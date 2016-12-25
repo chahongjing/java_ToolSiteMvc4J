@@ -1,6 +1,7 @@
 package com.zjy.baseframework;
 
-import com.sun.org.glassfish.gmbal.Description;
+
+import org.springframework.context.annotation.Description;
 
 import java.lang.reflect.Field;
 

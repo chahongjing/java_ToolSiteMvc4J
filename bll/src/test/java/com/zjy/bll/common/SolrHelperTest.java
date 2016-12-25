@@ -30,7 +30,7 @@ public class SolrHelperTest extends TestCase {
             add("IT");
         }};
         good.setTitle(title);
-        solrHelper.add(good);
+        //solrHelper.add(good);
     }
 
     public void testAddList() throws Exception {
@@ -55,12 +55,12 @@ public class SolrHelperTest extends TestCase {
         good3.setWeight(66.2f);
         good3.setPrice(43.4f);
         list.add(good3);
-        solrHelper.addList(list);
+        //solrHelper.addList(list);
     }
 
     public void testDelete() throws Exception {
 //        solrHelper.delete(1);
-        solrHelper.delete(2);
+        //solrHelper.delete(2);
 //        solrHelper.delete(3);
 //        solrHelper.delete(4);
     }
