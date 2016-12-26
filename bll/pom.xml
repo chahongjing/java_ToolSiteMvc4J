@@ -5,7 +5,7 @@
     <parent>
         <artifactId>ToolSiteMvc4J</artifactId>
         <groupId>com.zjy</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>bll</artifactId>
@@ -14,13 +14,13 @@
         <dependency>
             <groupId>com.zjy</groupId>
             <artifactId>entity</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.zjy</groupId>
             <artifactId>baseframework</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0</version>
         </dependency>
     </dependencies>
 
