@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +7,7 @@
 <body>
 <h2>Hello World!</h2>
 <a href="${ctx}/index.do">跳转</a>
+<a href="${ctx}/userinfo/loginindex.do" target="_blank">分页查询</a>
 <a href="javascript:void(0)" id="lnkTestPromise">测试promise</a>
 <a href="javascript:alert('请在单元测试中查看！')" id="lntAddSolrIndex">solr</a>
 <br />

@@ -1,7 +1,9 @@
 package com.zjy.web.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.zjy.baseframework.BaseResult;
 import com.zjy.baseframework.enums.ResultStatus;
+import com.zjy.bll.request.UserInfoRequest;
 import com.zjy.bll.service.UserInfoService;
 import com.zjy.entities.UserInfo;
 import org.apache.shiro.SecurityUtils;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author chahongjing
@@ -60,6 +63,23 @@ public class UserInfoController {
         subject.login(token); // 登录
         logger.info("用户{}登录", user.getUserCode());
         return new ResponseEntity<BaseResult<String>>(re, HttpStatus.OK);
+    }
+
+
+    @RequestMapping("/loginindex.do")
+    public ModelAndView loginindex() {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("list");
+
+        List<UserInfo> list = userInfoService.query(new UserInfo());
+
+        UserInfoRequest request = new UserInfoRequest();
+        request.setOrderBy("UserCode DESC");
+        PageInfo query = userInfoService.queryPage(request);
+
+        mv.addObject("pageinfo", query);
+
+        return mv;
     }
 
     @RequestMapping(value = "/logout.do")

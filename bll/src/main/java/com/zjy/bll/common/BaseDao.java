@@ -1,6 +1,7 @@
 package com.zjy.bll.common;
 
-import java.util.UUID;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author chahongjing
@@ -8,4 +9,8 @@ import java.util.UUID;
  */
 public interface BaseDao<T> {
      T get(String id);
+
+     List<T> query(T entity);
+
+     List<T> queryPage(HashMap<String, Object> query);
 }

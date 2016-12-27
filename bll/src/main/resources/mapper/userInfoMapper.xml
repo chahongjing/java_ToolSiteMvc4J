@@ -4,4 +4,12 @@
 	<select id="get" parameterType="String" resultType="com.zjy.entities.UserInfo">
 		select top 1 userguid,userName,userCode,[password] from UserInfo where userCode = #{userCode, jdbcType = VARCHAR}
 	</select>
+	<select id="query" resultType="com.zjy.entities.UserInfo">
+		select userguid,userName,userCode,[password] from UserInfo
+		 where 1 = 1
+	</select>
+	<select id="queryPage" resultType="com.zjy.entities.UserInfo">
+		select userguid,userName,userCode,[password] from UserInfo
+		where 2 = 2
+	</select>
 </mapper>
