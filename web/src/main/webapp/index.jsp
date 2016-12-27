@@ -10,9 +10,16 @@
 <a href="${ctx}/index.do">跳转</a>
 <a href="javascript:void(0)" id="lnkTestPromise">测试promise</a>
 <a href="javascript:alert('请在单元测试中查看！')" id="lntAddSolrIndex">solr</a>
+<br />
+<form method="post" action="${ctx}/fileupload.do" enctype="multipart/form-data" target="_blank">
+    <input type="text" name="name" />
+    <input type="file" name="myfile" />
+    <button type="submit" name="tj" value="提交">提交</button>
+</form>
 <br/>
 <a href="${ctx}/userinfo/loginpage.do">登录</a>
 <a href="javascript:void(0)" id="lnkLogout">注销</a>
+<br/>
 <%@ include  file="/commonJs.jsp" %>
 <script>
     $(function () {
