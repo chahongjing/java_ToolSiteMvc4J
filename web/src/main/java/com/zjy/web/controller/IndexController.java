@@ -13,17 +13,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.MultipartResolver;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.Date;
 
 /**
  * @author chahongjing
@@ -73,20 +69,17 @@ public class IndexController {
     }
 
     @RequestMapping("/fileupload.do")
-    public ModelAndView fileUpload(HttpServletRequest request) {
+    public ModelAndView fileUpload(MultipartHttpServletRequest request) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("OK");
-        // 转型为MultipartHttpRequest：
-        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-        Path path = Paths.get(request.getSession().getServletContext().getRealPath("/"), "upload");
+        Path path = Paths.get(request.getSession().getServletContext().getRealPath(File.separator), "upload");
         File dir = path.toFile();
         if (!dir.exists()) {
             dir.mkdir();
         }
-        for(Map.Entry<String, MultipartFile> kv: multipartRequest.getFileMap().entrySet()) {
-            MultipartFile file = kv.getValue();
+        for(MultipartFile file: request.getFileMap().values()) {
             try {
-                file.transferTo(new File(path + File.separator + file.getOriginalFilename()));
+                file.transferTo(Paths.get(path.toString(), file.getOriginalFilename()).toFile());
             } catch (IOException e) {
                 e.printStackTrace();
             }
