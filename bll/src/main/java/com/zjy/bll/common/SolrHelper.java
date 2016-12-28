@@ -25,7 +25,7 @@ import java.util.Map;
  */
 public class SolrHelper {
     // solr服务器地址 cores为核心名称
-    String url = "http://127.0.0.1:8080/solr/cores";
+    private String url = "http://127.0.0.1:8080/solr/cores";
 
     public void add(Goods good) throws IOException, SolrServerException {
         HttpSolrClient solr = new HttpSolrClient.Builder(url).build();

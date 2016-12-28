@@ -20,7 +20,7 @@ import java.io.IOException;
  */
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+    private Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler()
     public ModelAndView processException(NativeWebRequest request, HttpServletResponse response, Exception ex) {

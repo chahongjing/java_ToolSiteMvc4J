@@ -23,14 +23,12 @@ import java.util.Date;
 
 /**
  * @author chahongjing
- * @create 2016-11-22 22:59
+ * @date 2016-11-22 22:59
  */
 @Controller
 public class IndexController {
-    Logger logger = LoggerFactory.getLogger(IndexController.class);
+    private Logger logger = LoggerFactory.getLogger(IndexController.class);
 
-    @Autowired
-    private UserInfoService userInfoService;
     @Value("${db.url}")
     private String url;
 
@@ -43,21 +41,21 @@ public class IndexController {
     }
 
     @RequestMapping("/testP1.do")
-    public ResponseEntity testP1() {
+    public ResponseEntity<BaseResult<String>> testP1() {
         BaseResult<String> re = BaseResult.OK();
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return new ResponseEntity(re, HttpStatus.OK);
+        return new ResponseEntity<>(re, HttpStatus.OK);
     }
 
     @RequestMapping("/testP2.do")
-    public ResponseEntity testP2() {
+    public ResponseEntity<BaseResult<String>> testP2() {
         BaseResult<String> re = BaseResult.OK();
 
-        return new ResponseEntity(re, HttpStatus.OK);
+        return new ResponseEntity<>(re, HttpStatus.OK);
     }
 
     @RequestMapping("/redirect.do")

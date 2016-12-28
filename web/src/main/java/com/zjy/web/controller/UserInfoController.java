@@ -30,7 +30,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/userinfo")
 public class UserInfoController {
-    Logger logger = LoggerFactory.getLogger(UserInfoController.class);
+    private Logger logger = LoggerFactory.getLogger(UserInfoController.class);
     @Autowired
     private UserInfoService userInfoService;
 
@@ -48,11 +48,11 @@ public class UserInfoController {
     }
 
     @RequestMapping("/login.do")
-    public ResponseEntity<BaseResult<String>> login(UserInfo user, HttpServletRequest request) throws Exception {
+    public ResponseEntity<BaseResult<String>> login(UserInfo user) throws Exception {
         BaseResult<String> re = userInfoService.login(user);
 
         if (re.getStatus() != ResultStatus.OK) {
-            return new ResponseEntity<BaseResult<String>>(re, HttpStatus.OK);
+            return new ResponseEntity<>(re, HttpStatus.OK);
         }
 
         Subject subject = SecurityUtils.getSubject();
@@ -62,7 +62,7 @@ public class UserInfoController {
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUserCode(), user.getPassword());
         subject.login(token); // 登录
         logger.info("用户{}登录", user.getUserCode());
-        return new ResponseEntity<BaseResult<String>>(re, HttpStatus.OK);
+        return new ResponseEntity<>(re, HttpStatus.OK);
     }
 
 
@@ -92,6 +92,6 @@ public class UserInfoController {
         BaseResult<String> re = BaseResult.OK();
         re.setMessage("注销成功！");
         System.out.println(re);
-        return new ResponseEntity<BaseResult<String>>(re, HttpStatus.OK);
+        return new ResponseEntity<>(re, HttpStatus.OK);
     }
 }

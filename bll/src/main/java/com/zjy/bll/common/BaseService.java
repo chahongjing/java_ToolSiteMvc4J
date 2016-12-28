@@ -24,7 +24,7 @@ public class BaseService<Dao extends BaseDao<T>, T> {
 
     public T get(String id) {
         logger.info("调用get方法:id: {}", id);
-        return (T) dao.get(id);
+        return dao.get(id);
     }
 
     public List<T> query(T entity) {

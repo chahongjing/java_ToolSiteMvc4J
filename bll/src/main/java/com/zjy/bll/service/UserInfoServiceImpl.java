@@ -19,8 +19,8 @@ import java.util.List;
 @Service
 public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> implements UserInfoService {
 
-    public BaseResult login(UserInfo user) {
-        BaseResult result = new BaseResult();
+    public BaseResult<String> login(UserInfo user) {
+        BaseResult<String> result = new BaseResult<>();
         UserInfo dbUser = super.get(user.getUserCode());
 
         if (dbUser == null) {
