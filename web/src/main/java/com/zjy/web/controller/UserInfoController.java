@@ -41,7 +41,7 @@ public class UserInfoController {
         // 获取上一次的地址
         SavedRequest lastRequest = WebUtils.getSavedRequest(request);
         String url = null;
-        if (lastRequest != null && "GET".equals(lastRequest.getMethod().toUpperCase()))
+        if (lastRequest != null && "GET".equalsIgnoreCase(lastRequest.getMethod()))
             url = WebUtils.getSavedRequest(request).getRequestUrl();
         mv.addObject("redirectUrl", url);
         return mv;

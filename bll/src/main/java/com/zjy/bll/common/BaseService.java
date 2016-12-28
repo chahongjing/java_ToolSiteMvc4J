@@ -28,13 +28,23 @@ public class BaseService<Dao extends BaseDao<T>, T> {
     }
 
     public List<T> query(T entity) {
-        logger.info("query:UserInfo: {}", JSON.toJSONString(entity));
+        logger.info("调用query方法:{}: {}", entity.getClass().getName(), JSON.toJSONString(entity));
         return dao.query(entity);
     }
 
     public PageInfo<T> queryPage(PageInfomation pi, HashMap<String, Object> query) {
-        logger.info("queryPage:PageInfomation: {}\tquery: {}", JSON.toJSONString(pi), JSON.toJSONString(query));
+        logger.info("调用queryPage方法:PageInfomation: {}\tquery: {}", JSON.toJSONString(pi), JSON.toJSONString(query));
         PageHelper.startPage(pi.getPageNum(), pi.getPageSize()).setOrderBy(pi.getOrderBy());
         return new PageInfo<>(dao.queryPage(query));
+    }
+
+    public int delete(String id) {
+        logger.info("调用delete方法:id: {}", id);
+        return dao.delete(id);
+    }
+
+    public int update(T entity) {
+        logger.info("调用update   方法:{}: {}", entity.getClass().getName(), JSON.toJSONString(entity));
+        return dao.update(entity);
     }
 }
