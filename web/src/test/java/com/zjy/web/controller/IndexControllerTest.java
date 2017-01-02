@@ -3,7 +3,7 @@ package com.zjy.web.controller;
 import com.alibaba.fastjson.JSON;
 import com.zjy.baseframework.MongoDbHelper;
 import com.zjy.baseframework.PropertiesHelper;
-import com.zjy.common.BaseTestCase;
+import com.zjy.bll.common.BaseTestCase;
 import com.zjy.entities.UserInfo;
 import org.junit.Test;
 import org.springframework.test.annotation.Rollback;

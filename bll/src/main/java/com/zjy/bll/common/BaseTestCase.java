@@ -1,4 +1,4 @@
-package com.zjy.common;
+package com.zjy.bll.common;
 
 import junit.framework.TestCase;
 import org.junit.runner.RunWith;

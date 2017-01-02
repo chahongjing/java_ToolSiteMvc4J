@@ -1,25 +1,24 @@
-package com.zjy.web.controller;
+package com.zjy.bll.common;
 
-import com.zjy.bll.common.SolrHelper;
+import com.alibaba.fastjson.JSON;
 import com.zjy.entities.Goods;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static org.junit.Assert.*;
+
 /**
  * Created by chahongjing on 2017/1/2.
  */
-@Controller
-public class TestController {
-    //region 自动装配
+public class SolrHelperTest extends BaseTestCase {
     private SolrHelper solrHelper = new SolrHelper();
-    //endregion
 
     //region solr测试
-    public void solrAdd() throws Exception {
+    @Test
+    public void add() throws Exception {
         Goods good = new Goods();
         good.setId("1");
         good.setName("计算机科学");
@@ -33,7 +32,8 @@ public class TestController {
         solrHelper.add(good);
     }
 
-    public void solrAddList() throws Exception {
+    @Test
+    public void addList() throws Exception {
         List<Goods> list = new ArrayList<>();
         Goods good1 = new Goods();
         good1.setId("2");
@@ -58,17 +58,20 @@ public class TestController {
         solrHelper.addList(list);
     }
 
-    public void solrDelete() throws Exception {
+    @Test
+    public void delete() throws Exception {
 //        solrHelper.delete(1);
         solrHelper.delete(2);
 //        solrHelper.delete(3);
 //        solrHelper.delete(4);
     }
 
-    public void solrFind() throws Exception {
+    @Test
+    public void find() throws Exception {
         HashMap<String, String> map = new HashMap<>();
         map.put("id", "3");
         List<Goods> list = solrHelper.find(map);
+        logger.info("solor测试: {}", JSON.toJSONString(list));
     }
     //endregion
 }
