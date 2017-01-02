@@ -1,5 +1,6 @@
 package com.zjy.web.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.zjy.baseframework.MongoDbHelper;
 import com.zjy.baseframework.PropertiesHelper;
 import com.zjy.common.BaseTestCase;
@@ -33,7 +34,7 @@ public class IndexControllerTest extends BaseTestCase {
         indexController.test();
         new MongoDbHelper().test();
         PropertiesHelper instance = PropertiesHelper.getInstance();
-        //logger.info("db.url:" + instance.getProperties("db.url"));
+        logger.info("db.url:" + instance.getProperties("db.url"));
         List<UserInfo> userInfos = new ArrayList<>();
         userInfos.add(new UserInfo() {{
             setUserCode("zjy");
@@ -53,20 +54,20 @@ public class IndexControllerTest extends BaseTestCase {
         }});
 
         Map<String, UserInfo> collect = userInfos.parallelStream().collect(Collectors.toMap(item -> item.getUserCode(), item -> item));
-        //logger.info("toMap：" + JSON.toJSONString(collect));
+        logger.info("toMap：" + JSON.toJSONString(collect));
 
         userInfos = userInfos.parallelStream().map(item -> {
             item.setPassword("1");
             return item;
         }).collect(Collectors.toList());
-        //logger.info("map：" + JSON.toJSONString(collect));
+        logger.info("map：" + JSON.toJSONString(collect));
 
         List<String> userCodes = userInfos.parallelStream().peek(item -> item.setPassword("abc")).map(UserInfo::getUserCode).collect(Collectors.toList());
         userCodes.stream().peek(item -> System.out.printf("peek" + item)).map(String::toUpperCase).peek(item -> System.out.println("up:" + item))
                 .collect(Collectors.toList());
-        //logger.info("map：" + JSON.toJSONString(collect));
+        logger.info("map：" + JSON.toJSONString(collect));
 
-        Thread.sleep(12000);
-        //logger.info("IndexController().test()");
+        Thread.sleep(2000);
+        logger.info("IndexController().test()");
     }
 }

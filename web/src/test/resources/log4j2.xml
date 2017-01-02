@@ -5,12 +5,12 @@
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
         </Console>
 
-        <File name="File" fileName="${web:rootDir}logs\app.log"
+        <File name="File" fileName="logs/ToolSiteMvc4J/app.log"
               filePattern="$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
             <PatternLayout pattern="%d %p %c{1.} [%t] %m%n"/>
         </File>
-        <RollingFile name="RollingFile" fileName="${web:rootDir}logs\log.log"
-                     filePattern="${web:rootDir}logs\log_%d{yyyy-MM-dd}_%i.log">
+        <RollingFile name="RollingFile" fileName="logs/ToolSiteMvc4J/r_log.log"
+                     filePattern="logs/ToolSiteMvc4J/r_log_%d{yyyy-MM-dd}_%i.log">
             <PatternLayout pattern="%d %p %c{1.} [%t] %m%n"/>
             <Policies>
                 <TimeBasedTriggeringPolicy modulate="true" interval="24"/>

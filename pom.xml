@@ -36,7 +36,6 @@
         <solr.version>6.3.0</solr.version>
         <sqlserver.version>4.0</sqlserver.version>
         <mysql.version>6.0.5</mysql.version>
-        <oracle.version>10.2.0.4.0</oracle.version>
         <!--<hibernate.version>5.2.3.Final</hibernate.version>-->
     </properties>
 
@@ -201,12 +200,6 @@
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>sqljdbc4</artifactId>
             <version>${sqlserver.version}</version>
-        </dependency>
-        <!-- oracle驱动 -->
-        <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ojdbc14</artifactId>
-            <version>${oracle.version}</version>
         </dependency>
         <!-- mysql驱动 -->
         <dependency>
