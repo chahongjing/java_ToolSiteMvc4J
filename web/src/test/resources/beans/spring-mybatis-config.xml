@@ -12,6 +12,19 @@
         <property name="typeAliasesPackage" value="com.zjy.entities" />
         <!-- 显式指定Mapper文件位置 -->
         <property name="mapperLocations" value="classpath*:mapper/*Mapper.xml" />
+
+		<property name="plugins">
+			<array>
+				<bean class="com.github.pagehelper.PageHelper">
+					<property name="properties">
+						<value>
+							dialect=sqlserver
+						</value>
+					</property>
+					<!-- dialect可以设置为oracle, mysql -->
+				</bean>
+			</array>
+		</property>
 	</bean>
 	<!-- 扫描basePackage下所有以@MyBatisRepository标识的 接口-->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

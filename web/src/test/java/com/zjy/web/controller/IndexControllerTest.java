@@ -2,7 +2,7 @@ package com.zjy.web.controller;
 
 import com.zjy.baseframework.MongoDbHelper;
 import com.zjy.baseframework.PropertiesHelper;
-import com.zjy.common.BaseTest;
+import com.zjy.common.BaseTestCase;
 import com.zjy.entities.UserInfo;
 import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 /**
  * Created by chahongjing on 2016/12/12.
  */
-public class IndexControllerTest extends BaseTest {
+public class IndexControllerTest extends BaseTestCase {
 
     @Resource
     private IndexController indexController;
