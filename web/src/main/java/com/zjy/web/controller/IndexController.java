@@ -40,6 +40,7 @@ public class IndexController {
         return "OK";
     }
 
+    //region 延迟和回调
     @RequestMapping("/testP1.do")
     public ResponseEntity<BaseResult<String>> testP1() {
         BaseResult<String> re = BaseResult.OK();
@@ -65,6 +66,7 @@ public class IndexController {
 
         return mv;
     }
+    //endregion
 
     @RequestMapping("/fileupload.do")
     public ModelAndView fileUpload(MultipartHttpServletRequest request) {

@@ -1,26 +1,25 @@
 package com.zjy.web.controller;
 
 import com.zjy.bll.common.SolrHelper;
-import com.zjy.common.BaseTestCase;
 import com.zjy.entities.Goods;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 /**
- * @author chahongjing
- * @create 2017-01-02 11:06
+ * Created by chahongjing on 2017/1/2.
  */
-public class SolrTest extends BaseTestCase {
-    private SolrHelper solrHelper;
+@Controller
+public class TestController {
+    //region 自动装配
+    private SolrHelper solrHelper = new SolrHelper();
+    //endregion
 
-    public void setUp() throws Exception {
-        super.setUp();
-        solrHelper = new SolrHelper();
-    }
-
-    public void testAdd() throws Exception {
+    //region solr测试
+    public void solrAdd() throws Exception {
         Goods good = new Goods();
         good.setId("1");
         good.setName("计算机科学");
@@ -31,10 +30,10 @@ public class SolrTest extends BaseTestCase {
             add("IT");
         }};
         good.setTitle(title);
-        //solrHelper.add(good);
+        solrHelper.add(good);
     }
 
-    public void testAddList() throws Exception {
+    public void solrAddList() throws Exception {
         List<Goods> list = new ArrayList<>();
         Goods good1 = new Goods();
         good1.setId("2");
@@ -56,19 +55,20 @@ public class SolrTest extends BaseTestCase {
         good3.setWeight(66.2f);
         good3.setPrice(43.4f);
         list.add(good3);
-        //solrHelper.addList(list);
+        solrHelper.addList(list);
     }
 
-    public void testDelete() throws Exception {
+    public void solrDelete() throws Exception {
 //        solrHelper.delete(1);
-        //solrHelper.delete(2);
+        solrHelper.delete(2);
 //        solrHelper.delete(3);
 //        solrHelper.delete(4);
     }
 
-    public void testFind() throws Exception {
+    public void solrFind() throws Exception {
         HashMap<String, String> map = new HashMap<>();
         map.put("id", "3");
         List<Goods> list = solrHelper.find(map);
     }
+    //endregion
 }

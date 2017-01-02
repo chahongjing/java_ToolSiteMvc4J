@@ -30,10 +30,16 @@ import java.util.List;
 @Controller
 @RequestMapping("/userinfo")
 public class UserInfoController {
+
+    //region 属性
+    // 日志
     private Logger logger = LoggerFactory.getLogger(UserInfoController.class);
+
     @Autowired
     private UserInfoService userInfoService;
+    //endregion
 
+    //region 登录登出
     @RequestMapping("/loginpage.do")
     public ModelAndView login(HttpServletRequest request) {
         ModelAndView mv = new ModelAndView();
@@ -65,6 +71,19 @@ public class UserInfoController {
         return new ResponseEntity<>(re, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/logout.do")
+    public ResponseEntity<BaseResult<String>> logout() {
+        Subject subject = SecurityUtils.getSubject();
+        if (subject.isAuthenticated()) {
+            subject.logout(); // session 会销毁，在SessionListener监听session销毁，清理权限缓存
+        }
+
+        BaseResult<String> re = BaseResult.OK();
+        re.setMessage("注销成功！");
+        System.out.println(re);
+        return new ResponseEntity<>(re, HttpStatus.OK);
+    }
+    //endregion
 
     @RequestMapping("/loginindex.do")
     public ModelAndView loginindex() {
@@ -80,18 +99,5 @@ public class UserInfoController {
         mv.addObject("pageinfo", query);
 
         return mv;
-    }
-
-    @RequestMapping(value = "/logout.do")
-    public ResponseEntity<BaseResult<String>> logout() {
-        Subject subject = SecurityUtils.getSubject();
-        if (subject.isAuthenticated()) {
-            subject.logout(); // session 会销毁，在SessionListener监听session销毁，清理权限缓存
-        }
-
-        BaseResult<String> re = BaseResult.OK();
-        re.setMessage("注销成功！");
-        System.out.println(re);
-        return new ResponseEntity<>(re, HttpStatus.OK);
     }
 }
