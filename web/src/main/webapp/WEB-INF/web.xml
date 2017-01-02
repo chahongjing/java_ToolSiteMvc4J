@@ -5,7 +5,7 @@
     <!-- 上下文配置 -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:applicationContext.xml,classpath:/beans/*.xml</param-value>
+        <param-value>classpath:applicationContext.xml,classpath:/config/spring-*.xml</param-value>
     </context-param>
     <!-- 上下文监听 -->
     <listener>
@@ -20,7 +20,7 @@
         <load-on-startup>1</load-on-startup>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>classpath:applicationContext.xml,classpath:/beans/spring-mvc.xml</param-value>
+            <param-value>classpath:applicationContext.xml,classpath:/config/spring-mvc.xml</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>
