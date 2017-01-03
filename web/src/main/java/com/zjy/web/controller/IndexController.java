@@ -36,7 +36,6 @@ public class IndexController {
     public String test() throws Exception {
         logger.info("测试日志方法{}", new Date());
         logger.info("从Properties读取配置信息：" + url);
-        DbHelper.Test();
         return "OK";
     }
 

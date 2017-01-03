@@ -1,27 +1,89 @@
 package com.zjy.baseframework;
 
 import java.sql.*;
+import java.util.UUID;
 
 public class DbHelper {
-    public static void Test() throws SQLException, ClassNotFoundException {
-        // 反射数据库驱动程序类
-        Class.forName(com.zjy.baseframework.PropertiesHelper.getInstance().getProperties("db.driverClassName"));
+    public static ResultSet testSelect()  {
+        String sql = PropertiesHelper.getInstance().getProperties("db.testSql");
+        try (Connection conn = getConnection()){
+            PreparedStatement pSta = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            // pSta.setString(1, "abc");
+            ResultSet rSet = pSta.executeQuery();
+            // rSet.last();rSet.getRow();
+            return rSet;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public static int testInsert()  {
+        String sql = "insert into userinfo(UserGuid, UserCode, UserName, [Password], Sex, Birthday, IsSystem)\n" +
+                "values(?, 'testuser', '测试数据', '1', 1, getdate(), 1)";
+        try (Connection conn = getConnection()){
+            PreparedStatement pSta = conn.prepareStatement(sql);
+            pSta.setString(1, "D8E6B877-3645-4063-A25C-495606B95349");
 
-        // 获取数据库连接
-        Connection conn = DriverManager.getConnection(
-                com.zjy.baseframework.PropertiesHelper.getInstance().getProperties("db.url"),
-                com.zjy.baseframework.PropertiesHelper.getInstance().getProperties("db.userName"),
-                com.zjy.baseframework.PropertiesHelper.getInstance().getProperties("db.password"));
-        // 定制sql命令
-        System.out.println("1");
-        // 创建该连接下的PreparedStatement对象
-        PreparedStatement stmt = conn
-                .prepareStatement(com.zjy.baseframework.PropertiesHelper.getInstance().getProperties("db.testSql"),
-                        ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-        // stmt.setString(1, "abc");
+            return pSta.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+    public static int testUpdate()  {
+        String sql = "update userinfo set birthday = ? where userguid = ?";
+        try (Connection conn = getConnection()){
+            // 获取数据库连接
+            PreparedStatement pSta = conn.prepareStatement(sql);
+            pSta.setTimestamp(1, new java.sql.Timestamp(new java.util.Date().getTime()));
+            pSta.setString(2, "D8E6B877-3645-4063-A25C-495606B95349");
+            //pSta.setString(2, UUID.randomUUID().toString());
+            conn.setAutoCommit(false);
+            int result =  pSta.executeUpdate();
+            conn.commit();
+            conn.close();
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+    public static int testDelete()  {
+        String sql = "delete from userinfo where userguid = ?";
+        try (Connection conn = getConnection()){
+            PreparedStatement pSta = conn.prepareStatement(sql);
+            pSta.setString(1, "D8E6B877-3645-4063-A25C-495606B95349");
+            //pSta.setString(1, UUID.randomUUID().toString());
 
-        ResultSet rSet = stmt.executeQuery();
-        rSet.last();
-        System.out.println("3:row" + rSet.getRow());
+            return pSta.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    public static Connection getConnection() throws ClassNotFoundException, SQLException {
+            // 反射数据库驱动程序类
+            Class.forName(com.zjy.baseframework.PropertiesHelper.getInstance().getProperties("db.driverClassName"));
+
+            // 获取数据库连接
+            Connection con = DriverManager.getConnection(
+                    PropertiesHelper.getInstance().getProperties("db.url"),
+                    PropertiesHelper.getInstance().getProperties("db.userName"),
+                    PropertiesHelper.getInstance().getProperties("db.password"));
+            return con;
     }
 }
