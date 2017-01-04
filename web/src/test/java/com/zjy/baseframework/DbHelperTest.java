@@ -1,9 +1,12 @@
 package com.zjy.baseframework;
 
 import com.zjy.bll.common.BaseTestCase;
+import com.zjy.entities.UserInfo;
 import org.junit.Test;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -20,6 +23,11 @@ public class DbHelperTest extends BaseTestCase {
         } else {
             System.out.println("没有数据");
         }
+    }
+
+    @Test
+    public void toList() throws Exception {
+        List<UserInfo> list = dbHelper.toList(UserInfo.class);
     }
 
     @Test
