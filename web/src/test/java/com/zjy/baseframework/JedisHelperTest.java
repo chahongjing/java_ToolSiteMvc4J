@@ -14,5 +14,6 @@ public class JedisHelperTest extends BaseTestCase {
         JedisHelper.set("key", "myvalue");
         String abc = JedisHelper.get("key");
         Long a = JedisHelper.delete("key");
+        System.out.println(String.format("abc%s%d", abc, a));
     }
 }

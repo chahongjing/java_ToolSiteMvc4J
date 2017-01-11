@@ -9,7 +9,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
 	<!-- ①：在指定的包下扫描@Component @Controller @Service @Reposity等注解 -->
-	<context:component-scan base-package="com.zjy.web.controller,com.zjy.bll.common,com.zjy.bll.dao,com.zjy.bll.service,com.zjy.baseframework" />
+	<context:component-scan base-package="com.zjy.web.controller,com.zjy.bll,com.zjy.baseframework" />
 
 	<!-- ②：对模型视图名称的解析，即在模型视图名称添加前后缀 -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
@@ -54,19 +54,7 @@
         </property>
     </bean>
 
-	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
-		<property name="maxIdle" value="300"/> <!--最大能够保持idel状态的对象数-->
-		<property name="maxTotal" value="60000"/><!--最大分配的对象数-->
-		<property name="testOnBorrow" value="true"/><!--当调用borrow Oject方法时，是否进行有效性检查-->
-	</bean>
-
-	<bean id="jedisPool" class="redis.clients.jedis.JedisPool">
-		<constructor-arg name="poolConfig" ref="jedisPoolConfig"/>
-		<constructor-arg name="host" value="${jedis.host}"/>
-		<constructor-arg name="port" value="${jedis.port}" type="int"/>
-		<constructor-arg name="timeout" value="${jedis.timeout}" type="int"/>
-		<constructor-arg name="password" value="${jedis.auth}"/>
-	</bean>
+	<!-- 文件上传 -->
 	<bean id="multipartResolver"
 		  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<!-- 设置上传文件的最大尺寸为1MB -->
