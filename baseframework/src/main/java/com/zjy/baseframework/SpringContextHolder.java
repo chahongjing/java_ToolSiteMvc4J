@@ -47,7 +47,7 @@ public class SpringContextHolder implements ApplicationContextAware, ServletCont
      * @param: name
      * @return: T 一个以所给名字注册的bean的实例
      * @throws: BeansException
-     * @Author: <a href="mailto:unitysl@hotmail.com"/>沈浩</a>
+     * @Author: <a href="mailto:unitysl@hotmail.com"/></a>
      * @CreateDate: 2016年6月26日
      */
     @SuppressWarnings("unchecked")
