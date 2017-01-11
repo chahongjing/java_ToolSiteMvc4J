@@ -4,12 +4,12 @@
 <head>
     <%@ include  file="/commonCss.jsp" %>
     <style>
-        .font{font-family: arial,'Microsoft YaHei',SimSun,sans-serif,tahoma;}
+        .font{font-family: arial;font-weight: 500;}
     </style>
 </head>
 <body>
 <h2>Hello World!</h2>
-<p class="font">2017年01月01日</p>
+<span class="font">2017年01月01日</span>
 <a href="${ctx}/index.do">跳转</a>
 <a href="${ctx}/userinfo/loginindex.do" target="_blank">分页查询</a>
 <a href="javascript:void(0)" id="lnkTestPromise">测试promise</a>
