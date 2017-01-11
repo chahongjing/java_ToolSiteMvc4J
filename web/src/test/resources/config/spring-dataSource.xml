@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+    <!-- 数据源 -->
+    <!-- class="org.apache.tomcat.dbcp.dbcp.BasicDataSource" -->
+    <!-- class="org.springframework.jdbc.datasource.DriverManagerDataSource" -->
+    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${db.driverClassName}"/>
+        <property name="url" value="${db.url}"/>
+        <property name="username" value="${db.userName}"/>
+        <property name="password" value="${db.password}"/>
+    </bean>
+</beans>
