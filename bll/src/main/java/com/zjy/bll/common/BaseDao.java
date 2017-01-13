@@ -14,6 +14,8 @@ public interface BaseDao<T> {
 
      List<T> queryPage(HashMap<String, Object> query);
 
+     int add(T entity);
+
      int delete(String id);
 
      int update(T entity);

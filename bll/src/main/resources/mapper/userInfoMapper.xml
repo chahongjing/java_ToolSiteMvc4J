@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zjy.bll.dao.UserInfoDao">
+
+	<insert id="add" parameterType="UserInfo">
+		insert into userinfo(UserGuid, UserCode, UserName, [Password], Sex, Birthday, IsSystem)
+		values(#{userGuid, jdbcType=VARCHAR}, #{userCode, jdbcType=VARCHAR}, #{userName, jdbcType=VARCHAR}, #{password, jdbcType=VARCHAR},
+		#{sex, jdbcType=BIT}, #{birthday, jdbcType=TIMESTAMP}, #{isSystem, jdbcType=BIT})
+	</insert>
+
 	<select id="get" parameterType="String" resultType="com.zjy.entities.UserInfo">
 		select top 1 userguid,userName,userCode,[password] from UserInfo where userCode = #{userCode, jdbcType = VARCHAR}
 	</select>
+
+	<insert id="delete" parameterType="String">
+		delete from userinfo where UserGuid = #{id, jdbcType=VARCHAR}
+	</insert>
+
 	<select id="query" resultType="com.zjy.entities.UserInfo">
 		select userguid,userName,userCode,[password] from UserInfo
 		 where 1 = 1

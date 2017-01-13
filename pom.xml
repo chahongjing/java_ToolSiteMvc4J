@@ -33,6 +33,7 @@
         <poi.version>3.9</poi.version>
         <jedis.version>2.9.0</jedis.version>
         <mongodb.version>3.4.0</mongodb.version>
+        <mongodb.spring.version>1.9.6.RELEASE</mongodb.spring.version>
         <cache.version>1.0.0</cache.version>
         <quartz.version>2.2.1</quartz.version>
         <solr.version>6.3.0</solr.version>
@@ -184,6 +185,11 @@
             <artifactId>mongo-java-driver</artifactId>
             <version>${mongodb.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-mongodb</artifactId>
+            <version>${mongodb.spring.version}</version>
+        </dependency>
         <!-- cache -->
         <dependency>
             <groupId>javax.cache</groupId>
@@ -207,6 +213,7 @@
             <artifactId>solr-solrj</artifactId>
             <version>${solr.version}</version>
         </dependency>
+
         <!-- sql server驱动 -->
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>

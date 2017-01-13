@@ -6,11 +6,13 @@ import com.zjy.baseframework.PropertiesHelper;
 import com.zjy.bll.common.BaseTestCase;
 import com.zjy.entities.UserInfo;
 import org.junit.Test;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,6 +24,9 @@ public class IndexControllerTest extends BaseTestCase {
 
     @Resource
     private IndexController indexController;
+
+    @Resource
+    private MongoTemplate mongoTemplate;
 
     public void setUp() throws Exception {
         super.setUp();
@@ -70,4 +75,22 @@ public class IndexControllerTest extends BaseTestCase {
         Thread.sleep(2000);
         logger.info("IndexController().test()");
     }
+
+    @Test
+    public void test2() {
+        UserInfo user = new UserInfo();
+        user.setUserGuid("D8E6B877-3645-4063-A25C-495606B95349");
+        user.setUserCode("testuser");
+        user.setUserName("测试数据");
+        user.setPassword("1");
+        user.setSex(true);
+        user.setBirthday(new Date());
+        user.setIsSystem(true);
+        //mongoTemplate.insert(user, "testcollection");
+        List<UserInfo> list = get(UserInfo.class);
+    }
+
+    public <T> List<T> get(Class clazz){
+        return mongoTemplate.findAll(clazz, "testcollection");
+    };
 }

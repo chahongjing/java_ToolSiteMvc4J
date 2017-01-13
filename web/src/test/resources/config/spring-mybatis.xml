@@ -3,15 +3,15 @@
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
 	   xmlns:aop="http://www.springframework.org/schema/aop"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
-	
+
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource">
 			<ref bean="dataSource"></ref>
 		</property>
-        <!-- 自动扫描entity目录, 省掉Configuration.xml里的手工配置 -->
-        <property name="typeAliasesPackage" value="com.zjy.entities" />
-        <!-- 显式指定Mapper文件位置 -->
-        <property name="mapperLocations" value="classpath*:mapper/*Mapper.xml" />
+		<!-- 自动扫描entity目录, 省掉Configuration.xml里的手工配置 -->
+		<property name="typeAliasesPackage" value="com.zjy.entities"/>
+		<!-- 显式指定Mapper文件位置 -->
+		<property name="mapperLocations" value="classpath*:mapper/*Mapper.xml"/>
 
 		<property name="plugins">
 			<array>
@@ -26,35 +26,39 @@
 			</array>
 		</property>
 	</bean>
-	<!-- 扫描basePackage下所有以@MyBatisRepository标识的 接口-->
+	<!-- 扫描basePackage下所有以@Repository标识的 接口-->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.zjy.bll.dao" />
+		<property name="basePackage" value="com.zjy.bll.dao"/>
 		<property name="annotationClass" value="org.springframework.stereotype.Repository"/>
 	</bean>
 
 	<!-- 配置mybatis事务管理器 -->
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
+		<property name="dataSource" ref="dataSource"/>
 	</bean>
 
-	<!-- 声明式容器事务管理 ,transaction-manager指定事务管理器为transactionManager -->
-	<tx:advice id="txAdvice" transaction-manager="transactionManager">
-		<tx:attributes>
-			<tx:method name="add*" propagation="REQUIRED" />
-			<tx:method name="get*" propagation="REQUIRED" />
-			<tx:method name="*" read-only="true" />
-		</tx:attributes>
-	</tx:advice>
+	<!-- 第一种开启事务控制的注解支持 -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+
+	<!--&lt;!&ndash; 第二种：1)声明式容器事务管理 ,transaction-manager指定事务管理器为transactionManager &ndash;&gt;-->
+	<!--<tx:advice id="txAdvice" transaction-manager="transactionManager">-->
+	<!--<tx:attributes>-->
+	<!--<tx:method name="add*" propagation="REQUIRED"/>-->
+	<!--<tx:method name="get*" propagation="REQUIRED"/>-->
+	<!--<tx:method name="*" read-only="true"/>-->
+	<!--</tx:attributes>-->
+	<!--</tx:advice>-->
+
+	<!--&lt;!&ndash; 第二种： 2）声明切入点 &ndash;&gt;-->
+	<!--<aop:config expose-proxy="true">-->
+	<!--&lt;!&ndash; 只对业务逻辑层实施事务 &ndash;&gt;-->
+	<!--&lt;!&ndash;服务命名空间 &ndash;&gt;-->
+	<!--<aop:pointcut id="txPointcut" expression="execution(* com.zjy.bll.service..*.*(..))"/>-->
+	<!--&lt;!&ndash; Advisor定义，切入点和通知分别为txPointcut、txAdvice &ndash;&gt;-->
+	<!--<aop:advisor pointcut-ref="txPointcut" advice-ref="txAdvice"/>-->
+	<!--</aop:config>-->
 
 	<!-- 配置事务异常封装 -->
 	<bean id="persistenceExceptionTranslationPostProcessor"
-		  class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
-
-	<aop:config expose-proxy="true">
-		<!-- 只对业务逻辑层实施事务 -->
-		<!--服务命名空间 -->
-		<aop:pointcut id="txPointcut" expression="execution(* com.zjy.bll.service..*.*(..))" />
-		<!-- Advisor定义，切入点和通知分别为txPointcut、txAdvice -->
-		<aop:advisor pointcut-ref="txPointcut" advice-ref="txAdvice" />
-	</aop:config>
+		  class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 </beans>

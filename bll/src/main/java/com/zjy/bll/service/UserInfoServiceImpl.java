@@ -2,13 +2,17 @@ package com.zjy.bll.service;
 
 import com.github.pagehelper.PageInfo;
 import com.zjy.baseframework.BaseResult;
+import com.zjy.baseframework.DbHelper;
 import com.zjy.baseframework.enums.ResultStatus;
 import com.zjy.bll.common.BaseService;
 import com.zjy.bll.dao.UserInfoDao;
 import com.zjy.bll.request.UserInfoRequest;
 import com.zjy.entities.UserInfo;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -37,12 +41,44 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
         return result;
     }
 
-    public List<UserInfo> query(UserInfo entity){
+    public List<UserInfo> query(UserInfo entity) {
         return super.query(entity);
     }
 
-    public PageInfo<UserInfo> queryPage(UserInfoRequest request){
+    public PageInfo<UserInfo> queryPage(UserInfoRequest request) {
         HashMap<String, Object> query = new HashMap<>();
         return super.queryPage(request, query);
+    }
+
+    @Override
+    @Transactional
+    public int add(UserInfo entity) {
+        return dao.add(entity);
+    }
+
+    @Override
+    @Transactional
+    public int delete(String id) {
+        return dao.delete(id);
+    }
+
+    @Override
+    @Transactional
+    public void testtr() {
+        UserInfo user = new UserInfo();
+        user.setUserGuid("D8E6B877-3645-4063-A25C-495606B95349");
+        user.setUserCode("testuser");
+        user.setUserName("测试数据");
+        user.setPassword("1");
+        user.setSex(true);
+        user.setBirthday(new Date());
+        user.setIsSystem(true);
+
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        System.out.println(sdf.format(user.getBirthday()));
+
+        dao.add(user);
+        int a = 1 / 0;
+        dao.delete("D8E6B877-3645-4063-A25C-495606B95349");
     }
 }

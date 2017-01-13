@@ -47,7 +47,13 @@
 
     <!-- json格式化器 -->
     <bean id="jsonConverter" class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
-        <property name="supportedMediaTypes" value="application/json;charset=UTF-8"/>
+        <property name="supportedMediaTypes">
+            <list>
+                <value>text/html;charset=UTF-8</value>
+                <value>text/json;charset=UTF-8</value>
+                <value>application/json;charset=UTF-8</value>
+            </list>
+        </property>
         <property name="features">
             <array value-type="com.alibaba.fastjson.serializer.SerializerFeature">
                 <value>DisableCircularReferenceDetect</value>

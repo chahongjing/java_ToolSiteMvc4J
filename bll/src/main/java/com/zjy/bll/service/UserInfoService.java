@@ -17,4 +17,10 @@ public interface UserInfoService {
     List<UserInfo> query(UserInfo user);
 
     PageInfo queryPage(UserInfoRequest request);
+
+    int add(UserInfo entity);
+
+    int delete(String id);
+
+    void testtr();
 }
