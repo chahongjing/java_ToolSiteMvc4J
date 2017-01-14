@@ -40,71 +40,8 @@ import java.util.*;
 public class IndexController {
     private Logger logger = LoggerFactory.getLogger(IndexController.class);
 
-    @Value("${db.url}")
-    private String url;
-
-//    @Autowired
-//    private ResourceBundleMessageSource messageSource;
-
     @RequestMapping("/index.do")
     public String test(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        logger.info("测试日志方法{}", new Date());
-        logger.info("从Properties读取配置信息：" + url);
-
-//        Object[] arg = new Object[] { "Erica", Calendar.getInstance().getTime() };
-//        messageSource.getMessage("username", arg, Locale.CHINA);
-
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("zjy", "23ab33");
-        String content = PartialViewHelper.renderTest("/index.jsp", request, response, map);
-
         return "OK";
-    }
-
-    //region 延迟和回调
-    @RequestMapping("/testP1.do")
-    public ResponseEntity<BaseResult<String>> testP1() {
-        BaseResult<String> re = BaseResult.OK();
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return new ResponseEntity<>(re, HttpStatus.OK);
-    }
-
-    @RequestMapping("/testP2.do")
-    public ResponseEntity<BaseResult<String>> testP2() {
-        BaseResult<String> re = BaseResult.OK();
-
-        return new ResponseEntity<>(re, HttpStatus.OK);
-    }
-
-    @RequestMapping("/redirect.do")
-    public ModelAndView redirect() {
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("redirect:/testP2.do");
-
-        return mv;
-    }
-    //endregion
-
-    @RequestMapping("/fileupload.do")
-    public ModelAndView fileUpload(MultipartHttpServletRequest request) {
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("OK");
-        Path path = Paths.get(request.getSession().getServletContext().getRealPath(File.separator), "upload");
-        File dir = path.toFile();
-        if (!dir.exists()) {
-            dir.mkdir();
-        }
-        for(MultipartFile file: request.getFileMap().values()) {
-            try {
-                file.transferTo(Paths.get(path.toString(), file.getOriginalFilename()).toFile());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return mv;
     }
 }

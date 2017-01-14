@@ -11,23 +11,26 @@
     </style>
 </head>
 <body>
-<h2>Hello World!</h2>
-<span class="font">2017年01月01日</span>
-<a href="${ctx}/index.do">跳转</a>
-<a href="${ctx}/userinfo/loginindex.do" target="_blank">分页查询</a>
-<a href="javascript:void(0)" id="lnkTestPromise">测试promise</a>
-<a href="javascript:alert('请在单元测试中查看！')" id="lntAddSolrIndex">solr</a>
+<h2>Hello World!</h2><span class="font">2017年01月01日</span>
 <br/>
-<form method="post" action="${ctx}/fileupload.do" enctype="multipart/form-data" target="_blank">
-    <input type="text" name="name"/>
-    <input type="text" name="test" value="测试部分页render:${zjy}"/>
-    <input type="file" name="myfile"/>
-    <button type="submit" name="tj" value="提交">提交</button>
-</form>
 <br/>
 <a href="${ctx}/userinfo/loginpage.do">登录</a>
 <a href="javascript:void(0)" id="lnkLogout">注销</a>
 <br/>
+<br/>
+<a href="${ctx}/index.do">跳转</a>
+<a href="${ctx}/userinfo/loginindex.do" target="_blank">分页查询</a>
+<a href="javascript:void(0)" id="lnkTestPromise">测试promise</a>
+<a href="javascript:alert('请在单元测试中查看！')" id="lntAddSolrIndex">solr</a>
+<a href="${ctx}/test/test.do">测试@Value和加载部分页</a>
+<br/>
+<br/>
+<form method="post" action="${ctx}/test/fileupload.do" enctype="multipart/form-data" target="_blank">
+    <input type="text" name="name"/>
+    <input type="text" name="test" value="测试部分页render:${username}"/>
+    <input type="file" name="myfile"/>
+    <button type="submit" name="tj" value="提交">提交</button>
+</form>
 <%@ include file="/commonJs.jsp" %>
 <script>
     $(function () {
@@ -44,7 +47,7 @@
         $('#lnkTestPromise').one('click', function () {
             console.log('click');
             var p1 = $.ajax({
-                url: ctx + '/testP1.do'
+                url: ctx + '/test/testP1.do'
             }).then(function (data) {
                 console.log('testP1');
 
@@ -52,7 +55,7 @@
             });
 
             var p2 = $.ajax({
-                url: ctx + '/redirect.do'
+                url: ctx + '/test/redirect.do'
             }).then(function (data) {
                 console.log('testP2');
 
