@@ -6,15 +6,14 @@ import com.zjy.baseframework.PropertiesHelper;
 import com.zjy.bll.common.BaseTestCase;
 import com.zjy.entities.UserInfo;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -36,7 +35,6 @@ public class IndexControllerTest extends BaseTestCase {
     @Transactional   //标明此方法需使用事务
     @Rollback(false)  //标明使用完此方法后事务不回滚,true时为回滚
     public void testTest1() throws Exception {
-        indexController.test();
         new MongoDbHelper().test();
         PropertiesHelper instance = PropertiesHelper.getInstance();
         logger.info("db.url:" + instance.getProperties("db.url"));

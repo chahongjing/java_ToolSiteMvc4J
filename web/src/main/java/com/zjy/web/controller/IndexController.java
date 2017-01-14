@@ -3,12 +3,17 @@ package com.zjy.web.controller;
 import com.zjy.baseframework.BaseResult;
 import com.zjy.baseframework.DbHelper;
 import com.zjy.baseframework.MongoDbHelper;
+import com.zjy.baseframework.PartialViewHelper;
 import com.zjy.bll.service.UserInfoService;
 import com.zjy.entities.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.data.crossstore.HashMapChangeSet;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +24,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author chahongjing
@@ -37,10 +43,21 @@ public class IndexController {
     @Value("${db.url}")
     private String url;
 
+//    @Autowired
+//    private ResourceBundleMessageSource messageSource;
+
     @RequestMapping("/index.do")
-    public String test() throws Exception {
+    public String test(HttpServletRequest request, HttpServletResponse response) throws Exception {
         logger.info("测试日志方法{}", new Date());
         logger.info("从Properties读取配置信息：" + url);
+
+//        Object[] arg = new Object[] { "Erica", Calendar.getInstance().getTime() };
+//        messageSource.getMessage("username", arg, Locale.CHINA);
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("zjy", "23ab33");
+        String content = PartialViewHelper.renderTest("/index.jsp", request, response, map);
+
         return "OK";
     }
 

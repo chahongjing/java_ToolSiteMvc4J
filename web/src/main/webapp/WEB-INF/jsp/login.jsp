@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
     <head>
         <title>test</title>
         <%@ include  file="/commonCss.jsp" %>
     </head>
     <body>
+    <fmt:message key="username">
+        <fmt:param value="a"/>
+        <fmt:param value="b"/>
+    </fmt:message>
     <form id="loginForm" action="${ctx}/userinfo/login.do" method="post">
         <input type="hidden" id="redirectUrl" value="<c:out value="${redirectUrl}"/>" />
         <input type="text" name="userCode" value="admin"/>
