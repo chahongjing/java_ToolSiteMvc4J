@@ -15,6 +15,6 @@
         </property>
     </bean>
     <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
-        <property name="defaultLocale" value="zh_CN"></property>
+        <!--<property name="defaultLocale" value="en_US"></property>-->
     </bean>
 </beans>
