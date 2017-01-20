@@ -90,6 +90,9 @@ public class UserInfoController {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("list");
 
+        UserInfo b = new UserInfo();
+        b.setUserCode("b");
+        List<UserInfo> test = userInfoService.test("a", b);
         List<UserInfo> list = userInfoService.query(new UserInfo());
 
         UserInfoRequest request = new UserInfoRequest();

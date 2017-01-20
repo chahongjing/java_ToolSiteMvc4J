@@ -24,4 +24,9 @@
 		select userguid,userName,userCode,[password] from UserInfo
 		where 2 = 2
 	</select>
+	<select id="test" resultType="com.zjy.entities.UserInfo">
+		select userguid,userName,userCode,[password] from UserInfo
+		where 'a' = #{a}
+		  and 'b' = #{b.userCode}
+	</select>
 </mapper>

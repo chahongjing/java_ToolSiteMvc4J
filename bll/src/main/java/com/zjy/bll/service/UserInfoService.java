@@ -23,4 +23,6 @@ public interface UserInfoService {
     int delete(String id);
 
     void testtr();
+
+    List<UserInfo> test(String aa, UserInfo bb);
 }

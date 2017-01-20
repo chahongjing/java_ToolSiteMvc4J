@@ -81,4 +81,9 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
         int a = 1 / 0;
         dao.delete("D8E6B877-3645-4063-A25C-495606B95349");
     }
+
+    @Override
+    public List<UserInfo> test(String aa, UserInfo bb) {
+        return dao.test(aa, bb);
+    }
 }
