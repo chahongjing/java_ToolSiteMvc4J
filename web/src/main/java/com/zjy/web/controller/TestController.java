@@ -9,8 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +23,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author chahongjing
@@ -82,6 +85,7 @@ public class TestController {
 
     @RequestMapping("/fileupload.do")
     public ModelAndView fileUpload(MultipartHttpServletRequest request) {
+        // @RequestParam("myfile") List<CommonsMultipartFile> myfile
         ModelAndView mv = new ModelAndView();
         mv.setViewName("OK");
         Path path = Paths.get(request.getSession().getServletContext().getRealPath(File.separator), "upload");
@@ -89,7 +93,7 @@ public class TestController {
         if (!dir.exists()) {
             dir.mkdir();
         }
-        for(MultipartFile file: request.getFileMap().values()) {
+        for(MultipartFile file: request.getFiles("myfile")) {
             try {
                 file.transferTo(Paths.get(path.toString(), file.getOriginalFilename()).toFile());
             } catch (IOException e) {

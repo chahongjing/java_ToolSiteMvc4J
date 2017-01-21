@@ -28,7 +28,7 @@
 <form method="post" action="${ctx}/test/fileupload.do" enctype="multipart/form-data" target="_blank">
     <input type="text" name="name"/>
     <input type="text" name="test" value="测试部分页render:${username}"/>
-    <input type="file" name="myfile"/>
+    <input type="file" name="myfile" multiple="multiple" />
     <button type="submit" name="tj" value="提交">提交</button>
 </form>
 <%@ include file="/commonJs.jsp" %>
