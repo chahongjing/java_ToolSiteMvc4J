@@ -30,7 +30,9 @@
     <input type="text" name="test" value="测试部分页render:${username}"/>
     <input type="file" name="myfile" multiple="multiple" />
     <button type="submit" name="tj" value="提交">提交</button>
+    <button type="button" name="ajaxtj" value="提交">ajax提交</button>
 </form>
+<br />
 <%@ include file="/commonJs.jsp" %>
 <script>
     $(function () {
@@ -67,7 +69,25 @@
             });
         });
 
+        $('button[name=ajaxtj]').click(function() {
+            var formData = new FormData();
+            var files = $('input[name=myfile]')[0].files;
+            formData.append("name", "zjy");
+            for(var i = 0; i < files.length; i++) {
+                formData.append("myfile", files[i]);
+            }
 
+            $.ajax({
+                url: ctx + '/test/fileupload.do',
+                type: 'post',
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function(resp) {
+
+                }
+            });
+        });
     });
 </script>
 </body>
