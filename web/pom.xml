@@ -153,6 +153,7 @@
             </properties>
         </profile>
     </profiles>
+
     <build>
         <finalName>web</finalName>
         <resources>
