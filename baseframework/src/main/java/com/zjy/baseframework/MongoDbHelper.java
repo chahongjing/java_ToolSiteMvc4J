@@ -17,7 +17,7 @@ public class MongoDbHelper {
         SimpleMongoDbFactory mongoDb = SpringContextHolder.getBean("mongoDbFactory");
         DB test = mongoDb.getDb("test");
 
-        MongoCollection<Document> user = (MongoCollection<Document>)test.getCollection("user");
+        //MongoCollection<Document> user = (MongoCollection<Document>)test.getCollection("user");
 //        List<MongoCredential> credentialList = new ArrayList<MongoCredential>();
 //        MongoCredential credential = MongoCredential.createCredential("root", "test", "root".toCharArray());
 //        credentialList.add(credential);
@@ -30,9 +30,9 @@ public class MongoDbHelper {
 //        MongoClientURI connectionString = new MongoClientURI("mongodb://localhost:27017,localhost:27018,localhost:27019");
 //        MongoClient mongoClient = new MongoClient(connectionString);
 
-        MongoDatabase database = mongoClient.getDatabase("test");
-        MongoCollection<Document> users = database.getCollection("user");
-        // Document user = users.find().first();
+        MongoDatabase database = mongoClient.getDatabase("testdb");
+        MongoCollection<Document> users = database.getCollection("testcollection");
+        Document user = users.find().first();
 
         mongoClient.close();
     }

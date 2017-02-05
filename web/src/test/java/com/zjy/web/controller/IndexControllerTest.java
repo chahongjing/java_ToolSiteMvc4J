@@ -84,7 +84,7 @@ public class IndexControllerTest extends BaseTestCase {
         user.setSex(true);
         user.setBirthday(new Date());
         user.setIsSystem(true);
-        //mongoTemplate.insert(user, "testcollection");
+        mongoTemplate.insert(user, "testcollection");
         List<UserInfo> list = get(UserInfo.class);
     }
 

@@ -80,7 +80,7 @@ public class UserInfoController {
 
         BaseResult<String> re = BaseResult.OK();
         re.setMessage("注销成功！");
-        System.out.println(re);
+        logger.info("注销{}", re);
         return new ResponseEntity<>(re, HttpStatus.OK);
     }
     //endregion
