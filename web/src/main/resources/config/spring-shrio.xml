@@ -37,6 +37,7 @@
                 /userinfo/logout**=anon
                 /js/**=anon
                 /css/**=anon
+                /test/**=anon
                 /ToolSiteMVC/TestMvc/**=authc
                 /admin/listUser**=authc,perms[admin:manage]
                 /**=authc

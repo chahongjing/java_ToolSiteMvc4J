@@ -39,6 +39,7 @@
         <sqlserver.version>4.0</sqlserver.version>
         <mysql.version>6.0.5</mysql.version>
         <junit.version>4.11</junit.version>
+        <httpclient.version>3.1</httpclient.version>
         <!--<hibernate.version>5.2.3.Final</hibernate.version>-->
     </properties>
 
@@ -257,6 +258,12 @@
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql.version}</version>
+            </dependency>
+            <!-- httpclient -->
+            <dependency>
+                <groupId>commons-httpclient</groupId>
+                <artifactId>commons-httpclient</artifactId>
+                <version>${httpclient.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
