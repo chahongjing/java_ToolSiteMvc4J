@@ -17,6 +17,12 @@ import org.apache.commons.httpclient.methods.multipart.StringPart;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.httpclient.util.URIUtil;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -169,5 +175,28 @@ public class HttpHelper {
             method.releaseConnection();
         }
         return response.toString();
+    }
+
+    public static Object get(Class<?> clazz) {
+        Client client = ClientBuilder.newClient();
+        //Client client = ClientBuilder.newClient().register(JacksonJsonProvider.class).register(MultiPartFeature.class);// 注册json 支持
+        String path = "http://localhost:8080/api/rest";
+        WebTarget target = client.target(path + "/hello/returnentity");
+        Response response = target.request(MediaType.APPLICATION_JSON).get();
+        Object user = response.readEntity(clazz);
+        response.close();
+        return user;
+    }
+
+    public static Object post(Class<?> clazz) {
+        Client client = ClientBuilder.newClient();
+        //Client client = ClientBuilder.newClient().register(JacksonJsonProvider.class).register(MultiPartFeature.class);// 注册json 支持
+        String path = "http://localhost:8080/api/rest";
+        WebTarget target = client.target(path + "/hello/returnentity");
+        Entity<Object> entity = Entity.entity(new Object(), MediaType.APPLICATION_JSON);
+        Response response = target.request(MediaType.APPLICATION_JSON).post(entity);
+        Object user = response.readEntity(clazz);
+        response.close();
+        return user;
     }
 }

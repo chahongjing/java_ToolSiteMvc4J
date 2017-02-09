@@ -40,6 +40,7 @@
         <mysql.version>6.0.5</mysql.version>
         <junit.version>4.11</junit.version>
         <httpclient.version>3.1</httpclient.version>
+        <ws.rs.version>2.0.1</ws.rs.version>
         <!--<hibernate.version>5.2.3.Final</hibernate.version>-->
     </properties>
 
@@ -264,6 +265,12 @@
                 <groupId>commons-httpclient</groupId>
                 <artifactId>commons-httpclient</artifactId>
                 <version>${httpclient.version}</version>
+            </dependency>
+            <!-- ws/rs -->
+            <dependency>
+                <groupId>javax.ws.rs</groupId>
+                <artifactId>javax.ws.rs-api</artifactId>
+                <version>${ws.rs.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
