@@ -8,6 +8,21 @@
             font-family: arial;
             font-weight: 500;
         }
+        .next{display:inline-block;width:100px;height:46px;background-color:#D0DCED;margin:0;padding:0;border:0;float:left;position:relative;}
+        .next:before{
+            position:absolute;top:0px;right:-25px;
+            z-index: 1;
+            content:'';border:23px solid black;border-right:none;
+            border-color: transparent transparent transparent white;
+        }
+        .next:after{
+            position:absolute;top:0;right:-23px;
+            z-index: 1;
+            content:'';border:23px solid white;border-right:none;
+            border-color: transparent transparent transparent #D0DCED;
+        }
+        .pro:last-child{border:1px solid black;}
+        .pro span:last-child:before,.pro span:last-child:after{display:none;}
     </style>
 </head>
 <body>
@@ -32,6 +47,14 @@
     <button type="submit" name="tj" value="提交">提交</button>
     <button type="button" name="ajaxtj" value="提交">ajax提交</button>
 </form>
+<br />
+<br />
+<div class="pro">
+<span class="next"></span>
+<span class="next"></span>
+<span class="next"></span>
+<span class="next"></span>
+</div>
 <br />
 <%@ include file="/commonJs.jsp" %>
 <script>
