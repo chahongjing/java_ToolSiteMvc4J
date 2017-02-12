@@ -20,7 +20,7 @@ public class BaseService<Dao extends BaseDao<T>, T> {
     @Autowired
     protected Dao dao;
 
-    Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public T get(String id) {
         logger.info("调用get方法:id: {}", id);
