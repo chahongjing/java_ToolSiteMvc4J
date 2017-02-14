@@ -1,5 +1,6 @@
 package com.zjy.web.controller;
 
+import com.zjy.baseframework.ZipHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,8 @@ public class IndexController {
 
     @RequestMapping("/index.do")
     public String test(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        ZipHelper.zip("D:\\a.xml");
+        ZipHelper.zip("D:\\a.zip", "D:\\a\\b\\c");
         return "OK";
     }
 }

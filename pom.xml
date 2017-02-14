@@ -41,6 +41,7 @@
         <junit.version>4.11</junit.version>
         <httpclient.version>3.1</httpclient.version>
         <ws.rs.version>2.0.1</ws.rs.version>
+        <zip.version>1.3.2</zip.version>
         <!--<hibernate.version>5.2.3.Final</hibernate.version>-->
     </properties>
 
@@ -272,6 +273,13 @@
                 <artifactId>javax.ws.rs-api</artifactId>
                 <version>${ws.rs.version}</version>
             </dependency>
+            <!-- zip -->
+            <dependency>
+                <groupId>net.lingala.zip4j</groupId>
+                <artifactId>zip4j</artifactId>
+                <version>${zip.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
     <build>
