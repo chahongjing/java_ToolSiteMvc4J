@@ -1,13 +1,6 @@
 package com.zjy.baseframework;
 
-import java.io.*;
-import java.nio.charset.Charset;
-import java.util.*;
-
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.URIException;
+import org.apache.commons.httpclient.*;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.multipart.FilePart;
@@ -21,12 +14,14 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -42,7 +37,7 @@ public class HttpHelper {
      * @return
      */
     public static String doGet(String url, String queryString) {
-        return doGet(url, queryString, Charset.forName("UTF-8"));
+        return doGet(url, queryString, StandardCharsets.UTF_8);
     }
 
     /**
@@ -62,6 +57,19 @@ public class HttpHelper {
                 method.setQueryString(URIUtil.encodeQuery(queryString));
             client.executeMethod(method);
             if (method.getStatusCode() == HttpStatus.SC_OK) {
+                Header contentHead = method.getResponseHeader(HttpHeaders.CONTENT_DISPOSITION);
+                //开始解析文件头信息，这里使用的是HeaderElement对象作为文件头的基础信息
+                HeaderElement[] elements = contentHead.getElements();
+                String filerName = null;
+                for (HeaderElement el : elements) {
+                    //遍历，获取filename。filename信息对应的就是下载文件的文件名称。
+                    NameValuePair pair = el.getParameterByName("filename");
+                    if (pair != null) {
+                        System.out.println(pair.getName() + ":" + pair.getValue());
+                        filerName = pair.getValue();
+                    }
+                }
+
                 BufferedReader reader = new BufferedReader(new InputStreamReader(method.getResponseBodyAsStream(), charset));
                 String line;
                 while ((line = reader.readLine()) != null) {
@@ -80,12 +88,12 @@ public class HttpHelper {
     /**
      * 发送post请求
      *
-     * @param url     请求地址
-     * @param params  请求参数
+     * @param url    请求地址
+     * @param params 请求参数
      * @return
      */
     public static String doPost(String url, Map<String, String> params) {
-        return doPost(url, params, Charset.forName("UTF-8"));
+        return doPost(url, params, StandardCharsets.UTF_8);
     }
 
     /**
@@ -109,7 +117,7 @@ public class HttpHelper {
      * @return
      */
     public static String doPost(String url, Map<String, String> params, Map<String, String> fileList) {
-        return doPost(url, params, fileList, Charset.forName("UTF-8"));
+        return doPost(url, params, fileList, StandardCharsets.UTF_8);
     }
 
     /**

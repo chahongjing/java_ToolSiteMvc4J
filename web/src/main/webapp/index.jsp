@@ -49,6 +49,9 @@
 </form>
 <br />
 <br />
+<a href="${ctx}/test/download.do">下载</a>
+<br />
+<br />
 <div class="pro">
 <span class="next"></span>
 <span class="next"></span>

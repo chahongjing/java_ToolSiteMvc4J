@@ -17,41 +17,76 @@ import java.util.List;
  */
 public class ZipHelper {
 
+    /**
+     * 压缩文件
+     * @param file 文件路径
+     * @return
+     */
     public static String zip(String file) {
         File f = new File(file);
         String prefix = f.getName().substring(f.getName().lastIndexOf("."));
-        String outputPath = "";
+        String outputPath = file;
         if (prefix != null)
-            outputPath = file.replace(prefix, "") + ".zip";
+            outputPath = outputPath.replace(prefix, "") + ".zip";
 
         return zip(file, outputPath);
     }
 
+    /**
+     * 压缩文件
+     * @param file 文件路径
+     * @param zipFilePath 压缩文件存放地址
+     * @return
+     */
     public static String zip(String file, String zipFilePath) {
         return zip(file, zipFilePath, null);
     }
 
+    /**
+     * 压缩文件
+     * @param file 文件路径
+     * @param zipFilePath 压缩文件存放地址
+     * @param password 密码
+     * @return
+     */
     public static String zip(String file, String zipFilePath, String password) {
         return zip(new String[]{file}, zipFilePath, password);
     }
 
+    /**
+     * 压缩文件
+     * @param files 文件路径列表
+     * @param zipFilePath 压缩文件存放地址
+     * @return
+     */
     public static String zip(String[] files, String zipFilePath) {
         return zip(files, zipFilePath, null);
     }
 
+    /**
+     * 压缩文件
+     * @param files 文件路径列表
+     * @param zipFilePath 压缩文件存放地址
+     * @param password 密码
+     * @return
+     */
     public static String zip(String[] files, String zipFilePath, String password) {
         ZipParameters parameters = new ZipParameters();
         // 压缩方式
         parameters.setCompressionMethod(Zip4jConstants.COMP_DEFLATE);
         // 压缩级别
         parameters.setCompressionLevel(Zip4jConstants.DEFLATE_LEVEL_NORMAL);
-        if (!(password == null && password == "")) {
+        if (!(password == null || password == "")) {
             parameters.setEncryptFiles(true);
             // 加密方式
             parameters.setEncryptionMethod(Zip4jConstants.ENC_METHOD_STANDARD);
             parameters.setPassword(password.toCharArray());
         }
         try {
+            File dest = new File(zipFilePath);
+            if(!dest.getParentFile().exists()) {
+                dest.getParentFile().mkdirs();
+            }
             ZipFile zipFile = new ZipFile(zipFilePath);
             for (String item : files) {
                 File file = new File(item);
@@ -70,16 +105,32 @@ public class ZipHelper {
         return null;
     }
 
-
+    /**
+     * 解压文件
+     * @param zipPath 压缩文件路径
+     */
     public static void unzip(String zipPath) {
         File file = new File(zipPath);
         unzip(zipPath, file.getParent().toString());
     }
 
+    /**
+     * 解压文件
+     * @param zipPath 压缩文件路径
+     * @param outputPath 解压目录
+     * @return
+     */
     public static File[] unzip(String zipPath, String outputPath) {
         return unzip(zipPath, outputPath, null);
     }
 
+    /**
+     * 解压文件
+     * @param zipPath 压缩文件路径
+     * @param outputPath 解压目录
+     * @param password 密码
+     * @return
+     */
     public static File[] unzip(String zipPath, String outputPath, String password) {
         try {
             ZipFile zipFile = new ZipFile(zipPath);
@@ -111,10 +162,16 @@ public class ZipHelper {
         return new File[0];
     }
 
-    void removeDirFromZipArchive(String file, String removeDir) throws ZipException {
+    /**
+     * 从压缩文件中删除指定的目录
+     * @param file 压缩文件路径
+     * @param removeDir 要删除的目录，如a/b/
+     * @throws ZipException
+     */
+    public static void removeZipDir(String file, String removeDir) throws ZipException {
         // 创建ZipFile并设置编码
         ZipFile zipFile = new ZipFile(file);
-        zipFile.setFileNameCharset("GBK");
+        zipFile.setFileNameCharset("UTF-8");
 
         // 给要删除的目录加上路径分隔符
         if (!removeDir.endsWith(File.separator)) removeDir += File.separator;
@@ -125,7 +182,7 @@ public class ZipHelper {
 
         // 遍历压缩文件中所有的FileHeader, 将指定删除目录下的子文件名保存起来
         List headersList = zipFile.getFileHeaders();
-        List<String> removeHeaderNames = new ArrayList<String>();
+        List<String> removeHeaderNames = new ArrayList<>();
         for (int i = 0, len = headersList.size(); i < len; i++) {
             FileHeader subHeader = (FileHeader) headersList.get(i);
             if (subHeader.getFileName().startsWith(dirHeader.getFileName())
