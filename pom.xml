@@ -43,6 +43,7 @@
         <httpclientnew.version>4.5.3</httpclientnew.version>
         <ws.rs.version>2.0.1</ws.rs.version>
         <zip.version>1.3.2</zip.version>
+        <commons.lang.version>3.5</commons.lang.version>
         <!--<hibernate.version>5.2.3.Final</hibernate.version>-->
     </properties>
 
@@ -134,6 +135,13 @@
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
             </dependency>
+            <!-- commons-lang3 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons.lang.version}</version>
+            </dependency>
+
             <!-- 文件上传 -->
             <dependency>
                 <groupId>commons-fileupload</groupId>

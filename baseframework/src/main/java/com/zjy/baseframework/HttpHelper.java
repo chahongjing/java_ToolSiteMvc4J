@@ -9,10 +9,13 @@ import org.apache.commons.httpclient.methods.multipart.Part;
 import org.apache.commons.httpclient.methods.multipart.StringPart;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.httpclient.util.URIUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
@@ -31,6 +34,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.*;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -45,12 +49,51 @@ public class HttpHelper {
     /**
      * 发送get请求
      *
-     * @param url         请求地址
-     * @param queryString 查询参数
+     * @param url    请求地址
+     * @param params 查询参数
      * @return
      */
-    public static String doGet(String url, String queryString) {
-        return doGet(url, queryString, StandardCharsets.UTF_8);
+    public static String doGet(String url, Map<String, String> params) {
+        return doGet(url, params, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * 发送get请求
+     *
+     * @param url     请求地址
+     * @param params  查询参数
+     * @param charset 字符集
+     * @return
+     */
+    public static String doGet(String url, Map<String, String> params, Charset charset) {
+        try (CloseableHttpClient client = HttpClients.createDefault()) {
+
+            if (params != null && !params.isEmpty()) {
+                List<String> list = new ArrayList<>();
+                for (Map.Entry<String, String> entry : params.entrySet()) {
+                    list.add(URLEncoder.encode(entry.getKey(), charset.displayName()) + "=" + URLEncoder.encode(entry.getValue(), charset.displayName()));
+                }
+                url += url.indexOf("?") > -1 ? "&" : "?";
+                url += StringUtils.join(list, "&");
+            }
+            HttpGet httpGet = new HttpGet(url);
+            CloseableHttpResponse response = client.execute(httpGet);
+            // 服务器返回码
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpStatus.SC_OK || statusCode == HttpStatus.SC_NOT_MODIFIED) {
+                // 服务器返回内容
+                HttpEntity respEntity = response.getEntity();
+                String respStr = EntityUtils.toString(respEntity, charset);
+                respStr = URLDecoder.decode(respStr, charset.displayName());
+                // 释放资源
+                EntityUtils.consume(respEntity);
+                return respStr;
+            } else {
+                return "失败！";
+            }
+        } catch (IOException ex) {
+            return "异常，请稍后重试！";
+        }
     }
 
     /**
@@ -61,7 +104,7 @@ public class HttpHelper {
      * @param charset     字符集
      * @return
      */
-    public static String doGet(String url, String queryString, Charset charset) {
+    public static String doGetOld(String url, String queryString, Charset charset) {
         StringBuffer response = new StringBuffer();
         HttpClient client = new HttpClient();
         HttpMethod method = new GetMethod(url);
@@ -142,7 +185,7 @@ public class HttpHelper {
      * @param charset  字符集
      * @return
      */
-    public static String doPost(String url, Map<String, String> params, Map<String, String> fileList, Charset charset) {
+    public static String doPostOld(String url, Map<String, String> params, Map<String, String> fileList, Charset charset) {
         StringBuffer response = new StringBuffer();
         HttpClient client = new HttpClient();
         PostMethod method = new PostMethod(url);
@@ -198,41 +241,50 @@ public class HttpHelper {
         return response.toString();
     }
 
-    public static String doPostNew() {
+    public static String doPost(String url, Map<String, String> params, Map<String, String> fileList, Charset charset) {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
-            HttpPost httpPost = new HttpPost("");
-            FileBody fileBody = new FileBody(new File(""));
-            HttpEntity entity = MultipartEntityBuilder.create()
-                    .addPart("file", fileBody)
-                    .addTextBody("files", "", ContentType.TEXT_PLAIN.withCharset(StandardCharsets.UTF_8))
-                    .build();
-            httpPost.setEntity(entity);
+            HttpPost httpPost = new HttpPost(url);
+            MultipartEntityBuilder entity = MultipartEntityBuilder.create();
 
-            List<NameValuePair> nvps = new ArrayList <>();
-            nvps.add(new BasicNameValuePair("username", "vip"));
-            nvps.add(new BasicNameValuePair("password", "secret"));
-            // httpPost.setEntity(new UrlEncodedFormEntity(nvps));
-
+            // 文件
+            if (fileList != null && !fileList.isEmpty()) {
+                for (Map.Entry<String, String> entry : fileList.entrySet()) {
+                    entity.addPart(entry.getKey(), new FileBody(new File(entry.getValue())));
+                }
+                if (params != null) {
+                    for (Map.Entry<String, String> entry : params.entrySet()) {
+                        //entity.addPart(entry.getKey(), new StringBody(entry.getValue(), charset));
+                        entity.addTextBody(entry.getKey(), entry.getValue(), ContentType.TEXT_PLAIN.withCharset(charset));
+                    }
+                }
+                httpPost.setEntity(entity.build());
+            } else {
+                // 非文件
+                List<NameValuePair> nvps = new ArrayList<>();
+                if (params != null) {
+                    for (Map.Entry<String, String> entry : params.entrySet()) {
+                        nvps.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
+                    }
+                }
+                httpPost.setEntity(new UrlEncodedFormEntity(nvps, charset));
+            }
             CloseableHttpResponse response = client.execute(httpPost);
             // 服务器返回码
             int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode == HttpStatus.SC_OK || statusCode == HttpStatus.SC_NOT_MODIFIED) {
                 // 服务器返回内容
-                entity = response.getEntity();
-                if (null != entity) {
-                    String respStr = EntityUtils.toString(entity, StandardCharsets.UTF_8);
-                    respStr = URLDecoder.decode(respStr, StandardCharsets.UTF_8.displayName());
-                    // 释放资源
-                    EntityUtils.consume(entity);
-                    return respStr;
-                }
+                HttpEntity respEntity = response.getEntity();
+                String respStr = EntityUtils.toString(respEntity, charset);
+                respStr = URLDecoder.decode(respStr, charset.displayName());
+                // 释放资源
+                EntityUtils.consume(respEntity);
+                return respStr;
             } else {
                 return "失败！";
             }
         } catch (IOException ex) {
             return "异常，请稍后重试！";
         }
-        return "";
     }
 
     public static Object get(Class<?> clazz) {
@@ -258,3 +310,4 @@ public class HttpHelper {
         return user;
     }
 }
+
