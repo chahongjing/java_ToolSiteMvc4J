@@ -40,6 +40,7 @@
         <mysql.version>6.0.5</mysql.version>
         <junit.version>4.11</junit.version>
         <httpclient.version>3.1</httpclient.version>
+        <httpclientnew.version>4.5.3</httpclientnew.version>
         <ws.rs.version>2.0.1</ws.rs.version>
         <zip.version>1.3.2</zip.version>
         <!--<hibernate.version>5.2.3.Final</hibernate.version>-->
@@ -266,6 +267,17 @@
                 <groupId>commons-httpclient</groupId>
                 <artifactId>commons-httpclient</artifactId>
                 <version>${httpclient.version}</version>
+            </dependency>
+            <!-- httpclient -->
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclientnew.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpmime</artifactId>
+                <version>${httpclientnew.version}</version>
             </dependency>
             <!-- ws/rs -->
             <dependency>

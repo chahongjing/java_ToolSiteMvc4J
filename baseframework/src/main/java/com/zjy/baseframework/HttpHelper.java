@@ -9,6 +9,18 @@ import org.apache.commons.httpclient.methods.multipart.Part;
 import org.apache.commons.httpclient.methods.multipart.StringPart;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.httpclient.util.URIUtil;
+import org.apache.http.HttpEntity;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -18,6 +30,7 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.*;
+import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -63,7 +76,7 @@ public class HttpHelper {
                 String filerName = null;
                 for (HeaderElement el : elements) {
                     //遍历，获取filename。filename信息对应的就是下载文件的文件名称。
-                    NameValuePair pair = el.getParameterByName("filename");
+                    org.apache.commons.httpclient.NameValuePair pair = el.getParameterByName("filename");
                     if (pair != null) {
                         System.out.println(pair.getName() + ":" + pair.getValue());
                         filerName = pair.getValue();
@@ -183,6 +196,43 @@ public class HttpHelper {
             method.releaseConnection();
         }
         return response.toString();
+    }
+
+    public static String doPostNew() {
+        try (CloseableHttpClient client = HttpClients.createDefault()) {
+            HttpPost httpPost = new HttpPost("");
+            FileBody fileBody = new FileBody(new File(""));
+            HttpEntity entity = MultipartEntityBuilder.create()
+                    .addPart("file", fileBody)
+                    .addTextBody("files", "", ContentType.TEXT_PLAIN.withCharset(StandardCharsets.UTF_8))
+                    .build();
+            httpPost.setEntity(entity);
+
+            List<NameValuePair> nvps = new ArrayList <>();
+            nvps.add(new BasicNameValuePair("username", "vip"));
+            nvps.add(new BasicNameValuePair("password", "secret"));
+            // httpPost.setEntity(new UrlEncodedFormEntity(nvps));
+
+            CloseableHttpResponse response = client.execute(httpPost);
+            // 服务器返回码
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpStatus.SC_OK || statusCode == HttpStatus.SC_NOT_MODIFIED) {
+                // 服务器返回内容
+                entity = response.getEntity();
+                if (null != entity) {
+                    String respStr = EntityUtils.toString(entity, StandardCharsets.UTF_8);
+                    respStr = URLDecoder.decode(respStr, StandardCharsets.UTF_8.displayName());
+                    // 释放资源
+                    EntityUtils.consume(entity);
+                    return respStr;
+                }
+            } else {
+                return "失败！";
+            }
+        } catch (IOException ex) {
+            return "异常，请稍后重试！";
+        }
+        return "";
     }
 
     public static Object get(Class<?> clazz) {
