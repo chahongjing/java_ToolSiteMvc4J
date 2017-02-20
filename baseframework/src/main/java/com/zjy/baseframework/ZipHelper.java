@@ -7,6 +7,7 @@ import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.util.Zip4jConstants;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -22,12 +23,16 @@ public class ZipHelper {
      * @param file 文件路径
      * @return
      */
-    public static String zip(String file) {
+    public static String zip(String file) throws Exception {
         File f = new File(file);
-        String prefix = f.getName().substring(f.getName().lastIndexOf("."));
         String outputPath = file;
-        if (prefix != null)
-            outputPath = outputPath.replace(prefix, "") + ".zip";
+        if(f.isDirectory()) {
+            outputPath = Paths.get(f.getPath().toString(), f.getName() + ".zip").toString();
+        } else {
+            String prefix = f.getName().substring(f.getName().lastIndexOf("."));
+            if (prefix != null)
+                outputPath = outputPath.replace(prefix, "") + ".zip";
+        }
 
         return zip(file, outputPath);
     }
@@ -38,7 +43,7 @@ public class ZipHelper {
      * @param zipFilePath 压缩文件存放地址
      * @return
      */
-    public static String zip(String file, String zipFilePath) {
+    public static String zip(String file, String zipFilePath) throws Exception {
         return zip(file, zipFilePath, null);
     }
 
@@ -49,7 +54,7 @@ public class ZipHelper {
      * @param password 密码
      * @return
      */
-    public static String zip(String file, String zipFilePath, String password) {
+    public static String zip(String file, String zipFilePath, String password) throws Exception {
         return zip(new String[]{file}, zipFilePath, password);
     }
 
@@ -59,7 +64,7 @@ public class ZipHelper {
      * @param zipFilePath 压缩文件存放地址
      * @return
      */
-    public static String zip(String[] files, String zipFilePath) {
+    public static String zip(String[] files, String zipFilePath) throws Exception {
         return zip(files, zipFilePath, null);
     }
 
@@ -70,7 +75,11 @@ public class ZipHelper {
      * @param password 密码
      * @return
      */
-    public static String zip(String[] files, String zipFilePath, String password) {
+    public static String zip(String[] files, String zipFilePath, String password) throws Exception {
+        File dest = new File(zipFilePath);
+        if(dest.isDirectory()){
+            throw new Exception("目标文件不是有效的压缩文件！");
+        }
         ZipParameters parameters = new ZipParameters();
         // 压缩方式
         parameters.setCompressionMethod(Zip4jConstants.COMP_DEFLATE);
@@ -83,7 +92,6 @@ public class ZipHelper {
             parameters.setPassword(password.toCharArray());
         }
         try {
-            File dest = new File(zipFilePath);
             if(!dest.getParentFile().exists()) {
                 dest.getParentFile().mkdirs();
             }
