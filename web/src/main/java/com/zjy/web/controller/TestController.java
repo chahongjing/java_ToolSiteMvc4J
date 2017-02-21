@@ -1,7 +1,9 @@
 package com.zjy.web.controller;
 
 import com.zjy.baseframework.BaseResult;
+import com.zjy.baseframework.DownloadHelper;
 import com.zjy.baseframework.PartialViewHelper;
+import org.apache.commons.fileupload.FileItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,11 +17,14 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -85,12 +90,21 @@ public class TestController {
     @RequestMapping("/fileupload.do")
     public ModelAndView fileUpload(MultipartHttpServletRequest request) {
         // @RequestParam("myfile") List<CommonsMultipartFile> myfile
+//        try {
+//            for(Part part : request.getParts()) {
+//                //part.write("要保存的文件路径");
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (ServletException e) {
+//            e.printStackTrace();
+//        }
         ModelAndView mv = new ModelAndView();
         mv.setViewName("OK");
-        Path path = Paths.get(request.getSession().getServletContext().getRealPath(File.separator), "upload");
+        Path path = Paths.get(request.getSession().getServletContext().getRealPath(""), "upload");
         File dir = path.toFile();
         if (!dir.exists()) {
-            dir.mkdir();
+            dir.mkdirs();
         }
         for(MultipartFile file: request.getFiles("myfile")) {
             try {
@@ -104,32 +118,8 @@ public class TestController {
 
     @RequestMapping("/download.do")
     public void download(HttpServletResponse response) {
-        try {
-            // path是指欲下载的文件的路径。
-            String path = "d:\\b.txt";
-            File file = new File(path);
-            // 取得文件名。
-            String filename = file.getName();
-            // 取得文件的后缀名。
-            String ext = filename.substring(filename.lastIndexOf(".") + 1).toUpperCase();
-
-            // 以流的形式下载文件。
-            InputStream fis = new BufferedInputStream(new FileInputStream(path));
-            byte[] buffer = new byte[fis.available()];
-            fis.read(buffer);
-            fis.close();
-            // 清空response
-            response.reset();
-            // 设置response的Header
-            response.addHeader("Content-Disposition", "attachment;filename=" + new String(filename.getBytes()));
-            response.addHeader("Content-Length", "" + file.length());
-            OutputStream toClient = new BufferedOutputStream(response.getOutputStream());
-            response.setContentType("application/octet-stream");
-            toClient.write(buffer);
-            toClient.flush();
-            toClient.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        // path是指欲下载的文件的路径。
+        String path = "d:\\b.txt";
+        DownloadHelper.download(path, response);
     }
 }

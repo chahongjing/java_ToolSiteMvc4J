@@ -1,5 +1,6 @@
 package com.zjy.baseframework;
 
+import org.apache.http.entity.ContentType;
 import org.springframework.web.servlet.view.InternalResourceView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 import java.io.CharArrayWriter;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 public class PartialViewHelper {
@@ -19,7 +21,7 @@ public class PartialViewHelper {
 //    }
     public static String renderTest(String viewUrl, HttpServletRequest request, HttpServletResponse response, HashMap data) throws Exception {
         InternalResourceView view = new InternalResourceView(viewUrl, true);
-        view.setContentType("text/html;charset=utf-8");
+        view.setContentType(ContentType.TEXT_PLAIN.withCharset(StandardCharsets.UTF_8).toString());
         ResponseWrapper rw = new PartialViewHelper().new ResponseWrapper(response);
         view.render(data, request, rw);
         return rw.getResult();
