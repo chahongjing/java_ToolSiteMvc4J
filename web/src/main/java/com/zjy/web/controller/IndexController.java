@@ -20,4 +20,7 @@ public class IndexController {
     public String test(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return "OK";
     }
+
+    public static void main(String[] args) {
+    }
 }
