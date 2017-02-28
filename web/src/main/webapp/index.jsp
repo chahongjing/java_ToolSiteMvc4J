@@ -50,7 +50,7 @@
 <br />
 <br />
 <a href="${ctx}/test/download.do">下载</a>
-<a href="${ctx}/echarts/dashboard.do" target="_blank">echarts图表</a>
+<a href="${ctx}/echarts/index.do" target="_blank">echarts图表</a>
 
 <br />
 <br />

@@ -39,8 +39,8 @@ import java.util.stream.IntStream;
 @RequestMapping("/echarts")
 public class EchartsController {
 
-    @RequestMapping("/dashboard.do")
-    public ModelAndView dashBoard(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @RequestMapping("/index.do")
+    public ModelAndView index(HttpServletRequest request, HttpServletResponse response) throws Exception {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("echarts");
 
