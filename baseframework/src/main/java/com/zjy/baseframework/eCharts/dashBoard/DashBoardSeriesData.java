@@ -23,7 +23,7 @@ public class DashBoardSeriesData extends ChartSeriesDataBase {
     /// <param name="value">值</param>
     /// <param name="name">名称</param>
     public DashBoardSeriesData(String value, String name) {
-        super.name = name;
-        super.value = value;
+        super.setName(name);
+        super.setValue(value);
     }
 }

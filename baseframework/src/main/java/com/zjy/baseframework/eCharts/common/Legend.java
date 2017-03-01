@@ -17,21 +17,21 @@ public class Legend
     /// <summary>
     /// 是否显示
     /// </summary>
-    public Boolean show;
+    private Boolean show;
 
     /// <summary>
     /// 源
     /// </summary>
-    public String orient;
+    private String orient;
 
     /// <summary>
     /// 左
     /// </summary>
-    public String left;
+    private String left;
     /// <summary>
     /// 标题数据
     /// </summary>
-    public List<LegendData> data;
+    private List<LegendData> data;
 
     /// <summary>
     /// 构造函数

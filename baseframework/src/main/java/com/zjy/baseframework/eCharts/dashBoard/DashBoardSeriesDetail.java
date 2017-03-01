@@ -11,11 +11,11 @@ public class DashBoardSeriesDetail
     /// <summary>
     /// 格式化器
     /// </summary>
-    public String formatter;
+    private String formatter;
     /// <summary>
     /// 是否显示
     /// </summary>
-    public Boolean show ;
+    private Boolean show ;
 
     public String getFormatter() {
         return formatter;

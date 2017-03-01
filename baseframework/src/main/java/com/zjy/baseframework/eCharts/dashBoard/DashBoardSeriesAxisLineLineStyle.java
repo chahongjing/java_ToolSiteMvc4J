@@ -13,7 +13,7 @@ public class DashBoardSeriesAxisLineLineStyle
     /// <summary>
     /// 每个阶段颜色(比如0-30一个颜色, 30-70一个颜色, 70-100一个颜色)
     /// </summary>
-    public List<List<Object>> color;
+    private List<List<Object>> color;
 
     /// <summary>
     /// 构造函数

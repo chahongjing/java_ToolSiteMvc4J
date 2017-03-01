@@ -3,38 +3,35 @@ package com.zjy.baseframework.eCharts.common;
 import java.util.List;
 
 /**
- * Created by chahongjing on 2017/2/28.
+ * 图表系列
  */
-/// <summary>
-/// 图标系列
-/// </summary>
-public class ChartSeriesBase
-{
-    /// <summary>
-    /// 名称
-    /// </summary>
-    public String name;
-    /// <summary>
-    /// 数据
-    /// </summary>
-    public List<ChartSeriesDataBase> data;
-    /// <summary>
-    /// 类型(line, Gauge)
-    /// </summary>
-    public String type;
+public class ChartSeriesBase {
+    /**
+     * 名称
+     */
+    private String name;
+    /**
+     * 数据
+     */
+    private List<ChartSeriesDataBase> data;
+    /**
+     * 类型(line, Gauge)
+     */
+    private String type;
 
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    public ChartSeriesBase()
-    { this(null);}
+    /**
+     * 构造函数
+     */
+    public ChartSeriesBase() {
+        this(null);
+    }
 
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="name">名称</param>
-    public ChartSeriesBase(String name)
-    {
+    /**
+     * 构造函数
+     *
+     * @param name 名称
+     */
+    public ChartSeriesBase(String name) {
         this.name = name;
     }
 

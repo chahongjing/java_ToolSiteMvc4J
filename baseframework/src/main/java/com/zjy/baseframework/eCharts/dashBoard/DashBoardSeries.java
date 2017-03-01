@@ -18,7 +18,7 @@ public class DashBoardSeries extends ChartSeriesBase {
     /// <summary>
 /// 详情
 /// </summary>
-    public DashBoardSeriesDetail detail;
+    private DashBoardSeriesDetail detail;
 
 /// <summary>
 /// 轴线
@@ -28,7 +28,7 @@ public class DashBoardSeries extends ChartSeriesBase {
     /// <summary>
 /// 轴标
 /// </summary>
-    public AxisLabel axisLabel;
+    private AxisLabel axisLabel;
 
     /// <summary>
 /// 构造函数
@@ -44,10 +44,26 @@ public class DashBoardSeries extends ChartSeriesBase {
 /// <param name="name">名称</param>
 /// <param name="data">数据</param>
     public DashBoardSeries(String name, List<DashBoardSeriesData> data) {
-        type = ChartType.Gauge.toString().toLowerCase();
+        super.setType(ChartType.Gauge.toString().toLowerCase());
         //axisLine = new DashBoardSeriesAxisLine();
         axisLabel = new AxisLabel();
-        super.data = data.stream().map(item -> (ChartSeriesDataBase) item).collect(Collectors.toList());
-        this.name = name;
+        super.setData(data.stream().map(item -> (ChartSeriesDataBase) item).collect(Collectors.toList()));
+        super.setName(name);
+    }
+
+    public DashBoardSeriesDetail getDetail() {
+        return detail;
+    }
+
+    public void setDetail(DashBoardSeriesDetail detail) {
+        this.detail = detail;
+    }
+
+    public AxisLabel getAxisLabel() {
+        return axisLabel;
+    }
+
+    public void setAxisLabel(AxisLabel axisLabel) {
+        this.axisLabel = axisLabel;
     }
 }

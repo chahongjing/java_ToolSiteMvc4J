@@ -16,47 +16,47 @@ public class XAxis
     /// <summary>
     /// 标题
     /// </summary>
-    public String name;
+    private String name;
 
     /// <summary>
     /// 类型
     /// </summary>
-    public String type;
+    private String type;
 
     /// <summary>
     /// 坐标轴两边留白策略
     /// </summary>
-    public Boolean boundaryGap;
+    private Boolean boundaryGap;
 
     /// <summary>
     /// 数据
     /// </summary>
-    public List<String> data;
+    private List<String> data;
 
     /// <summary>
     /// 轴标信息
     /// </summary>
-    public AxisLabel axisLabel;
+    private AxisLabel axisLabel;
 
     /// <summary>
     /// 刻度
     /// </summary>
-    public AxisTick axisTick;
+    private AxisTick axisTick;
 
     /// <summary>
     /// 标题间隔
     /// </summary>
-    public int nameGap;
+    private int nameGap;
 
     /// <summary>
     /// 标题旋转
     /// </summary>
-    public int nameRotate;
+    private int nameRotate;
 
     /// <summary>
     /// 标题位置
     /// </summary>
-    public String nameLocation;
+    private String nameLocation;
 
     /// <summary>
     /// 构造函数

@@ -15,7 +15,7 @@ public class Histogram extends EChartsBase {
     /// <summary>
 /// 颜色
 /// </summary>
-    public List<String> color;
+    private List<String> color;
 
     /// <summary>
 /// 构造函数
@@ -41,7 +41,7 @@ public class Histogram extends EChartsBase {
     public Histogram(ChartTitle title, List<ChartSeriesBase> series, ChartToolTip tooltip) {
         super(title, series, tooltip);
         color = EChartsBase.Colors;
-        grid = new Grid();
+        super.setGrid(new Grid());
     }
 
     public List<String> getColor() {

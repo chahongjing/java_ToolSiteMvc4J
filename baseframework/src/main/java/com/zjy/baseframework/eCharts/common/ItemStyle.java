@@ -11,8 +11,8 @@ public class ItemStyle
     /// <summary>
     /// 常规
     /// </summary>
-    public ItemStyleNormal normal;
-    public Emphasis emphasis;
+    private ItemStyleNormal normal;
+    private Emphasis emphasis;
 
     public ItemStyleNormal getNormal() {
         return normal;

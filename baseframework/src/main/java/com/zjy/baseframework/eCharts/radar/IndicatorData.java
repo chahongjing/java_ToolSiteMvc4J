@@ -11,12 +11,12 @@ public class IndicatorData
     /// <summary>
     /// 名称
     /// </summary>
-    public String name;
+    private String name;
 
     /// <summary>
     /// 最大值
     /// </summary>
-    public float max ;
+    private float max ;
 
     /// <summary>
     /// 构造函数

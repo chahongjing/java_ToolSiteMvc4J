@@ -36,9 +36,9 @@ public class LineChartSeries extends ChartSeriesBase {
 /// <param name="name">拆线名称</param>
 /// <param name="data">值</param>
     public LineChartSeries(String name, List<LineChartSeriesData> data) {
-        super.name = name;
-        super.data = data.stream().map(item -> (ChartSeriesDataBase) item).collect(Collectors.toList());
-        super.type = ChartType.Line.toString().toLowerCase();
+        super.setName(name);
+        super.setData(data.stream().map(item -> (ChartSeriesDataBase) item).collect(Collectors.toList()));
+        super.setType(ChartType.Line.toString().toLowerCase());
     }
 
 }

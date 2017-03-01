@@ -38,8 +38,8 @@ public class RadarSeries extends ChartSeriesBase {
 /// <param name="name">名称</param>
 /// <param name="data">数据</param>
     public RadarSeries(String name, List<RadarSeriesData> data) {
-        super.name = name;
-        super.data = data.stream().map(item -> (ChartSeriesDataBase) item).collect(Collectors.toList());
-        super.type = ChartType.Radar.toString().toLowerCase();
+        super.setName(name);
+        super.setData(data.stream().map(item -> (ChartSeriesDataBase) item).collect(Collectors.toList()));
+        super.setType(ChartType.Radar.toString().toLowerCase());
     }
 }

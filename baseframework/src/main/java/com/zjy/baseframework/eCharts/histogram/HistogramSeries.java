@@ -17,7 +17,7 @@ public class HistogramSeries extends ChartSeriesBase {
     /// <summary>
 /// 宽度
 /// </summary>
-    public String barWidth;
+    private String barWidth;
 
     /// <summary>
 /// 构造函数
@@ -40,9 +40,9 @@ public class HistogramSeries extends ChartSeriesBase {
 /// <param name="name">名称</param>
 /// <param name="data">值</param>
     public HistogramSeries(String name, List<HistogramSeriesData> data) {
-        super.name = name;
-        super.data = data.stream().map(item -> (ChartSeriesDataBase) item).collect(Collectors.toList());
-        super.type = ChartType.Bar.toString().toLowerCase();
+        super.setName(name);
+        super.setData(data.stream().map(item -> (ChartSeriesDataBase) item).collect(Collectors.toList()));
+        super.setType(ChartType.Bar.toString().toLowerCase());
     }
 
     public String getBarWidth() {

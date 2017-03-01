@@ -12,16 +12,16 @@ public class ChartSeriesDataBase
     /// <summary>
     /// 名称
     /// </summary>
-    public String name;
+    private String name;
     /// <summary>
     /// 值
     /// </summary>
-    public Object value;
+    private Object value;
 
     /// <summary>
     /// 指针,标识颜色
     /// </summary>
-    public ItemStyle itemStyle;
+    private ItemStyle itemStyle;
 
     /// <summary>
     /// 构造函数

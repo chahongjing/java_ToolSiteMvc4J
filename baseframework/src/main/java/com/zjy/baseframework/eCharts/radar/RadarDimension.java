@@ -14,7 +14,7 @@ public class RadarDimension
     /// <summary>
     /// 维度信息
     /// </summary>
-    public List<IndicatorData> indicator;
+    private List<IndicatorData> indicator;
 
     /// <summary>
     /// 构造函数

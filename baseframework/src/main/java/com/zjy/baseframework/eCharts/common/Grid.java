@@ -11,25 +11,25 @@ public class Grid
     /// <summary>
     /// 左边距
     /// </summary>
-    public String left;
+    private String left;
 
     /// <summary>
     /// 右边距
     /// </summary>
-    public String right;
+    private String right;
     /// <summary>
     /// 上边距
     /// </summary>
-    public String top;
+    private String top;
     /// <summary>
     /// 下边距
     /// </summary>
-    public String bottom;
+    private String bottom;
 
     /// <summary>
     /// 是否包含标签
     /// </summary>
-    public Boolean containLabel;
+    private Boolean containLabel;
 
     /// <summary>
     /// 构造函数

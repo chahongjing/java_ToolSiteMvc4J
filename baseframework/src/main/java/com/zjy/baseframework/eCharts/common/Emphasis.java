@@ -11,17 +11,17 @@ public class Emphasis
     /// <summary>
     /// 图形阴影的模糊大小
     /// </summary>
-    public int shadowBlur;
+    private int shadowBlur;
 
     /// <summary>
     /// 阴影水平方向上的偏移距离。
     /// </summary>
-    public int shadowOffsetX;
+    private int shadowOffsetX;
 
     /// <summary>
     /// 阴影颜色
     /// </summary>
-    public String shadowColor;
+    private String shadowColor;
 
     public int getShadowBlur() {
         return shadowBlur;

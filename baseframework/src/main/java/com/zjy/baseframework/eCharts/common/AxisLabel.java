@@ -1,38 +1,37 @@
 package com.zjy.baseframework.eCharts.common;
 
 /**
- * Created by Administrator on 2017/2/28.
+ * 轴标信息
  */
-/// <summary>
-/// 轴标信息
-/// </summary>
 public class AxisLabel {
-    /// <summary>
-    /// 格式化器
-    /// </summary>
-    public String formatter;
+    /**
+     * 格式化器
+     */
+    private String formatter;
 
-    /// <summary>
-    /// 旋转角度
-    /// </summary>
-    public int rotate;
+    /**
+     * 旋转角度
+     */
+    private int rotate;
 
-    /// <summary>
-    /// 每个刻度间隔
-    /// </summary>
-    public int interval;
+    /**
+     * 每个刻度间隔
+     */
+    private int interval;
 
-    /// <summary>
-    /// 构造函数
-    /// </summary>
+    /**
+     * 构造函数
+     */
     public AxisLabel() {
         this(null);
     }
 
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="formatter">格式化器</param>
+
+    /**
+     * 构造函数
+     *
+     * @param formatter 格式化器
+     */
     public AxisLabel(String formatter) {
         this.formatter = formatter;
         interval = 0;

@@ -11,7 +11,7 @@ public class DashBoardSeriesAxisLine
     /// <summary>
     /// 仪表盘指针样式
     /// </summary>
-    public DashBoardSeriesAxisLineLineStyle lineStyle;
+    private DashBoardSeriesAxisLineLineStyle lineStyle;
 
     /// <summary>
     /// 构造函数

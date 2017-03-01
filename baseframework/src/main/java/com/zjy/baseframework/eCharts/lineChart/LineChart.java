@@ -35,6 +35,6 @@ public class LineChart extends EChartsBase {
 /// <param name="tooltip">鼠标hover提示</param>
     public LineChart(ChartTitle title, List<ChartSeriesBase> series, ChartToolTip tooltip) {
         super(title, series, tooltip);
-        super.grid = new Grid();
+        super.setGrid(new Grid());
     }
 }

@@ -11,17 +11,17 @@ public class LegendData
     /// <summary>
     /// 名称
     /// </summary>
-    public String name;
+    private String name;
 
     /// <summary>
     /// 图标
     /// </summary>
-    public String icon;
+    private String icon;
 
     /// <summary>
     /// 样式
     /// </summary>
-    public Object textStyle;
+    private Object textStyle;
 
     /// <summary>
     /// 构造函数

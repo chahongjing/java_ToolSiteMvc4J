@@ -36,37 +36,37 @@ import java.util.List;
         /// <summary>
         /// 图表标题
         /// </summary>
-        public ChartTitle title;
+        private ChartTitle title;
 
         /// <summary>
         /// 鼠标悬浮提示
         /// </summary>
-        public ChartToolTip tooltip;
+        private ChartToolTip tooltip;
 
         /// <summary>
         /// 标题
         /// </summary>
-        public Legend legend;
+        private Legend legend;
 
         /// <summary>
         /// 网格
         /// </summary>
-        public Grid grid;
+        private Grid grid;
 
         /// <summary>
         /// 数据
         /// </summary>
-        public List<ChartSeriesBase> series;
+        private List<ChartSeriesBase> series;
 
         /// <summary>
         /// x轴
         /// </summary>
-        public List<XAxis> xAxis;
+        private List<XAxis> xAxis;
 
         /// <summary>
         /// y轴
         /// </summary>
-        public List<YAxis> yAxis;
+        private List<YAxis> yAxis;
 
         /// <summary>
         /// 构造函数
@@ -100,4 +100,68 @@ import java.util.List;
     {
         return JSON.toJSONString(this);
     }
-}
+
+        public static List<String> getColors() {
+            return Colors;
+        }
+
+        public static void setColors(List<String> colors) {
+            Colors = colors;
+        }
+
+        public ChartTitle getTitle() {
+            return title;
+        }
+
+        public void setTitle(ChartTitle title) {
+            this.title = title;
+        }
+
+        public ChartToolTip getTooltip() {
+            return tooltip;
+        }
+
+        public void setTooltip(ChartToolTip tooltip) {
+            this.tooltip = tooltip;
+        }
+
+        public Legend getLegend() {
+            return legend;
+        }
+
+        public void setLegend(Legend legend) {
+            this.legend = legend;
+        }
+
+        public Grid getGrid() {
+            return grid;
+        }
+
+        public void setGrid(Grid grid) {
+            this.grid = grid;
+        }
+
+        public List<ChartSeriesBase> getSeries() {
+            return series;
+        }
+
+        public void setSeries(List<ChartSeriesBase> series) {
+            this.series = series;
+        }
+
+        public List<XAxis> getxAxis() {
+            return xAxis;
+        }
+
+        public void setxAxis(List<XAxis> xAxis) {
+            this.xAxis = xAxis;
+        }
+
+        public List<YAxis> getyAxis() {
+            return yAxis;
+        }
+
+        public void setyAxis(List<YAxis> yAxis) {
+            this.yAxis = yAxis;
+        }
+    }

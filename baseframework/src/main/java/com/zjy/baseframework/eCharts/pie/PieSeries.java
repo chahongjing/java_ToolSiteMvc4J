@@ -18,17 +18,17 @@ public class PieSeries extends ChartSeriesBase {
     /// <summary>
 /// 饼图半径
 /// </summary>
-    public String radius;
+    private String radius;
 
     /// <summary>
 /// 饼图的中心（圆心）坐标
 /// </summary>
-    public List<String> center;
+    private List<String> center;
 
     /// <summary>
 /// 悬浮状态
 /// </summary>
-    public ItemStyle itemStyle;
+    private ItemStyle itemStyle;
 
     /// <summary>
 /// 构造函数
@@ -44,9 +44,9 @@ public class PieSeries extends ChartSeriesBase {
 /// <param name="name">名称</param>
 /// <param name="data">数据</param>
     public PieSeries(String name, List<PieSeriesData> data) {
-        type = ChartType.Pie.toString().toLowerCase();
-        super.data = data.stream().map(item -> (ChartSeriesDataBase) item).collect(Collectors.toList());
-        this.name = name;
+        super.setType(ChartType.Pie.toString().toLowerCase());
+        super.setData(data.stream().map(item -> (ChartSeriesDataBase) item).collect(Collectors.toList()));
+        super.setName(name);
     }
 
     public String getRadius() {

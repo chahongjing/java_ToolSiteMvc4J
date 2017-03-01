@@ -14,36 +14,36 @@ public class ChartTitle
     /// <summary>
     /// 是否显示
     /// </summary>
-    public Boolean show;
+    private Boolean show;
 
     /// <summary>
     /// 主标题
     /// </summary>
-    public String text;
+    private String text;
     /// <summary>
     /// 副标题
     /// </summary>
-    public String subtext;
+    private String subtext;
 
     /// <summary>
     /// 标题链接
     /// </summary>
-    public String link;
+    private String link;
 
     /// <summary>
     /// 打开位置
     /// </summary>
-    public String target;
+    private String target;
 
     /// <summary>
     /// x轴位置(可以为left ,center, right)
     /// </summary>
-    public String x;
+    private String x;
 
     /// <summary>
     /// y轴位置(可以为top, middle, bottom)
     /// </summary>
-    public String y;
+    private String y;
 
     /// <summary>
     /// 构造函数

@@ -23,7 +23,7 @@ public class PieSeriesData extends ChartSeriesDataBase {
 /// <param name="value">值</param>
 /// <param name="name">名称</param>
     public PieSeriesData(float value, String name) {
-        this.name = name;
-        this.value = value;
+        super.setName(name);
+        super.setValue(value);
     }
 }

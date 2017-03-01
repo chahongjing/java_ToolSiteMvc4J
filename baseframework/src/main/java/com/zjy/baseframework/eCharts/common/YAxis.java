@@ -15,36 +15,36 @@ public class YAxis
     /// <summary>
     /// y轴标题
     /// </summary>
-    public String name;
+    private String name;
 
     /// <summary>
     /// 类型
     /// </summary>
-    public String type;
+    private String type;
 
     /// <summary>
     /// 轴信息
     /// </summary>
-    public AxisLabel axisLabel;
+    private AxisLabel axisLabel;
 
     /// <summary>
     /// 分段数(如分5段)
     /// </summary>
-    public float splitNumber;
+    private float splitNumber;
 
     /// <summary>
     /// 每段间隔(如每段20度)
     /// </summary>
-    public float interval;
+    private float interval;
 
     /// <summary>
     /// 总值(如20 * 5 = 100度)
     /// </summary>
-    public float max;
+    private float max;
     /// <summary>
     /// 数据
     /// </summary>
-    public List<String> data;
+    private List<String> data;
 
     /// <summary>
     /// 构造函数

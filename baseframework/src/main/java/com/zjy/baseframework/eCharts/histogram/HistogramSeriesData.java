@@ -20,7 +20,7 @@ public class HistogramSeriesData extends ChartSeriesDataBase {
 /// <param name="value">值</param>
 /// <param name="name">名称</param>
     public HistogramSeriesData(String value, String name) {
-        this.name = name;
-        this.value = value;
+        super.setName(name);
+        super.setValue(value);
     }
 }

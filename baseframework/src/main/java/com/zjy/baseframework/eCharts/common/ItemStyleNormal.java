@@ -11,7 +11,7 @@ public class ItemStyleNormal
     /// <summary>
     /// 颜色
     /// </summary>
-    public String color;
+    private String color;
 
     public String getColor() {
         return color;

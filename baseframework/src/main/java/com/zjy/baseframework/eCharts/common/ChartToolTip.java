@@ -13,21 +13,21 @@ public class ChartToolTip
     /// <summary>
     /// 是否显示
     /// </summary>
-    public Boolean show;
+    private Boolean show;
     /// <summary>
     /// 格式化器
     /// </summary>
-    public String formatter;
+    private String formatter;
 
     /// <summary>
     /// 触发器
     /// </summary>
-    public String trigger;
+    private String trigger;
 
     /// <summary>
     /// 坐标轴指示器(默认为直线)
     /// </summary>
-    public AxisPointer axisPointer;
+    private AxisPointer axisPointer;
 
 
     /// <summary>
