@@ -47,4 +47,36 @@ public class Legend
         orient = OrientType.Horizontal.toString().toLowerCase();
         left = LabelXLocation.Center.toString().toLowerCase();
     }
+
+    public Boolean getShow() {
+        return show;
+    }
+
+    public void setShow(Boolean show) {
+        this.show = show;
+    }
+
+    public String getOrient() {
+        return orient;
+    }
+
+    public void setOrient(String orient) {
+        this.orient = orient;
+    }
+
+    public String getLeft() {
+        return left;
+    }
+
+    public void setLeft(String left) {
+        this.left = left;
+    }
+
+    public List<LegendData> getData() {
+        return data;
+    }
+
+    public void setData(List<LegendData> data) {
+        this.data = data;
+    }
 }
