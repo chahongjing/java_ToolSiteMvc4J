@@ -54,25 +54,25 @@ public class EchartsController {
         // 仪表盘, 标题
         DashBoard db = new DashBoard(new ChartTitle("学习仪表盘", "学生的排名情况"));
         // 鼠标hover提示
-        db.tooltip = new ChartToolTip("{b}<br/>排名 : {c}%");
+        db.setTooltip(new ChartToolTip("{b}<br/>排名 : {c}%"));
         // 仪表盘数据, x轴名称, 仪表盘名称, 值
         List<DashBoardSeriesData> ll = new ArrayList<>();
         for (Map.Entry<String, Float> entry : list.entrySet()) {
             DashBoardSeriesData d = new DashBoardSeriesData(String.valueOf(Math.round(entry.getValue() * 100)), entry.getKey());
-            d.itemStyle = new ItemStyle();
-            d.itemStyle.normal = new ItemStyleNormal();
-            d.itemStyle.normal.color = DashBoard.Colors.get(ll.size());
+            d.setItemStyle(new ItemStyle());
+            d.getItemStyle().setNormal(new ItemStyleNormal());
+            d.getItemStyle().getNormal().setColor(DashBoard.Colors.get(ll.size()));
             ll.add(d);
         }
 
         DashBoardSeries dbs = new DashBoardSeries("学习仪表盘", ll);
         // 显示值, 是否显示, 值格式化器
-        dbs.detail = new DashBoardSeriesDetail();
-        dbs.detail.show = false;
-        dbs.detail.formatter = "{value}%";
+        dbs.setDetail(new DashBoardSeriesDetail());
+        dbs.getDetail().setShow(false);
+        dbs.getDetail().setFormatter("{value}%");
         // 刻度格式化器
-        dbs.axisLabel = new AxisLabel("{value}%");
-        db.series.add(dbs);
+        dbs.setAxisLabel(new AxisLabel("{value}%"));
+        db.getSeries().add(dbs);
         mv.addObject("dashBoard", JSON.toJSONString(db));
         //endregion
 
@@ -82,18 +82,18 @@ public class EchartsController {
         List<LegendData> legendL = new ArrayList<>();
         legendL.add(new LegendData("学习轨迹图"));
         legendL.add(new LegendData("成长轨迹图"));
-        lc.legend = new Legend(legendL);
+        lc.setLegend(new Legend(legendL));
         // 鼠标hover提示
-        lc.tooltip = new ChartToolTip("{b}<br/>{a0}排名 : {c0}%<br/>{a1}排名 : {c1}%", TriggerType.Axis);
+        lc.setTooltip(new ChartToolTip("{b}<br/>{a0}排名 : {c0}%<br/>{a1}排名 : {c1}%", TriggerType.Axis));
         // x轴相关信息
-        lc.xAxis = new ArrayList<>();
-        lc.xAxis.add(new XAxis("考试编号", new ArrayList<>(list.keySet())));
-        lc.xAxis.get(0).axisLabel = new AxisLabel();
-        lc.xAxis.get(0).axisLabel.rotate = 8;
+        lc.setxAxis(new ArrayList<>());
+        lc.getxAxis().add(new XAxis("考试编号", new ArrayList<>(list.keySet())));
+        lc.getxAxis().get(0).setAxisLabel(new AxisLabel());
+        lc.getxAxis().get(0).getAxisLabel().setRotate(8);
         // y轴相关信息
-        lc.yAxis = new ArrayList<>();
-        lc.yAxis.add(new YAxis("排名百分比", 10, 10, 100));
-        lc.yAxis.get(0).axisLabel = new AxisLabel("{value}%");
+        lc.setyAxis(new ArrayList<>());
+        lc.getyAxis().add(new YAxis("排名百分比", 10, 10, 100));
+        lc.getyAxis().get(0).setAxisLabel(new AxisLabel("{value}%"));
 
         List<LineChartSeriesData> li1 = new ArrayList<>();
         List<LineChartSeriesData> li2 = new ArrayList<>();
@@ -104,10 +104,10 @@ public class EchartsController {
             li2.add(lcsd2);
         }
         // 折线图的值
-        lc.series.add(new LineChartSeries("学习轨迹图", li1));
+        lc.getSeries().add(new LineChartSeries("学习轨迹图", li1));
         Collections.reverse(li2);
         // 折线图的值
-        lc.series.add(new LineChartSeries("成长轨迹图", li2));
+        lc.getSeries().add(new LineChartSeries("成长轨迹图", li2));
         mv.addObject("lineChart", JSON.toJSONString(lc));
         //endregion
 
@@ -117,19 +117,19 @@ public class EchartsController {
         List<LegendData> legendH = new ArrayList<>();
         legendH.add(new LegendData("学习轨迹图"));
         legendH.add(new LegendData("成长轨迹图"));
-        his.legend = new Legend(legendH);
+        his.setLegend(new Legend(legendH));
         // 鼠标hover提示
-        his.tooltip = new ChartToolTip("{b} <br/>{a0}排名 : {c0}%<br/>{a1}排名 : {c1}%", TriggerType.Axis);
-        his.tooltip.axisPointer = new AxisPointer(LineType.Shadow);
+        his.setTooltip(new ChartToolTip("{b} <br/>{a0}排名 : {c0}%<br/>{a1}排名 : {c1}%", TriggerType.Axis));
+        his.getTooltip().setAxisPointer(new AxisPointer(LineType.Shadow));
         // x轴相关信息, 数据值
-        his.xAxis = new ArrayList<>();
-        his.xAxis.add(new XAxis("考试编号", AxisValueType.Category, new ArrayList<>(list.keySet())));
-        his.xAxis.get(0).boundaryGap = true;
-        his.xAxis.get(0).axisTick = new AxisTick(true);
+        his.setxAxis(new ArrayList<>());
+        his.getxAxis().add(new XAxis("考试编号", AxisValueType.Category, new ArrayList<>(list.keySet())));
+        his.getxAxis().get(0).setBoundaryGap(true);
+        his.getxAxis().get(0).setAxisTick(new AxisTick(true));
         // y轴相关信息
-        his.yAxis = new ArrayList<>();
-        his.yAxis.add(new YAxis("排名百分比", AxisValueType.Value, 10, 10, 100));
-        his.yAxis.get(0).axisLabel = new AxisLabel("{value}%");
+        his.setyAxis(new ArrayList<>());
+        his.getyAxis().add(new YAxis("排名百分比", AxisValueType.Value, 10, 10, 100));
+        his.getyAxis().get(0).setAxisLabel(new AxisLabel("{value}%"));
 
         List<HistogramSeriesData> hsd1 = new ArrayList<>();
         List<HistogramSeriesData> hsd2 = new ArrayList<>();
@@ -140,10 +140,10 @@ public class EchartsController {
             hsd2.add(lcsd2);
         }
         // 柱状图的值
-        his.series.add(new HistogramSeries("学习轨迹图", hsd1));
+        his.getSeries().add(new HistogramSeries("学习轨迹图", hsd1));
         Collections.reverse(li2);
         // 柱状图的值
-        his.series.add(new HistogramSeries("成长轨迹图", hsd2));
+        his.getSeries().add(new HistogramSeries("成长轨迹图", hsd2));
 
         mv.addObject("histogram", JSON.toJSONString(his));
         //endregion
@@ -156,17 +156,17 @@ public class EchartsController {
         ;
         legend.add(new LegendData("实际开销"));
         // 每项标题
-        radar.legend = new Legend(legend);
-        radar.legend.orient = OrientType.Vertical.toString().toLowerCase();
-        radar.legend.left = LabelXLocation.Left.toString().toLowerCase();
+        radar.setLegend(new Legend(legend));
+        radar.getLegend().setOrient(OrientType.Vertical.toString().toLowerCase());
+        radar.getLegend().setLeft(LabelXLocation.Left.toString().toLowerCase());
 
         // 维度
-        radar.radar.indicator.add(new IndicatorData("销售"));
-        radar.radar.indicator.add(new IndicatorData("管理"));
-        radar.radar.indicator.add(new IndicatorData("信息技术"));
-        radar.radar.indicator.add(new IndicatorData("客服"));
-        radar.radar.indicator.add(new IndicatorData("研发"));
-        radar.radar.indicator.add(new IndicatorData("市场"));
+        radar.getRadar().getIndicator().add(new IndicatorData("销售"));
+        radar.getRadar().getIndicator().add(new IndicatorData("管理"));
+        radar.getRadar().getIndicator().add(new IndicatorData("信息技术"));
+        radar.getRadar().getIndicator().add(new IndicatorData("客服"));
+        radar.getRadar().getIndicator().add(new IndicatorData("研发"));
+        radar.getRadar().getIndicator().add(new IndicatorData("市场"));
 
         // 数据
         List<RadarSeriesData> radarData = new ArrayList<>();
@@ -174,11 +174,11 @@ public class EchartsController {
         legend.forEach(item -> {
             List<Float> l = new ArrayList<>();
             IntStream.range(1, 7).forEach(innerItem -> l.add(random.nextFloat() * 100));
-            RadarSeriesData rsd = new RadarSeriesData(l, item.name);
+            RadarSeriesData rsd = new RadarSeriesData(l, item.getName());
             radarData.add(rsd);
         });
 
-        radar.series.add(new RadarSeries("学习轨迹图", radarData));
+        radar.getSeries().add(new RadarSeries("学习轨迹图", radarData));
         mv.addObject("radar", JSON.toJSONString(radar));
         //endregion
 
@@ -186,7 +186,7 @@ public class EchartsController {
         // 饼图, 标题, 副标题, 鼠标提示为item
         Pie pie = new Pie(new ChartTitle("学习轨迹图", "学生的排名情况"));
         // 鼠标hover提示
-        pie.tooltip = new ChartToolTip("{a} <br/>{b} : {c} ({d}%)");
+        pie.setTooltip(new ChartToolTip("{a} <br/>{b} : {c} ({d}%)"));
         // 每项标题
         List<LegendData> legendP = new ArrayList<>();
         legendP.add(new LegendData("直接访问"));
@@ -195,28 +195,28 @@ public class EchartsController {
         legendP.add(new LegendData("视频广告"));
         legendP.add(new LegendData("搜索引擎"));
 
-        pie.legend = new Legend(legendP);
-        pie.legend.orient = OrientType.Vertical.toString().toLowerCase();
-        pie.legend.left = LabelXLocation.Left.toString().toLowerCase();
+        pie.setLegend(new Legend(legendP));
+        pie.getLegend().setOrient(OrientType.Vertical.toString().toLowerCase());
+        pie.getLegend().setLeft(LabelXLocation.Left.toString().toLowerCase());
 
         // 数据
         List<PieSeriesData> pieData = new ArrayList<>();
         legendP.forEach(item ->
         {
-            PieSeriesData rsd = new PieSeriesData(random.nextFloat() * 100, item.name);
+            PieSeriesData rsd = new PieSeriesData(random.nextFloat() * 100, item.getName());
             pieData.add(rsd);
         });
         PieSeries series = new PieSeries("学习轨迹图", pieData);
-        series.radius = "70%";
-        series.center = new ArrayList<>();
-        series.center.add("50%");
-        series.center.add("45%");
-        series.itemStyle = new ItemStyle();
-        series.itemStyle.emphasis = new Emphasis();
-        series.itemStyle.emphasis.shadowBlur = 10;
-        series.itemStyle.emphasis.shadowColor = "rgba(0, 0, 0, 0.5)";
-        series.itemStyle.emphasis.shadowOffsetX = 0;
-        pie.series.add(series);
+        series.setRadius("70%");
+        series.setCenter(new ArrayList<>());
+        series.getCenter().add("50%");
+        series.getCenter().add("45%");
+        series.setItemStyle(new ItemStyle());
+        series.getItemStyle().setEmphasis(new Emphasis());
+        series.getItemStyle().getEmphasis().setShadowBlur(10);
+        series.getItemStyle().getEmphasis().setShadowColor("rgba(0, 0, 0, 0.5)");
+        series.getItemStyle().getEmphasis().setShadowOffsetX(0);
+        pie.getSeries().add(series);
         mv.addObject("pie", JSON.toJSONString(pie));
         //endregion
 
