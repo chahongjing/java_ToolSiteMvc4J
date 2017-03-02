@@ -1,38 +1,34 @@
 package com.zjy.baseframework.eCharts.common;
 
 /**
- * Created by chahongjing on 2017/2/28.
+ * 系列列表数据
  */
-/// <summary>
-/// 系列列表数据
-/// </summary>
-/// <typeparam name="T">类型</typeparam>
 public class ChartSeriesDataBase
 {
-    /// <summary>
-    /// 名称
-    /// </summary>
+    /**
+     * 名称
+     */
     private String name;
-    /// <summary>
-    /// 值
-    /// </summary>
+    /**
+     * 值
+     */
     private Object value;
 
-    /// <summary>
-    /// 指针,标识颜色
-    /// </summary>
+    /**
+     * 指针,标识颜色
+     */
     private ItemStyle itemStyle;
 
-    /// <summary>
-    /// 构造函数
-    /// </summary>
+    /**
+     * 构造函数
+     */
     public ChartSeriesDataBase()
     { }
 
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="name">名称</param>
+    /**
+     * 构造函数
+     * @param name 名称
+     */
     public ChartSeriesDataBase(String name)
     {
         this.name = name;

@@ -1,23 +1,20 @@
 package com.zjy.baseframework.eCharts.enums;
 
 /**
- * Created by chahongjing on 2017/2/28.
+ * y坐标位置
  */
-/// <summary>
-/// y坐标位置
-/// </summary>
 public enum LabelYLocation
 {
-    /// <summary>
-    /// 居上
-    /// </summary>
+    /**
+     * 居上
+     */
     Top,
-    /// <summary>
-    /// 居中
-    /// </summary>
+    /**
+     * 居中
+     */
     Middle,
-    /// <summary>
-    /// 居下
-    /// </summary>
+    /**
+     * 居下
+     */
     Bottom
 }

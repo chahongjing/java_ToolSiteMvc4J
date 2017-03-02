@@ -1,41 +1,38 @@
 package com.zjy.baseframework.eCharts.radar;
 
 /**
- * Created by chahongjing on 2017/2/28.
+ * 雷达维度数据
  */
-/// <summary>
-/// 雷达维度数据
-/// </summary>
 public class IndicatorData
 {
-    /// <summary>
-    /// 名称
-    /// </summary>
+    /**
+     * 名称
+     */
     private String name;
 
-    /// <summary>
-    /// 最大值
-    /// </summary>
+    /**
+     * 最大值
+     */
     private float max ;
 
-    /// <summary>
-    /// 构造函数
-    /// </summary>
+    /**
+     * 构造函数
+     */
     public IndicatorData()
     { this(null);}
 
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="name">名称</param>
+    /**
+     * 构造函数
+     * @param name 名称
+     */
     public IndicatorData(String name)
     { this(name, 100); }
 
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="name">名称</param>
-    /// <param name="max">最大值</param>
+    /**
+     * 构造函数
+     * @param name 名称
+     * @param max 最大值
+     */
     public IndicatorData(String name, float max)
     {
         this.name = name;

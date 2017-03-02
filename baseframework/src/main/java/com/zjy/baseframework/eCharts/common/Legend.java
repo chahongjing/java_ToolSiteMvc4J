@@ -7,42 +7,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by chahongjing on 2017/2/28.
+ * 标题
  */
-/// <summary>
-/// 标题
-/// </summary>
 public class Legend
 {
-    /// <summary>
-    /// 是否显示
-    /// </summary>
+    /**
+     * 是否显示
+     */
     private Boolean show;
 
-    /// <summary>
-    /// 源
-    /// </summary>
+    /**
+     * 源
+     */
     private String orient;
 
-    /// <summary>
-    /// 左
-    /// </summary>
+    /**
+     * 左
+     */
     private String left;
-    /// <summary>
-    /// 标题数据
-    /// </summary>
+    /**
+     * 标题数据
+     */
     private List<LegendData> data;
 
-    /// <summary>
-    /// 构造函数
-    /// </summary>
+    /**
+     * 构造函数
+     */
     public Legend()
     { this(new ArrayList<>());}
 
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="data">标题数据</param>
+    /**
+     * 构造函数
+     * @param data 标题数据
+     */
     public Legend(List<LegendData> data)
     {
         show = true;

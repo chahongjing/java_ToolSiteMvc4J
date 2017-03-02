@@ -8,33 +8,30 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Created by chahongjing on 2017/2/28.
+ * 折线数据
  */
-/// <summary>
-/// 折线数据
-/// </summary>
 public class LineChartSeries extends ChartSeriesBase {
 
-    /// <summary>
-/// 构造函数
-/// </summary>
+    /**
+     * 构造函数
+     */
     public LineChartSeries() {
         this(null);
     }
 
-    /// <summary>
-/// 构造函数
-/// </summary>
-/// <param name="name">名称</param>
+    /**
+     * 构造函数
+     * @param name 拆线名称
+     */
     public LineChartSeries(String name) {
         this(name, null);
     }
 
-    /// <summary>
-/// 构造函数
-/// </summary>
-/// <param name="name">拆线名称</param>
-/// <param name="data">值</param>
+    /**
+     * 构造函数
+     * @param name 拆线名称
+     * @param data 值
+     */
     public LineChartSeries(String name, List<LineChartSeriesData> data) {
         super.setName(name);
         super.setData(data.stream().map(item -> (ChartSeriesDataBase) item).collect(Collectors.toList()));

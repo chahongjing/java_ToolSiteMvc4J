@@ -1,20 +1,17 @@
 package com.zjy.baseframework.eCharts.dashBoard;
 
 /**
- * Created by chahongjing on 2017/2/28.
+ * 详细信息
  */
-/// <summary>
-/// 详细信息
-/// </summary>
 public class DashBoardSeriesDetail
 {
-    /// <summary>
-    /// 格式化器
-    /// </summary>
+    /**
+     * 格式化器
+     */
     private String formatter;
-    /// <summary>
-    /// 是否显示
-    /// </summary>
+    /**
+     * 是否显示
+     */
     private Boolean show ;
 
     public String getFormatter() {

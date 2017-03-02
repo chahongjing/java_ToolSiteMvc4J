@@ -8,35 +8,29 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Created by chahongjing on 2017/2/28.
+ * 雷达数据
  */
-/// <summary>
-/// 雷达维度
-/// </summary>
-/// <summary>
-/// 雷达数据
-/// </summary>
 public class RadarSeries extends ChartSeriesBase {
-    /// <summary>
-/// 构造函数
-/// </summary>
+    /**
+     * 构造函数
+     */
     public RadarSeries() {
         this(null);
     }
 
-    /// <summary>
-/// 构造函数
-/// </summary>
-/// <param name="name">名称</param>
+    /**
+     * 构造函数
+     * @param name 名称
+     */
     public RadarSeries(String name) {
         this(name, null);
     }
 
-    /// <summary>
-/// 构造函数
-/// </summary>
-/// <param name="name">名称</param>
-/// <param name="data">数据</param>
+    /**
+     * 构造函数
+     * @param name 名称
+     * @param data 数据
+     */
     public RadarSeries(String name, List<RadarSeriesData> data) {
         super.setName(name);
         super.setData(data.stream().map(item -> (ChartSeriesDataBase) item).collect(Collectors.toList()));

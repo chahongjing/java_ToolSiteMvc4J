@@ -9,15 +9,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Created by chahongjing on 2017/2/28.
+ * 数据
  */
-/// <summary>
-/// 数据
-/// </summary>
 public class DashBoardSeries extends ChartSeriesBase {
-    /// <summary>
-/// 详情
-/// </summary>
+    /**
+     * 详情
+     */
     private DashBoardSeriesDetail detail;
 
 /// <summary>
@@ -25,24 +22,24 @@ public class DashBoardSeries extends ChartSeriesBase {
 /// </summary>
 //public DashBoardSeriesAxisLine axisLine { get; set; }
 
-    /// <summary>
-/// 轴标
-/// </summary>
+    /**
+     * 轴标
+     */
     private AxisLabel axisLabel;
 
-    /// <summary>
-/// 构造函数
-/// </summary>
-/// <param name="name">名称</param>
+    /**
+     * 构造函数
+     * @param name 名称
+     */
     public DashBoardSeries(String name) {
         this(name, null);
     }
 
-    /// <summary>
-/// 构造函数
-/// </summary>
-/// <param name="name">名称</param>
-/// <param name="data">数据</param>
+    /**
+     * 构造函数
+     * @param name 名称
+     * @param data 数据
+     */
     public DashBoardSeries(String name, List<DashBoardSeriesData> data) {
         super.setType(ChartType.Gauge.toString().toLowerCase());
         //axisLine = new DashBoardSeriesAxisLine();

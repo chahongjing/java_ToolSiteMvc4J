@@ -1,21 +1,18 @@
 package com.zjy.baseframework.eCharts.dashBoard;
 
 /**
- * Created by chahongjing on 2017/2/28.
+ * 仪表盘指针
  */
-/// <summary>
-/// 仪表盘指针
-/// </summary>
 public class DashBoardSeriesAxisLine
 {
-    /// <summary>
-    /// 仪表盘指针样式
-    /// </summary>
+    /**
+     * 仪表盘指针样式
+     */
     private DashBoardSeriesAxisLineLineStyle lineStyle;
 
-    /// <summary>
-    /// 构造函数
-    /// </summary>
+    /**
+     * 构造函数
+     */
     public DashBoardSeriesAxisLine()
     {
         lineStyle = new DashBoardSeriesAxisLineLineStyle();

@@ -1,16 +1,14 @@
 package com.zjy.baseframework.eCharts.common;
 
 /**
- * Created by chahongjing on 2017/2/28.
+ * 常规
  */
-/// <summary>
-/// 常规
-/// </summary>
 public class ItemStyleNormal
 {
-    /// <summary>
-    /// 颜色
-    /// </summary>
+
+    /**
+     * 颜色
+     */
     private String color;
 
     public String getColor() {

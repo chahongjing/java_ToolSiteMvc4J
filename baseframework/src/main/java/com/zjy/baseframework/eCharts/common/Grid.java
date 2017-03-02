@@ -3,37 +3,38 @@ package com.zjy.baseframework.eCharts.common;
 /**
  * Created by chahongjing on 2017/2/28.
  */
-/// <summary>
-/// 网格
-/// </summary>
+
+/**
+ * 网格
+ */
 public class Grid
 {
-    /// <summary>
-    /// 左边距
-    /// </summary>
+    /**
+     * 左边距
+     */
     private String left;
 
-    /// <summary>
-    /// 右边距
-    /// </summary>
+    /**
+     * 右边距
+     */
     private String right;
-    /// <summary>
-    /// 上边距
-    /// </summary>
+    /**
+     * 上边距
+     */
     private String top;
-    /// <summary>
-    /// 下边距
-    /// </summary>
+    /**
+     * 下边距
+     */
     private String bottom;
 
-    /// <summary>
-    /// 是否包含标签
-    /// </summary>
+    /**
+     * 是否包含标签
+     */
     private Boolean containLabel;
 
-    /// <summary>
-    /// 构造函数
-    /// </summary>
+    /**
+     * 构造函数
+     */
     public Grid()
     {
         containLabel = true;

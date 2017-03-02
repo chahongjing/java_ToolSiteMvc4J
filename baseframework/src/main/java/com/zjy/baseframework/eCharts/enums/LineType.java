@@ -5,16 +5,16 @@ package com.zjy.baseframework.eCharts.enums;
  */
 public enum LineType
 {
-    /// <summary>
-    /// 直线指示器
-    /// </summary>
+    /**
+     * 直线指示器
+     */
     Line,
-    /// <summary>
-    /// 十字准星指示器
-    /// </summary>
+    /**
+     * 十字准星指示器
+     */
     Cross,
-    /// <summary>
-    /// 阴影指示器
-    /// </summary>
+    /**
+     * 阴影指示器
+     */
     Shadow
 }

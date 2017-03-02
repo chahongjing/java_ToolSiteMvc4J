@@ -4,21 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by chahongjing on 2017/2/28.
+ * 雷达维度
  */
-/// <summary>
-/// 雷达维度
-/// </summary>
 public class RadarDimension
 {
-    /// <summary>
-    /// 维度信息
-    /// </summary>
+    /**
+     * 维度信息
+     */
     private List<IndicatorData> indicator;
 
-    /// <summary>
-    /// 构造函数
-    /// </summary>
+    /**
+     * 构造函数
+     */
     public RadarDimension()
     {
         indicator = new ArrayList<>();

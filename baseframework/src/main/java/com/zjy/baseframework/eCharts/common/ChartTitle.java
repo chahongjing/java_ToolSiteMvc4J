@@ -4,80 +4,81 @@ import com.zjy.baseframework.eCharts.enums.LabelXLocation;
 import com.zjy.baseframework.eCharts.enums.LabelYLocation;
 
 /**
- * Created by chahongjing on 2017/2/28.
+ * 标题
  */
-/// <summary>
-/// 标题
-/// </summary>
 public class ChartTitle
 {
-    /// <summary>
-    /// 是否显示
-    /// </summary>
+    /**
+     * 是否显示
+     */
     private Boolean show;
 
-    /// <summary>
-    /// 主标题
-    /// </summary>
+    /**
+     * 主标题
+     */
     private String text;
-    /// <summary>
-    /// 副标题
-    /// </summary>
+    /**
+     * 副标题
+     */
     private String subtext;
 
-    /// <summary>
-    /// 标题链接
-    /// </summary>
+    /**
+     * 标题链接
+     */
     private String link;
 
-    /// <summary>
-    /// 打开位置
-    /// </summary>
+    /**
+     * 打开位置
+     */
     private String target;
 
-    /// <summary>
-    /// x轴位置(可以为left ,center, right)
-    /// </summary>
+    /**
+     * x轴位置(可以为left ,center, right)
+     */
     private String x;
 
-    /// <summary>
-    /// y轴位置(可以为top, middle, bottom)
-    /// </summary>
+    /**
+     * y轴位置(可以为top, middle, bottom)
+     */
     private String y;
 
-    /// <summary>
-    /// 构造函数
-    /// </summary>
+    /**
+     * 构造函数
+     */
     public ChartTitle()
     { this(null, null);}
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="title">标题</param>
+
+    /**
+     * 构造函数
+     * @param title 标题
+     */
     public ChartTitle(String title)
     { this(title, null);}
-    /// <summary>
-    /// /// 构造函数
-    /// </summary>
-    /// <param name="title">标题</param>
-    /// <param name="subTitle">副标题</param>
+
+    /**
+     * 构造函数
+     * @param title 标题
+     * @param subTitle 副标题
+     */
     public ChartTitle(String title, String subTitle)
     { this(title, subTitle, LabelXLocation.Center, LabelYLocation.Bottom);}
-    /// <summary>
-    /// /// 构造函数
-    /// </summary>
-    /// <param name="title">标题</param>
-    /// <param name="x">x轴信息</param>
-    /// <param name="y">y轴信息</param>
+
+    /**
+     * 构造函数
+     * @param title 标题
+     * @param x x轴信息
+     * @param y y轴信息
+     */
     public ChartTitle(String title, LabelXLocation x, LabelYLocation y)
     { this(title, null, x, y);}
-    /// <summary>
-    /// /// 构造函数
-    /// </summary>
-    /// <param name="title">标题</param>
-    /// <param name="subTitle">副标题</param>
-    /// <param name="x">x轴信息</param>
-    /// <param name="y">y轴信息</param>
+
+    /**
+     * 构造函数
+     * @param title 标题
+     * @param subTitle 副标题
+     * @param x x轴信息
+     * @param y y轴信息
+     */
     public ChartTitle(String title, String subTitle, LabelXLocation x, LabelYLocation y)
     {
         show = true;

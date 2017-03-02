@@ -1,26 +1,23 @@
 package com.zjy.baseframework.eCharts.common;
 
 /**
- * Created by chahongjing on 2017/2/28.
+ * 悬浮效果
  */
-/// <summary>
-/// 悬浮效果
-/// </summary>
 public class Emphasis
 {
-    /// <summary>
-    /// 图形阴影的模糊大小
-    /// </summary>
+    /**
+     * 图形阴影的模糊大小
+     */
     private int shadowBlur;
 
-    /// <summary>
-    /// 阴影水平方向上的偏移距离。
-    /// </summary>
+    /**
+     * 阴影水平方向上的偏移距离
+     */
     private int shadowOffsetX;
 
-    /// <summary>
-    /// 阴影颜色
-    /// </summary>
+    /**
+     * 阴影颜色
+     */
     private String shadowColor;
 
     public int getShadowBlur() {

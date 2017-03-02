@@ -1,31 +1,28 @@
 package com.zjy.baseframework.eCharts.enums;
 
 /**
- * Created by chahongjing on 2017/2/28.
+ * 图表类型
  */
-/// <summary>
-/// 图表类型
-/// </summary>
 public enum ChartType
 {
-    /// <summary>
-    /// 拆线图
-    /// </summary>
+    /**
+     * 拆线图
+     */
     Line,
-    /// <summary>
-    /// 仪表盘
-    /// </summary>
+    /**
+     * 仪表盘
+     */
     Gauge,
-    /// <summary>
-    /// 柱状图
-    /// </summary>
+    /**
+     * 柱状图
+     */
     Bar,
-    /// <summary>
-    /// 雷达图
-    /// </summary>
+    /**
+     * 雷达图
+     */
     Radar,
-    /// <summary>
-    /// 饼图
-    /// </summary>
+    /**
+     * 饼图
+     */
     Pie
 }

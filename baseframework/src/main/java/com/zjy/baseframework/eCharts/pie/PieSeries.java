@@ -9,40 +9,37 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Created by chahongjing on 2017/2/28.
+ * 饼图系列
  */
-/// <summary>
-/// 饼图系列
-/// </summary>
 public class PieSeries extends ChartSeriesBase {
-    /// <summary>
-/// 饼图半径
-/// </summary>
+    /**
+     * 饼图半径
+     */
     private String radius;
 
-    /// <summary>
-/// 饼图的中心（圆心）坐标
-/// </summary>
+    /**
+     * 饼图的中心（圆心）坐标
+     */
     private List<String> center;
 
-    /// <summary>
-/// 悬浮状态
-/// </summary>
+    /**
+     * 悬浮状态
+     */
     private ItemStyle itemStyle;
 
-    /// <summary>
-/// 构造函数
-/// </summary>
-/// <param name="name">名称</param>
+    /**
+     * 构造函数
+     * @param name 名称
+     */
     public PieSeries(String name) {
         this(name, null);
     }
 
-    /// <summary>
-/// 构造函数
-/// </summary>
-/// <param name="name">名称</param>
-/// <param name="data">数据</param>
+    /**
+     * 构造函数
+     * @param name 名称
+     * @param data 数据
+     */
     public PieSeries(String name, List<PieSeriesData> data) {
         super.setType(ChartType.Pie.toString().toLowerCase());
         super.setData(data.stream().map(item -> (ChartSeriesDataBase) item).collect(Collectors.toList()));

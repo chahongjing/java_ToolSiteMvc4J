@@ -1,32 +1,29 @@
 package com.zjy.baseframework.eCharts.common;
 
 /**
- * Created by chahongjing on 2017/2/28.
+ * 标题数据
  */
-/// <summary>
-/// 标题数据
-/// </summary>
 public class LegendData
 {
-    /// <summary>
-    /// 名称
-    /// </summary>
+    /**
+     * 名称
+     */
     private String name;
 
-    /// <summary>
-    /// 图标
-    /// </summary>
+    /**
+     * 图标
+     */
     private String icon;
 
-    /// <summary>
-    /// 样式
-    /// </summary>
+    /**
+     * 样式
+     */
     private Object textStyle;
 
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="name">名称</param>
+    /**
+     * 构造函数
+     * @param name 名称
+     */
     public LegendData(String name)
     {
         this.name = name;

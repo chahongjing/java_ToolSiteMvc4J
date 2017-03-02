@@ -1,16 +1,13 @@
 package com.zjy.baseframework.eCharts.common;
 
 /**
- * Created by chahongjing on 2017/2/28.
+ * 指针,标识颜色
  */
-/// <summary>
-/// 指针,标识颜色
-/// </summary>
 public class ItemStyle
 {
-    /// <summary>
-    /// 常规
-    /// </summary>
+    /**
+     * 常规
+     */
     private ItemStyleNormal normal;
     private Emphasis emphasis;
 
