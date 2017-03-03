@@ -86,14 +86,14 @@ public class EchartsController {
         // 鼠标hover提示
         lc.setTooltip(new ChartToolTip("{b}<br/>{a0}排名 : {c0}%<br/>{a1}排名 : {c1}%", TriggerType.Axis));
         // x轴相关信息
-        lc.setxAxis(new ArrayList<>());
-        lc.getxAxis().add(new XAxis("考试编号", new ArrayList<>(list.keySet())));
-        lc.getxAxis().get(0).setAxisLabel(new AxisLabel());
-        lc.getxAxis().get(0).getAxisLabel().setRotate(8);
+        lc.setXAxis(new ArrayList<>());
+        lc.getXAxis().add(new XAxis("考试编号", new ArrayList<>(list.keySet())));
+        lc.getXAxis().get(0).setAxisLabel(new AxisLabel());
+        lc.getXAxis().get(0).getAxisLabel().setRotate(8);
         // y轴相关信息
-        lc.setyAxis(new ArrayList<>());
-        lc.getyAxis().add(new YAxis("排名百分比", 10, 10, 100));
-        lc.getyAxis().get(0).setAxisLabel(new AxisLabel("{value}%"));
+        lc.setYAxis(new ArrayList<>());
+        lc.getYAxis().add(new YAxis("排名百分比", 10, 10, 100));
+        lc.getYAxis().get(0).setAxisLabel(new AxisLabel("{value}%"));
 
         List<LineChartSeriesData> li1 = new ArrayList<>();
         List<LineChartSeriesData> li2 = new ArrayList<>();
@@ -122,14 +122,14 @@ public class EchartsController {
         his.setTooltip(new ChartToolTip("{b} <br/>{a0}排名 : {c0}%<br/>{a1}排名 : {c1}%", TriggerType.Axis));
         his.getTooltip().setAxisPointer(new AxisPointer(LineType.Shadow));
         // x轴相关信息, 数据值
-        his.setxAxis(new ArrayList<>());
-        his.getxAxis().add(new XAxis("考试编号", AxisValueType.Category, new ArrayList<>(list.keySet())));
-        his.getxAxis().get(0).setBoundaryGap(true);
-        his.getxAxis().get(0).setAxisTick(new AxisTick(true));
+        his.setXAxis(new ArrayList<>());
+        his.getXAxis().add(new XAxis("考试编号", AxisValueType.Category, new ArrayList<>(list.keySet())));
+        his.getXAxis().get(0).setBoundaryGap(true);
+        his.getXAxis().get(0).setAxisTick(new AxisTick(true));
         // y轴相关信息
-        his.setyAxis(new ArrayList<>());
-        his.getyAxis().add(new YAxis("排名百分比", AxisValueType.Value, 10, 10, 100));
-        his.getyAxis().get(0).setAxisLabel(new AxisLabel("{value}%"));
+        his.setYAxis(new ArrayList<>());
+        his.getYAxis().add(new YAxis("排名百分比", AxisValueType.Value, 10, 10, 100));
+        his.getYAxis().get(0).setAxisLabel(new AxisLabel("{value}%"));
 
         List<HistogramSeriesData> hsd1 = new ArrayList<>();
         List<HistogramSeriesData> hsd2 = new ArrayList<>();

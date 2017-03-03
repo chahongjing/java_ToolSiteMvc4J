@@ -149,19 +149,19 @@ public class EChartsBase
         this.series = series;
     }
 
-    public List<XAxis> getxAxis() {
+    public List<XAxis> getXAxis() {
         return xAxis;
     }
 
-    public void setxAxis(List<XAxis> xAxis) {
+    public void setXAxis(List<XAxis> xAxis) {
         this.xAxis = xAxis;
     }
 
-    public List<YAxis> getyAxis() {
+    public List<YAxis> getYAxis() {
         return yAxis;
     }
 
-    public void setyAxis(List<YAxis> yAxis) {
+    public void setYAxis(List<YAxis> yAxis) {
         this.yAxis = yAxis;
     }
 }
