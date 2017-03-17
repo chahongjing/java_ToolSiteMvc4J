@@ -1,6 +1,7 @@
 package com.zjy.baseframework;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.context.ContextLoader;
 
 import java.nio.file.Paths;
 
@@ -9,6 +10,7 @@ import java.nio.file.Paths;
  */
 public class Utils {
     public static String getRootPath() {
+        //return ContextLoader.getCurrentWebApplicationContext().getServletContext().getRealPath("/");
         return Paths.get(StringUtils.removeStart(Utils.class.getClassLoader().getResource("/").getFile(), "/")).getParent().getParent().toAbsolutePath().toString();
     }
 }
