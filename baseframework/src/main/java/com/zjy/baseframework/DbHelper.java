@@ -74,6 +74,7 @@ public class DbHelper {
             conn.setAutoCommit(false);
             int result = pSta.executeUpdate();
             conn.commit();
+            pSta.close();
             conn.close();
             return result;
         } catch (SQLException e) {

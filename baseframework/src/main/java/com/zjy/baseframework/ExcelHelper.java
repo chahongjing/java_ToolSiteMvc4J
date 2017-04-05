@@ -48,13 +48,13 @@ public class ExcelHelper<T> {
     @SuppressWarnings("unchecked")
     public void exportExcel(String title, String[] headers, Collection<T> dataset, OutputStream out, String pattern) {
         // 声明一个工作薄
-        HSSFWorkbook workbook = new HSSFWorkbook();
+        Workbook workbook = new HSSFWorkbook();
         // 生成一个表格
-        HSSFSheet sheet = workbook.createSheet(title);
+        Sheet sheet = workbook.createSheet(title);
         // 设置表格默认列宽度为15个字节
         sheet.setDefaultColumnWidth(15);
         // 生成一个样式
-        HSSFCellStyle style = workbook.createCellStyle();
+        CellStyle style = workbook.createCellStyle();
         // 设置这些样式
         style.setFillForegroundColor(HSSFColor.SKY_BLUE.index);
         style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
@@ -64,14 +64,14 @@ public class ExcelHelper<T> {
         style.setBorderTop(HSSFCellStyle.BORDER_THIN);
         style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
         // 生成一个字体
-        HSSFFont font = workbook.createFont();
+        Font font = workbook.createFont();
         font.setColor(HSSFColor.VIOLET.index);
         font.setFontHeightInPoints((short) 12);
         font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
         // 把字体应用到当前的样式
         style.setFont(font);
         // 生成并设置另一个样式
-        HSSFCellStyle style2 = workbook.createCellStyle();
+        CellStyle style2 = workbook.createCellStyle();
         style2.setFillForegroundColor(HSSFColor.LIGHT_YELLOW.index);
         style2.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
         style2.setBorderBottom(HSSFCellStyle.BORDER_THIN);
@@ -81,26 +81,24 @@ public class ExcelHelper<T> {
         style2.setAlignment(HSSFCellStyle.ALIGN_CENTER);
         style2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
         // 生成另一个字体
-        HSSFFont font2 = workbook.createFont();
+        Font font2 = workbook.createFont();
         font2.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
         // 把字体应用到当前的样式
         style2.setFont(font2);
 
         // 声明一个画图的顶级管理器
-        HSSFPatriarch patriarch = sheet.createDrawingPatriarch();
-        // 定义注释的大小和位置,详见文档
-        HSSFComment comment = patriarch.createComment(new HSSFClientAnchor(0, 0, 0, 0, (short) 4, 2, (short) 6, 5));
+        Comment comment = sheet.getCellComment(1, 2);
         // 设置注释内容
         comment.setString(new HSSFRichTextString("可以在POI中添加注释！"));
         // 设置注释作者，当鼠标移动到单元格上是可以在状态栏中看到该内容.
         comment.setAuthor("leno");
 
         // 产生表格标题行
-        HSSFRow row = sheet.createRow(0);
+        Row row = sheet.createRow(0);
         for (int i = 0; i < headers.length; i++) {
-            HSSFCell cell = row.createCell(i);
+            Cell cell = row.createCell(i);
             cell.setCellStyle(style);
-            HSSFRichTextString text = new HSSFRichTextString(headers[i]);
+            RichTextString text = new HSSFRichTextString(headers[i]);
             cell.setCellValue(text);
         }
 
@@ -114,7 +112,7 @@ public class ExcelHelper<T> {
             // 利用反射，根据javabean属性的先后顺序，动态调用getXxx()方法得到属性值
             Field[] fields = t.getClass().getDeclaredFields();
             for (int i = 0; i < fields.length; i++) {
-                HSSFCell cell = row.createCell(i);
+                Cell cell = row.createCell(i);
                 cell.setCellStyle(style2);
                 Field field = fields[i];
                 String fieldName = field.getName();
@@ -159,10 +157,10 @@ public class ExcelHelper<T> {
                         sheet.setColumnWidth(i, (short) (35.7 * 80));
                         // sheet.autoSizeColumn(i);
                         byte[] bsValue = (byte[]) value;
-                        HSSFClientAnchor anchor = new HSSFClientAnchor(0, 0, 1023, 255, (short) 6, index, (short) 6,
+                        ClientAnchor anchor = new HSSFClientAnchor(0, 0, 1023, 255, (short) 6, index, (short) 6,
                                 index);
                         anchor.setAnchorType(2);
-                        patriarch.createPicture(anchor, workbook.addPicture(bsValue, HSSFWorkbook.PICTURE_TYPE_JPEG));
+                        //patriarch.createPicture(anchor, workbook.addPicture(bsValue, HSSFWorkbook.PICTURE_TYPE_JPEG));
                     } else {
                         // 其它数据类型都当作字符串简单处理
                         textValue = value.toString();
@@ -175,8 +173,8 @@ public class ExcelHelper<T> {
                             // 是数字当作double处理
                             cell.setCellValue(Double.parseDouble(textValue));
                         } else {
-                            HSSFRichTextString richString = new HSSFRichTextString(textValue);
-                            HSSFFont font3 = workbook.createFont();
+                            RichTextString richString = new HSSFRichTextString(textValue);
+                            Font font3 = workbook.createFont();
                             font3.setColor(HSSFColor.BLUE.index);
                             richString.applyFont(font3);
                             cell.setCellValue(richString);
@@ -217,16 +215,16 @@ public class ExcelHelper<T> {
                 Cell cell = cells.next();
                 System.out.println("Cell #" + cell.getColumnIndex());
                 switch (cell.getCellType()) { // 根据cell中的类型来输出数据
-                    case HSSFCell.CELL_TYPE_NUMERIC:
+                    case Cell.CELL_TYPE_NUMERIC:
                         System.out.println(cell.getNumericCellValue());
                         break;
-                    case HSSFCell.CELL_TYPE_STRING:
+                    case Cell.CELL_TYPE_STRING:
                         System.out.println(cell.getStringCellValue());
                         break;
-                    case HSSFCell.CELL_TYPE_BOOLEAN:
+                    case Cell.CELL_TYPE_BOOLEAN:
                         System.out.println(cell.getBooleanCellValue());
                         break;
-                    case HSSFCell.CELL_TYPE_FORMULA:
+                    case Cell.CELL_TYPE_FORMULA:
                         System.out.println(cell.getCellFormula());
                         break;
                     default:
