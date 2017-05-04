@@ -44,7 +44,7 @@
         <ws.rs.version>2.0.1</ws.rs.version>
         <zip.version>1.3.2</zip.version>
         <commons.lang.version>3.5</commons.lang.version>
-        <!--<hibernate.version>5.2.3.Final</hibernate.version>-->
+        <hibernate.version>5.2.10.Final</hibernate.version>
     </properties>
 
     <dependencyManagement>
@@ -128,6 +128,12 @@
                 <groupId>org.mybatis</groupId>
                 <artifactId>mybatis-spring</artifactId>
                 <version>${mybatis.spring.version}</version>
+            </dependency>
+            <!-- hibernate -->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>${hibernate.version}</version>
             </dependency>
             <!-- fastjson -->
             <dependency>
@@ -299,7 +305,6 @@
                 <artifactId>zip4j</artifactId>
                 <version>${zip.version}</version>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
     <build>
