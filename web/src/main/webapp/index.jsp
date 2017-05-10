@@ -26,7 +26,7 @@
     </style>
 </head>
 <body>
-<h2>Hello World!</h2><span class="font">2017年01月01日</span>
+<h2>Hello World!</h2><span class="font"><% out.println("<div>abc</div>"); %></span>
 <br/>
 <br/>
 <a href="${ctx}/userinfo/loginpage.do">登录</a>
@@ -51,6 +51,7 @@
 <br />
 <a href="${ctx}/test/download.do">下载</a>
 <a href="${ctx}/echarts/index.do" target="_blank">echarts图表</a>
+<a href="${ctx}/test/testangular.do" target="_blank">测试angular</a>
 
 <br />
 <br />

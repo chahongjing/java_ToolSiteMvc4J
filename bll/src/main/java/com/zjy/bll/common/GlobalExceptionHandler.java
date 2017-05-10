@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
         ModelAndView mv = new ModelAndView();
         boolean isAjax = "XMLHttpRequest".equalsIgnoreCase(request.getHeader("x-requested-with"));
 
-        if (isAjax) {
+        if (isAjax && false) {
             response.setStatus(HttpStatus.OK.value()); //设置状态码
             response.setContentType(MediaType.APPLICATION_JSON_VALUE); //设置ContentType
             response.setHeader("Cache-Control", "no-cache, must-revalidate");
@@ -39,7 +39,8 @@ public class GlobalExceptionHandler {
         } else {
             logger.error("系统错误", ex);
             ex.printStackTrace();
-            mv.setViewName("ERROR");
+            mv.setViewName("error");
+            response.setStatus(HttpStatus.NOT_FOUND.value()); //设置状态码
         }
         return mv;
     }

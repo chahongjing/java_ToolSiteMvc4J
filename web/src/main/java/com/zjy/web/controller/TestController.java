@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -50,7 +51,7 @@ public class TestController {
         map.put("username", "23ab33");
         String content = PartialViewHelper.renderTest("/index.jsp", request, response, map);
 
-        return "OK";
+        return "ok";
     }
 
     //region 延迟和回调
@@ -81,6 +82,20 @@ public class TestController {
     }
     //endregion
 
+    @RequestMapping("/testangular.do")
+    public String testangular() {
+        return "testangular";
+    }
+
+    @RequestMapping("/testajax.do")
+    @ResponseBody
+    public BaseResult testajax(String a, String b, String c) {
+        BaseResult<String> result = BaseResult.OK("abc");
+        int aa = 1,bb  =0;
+        int cc = aa / bb;
+        return result;
+    }
+
     @RequestMapping("/fileupload.do")
     public ModelAndView fileUpload(MultipartHttpServletRequest request) {
         // @RequestParam("myfile") List<CommonsMultipartFile> myfile
@@ -94,7 +109,7 @@ public class TestController {
 //            e.printStackTrace();
 //        }
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("OK");
+        mv.setViewName("ok");
         Path path = Paths.get(request.getSession().getServletContext().getRealPath(""), "upload");
         File dir = path.toFile();
         if (!dir.exists()) {
