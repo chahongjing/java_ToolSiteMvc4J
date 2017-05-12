@@ -6,11 +6,11 @@ app.directive('ngRepeatFinish', function ($compile) {
     return {
         restrict: 'A',
         scope: {
-            afterRender: '&'
+            ngRepeatFinish: '&'
         },
         link: function ($scope, element, attrs) {
             if ($scope.$parent.$last === true) {
-                $scope.afterRender && $scope.afterRender({param: 456});
+                $scope.ngRepeatFinish && $scope.ngRepeatFinish({param: 456});
             }
         }
     }
