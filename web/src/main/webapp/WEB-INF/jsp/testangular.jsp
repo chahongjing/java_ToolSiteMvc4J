@@ -1,7 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/jsp/common/beginHead.jsp" %>
+<%-- 页头，添加title, mate信息, link样式, script脚本(建议在script节中添加) --%>
 <title>测试angular</title>
 <%@ include file="/WEB-INF/jsp/common/endHeadAndBeginBody.jsp" %>
+<%-- html正文 --%>
 <div data-ng-controller="testCtrl" data-ng-init="init()">
     <ul>
         <li data-ng-repeat="item in model.list" data-ng-bind="item.name" ng-repeat-finish="model.myAfterRender(param)">
@@ -13,6 +15,7 @@
     </div>
 </div>
 <%@ include file="/WEB-INF/jsp/common/endBodyAndBeginScript.jsp" %>
+<%-- js脚本 --%>
 <script src="${ctx}/js/angular/angular.js"></script>
 <script src="${ctx}/js/angular/angular_main.js"></script>
 <script src="${ctx}/js/angular/directives/ng_repeat_finish.js"></script>
