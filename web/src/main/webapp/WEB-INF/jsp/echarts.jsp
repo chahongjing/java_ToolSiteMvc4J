@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <%@ include file="/commonCss.jsp" %>
+    <%@ include file="/WEB-INF/jsp/common/commonCss.jsp" %>
     <style>
 
     </style>
@@ -36,7 +36,7 @@
     <div class="col-sm-6">
     </div>
 </div>
-<%@ include file="/commonJs.jsp" %>
+<%@ include file="/WEB-INF/jsp/common/commonJs.jsp" %>
 <script src="${ctx}/js/echarts.min.js"></script>
 <script>
     // 准备数据

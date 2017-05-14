@@ -1,11 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <%@ include file="/commonCss.jsp" %>
-    <title>测试angular</title>
-</head>
-<body data-ng-app="myApp">
+<%@ include file="/WEB-INF/jsp/common/beginHead.jsp" %>
+<title>测试angular</title>
+<%@ include file="/WEB-INF/jsp/common/endHeadAndBeginBody.jsp" %>
 <div data-ng-controller="testCtrl" data-ng-init="init()">
     <ul>
         <li data-ng-repeat="item in model.list" data-ng-bind="item.name" ng-repeat-finish="model.myAfterRender(param)">
@@ -16,9 +12,7 @@
         <span data-ng-bind="model.name"></span>
     </div>
 </div>
-</body>
-</html>
-<%@ include file="/commonJs.jsp" %>
+<%@ include file="/WEB-INF/jsp/common/endBodyAndBeginScript.jsp" %>
 <script src="${ctx}/js/angular/angular.js"></script>
 <script src="${ctx}/js/angular/angular_main.js"></script>
 <script src="${ctx}/js/angular/directives/ng_repeat_finish.js"></script>
@@ -60,3 +54,4 @@
             };
         }]);
 </script>
+<%@ include file="/WEB-INF/jsp/common/endScript.jsp" %>

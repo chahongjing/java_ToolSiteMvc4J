@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <%@ include file="/commonCss.jsp" %>
+    <%@ include file="/WEB-INF/jsp/common/commonCss.jsp" %>
     <style>
         .font {
             font-family: arial;
@@ -62,7 +62,7 @@
 <span class="next"></span>
 </div>
 <br />
-<%@ include file="/commonJs.jsp" %>
+<%@ include file="/WEB-INF/jsp/common/commonJs.jsp" %>
 <script>
     $(function () {
         $('#lnkLogout').click(function () {

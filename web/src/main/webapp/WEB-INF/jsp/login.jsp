@@ -4,7 +4,7 @@
 <html>
     <head>
         <title>test</title>
-        <%@ include  file="/commonCss.jsp" %>
+        <%@ include  file="/WEB-INF/jsp/common/commonCss.jsp" %>
     </head>
     <body>
     <fmt:message key="username">
@@ -19,7 +19,7 @@
         <input type="button" value="登 录" id="btnLogin" />
     </form>
 
-    <%@ include  file="/commonJs.jsp" %>
+    <%@ include  file="/WEB-INF/jsp/common/commonJs.jsp" %>
     <script type="text/javascript" src="${ctx}/js/jquery.form.js"></script>
     <script>
         $(function() {

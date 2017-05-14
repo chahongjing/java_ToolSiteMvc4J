@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>列表</title>
-    <%@ include file="/commonCss.jsp" %>
+    <%@ include file="/WEB-INF/jsp/common/commonCss.jsp" %>
 </head>
 <body>
 
@@ -17,6 +17,6 @@
     </c:forEach>
 </table>
 
-<%@ include file="/commonJs.jsp" %>
+<%@ include file="/WEB-INF/jsp/common/commonJs.jsp" %>
 </body>
 </html>
