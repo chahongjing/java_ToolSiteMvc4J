@@ -3,12 +3,14 @@ package com.zjy.web.controller;
 import com.zjy.baseframework.BaseResult;
 import com.zjy.baseframework.DownloadHelper;
 import com.zjy.baseframework.PartialViewHelper;
+import com.zjy.entities.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -91,7 +94,7 @@ public class TestController {
     @ResponseBody
     public BaseResult testajax(String a, String b, String c) {
         BaseResult<String> result = BaseResult.OK("abc");
-        int aa = 1,bb  =0;
+        int aa = 1, bb = 0;
         int cc = aa / bb;
         return result;
     }
@@ -115,7 +118,7 @@ public class TestController {
         if (!dir.exists()) {
             dir.mkdirs();
         }
-        for(MultipartFile file: request.getFiles("myfile")) {
+        for (MultipartFile file : request.getFiles("myfile")) {
             try {
                 file.transferTo(Paths.get(path.toString(), file.getOriginalFilename()).toFile());
             } catch (IOException e) {
@@ -130,5 +133,28 @@ public class TestController {
         // path是指欲下载的文件的路径。
         String path = "d:\\b.txt";
         DownloadHelper.download(path, response);
+    }
+
+
+    @RequestMapping("/jspLearn.do")
+    public String jspLearn(Integer[] arr) {
+        System.out.println(arr);
+        return "jspLearn";
+    }
+
+    @RequestMapping("/springLearn/{intVar}.do")
+    public String springLearn(@PathVariable(required = true) int intVar) {
+        System.out.println(intVar);
+        return "springLearn";
+    }
+
+    @RequestMapping("/elLearn.do")
+    public String elLearn() {
+        return "elLearn";
+    }
+
+    @RequestMapping("/servletLearn.do")
+    public String servletLearn() {
+        return "servletLearn";
     }
 }
