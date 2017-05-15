@@ -29,7 +29,7 @@ public class IndexController {
     public String test(HttpServletRequest request, HttpServletResponse response) throws Exception {
         ExcelHelper<String> e = new ExcelHelper<>();
 
-        return "ok";
+        return "common/ok";
     }
 
     public static void main(String[] args) {

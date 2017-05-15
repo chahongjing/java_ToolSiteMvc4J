@@ -54,7 +54,7 @@ public class TestController {
         map.put("username", "23ab33");
         String content = PartialViewHelper.renderTest("/index.jsp", request, response, map);
 
-        return "ok";
+        return "common/ok";
     }
 
     //region 延迟和回调
@@ -112,7 +112,7 @@ public class TestController {
 //            e.printStackTrace();
 //        }
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("ok");
+        mv.setViewName("common/ok");
         Path path = Paths.get(request.getSession().getServletContext().getRealPath(""), "upload");
         File dir = path.toFile();
         if (!dir.exists()) {
