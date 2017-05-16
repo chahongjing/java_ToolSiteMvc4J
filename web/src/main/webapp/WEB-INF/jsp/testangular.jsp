@@ -10,6 +10,8 @@
         </li>
     </ul>
 
+    <span data-ng-bind-template="{{param}}[abc]{{paramb}}"></span>
+    <span data-ng-bind="paramb"></span>
     <div test-url>
         <span data-ng-bind="model.name"></span>
     </div>
@@ -25,6 +27,7 @@
         function ($scope, $http) {
             $scope.model = {};
             $scope.param = '123';
+            $scope.paramb = '<div>abc</div>';
 
             $scope.init = function () {
                 $scope.model.list = [];
