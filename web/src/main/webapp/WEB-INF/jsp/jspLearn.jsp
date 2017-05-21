@@ -37,7 +37,16 @@
         <li>config(ServletConfig)</li>
         <li>exception</li>
     </ul>
-    其中application(ServletContext) &gt; session(HttpSession) &gt; request(HttpSevletRequest) &gt; page(this)
+    <br>
+    <%
+        pageContext.setAttribute("name", "PageContext");
+        request.setAttribute("name", "HttpSevletRequest");
+        session.setAttribute("name", "HttpSession");
+        application.setAttribute("name", "ServletContext");
+    %>
+    其中application(<%= application.getAttribute("name") %>) &gt; session(<%= session.getAttribute("name") %>)
+    &gt; request(<%= request.getAttribute("name") %>) &gt; pageContext(<%= pageContext.getAttribute("name") %>)
+    <br>他们都有setAttribute方法
     <br><br>
     在jsp中可以定义页面类的属性，还可以定义方法, 要使用&lt;%<span class="bold red">!</span> <pre class="inline">int a = 1;</pre> %&gt;
     <br>

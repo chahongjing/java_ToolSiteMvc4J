@@ -12,6 +12,15 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener
         </listener-class>
     </listener>
+    <servlet>
+        <servlet-name>myServlet</servlet-name>
+        <servlet-class>com.zjy.web.learn.MyServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>myServlet</servlet-name>
+        <url-pattern>*.test</url-pattern>
+    </servlet-mapping>
     <!-- servlet -->
     <servlet>
         <servlet-name>springmvc</servlet-name>

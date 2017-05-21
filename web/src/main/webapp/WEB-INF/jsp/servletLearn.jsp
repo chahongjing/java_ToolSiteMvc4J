@@ -27,7 +27,9 @@
 <%@ include file="/WEB-INF/jsp/common/endHeadAndBeginBody.jsp" %>
 <%-- html正文 --%>
 <div>
-    生命周期函数:
+    一般继承GenericServlet的子类HttpServlet
+    <br>
+    servlet生命周期函数:
     <ul>
         <li>constructor: 创建时，只调用一次</li>
         <li>init(ServletConfig)：初始化时，只调用一次</li>
@@ -57,7 +59,23 @@
             HttpServletRequest:
             <ul>
                 <li>getParameter:获取请求参数,get,post(普通form表单提交)</li>
+                <li>RequestDispatcher requestDispatcher = request.getRequestDispatcher("/" + servletName);
+                    <br/>requestDispatcher.forward(request, response);
+                </li>
             </ul>
+        </li>
+        <li>
+            HttpServletReponse:
+            <ul>
+                <li>getWriter();  // PrintWriter</li>
+                <li>sendRedirect(location)</li>
+            </ul>
+        </li>
+        <li>
+            PageContext:页面上下文,可以获取到其它8个内置对象
+        </li>
+        <li>
+            exception:当page指令中isErrorPage=true时才可以使用
         </li>
     </ul>
 </div>
