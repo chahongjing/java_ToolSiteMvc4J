@@ -53,6 +53,22 @@
     &lt;%<span class="bold red">!</span> <pre class="inline">public void myFunc() { ... }</pre> %&gt;
     <br/><br/>
 
+    <h3>jsp标签</h3>
+    <br>
+    &lt;jsp:include page="a.jsp"&gt;&lt;/jsp:include&gt;<br><br>
+    &lt;jsp:forward page="a.jsp"&gt;<br>
+    &nbsp;&nbsp;&lt;jsp:param name="" value=""&gt;<br>&nbsp;&nbsp;&lt;/jsp:param&gt;
+    <br>&lt;/jsp:forward&gt;<br>相当于requestDispatcher.forward(request, response); include也可以添加jsp:param, 用request.getParameter获取
+
+    <br><br>
+    <h3>中文乱码</h3>
+    <ul>
+        <li>pageEncoding=utf-8</li>
+        <li>contentType=text/html;charset=UTF-8</li>
+        <li>对于post请求，在获取参数之前调用request.setCharacterEncoding("UTF-8")</li>
+        <li>对于get请求，在tomcat中conf/server.xml中找到节点Connector，添加属性useBodyEncodingForURI设置为true（此方法将使用post请求中保持一致的编码）<br>
+        还可以直接设置为URIEncoding=UTF-8,这只对get有效</li>
+    </ul>
 </div>
 <%@ include file="/WEB-INF/jsp/common/endBodyAndBeginScript.jsp" %>
 <%-- js脚本 --%>

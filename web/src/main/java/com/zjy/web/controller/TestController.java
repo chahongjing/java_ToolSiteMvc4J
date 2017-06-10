@@ -159,4 +159,44 @@ public class TestController {
     public String servletLearn() {
         return "servletLearn";
     }
+
+    public static void main(String[] args) {
+        UserInfo user1 = new UserInfo();
+        user1.setUserName("曾军毅");
+        UserInfo user2 = new UserInfo();
+        user2.setUserName("曾军毅");
+        System.out.println(user1.toString());
+        System.out.println(user2.toString());
+        test(user1, user1);
+
+        String a = "a";
+        String b = new String("a");
+        teststring(a, b);
+
+        int c = 1;
+        int d = 1;
+        testint(c, d);
+
+        Integer e = new Integer(1);
+        Integer f = new Integer(1);
+        testintger(e, f);
+
+
+    }
+    private static void test(UserInfo user1, UserInfo user2) {
+        user1.setUserCode("zjy");
+        user1 = new UserInfo();
+        user1.setUserName("第二个");
+        System.out.println(user1.toString());
+    }
+
+    private static void teststring(String a, String b) {
+        a = "c";
+    }
+    private static void testint(int a, int b) {
+        a = 3;
+    }
+    private static void testintger(Integer a, Integer b) {
+        a = 3;
+    }
 }

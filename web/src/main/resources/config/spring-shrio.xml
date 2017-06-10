@@ -36,6 +36,8 @@
                 /userinfo/login**=anon
                 /userinfo/logout**=anon
                 /js/**=anon
+                /bootstrap/**=anon
+                /Controls/**=anon
                 /css/**=anon
                 /test/**=anon
                 /ToolSiteMVC/TestMvc/**=authc

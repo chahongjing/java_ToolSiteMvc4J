@@ -1,0 +1,153 @@
+﻿@charset "utf-8";
+/* radio */
+.my-radio,.my-radio1{
+	line-height:28px;
+}
+.my-radio input[type='radio'],.my-radio1 input[type='radio']{
+	display:none;
+}
+.my-radio label,.my-radio1 label{cursor:pointer;display:inline-block;position:relative;
+	line-height:28px;margin-right:10px;}
+.my-radio label span,.my-radio1 label span{display:inline-block;line-height:30px;margin-left:22px;}
+.my-radio label i,.my-radio1 label i{
+	display:inline-block;position:absolute;width:18px;height:18px;
+	border:1px #ccc solid;background-color:#fff;left:0;top:6px;
+	cursor:pointer;border-radius:100%;overflow:hidden;transition:0.3s; -webkit-transition:0.3s;-moz-transition:0.3s; -o-transition:0.3s;
+}
+.my-radio label:hover i, .my-radio1 label:hover i {border-color:#7c7c7c;}
+.my-radio label i:after{
+	content:'';position:absolute;top:2px;left:2px;width:12px;height:12px;
+	background-color:#666;border-radius:50%;transform:scale(0);-webkit-transform:scale(0);
+	transition:transform 0.2s ease-out;-webkit-transition:-webkit-transform 0.2s ease-out;
+}
+.my-radio [type='radio']:checked + label i,.my-radio1 [type='radio']:checked + label i {
+	background-color:#eee;border-color:#7c7c7c;
+}
+.my-radio [type='radio']:checked + label i:after,.my-radio1 [type='radio']:checked + label i:after{
+	transform:scale(1);-webkit-transform:scale(1);transition:transform 0.2s ease-in;-webkit-transition:-webkit-transform 0.2s ease-in;
+}
+.my-radio [type=radio]:disabled + label span,.my-radio1 [type=radio]:disabled + label span{
+	color:#888;
+}
+.my-radio [type=radio]:disabled + label i,.my-radio1 [type=radio]:disabled + label i{
+	border-color:#ccc;
+}
+
+/* 第二种radio */
+.my-radio1 label i:after{
+	content:'';position:absolute;top:2px;left:2px;width:12px;height:12px;
+	background-color:#666;border-radius:50%;
+	transform:rotate(-180deg);
+	transform-origin:-2px 50%;
+	transition:transform 0.2s ease-out;display:inline-block;
+	-webkit-transform:rotate(-180deg);
+	-webkit-transform-origin:-2px 50%;
+	-webkit-transition:-webkit-transform 0.2s ease-out;
+}
+
+/* checkbox */
+.my-checkbox input[type=checkbox]{
+	display:none;
+}
+.my-checkbox label,.my-checkbox1 label{
+	cursor:pointer;position:relative;display:inline-block;margin-right:15px;
+}
+.my-checkbox label i{
+	display:inline-block;width:10px;height:10px;padding:9px;
+	border:1px #ccc solid;border-radius:4px;cursor:pointer;
+	background-color:#fff;color:#333;margin-right:10px;overflow:hidden;
+	position:absolute;font-style:normal;top:5px;transition:0.3s; -webkit-transition:0.3s;-moz-transition:0.3s; -o-transition:0.3s;
+}
+.my-checkbox label:hover i, .my-checkbox1 label:hover i {border-color:#7c7c7c;}
+.my-checkbox label span{display:inline-block;line-height:30px;margin-left:25px;
+	text-align:left;
+}
+.my-checkbox label i:after{
+	content: '√';font-family: Microsoft YaHei;color:#fff;background-color:#399;
+	width:16px;height:16px;line-height:16px;position:absolute;
+	left:1px; top:1px;border-radius:4px;text-align:center;
+	transform:translateY(-30px);-webkit-transform:translateY(-30px);transition:0.2s ease-in;
+}
+.my-checkbox [type=checkbox]:checked + label i:after{
+	transform:translateY(0);-webkit-transform:translateY(0);transition:0.2s ease-out;
+}
+.my-checkbox [type=checkbox]:checked + label i,.my-checkbox1 [type=checkbox]:checked + label i{
+	border-color:#7c7c7c;
+}
+.my-checkbox [type=checkbox]:disabled + label span,.my-checkbox1 [type=checkbox]:disabled + label span{
+	color:#888;
+}
+.my-checkbox [type=checkbox]:disabled + label i,.my-checkbox1 [type=checkbox]:disabled + label i{
+	border-color:#ccc;
+}
+
+/* 第二种checkbox */
+.my-checkbox1 input[type=checkbox]{
+	display:none;
+}
+.my-checkbox1 label i{
+	position:absolute;display:inline-block;width:40px;height:20px;border:1px #ccc solid;
+	background-color:#fafafa;border-radius:18px;transition:0.2s ease-in;top:5px;
+}
+.my-checkbox1 label i:after{
+	content:'';position:absolute;left:1px;top:1px;width:16px;
+	height:16px;border:1px #aaa solid;border-radius:18px;background-color:#eee;
+	transition:0.2s ease-in;
+}
+.my-checkbox1 label span{display:inline-block;line-height:30px;margin-left:45px;
+	text-align:left;
+}
+.my-checkbox1 [type=checkbox]:checked + label i{
+	background-color:#3c6;
+}
+.my-checkbox1 [type=checkbox]:checked + label i:after{
+	left:21px;background-color:#ccc;
+}
+
+/* select */
+.select{
+	width:100%;height:100%;font-family:"Microsoft YaHei";
+	font-size:14px;background-color:#fff;position:relative;border:1px solid #ccc;transition:0.3s; -webkit-transition:0.3s;-moz-transition:0.3s; -o-transition:0.3s;
+}
+.select:hover {border-color:#7c7c7c;}
+.select p{
+	padding:0 15px;line-height:30px;cursor:pointer;z-index:1;margin-bottom:0;
+}
+.select p:after{
+	content:'';display:block;width:10px;height:10px;border-left:1px solid #ccc;
+	border-bottom:1px solid #999;position:absolute;right:12px;top:7px;
+	transform:rotate(-45deg);cursor:pointer;transition:all 0.2s ease-in;
+}
+.select:hover p:after{
+	border-left:1px solid #666;border-bottom:1px solid #666;
+}
+.select ul{
+	list-style-type:none;background-color:#fff;width:100%;
+	overflow-y:auto;position:absolute;top:30px;left:0;max-height:0px;
+	transition:max-height 0.2s ease-in;z-index:1;
+}
+.select ul li{
+	padding: 0 15px;line-height:35px;cursor:pointer;transition:0.1s ease-in;
+	border-bottom:1px solid #eee;
+}
+.select ul li:hover{
+	background-color:#efefef;
+}
+.select ul li.selected{
+	background-color:#39f;color:#fff;
+}
+.select.open ul{
+	max-height:250px;transform-origin:50% 0;
+	animation:slidedown .5s ease-in;
+}
+.select.open p:after{
+	transform:rotate(-225deg);
+	top:13px;
+}
+@keyframes slidedown{
+	0%{transform:scale(1, 0);}
+	25%{transform:scale(1, 1.2);}
+	50%{transform:scale(1, 0.85);}
+	75%{transform:scale(1, 1.05);}
+	100%{transform:scale(1, 1);}
+}

@@ -1,0 +1,55 @@
+<div class="pagination">
+   <div class="col-xs-2 col-sm-2 col-md-2 pagination-size">
+       <div class="input-group">
+           <span class="input-group-addon">每页</span>
+           <input class="form-control input-mask-phone text-center" type="text" name="txtPageSize"
+          title="" data-last-value="" value="" />
+           <span class="input-group-addon pageSize"></span>
+       </div>
+   </div>
+   <div class="col-xs-2 col-sm-2 col-md-2 pagination-index">
+       <div class="input-group">
+           <span class="input-group-addon">第</span>
+           <input class="form-control input-mask-phone text-center" type="text" name="txtPageIndex"
+          title="" data-last-value="" value="" />
+           <span class="input-group-addon totalPages">页/共页</span>
+       </div>
+   </div>
+   <div class="col-xs-1 col-sm-1 col-md-1 pagination-confirm">
+       <input class="btn btn-sm btn-info no-border" type="button" title="点击跳转到指定页" value="确定"
+      onclick="innerSearch(this, 1, '')" />
+    </div>
+    <div class="pull-right pagination-pager pagination-button">
+        <ul class="pagination no-margin pull-right">
+            <li class="first" title="首页">
+                <a href="javascript:void(0)" data-value="1" onclick="">
+                    <i class="fa fa-angle-double-left"></i>
+                </a>
+            </li>
+            <li class="prev" title="上一页">
+                <a href="javascript:void(0)" data-value="" onclick="">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            </li>
+            <div id='divReplace'></div>
+
+            <li class="next" title="下一页">
+                <a href="javascript:void(0)" data-value="" onclick="">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+            <li class="last" title="尾页">
+                <a href="javascript:void(0)" data-value="" onclick="">
+                    <i class="fa fa-angle-double-right"></i>
+                </a>
+            </li>
+        </ul>
+        
+        <div style='display:none;' id='divLi'>
+			<li class="" title="">
+			  <a href="javascript:void(0)" data-value="" onclick="">1</a>
+			</li>
+		</div>
+    </div>
+</div>
+
