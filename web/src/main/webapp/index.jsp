@@ -59,6 +59,10 @@
 
 <br />
 <br />
+<br />
+<a href="${ctx}/cost/.do" target="_blank">财务管理</a>
+
+<br />
 <div class="pro">
 <span class="next"></span>
 <span class="next"></span>

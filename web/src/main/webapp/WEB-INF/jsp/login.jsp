@@ -61,7 +61,7 @@
     </h1>
     <h4 class="copy-right blue">&copy; Zjy Office</h4>
     <div class="login-form">
-        <form id="formLogin" action="${ctx}/userinfo/login.do" method="post">
+        <form id="formLogin" action="${ctx}/userinfo/login" method="post">
             <input type="hidden" id="RedirectUrl" name="RedirectUrl" value="<c:out value="${redirectUrl}"/>"/>
            <h4 class="header blue"><i class="fa fa-coffee green"></i>请输入您的信息</h4>
             <div class="form-control"><input type="text" name="UserCode" maxlength="30" placeholder="请输入账户"

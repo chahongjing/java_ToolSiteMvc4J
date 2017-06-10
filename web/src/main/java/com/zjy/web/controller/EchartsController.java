@@ -39,7 +39,7 @@ import java.util.stream.IntStream;
 @RequestMapping("/echarts")
 public class EchartsController {
 
-    @RequestMapping("/index.do")
+    @RequestMapping("/index")
     public ModelAndView index(HttpServletRequest request, HttpServletResponse response) throws Exception {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("echarts");

@@ -81,18 +81,18 @@ public class TestController {
     @RequestMapping("/redirect.do")
     public ModelAndView redirect() {
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("redirect:/testP2.do");
+        mv.setViewName("redirect:/testP2");
 
         return mv;
     }
     //endregion
 
-    @RequestMapping("/testangular.do")
+    @RequestMapping("/testangular")
     public String testangular() {
         return "testangular";
     }
 
-    @RequestMapping("/testajax.do")
+    @RequestMapping("/testajax")
     @ResponseBody
     public BaseResult testajax(String a, String b, String c) {
         BaseResult<String> result = BaseResult.OK("abc");
@@ -101,7 +101,7 @@ public class TestController {
         return result;
     }
 
-    @RequestMapping("/fileupload.do")
+    @RequestMapping("/fileupload")
     public ModelAndView fileUpload(MultipartHttpServletRequest request) {
         // @RequestParam("myfile") List<CommonsMultipartFile> myfile
 //        try {
@@ -130,7 +130,7 @@ public class TestController {
         return mv;
     }
 
-    @RequestMapping("/download.do")
+    @RequestMapping("/download")
     public void download(HttpServletResponse response) {
         // path是指欲下载的文件的路径。
         String path = "d:\\b.txt";
@@ -138,24 +138,24 @@ public class TestController {
     }
 
 
-    @RequestMapping("/jspLearn.do")
+    @RequestMapping("/jspLearn")
     public String jspLearn(Integer[] arr) {
         System.out.println(arr);
         return "jspLearn";
     }
 
-    @RequestMapping("/springLearn/{intVar}.do")
+    @RequestMapping("/springLearn/{intVar}")
     public String springLearn(@PathVariable(required = true) int intVar) {
         System.out.println(intVar);
         return "springLearn";
     }
 
-    @RequestMapping("/elLearn.do")
+    @RequestMapping("/elLearn")
     public String elLearn() {
         return "elLearn";
     }
 
-    @RequestMapping("/servletLearn.do")
+    @RequestMapping("/servletLearn")
     public String servletLearn() {
         return "servletLearn";
     }

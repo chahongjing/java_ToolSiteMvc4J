@@ -25,7 +25,7 @@ public class IndexController {
     @Autowired
     private UserInfoForHibernateDao userInfoForHibernateDao;
 
-    @RequestMapping("/index.do")
+    @RequestMapping("/index")
     public String test(HttpServletRequest request, HttpServletResponse response) throws Exception {
         ExcelHelper<String> e = new ExcelHelper<>();
 

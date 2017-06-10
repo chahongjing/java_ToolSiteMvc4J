@@ -18,6 +18,10 @@ public interface UserInfoService {
 
     PageInfo queryPage(UserInfoRequest request);
 
+    UserInfo get(String id);
+
+    UserInfo getByUserCode(String userCode);
+
     int add(UserInfo entity);
 
     int delete(String id);

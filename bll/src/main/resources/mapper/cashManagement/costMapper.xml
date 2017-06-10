@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zjy.bll.dao.cashManagement.CostDao">
+    <insert id="add" parameterType="Cost">
+        INSERT INTO Cost([Amount], [CosterId], [CostTime], [CreatedBy], [CreatedOn], [Id], [Memo], [ModifiedBy], [ModifiedOn],
+                [Status], [Title])
+        VALUES(#{amount, jdbcType=FLOAT}, #{costerId, jdbcType=VARCHAR}, #{costTime, jdbcType=TIMESTAMP},
+                #{createdBy, jdbcType=VARCHAR}, #{createdOn, jdbcType=TIMESTAMP}, #{id, jdbcType=VARCHAR},
+                #{memo, jdbcType=VARCHAR}, #{modifiedBy, jdbcType=VARCHAR}, #{modifiedOn, jdbcType=TIMESTAMP},
+                #{status, jdbcType=BIT}, #{title, jdbcType=VARCHAR})
+    </insert>
+
+    <select id="get" parameterType="String" resultType="Cost">
+        SELECT TOP 1 [Amount], [CosterId], [CostTime], [CreatedBy], [CreatedOn], [Id], [Memo], [ModifiedBy], [ModifiedOn],
+                [Status], [Title]
+          FROM Cost
+         WHERE Id = #{id, jdbcType = VARCHAR}
+    </select>
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM Cost WHERE Id = #{id, jdbcType=VARCHAR}
+    </delete>
+
+    <select id="query" resultType="Cost">
+        SELECT [Amount], [CosterId], [CostTime], [CreatedBy], [CreatedOn], [Id], [Memo], [ModifiedBy], [ModifiedOn], [Status],
+                [Title]
+          FROM Cost
+         WHERE 1 = 1
+    </select>
+    <select id="queryPage" resultType="Cost">
+        SELECT [Amount], [CosterId], [CostTime], [CreatedBy], [CreatedOn], [Id], [Memo], [ModifiedBy], [ModifiedOn], [Status],
+                [Title]
+          FROM Cost
+         WHERE CosterId = #{userId, jdbcType=VARCHAR}
+    </select>
+</mapper>

@@ -13,5 +13,6 @@ import java.util.List;
  */
 @Repository
 public interface UserInfoDao extends BaseDao<UserInfo> {
+    UserInfo getByUserCode(String userCode);
     List<UserInfo> test(@Param("a") String aa, @Param("b") UserInfo bb);
 }

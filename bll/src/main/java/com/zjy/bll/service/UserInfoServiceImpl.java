@@ -25,7 +25,7 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
 
     public BaseResult<String> login(UserInfo user) {
         BaseResult<String> result = new BaseResult<>();
-        UserInfo dbUser = super.get(user.getUserCode());
+        UserInfo dbUser = dao.getByUserCode(user.getUserCode());
 
         if (dbUser == null) {
             result.setStatus(ResultStatus.NO);
@@ -85,5 +85,10 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
     @Override
     public List<UserInfo> test(String aa, UserInfo bb) {
         return dao.test(aa, bb);
+    }
+
+    @Override
+    public UserInfo getByUserCode(String userCode){
+        return dao.getByUserCode(userCode);
     }
 }

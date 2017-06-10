@@ -3,6 +3,7 @@ package com.zjy.web.controller;
 import com.github.pagehelper.PageInfo;
 import com.zjy.baseframework.BaseResult;
 import com.zjy.baseframework.enums.ResultStatus;
+import com.zjy.bll.common.UserUtils;
 import com.zjy.bll.request.UserInfoRequest;
 import com.zjy.bll.service.UserInfoService;
 import com.zjy.entities.UserInfo;
@@ -37,10 +38,12 @@ public class UserInfoController {
 
     @Autowired
     private UserInfoService userInfoService;
+    @Autowired
+    private UserUtils userUtils;
     //endregion
 
     //region 登录登出
-    @RequestMapping("/loginpage.do")
+    @RequestMapping("/loginpage")
     public ModelAndView login(HttpServletRequest request) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("login");
@@ -53,7 +56,7 @@ public class UserInfoController {
         return mv;
     }
 
-    @RequestMapping("/login.do")
+    @RequestMapping("/login")
     public ResponseEntity<BaseResult<String>> login(UserInfo user) throws Exception {
         BaseResult<String> re = userInfoService.login(user);
 
@@ -71,11 +74,12 @@ public class UserInfoController {
         return new ResponseEntity<>(re, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/logout.do")
+    @RequestMapping(value = "/logout")
     public ResponseEntity<BaseResult<String>> logout() {
         Subject subject = SecurityUtils.getSubject();
         if (subject.isAuthenticated()) {
             subject.logout(); // session 会销毁，在SessionListener监听session销毁，清理权限缓存
+            userUtils.logout();
         }
 
         BaseResult<String> re = BaseResult.OK();
@@ -85,7 +89,7 @@ public class UserInfoController {
     }
     //endregion
 
-    @RequestMapping("/loginindex.do")
+    @RequestMapping("/loginindex")
     public ModelAndView loginindex() {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("list");

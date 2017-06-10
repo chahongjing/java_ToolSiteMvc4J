@@ -7,8 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author chahongjing
@@ -32,7 +32,7 @@ public class BaseService<Dao extends BaseDao<T>, T> {
         return dao.query(entity);
     }
 
-    public PageInfo<T> queryPage(PageInfomation pi, HashMap<String, Object> query) {
+    public PageInfo<T> queryPage(PageInfomation pi, Map<String, Object> query) {
         logger.info("调用queryPage方法:PageInfomation: {}\tquery: {}", JSON.toJSONString(pi), JSON.toJSONString(query));
         PageHelper.startPage(pi.getPageNum(), pi.getPageSize()).setOrderBy(pi.getOrderBy());
         return new PageInfo<>(dao.queryPage(query));

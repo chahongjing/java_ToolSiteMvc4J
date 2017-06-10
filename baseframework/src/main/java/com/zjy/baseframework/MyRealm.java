@@ -1,13 +1,17 @@
 package com.zjy.baseframework;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.Subject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 import static org.apache.shiro.web.filter.mgt.DefaultFilter.user;
 
@@ -18,6 +22,10 @@ import static org.apache.shiro.web.filter.mgt.DefaultFilter.user;
  * @create 2016-10-27 23:04
  */
 public class MyRealm extends AuthorizingRealm {
+
+    protected static String currentKey = "currentUser";
+
+    protected static Function<String, Object> myfun;
     /**
      * 为当前登录的Subject授予角色和权限
      *
@@ -109,7 +117,8 @@ public class MyRealm extends AuthorizingRealm {
         //User user = userService.getByUsername(token.getUsername());
         if (null != user) {
             AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(token.getUsername(), token.getPassword(), "");
-            this.setSession("currentUser", user);
+            this.setSession(currentKey, myfun.apply(authcInfo.getPrincipals().asList().get(0).toString()));
+            // this.setSession(currentKey, authcInfo);
             return authcInfo;
         } else {
             return null;
@@ -123,13 +132,28 @@ public class MyRealm extends AuthorizingRealm {
      * @see 比如Controller,使用时直接用HttpSession.getAttribute(key)就可以取到
      */
     private void setSession(Object key, Object value) {
-//        Subject currentUser = SecurityUtils.getSubject();
-//        if (null != currentUser) {
-//            Session session = currentUser.getSession();
-//            System.out.println("Session默认超时时间为[" + session.getTimeout() + "]毫秒");
-//            if (null != session) {
-//                session.setAttribute(key, value);
-//            }
-//        }
+        Subject currentUser = SecurityUtils.getSubject();
+        if (null != currentUser) {
+            Session session = currentUser.getSession();
+            System.out.println("Session默认超时时间为[" + session.getTimeout() + "]毫秒");
+            if (null != session) {
+                session.setAttribute(key, value);
+            }
+        }
+    }
+
+    public Object getUser() {
+        Subject currentUser = SecurityUtils.getSubject();
+        if (null != currentUser) {
+            Session session = currentUser.getSession();
+            if (null != session) {
+                Object obj = session.getAttribute(currentKey);
+                if(obj != null) {
+                    // AuthenticationInfo ai = (AuthenticationInfo)obj;
+                    return obj;
+                }
+            }
+        }
+        return null;
     }
 }
