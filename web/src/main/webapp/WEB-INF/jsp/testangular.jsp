@@ -15,6 +15,8 @@
     <div test-url>
         <span data-ng-bind="model.name"></span>
     </div>
+
+    <div data-ng-include="includeUrl" data-ng-controller="includePageCtrl" onload="init()"></div>
 </div>
 <%@ include file="/WEB-INF/jsp/common/endBodyAndBeginScript.jsp" %>
 <%-- js脚本 --%>
@@ -22,9 +24,10 @@
 <script src="${ctx}/js/angular/angular_main.js"></script>
 <script src="${ctx}/js/angular/directives/ng_repeat_finish.js"></script>
 <script src="${ctx}/js/angular/directives/test_templateurl.js"></script>
+<script src="${ctx}/js/angular/includePageCtrl.js"></script>
 <script>
-    app.controller('testCtrl', ['$scope', '$http',
-        function ($scope, $http) {
+    app.controller('testCtrl', ['$scope', '$http', '$timeout',
+        function ($scope, $http, $timeout) {
             $scope.model = {};
             $scope.param = '123';
             $scope.paramb = '<div>abc</div>';
@@ -37,6 +40,12 @@
                 $scope.model.name = "父级";
 //                $scope.model.testGet();
 //                $scope.model.testPost();
+
+                $scope.includeUrl = '${ctx}/js/angular/includePage.html';
+
+                $timeout(function() {
+                    $scope.$broadcast('callChildFuncId', {a: '参数'});
+                });
             };
 
             $scope.model.myAfterRender = function (param) {
@@ -58,6 +67,13 @@
                     console.log('error');
                 });
             };
+
+            $scope.parentFunc = function() {
+                console.log('这是父页面方法,通过$parent调用父方法!');
+            }
+            var m = $scope.$on('callParentFuncId', function($event, param) {
+                console.log('这是父页面方法,通过emit+on调用父方法!' + JSON.stringify(param));
+            });
         }]);
 </script>
 <%@ include file="/WEB-INF/jsp/common/endScript.jsp" %>
