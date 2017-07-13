@@ -2,5 +2,8 @@
     <div>测试数据</div>
     <div data-ng-bind="model.testdata">
     </div>
+    <input type="text" data-ng-model="myInput">
     <div ng-transclude></div>
+    <div test-dir abcname="{{myInput}}"></div>
+    <div data-ng-include="'../js/angular/templates/includePage.html'"></div>
 </div>

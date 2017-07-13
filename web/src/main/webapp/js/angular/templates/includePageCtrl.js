@@ -13,4 +13,8 @@ app.controller('includePageCtrl', ['$scope', '$http',
         $scope.$on('callChildFuncId', function($event, param) {
             console.log('这是子页面方法！通过broadcast+on调用子方法!' + JSON.stringify(param));
         });
+
+        $scope.testclick = function() {
+            console.log('test');
+        }
     }]);

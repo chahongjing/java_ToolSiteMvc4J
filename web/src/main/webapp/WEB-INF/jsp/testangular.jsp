@@ -10,13 +10,13 @@
         </li>
     </ul>
 
+    <div data-ng-include="includeUrl" data-ng-controller="includePageCtrl" onload="init()"></div>
     <span data-ng-bind-template="{{param}}[abc]{{paramb}}"></span>
     <span data-ng-bind="paramb"></span>
     <div test-url>
         <span data-ng-bind="model.name"></span>
     </div>
 
-    <div data-ng-include="includeUrl" data-ng-controller="includePageCtrl" onload="init()"></div>
 </div>
 <%@ include file="/WEB-INF/jsp/common/endBodyAndBeginScript.jsp" %>
 <%-- js脚本 --%>
@@ -24,7 +24,8 @@
 <script src="${ctx}/js/angular/angular_main.js"></script>
 <script src="${ctx}/js/angular/directives/ng_repeat_finish.js"></script>
 <script src="${ctx}/js/angular/directives/test_templateurl.js"></script>
-<script src="${ctx}/js/angular/includePageCtrl.js"></script>
+<script src="${ctx}/js/angular/directives/testDir.js"></script>
+<script src="${ctx}/js/angular/templates/includePageCtrl.js"></script>
 <script>
     app.controller('testCtrl', ['$scope', '$http', '$timeout',
         function ($scope, $http, $timeout) {
@@ -41,7 +42,7 @@
 //                $scope.model.testGet();
 //                $scope.model.testPost();
 
-                $scope.includeUrl = '${ctx}/js/angular/includePage.html';
+                $scope.includeUrl = '${ctx}/js/angular/templates/includePage.html';
 
                 $timeout(function() {
                     $scope.$broadcast('callChildFuncId', {a: '参数'});
