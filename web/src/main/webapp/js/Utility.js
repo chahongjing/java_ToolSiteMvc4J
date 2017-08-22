@@ -387,3 +387,27 @@ window.Constant = {
     AjaxStatus: { OK: "OK", NO: "NO", ERROR: "ERROR", UNLOGIN: "UNLOGIN", UNAUTHORIZED: "UNAUTHORIZED" },
     EmptyGuid: "00000000-0000-0000-0000-000000000000"
 }
+
+if($ && $.ajaxSetup) {
+    $.ajaxSetup({
+        //请求失败遇到异常触发
+        error: function (xhr, status, e) {
+            if(status == 'error') {
+                var startIndex = xhr.responseText.indexOf('<title>');
+                var endIndex = xhr.responseText.indexOf('</title>');
+                var message = xhr.responseText.substring(startIndex + 7, endIndex);
+                window.DialogBox.Alert(message, function () {
+                    return false;
+                });
+            }
+        }
+        // //完成请求后触发。即在success或error触发后触发
+        // complete: function (xhr, status) { show.append('complete invoke! status:' + status+'<br/>'); },
+        // //发送请求前触发
+        // beforeSend: function (xhr) {
+        //     //可以设置自定义标头
+        //     xhr.setRequestHeader('Content-Type', 'application/xml;charset=utf-8');
+        //     show.append('beforeSend invoke!' +'<br/>');
+        // },
+    })
+}

@@ -126,8 +126,7 @@
                         return false;
                     });
                 }
-            },
-            error: function() {}
+            }
         });
     }
 </script>
