@@ -95,9 +95,9 @@ public class TestController {
     @RequestMapping("/testajax")
     @ResponseBody
     public BaseResult testajax(String a, String b, String c) {
-        BaseResult<String> result = BaseResult.OK("abc");
-        int aa = 1, bb = 0;
-        int cc = aa / bb;
+        BaseResult<String> result = BaseResult.OK("后台返回数据");
+//        int aa = 1, bb = 0;
+//        int cc = aa / bb;
         return result;
     }
 
@@ -158,6 +158,11 @@ public class TestController {
     @RequestMapping("/servletLearn")
     public String servletLearn() {
         return "servletLearn";
+    }
+
+    @RequestMapping("/angulardemo")
+    public String angulardemo() {
+        return "angulardemo";
     }
 
     public static void main(String[] args) {

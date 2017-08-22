@@ -56,6 +56,7 @@
 <a href="${ctx}/test/springLearn/123.do" target="_blank">学习spring</a>
 <a href="${ctx}/test/elLearn.do" target="_blank">学习el</a>
 <a href="${ctx}/test/servletLearn.do" target="_blank">学习servlet</a>
+<a href="${ctx}/test/angulardemo.do" target="_blank">angular demo</a>
 
 <br />
 <br />

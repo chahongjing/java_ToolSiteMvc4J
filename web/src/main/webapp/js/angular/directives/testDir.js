@@ -4,13 +4,15 @@
 app.directive('testDir', function ($compile) {
     return {
         restrict: 'A',
-        template: '<div>testdiv</div>',
+        template: '<div>old:{{oldValue}}--new:{{newValue}}</div>',
         scope: {
             abcname: '@'
         },
-        link: function ($scope, element, attrs) {
+        link: function ($scope, $compile, element, attrs) {
             $scope.$watch('abcname', function(newValue, oldValue) {
                 console.log('new:' + newValue + ' old:' + oldValue);
+                $scope.oldValue = oldValue;
+                $scope.newValue = newValue;
             })
         }
     }
