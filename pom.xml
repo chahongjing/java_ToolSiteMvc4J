@@ -40,7 +40,7 @@
         <solr.version>6.3.0</solr.version>
         <sqlserver.version>4.0</sqlserver.version>
         <mysql.version>6.0.5</mysql.version>
-        <junit.version>4.11</junit.version>
+        <junit.version>4.12</junit.version>
         <httpclient.version>3.1</httpclient.version>
         <httpclientnew.version>4.5.3</httpclientnew.version>
         <ws.rs.version>2.0.1</ws.rs.version>

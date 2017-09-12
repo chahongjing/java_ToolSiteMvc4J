@@ -5,7 +5,7 @@
     <!-- 上下文配置 -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:applicationContext.xml,classpath:/config/spring-*.xml</param-value>
+        <param-value>classpath:applicationContext.xml,classpath:/config/spring-context-*.xml</param-value>
     </context-param>
     <!-- 上下文监听 -->
     <listener>

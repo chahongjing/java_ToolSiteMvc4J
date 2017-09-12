@@ -1,3 +1,4 @@
+<%@ page import="com.zjy.entities.UserInfo" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/jsp/common/beginHead.jsp" %>
 <%-- 页头，添加title, mate信息, link样式, script脚本(建议在script节中添加) --%>
@@ -69,6 +70,15 @@
         <li>对于get请求，在tomcat中conf/server.xml中找到节点Connector，添加属性useBodyEncodingForURI设置为true（此方法将使用post请求中保持一致的编码）<br>
         还可以直接设置为URIEncoding=UTF-8,这只对get有效</li>
     </ul>
+
+    <h3>测试代码<a href="http://blog.csdn.net/u010168160/article/details/49182867">学习地址</a></h3>
+    <jsp:useBean id="testUser" class="com.zjy.entities.UserInfo" scope="session"></jsp:useBean>
+    <jsp:setProperty name="testUser" property="userName" value="曾军毅"></jsp:setProperty>
+    age<%
+    UserInfo user = (UserInfo)session.getAttribute("testUser");
+    out.println(user.getUserName());
+%>
+age<jsp:getProperty name="testUser" property="userName"></jsp:getProperty>
 </div>
 <%@ include file="/WEB-INF/jsp/common/endBodyAndBeginScript.jsp" %>
 <%-- js脚本 --%>

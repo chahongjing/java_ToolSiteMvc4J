@@ -10,6 +10,7 @@ import com.zjy.entities.UserInfo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.session.HttpServletSession;
 import org.apache.shiro.web.util.SavedRequest;
 import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
@@ -90,18 +91,20 @@ public class UserInfoController {
     //endregion
 
     @RequestMapping("/loginindex")
-    public ModelAndView loginindex() {
+    public ModelAndView loginindex(HttpServletRequest request) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("list");
 
         UserInfo b = new UserInfo();
         b.setUserCode("b");
+        b.setUserName("曾军毅从controller获取数据");
         List<UserInfo> test = userInfoService.test("a", b);
         List<UserInfo> list = userInfoService.query(new UserInfo());
 
-        UserInfoRequest request = new UserInfoRequest();
-        request.setOrderBy("UserCode DESC");
-        PageInfo query = userInfoService.queryPage(request);
+        UserInfoRequest uRequest = new UserInfoRequest();
+        uRequest.setOrderBy("UserCode DESC");
+        PageInfo query = userInfoService.queryPage(uRequest);
+        request.getSession().setAttribute("userTest", b);
 
         mv.addObject("pageinfo", query);
 
