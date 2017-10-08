@@ -23,4 +23,10 @@
             <type>java.lang.String</type>
         </attribute>
     </tag>
+
+    <tag>
+        <name>sonTag</name>
+        <tag-class>com.zjy.bll.common.SonTag</tag-class>
+        <body-content>empty</body-content>
+    </tag>
 </taglib>

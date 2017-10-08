@@ -10,7 +10,6 @@ import com.zjy.entities.UserInfo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
-import org.apache.shiro.web.session.HttpServletSession;
 import org.apache.shiro.web.util.SavedRequest;
 import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
@@ -58,7 +57,7 @@ public class UserInfoController {
     }
 
     @RequestMapping("/login")
-    public ResponseEntity<BaseResult<String>> login(UserInfo user) throws Exception {
+    public ResponseEntity<BaseResult<String>> login(HttpServletRequest request, UserInfo user) throws Exception {
         BaseResult<String> re = userInfoService.login(user);
 
         if (re.getStatus() != ResultStatus.OK) {

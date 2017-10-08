@@ -39,6 +39,7 @@ empty:${empty " "}
 <h2>el tag</h2>
 <myPre:readFile src="/WEB-INF/myTag.tld">
 从页面上传过来的参数：${param.name}
+    <myPre:sonTag/>
 </myPre:readFile>
 
 <%@ include file="/WEB-INF/jsp/common/commonJs.jsp" %>

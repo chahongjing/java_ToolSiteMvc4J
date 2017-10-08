@@ -62,6 +62,11 @@
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-mongodb</artifactId>
         </dependency>
+        <!-- dbutils -->
+        <dependency>
+            <groupId>commons-dbutils</groupId>
+            <artifactId>commons-dbutils</artifactId>
+        </dependency>
         <!-- sql server驱动 -->
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>

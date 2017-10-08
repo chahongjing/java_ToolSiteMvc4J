@@ -21,7 +21,7 @@ public class MyServlet extends HttpServlet {
         // 转发 /表示项目根目录，不需要再添加contextPath
         RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/jsp/servletLearn.jsp");
         //dispatcher.forward(req, resp);
-
+        //this.getServletContext().getResource()
         // 重定向 /表示站点根目录，需要添加contextPath
         resp.sendRedirect(req.getContextPath() + "/index.jsp");
         //super.doPost(req, resp);

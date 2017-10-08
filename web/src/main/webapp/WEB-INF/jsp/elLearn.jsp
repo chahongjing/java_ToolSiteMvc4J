@@ -8,7 +8,7 @@
     .red{color:#f00;}
     .inline{display:inline-block;}
 </style>
-<title>学习spring</title>
+<title>学习el</title>
 <%@ include file="/WEB-INF/jsp/common/endHeadAndBeginBody.jsp" %>
 <%-- html正文 --%>
 <div>

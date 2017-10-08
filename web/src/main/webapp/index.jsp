@@ -52,11 +52,13 @@
 <a href="${ctx}/test/download.do">下载</a>
 <a href="${ctx}/echarts/index.do" target="_blank">echarts图表</a>
 <a href="${ctx}/test/testangular.do" target="_blank">测试angular</a>
-<a href="${ctx}/test/jspLearn.do?arr=1&arr=2" target="_blank">学习jsp</a>
-<a href="${ctx}/test/springLearn/123.do" target="_blank">学习spring</a>
-<a href="${ctx}/test/elLearn.do" target="_blank">学习el</a>
-<a href="${ctx}/test/servletLearn.do" target="_blank">学习servlet</a>
 <a href="${ctx}/test/angulardemo.do" target="_blank">angular demo</a>
+<br/><br/>
+<a href="${ctx}/test/tomcatLearn.do" target="_blank">学习tomcat</a>
+<a href="${ctx}/test/servletLearn.do" target="_blank">学习servlet</a>
+<a href="${ctx}/test/jspLearn.do?arr=1&arr=2" target="_blank">学习jsp</a>
+<a href="${ctx}/test/elLearn.do" target="_blank">学习el</a>
+<a href="${ctx}/test/springLearn/123.do" target="_blank">学习spring</a>
 
 <br />
 <br />

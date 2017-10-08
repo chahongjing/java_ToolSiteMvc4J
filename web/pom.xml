@@ -161,9 +161,9 @@
                 <directory>src/main/resources</directory>
                 <!-- 资源根目录排除各环境的配置，使用单独的资源目录来指定 -->
                 <excludes>
-                    <exclude>test/*</exclude>
-                    <exclude>production/*</exclude>
-                    <exclude>development/*</exclude>
+                    <exclude>profiles/test/*</exclude>
+                    <exclude>profiles/production/*</exclude>
+                    <exclude>profiles/development/*</exclude>
                 </excludes>
             </resource>
             <resource>

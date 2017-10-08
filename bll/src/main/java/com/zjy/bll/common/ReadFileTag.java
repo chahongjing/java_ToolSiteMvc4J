@@ -1,11 +1,8 @@
 package com.zjy.bll.common;
 
-import javax.servlet.jsp.JspContext;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.JspFragment;
-import javax.servlet.jsp.tagext.JspTag;
-import javax.servlet.jsp.tagext.SimpleTag;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 import java.io.IOException;
 
@@ -17,6 +14,10 @@ public class ReadFileTag extends SimpleTagSupport {
 
     public void setSrc(String src) {
         this.src = src;
+    }
+
+    public String getSrc() {
+        return src;
     }
 
     /**

@@ -38,6 +38,7 @@
         <cache.version>1.0.0</cache.version>
         <quartz.version>2.2.1</quartz.version>
         <solr.version>6.3.0</solr.version>
+        <dbutils.version>1.7</dbutils.version>
         <sqlserver.version>4.0</sqlserver.version>
         <mysql.version>6.0.5</mysql.version>
         <junit.version>4.12</junit.version>
@@ -265,6 +266,12 @@
                         <artifactId>zookeeper</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <!-- dbutils -->
+            <dependency>
+                <groupId>commons-dbutils</groupId>
+                <artifactId>commons-dbutils</artifactId>
+                <version>${dbutils.version}</version>
             </dependency>
             <!-- sql server驱动 -->
             <dependency>

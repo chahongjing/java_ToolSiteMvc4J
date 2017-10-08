@@ -13,19 +13,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.ServletConfigAware;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.JspWriter;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -35,9 +34,15 @@ import java.util.HashMap;
  */
 @Controller
 @RequestMapping("/test")
-public class TestController {
+public class TestController implements ServletConfigAware {
     private Logger logger = LoggerFactory.getLogger(TestController.class);
 
+    private ServletConfig servletConfig;
+
+    @Override
+    public void setServletConfig(ServletConfig servletConfig) {
+        this.servletConfig = servletConfig;
+    }
     @Value("${db.url}")
     private String url;
 
@@ -153,6 +158,12 @@ public class TestController {
     @RequestMapping("/elLearn")
     public String elLearn() {
         return "elLearn";
+    }
+
+
+    @RequestMapping("/tomcatLearn")
+    public String tomcatLearn() {
+        return "tomcatLearn";
     }
 
     @RequestMapping("/servletLearn")
