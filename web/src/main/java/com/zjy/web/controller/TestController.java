@@ -149,6 +149,13 @@ public class TestController implements ServletConfigAware {
         return "jspLearn";
     }
 
+
+    @RequestMapping("/otherLearn")
+    public String otherLearn(Integer[] arr) {
+        System.out.println(arr);
+        return "otherLearn";
+    }
+
     @RequestMapping("/springLearn/{intVar}")
     public String springLearn(@PathVariable(required = true) int intVar) {
         System.out.println(intVar);

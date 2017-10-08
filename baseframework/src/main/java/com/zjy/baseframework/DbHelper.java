@@ -5,10 +5,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class DbHelper {
+    private static boolean isLoadDirve = false;
     private static ConcurrentHashMap<String, List<Field>> map = new ConcurrentHashMap();
     public static ResultSet testSelect() {
         String sql = PropertiesHelper.getInstance().getProperties("db.testSql");
@@ -105,7 +105,10 @@ public class DbHelper {
 
     public static Connection getConnection() throws ClassNotFoundException, SQLException {
         // 反射数据库驱动程序类
-        Class.forName(com.zjy.baseframework.PropertiesHelper.getInstance().getProperties("db.driverClassName"));
+        if(!isLoadDirve) {
+            Class.forName(PropertiesHelper.getInstance().getProperties("db.driverClassName"));
+            isLoadDirve = true;
+        }
 
         // 获取数据库连接
         Connection con = DriverManager.getConnection(

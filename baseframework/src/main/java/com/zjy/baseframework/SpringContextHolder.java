@@ -52,7 +52,13 @@ public class SpringContextHolder implements ApplicationContextAware, ServletCont
      */
     @SuppressWarnings("unchecked")
     public static <T> T getBean(String name) throws BeansException {
-        return (T) applicationContext.getBean(name);
+        T bean = null;
+        try {
+            bean = (T) applicationContext.getBean(name);
+        }catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return bean;
     }
 
     /**

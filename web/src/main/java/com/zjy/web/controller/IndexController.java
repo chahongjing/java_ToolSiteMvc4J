@@ -1,9 +1,7 @@
 package com.zjy.web.controller;
 
-import com.zjy.baseframework.DbHelperNew;
 import com.zjy.baseframework.ExcelHelper;
 import com.zjy.bll.dao.UserInfoForHibernateDao;
-import com.zjy.entities.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,14 +35,11 @@ public class IndexController {
     @RequestMapping("/")
     public String test(HttpServletRequest request, HttpServletResponse response) throws Exception {
         ExcelHelper<String> e = new ExcelHelper<>();
-
         return "common/ok";
     }
 
     public static void main(String[] args) {
-        UserInfo u = DbHelperNew.get("select * from userinfo", UserInfo.class);
-        int i = DbHelperNew.update("update userinfo set username = '曾' where username = '1曾'");
-        List<UserInfo> list = DbHelperNew.getList("select * from userinfo", UserInfo.class);
+
 
         Set<String> s = new LinkedHashSet<>();
         s.add("b");
