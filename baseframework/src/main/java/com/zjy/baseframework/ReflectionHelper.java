@@ -19,6 +19,9 @@ public class ReflectionHelper {
                 }
             }
         }
+
+        // 获取方法，后面的参数为获取的方法的签名参数类型
+        // Method method = clazz.getDeclaredMethod("方法名称", HttpServletRequest.class, HttpServletResponse.class);
         return clazz;
     }
 }

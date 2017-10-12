@@ -59,6 +59,8 @@
 <a href="${ctx}/test/jspLearn.do?arr=1&arr=2" target="_blank">学习jsp</a>
 <a href="${ctx}/test/elLearn.do" target="_blank">学习el</a>
 <a href="${ctx}/test/springLearn/123.do" target="_blank">学习spring</a>
+<a href="${ctx}/test/cookieLearn.do" target="_blank">学习cookie</a>
+<a href="${ctx}/test/sessionLearn.do" target="_blank">学习session</a>
 <a href="${ctx}/test/otherLearn.do" target="_blank">其它</a>
 
 <br />

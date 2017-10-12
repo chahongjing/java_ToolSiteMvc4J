@@ -1,6 +1,7 @@
 package com.zjy.web.controller;
 
 import com.zjy.baseframework.BaseResult;
+import com.zjy.baseframework.CookieHelper;
 import com.zjy.baseframework.DownloadHelper;
 import com.zjy.baseframework.PartialViewHelper;
 import com.zjy.entities.UserInfo;
@@ -149,6 +150,18 @@ public class TestController implements ServletConfigAware {
         return "jspLearn";
     }
 
+
+    @RequestMapping("/cookieLearn")
+    public String cookieLearn(HttpServletRequest request, HttpServletResponse response) {
+        String cookie = CookieHelper.getCookie(request, "zjy");
+        CookieHelper.addCookie(response, "zjy", "曾军毅");
+        return "cookieLearn";
+    }
+
+    @RequestMapping("/sessionLearn")
+    public String sessionLearn() {
+        return "sessionLearn";
+    }
 
     @RequestMapping("/otherLearn")
     public String otherLearn(Integer[] arr) {
