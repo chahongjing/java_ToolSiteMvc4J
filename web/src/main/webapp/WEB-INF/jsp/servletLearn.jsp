@@ -82,6 +82,7 @@
         <li>request.getQueryString()来获取查询参数，如username=zjy&password=1</li>
         <li>request.getServletPath(),获取servlet请求方路径，不包括context, 参数之前, 如/userinfo/login</li>
         <li>request.getMethod(),获取请求方式，如POST</li>
+        <li>request.getSession(),获取session,可以传参，当传true时表示，若存在，则直接返回，不存在，则创建，为false时，当存在则返回，不存在返回null</li>
         <li>RequestDispatcher requestDispatcher = request.getRequestDispatcher("/" + servletName);
             <br/>requestDispatcher.<span class="red">forward</span>(request, response);
             <br>

@@ -17,7 +17,18 @@
         <span data-ng-bind="model.name"></span>
     </div>
 
+    <hr>
+    <div id="testTemplate">
+
+    </div>
 </div>
+
+<script type="text/ng-template" id="my.html">
+    <h4>lovestory</h4>
+    <p>这是script标签获取模板文件的方式</p>
+    <a href="{{url}}">标签启用templateCache方式</a>
+</script>
+
 <%@ include file="/WEB-INF/jsp/common/endBodyAndBeginScript.jsp" %>
 <%-- js脚本 --%>
 <script src="${ctx}/js/angular/angular.js"></script>
@@ -27,8 +38,8 @@
 <script src="${ctx}/js/angular/directives/testDir.js"></script>
 <script src="${ctx}/js/angular/templates/includePageCtrl.js"></script>
 <script>
-    app.controller('testCtrl', ['$scope', '$http', '$timeout',
-        function ($scope, $http, $timeout) {
+    app.controller('testCtrl', ['$scope', '$http', '$timeout', '$compile', '$templateCache',
+        function ($scope, $http, $timeout, $compile, $templateCache) {
             $scope.model = {};
             $scope.param = '123';
             $scope.paramb = '<div>abc</div>';
@@ -47,6 +58,10 @@
                 $timeout(function() {
                     $scope.$broadcast('callChildFuncId', {a: '参数'});
                 });
+
+                var template = $templateCache.get('my.html');
+                $scope.url = 'http://www.baidu.com';
+                angular.element('#testTemplate').append($compile(template)($scope));
             };
 
             $scope.model.myAfterRender = function (param) {
