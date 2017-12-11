@@ -12,28 +12,23 @@
 <%@ include file="/WEB-INF/jsp/common/endHeadAndBeginBody.jsp" %>
 <%-- html正文 --%>
 <div>
-    spring 2.5之前用@controller，之后用注解：
+    <p>代理模式<a href="<c:url value="/test/testProxy.do" />" target="_blank">测试代理</a></p>
     <ul>
-        <li>@RequestParam</li>
-        <li>@ModelAttribute</li>
-        <li>@SessionAttributes</li>
-        <li>@InitBinder</li>
+        <li>切面（aspect）</li>
+        <li>通知（advice）</li>
+        <li>目标（target）</li>
+        <li>代理（proxy）</li>
+        <li>连接点（joinpoint）</li>
+        <li>切点（pointcut）</li>
     </ul>
-    <br>
-    spring3.0引入restful风格，如:
+    <p>AspectJ<a href="<c:url value="/test/testAspectJ.do" />" target="_blank">测试AspectJ</a></p>
     <ul>
-        <li>@PathVariable(rest @PathParam)</li>
-        <li>@CookieValue</li>
-        <li>@RequestHandler</li>
-        <li>@RequestBody</li>
-        <li>@ResponseBody</li>
-        <li>@ResponseStatus</li>
-        <li>@RequestPart</li>
-        <li>@ExceptionHandler</li>
+        <li>@Before前置通知，方法执行前</li>
+        <li>@After后置通知，方法执行后</li>
+        <li>@AfterRunning返回通知，返回结果后执行</li>
+        <li>@AfterThrowing异常通知，抛出异常后执行</li>
+        <li>@Around环绕通知，围绕方法执行</li>
     </ul>
-    <br>
-    还有@NumberFormat 和 @DateTimeFormat支持，还引入mvc XML的命名空间用于支持mvc配置，如&lt;mvc:annotation-driven&gt;
-
 </div>
 <%@ include file="/WEB-INF/jsp/common/endBodyAndBeginScript.jsp" %>
 <%-- js脚本 --%>

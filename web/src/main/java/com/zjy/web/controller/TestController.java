@@ -4,9 +4,13 @@ import com.zjy.baseframework.BaseResult;
 import com.zjy.baseframework.CookieHelper;
 import com.zjy.baseframework.DownloadHelper;
 import com.zjy.baseframework.PartialViewHelper;
+import com.zjy.bll.common.LoggingProxy;
+import com.zjy.bll.service.TestService;
+import com.zjy.bll.service.TestServiceImpl;
 import com.zjy.entities.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +43,9 @@ public class TestController implements ServletConfigAware {
     private Logger logger = LoggerFactory.getLogger(TestController.class);
 
     private ServletConfig servletConfig;
+
+    @Autowired
+    private TestService testSrv;
 
     @Override
     public void setServletConfig(ServletConfig servletConfig) {
@@ -143,13 +150,23 @@ public class TestController implements ServletConfigAware {
         DownloadHelper.download(path, response);
     }
 
-
     @RequestMapping("/jspLearn")
     public String jspLearn(Integer[] arr) {
         System.out.println(arr);
         return "jspLearn";
     }
 
+    @RequestMapping("/javaLearn")
+    public String javaLearn(Integer[] arr) {
+        System.out.println(arr);
+        return "javaLearn";
+    }
+
+    @RequestMapping("/filterLearn")
+    public String FilterLearn(Integer[] arr) {
+        System.out.println(arr);
+        return "filterLearn";
+    }
 
     @RequestMapping("/cookieLearn")
     public String cookieLearn(HttpServletRequest request, HttpServletResponse response) {
@@ -173,6 +190,32 @@ public class TestController implements ServletConfigAware {
     public String springLearn(@PathVariable(required = true) int intVar) {
         System.out.println(intVar);
         return "springLearn";
+    }
+
+    @RequestMapping("/testProxy")
+    @ResponseBody
+    public BaseResult testProxy() {
+        BaseResult<Integer> result = BaseResult.OK();
+        TestService testService = new TestServiceImpl();
+        TestService proxy = new LoggingProxy(testService).getLoggingProxy();
+        result.setValue(proxy.add(1, 3));
+        result.setValue(proxy.sub(5, 3));
+        return result;
+    }
+
+    @RequestMapping("/testAspectJ")
+    @ResponseBody
+    public BaseResult testAspectJ() {
+        BaseResult<Integer> result = BaseResult.OK();
+        testSrv.add(1, 4);
+        result.setValue(testSrv.sub(3, 1));
+        return result;
+    }
+
+    @RequestMapping("/springMVCLearn/{intVar}")
+    public String springMVCLearn(@PathVariable(required = true) int intVar) {
+        System.out.println(intVar);
+        return "springMVCLearn";
     }
 
     @RequestMapping("/elLearn")

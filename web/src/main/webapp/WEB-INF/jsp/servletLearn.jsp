@@ -90,6 +90,7 @@
             <br>
             只能转发到当前应用的页面
         </li>
+        <li>HttpServletRequestWrapper,包装类，如重写getPrameter()方法</li>
     </ul>
     </p>
     <p>8. ServletResponse
@@ -102,6 +103,7 @@
     <ul>
         <li>response.sendRedirect(location)<span class="red">重定向</span>，地址/代表当前站点的根目录</li>
         <li>response.sendError()转到错误页面</li>
+        <li>HttpServletRespnseWrapper,包装类，类似HttpServletRequestWrapper，可以做一些特殊操作</li>
     </ul>
     </p>
     <p>10. GenericServlet

@@ -75,6 +75,10 @@
             <groupId>javax.servlet</groupId>
             <artifactId>jsp-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+        </dependency>
         <!-- hibernate -->
         <!--<dependency>-->
             <!--<groupId>org.hibernate</groupId>-->
