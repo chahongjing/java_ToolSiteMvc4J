@@ -13,7 +13,7 @@ app.directive('scopeIso', function ($compile) {
         '<button data-ng-click="callP()">调用父方法</button>',
         link: function ($scope, element, attrs) {
             $scope.testVar = 'scopeIso';
-            $scope.param = 'scopeIso';
+            $scope.param3 = 'scopeIso';
 
             $scope.callP = function() {
                 if($scope.selfFuncParam) {

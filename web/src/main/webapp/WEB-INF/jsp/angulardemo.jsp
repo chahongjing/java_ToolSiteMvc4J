@@ -26,12 +26,17 @@
     <script src="/ToolSiteMvc4J/js/angular/directives/scopeTrue.js"></script>
     <script src="/ToolSiteMvc4J/js/angular/directives/scopeFalse.js"></script>
     <script src="/ToolSiteMvc4J/js/angular/directives/scopeIso.js"></script>
+    <script src="/ToolSiteMvc4J/js/angular/directives/dirCompile.js"></script>
 </head>
 <body data-ng-app="myApp">
 <div data-ng-controller="testCtrl" data-ng-init="init()">
     <hr>
     <h2>repeat</h2>
-    <span data-ng-bind="param"></span>
+    param：<span data-ng-bind="param"></span><br>
+    param1：<span data-ng-bind="param1"></span><br>
+    param2：<span data-ng-bind="param2"></span><br>
+    param3：<span data-ng-bind="param3"></span><br>
+    template:<span data-ng-bind-template="{{param}}这是中间的数据{{paramB}}"></span><br>
     <ul>
         <li data-ng-repeat="item in model.list" data-ng-bind="item.name"
             ng-repeat-finish="model.myAfterRender(param)">
@@ -71,12 +76,21 @@
     <hr>
     <h2>promise</h2>
     <button data-ng-click="testPromise()">测试promise</button>
+
+    <hr>
+    <h2>compile</h2>
+    <div dir-compile watch-var="{{myChangeVar}}"></div>
+    <button data-ng-click="changeVar()">改变变量的值</button>
 </div>
 <script>
     app.controller('testCtrl', ['$scope', '$http', '$timeout', '$q',
         function ($scope, $http, $timeout, $q) {
             $scope.model = {};
             $scope.param = 123;
+            $scope.param1 = 123;
+            $scope.param2 = 123;
+            $scope.param3 = 123;
+            $scope.paramB = 1111;
 
             $scope.init = function () {
                 $scope.model.list = [];
@@ -123,6 +137,10 @@
                 promise.then(function (resp) {
                     console.log('success');
                 });
+            }
+
+            $scope.changeVar = function() {
+                $scope.myChangeVar = Math.random();
             }
         }]);
 </script>

@@ -11,7 +11,7 @@ app.directive('scopeTrue', function ($compile) {
         template: 'scopeTrue',
         link: function ($scope, element, attrs) {
             $scope.testVar = 'scopeTrue';
-            $scope.param = 'scopeTrue';
+            $scope.param2 = 'scopeTrue';
         }
     }
 });

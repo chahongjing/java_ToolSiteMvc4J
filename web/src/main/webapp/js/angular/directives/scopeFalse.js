@@ -8,7 +8,7 @@ app.directive('scopeFalse', function ($compile) {
         template: 'scopeFalse',
         link: function ($scope, element, attrs) {
             $scope.testVar = 'scopeFalse';
-            $scope.param = 'scopeFalse';
+            $scope.param1 = 'scopeFalse';
         }
     }
 });

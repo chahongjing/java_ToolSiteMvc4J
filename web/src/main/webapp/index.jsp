@@ -65,6 +65,7 @@
 <a href="${ctx}/test/javaLearn.do" target="_blank">java后台学习</a>
 <a href="${ctx}/test/filterLearn.do" target="_blank">filter学习</a>
 <a href="${ctx}/test/otherLearn.do" target="_blank">其它</a>
+<a href="${ctx}/test/angulardemo.do" target="_blank">angular demo</a>
 
 <br />
 <br />
@@ -103,7 +104,7 @@
             });
 
             var p2 = $.ajax({
-                url: ctx + '/test/redirect.do'
+                url: ctx + '/test/testP2.do'
             }).then(function (data) {
                 console.log('testP2');
 
