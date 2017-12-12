@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,9 @@ public class IndexControllerTest extends BaseTestCase {
 
     @Resource
     private MongoTemplate mongoTemplate;
+
+    //@Resource
+    //private JdbcTemplate jdbcTemplate;
 
     public void setUp() throws Exception {
         super.setUp();
@@ -72,6 +76,8 @@ public class IndexControllerTest extends BaseTestCase {
 
         Thread.sleep(2000);
         logger.info("IndexController().test()");
+
+        //jdbcTemplate.update("select ....", p1, p2)
     }
 
     @Test

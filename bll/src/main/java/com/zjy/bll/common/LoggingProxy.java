@@ -31,7 +31,16 @@ public class LoggingProxy {
                 // 一般不直接有proxy对象，因为调用proxy对象的方法时又会进入此方法，导致死循环
                 String name = method.getName();
                 System.out.println("method:" + name + "执行前操作！");
-                Object result = method.invoke(target, args);
+                Object result = null;
+
+                try {
+                    // 前置通知
+                    result = method.invoke(target, args);
+                    // 返回通知
+                } catch (Exception ex) {
+                    // 异常通知
+                }
+                // 后置通知
                 System.out.println("method:" + name + "执行后操作！proxy result:" + result);
                 return result;
             }

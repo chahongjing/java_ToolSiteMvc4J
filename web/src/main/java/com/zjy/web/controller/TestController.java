@@ -186,10 +186,21 @@ public class TestController implements ServletConfigAware {
         return "otherLearn";
     }
 
-    @RequestMapping("/springLearn/{intVar}")
-    public String springLearn(@PathVariable(required = true) int intVar) {
+    @RequestMapping("/springAopLearn/{intVar}")
+    public String springAopLearn(@PathVariable(required = true) int intVar) {
         System.out.println(intVar);
-        return "springLearn";
+        return "springAopLearn";
+    }
+
+    @RequestMapping("/springBeanLearn/{intVar}")
+    public String springBeanLearn(@PathVariable(required = true) int intVar) {
+        System.out.println(intVar);
+        return "springBeanLearn";
+    }
+    @RequestMapping("/springMVCLearn/{intVar}")
+    public String springMVCLearn(@PathVariable(required = true) int intVar) {
+        System.out.println(intVar);
+        return "springMVCLearn";
     }
 
     @RequestMapping("/testProxy")
@@ -210,12 +221,6 @@ public class TestController implements ServletConfigAware {
         testSrv.add(1, 4);
         result.setValue(testSrv.sub(3, 1));
         return result;
-    }
-
-    @RequestMapping("/springMVCLearn/{intVar}")
-    public String springMVCLearn(@PathVariable(required = true) int intVar) {
-        System.out.println(intVar);
-        return "springMVCLearn";
     }
 
     @RequestMapping("/elLearn")

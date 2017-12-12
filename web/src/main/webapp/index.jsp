@@ -58,7 +58,8 @@
 <a href="${ctx}/test/servletLearn.do" target="_blank">学习servlet</a>
 <a href="${ctx}/test/jspLearn.do?arr=1&arr=2" target="_blank">学习jsp</a>
 <a href="${ctx}/test/elLearn.do" target="_blank">学习el</a>
-<a href="${ctx}/test/springLearn/123.do" target="_blank">学习spring</a>
+<a href="${ctx}/test/springAopLearn/123.do" target="_blank">学习spring aop</a>
+<a href="${ctx}/test/springBeanLearn/123.do" target="_blank">学习spring Bean</a>
 <a href="${ctx}/test/springMVCLearn/123.do" target="_blank">学习springMVC</a>
 <a href="${ctx}/test/cookieLearn.do" target="_blank">学习cookie</a>
 <a href="${ctx}/test/sessionLearn.do" target="_blank">学习session</a>
