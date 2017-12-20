@@ -140,9 +140,9 @@
                 var diyHtml = [];
                 var diyDomClass = 'diydomclass';
                 if (treeNode.isHide) {
-                    diyHtml.push('<span class="' + diyDomClass + ' tipicon"><i class="fa fa-eye-slash"></i></span>');
+                    diyHtml.push('<span class="' + diyDomClass + ' tipicon"><i class="fa fa-eye-slash">a</i></span>');
                 } else {
-                    diyHtml.push('<span class="' + diyDomClass + ' tipicon"><i class="fa fa-eye"></i></span>');
+                    diyHtml.push('<span class="' + diyDomClass + ' tipicon"><i class="fa fa-eye">b</i></span>');
                 }
                 if (diyHtml.length > 0) {
                     nodeA.parent().find('> .' + diyDomClass).remove();
