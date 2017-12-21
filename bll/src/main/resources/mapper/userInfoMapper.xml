@@ -8,11 +8,11 @@
 	</insert>
 
 	<select id="get" parameterType="String" resultType="com.zjy.entities.UserInfo">
-		SELECT TOP 1 userguid,userName,userCode,[password] FROM UserInfo WHERE Id = #{id, jdbcType = VARCHAR}
+		SELECT userguid,userName,userCode,password FROM UserInfo WHERE Id = #{id, jdbcType = VARCHAR}
 	</select>
 
 	<select id="getByUserCode" parameterType="String" resultType="com.zjy.entities.UserInfo">
-		SELECT TOP 1 userguid,userName,userCode,[password] FROM UserInfo WHERE userCode = #{userCode, jdbcType = VARCHAR}
+		SELECT userguid,userName,userCode,password FROM UserInfo WHERE userCode = #{userCode, jdbcType = VARCHAR}
 	</select>
 
     <insert id="delete" parameterType="String">
