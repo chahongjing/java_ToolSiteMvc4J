@@ -105,6 +105,16 @@ public class TestController implements ServletConfigAware {
         return "testangular";
     }
 
+    @RequestMapping("/vueDemo")
+    public String vueDemo() {
+        return "vueDemo";
+    }
+
+    @RequestMapping("/vueLearn")
+    public String vueLearn() {
+        return "vueLearn";
+    }
+
     @RequestMapping("/testajax")
     @ResponseBody
     public BaseResult testajax(String a, String b, String c) {
