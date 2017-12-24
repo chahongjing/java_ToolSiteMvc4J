@@ -212,6 +212,11 @@ public class TestController implements ServletConfigAware {
         System.out.println(intVar);
         return "springMVCLearn";
     }
+    @RequestMapping("/springTransactionLearn")
+    public String springTransactionLearn() {
+        return "springTransactionLearn";
+    }
+
 
     @RequestMapping("/testProxy")
     @ResponseBody

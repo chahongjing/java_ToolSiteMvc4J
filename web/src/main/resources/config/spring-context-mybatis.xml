@@ -37,7 +37,7 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <!-- 第一种开启事务控制的注解支持 -->
+    <!-- 第一种开启事务控制的注解支持, 添加@Transactional注解即可 -->
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
     <!--&lt;!&ndash; 第二种：1)声明式容器事务管理 ,transaction-manager指定事务管理器为transactionManager &ndash;&gt;-->
