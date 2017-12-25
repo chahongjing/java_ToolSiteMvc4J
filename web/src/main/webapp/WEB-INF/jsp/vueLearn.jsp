@@ -36,8 +36,29 @@
             </li>
         </ul>
     </div>
+
+    <div>
+        <div id="divOne">
+            <my-component></my-component>
+        </div>
+        <div id="divTwo">
+            <my-component></my-component>
+        </div>
+    </div>
 </div>
 <%@ include file="/WEB-INF/jsp/common/endBodyAndBeginScript.jsp" %>
 <%-- js脚本 --%>
 <script src="${ctx}/js/vue/vue.js"></script>
+<script>
+    Vue.component('myComponent', {
+        template: '<p>abcd<button>测试</button></p>'
+    });
+
+    new Vue({
+        el: '#divOne'
+    });
+    new Vue({
+        el: '#divTwo'
+    });
+</script>
 <%@ include file="/WEB-INF/jsp/common/endScript.jsp" %>
