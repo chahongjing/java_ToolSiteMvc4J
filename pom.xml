@@ -50,6 +50,10 @@
         <aspectj.version>1.8.9</aspectj.version>
         <commons.lang.version>3.5</commons.lang.version>
         <hibernate.version>5.2.10.Final</hibernate.version>
+        <maven.jar.version>3.0.2</maven.jar.version>
+        <encoding>UTF-8</encoding>
+        <java.source.version>1.8</java.source.version>
+        <java.target.version>1.8</java.target.version>
     </properties>
 
     <dependencyManagement>
@@ -337,14 +341,28 @@
     <build>
         <pluginManagement>
             <plugins>
+                <!-- java版本和jdk版本，编码 -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <configuration>
-                        <source>1.8</source>
-                        <target>1.8</target>
-                        <encoding>utf-8</encoding>
+                        <source>${java.source.version}</source>
+                        <target>${java.target.version}</target>
+                        <encoding>${encoding}</encoding>
                         <!--<testFailureIgnore>true</testFailureIgnore>-->
+                    </configuration>
+                </plugin>
+                <!-- 排除jar包中的配置文件 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${maven.jar.version}</version>
+                    <configuration>
+                        <excludes>
+                            <exclude>**/logback.xml</exclude>
+                            <exclude>**/*.properties</exclude>
+                            <exclude>**/META-INF/spring/**</exclude>
+                        </excludes>
                     </configuration>
                 </plugin>
             </plugins>
