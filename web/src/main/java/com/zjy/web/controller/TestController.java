@@ -249,6 +249,12 @@ public class TestController implements ServletConfigAware {
         return "tomcatLearn";
     }
 
+    @RequestMapping("/mavenLearn")
+    public String mavenLearn() {
+        return "mavenLearn";
+    }
+
+
     @RequestMapping("/servletLearn")
     public String servletLearn() {
         return "servletLearn";

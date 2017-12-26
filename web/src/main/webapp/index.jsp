@@ -67,6 +67,9 @@ java<br>
 服务器<br>
 <a href="${ctx}/test/tomcatLearn.do" target="_blank">学习tomcat</a>
 <hr>
+maven<br>
+<a href="${ctx}/test/mavenLearn.do" target="_blank">maven学习</a>
+<hr>
 echarts<br>
 <a href="${ctx}/echarts/index.do" target="_blank">echarts图表</a>
 <hr>
