@@ -22,12 +22,14 @@ import org.springframework.web.context.ServletConfigAware;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
+import sun.plugin2.gluegen.runtime.BufferFactory;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
@@ -215,6 +217,72 @@ public class TestController implements ServletConfigAware {
     @RequestMapping("/springTransactionLearn")
     public String springTransactionLearn() {
         return "springTransactionLearn";
+    }
+    @RequestMapping("/nioLearn")
+    public String nioLearn() {
+        String str = "abc";
+        // 分配缓冲区
+        ByteBuffer buf = ByteBuffer.allocate(1024);
+        System.out.println("allocate:");
+        System.out.println(buf.position()); // 0
+        System.out.println(buf.limit()); // 1024
+        System.out.println(buf.capacity()); // 1024
+        // 缓冲区存入数据 put()
+        buf.put(str.getBytes());
+        System.out.println("put:");
+        System.out.println(buf.position()); // 3
+        System.out.println(buf.limit()); // 1024
+        System.out.println(buf.capacity()); // 1024
+        // 切换为读模式, position:0, limit:3, capacity:1024
+        buf.flip();
+        System.out.println("flip:");
+        System.out.println(buf.position()); // 0
+        System.out.println(buf.limit()); // 3
+        System.out.println(buf.capacity()); // 1024
+        // 缓冲区读取数据 get()
+        byte[] dest = new byte[buf.limit()];
+        buf.get(dest);
+        System.out.println("allocate:");
+        System.out.println(buf.position()); // 3
+        System.out.println(buf.limit()); // 3
+        System.out.println(buf.capacity()); // 1024
+        // rewind 可重复读
+        buf.rewind();
+        System.out.println("rewind:");
+        System.out.println(buf.position()); // 3
+        System.out.println(buf.limit()); // 3
+        System.out.println(buf.capacity()); // 1024
+        // 清空缓冲区，但数据还在，处于被遗忘状态
+        buf.clear();
+        System.out.println("clear:");
+        System.out.println(buf.position()); // 3
+        System.out.println(buf.limit()); // 3
+        System.out.println(buf.capacity()); // 1024
+
+        //
+        ByteBuffer buf2 = ByteBuffer.allocate(1024);
+        buf2.put(str.getBytes());
+        buf2.flip();
+        byte[] dest2 = new byte[buf2.limit()];
+        buf2.get(dest2, 0, 1);
+        System.out.println("get:");
+        System.out.println(buf2.position()); // 1
+        //
+        buf2.mark();
+
+        buf2.get(dest2, 1, 2);
+        System.out.println("mark--get:");
+        System.out.println(buf2.position()); // 1
+
+        buf2.reset();
+        System.out.println("reset:");
+        System.out.println(buf2.position()); // 1
+
+        if (buf2.hasRemaining()) {
+            System.out.println("hasRemaining:");
+            System.out.println(buf2.remaining());
+        }
+        return "nioLearn";
     }
 
 
