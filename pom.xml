@@ -368,7 +368,7 @@
                             <exclude>**/*.properties</exclude>
                             <exclude>**/META-INF/spring/**</exclude>
                         </excludes>
-                        <!-- 打包jar文件时，配置manifest文件添加main函数入口 -->
+                        <!-- 打包jar文件时，配置manifest文件添加main函数入口， 通过java -jar xxxx.jar运行 -->
                         <!--<archive>-->
                         <!--<manifest>-->
                         <!--<addClasspath>true</addClasspath>-->
