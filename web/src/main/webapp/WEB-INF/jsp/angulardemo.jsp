@@ -76,6 +76,7 @@
     <hr>
     <h2>promise</h2>
     <button data-ng-click="testPromise()">测试promise</button>
+    <button data-ng-click="testAjax()">测试ajax</button>
 
     <hr>
     <h2>compile</h2>
@@ -141,6 +142,14 @@
 
             $scope.changeVar = function() {
                 $scope.myChangeVar = Math.random();
+            }
+
+            $scope.testAjax = function() {
+                $http.get(ctx + '/test/testajax11.do', {params: {a: 1}}).success(function(resp) {
+                    console.log('success:' + resp);
+                }).error(function(resp) {
+                    console.log('error:' + resp);
+                });
             }
         }]);
 </script>

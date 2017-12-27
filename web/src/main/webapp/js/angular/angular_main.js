@@ -30,6 +30,29 @@ var app = angular.module('myApp', [])
                             $rootScope.requests401.push(req);
                             $rootScope.$broadcast('event:loginRequired');
                             return deferred.promise;
+                        } else if(response.status === 404) {
+                            var jReturn = {Status: 'ERROR'};
+                            var startIndex = response.data.indexOf("<title>");
+                            if (startIndex > 0) {
+                                var endIndex = response.data.indexOf("</title>");
+                                jReturn.Message = response.data.substring(startIndex + 7, endIndex);
+                                startIndex = response.data.indexOf("<body>");
+                                endIndex = response.data.indexOf("</body>");
+                                var els = $('<div>' + response.data.substring(startIndex + 6, endIndex) + '</div>').children();
+                                if(els && els.length > 0) {
+                                    var message = [];
+                                    for(var i = 0; i < els.length; i++) {
+                                        if(els[i].innerText && $.trim(els[i].innerText)) {
+                                            message.push(els[i].innerText);
+                                        }
+                                    }
+                                    jReturn.DetailMessage = message.join('\r\n');
+                                }
+                            } else {
+                                jReturn.Message = "返回数据失败！";
+                            }
+                            //return $q.resolve({data:jReturn});
+                            return $q.reject({data:jReturn});
                         }
                         return $q.reject(response);
                         //return $q.resolve(response);
