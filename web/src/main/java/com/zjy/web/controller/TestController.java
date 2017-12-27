@@ -22,7 +22,6 @@ import org.springframework.web.context.ServletConfigAware;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
-import sun.plugin2.gluegen.runtime.BufferFactory;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
@@ -53,6 +52,7 @@ public class TestController implements ServletConfigAware {
     public void setServletConfig(ServletConfig servletConfig) {
         this.servletConfig = servletConfig;
     }
+
     @Value("${db.url}")
     private String url;
 
@@ -209,15 +209,18 @@ public class TestController implements ServletConfigAware {
         System.out.println(intVar);
         return "springBeanLearn";
     }
+
     @RequestMapping("/springMVCLearn/{intVar}")
     public String springMVCLearn(@PathVariable(required = true) int intVar) {
         System.out.println(intVar);
         return "springMVCLearn";
     }
+
     @RequestMapping("/springTransactionLearn")
     public String springTransactionLearn() {
         return "springTransactionLearn";
     }
+
     @RequestMapping("/nioLearn")
     public String nioLearn() {
         String str = "abc";
@@ -356,6 +359,7 @@ public class TestController implements ServletConfigAware {
 
 
     }
+
     private static void test(UserInfo user1, UserInfo user2) {
         user1.setUserCode("zjy");
         user1 = new UserInfo();
@@ -366,9 +370,11 @@ public class TestController implements ServletConfigAware {
     private static void teststring(String a, String b) {
         a = "c";
     }
+
     private static void testint(int a, int b) {
         a = 3;
     }
+
     private static void testintger(Integer a, Integer b) {
         a = 3;
     }

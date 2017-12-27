@@ -1,7 +1,6 @@
 package com.zjy.baseframework;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.web.context.ContextLoader;
 
 import java.nio.file.Paths;
 
