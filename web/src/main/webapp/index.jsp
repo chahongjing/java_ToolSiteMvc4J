@@ -83,6 +83,7 @@ vue<br>
 <a href="${ctx}/test/vueLearn.do" target="_blank">vue learn</a>
 <hr>
 其它<br>
+<a href="${ctx}/test/gitLearn.do" target="_blank">git学习</a>
 <a href="${ctx}/test/otherLearn.do" target="_blank">其它</a>
 
 <br />

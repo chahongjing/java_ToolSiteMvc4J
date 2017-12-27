@@ -314,6 +314,10 @@ public class TestController implements ServletConfigAware {
         return "elLearn";
     }
 
+    @RequestMapping("/gitLearn")
+    public String gitLearn() {
+        return "gitLearn";
+    }
 
     @RequestMapping("/tomcatLearn")
     public String tomcatLearn() {
