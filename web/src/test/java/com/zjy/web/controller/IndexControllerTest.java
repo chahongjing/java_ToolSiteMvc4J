@@ -6,15 +6,15 @@ import com.zjy.baseframework.PropertiesHelper;
 import com.zjy.bll.common.BaseTestCase;
 import com.zjy.entities.UserInfo;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -31,34 +31,34 @@ public class IndexControllerTest extends BaseTestCase {
     //@Resource
     //private JdbcTemplate jdbcTemplate;
 
-    public void setUp() throws Exception {
-        super.setUp();
-    }
-
     @Test
     @Transactional   //标明此方法需使用事务
     @Rollback(false)  //标明使用完此方法后事务不回滚,true时为回滚
-    public void testTest1() throws Exception {
+    public void testTest1() {
         new MongoDbHelper().test();
         PropertiesHelper instance = PropertiesHelper.getInstance();
         logger.info("db.url:" + instance.getProperties("db.url"));
         List<UserInfo> userInfos = new ArrayList<>();
-        userInfos.add(new UserInfo() {{
-            setUserCode("zjy");
-            setUserName("曾军毅");
-        }});
-        userInfos.add(new UserInfo() {{
-            setUserCode("zs");
-            setUserName("张三");
-        }});
-        userInfos.add(new UserInfo() {{
-            setUserCode("ls");
-            setUserName("李四");
-        }});
-        userInfos.add(new UserInfo() {{
-            setUserCode("ww");
-            setUserName("王五");
-        }});
+
+        UserInfo user = new UserInfo();
+        user.setUserCode("zjy");
+        user.setUserName("曾军毅");
+        userInfos.add(user);
+
+        user = new UserInfo();
+        user.setUserCode("zs");
+        user.setUserName("张三");
+        userInfos.add(user);
+
+        user = new UserInfo();
+        user.setUserCode("ls");
+        user.setUserName("李四");
+        userInfos.add(user);
+
+        user = new UserInfo();
+        user.setUserCode("ww");
+        user.setUserName("王五");
+        userInfos.add(user);
 
         Map<String, UserInfo> collect = userInfos.parallelStream().collect(Collectors.toMap(item -> item.getUserCode(), item -> item));
         logger.info("toMap：" + JSON.toJSONString(collect));
@@ -74,7 +74,11 @@ public class IndexControllerTest extends BaseTestCase {
                 .collect(Collectors.toList());
         logger.info("map：" + JSON.toJSONString(collect));
 
-        Thread.sleep(2000);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            logger.error("系统异常", e);
+        }
         logger.info("IndexController().test()");
 
         //jdbcTemplate.update("select ....", p1, p2)
@@ -94,7 +98,7 @@ public class IndexControllerTest extends BaseTestCase {
         List<UserInfo> list = get(UserInfo.class);
     }
 
-    public <T> List<T> get(Class clazz){
+    public <T> List<T> get(Class clazz) {
         return mongoTemplate.findAll(clazz, "testcollection");
-    };
+    }
 }

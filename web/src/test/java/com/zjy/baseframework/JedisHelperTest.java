@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
  */
 public class JedisHelperTest extends BaseTestCase {
     @Test
-    public void get() throws Exception {
+    public void get() {
         JedisHelper.set("key", "myvalue");
         String abc = JedisHelper.get("key");
         Long a = JedisHelper.delete("key");

@@ -2,11 +2,14 @@ package com.zjy.bll.common;
 
 import com.alibaba.fastjson.JSON;
 import com.zjy.entities.Goods;
+import org.apache.solr.client.solrj.SolrServerException;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -18,22 +21,25 @@ public class SolrHelperTest extends BaseTestCase {
 
     //region solr测试
     @Test
-    public void add() throws Exception {
+    public void add() {
         Goods good = new Goods();
         good.setId("1");
         good.setName("计算机科学");
         good.setWeight(23.2f);
         good.setPrice(30.4f);
-        List<String> title = new ArrayList<String>() {{
-            add("语言");
-            add("IT");
-        }};
+        List<String> title = new ArrayList<>();
+        title.add("语言");
+        title.add("IT");
         good.setTitle(title);
-        solrHelper.add(good);
+        try {
+            solrHelper.add(good);
+        } catch (Exception e) {
+            logger.error("solr.add异常", e);
+        }
     }
 
     @Test
-    public void addList() throws Exception {
+    public void addList() {
         List<Goods> list = new ArrayList<>();
         Goods good1 = new Goods();
         good1.setId("2");
@@ -55,22 +61,35 @@ public class SolrHelperTest extends BaseTestCase {
         good3.setWeight(66.2f);
         good3.setPrice(43.4f);
         list.add(good3);
-        solrHelper.addList(list);
+        try {
+            solrHelper.addList(list);
+        } catch (Exception e) {
+            logger.error("solr.addList异常", e);
+        }
     }
 
     @Test
-    public void delete() throws Exception {
+    public void delete() {
 //        solrHelper.delete(1);
-        solrHelper.delete(2);
+        try {
+            solrHelper.delete(2);
+        } catch (Exception e) {
+            logger.error("solr.delete异常", e);
+        }
 //        solrHelper.delete(3);
 //        solrHelper.delete(4);
     }
 
     @Test
-    public void find() throws Exception {
-        HashMap<String, String> map = new HashMap<>();
+    public void find() {
+        Map<String, String> map = new HashMap<>();
         map.put("id", "3");
-        List<Goods> list = solrHelper.find(map);
+        List<Goods> list = null;
+        try {
+            list = solrHelper.find(map);
+        } catch (Exception e) {
+            logger.error("solr.find异常", e);
+        }
         logger.info("solor测试: {}", JSON.toJSONString(list));
     }
     //endregion

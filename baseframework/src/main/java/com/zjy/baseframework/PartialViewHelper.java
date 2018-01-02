@@ -10,6 +10,7 @@ import java.io.CharArrayWriter;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.Map;
 
 public class PartialViewHelper {
 //    public static String render(String viewUrl, HttpServletRequest request, HashMap data) throws Exception {
@@ -19,7 +20,7 @@ public class PartialViewHelper {
 //        view.render(data, request, mockResp);
 //        return mockResp.getContentAsString();
 //    }
-    public static String renderTest(String viewUrl, HttpServletRequest request, HttpServletResponse response, HashMap data) throws Exception {
+    public static String renderTest(String viewUrl, HttpServletRequest request, HttpServletResponse response, Map data) throws Exception {
         InternalResourceView view = new InternalResourceView(viewUrl, true);
         view.setContentType(ContentType.TEXT_PLAIN.withCharset(StandardCharsets.UTF_8).toString());
         ResponseWrapper rw = new PartialViewHelper().new ResponseWrapper(response);

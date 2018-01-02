@@ -5,6 +5,7 @@ import com.zjy.entities.UserInfo;
 import org.junit.Test;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,32 +17,36 @@ import static org.junit.Assert.*;
 public class DbHelperTest extends BaseTestCase {
     DbHelper dbHelper = new DbHelper();
     @Test
-    public void testSelect() throws Exception {
+    public void testSelect() {
         ResultSet rs = dbHelper.testSelect();
-        if(rs.next()) {
-            System.out.println("首行首列：" + rs.getString(1));
-        } else {
-            System.out.println("没有数据");
+        try {
+            if(rs.next()) {
+                System.out.println("首行首列：" + rs.getString(1));
+            } else {
+                System.out.println("没有数据");
+            }
+        } catch (SQLException e) {
+            logger.error("数据库操作异常", e);
         }
     }
 
     @Test
-    public void toList() throws Exception {
+    public void toList() {
         List<UserInfo> list = dbHelper.toList(UserInfo.class);
     }
 
     @Test
-    public void testInsert() throws Exception {
+    public void testInsert() {
         System.out.println("插入受影响行数：" + dbHelper.testInsert());
     }
 
     @Test
-    public void testUpdate() throws Exception {
+    public void testUpdate() {
         System.out.println("更新受影响行数：" + dbHelper.testUpdate());
     }
 
     @Test
-    public void testDelete() throws Exception {
+    public void testDelete() {
         System.out.println("删除受影响行数：" + dbHelper.testDelete());
     }
 }

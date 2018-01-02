@@ -32,7 +32,7 @@ public class CookieHelper {
                 for (Cookie cookie : cookies) {
                     if (cookie.getName().equals(key)) {
                         value = cookie.getValue();
-                        if(value != null) {
+                        if (value != null) {
                             value = URLDecoder.decode(value, StandardCharsets.UTF_8.name());
                         }
                     }

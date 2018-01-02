@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class DbHelperNewTest extends BaseTestCase {
     @Test
-    public void get() throws Exception {
+    public void get() {
         UserInfo u = DbHelperNew.get("select * from userinfo", UserInfo.class);
         int i = DbHelperNew.update("update userinfo set username = '曾' where username = '1曾'");
         List<UserInfo> list = DbHelperNew.getList("select * from userinfo", UserInfo.class);

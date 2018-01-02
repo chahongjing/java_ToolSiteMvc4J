@@ -1,15 +1,10 @@
 package com.zjy.web.controller;
 
-import com.zjy.baseframework.BaseResult;
-import com.zjy.baseframework.CookieHelper;
-import com.zjy.baseframework.DownloadHelper;
-import com.zjy.baseframework.PartialViewHelper;
+import com.zjy.baseframework.*;
 import com.zjy.bll.common.LoggingProxy;
 import com.zjy.bll.service.TestService;
 import com.zjy.bll.service.TestServiceImpl;
 import com.zjy.entities.UserInfo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -33,6 +28,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author chahongjing
@@ -40,36 +36,40 @@ import java.util.HashMap;
  */
 @Controller
 @RequestMapping("/test")
-public class TestController implements ServletConfigAware {
-    private Logger logger = LoggerFactory.getLogger(TestController.class);
+public class TestController extends BaseController implements ServletConfigAware {
 
     private ServletConfig servletConfig;
 
     @Autowired
     private TestService testSrv;
 
+    @Value("${db.url}")
+    private String url;
+
     @Override
     public void setServletConfig(ServletConfig servletConfig) {
         this.servletConfig = servletConfig;
     }
 
-    @Value("${db.url}")
-    private String url;
 
 //    @Autowired
 //    private ResourceBundleMessageSource messageSource;
 
     @RequestMapping("/test.do")
-    public String test(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public String test(HttpServletRequest request, HttpServletResponse response) {
         logger.info("测试日志方法{}", new Date());
         logger.info("从Properties读取配置信息：" + url);
 
 //        Object[] arg = new Object[] { "Erica", Calendar.getInstance().getTime() };
 //        messageSource.getMessage("username", arg, Locale.CHINA);
 
-        HashMap<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         map.put("username", "23ab33");
-        String content = PartialViewHelper.renderTest("/index.jsp", request, response, map);
+        try {
+            String content = PartialViewHelper.renderTest("/index.jsp", request, response, map);
+        } catch (Exception e) {
+            logger.error("执行视图错误！", e);
+        }
 
         return "common/ok";
     }
@@ -81,7 +81,7 @@ public class TestController implements ServletConfigAware {
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            logger.error("测试sleep异常！", e);
         }
         return new ResponseEntity<>(re, HttpStatus.OK);
     }
@@ -120,10 +120,9 @@ public class TestController implements ServletConfigAware {
     @RequestMapping("/testajax")
     @ResponseBody
     public BaseResult testajax(String a, String b, String c) {
-        BaseResult<String> result = BaseResult.OK("后台返回数据");
 //        int aa = 1, bb = 0;
 //        int cc = aa / bb;
-        return result;
+        return BaseResult.OK("后台返回数据");
     }
 
     @RequestMapping("/fileupload")
@@ -149,7 +148,7 @@ public class TestController implements ServletConfigAware {
             try {
                 file.transferTo(Paths.get(path.toString(), file.getOriginalFilename()).toFile());
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error("上传文件异常！", e);
             }
         }
         return mv;
@@ -163,20 +162,17 @@ public class TestController implements ServletConfigAware {
     }
 
     @RequestMapping("/jspLearn")
-    public String jspLearn(Integer[] arr) {
-        System.out.println(arr);
+    public String jspLearn() {
         return "jspLearn";
     }
 
     @RequestMapping("/javaLearn")
-    public String javaLearn(Integer[] arr) {
-        System.out.println(arr);
+    public String javaLearn() {
         return "javaLearn";
     }
 
     @RequestMapping("/filterLearn")
-    public String FilterLearn(Integer[] arr) {
-        System.out.println(arr);
+    public String filterLearn() {
         return "filterLearn";
     }
 
@@ -193,8 +189,7 @@ public class TestController implements ServletConfigAware {
     }
 
     @RequestMapping("/otherLearn")
-    public String otherLearn(Integer[] arr) {
-        System.out.println(arr);
+    public String otherLearn() {
         return "otherLearn";
     }
 

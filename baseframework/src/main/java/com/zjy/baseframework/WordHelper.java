@@ -28,7 +28,7 @@ public class WordHelper {
             src1Package = OPCPackage.open(in1);
             src2Package = OPCPackage.open(in2);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
         XWPFDocument src1Document = new XWPFDocument(src1Package);
@@ -37,7 +37,6 @@ public class WordHelper {
         CTBody src2Body = src2Document.getDocument().getBody();
         appendBody(src1Body, src2Body);
         src1Document.write(dest);
-
     }
 
     private static void appendBody(CTBody src, CTBody append) throws Exception {

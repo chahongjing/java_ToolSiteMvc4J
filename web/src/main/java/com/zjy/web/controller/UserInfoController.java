@@ -12,8 +12,6 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.SavedRequest;
 import org.apache.shiro.web.util.WebUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,11 +28,9 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/userinfo")
-public class UserInfoController {
+public class UserInfoController extends BaseController {
 
     //region 属性
-    // 日志
-    private Logger logger = LoggerFactory.getLogger(UserInfoController.class);
 
     @Autowired
     private UserInfoService userInfoService;
@@ -50,14 +46,16 @@ public class UserInfoController {
         // 获取上一次的地址
         SavedRequest lastRequest = WebUtils.getSavedRequest(request);
         String url = null;
-        if (lastRequest != null && "GET".equalsIgnoreCase(lastRequest.getMethod()))
+        if (lastRequest != null && "GET".equalsIgnoreCase(lastRequest.getMethod())) {
             url = WebUtils.getSavedRequest(request).getRequestUrl();
+        }
+
         mv.addObject("redirectUrl", url);
         return mv;
     }
 
     @RequestMapping("/login")
-    public ResponseEntity<BaseResult<String>> login(HttpServletRequest request, UserInfo user) throws Exception {
+    public ResponseEntity<BaseResult<String>> login(HttpServletRequest request, UserInfo user) {
         BaseResult<String> re = userInfoService.login(user);
 
         if (re.getStatus() != ResultStatus.OK) {
@@ -78,7 +76,8 @@ public class UserInfoController {
     public ResponseEntity<BaseResult<String>> logout() {
         Subject subject = SecurityUtils.getSubject();
         if (subject.isAuthenticated()) {
-            subject.logout(); // session 会销毁，在SessionListener监听session销毁，清理权限缓存
+            subject.logout();
+            // session 会销毁，在SessionListener监听session销毁，清理权限缓存
             userUtils.logout();
         }
 

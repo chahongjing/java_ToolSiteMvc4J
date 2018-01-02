@@ -365,6 +365,7 @@
                     <configuration>
                         <excludes>
                             <exclude>**/logback.xml</exclude>
+                            <exclude>**/log4j2.xml</exclude>
                             <exclude>**/*.properties</exclude>
                             <exclude>**/META-INF/spring/**</exclude>
                         </excludes>

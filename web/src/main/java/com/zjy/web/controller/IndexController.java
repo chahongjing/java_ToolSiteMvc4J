@@ -2,8 +2,6 @@ package com.zjy.web.controller;
 
 import com.zjy.baseframework.ExcelHelper;
 import com.zjy.bll.dao.UserInfoForHibernateDao;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,21 +17,21 @@ import java.util.concurrent.Executors;
  * @date 2016-11-22 22:59
  */
 @Controller
-public class IndexController {
-    private Logger logger = LoggerFactory.getLogger(IndexController.class);
+public class IndexController extends BaseController {
 
     @Autowired
     private UserInfoForHibernateDao userInfoForHibernateDao;
 
     /**
      * 若没有welcome-file-list中的文件或action,则/会进入到此请求中
+     *
      * @param request
      * @param response
      * @return
      * @throws Exception
      */
     @RequestMapping("/")
-    public String test(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public String test(HttpServletRequest request, HttpServletResponse response) {
         ExcelHelper<String> e = new ExcelHelper<>();
         return "common/ok";
     }
@@ -65,7 +63,7 @@ public class IndexController {
         lhm.put("d", 5);
         System.out.println(lhm);
 
-        TreeMap<String, Integer> tm = new TreeMap<>();
+        Map<String, Integer> tm = new TreeMap<>();
         tm.put("b", 1);
         tm.put("a", 2);
         tm.put("d", 3);

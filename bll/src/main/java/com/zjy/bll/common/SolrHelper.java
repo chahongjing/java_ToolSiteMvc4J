@@ -49,7 +49,7 @@ public class SolrHelper {
         solr.close();
     }
 
-    public List<Goods> find(HashMap<String, String> map) throws SolrServerException, IOException {
+    public List<Goods> find(Map<String, String> map) throws SolrServerException, IOException {
         SolrClient solr = new HttpSolrClient.Builder(url).build();
 
         SolrQuery solrQuery = new SolrQuery();
