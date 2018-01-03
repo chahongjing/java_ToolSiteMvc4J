@@ -115,14 +115,14 @@ public class MyRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
         //User user = userService.getByUsername(token.getUsername());
-        if (null != user) {
+        //if (null != user) {
             AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(token.getUsername(), token.getPassword(), "");
             this.setSession(currentKey, myfun.apply(authcInfo.getPrincipals().asList().get(0).toString()));
             // this.setSession(currentKey, authcInfo);
             return authcInfo;
-        } else {
-            return null;
-        }
+//        } else {
+//            return null;
+//        }
     }
 
 

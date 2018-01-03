@@ -1,6 +1,9 @@
 package com.zjy.web.controller;
 
-import com.zjy.baseframework.*;
+import com.zjy.baseframework.BaseResult;
+import com.zjy.baseframework.CookieHelper;
+import com.zjy.baseframework.DownloadHelper;
+import com.zjy.baseframework.PartialViewHelper;
 import com.zjy.bll.common.LoggingProxy;
 import com.zjy.bll.service.TestService;
 import com.zjy.bll.service.TestServiceImpl;
@@ -335,6 +338,12 @@ public class TestController extends BaseController implements ServletConfigAware
         return "angulardemo";
     }
 
+    @RequestMapping("/shiroLearn")
+    public String shiroLearn() {
+        return "shiroLearn";
+    }
+
+
     public static void main(String[] args) {
         UserInfo user1 = new UserInfo();
         user1.setUserName("曾军毅");
@@ -355,8 +364,6 @@ public class TestController extends BaseController implements ServletConfigAware
         Integer e = new Integer(1);
         Integer f = new Integer(1);
         testintger(e, f);
-
-
     }
 
     private static void test(UserInfo user1, UserInfo user2) {

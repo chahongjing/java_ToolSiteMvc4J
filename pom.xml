@@ -56,6 +56,8 @@
         <encoding>UTF-8</encoding>
         <java.source.version>1.8</java.source.version>
         <java.target.version>1.8</java.target.version>
+        <dubbo.version>2.5.8</dubbo.version>
+        <zookeeper.client.version>0.10</zookeeper.client.version>
     </properties>
 
     <dependencyManagement>
@@ -336,6 +338,16 @@
                 <groupId>org.aspectj</groupId>
                 <artifactId>aspectjweaver</artifactId>
                 <version>${aspectj.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>dubbo</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.101tec</groupId>
+                <artifactId>zkclient</artifactId>
+                <version>${zookeeper.client.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
