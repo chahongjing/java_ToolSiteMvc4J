@@ -4,33 +4,32 @@ import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class ExcelHelper<T> {
     /**
      * 依赖包: org.apache.poi, poi-ooxml, 版本3.9
      */
-    public void exportExcel(Collection<T> dataset, OutputStream out) {
+    public static <T> void exportExcel(Collection<T> dataset, OutputStream out) {
         exportExcel("测试POI导出EXCEL文档", Collections.EMPTY_LIST, dataset, out, "yyyy-MM-dd");
     }
 
-    public void exportExcel(List<String> headers, Collection<T> dataset, OutputStream out) {
+    public static <T> void exportExcel(List<String> headers, Collection<T> dataset, OutputStream out) {
         exportExcel("测试POI导出EXCEL文档", headers, dataset, out, "yyyy-MM-dd");
     }
 
-    public void exportExcel(List<String> headers, Collection<T> dataset, OutputStream out, String pattern) {
+    public static <T> void exportExcel(List<String> headers, Collection<T> dataset, OutputStream out, String pattern) {
         exportExcel("测试POI导出EXCEL文档", headers, dataset, out, pattern);
     }
 
@@ -45,7 +44,7 @@ public class ExcelHelper<T> {
      * @param pattern 如果有时间数据，设定输出格式。默认为"yyy-MM-dd"
      */
     @SuppressWarnings("unchecked")
-    public void exportExcel(String title, List<String> headers, Collection<T> dataset, OutputStream out, String pattern) {
+    public static <T> void exportExcel(String title, List<String> headers, Collection<T> dataset, OutputStream out, String pattern) {
         // 声明一个工作薄
         Workbook workbook = new HSSFWorkbook();
         // 生成一个表格
@@ -85,12 +84,12 @@ public class ExcelHelper<T> {
         // 把字体应用到当前的样式
         style2.setFont(font2);
 
-        // 声明一个画图的顶级管理器
-        Comment comment = sheet.getCellComment(1, 2);
-        // 设置注释内容
-        comment.setString(new HSSFRichTextString("可以在POI中添加注释！"));
-        // 设置注释作者，当鼠标移动到单元格上是可以在状态栏中看到该内容.
-        comment.setAuthor("leno");
+//        // 声明一个画图的顶级管理器
+//        Comment comment = sheet.getCellComment(1, 2);
+//        // 设置注释内容
+//        comment.setString(new HSSFRichTextString("可以在POI中添加注释！"));
+//        // 设置注释作者，当鼠标移动到单元格上是可以在状态栏中看到该内容.
+//        comment.setAuthor("leno");
 
         // 产生表格标题行
         Row row = sheet.createRow(0);
@@ -272,6 +271,17 @@ public class ExcelHelper<T> {
             int sheetSize,
             OutputStream out
     ) throws Exception {
+        listToExcel(list, fieldMap, sheetName, sheetSize, out, null);
+    }
+
+    public static <T> void listToExcel(
+            List<T> list,
+            LinkedHashMap<String, String> fieldMap,
+            String sheetName,
+            int sheetSize,
+            OutputStream out,
+            InputStream in
+    ) throws Exception {
 
 
         if (list.size() == 0 || list == null) {
@@ -283,11 +293,13 @@ public class ExcelHelper<T> {
         }
 
         //创建工作簿并发送到OutputStream指定的地方
-        Workbook wwb;
         try {
-
-            wwb = new HSSFWorkbook();
-
+            Workbook wwb;
+            if(in == null) {
+                wwb = new HSSFWorkbook();
+            } else {
+                wwb = new HSSFWorkbook(in);
+            }
             //因为2003的Excel一个工作表最多可以有65536条记录，除去列头剩下65535条
             //所以如果记录太多，需要放到多个工作表中，其实就是个分页的过程
             //1.计算一共有多少个工作表
@@ -297,6 +309,7 @@ public class ExcelHelper<T> {
             for (int i = 0; i < sheetNum; i++) {
                 //如果只有一个工作表的情况
                 if (1 == sheetNum) {
+                    //Sheet sheet = wwb.getSheetAt(0);
                     Sheet sheet = wwb.createSheet(sheetName);
                     fillSheet(sheet, list, fieldMap, 0, list.size() - 1);
 
@@ -316,7 +329,56 @@ public class ExcelHelper<T> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    public static <T> void listToExcel(
+            List<T> list,
+            LinkedHashMap<String, String> fieldMap,
+            String sheetName,
+            int sheetSize,
+            Workbook wb
+    ) throws Exception {
+        if (list.size() == 0 || list == null) {
+            throw new Exception("数据源中没有任何数据");
+        }
+
+        if (sheetSize > 65535 || sheetSize < 1) {
+            sheetSize = 65535;
+        }
+
+        //创建工作簿并发送到OutputStream指定的地方
+        try {
+            //因为2003的Excel一个工作表最多可以有65536条记录，除去列头剩下65535条
+            //所以如果记录太多，需要放到多个工作表中，其实就是个分页的过程
+            //1.计算一共有多少个工作表
+            double sheetNum = Math.ceil(list.size() / new Integer(sheetSize).doubleValue());
+
+            //2.创建相应的工作表，并向其中填充数据
+            for (int i = 0; i < sheetNum; i++) {
+                //如果只有一个工作表的情况
+                if (1 == sheetNum) {
+                    //Sheet sheet = wwb.getSheetAt(0);
+                    Sheet sheet = wb.getSheet(sheetName);
+                    if(sheet == null) {
+                        sheet = wb.createSheet(sheetName);
+                    }
+
+                    fillSheet(sheet, list, fieldMap, 0, list.size() - 1);
+
+                    //有多个工作表的情况
+                } else {
+                    Sheet sheet = wb.createSheet(sheetName + (i + 1));
+
+                    //获取开始索引和结束索引
+                    int firstIndex = i * sheetSize;
+                    int lastIndex = (i + 1) * sheetSize - 1 > list.size() - 1 ? list.size() - 1 : (i + 1) * sheetSize - 1;
+                    //填充工作表
+                    fillSheet(sheet, list, fieldMap, firstIndex, lastIndex);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -333,10 +395,18 @@ public class ExcelHelper<T> {
             String sheetName,
             OutputStream out
     ) throws Exception {
-
         listToExcel(list, fieldMap, sheetName, 65535, out);
-
     }
+
+    public static <T> void listGroupToExcel(
+            List<T> list,
+            LinkedHashMap<String, String> fieldMap,
+            String sheetName,
+            Workbook wb
+    ) throws Exception {
+        listToExcel(list, fieldMap, sheetName, 65535, wb);
+    }
+
 
 
     /**
@@ -429,8 +499,14 @@ public class ExcelHelper<T> {
 
                 int nullCols = 0;
                 Row row = sheet.getRow(i);
+                if(row == null) {
+                    row = sheet.createRow(i);
+                }
                 for (int j = 0; j < row.getLastCellNum(); j++) {
                     Cell currentCell = row.getCell(j);
+                    if(currentCell == null) {
+                        currentCell = row.createCell(j);
+                    }
                     if (currentCell == null || "".equals(currentCell.getStringCellValue())) {
                         nullCols++;
                     }
@@ -451,12 +527,19 @@ public class ExcelHelper<T> {
 
 
             Row firstRow = sheet.getRow(0);
+            if(firstRow == null) {
+                firstRow = sheet.createRow(0);
+            }
 
             String[] excelFieldNames = new String[firstRow.getLastCellNum()];
 
             //获取Excel中的列名
             for (int i = 0; i < firstRow.getLastCellNum(); i++) {
-                excelFieldNames[i] = firstRow.getCell(i).getStringCellValue().trim();
+                Cell cell = firstRow.getCell(i);
+                if(cell == null) {
+                    cell = firstRow.createCell(i);
+                }
+                excelFieldNames[i] = cell.getStringCellValue().trim();
             }
 
             //判断需要的字段在Excel中是否都存在
@@ -685,10 +768,21 @@ public class ExcelHelper<T> {
     private static void setColumnAutoSize(Sheet sheet, int extraWith) {
         //获取本列的最宽单元格的宽度
         Row row = sheet.getRow(0);
+        if(row == null) {
+            row = sheet.createRow(0);
+        }
         for (int i = 0; i < row.getLastCellNum(); i++) {
             int colWith = 0;
             for (int j = 0; j < sheet.getLastRowNum(); j++) {
-                String content = sheet.getRow(j).getCell(i).getStringCellValue().toString();
+                Row irow = sheet.getRow(j);
+                if(irow == null) {
+                    irow = sheet.createRow(j);
+                }
+                Cell cell = irow.getCell(i);
+                if(cell == null) {
+                    cell = irow.createCell(i);
+                }
+                String content = cell.getStringCellValue().toString();
                 int cellWith = content.length();
                 if (colWith < cellWith) {
                     colWith = cellWith;
@@ -730,8 +824,14 @@ public class ExcelHelper<T> {
         }
         //填充表头
         Row row = sheet.getRow(0);
+        if(row == null) {
+            row = sheet.createRow(0);
+        }
         for (int i = 0; i < cnFields.length; i++) {
             Cell cell = row.getCell(i);
+            if(cell == null) {
+                cell = row.createCell(i);
+            }
             cell.setCellValue(cnFields[i]);
         }
 
@@ -740,11 +840,19 @@ public class ExcelHelper<T> {
         for (int index = firstIndex; index <= lastIndex; index++) {
             //获取单个对象
             T item = list.get(index);
+            Row myrow = sheet.getRow(rowNo);
+            if(myrow == null) {
+                myrow = sheet.createRow(rowNo);
+            }
             for (int i = 0; i < enFields.length; i++) {
                 Object objValue = getFieldValueByNameSequence(enFields[i], item);
                 String fieldValue = objValue == null ? "" : objValue.toString();
+                Cell cell = myrow.getCell(i);
+                if(cell == null) {
+                    cell = myrow.createCell(i);
+                }
+                cell.setCellValue(fieldValue);
             }
-
             rowNo++;
         }
 

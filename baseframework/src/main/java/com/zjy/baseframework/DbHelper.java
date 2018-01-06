@@ -31,6 +31,11 @@ public class DbHelper {
     public static List toList(Class clazz) {
         //String sql = PropertiesHelper.getInstance().getProperties("db.testSql");
         String sql = "select * from userinfo";
+        return toList(clazz, sql);
+    }
+
+
+    public static List toList(Class clazz, String sql) {
         try {
             Connection conn = getConnection();
             PreparedStatement pSta = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -156,7 +161,30 @@ public class DbHelper {
                             }
                             flag = f.isAccessible();
                             f.setAccessible(true);
-                            f.set(obj, value);
+                            if(value == null) {
+                                continue;
+                            }
+                            if(f.getType().equals(Boolean.class) || f.getType().equals(boolean.class)) {
+                                f.set(obj, Boolean.parseBoolean(String.valueOf(value)));
+                            } else if(f.getType().equals(Byte.class) || f.getType().equals(byte.class)) {
+                                f.set(obj, Byte.parseByte(String.valueOf(value)));
+                            } else if(f.getType().equals(Character.class) || f.getType().equals(char.class)) {
+                                f.set(obj, value);
+                            } else if(f.getType().equals(Double.class) || f.getType().equals(double.class)) {
+                                f.set(obj, Double.parseDouble(String.valueOf(value)));
+                            } else if(f.getType().equals(Float.class) || f.getType().equals(float.class)) {
+                                f.set(obj, Float.parseFloat(String.valueOf(value)));
+                            } else if(f.getType().equals(Integer.class) || f.getType().equals(int.class)) {
+                                f.set(obj, Integer.parseInt(String.valueOf(value)));
+                            } else if(f.getType().equals(Long.class) || f.getType().equals(long.class)) {
+                                f.set(obj, Long.parseLong(String.valueOf(value)));
+                            } else if(f.getType().equals(Short.class) || f.getType().equals(short.class)) {
+                                f.set(obj, Short.parseShort(String.valueOf(value)));
+                            } else if(f.getType().equals(String.class)) {
+                                f.set(obj, String.valueOf(value));
+                            } else {
+                                f.set(obj, value);
+                            }
                             f.setAccessible(flag);
                         }
                     }

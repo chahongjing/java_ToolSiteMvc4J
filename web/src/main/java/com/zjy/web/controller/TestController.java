@@ -120,6 +120,11 @@ public class TestController extends BaseController implements ServletConfigAware
         return "vueLearn";
     }
 
+    @RequestMapping("/reflectLearn")
+    public String reflectLearn() {
+        return "reflectLearn";
+    }
+
     @RequestMapping("/testajax")
     @ResponseBody
     public BaseResult testajax(String a, String b, String c) {
