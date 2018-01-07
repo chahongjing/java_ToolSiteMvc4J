@@ -42,6 +42,7 @@
         <c3p0.version>0.9.1.2</c3p0.version>
         <sqlserver.version>4.0</sqlserver.version>
         <mysql.version>6.0.5</mysql.version>
+        <oracle.version>11.2.0</oracle.version>
         <junit.version>4.12</junit.version>
         <httpclient.version>3.1</httpclient.version>
         <httpclientnew.version>4.5.3</httpclientnew.version>
@@ -303,6 +304,12 @@
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql.version}</version>
                 <scope>runtime</scope>
+            </dependency>
+            <!-- oracle驱动 -->
+            <dependency>
+                <groupId>com.oracle</groupId>
+                <artifactId>ojdbc6</artifactId>
+                <version>${oracle.version}</version>
             </dependency>
             <!-- httpclient -->
             <dependency>
