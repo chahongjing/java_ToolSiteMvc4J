@@ -14,6 +14,7 @@
     <p>2. server.xml server节点下有多个listener和多个service节点，每个service下有多个connector和一个engine节点， engin下又有host节点</p>
     <p>3. startup.bat通过找到并运行同目录下的catalina.bat启动的 catalina run在本cmd窗口打开服务器，catalina start在新cmd窗口打开服务器</p>
 
+    <h2>看透spring mvc</h2>
     <div>
         <p>tomcat启动过程</p>
         <ul>
@@ -32,7 +33,41 @@
     <div>
         <p>Bootstrap启动过程</p>
         <ul>
-            <li>BootStrap是tomcat的入口，正常情况启动tomcat就是启用了Bootstrap的main方法</li>
+            <li>BootStrap是tomcat的入口，正常情况启动tomcat就是启用了Bootstrap的main方法，然后创建一个Catalina实例，使用反射调用load，start, stop方法</li>
+            <li>server默认实现是org.apache.catalina.core.StandardServer,它继承LifecycleMBeanBase,LifecycyleMBeanBase又继承LifecycleBase,init和start方法就定义在这里，
+            它们分别会调用initInternal和startInternal模板方法，这两个方法又循环调用了每一个service中的init和start方法</li>
+            <li>server中还有一个await方法，监听配置文件中的端口（默认8005，SHUTDOWN），如果为-2，直接退出，如果为-1，一直循环，直到调用stop方法，如果为大于0的其它值，
+            如默认的8005，会启动一个Serversocket监听，接收到的命令为配置文件中的命令，默认为SHUTDOWN</li>
+            <li>service默认实现org.apache.catalina.core.StandardService,同样，他也继承自LifecycleMBeanBase, 执行模板方法</li>
+            <li>StandardService中的initInternal和startInternal方法主要调用container,executors,mapperlisener,connectors中的init和start方法</li>
+            <li>mapperlistener是mapper的监听，可以监听container容器的变化,executors是用在connectors中管理线程的线程池</li>
+        </ul>
+    </div>
+    <hr>
+    <div>
+        <p>tomcat生命周期管理</p>
+        <ul>
+            <li>tomcat通过org.apache.catalina.Lifecycle接口统一管理生命周期，所有生命周期组件都实现它</li>
+            <li>lifecycle做四件事
+                <ul>
+                    <li>定义13个String类型变量，如before_init,用来区分生命周期组件的事件状态</li>
+                    <li>定义三个管理监听器的方法，addLifecycleListener,findLifecycleListener,removeLifesysleListener</li>
+                    <li>定义4个生命周期方法,init,start,stop,destroy</li>
+                    <li>定义获取当前状态的两个方法getState,getStatName</li>
+                </ul>
+            </li>
+            <li>lifecycle默认实现是org.apache.catalina.util.LifecycleBase,所有生命周期组件都直接或间接继承它</li>
+        </ul>
+    </div>
+    <hr>
+    <div>
+        <p>
+            container分析
+        </p>
+        <ul>
+            <li>container是tomcat中的容器接口， 通常使用的Servlet就封闭在其子接口Wrapper中</li>
+            <li>container一共有四个接口，Engine,Host,Context,Wrapper,它们是逐层包含关系，一个service中只能有一个engine,engine中可以有多个host，每个host可以有多个context,
+            每个context下可以有多个wrapper</li>
         </ul>
     </div>
 </div>
