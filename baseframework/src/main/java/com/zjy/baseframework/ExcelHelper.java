@@ -18,6 +18,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class ExcelHelper<T> {
+    private static int MaxSheetRow = 65535;
+
     /**
      * 依赖包: org.apache.poi, poi-ooxml, 版本3.9
      */
@@ -209,7 +211,7 @@ public class ExcelHelper<T> {
         Sheet sheet = wb.getSheetAt(0); // 获得第一个表单
         Iterator<Row> rows = sheet.rowIterator(); // 获得第一个表单的迭代器
         Field[] fields = clazz.getDeclaredFields();
-        if(rows.hasNext()) {
+        if (rows.hasNext()) {
             Row row = rows.next(); // 获得行数据
             Iterator<Cell> cells = row.cellIterator();
             while (cells.hasNext()) {
@@ -295,7 +297,7 @@ public class ExcelHelper<T> {
         //创建工作簿并发送到OutputStream指定的地方
         try {
             Workbook wwb;
-            if(in == null) {
+            if (in == null) {
                 wwb = new HSSFWorkbook();
             } else {
                 wwb = new HSSFWorkbook(in);
@@ -359,7 +361,7 @@ public class ExcelHelper<T> {
                 if (1 == sheetNum) {
                     //Sheet sheet = wwb.getSheetAt(0);
                     Sheet sheet = wb.getSheet(sheetName);
-                    if(sheet == null) {
+                    if (sheet == null) {
                         sheet = wb.createSheet(sheetName);
                     }
 
@@ -406,7 +408,6 @@ public class ExcelHelper<T> {
     ) throws Exception {
         listToExcel(list, fieldMap, sheetName, 65535, wb);
     }
-
 
 
     /**
@@ -466,7 +467,7 @@ public class ExcelHelper<T> {
 
     /**
      * @param in           ：承载着Excel的输入流
-     * @param sheetName   ：要导入的工作表序号
+     * @param sheetName    ：要导入的工作表序号
      * @param entityClass  ：List中对象的类型（Excel中的每一行都要转化为该类型的对象）
      * @param fieldMap     ：Excel中的中文列头和类的英文属性的对应关系Map
      * @param uniqueFields ：指定业务主键组合（即复合主键），这些列的组合不能重复
@@ -499,12 +500,12 @@ public class ExcelHelper<T> {
 
                 int nullCols = 0;
                 Row row = sheet.getRow(i);
-                if(row == null) {
+                if (row == null) {
                     row = sheet.createRow(i);
                 }
                 for (int j = 0; j < row.getLastCellNum(); j++) {
                     Cell currentCell = row.getCell(j);
-                    if(currentCell == null) {
+                    if (currentCell == null) {
                         currentCell = row.createCell(j);
                     }
                     if (currentCell == null || "".equals(currentCell.getStringCellValue())) {
@@ -527,7 +528,7 @@ public class ExcelHelper<T> {
 
 
             Row firstRow = sheet.getRow(0);
-            if(firstRow == null) {
+            if (firstRow == null) {
                 firstRow = sheet.createRow(0);
             }
 
@@ -536,7 +537,7 @@ public class ExcelHelper<T> {
             //获取Excel中的列名
             for (int i = 0; i < firstRow.getLastCellNum(); i++) {
                 Cell cell = firstRow.getCell(i);
-                if(cell == null) {
+                if (cell == null) {
                     cell = firstRow.createCell(i);
                 }
                 excelFieldNames[i] = cell.getStringCellValue().trim();
@@ -768,18 +769,18 @@ public class ExcelHelper<T> {
     private static void setColumnAutoSize(Sheet sheet, int extraWith) {
         //获取本列的最宽单元格的宽度
         Row row = sheet.getRow(0);
-        if(row == null) {
+        if (row == null) {
             row = sheet.createRow(0);
         }
         for (int i = 0; i < row.getLastCellNum(); i++) {
             int colWith = 0;
             for (int j = 0; j < sheet.getLastRowNum(); j++) {
                 Row irow = sheet.getRow(j);
-                if(irow == null) {
+                if (irow == null) {
                     irow = sheet.createRow(j);
                 }
                 Cell cell = irow.getCell(i);
-                if(cell == null) {
+                if (cell == null) {
                     cell = irow.createCell(i);
                 }
                 String content = cell.getStringCellValue().toString();
@@ -824,12 +825,12 @@ public class ExcelHelper<T> {
         }
         //填充表头
         Row row = sheet.getRow(0);
-        if(row == null) {
+        if (row == null) {
             row = sheet.createRow(0);
         }
         for (int i = 0; i < cnFields.length; i++) {
             Cell cell = row.getCell(i);
-            if(cell == null) {
+            if (cell == null) {
                 cell = row.createCell(i);
             }
             cell.setCellValue(cnFields[i]);
@@ -841,14 +842,14 @@ public class ExcelHelper<T> {
             //获取单个对象
             T item = list.get(index);
             Row myrow = sheet.getRow(rowNo);
-            if(myrow == null) {
+            if (myrow == null) {
                 myrow = sheet.createRow(rowNo);
             }
             for (int i = 0; i < enFields.length; i++) {
                 Object objValue = getFieldValueByNameSequence(enFields[i], item);
                 String fieldValue = objValue == null ? "" : objValue.toString();
                 Cell cell = myrow.getCell(i);
-                if(cell == null) {
+                if (cell == null) {
                     cell = myrow.createCell(i);
                 }
                 cell.setCellValue(fieldValue);
@@ -858,5 +859,68 @@ public class ExcelHelper<T> {
 
         //设置自动列宽
         setColumnAutoSize(sheet, 5);
+    }
+
+
+    public static <T> void listToExcelNew(List<T> list, LinkedHashMap<String, String> headers, String sheetName, OutputStream os) {
+        if (list == null || list.size() == 0) {
+            throw new IllegalArgumentException("数据源中没有任何数据");
+        }
+
+        int sheetNum = (int) Math.ceil(list.size() / new Integer(MaxSheetRow).doubleValue());
+        Workbook wwb = new HSSFWorkbook();
+        Sheet[] sheets = new Sheet[sheetNum];
+        // sheet名称
+        if(sheetNum == 1) {
+            sheets[0] = getSheet(wwb, sheetName);
+        } else {
+            for (int i = 0; i < sheets.length; i++) {
+                sheets[i] = getSheet(wwb, sheetName + (i + 1));
+            }
+        }
+        List<T> subList;
+        for (int i = 0; i < sheets.length; i++) {
+            setHeader(getRow(sheets[i], 0), headers);
+            subList = list.subList(i * MaxSheetRow, (i + 1) * MaxSheetRow - 2);
+            fillSheet(sheets[i], subList, headers);
+        }
+        try {
+            wwb.write(os);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void setHeader(Row row, Map<String, String> headers) {
+        int i = 0;
+        for (Map.Entry<String, String> entry : headers.entrySet()) {
+            Cell cell = getCell(row, i);
+            cell.setCellValue(entry.getValue());
+            i++;
+        }
+    }
+
+    private static Sheet getSheet(Workbook book, String sheetName) {
+        Sheet sheet = book.getSheet(sheetName);
+        if (sheet == null) {
+            sheet = book.createSheet(sheetName);
+        }
+        return sheet;
+    }
+
+    private static Row getRow(Sheet sheet, int i) {
+        Row row = sheet.getRow(i);
+        if (row == null) {
+            row = sheet.createRow(i);
+        }
+        return row;
+    }
+
+    private static Cell getCell(Row row, int i) {
+        Cell cell = row.getCell(i);
+        if (cell == null) {
+            cell = row.createCell(i);
+        }
+        return cell;
     }
 }
