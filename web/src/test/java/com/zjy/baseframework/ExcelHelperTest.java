@@ -4,9 +4,6 @@ import com.zjy.bll.common.BaseTestCase;
 import com.zjy.entities.UserInfo;
 import org.junit.Test;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -58,13 +55,7 @@ public class ExcelHelperTest extends BaseTestCase {
         user.setUserName("第九个");
         list.add(user);
 
-        File f = new File("d:\\a.xls");
-        FileOutputStream os = null;
-        try {
-            os = new FileOutputStream(f);
-            ExcelHelper.listToExcelNew(list, headers, "sheetName", os);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        String file = "d:\\a.xlsx";
+        ExcelHelper.listToExcelNew(list, headers, "sheet名称", file);
     }
 }

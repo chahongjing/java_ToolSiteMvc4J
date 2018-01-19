@@ -1,16 +1,16 @@
 package com.zjy.baseframework;
 
+import com.zjy.baseframework.enums.FileSuffix;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.HttpHeaders;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -18,22 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class ExcelHelper<T> {
-    private static int MaxSheetRow = 65535;
-
-    /**
-     * 依赖包: org.apache.poi, poi-ooxml, 版本3.9
-     */
-    public static <T> void exportExcel(Collection<T> dataset, OutputStream out) {
-        exportExcel("测试POI导出EXCEL文档", Collections.EMPTY_LIST, dataset, out, "yyyy-MM-dd");
-    }
-
-    public static <T> void exportExcel(List<String> headers, Collection<T> dataset, OutputStream out) {
-        exportExcel("测试POI导出EXCEL文档", headers, dataset, out, "yyyy-MM-dd");
-    }
-
-    public static <T> void exportExcel(List<String> headers, Collection<T> dataset, OutputStream out, String pattern) {
-        exportExcel("测试POI导出EXCEL文档", headers, dataset, out, pattern);
-    }
+    private static final int MaxSheetRow = 65535;
 
     /**
      * 这是一个通用的方法，利用了JAVA的反射机制，可以将放置在JAVA集合中并且符号一定条件的数据以EXCEL 的形式输出到指定IO设备上
@@ -181,77 +166,6 @@ public class ExcelHelper<T> {
             e.printStackTrace();
         }
     }
-
-    public List<T> readExcel(Class<T> clazz, String filePath) {
-        try {
-            return readExcel(clazz, new FileInputStream(filePath));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return Collections.EMPTY_LIST;
-    }
-
-    public List<T> readExcel(Class<T> clazz, InputStream stream) throws IllegalAccessException, InstantiationException {
-        Workbook wb = null;
-        try {
-            wb = WorkbookFactory.create(stream);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return Collections.EMPTY_LIST;
-        } catch (InvalidFormatException e) {
-            e.printStackTrace();
-            return Collections.EMPTY_LIST;
-        }
-        List<T> list = new ArrayList<T>();
-        HashMap<String, String> title = new HashMap<>();
-        Sheet sheet = wb.getSheetAt(0); // 获得第一个表单
-        Iterator<Row> rows = sheet.rowIterator(); // 获得第一个表单的迭代器
-        Field[] fields = clazz.getDeclaredFields();
-        if (rows.hasNext()) {
-            Row row = rows.next(); // 获得行数据
-            Iterator<Cell> cells = row.cellIterator();
-            while (cells.hasNext()) {
-                Cell cell = cells.next();
-                title.put(cell.getStringCellValue(), cell.getStringCellValue());
-            }
-        }
-        while (rows.hasNext()) {
-            Row row = rows.next(); // 获得行数据
-            T entity = clazz.newInstance();
-            System.out.println("Row #" + row.getRowNum()); // 获得行号从0开始
-            Iterator<Cell> cells = row.cellIterator(); // 获得第一行的迭代器
-            int i = 0;
-            while (cells.hasNext()) {
-                Cell cell = cells.next();
-                System.out.println("Cell #" + cell.getColumnIndex());
-                switch (cell.getCellType()) { // 根据cell中的类型来输出数据
-                    case Cell.CELL_TYPE_NUMERIC:
-                        System.out.println(cell.getNumericCellValue());
-                        break;
-                    case Cell.CELL_TYPE_STRING:
-                        System.out.println(cell.getStringCellValue());
-                        break;
-                    case Cell.CELL_TYPE_BOOLEAN:
-                        System.out.println(cell.getBooleanCellValue());
-                        break;
-                    case Cell.CELL_TYPE_FORMULA:
-                        System.out.println(cell.getCellFormula());
-                        break;
-                    default:
-                        System.out.println("unsuported sell type");
-                        break;
-                }
-                i++;
-            }
-            list.add(entity);
-        }
-        return list;
-    }
-
 
     /**
      * @param list      数据源
@@ -447,24 +361,62 @@ public class ExcelHelper<T> {
     }
 
 
-    /**
-     * @param list     数据源
-     * @param fieldMap 类的英文属性和Excel中的中文列名的对应关系
-     * @param response 使用response可以导出到浏览器
-     * @throws Exception
-     * @MethodName : listToExcel
-     * @Description : 导出Excel（导出到浏览器，工作表的大小是2003支持的最大值）
-     */
-    public static <T> void listToExcel(
-            List<T> list,
-            LinkedHashMap<String, String> fieldMap,
-            String sheetName,
-            HttpServletResponse response
-    ) throws Exception {
-
-        listToExcel(list, fieldMap, sheetName, 65535, response);
+    public List<T> readExcel(Class<T> clazz, InputStream stream) throws IllegalAccessException, InstantiationException {
+        Workbook wb = null;
+        try {
+            wb = WorkbookFactory.create(stream);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Collections.EMPTY_LIST;
+        } catch (InvalidFormatException e) {
+            e.printStackTrace();
+            return Collections.EMPTY_LIST;
+        }
+        List<T> list = new ArrayList<T>();
+        HashMap<String, String> title = new HashMap<>();
+        Sheet sheet = wb.getSheetAt(0); // 获得第一个表单
+        Iterator<Row> rows = sheet.rowIterator(); // 获得第一个表单的迭代器
+        Field[] fields = clazz.getDeclaredFields();
+        if (rows.hasNext()) {
+            Row row = rows.next(); // 获得行数据
+            Iterator<Cell> cells = row.cellIterator();
+            while (cells.hasNext()) {
+                Cell cell = cells.next();
+                title.put(cell.getStringCellValue(), cell.getStringCellValue());
+            }
+        }
+        while (rows.hasNext()) {
+            Row row = rows.next(); // 获得行数据
+            T entity = clazz.newInstance();
+            System.out.println("Row #" + row.getRowNum()); // 获得行号从0开始
+            Iterator<Cell> cells = row.cellIterator(); // 获得第一行的迭代器
+            int i = 0;
+            while (cells.hasNext()) {
+                Cell cell = cells.next();
+                System.out.println("Cell #" + cell.getColumnIndex());
+                switch (cell.getCellType()) { // 根据cell中的类型来输出数据
+                    case Cell.CELL_TYPE_NUMERIC:
+                        System.out.println(cell.getNumericCellValue());
+                        break;
+                    case Cell.CELL_TYPE_STRING:
+                        System.out.println(cell.getStringCellValue());
+                        break;
+                    case Cell.CELL_TYPE_BOOLEAN:
+                        System.out.println(cell.getBooleanCellValue());
+                        break;
+                    case Cell.CELL_TYPE_FORMULA:
+                        System.out.println(cell.getCellFormula());
+                        break;
+                    default:
+                        System.out.println("unsuported sell type");
+                        break;
+                }
+                i++;
+            }
+            list.add(entity);
+        }
+        return list;
     }
-
     /**
      * @param in           ：承载着Excel的输入流
      * @param sheetName    ：要导入的工作表序号
@@ -483,21 +435,16 @@ public class ExcelHelper<T> {
             LinkedHashMap<String, String> fieldMap,
             String[] uniqueFields
     ) throws Exception {
-
         //定义要返回的list
         List<T> resultList = new ArrayList<T>();
-
         try {
-
             //根据Excel数据源创建WorkBook
             Workbook wb = WorkbookFactory.create(in);
             //获取工作表
             Sheet sheet = wb.getSheet(sheetName);
-
             //获取工作表的有效行数
             int realRows = 0;
             for (int i = 0; i < sheet.getLastRowNum(); i++) {
-
                 int nullCols = 0;
                 Row row = sheet.getRow(i);
                 if (row == null) {
@@ -520,20 +467,15 @@ public class ExcelHelper<T> {
                 }
             }
 
-
             //如果Excel中没有数据则提示错误
             if (realRows <= 1) {
                 throw new Exception("Excel文件中没有任何数据");
             }
-
-
             Row firstRow = sheet.getRow(0);
             if (firstRow == null) {
                 firstRow = sheet.createRow(0);
             }
-
             String[] excelFieldNames = new String[firstRow.getLastCellNum()];
-
             //获取Excel中的列名
             for (int i = 0; i < firstRow.getLastCellNum(); i++) {
                 Cell cell = firstRow.getCell(i);
@@ -552,13 +494,10 @@ public class ExcelHelper<T> {
                     break;
                 }
             }
-
             //如果有列名不存在，则抛出异常，提示错误
             if (!isExist) {
                 throw new Exception("Excel中缺少必要的字段，或字段名称有误");
             }
-
-
 //            //将列名和列号放入Map中,这样通过列名就可以拿到列号
 //            LinkedHashMap<String, Integer> colMap = new LinkedHashMap<String, Integer>();
 //            for (int i = 0; i < excelFieldNames.length; i++) {
@@ -616,149 +555,15 @@ public class ExcelHelper<T> {
                     //给对象赋值
                     setFieldValueByName(enNormalName, content, entity);
                 }
-
                 resultList.add(entity);
             }
         } catch (Exception e) {
             e.printStackTrace();
-
         }
         return resultList;
     }
 
-
-
-
-
-        /*<-------------------------辅助的私有方法----------------------------------------------->*/
-
-    /**
-     * @param fieldName 字段名
-     * @param o         对象
-     * @return 字段值
-     * @MethodName : getFieldValueByName
-     * @Description : 根据字段名获取字段值
-     */
-    private static Object getFieldValueByName(String fieldName, Object o) {
-        Object value = null;
-        try {
-            Field field = getFieldByName(fieldName, o.getClass());
-            if (field != null) {
-                field.setAccessible(true);
-                value = field.get(o);
-            } else {
-                throw new NoSuchFieldException(o.getClass().getSimpleName() + "类不存在字段名 " + fieldName);
-            }
-        } catch (Exception ex) {
-        }
-        return value;
-    }
-
-    /**
-     * @param fieldName 字段名
-     * @param clazz     包含该字段的类
-     * @return 字段
-     * @MethodName : getFieldByName
-     * @Description : 根据字段名获取字段
-     */
-    private static Field getFieldByName(String fieldName, Class<?> clazz) {
-        //拿到本类的所有字段
-        Field[] selfFields = clazz.getDeclaredFields();
-
-        //如果本类中存在该字段，则返回
-        for (Field field : selfFields) {
-            if (field.getName().equals(fieldName)) {
-                return field;
-            }
-        }
-
-        //否则，查看父类中是否存在此字段，如果有则返回
-        Class<?> superClazz = clazz.getSuperclass();
-        if (superClazz != null && superClazz != Object.class) {
-            return getFieldByName(fieldName, superClazz);
-        }
-
-        //如果本类和父类都没有，则返回空
-        return null;
-    }
-
-
-    /**
-     * @param fieldNameSequence 带路径的属性名或简单属性名
-     * @param o                 对象
-     * @return 属性值
-     * @throws Exception
-     * @MethodName : getFieldValueByNameSequence
-     * @Description :
-     * 根据带路径或不带路径的属性名获取属性值
-     * 即接受简单属性名，如userName等，又接受带路径的属性名，如student.department.name等
-     */
-    private static Object getFieldValueByNameSequence(String fieldNameSequence, Object o) {
-
-        Object value = null;
-
-        //将fieldNameSequence进行拆分
-        String[] attributes = fieldNameSequence.split("\\.");
-        if (attributes.length == 1) {
-            value = getFieldValueByName(fieldNameSequence, o);
-        } else {
-            //根据属性名获取属性对象
-            Object fieldObj = getFieldValueByName(attributes[0], o);
-            String subFieldNameSequence = fieldNameSequence.substring(fieldNameSequence.indexOf(".") + 1);
-            value = getFieldValueByNameSequence(subFieldNameSequence, fieldObj);
-        }
-        return value;
-
-    }
-
-
-    /**
-     * @param fieldName  字段名
-     * @param fieldValue 字段值
-     * @param o          对象
-     * @MethodName : setFieldValueByName
-     * @Description : 根据字段名给对象的字段赋值
-     */
-    private static void setFieldValueByName(String fieldName, Object fieldValue, Object o) throws Exception {
-
-        Field field = getFieldByName(fieldName, o.getClass());
-        if (field != null) {
-            field.setAccessible(true);
-            //获取字段类型
-            Class<?> fieldType = field.getType();
-
-            //根据字段类型给字段赋值
-            if (String.class == fieldType) {
-                field.set(o, String.valueOf(fieldValue));
-            } else if ((Integer.TYPE == fieldType)
-                    || (Integer.class == fieldType)) {
-                field.set(o, Integer.parseInt(fieldValue.toString()));
-            } else if ((Long.TYPE == fieldType)
-                    || (Long.class == fieldType)) {
-                field.set(o, Long.valueOf(fieldValue.toString()));
-            } else if ((Float.TYPE == fieldType)
-                    || (Float.class == fieldType)) {
-                field.set(o, Float.valueOf(fieldValue.toString()));
-            } else if ((Short.TYPE == fieldType)
-                    || (Short.class == fieldType)) {
-                field.set(o, Short.valueOf(fieldValue.toString()));
-            } else if ((Double.TYPE == fieldType)
-                    || (Double.class == fieldType)) {
-                field.set(o, Double.valueOf(fieldValue.toString()));
-            } else if (Character.TYPE == fieldType) {
-                if ((fieldValue != null) && (fieldValue.toString().length() > 0)) {
-                    field.set(o, Character
-                            .valueOf(fieldValue.toString().charAt(0)));
-                }
-            } else if (Date.class == fieldType) {
-                field.set(o, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(fieldValue.toString()));
-            } else {
-                field.set(o, fieldValue);
-            }
-        } else {
-            throw new Exception(o.getClass().getSimpleName() + "类不存在字段名 " + fieldName);
-        }
-    }
+    /*<-------------------------辅助的私有方法----------------------------------------------->*/
 
 
     /**
@@ -862,20 +667,146 @@ public class ExcelHelper<T> {
     }
 
 
-    public static <T> void listToExcelNew(List<T> list, LinkedHashMap<String, String> headers, String sheetName, OutputStream os) {
+    // region excle导入
+    public static <T> List<T> excelToList(InputStream in, String sheetName, Class<T> clazz, LinkedHashMap<String, String> headers) {
+        List<T> list = new ArrayList<T>();
+        Workbook workbook;
+        try {
+            workbook = WorkbookFactory.create(in);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return list;
+        }
+        Sheet sheet = workbook.getSheet(sheetName);
+        if(sheet == null) {
+            System.out.println("在excel中未找到对应的sheet:" + sheetName);
+            return list;
+        }
+
+        Row row;
+        Cell cell;
+        String fieldName;
+        int fieldIndex;
+        Map<String, Integer> fieldsMap = new HashMap<>();
+        // 处理列和字段对应关系
+        row = sheet.getRow(0);
+        if(row == null) return list;
+        for (Map.Entry<String, String> entry : headers.entrySet()) {
+            fieldName = "";
+            fieldIndex = 0;
+            for(int i = 0; i < row.getLastCellNum(); i++) {
+                cell = row.getCell(i);
+                if(StringUtils.isBlank(cell.getStringCellValue())) continue;
+                if(cell.getStringCellValue().trim().equals(entry.getValue())) {
+                    fieldName = entry.getKey();
+                    fieldIndex = i;
+                }
+            }
+            if(StringUtils.isBlank(fieldName)) {
+                throw new IllegalArgumentException("未找到列名【" + entry.getKey() + "-" + entry.getValue() + "】");
+            }
+            fieldsMap.put(fieldName, fieldIndex);
+        }
+        // 将行转为对象
+        T entity;
+        Object cellValue;
+        for (int i = 1; i < sheet.getLastRowNum(); i++) {
+            //新建要转换的对象
+            try {
+                entity = clazz.newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return list;
+            }
+            row = sheet.getRow(i);
+            //给对象中的字段赋值
+            for (Map.Entry<String, Integer> entry : fieldsMap.entrySet()) {
+                cellValue = getCellValue(row.getCell(entry.getValue()));
+                // 给对象赋值
+                try {
+                    setFieldValueByName(entry.getKey(), cellValue, entity);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            list.add(entity);
+        }
+        return list;
+    }
+    // endregion
+
+    // region list转excel
+    public static <T> void listToExcelNew(List<T> list, LinkedHashMap<String, String> headers, String sheetName, String filePath) {
+        LinkedHashMap<String, List<T>> map = new LinkedHashMap<>();
+        map.put(sheetName, list);
+        listToExcelNew(map, headers, filePath);
+    }
+
+    public static <T> void listToExcelNew(LinkedHashMap<String, List<T>> sheetList, LinkedHashMap<String, String> headers, String filePath) {
+        if(StringUtils.isBlank(filePath)) {
+            throw new IllegalArgumentException("filePath不能为空！");
+        }
+        Workbook workbook;
+        BufferedOutputStream os = null;
+        try {
+            File file = new File(filePath);
+            if(!file.getParentFile().exists()) {
+                file.mkdirs();
+            }
+            if(filePath.toLowerCase().endsWith(FileSuffix.XLSX.getValue())) {
+                workbook = new XSSFWorkbook();
+            } else {
+                workbook = new HSSFWorkbook();
+            }
+            os = new BufferedOutputStream(new FileOutputStream(filePath));
+            for (Map.Entry<String, List<T>> entry : sheetList.entrySet()) {
+                listToExcelNew(workbook, entry.getValue(), headers, entry.getKey());
+            }
+            os.flush();
+            workbook.write(os);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if(os != null) {
+                try{
+                    os.close();
+                } catch (Exception ex){}
+            }
+        }
+    }
+
+    public static <T> void listToExcelNew(List<T> list, LinkedHashMap<String, String> headers, String sheetName, OutputStream os, FileSuffix suffix) {
+        Workbook workbook;
+        if(suffix != null && suffix.equals(FileSuffix.XLSX)) {
+            workbook = new XSSFWorkbook();
+        } else {
+            workbook = new HSSFWorkbook();
+        }
+        try {
+            listToExcelNew(workbook, list, headers, sheetName);
+            workbook.write(os);
+            os.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static <T> void listToExcelNew(Workbook workbook, List<T> list, LinkedHashMap<String, String> headers, String sheetName) {
         if (list == null || list.size() == 0) {
-            throw new IllegalArgumentException("数据源中没有任何数据");
+            throw new IllegalArgumentException("数据源中没有任何数据!");
+        }
+        if (StringUtils.isBlank(sheetName)) {
+            throw new IllegalArgumentException("请输入sheet名称");
         }
 
         int sheetNum = (int) Math.ceil(list.size() / new Integer(MaxSheetRow - 1).doubleValue());
-        Workbook wwb = new HSSFWorkbook();
         Sheet[] sheets = new Sheet[sheetNum];
         // sheet名称
         if (sheetNum == 1) {
-            sheets[0] = getSheet(wwb, sheetName);
+            sheets[0] = getSheet(workbook, sheetName);
         } else {
             for (int i = 0; i < sheets.length; i++) {
-                sheets[i] = getSheet(wwb, sheetName + (i + 1));
+                sheets[i] = getSheet(workbook, sheetName + (i + 1));
             }
         }
         List<T> subList;
@@ -887,13 +818,10 @@ public class ExcelHelper<T> {
             }
             fillSheet(sheets[i], subList, headers);
         }
-        try {
-            wwb.write(os);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
+    // endregion
 
+    // region 辅助函数
     private static <T> void fillSheet(Sheet sheet, List<T> list, LinkedHashMap<String, String> headers) {
         // 设置标题
         setHeader(getRow(sheet, 0), headers);
@@ -956,4 +884,130 @@ public class ExcelHelper<T> {
         }
         return cell;
     }
+
+    private static Object getCellValue(Cell cell) {
+        int cellType = cell.getCellType();
+        Object value = null;
+        switch (cellType) {
+            case Cell.CELL_TYPE_NUMERIC:
+                value = cell.getNumericCellValue();
+                break;
+            case Cell.CELL_TYPE_STRING:
+                value = cell.getStringCellValue();
+                break;
+            case Cell.CELL_TYPE_FORMULA:
+                value = cell.getCellFormula();
+                break;
+            case Cell.CELL_TYPE_BLANK:
+                value = "";
+                break;
+            case Cell.CELL_TYPE_BOOLEAN:
+                value = cell.getBooleanCellValue();
+                break;
+            case Cell.CELL_TYPE_ERROR:
+                value = cell.getErrorCellValue();
+                break;
+        }
+        return value;
+    }
+
+    /**
+     * @param fieldNameSequence 带路径的属性名或简单属性名
+     * @param o                 对象
+     * @return 属性值
+     * @throws Exception
+     * @MethodName : getFieldValueByNameSequence
+     * @Description :
+     * 根据带路径或不带路径的属性名获取属性值
+     * 即接受简单属性名，如userName等，又接受带路径的属性名，如student.department.name等
+     */
+    private static Object getFieldValueByNameSequence(String fieldNameSequence, Object o) {
+        Object value = null;
+        //将fieldNameSequence进行拆分
+        String[] attributes = fieldNameSequence.split("\\.");
+        if (attributes.length == 1) {
+            value = getFieldValueByName(fieldNameSequence, o);
+        } else {
+            //根据属性名获取属性对象
+            Object fieldObj = getFieldValueByName(attributes[0], o);
+            String subFieldNameSequence = fieldNameSequence.substring(fieldNameSequence.indexOf(".") + 1);
+            value = getFieldValueByNameSequence(subFieldNameSequence, fieldObj);
+        }
+        return value;
+    }
+
+    /**
+     * @param fieldName 字段名
+     * @param o         对象
+     * @return 字段值
+     * @MethodName : getFieldValueByName
+     * @Description : 根据字段名获取字段值
+     */
+    private static Object getFieldValueByName(String fieldName, Object o) {
+        Object value = null;
+        try {
+            Field field = getFieldByName(fieldName, o.getClass());
+            if (field != null) {
+                field.setAccessible(true);
+                value = field.get(o);
+            } else {
+                throw new NoSuchFieldException(o.getClass().getSimpleName() + "类不存在字段名 " + fieldName);
+            }
+        } catch (Exception ex) {
+        }
+        return value;
+    }
+
+    /**
+     * @param fieldName 字段名
+     * @param clazz     包含该字段的类
+     * @return 字段
+     * @MethodName : getFieldByName
+     * @Description : 根据字段名获取字段
+     */
+    private static Field getFieldByName(String fieldName, Class<?> clazz) {
+        //拿到本类的所有字段
+        Field[] selfFields = clazz.getDeclaredFields();
+
+        //如果本类中存在该字段，则返回
+        for (Field field : selfFields) {
+            if (field.getName().equals(fieldName)) {
+                return field;
+            }
+        }
+
+        //否则，查看父类中是否存在此字段，如果有则返回
+        Class<?> superClazz = clazz.getSuperclass();
+        if (superClazz != null && superClazz != Object.class) {
+            return getFieldByName(fieldName, superClazz);
+        }
+
+        //如果本类和父类都没有，则返回空
+        return null;
+    }
+
+    /**
+     * @param fieldName  字段名
+     * @param fieldValue 字段值
+     * @param o          对象
+     * @MethodName : setFieldValueByName
+     * @Description : 根据字段名给对象的字段赋值
+     */
+    private static void setFieldValueByName(String fieldName, Object fieldValue, Object o) throws Exception {
+        Field field = getFieldByName(fieldName, o.getClass());
+        if (field != null) {
+            field.setAccessible(true);
+            //获取字段类型
+            Class<?> fieldType = field.getType();
+            //根据字段类型给字段赋值
+            if (Date.class == fieldType) {
+                field.set(o, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(fieldValue.toString()));
+            } else {
+                field.set(o, fieldValue);
+            }
+        } else {
+            throw new Exception(o.getClass().getSimpleName() + "类不存在字段名 " + fieldName);
+        }
+    }
+    // endregion
 }
