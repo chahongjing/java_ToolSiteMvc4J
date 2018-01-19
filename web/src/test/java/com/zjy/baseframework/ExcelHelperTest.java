@@ -1,10 +1,14 @@
 package com.zjy.baseframework;
 
+import com.alibaba.fastjson.JSON;
 import com.zjy.bll.common.BaseTestCase;
 import com.zjy.entities.UserInfo;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -19,9 +23,13 @@ public class ExcelHelperTest extends BaseTestCase {
         LinkedHashMap<String, String> headers = new LinkedHashMap<>();
         headers.put("userCode", "用户编码");
         headers.put("userName", "用户名称");
+        headers.put("createdOn", "创建时间");
+        headers.put("sex", "性别");
         UserInfo user = new UserInfo();
         user.setUserCode("1");
         user.setUserName("第一个");
+        user.setCreatedOn(new Date());
+        user.setSex(true);
         list.add(user);
         user = new UserInfo();
         user.setUserCode("2");
@@ -41,6 +49,11 @@ public class ExcelHelperTest extends BaseTestCase {
         list.add(user);
 
         user = new UserInfo();
+        user.setUserCode("6");
+        user.setUserName("第六个");
+        list.add(user);
+
+        user = new UserInfo();
         user.setUserCode("7");
         user.setUserName("第七个");
         list.add(user);
@@ -55,7 +68,26 @@ public class ExcelHelperTest extends BaseTestCase {
         user.setUserName("第九个");
         list.add(user);
 
-        String file = "d:\\a.xlsx";
+        String file = "d:\\a.xls";
         ExcelHelper.listToExcelNew(list, headers, "sheet名称", file);
+    }
+
+    @Test
+    public void testExcelToList() {
+        LinkedHashMap<String, String> headers = new LinkedHashMap<>();
+        headers.put("userCode", "用户编码");
+        headers.put("userName", "用户名称");
+        headers.put("createdOn", "创建时间");
+        headers.put("sex", "性别");
+        File f = new File("d:\\a.xls");
+        FileInputStream ins = null;
+        try {
+            ins = new FileInputStream(f);
+            List<UserInfo> list = ExcelHelper.excelToList(ins, "sheet名称", UserInfo.class, headers);
+            System.out.println(JSON.toJSONString(list));
+            ins.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

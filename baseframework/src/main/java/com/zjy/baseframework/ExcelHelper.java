@@ -710,7 +710,7 @@ public class ExcelHelper<T> {
         // 将行转为对象
         T entity;
         Object cellValue;
-        for (int i = 1; i < sheet.getLastRowNum(); i++) {
+        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
             //新建要转换的对象
             try {
                 entity = clazz.newInstance();
@@ -844,9 +844,8 @@ public class ExcelHelper<T> {
             row = getRow(sheet, rowNo);
             for (int i = 0; i < fieldNames.length; i++) {
                 Object objValue = getFieldValueByNameSequence(fieldNames[i], item);
-                String fieldValue = objValue == null ? "" : objValue.toString();
                 cell = getCell(row, i);
-                cell.setCellValue(fieldValue);
+                setCellValue(cell, objValue);
             }
             rowNo++;
         }
@@ -909,6 +908,16 @@ public class ExcelHelper<T> {
                 break;
         }
         return value;
+    }
+
+    private static void setCellValue(Cell cell, Object value) {
+        if(value == null) return;
+        Class clazz = value.getClass();
+        if(clazz == Date.class) {
+            cell.setCellValue((Date)value);
+        } else {
+            cell.setCellValue(value.toString());
+        }
     }
 
     /**
