@@ -639,18 +639,18 @@ public class ExcelHelper<T> {
      * @MethodName : getFieldValueByName
      * @Description : 根据字段名获取字段值
      */
-    private static Object getFieldValueByName(String fieldName, Object o) throws Exception {
-
+    private static Object getFieldValueByName(String fieldName, Object o) {
         Object value = null;
-        Field field = getFieldByName(fieldName, o.getClass());
-
-        if (field != null) {
-            field.setAccessible(true);
-            value = field.get(o);
-        } else {
-            throw new Exception(o.getClass().getSimpleName() + "类不存在字段名 " + fieldName);
+        try {
+            Field field = getFieldByName(fieldName, o.getClass());
+            if (field != null) {
+                field.setAccessible(true);
+                value = field.get(o);
+            } else {
+                throw new NoSuchFieldException(o.getClass().getSimpleName() + "类不存在字段名 " + fieldName);
+            }
+        } catch (Exception ex) {
         }
-
         return value;
     }
 
@@ -693,7 +693,7 @@ public class ExcelHelper<T> {
      * 根据带路径或不带路径的属性名获取属性值
      * 即接受简单属性名，如userName等，又接受带路径的属性名，如student.department.name等
      */
-    private static Object getFieldValueByNameSequence(String fieldNameSequence, Object o) throws Exception {
+    private static Object getFieldValueByNameSequence(String fieldNameSequence, Object o) {
 
         Object value = null;
 
@@ -867,11 +867,11 @@ public class ExcelHelper<T> {
             throw new IllegalArgumentException("数据源中没有任何数据");
         }
 
-        int sheetNum = (int) Math.ceil(list.size() / new Integer(MaxSheetRow).doubleValue());
+        int sheetNum = (int) Math.ceil(list.size() / new Integer(MaxSheetRow - 1).doubleValue());
         Workbook wwb = new HSSFWorkbook();
         Sheet[] sheets = new Sheet[sheetNum];
         // sheet名称
-        if(sheetNum == 1) {
+        if (sheetNum == 1) {
             sheets[0] = getSheet(wwb, sheetName);
         } else {
             for (int i = 0; i < sheets.length; i++) {
@@ -880,14 +880,47 @@ public class ExcelHelper<T> {
         }
         List<T> subList;
         for (int i = 0; i < sheets.length; i++) {
-            setHeader(getRow(sheets[i], 0), headers);
-            subList = list.subList(i * MaxSheetRow, (i + 1) * MaxSheetRow - 2);
+            if(i == sheets.length - 1) {
+                subList = list.subList(i * (MaxSheetRow - 1), list.size());
+            } else {
+                subList = list.subList(i * (MaxSheetRow - 1), (i + 1) * (MaxSheetRow - 1));
+            }
             fillSheet(sheets[i], subList, headers);
         }
         try {
             wwb.write(os);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static <T> void fillSheet(Sheet sheet, List<T> list, LinkedHashMap<String, String> headers) {
+        // 设置标题
+        setHeader(getRow(sheet, 0), headers);
+
+        // 定义存放字段名称的数组
+        String[] fieldNames = new String[headers.size()];
+
+        //填充数组
+        int count = 0;
+        for (Map.Entry<String, String> entry : headers.entrySet()) {
+            fieldNames[count] = entry.getKey();
+            count++;
+        }
+
+        //填充内容
+        int rowNo = 1;
+        Row row;
+        Cell cell;
+        for (T item : list) {
+            row = getRow(sheet, rowNo);
+            for (int i = 0; i < fieldNames.length; i++) {
+                Object objValue = getFieldValueByNameSequence(fieldNames[i], item);
+                String fieldValue = objValue == null ? "" : objValue.toString();
+                cell = getCell(row, i);
+                cell.setCellValue(fieldValue);
+            }
+            rowNo++;
         }
     }
 
