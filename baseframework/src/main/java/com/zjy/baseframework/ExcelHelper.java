@@ -721,7 +721,8 @@ public class ExcelHelper<T> {
             row = sheet.getRow(i);
             //给对象中的字段赋值
             for (Map.Entry<String, Integer> entry : fieldsMap.entrySet()) {
-                cellValue = getCellValue(row.getCell(entry.getValue()));
+                cell = row.getCell(entry.getValue());
+                cellValue = getCellValue(cell);
                 // 给对象赋值
                 try {
                     setFieldValueByName(entry.getKey(), cellValue, entity);
@@ -885,11 +886,16 @@ public class ExcelHelper<T> {
     }
 
     private static Object getCellValue(Cell cell) {
-        int cellType = cell.getCellType();
         Object value = null;
+        if(cell == null) return value;
+        int cellType = cell.getCellType();
         switch (cellType) {
             case Cell.CELL_TYPE_NUMERIC:
-                value = cell.getNumericCellValue();
+                if(DateUtil.isCellDateFormatted(cell)) {
+                    value = cell.getDateCellValue();
+                } else {
+                    value = cell.getNumericCellValue();
+                }
                 break;
             case Cell.CELL_TYPE_STRING:
                 value = cell.getStringCellValue();
@@ -914,7 +920,14 @@ public class ExcelHelper<T> {
         if(value == null) return;
         Class clazz = value.getClass();
         if(clazz == Date.class) {
+            Workbook wb = cell.getSheet().getWorkbook();
+            CreationHelper creationHelper = wb.getCreationHelper();
+            CellStyle dateStyle = wb.createCellStyle();
+            dateStyle.setDataFormat(creationHelper.createDataFormat().getFormat("yyyy-MM-dd HH:mm:ss"));
+            cell.setCellStyle(dateStyle);
             cell.setCellValue((Date)value);
+        } else if(clazz == Boolean.class || clazz == boolean.class) {
+            cell.setCellValue(Boolean.parseBoolean(value.toString()));
         } else {
             cell.setCellValue(value.toString());
         }
@@ -1010,7 +1023,7 @@ public class ExcelHelper<T> {
             Class<?> fieldType = field.getType();
             //根据字段类型给字段赋值
             if (Date.class == fieldType) {
-                field.set(o, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(fieldValue.toString()));
+                field.set(o, fieldValue);
             } else {
                 field.set(o, fieldValue);
             }
