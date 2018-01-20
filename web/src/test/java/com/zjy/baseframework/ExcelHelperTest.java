@@ -70,6 +70,8 @@ public class ExcelHelperTest extends BaseTestCase {
 
         String file = "d:\\a.xls";
         ExcelHelper.listToExcelNew(list, headers, "sheet名称", file);
+        file = "d:\\a.xlsx";
+        ExcelHelper.listToExcelNew(list, headers, "sheet名称", file);
     }
 
     @Test
@@ -79,11 +81,18 @@ public class ExcelHelperTest extends BaseTestCase {
         headers.put("userName", "用户名称");
         headers.put("createdOn", "创建时间");
         headers.put("sex", "性别");
-        File f = new File("d:\\a.xls");
-        FileInputStream ins = null;
         try {
+            File f = new File("d:\\a.xls");
+            FileInputStream ins = null;
             ins = new FileInputStream(f);
             List<UserInfo> list = ExcelHelper.excelToList(ins, "sheet名称", UserInfo.class, headers);
+            System.out.println(JSON.toJSONString(list));
+            ins.close();
+
+            f = new File("d:\\a.xlsx");
+            ins = null;
+            ins = new FileInputStream(f);
+            list = ExcelHelper.excelToList(ins, "sheet名称", UserInfo.class, headers);
             System.out.println(JSON.toJSONString(list));
             ins.close();
         } catch (Exception e) {
