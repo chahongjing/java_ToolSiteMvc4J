@@ -2,6 +2,7 @@ package com.zjy.web.controller;
 
 import com.zjy.baseframework.BaseResult;
 import com.zjy.baseframework.PartialViewHelper;
+import com.zjy.entities.Goods;
 import com.zjy.entities.UserInfo;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -109,6 +110,7 @@ public class TestController extends BaseController implements ServletConfigAware
         re.setValue(user);
         return new ResponseEntity<>(re, HttpStatus.OK);
     }
+
     @RequestMapping(value = "/testPostWithFile.do", method = RequestMethod.POST)
     public ResponseEntity<BaseResult<UserInfo>> testPostWithFile(MultipartHttpServletRequest request, @RequestParam Integer age,
                                                                  @RequestParam MultipartFile myfile, UserInfo users) {
@@ -118,9 +120,25 @@ public class TestController extends BaseController implements ServletConfigAware
         for (MultipartFile file : request.getFiles("myfile")) {
 
         }
-       user.setAge(age);
+       user.setAge(age + users.getAge());
         re.setValue(user);
         return new ResponseEntity<>(re, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/testGetEntity.do", produces="application/json;charset=UTF-8")
+    public ResponseEntity<UserInfo> testGetEntity(Goods goods) {
+        UserInfo user = new UserInfo();
+        user.setUserName(goods.getName());
+        user.setDepartmentName("testGetEntity");
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/testPostEntity.do", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
+    public ResponseEntity<UserInfo> testPostEntity(Goods goods) {
+        UserInfo user = new UserInfo();
+        user.setUserName(goods.getName());
+        user.setDepartmentName("testPostEntity");
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
     // endregion
 }

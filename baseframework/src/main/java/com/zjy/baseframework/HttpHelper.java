@@ -1,18 +1,8 @@
 package com.zjy.baseframework;
 
-import org.apache.commons.httpclient.*;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.multipart.FilePart;
-import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
-import org.apache.commons.httpclient.methods.multipart.Part;
-import org.apache.commons.httpclient.methods.multipart.StringPart;
-import org.apache.commons.httpclient.params.HttpMethodParams;
-import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -32,7 +22,9 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -90,6 +82,18 @@ public class HttpHelper {
             // 服务器返回码
             int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode == HttpStatus.SC_OK || statusCode == HttpStatus.SC_NOT_MODIFIED) {
+                org.apache.http.Header firstHeader = response.getFirstHeader(HttpHeaders.CONTENT_DISPOSITION);
+                // 开始解析文件头信息，这里使用的是HeaderElement对象作为文件头的基础信息
+                org.apache.http.HeaderElement[] elements1 = firstHeader.getElements();
+                String filerName = null;
+                for (org.apache.http.HeaderElement headerElement : elements1) {
+                    //遍历，获取filename。filename信息对应的就是下载文件的文件名称。
+                    org.apache.http.NameValuePair pair = headerElement.getParameterByName("filename");
+                    if (pair != null) {
+                        System.out.println(pair.getName() + ":" + pair.getValue());
+                        filerName = pair.getValue();
+                    }
+                }
                 // 服务器返回内容
                 HttpEntity respEntity = response.getEntity();
                 byte[] bytes = EntityUtils.toByteArray(respEntity);
@@ -185,7 +189,7 @@ public class HttpHelper {
                 httpPost.setEntity(entity.build());
             } else {
                 // 非文件
-                List<NameValuePair> nvps = new ArrayList<>();
+                List<BasicNameValuePair> nvps = new ArrayList<>();
                 if (params != null) {
                     for (Map.Entry<String, String> entry : params.entrySet()) {
                         nvps.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
@@ -212,7 +216,42 @@ public class HttpHelper {
     }
     // endregion
 
-    // region 其它
+    // region 返回实体
+    public static <T> T get(String url, Map<String, String> params, Class<T> clazz) {
+        Client client = ClientBuilder.newClient();
+        // 注册json 支持
+        //Client client = ClientBuilder.newClient().register(JacksonJsonProvider.class).register(MultiPartFeature.class);
+        if (params != null && !params.isEmpty()) {
+            List<String> list = new ArrayList<>();
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                try {
+                    list.add(URLEncoder.encode(entry.getKey(), StandardCharsets.UTF_8.name()) + "="
+                            + URLEncoder.encode(entry.getValue(), StandardCharsets.UTF_8.name()));
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }
+            url += url.indexOf("?") > -1 ? "&" : "?";
+            url += String.join("&", list);
+        }
+        WebTarget target = client.target(url);
+        Response response = target.request(MediaType.APPLICATION_JSON).get();
+        T user = response.readEntity(clazz);
+        response.close();
+        return user;
+    }
+
+    public static <T> T post(String url, Object params, Class<T> clazz) {
+        Client client = ClientBuilder.newClient();
+        //Client client = ClientBuilder.newClient().register(JacksonJsonProvider.class).register(MultiPartFeature.class);// 注册json 支持
+        WebTarget target = client.target(url);
+        Entity<Object> entity = Entity.entity(params, MediaType.APPLICATION_JSON);
+        Response response = target.request(MediaType.APPLICATION_JSON).post(entity);
+        T user = response.readEntity(clazz);
+        response.close();
+        return user;
+    }
+
     public static Object get(Class<?> clazz) {
         Client client = ClientBuilder.newClient();
         //Client client = ClientBuilder.newClient().register(JacksonJsonProvider.class).register(MultiPartFeature.class);// 注册json 支持
@@ -222,128 +261,6 @@ public class HttpHelper {
         Object user = response.readEntity(clazz);
         response.close();
         return user;
-    }
-
-    public static Object post(Class<?> clazz) {
-        Client client = ClientBuilder.newClient();
-        //Client client = ClientBuilder.newClient().register(JacksonJsonProvider.class).register(MultiPartFeature.class);// 注册json 支持
-        String path = "http://localhost:8080/api/rest";
-        WebTarget target = client.target(path + "/hello/returnentity");
-        Entity<Object> entity = Entity.entity(new Object(), MediaType.APPLICATION_JSON);
-        Response response = target.request(MediaType.APPLICATION_JSON).post(entity);
-        Object user = response.readEntity(clazz);
-        response.close();
-        return user;
-    }
-
-    /**
-     * 发送get请求
-     *
-     * @param url         请求地址
-     * @param queryString 查询参数
-     * @param charset     字符集
-     * @return
-     */
-    public static String doGetOld(String url, String queryString, Charset charset) {
-        StringBuffer response = new StringBuffer();
-        HttpClient client = new HttpClient();
-        HttpMethod method = new GetMethod(url);
-        try {
-            if (queryString != null && queryString.length() > 0)
-                method.setQueryString(URIUtil.encodeQuery(queryString));
-            client.executeMethod(method);
-            if (method.getStatusCode() == HttpStatus.SC_OK) {
-                Header contentHead = method.getResponseHeader(HttpHeaders.CONTENT_DISPOSITION);
-                //开始解析文件头信息，这里使用的是HeaderElement对象作为文件头的基础信息
-                HeaderElement[] elements = contentHead.getElements();
-                String filerName = null;
-                for (HeaderElement el : elements) {
-                    //遍历，获取filename。filename信息对应的就是下载文件的文件名称。
-                    org.apache.commons.httpclient.NameValuePair pair = el.getParameterByName("filename");
-                    if (pair != null) {
-                        System.out.println(pair.getName() + ":" + pair.getValue());
-                        filerName = pair.getValue();
-                    }
-                }
-
-                BufferedReader reader = new BufferedReader(new InputStreamReader(method.getResponseBodyAsStream(), charset));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    response.append(line);
-                }
-                reader.close();
-            }
-        } catch (URIException e) {
-        } catch (IOException e) {
-        } finally {
-            method.releaseConnection();
-        }
-        return response.toString();
-    }
-
-    /**
-     * 发送post请求
-     *
-     * @param url      请求地址
-     * @param params   请求参数
-     * @param fileList 发送文件
-     * @param charset  字符集
-     * @return
-     */
-    public static String doPostOld(String url, Map<String, String> params, Map<String, String> fileList, Charset charset) {
-        StringBuffer response = new StringBuffer();
-        HttpClient client = new HttpClient();
-        PostMethod method = new PostMethod(url);
-
-        // 文件post
-        if (fileList != null && fileList.size() > 0) {
-            List<Part> parts = new ArrayList<>();
-            for (Map.Entry<String, String> entry : fileList.entrySet()) {
-                FilePart fp = null;
-                try {
-                    // parts.add(new StringPart(entry.getKey(), entry.getValue(), charset));
-                    parts.add(new FilePart(entry.getKey(), new File(entry.getValue())));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-            HttpMethodParams par = new HttpMethodParams();
-            par.setContentCharset(charset.name());
-            if (params != null && params.size() > 0) {
-                for (Map.Entry<String, String> entry : params.entrySet()) {
-                    par.setParameter(entry.getKey(), entry.getValue());
-                    parts.add(new StringPart(entry.getKey(), entry.getValue(), charset.name()));
-                }
-            }
-            MultipartRequestEntity entity = new MultipartRequestEntity(parts.toArray(new Part[parts.size()]),
-                    par);
-            method.setRequestEntity(entity);
-            // 没有文件的post
-        } else {
-            // 设置参数
-            if (params != null && params.size() > 0) {
-                method.getParams().setContentCharset(charset.name());
-                for (Map.Entry<String, String> entry : params.entrySet()) {
-                    method.addParameter(entry.getKey(), entry.getValue());
-                }
-            }
-        }
-
-        try {
-            client.executeMethod(method);
-            if (method.getStatusCode() == HttpStatus.SC_OK) {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(method.getResponseBodyAsStream(), charset));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    response.append(line);
-                }
-                reader.close();
-            }
-        } catch (IOException e) {
-        } finally {
-            method.releaseConnection();
-        }
-        return response.toString();
     }
     // endregion
 }

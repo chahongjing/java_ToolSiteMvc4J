@@ -87,16 +87,12 @@
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc6</artifactId>
         </dependency>
-        <!-- httpclient -->
-        <dependency>
-            <groupId>commons-httpclient</groupId>
-            <artifactId>commons-httpclient</artifactId>
-        </dependency>
         <!-- ws/rs -->
         <dependency>
             <groupId>javax.ws.rs</groupId>
             <artifactId>javax.ws.rs-api</artifactId>
         </dependency>
+
         <!-- zip -->
         <dependency>
             <groupId>net.lingala.zip4j</groupId>
