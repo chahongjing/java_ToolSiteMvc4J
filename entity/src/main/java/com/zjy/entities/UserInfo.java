@@ -47,6 +47,10 @@ public class UserInfo {
      */
     private boolean sex;
     /**
+     * 年龄
+     */
+    private Integer age;
+    /**
      * 生日
      */
     private Date birthday;
@@ -229,5 +233,13 @@ public class UserInfo {
 
     public void setIsSystem(boolean system) {
         isSystem = system;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 }

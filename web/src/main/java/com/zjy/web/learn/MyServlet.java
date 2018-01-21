@@ -24,6 +24,6 @@ public class MyServlet extends HttpServlet {
         //this.getServletContext().getResource()
         // 重定向 /表示站点根目录，需要添加contextPath
         resp.sendRedirect(req.getContextPath() + "/index.jsp");
-        //super.doPost(req, resp);
+        //super.doPostToString(req, resp);
     }
 }

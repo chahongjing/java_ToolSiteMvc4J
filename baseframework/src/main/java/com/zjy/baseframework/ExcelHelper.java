@@ -20,7 +20,9 @@ import java.util.*;
 import static com.zjy.baseframework.enums.FileSuffix.XLSX;
 
 public class ExcelHelper<T> {
+    // region 变量
     private static final int MaxSheetRow = 65535;
+    // endregion
 
     // region excle转list
     public static <T> List<T> excelToList(InputStream in, String sheetName, Class<T> clazz, LinkedHashMap<String, String> headers) {

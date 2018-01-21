@@ -33,7 +33,6 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.*;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -46,6 +45,9 @@ import java.util.Map;
  * Created by chahongjing on 2017/2/6.
  */
 public class HttpHelper {
+
+    // region get请求
+
     /**
      * 发送get请求
      *
@@ -53,8 +55,16 @@ public class HttpHelper {
      * @param params 查询参数
      * @return
      */
-    public static String doGet(String url, Map<String, String> params) {
-        return doGet(url, params, StandardCharsets.UTF_8);
+    public static String doGetToString(String url, Map<String, String> params) throws IOException {
+        return doGetToString(url, params, StandardCharsets.UTF_8);
+    }
+
+    public static byte[] doGetToByte(String url, Map<String, String> params) throws IOException {
+        return doGetToByte(url, params, StandardCharsets.UTF_8);
+    }
+
+    public static String doGetToString(String url, Map<String, String> params, Charset charset) throws IOException {
+        return new String(doGetToByte(url, params, charset), charset);
     }
 
     /**
@@ -65,9 +75,8 @@ public class HttpHelper {
      * @param charset 字符集
      * @return
      */
-    public static String doGet(String url, Map<String, String> params, Charset charset) {
+    public static byte[] doGetToByte(String url, Map<String, String> params, Charset charset) throws IOException {
         try (CloseableHttpClient client = HttpClients.createDefault()) {
-
             if (params != null && !params.isEmpty()) {
                 List<String> list = new ArrayList<>();
                 for (Map.Entry<String, String> entry : params.entrySet()) {
@@ -83,17 +92,148 @@ public class HttpHelper {
             if (statusCode == HttpStatus.SC_OK || statusCode == HttpStatus.SC_NOT_MODIFIED) {
                 // 服务器返回内容
                 HttpEntity respEntity = response.getEntity();
-                String respStr = EntityUtils.toString(respEntity, charset);
-                respStr = URLDecoder.decode(respStr, charset.displayName());
+                byte[] bytes = EntityUtils.toByteArray(respEntity);
                 // 释放资源
                 EntityUtils.consume(respEntity);
-                return respStr;
+                return bytes;
             } else {
-                return "失败！";
+                return "服务器异常！".getBytes(charset);
             }
         } catch (IOException ex) {
-            return "异常，请稍后重试！";
+            throw ex;
         }
+    }
+    // endregion
+
+    // region post请求
+
+    /**
+     * 发送post请求
+     *
+     * @param url    请求地址
+     * @param params 请求参数
+     * @return
+     */
+    public static String doPostToString(String url, Map<String, String> params) throws IOException {
+        return doPostToString(url, params, StandardCharsets.UTF_8);
+    }
+
+
+    public static byte[] doPostToByte(String url, Map<String, String> params) throws IOException {
+        return doPostToByte(url, params, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * 发送post请求
+     *
+     * @param url     请求地址
+     * @param params  请求参数
+     * @param charset 字符集
+     * @return
+     */
+    public static String doPostToString(String url, Map<String, String> params, Charset charset) throws IOException {
+        return doPostToString(url, params, Collections.EMPTY_MAP, charset);
+    }
+
+
+    public static byte[] doPostToByte(String url, Map<String, String> params, Charset charset) throws IOException {
+        return doPostToByte(url, params, Collections.EMPTY_MAP, charset);
+    }
+
+    // endregion
+
+    // region post请求带文件
+
+    /**
+     * 发送post请求
+     *
+     * @param url      请求地址
+     * @param params   请求参数
+     * @param fileList 发送文件
+     * @return
+     */
+    public static String doPostToString(String url, Map<String, String> params, Map<String, String> fileList) throws IOException {
+        return doPostToString(url, params, fileList, StandardCharsets.UTF_8);
+    }
+
+
+    public static byte[] doPostToByte(String url, Map<String, String> params, Map<String, String> fileList) throws IOException {
+        return doPostToByte(url, params, fileList, StandardCharsets.UTF_8);
+    }
+
+
+    public static String doPostToString(String url, Map<String, String> params, Map<String, String> fileList, Charset charset) throws IOException {
+        return new String(doPostToByte(url, params, fileList, charset), charset);
+    }
+
+
+    public static byte[] doPostToByte(String url, Map<String, String> params, Map<String, String> fileList, Charset charset) throws IOException {
+        try (CloseableHttpClient client = HttpClients.createDefault()) {
+            HttpPost httpPost = new HttpPost(url);
+            MultipartEntityBuilder entity = MultipartEntityBuilder.create();
+            // 文件
+            if (fileList != null && !fileList.isEmpty()) {
+                for (Map.Entry<String, String> entry : fileList.entrySet()) {
+                    entity.addPart(entry.getKey(), new FileBody(new File(entry.getValue())));
+                }
+                if (params != null) {
+                    for (Map.Entry<String, String> entry : params.entrySet()) {
+                        //entity.addPart(entry.getKey(), new StringBody(entry.getValue(), charset));
+                        entity.addTextBody(entry.getKey(), entry.getValue(), ContentType.TEXT_PLAIN.withCharset(charset));
+                    }
+                }
+                httpPost.setEntity(entity.build());
+            } else {
+                // 非文件
+                List<NameValuePair> nvps = new ArrayList<>();
+                if (params != null) {
+                    for (Map.Entry<String, String> entry : params.entrySet()) {
+                        nvps.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
+                    }
+                }
+                httpPost.setEntity(new UrlEncodedFormEntity(nvps, charset));
+            }
+            CloseableHttpResponse response = client.execute(httpPost);
+            // 服务器返回码
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpStatus.SC_OK || statusCode == HttpStatus.SC_NOT_MODIFIED) {
+                // 服务器返回内容
+                HttpEntity respEntity = response.getEntity();
+                byte[] bytes = EntityUtils.toByteArray(respEntity);
+                // 释放资源
+                EntityUtils.consume(respEntity);
+                return bytes;
+            } else {
+                return "失败！".getBytes(charset);
+            }
+        } catch (IOException ex) {
+            throw ex;
+        }
+    }
+    // endregion
+
+    // region 其它
+    public static Object get(Class<?> clazz) {
+        Client client = ClientBuilder.newClient();
+        //Client client = ClientBuilder.newClient().register(JacksonJsonProvider.class).register(MultiPartFeature.class);// 注册json 支持
+        String path = "http://localhost:8080/api/rest";
+        WebTarget target = client.target(path + "/hello/returnentity");
+        Response response = target.request(MediaType.APPLICATION_JSON).get();
+        Object user = response.readEntity(clazz);
+        response.close();
+        return user;
+    }
+
+    public static Object post(Class<?> clazz) {
+        Client client = ClientBuilder.newClient();
+        //Client client = ClientBuilder.newClient().register(JacksonJsonProvider.class).register(MultiPartFeature.class);// 注册json 支持
+        String path = "http://localhost:8080/api/rest";
+        WebTarget target = client.target(path + "/hello/returnentity");
+        Entity<Object> entity = Entity.entity(new Object(), MediaType.APPLICATION_JSON);
+        Response response = target.request(MediaType.APPLICATION_JSON).post(entity);
+        Object user = response.readEntity(clazz);
+        response.close();
+        return user;
     }
 
     /**
@@ -144,41 +284,6 @@ public class HttpHelper {
     /**
      * 发送post请求
      *
-     * @param url    请求地址
-     * @param params 请求参数
-     * @return
-     */
-    public static String doPost(String url, Map<String, String> params) {
-        return doPost(url, params, StandardCharsets.UTF_8);
-    }
-
-    /**
-     * 发送post请求
-     *
-     * @param url     请求地址
-     * @param params  请求参数
-     * @param charset 字符集
-     * @return
-     */
-    public static String doPost(String url, Map<String, String> params, Charset charset) {
-        return doPost(url, params, Collections.EMPTY_MAP, charset);
-    }
-
-    /**
-     * 发送post请求
-     *
-     * @param url      请求地址
-     * @param params   请求参数
-     * @param fileList 发送文件
-     * @return
-     */
-    public static String doPost(String url, Map<String, String> params, Map<String, String> fileList) {
-        return doPost(url, params, fileList, StandardCharsets.UTF_8);
-    }
-
-    /**
-     * 发送post请求
-     *
      * @param url      请求地址
      * @param params   请求参数
      * @param fileList 发送文件
@@ -211,7 +316,7 @@ public class HttpHelper {
                 }
             }
             MultipartRequestEntity entity = new MultipartRequestEntity(parts.toArray(new Part[parts.size()]),
-                    new HttpMethodParams());
+                    par);
             method.setRequestEntity(entity);
             // 没有文件的post
         } else {
@@ -240,74 +345,6 @@ public class HttpHelper {
         }
         return response.toString();
     }
-
-    public static String doPost(String url, Map<String, String> params, Map<String, String> fileList, Charset charset) {
-        try (CloseableHttpClient client = HttpClients.createDefault()) {
-            HttpPost httpPost = new HttpPost(url);
-            MultipartEntityBuilder entity = MultipartEntityBuilder.create();
-
-            // 文件
-            if (fileList != null && !fileList.isEmpty()) {
-                for (Map.Entry<String, String> entry : fileList.entrySet()) {
-                    entity.addPart(entry.getKey(), new FileBody(new File(entry.getValue())));
-                }
-                if (params != null) {
-                    for (Map.Entry<String, String> entry : params.entrySet()) {
-                        //entity.addPart(entry.getKey(), new StringBody(entry.getValue(), charset));
-                        entity.addTextBody(entry.getKey(), entry.getValue(), ContentType.TEXT_PLAIN.withCharset(charset));
-                    }
-                }
-                httpPost.setEntity(entity.build());
-            } else {
-                // 非文件
-                List<NameValuePair> nvps = new ArrayList<>();
-                if (params != null) {
-                    for (Map.Entry<String, String> entry : params.entrySet()) {
-                        nvps.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
-                    }
-                }
-                httpPost.setEntity(new UrlEncodedFormEntity(nvps, charset));
-            }
-            CloseableHttpResponse response = client.execute(httpPost);
-            // 服务器返回码
-            int statusCode = response.getStatusLine().getStatusCode();
-            if (statusCode == HttpStatus.SC_OK || statusCode == HttpStatus.SC_NOT_MODIFIED) {
-                // 服务器返回内容
-                HttpEntity respEntity = response.getEntity();
-                String respStr = EntityUtils.toString(respEntity, charset);
-                respStr = URLDecoder.decode(respStr, charset.displayName());
-                // 释放资源
-                EntityUtils.consume(respEntity);
-                return respStr;
-            } else {
-                return "失败！";
-            }
-        } catch (IOException ex) {
-            return "异常，请稍后重试！";
-        }
-    }
-
-    public static Object get(Class<?> clazz) {
-        Client client = ClientBuilder.newClient();
-        //Client client = ClientBuilder.newClient().register(JacksonJsonProvider.class).register(MultiPartFeature.class);// 注册json 支持
-        String path = "http://localhost:8080/api/rest";
-        WebTarget target = client.target(path + "/hello/returnentity");
-        Response response = target.request(MediaType.APPLICATION_JSON).get();
-        Object user = response.readEntity(clazz);
-        response.close();
-        return user;
-    }
-
-    public static Object post(Class<?> clazz) {
-        Client client = ClientBuilder.newClient();
-        //Client client = ClientBuilder.newClient().register(JacksonJsonProvider.class).register(MultiPartFeature.class);// 注册json 支持
-        String path = "http://localhost:8080/api/rest";
-        WebTarget target = client.target(path + "/hello/returnentity");
-        Entity<Object> entity = Entity.entity(new Object(), MediaType.APPLICATION_JSON);
-        Response response = target.request(MediaType.APPLICATION_JSON).post(entity);
-        Object user = response.readEntity(clazz);
-        response.close();
-        return user;
-    }
+    // endregion
 }
 
