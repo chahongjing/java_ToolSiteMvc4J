@@ -35,6 +35,7 @@
                 /userinfo/loginpage**=anon
                 /userinfo/login**=anon
                 /userinfo/logout**=anon
+                /druid/**=anon
                 /js/**=anon
                 /bootstrap/**=anon
                 /Controls/**=anon

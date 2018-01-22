@@ -77,6 +77,11 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
         </dependency>
+        <!-- druid -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+        </dependency>
         <!-- 文件上传 -->
         <dependency>
             <groupId>commons-fileupload</groupId>

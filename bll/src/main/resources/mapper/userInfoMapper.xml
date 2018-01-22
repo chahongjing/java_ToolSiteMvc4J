@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zjy.bll.dao.UserInfoDao">
     <insert id="add" parameterType="UserInfo">
-		INSERT INTO userinfo(UserGuid, UserCode, UserName, [Password], Sex, Birthday, IsSystem)
+		INSERT INTO userinfo(UserGuid, UserCode, UserName, Password, Sex, Birthday, IsSystem)
 		VALUES(#{userGuid, jdbcType=VARCHAR}, #{userCode, jdbcType=VARCHAR}, #{userName, jdbcType=VARCHAR}, #{password, jdbcType=VARCHAR},
-		#{sex, jdbcType=BIT}, #{birthday, jdbcType=TIMESTAMP}, #{isSystem, jdbcType=BIT})
+		#{sex, jdbcType=BOOLEAN}, #{birthday, jdbcType=TIMESTAMP}, #{isSystem, jdbcType=BOOLEAN})
 	</insert>
 
 	<select id="get" parameterType="String" resultType="com.zjy.entities.UserInfo">
@@ -20,16 +20,16 @@
 	</insert>
 
     <select id="query" resultType="com.zjy.entities.UserInfo">
-		SELECT userguid,userName,userCode,[password] FROM UserInfo
+		SELECT userguid,userName,userCode,password FROM UserInfo
 		 WHERE 1 = 1
 	</select>
     <select id="queryPage" resultType="com.zjy.entities.UserInfo">
-		SELECT userguid,userName,userCode,[password] FROM UserInfo
+		SELECT userguid,userName,userCode,password FROM UserInfo
 		WHERE 2 = 2
 	</select>
     <select id="test" resultType="com.zjy.entities.UserInfo">
-		SELECT userguid,userName,userCode,[password] FROM UserInfo
-		WHERE 'a' = #{a}
-		  AND 'b' = #{b.userCode}
+		SELECT userguid,userName,userCode,password FROM UserInfo
+		WHERE 'a' = #{a, jdbcType=VARCHAR}
+		  AND 'b' = #{b.userCode, jdbcType=VARCHAR}
 	</select>
 </mapper>

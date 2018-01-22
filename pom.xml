@@ -27,6 +27,7 @@
         <mybatis.version>3.4.0</mybatis.version>
         <mybatis.spring.version>1.3.0</mybatis.spring.version>
         <fastjson.version>1.1.41</fastjson.version>
+        <druid.version>1.1.6</druid.version>
         <log4j.version>2.5</log4j.version>
         <slf4j.version>1.7.21</slf4j.version>
         <pagehelper.version>4.2.1</pagehelper.version>
@@ -154,7 +155,13 @@
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
             </dependency>
-            <!-- commons-lang3 -->
+            <!-- druid -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+        <!-- commons-lang3 -->
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
