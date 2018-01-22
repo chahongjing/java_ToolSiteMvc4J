@@ -51,43 +51,43 @@
 <br />
 <hr>
 java<br>
-<a href="${ctx}/test/download.do">下载</a>
-<a href="${ctx}/test/servletLearn.do" target="_blank">学习servlet</a>
-<a href="${ctx}/test/jspLearn.do?arr=1&arr=2" target="_blank">学习jsp</a>
-<a href="${ctx}/test/elLearn.do" target="_blank">学习el</a>
-<a href="${ctx}/test/springAopLearn/123.do" target="_blank">学习spring aop</a>
-<a href="${ctx}/test/springBeanLearn/123.do" target="_blank">学习spring Bean</a>
-<a href="${ctx}/test/springMVCLearn/123.do" target="_blank">学习springMVC</a>
-<a href="${ctx}/test/cookieLearn.do" target="_blank">学习cookie</a>
-<a href="${ctx}/test/sessionLearn.do" target="_blank">学习session</a>
-<a href="${ctx}/test/javaLearn.do" target="_blank">java后台学习</a>
-<a href="${ctx}/test/filterLearn.do" target="_blank">filter学习</a>
-<a href="${ctx}/test/springTransactionLearn.do" target="_blank">事务学习</a>
-<a href="${ctx}/test/nioLearn.do" target="_blank">nio学习</a>
-<a href="${ctx}/test/shiroLearn.do" target="_blank">shiro学习</a>
-<a href="${ctx}/test/reflectLearn.do" target="_blank">反射学习</a>
+<a href="${ctx}/learn/download.do">下载</a>
+<a href="${ctx}/learn/servletLearn.do" target="_blank">学习servlet</a>
+<a href="${ctx}/learn/jspLearn.do?arr=1&arr=2" target="_blank">学习jsp</a>
+<a href="${ctx}/learn/elLearn.do" target="_blank">学习el</a>
+<a href="${ctx}/learn/springAopLearn/123.do" target="_blank">学习spring aop</a>
+<a href="${ctx}/learn/springBeanLearn/123.do" target="_blank">学习spring Bean</a>
+<a href="${ctx}/learn/springMVCLearn/123.do" target="_blank">学习springMVC</a>
+<a href="${ctx}/learn/cookieLearn.do" target="_blank">学习cookie</a>
+<a href="${ctx}/learn/sessionLearn.do" target="_blank">学习session</a>
+<a href="${ctx}/learn/javaLearn.do" target="_blank">java后台学习</a>
+<a href="${ctx}/learn/filterLearn.do" target="_blank">filter学习</a>
+<a href="${ctx}/learn/springTransactionLearn.do" target="_blank">事务学习</a>
+<a href="${ctx}/learn/nioLearn.do" target="_blank">nio学习</a>
+<a href="${ctx}/learn/shiroLearn.do" target="_blank">shiro学习</a>
+<a href="${ctx}/learn/reflectLearn.do" target="_blank">反射学习</a>
 
 <hr>
 服务器<br>
-<a href="${ctx}/test/tomcatLearn.do" target="_blank">学习tomcat</a>
+<a href="${ctx}/learn/tomcatLearn.do" target="_blank">学习tomcat</a>
 <hr>
 maven<br>
-<a href="${ctx}/test/mavenLearn.do" target="_blank">maven学习</a>
+<a href="${ctx}/learn/mavenLearn.do" target="_blank">maven学习</a>
 <hr>
 echarts<br>
 <a href="${ctx}/echarts/index.do" target="_blank">echarts图表</a>
 <hr>
 angular<br>
-<a href="${ctx}/test/testangular.do" target="_blank">测试angular</a>
-<a href="${ctx}/test/angulardemo.do" target="_blank">angular demo</a>
+<a href="${ctx}/learn/testangular.do" target="_blank">测试angular</a>
+<a href="${ctx}/learn/angulardemo.do" target="_blank">angular demo</a>
 <hr>
 vue<br>
-<a href="${ctx}/test/vueDemo.do" target="_blank">vue demo</a>
-<a href="${ctx}/test/vueLearn.do" target="_blank">vue learn</a>
+<a href="${ctx}/learn/vueDemo.do" target="_blank">vue demo</a>
+<a href="${ctx}/learn/vueLearn.do" target="_blank">vue learn</a>
 <hr>
 其它<br>
-<a href="${ctx}/test/gitLearn.do" target="_blank">git学习</a>
-<a href="${ctx}/test/otherLearn.do" target="_blank">其它</a>
+<a href="${ctx}/learn/gitLearn.do" target="_blank">git学习</a>
+<a href="${ctx}/learn/otherLearn.do" target="_blank">其它</a>
 
 <br />
 <br />

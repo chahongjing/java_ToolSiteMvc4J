@@ -68,6 +68,37 @@
             <li>container是tomcat中的容器接口， 通常使用的Servlet就封闭在其子接口Wrapper中</li>
             <li>container一共有四个接口，Engine,Host,Context,Wrapper,它们是逐层包含关系，一个service中只能有一个engine,engine中可以有多个host，每个host可以有多个context,
             每个context下可以有多个wrapper</li>
+            <li>
+                <p>4个容器的作用</p>
+                <ul>
+                    <li>engine：用来管理多个站点</li>
+                    <li>host：代表一个站点，也叫虚拟主机</li>
+                    <li>context：代表一个应用程序，一般会对应一个web.xml文件</li>
+                    <li>wrapper：每个wrapper封闭着一个servlet</li>
+                </ul>
+            </li>
+        </ul>
+        <p>context配置的五种方法
+            <ul>
+                <li>在conf/server.xml文件中的context标签</li>
+                <li>conf/[enginename]/[hostname]/目录下以应用命名的xml文件</li>
+                <li>应用自己的/META-INF/context.xml</li>
+                <li>conf/context.xml文件</li>
+                <li>conf/[enginename]/[hostname]/context.xml.default文件</li>
+            </ul>
+            <p>其中前三个配置的是单独的应用，后两个配置的是共享的，第四个是在tomcat中共享，第五上是在host中共享。server.xml文件只有在tomcat重启的时候才会加载
+            ，所以一般不推荐在它中配置context</p>
+            <p>wrapper的配置就是我们在web.xml中配置的servlet，一个servlet对应一个wrapper,另外也可以在tomcat中的conf/web.xml中配置全局的wrapper,处理jsp的JspServlet就配置在这里</p>
+        </p>
+    </div>
+    <div>
+        <p>container启动</p>
+        <ul>
+            <li>container的启动是通过init和start方法来完成的</li>
+            <li>只有最外层的init是service调用的，子窗口的init是在执行start方法时通过状态判断还没有初始化后才调用的</li>
+            <li>connector收到请求后会调用顶层的pipeline，即engine的pipeline,engine管线启动后会调用它里面的每一个value,直到最后的basevalue,basevalue会调用下一层的pipeline，
+            即host的pipeline,host也会以同样的方式处，context,wrapper也是如此，当warpper执行到basevalue后会创建一个filterchain,调用dofilter来处理请求，FilterChain中包含着
+            我们配置的filter和servlet, 其doFilter 方法会依次调用所有Filter 的doFilter 方法和Servlet 的service 方法，这样请求就得到处理了。</li>
         </ul>
     </div>
 </div>
