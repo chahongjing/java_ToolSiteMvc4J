@@ -34,7 +34,7 @@
 <a href="javascript:void(0)" id="lnkLogout">注销</a>
 <br/>
 <br/>
-<a href="${ctx}/index.do">跳转</a>
+<a href="${ctx}/index/">跳转</a>
 <a href="${ctx}/userinfo/loginindex.do?code=zjy&name=曾&name=军" target="_blank">分页查询</a>
 <a href="javascript:void(0)" id="lnkTestPromise">测试promise</a>
 <a href="javascript:alert('请在单元测试中查看！')" id="lntAddSolrIndex">solr</a>

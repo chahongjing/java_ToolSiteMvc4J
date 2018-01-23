@@ -17,6 +17,7 @@ import java.util.concurrent.Executors;
  * @date 2016-11-22 22:59
  */
 @Controller
+@RequestMapping("/index")
 public class IndexController extends BaseController {
 
     @Autowired

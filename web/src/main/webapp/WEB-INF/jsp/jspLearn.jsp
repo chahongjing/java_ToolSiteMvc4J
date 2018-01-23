@@ -125,7 +125,7 @@
     </ul>
     <jsp:useBean id="user" class="com.zjy.entities.UserInfo" scope="session"></jsp:useBean>
     <jsp:setProperty name="user" property="userName" value="zjy"></jsp:setProperty>
-    getProperty:<jsp:getProperty name="user" property="username"></jsp:getProperty>
+    getProperty:<jsp:getProperty name="user" property="userName"></jsp:getProperty>
     </p>
     <br><br>
     <h3>中文乱码</h3>
@@ -140,10 +140,10 @@
 
     <h3>测试代码<a href="http://blog.csdn.net/u010168160/article/details/49182867">学习地址</a></h3>
     <jsp:useBean id="testUser" class="com.zjy.entities.UserInfo" scope="session"></jsp:useBean>
-    <jsp:setProperty name="testUser" property="userName" value="曾军毅"></jsp:setProperty>
+    <jsp:setProperty name="testUser" property="userName" value="123"></jsp:setProperty>
     age<%
-    UserInfo user = (UserInfo) session.getAttribute("testUser");
-    out.println(user.getUserName());
+    UserInfo user1 = (UserInfo) session.getAttribute("testUser");
+    out.println(user1.getUserName());
 %>
     age
     <jsp:getProperty name="testUser" property="userName"></jsp:getProperty>
