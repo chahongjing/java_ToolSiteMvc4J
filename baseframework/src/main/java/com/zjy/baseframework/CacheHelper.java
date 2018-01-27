@@ -1,19 +1,29 @@
 package com.zjy.baseframework;
 
+import com.zjy.baseframework.interfaces.ICache;
+import org.springframework.stereotype.Component;
+
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by chahongjing on 2017/6/10.
  */
-public class CacheHelper {
-    private static ConcurrentHashMap<String, Object> map = new ConcurrentHashMap();
-    public static Object get(String key) {
-        return map.get(key);
+@Component
+public class CacheHelper implements ICache {
+    private ConcurrentHashMap<String, Object> map = new ConcurrentHashMap();
+
+    @Override
+    public <T> T get(String key) {
+        return (T)map.get(key);
     }
-    public static void set(String key, Object value){
+
+    @Override
+    public void set(String key, Object value){
         map.put(key, value);
     }
-    public static boolean clear(String key){
+
+    @Override
+    public boolean clear(String key){
         map.remove(key);
         return true;
     }

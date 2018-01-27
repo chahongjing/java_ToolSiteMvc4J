@@ -121,7 +121,8 @@
             如果validationQuery为null，testOnBorrow、testOnReturn、
             testWhileIdle都不会其作用
         -->
-        <property name="validationQuery" value="SELECT 1 FROM DUAL"/>
+        <property name="validationQuery" value="SELECT 'x'"/>
+        <property name="validationQueryTimeout" value="0"/>
         <property name="testWhileIdle" value="true"/>
         <property name="testOnBorrow" value="false"/>
         <property name="testOnReturn" value="false"/>
@@ -170,8 +171,8 @@
     <bean id="druid-stat-pointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut" scope="prototype">
         <property name="patterns">
             <list>
-                <value>com.XXX.stat.service.*</value>
-                <value>com.XXX.stat.dao.*</value>
+                <value>com.zjy.bll.service.*</value>
+                <value>com.zjy.bll.dao.*</value>
             </list>
         </property>
     </bean>
