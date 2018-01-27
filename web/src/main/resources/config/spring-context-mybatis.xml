@@ -18,10 +18,9 @@
                 <bean class="com.github.pagehelper.PageHelper">
                     <property name="properties">
                         <value>
-                            dialect=sqlserver
+                            dialect=${db.dialect}
                         </value>
                     </property>
-                    <!-- dialect可以设置为sqlserver,oracle, mysql -->
                 </bean>
             </array>
         </property>
