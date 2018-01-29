@@ -25,8 +25,8 @@ public class IndexControllerTest extends BaseTestCase {
     @Resource
     private IndexController indexController;
 
-    @Resource
-    private MongoTemplate mongoTemplate;
+    //@Resource
+    //private MongoTemplate mongoTemplate;
 
     //@Resource
     //private JdbcTemplate jdbcTemplate;
@@ -94,11 +94,12 @@ public class IndexControllerTest extends BaseTestCase {
         user.setSex(true);
         user.setBirthday(new Date());
         user.setIsSystem(true);
-        mongoTemplate.insert(user, "testcollection");
+        //mongoTemplate.insert(user, "testcollection");
         List<UserInfo> list = get(UserInfo.class);
     }
 
     public <T> List<T> get(Class clazz) {
-        return mongoTemplate.findAll(clazz, "testcollection");
+        //return mongoTemplate.findAll(clazz, "testcollection");
+    	return null;
     }
 }
