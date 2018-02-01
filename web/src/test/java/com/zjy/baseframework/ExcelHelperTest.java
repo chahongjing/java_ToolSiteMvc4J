@@ -19,6 +19,7 @@ public class ExcelHelperTest extends BaseTestCase {
 
     @Test
     public void testListToExcel() {
+        System.out.println(String.format("%1s%2$02d%3$02d%4$02d", "asb", 1, 2, 0));
         List<UserInfo> list = new ArrayList<>();
         LinkedHashMap<String, String> headers = new LinkedHashMap<>();
         headers.put("userCode", "用户编码");
