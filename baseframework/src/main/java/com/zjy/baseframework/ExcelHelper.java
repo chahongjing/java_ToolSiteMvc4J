@@ -381,7 +381,9 @@ public class ExcelHelper<T> {
             Class<?> fieldType = field.getType();
             //根据字段类型给字段赋值
             if (Date.class == fieldType) {
-                field.set(o, fieldValue);
+                if(!StringUtils.isBlank(Objects.toString(fieldValue, ""))) {
+                    field.set(o, fieldValue);
+                }
             } else {
                 field.set(o, fieldValue);
             }

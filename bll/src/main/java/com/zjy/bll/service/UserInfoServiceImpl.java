@@ -2,7 +2,6 @@ package com.zjy.bll.service;
 
 import com.github.pagehelper.PageInfo;
 import com.zjy.baseframework.BaseResult;
-import com.zjy.baseframework.DbHelper;
 import com.zjy.baseframework.enums.ResultStatus;
 import com.zjy.bll.common.BaseService;
 import com.zjy.bll.dao.UserInfoDao;
@@ -11,7 +10,6 @@ import com.zjy.entities.UserInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -77,8 +75,8 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
 //        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //        System.out.println(sdf.format(user.getBirthday()));
 
-        dao.add(user);
-        int a = 1 / 0;
+        //dao.add(user);
+        //int a = 1 / 0;
         dao.delete("D8E6B877-3645-4063-A25C-495606B95349");
     }
 

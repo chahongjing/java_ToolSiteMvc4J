@@ -35,7 +35,7 @@ public class IndexControllerTest extends BaseTestCase {
     @Transactional   //标明此方法需使用事务
     @Rollback(false)  //标明使用完此方法后事务不回滚,true时为回滚
     public void testTest1() {
-        new MongoDbHelper().test();
+        //new MongoDbHelper().test();
         PropertiesHelper instance = PropertiesHelper.getInstance();
         logger.info("db.url:" + instance.getProperties("db.url"));
         List<UserInfo> userInfos = new ArrayList<>();

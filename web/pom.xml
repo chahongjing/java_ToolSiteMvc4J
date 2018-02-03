@@ -168,7 +168,7 @@
     </profiles>
 
     <build>
-        <finalName>web</finalName>
+        <finalName>ToolSiteMvc4J</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -183,5 +183,20 @@
                 <directory>src/main/resources/profiles/${profiles.active}</directory>
             </resource>
         </resources>
+        <plugins>
+            <plugin>
+                <!-- 使用maven的tomcat插件打包并部署war文件到tomcat -->
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <path>/${project.build.finalName}</path>
+                    <url>http://localhost:8080/manager/text</url>
+                    <server>tomcat</server>
+                    <username>tomcat</username>
+                    <password>tomcat</password>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 </project>

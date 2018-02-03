@@ -1,7 +1,6 @@
 package com.zjy.baseframework;
 
 import com.zjy.bll.common.BaseTestCase;
-import com.zjy.entities.UserInfo;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -20,12 +19,12 @@ public class HttpHelperTest extends BaseTestCase {
         String url = baseUrl + "/test/testGet.do";
         Map<String, String> map = new HashMap<>();
         map.put("age", "28");
-        try {
-            String result = HttpHelper.doGetToString(url, map);
-            logger.info("testGet结果：{}", result);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            String result = HttpHelper.doGetToString(url, map);
+//            logger.info("testGet结果：{}", result);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Test
@@ -61,7 +60,7 @@ public class HttpHelperTest extends BaseTestCase {
         String url = baseUrl + "/test/testGetEntity.do";
         Map<String, String> params = new HashMap<>();
         params.put("name", "java从入门到精通");
-        UserInfo userInfo = HttpHelper.get(url, params, UserInfo.class);
+        //UserInfo userInfo = HttpHelper.get(url, params, UserInfo.class);
     }
 
     @Test
@@ -69,6 +68,6 @@ public class HttpHelperTest extends BaseTestCase {
         String url = baseUrl + "/test/testPostEntity.do";
         Map<String, String> params = new HashMap<>();
         params.put("name", "java从入门到精通");
-        UserInfo userInfo = HttpHelper.get(url, params, UserInfo.class);
+        //UserInfo userInfo = HttpHelper.get(url, params, UserInfo.class);
     }
 }
