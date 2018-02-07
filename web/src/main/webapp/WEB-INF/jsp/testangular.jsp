@@ -149,6 +149,39 @@
                     nodeA.after(diyHtml.join(''));
                 }
             }
+
+            // blob下载
+            function blobDownload() {
+                var url = "/Paper/DownloadPaperZipFile?taskUtid=" + $('#DownloadPaperZipPaperTaskId').val() + "&Taoshu=" + num + "&throwException=true";
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', url, true);
+                xhr.responseType = "blob";
+                xhr.onload = function () {
+                    if (this.status == 200) {
+                        var blob = new Blob([this.response], { type: "application/x-zip-compressed" });
+                        var a = document.createElement("a");
+                        document.body.appendChild(a);
+                        a.download = $('#DownloadPaperZipPaperTaskName').val() + '_第' + num + '套试卷.zip';
+                        a.href = URL.createObjectURL(blob);
+                        a.click();
+                    } else {
+                        var reader = new FileReader();
+                        var text = reader.readAsText(this.response, 'utf-8');
+                        reader.onload = function (e) {
+                            var result = reader.result;
+                            console.log(result);
+                            var startIndex = result.indexOf("<title>");
+                            if (startIndex > 0) {
+                                var endIndex = result.indexOf("</title>");
+                                alert(result.substring(startIndex + 7, endIndex));
+                            } else {
+                                alert(result);
+                            }
+                        }
+                    }
+                }
+                xhr.send();
+            }
         }]);
 </script>
 <%@ include file="/WEB-INF/jsp/common/endScript.jsp" %>
