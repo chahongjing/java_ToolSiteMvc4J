@@ -1,15 +1,11 @@
 package com.zjy.baseframework;
 
-import org.apache.commons.lang3.StringUtils;
-
+import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
 import java.io.*;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 /**
  * Created by chahongjing on 2017/2/14.
@@ -24,10 +20,7 @@ public class DownloadHelper {
             response.reset();
             // 设置response的Header
             response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + URLEncoder.encode(filename, StandardCharsets.UTF_8.displayName()));
-            String mimeType = Files.probeContentType(Paths.get(filename));
-            if(StringUtils.isBlank(mimeType)) {
-                mimeType = MediaType.APPLICATION_OCTET_STREAM;
-            }
+            String mimeType = new MimetypesFileTypeMap().getContentType(new File(filename));
             response.setContentType(mimeType);
 
             //创建输出流
