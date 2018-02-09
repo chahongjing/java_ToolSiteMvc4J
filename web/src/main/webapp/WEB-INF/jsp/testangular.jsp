@@ -153,7 +153,12 @@
             // blob下载
             function blobDownload() {
                 var url = "/Paper/DownloadPaperZipFile?taskUtid=" + $('#DownloadPaperZipPaperTaskId').val() + "&Taoshu=" + num + "&throwException=true";
-                var xhr = new XMLHttpRequest();
+                var xhr;
+                if (window.XMLHttpRequest) {
+                    xhr = new XMLHttpRequest();
+                } else if (window.ActiveXObject) {
+                    xhr = new ActiveXObject("Microsoft.XMLHTTP");
+                }
                 xhr.open('GET', url, true);
                 xhr.responseType = "blob";
                 xhr.onload = function () {
@@ -163,6 +168,7 @@
                         document.body.appendChild(a);
                         a.download = $('#DownloadPaperZipPaperTaskName').val() + '_第' + num + '套试卷.zip';
                         a.href = URL.createObjectURL(blob);
+                        a.style.display = 'none';
                         a.click();
                     } else {
                         var reader = new FileReader();
