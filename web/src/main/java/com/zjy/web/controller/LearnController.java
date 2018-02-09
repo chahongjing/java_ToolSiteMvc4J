@@ -118,10 +118,17 @@ public class LearnController extends BaseController {
     }
 
     @RequestMapping("/download")
-    public void download(HttpServletResponse response) {
+    public void download(HttpServletResponse response) throws Exception {
         // path是指欲下载的文件的路径。
-        String path = "d:\\b.txt";
+        String path = "d:\\a.txt";
+        File f = new File(path);
+        if(!f.exists()) throw new Exception("未找到文件：" + path);
         DownloadHelper.download(path, response);
+    }
+
+    @RequestMapping("/jsLearn")
+    public String jsLearn() {
+        return "jsLearn";
     }
 
     @RequestMapping("/jspLearn")

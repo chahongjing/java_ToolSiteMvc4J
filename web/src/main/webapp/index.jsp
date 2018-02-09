@@ -3,7 +3,11 @@
 <html>
 <head>
     <%@ include file="/WEB-INF/jsp/common/commonCss.jsp" %>
+    <link href="${ctx}/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="${ctx}/bootstrap/css/font-awesome.css" rel="stylesheet" />
+    <link href="${ctx}/bootstrap/css/main.css" rel="stylesheet" />
     <style>
+        body{padding:20px;}
         .font {
             font-family: arial;
             font-weight: 500;
@@ -84,6 +88,12 @@ angular<br>
 vue<br>
 <a href="${ctx}/learn/vueDemo.do" target="_blank">vue demo</a>
 <a href="${ctx}/learn/vueLearn.do" target="_blank">vue learn</a>
+<hr>
+js<br>
+<a href="${ctx}/learn/jsLearn.do" class="btn btn-success btn-app radius-4" target="_blank">
+    <i class="icon-cog fa fa-lastfm bigger-230" style="display:block;"></i>
+    js学习
+</a>
 <hr>
 其它<br>
 <a href="${ctx}/learn/gitLearn.do" target="_blank">git学习</a>
