@@ -165,11 +165,12 @@
                     if (this.status == 200) {
                         var blob = new Blob([this.response], { type: "application/x-zip-compressed" });
                         var a = document.createElement("a");
-                        document.body.appendChild(a);
+                        a.style.display = 'none';
                         a.download = $('#DownloadPaperZipPaperTaskName').val() + '_第' + num + '套试卷.zip';
                         a.href = URL.createObjectURL(blob);
-                        a.style.display = 'none';
+                        document.body.appendChild(a);
                         a.click();
+                        document.body.removeChild(a);
                     } else {
                         var reader = new FileReader();
                         var text = reader.readAsText(this.response, 'utf-8');
