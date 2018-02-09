@@ -12,4 +12,9 @@ public class Utils {
         //return ContextLoader.getCurrentWebApplicationContext().getServletContext().getRealPath("/");
         return Paths.get(StringUtils.removeStart(Utils.class.getClassLoader().getResource("/").getFile(), "/")).getParent().getParent().toAbsolutePath().toString();
     }
+
+    public static String getFileExtension(String fileName) {
+        if(StringUtils.isBlank(fileName) || fileName.indexOf('.') == -1) return StringUtils.EMPTY;
+        return fileName.substring(fileName.lastIndexOf('.'));
+    }
 }
