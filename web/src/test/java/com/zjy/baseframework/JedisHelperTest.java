@@ -11,7 +11,11 @@ public class JedisHelperTest extends BaseTestCase {
     public void get() {
 //        JedisHelper.set("key", "myvalue");
 //        String abc = JedisHelper.get("key");
-//        Long a = JedisHelper.delete("key");
+//        abc = JedisHelper.getSet("key", "newValue");
+//        JedisHelper.rename("key", "newKey");
+//        JedisHelper.exists("newKey");
+//        JedisHelper.expire("newKey", 30);
+//        Long a = JedisHelper.delete("newKey");
 //        System.out.println(String.format("abc%s%d", abc, a));
     }
 }
