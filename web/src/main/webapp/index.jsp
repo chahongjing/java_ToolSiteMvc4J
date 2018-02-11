@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>首页</title>
     <%@ include file="/WEB-INF/jsp/common/commonCss.jsp" %>
     <link href="${ctx}/bootstrap/css/bootstrap.css" rel="stylesheet" />
     <link href="${ctx}/bootstrap/css/font-awesome.css" rel="stylesheet" />
