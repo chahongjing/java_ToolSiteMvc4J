@@ -4,7 +4,12 @@ import com.zjy.baseframework.BaseResult;
 import com.zjy.baseframework.PartialViewHelper;
 import com.zjy.entities.Goods;
 import com.zjy.entities.UserInfo;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.EnvironmentAware;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -29,11 +34,13 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/test")
-public class TestController extends BaseController implements ServletConfigAware {
+public class TestController extends BaseController implements ServletConfigAware, EnvironmentAware, ApplicationContextAware {
 //    @Autowired
 //    private ResourceBundleMessageSource messageSource;
 
     private ServletConfig servletConfig;
+    private Environment environment;
+    private ApplicationContext applicationContext;
 
     @Value("${db.url}")
     private String url;
@@ -41,6 +48,15 @@ public class TestController extends BaseController implements ServletConfigAware
     @Override
     public void setServletConfig(ServletConfig servletConfig) {
         this.servletConfig = servletConfig;
+    }
+
+    @Override
+    public void setEnvironment(Environment environment) {
+        this.environment = environment;
+    }
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
     }
 
     @RequestMapping("/test.do")

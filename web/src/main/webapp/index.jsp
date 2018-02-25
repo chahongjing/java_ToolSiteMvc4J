@@ -58,7 +58,7 @@
 java<br>
 <a href="${ctx}/learn/download.do">下载</a>
 <a href="${ctx}/learn/servletLearn.do" target="_blank">学习servlet</a>
-<a href="${ctx}/learn/jspLearn.do?arr=1&arr=2" target="_blank">学习jsp</a>
+<a href="${ctx}/learn/jspLearn.do?arr=1&arr=2&userName=曾军毅" target="_blank">学习jsp</a>
 <a href="${ctx}/learn/elLearn.do" target="_blank">学习el</a>
 <a href="${ctx}/learn/springAopLearn/123.do" target="_blank">学习spring aop</a>
 <a href="${ctx}/learn/springBeanLearn/123.do" target="_blank">学习spring Bean</a>

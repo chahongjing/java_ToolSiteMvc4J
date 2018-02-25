@@ -24,6 +24,17 @@
 <%@ include file="/WEB-INF/jsp/common/endHeadAndBeginBody.jsp" %>
 <%-- html正文 --%>
 <div>
+    <div>
+        <p>
+            Model & ModelAttribute & RedirectAttributes
+        </p>
+        <ul>
+            <li>测试mvc Model: <b>${testAttr}</b>。注入Model参数，类似于C#的ViewBag，只不过要在controller中的参数中添加</li>
+            <li>测试@ModelAttribute: <b>${modelattributeUser}</b>。预处理数据，可将此数据传递给controller，参数名为@ModelAttribute(key)中的key值，此处为mUserInfo，与此同时也会把此属性放在Model中key为mUserInfo, 值为返回的对象</li>
+            <li>测试从Model中获取@ModelAttribute数据: <b>${mUserInfo.userName}</b>。从Model对象中获取@ModelAttribute中返回的数据</li>
+            <li>RedirectAttributes在返回redirect，403请求中使用</li>
+        </ul>
+    </div>
     <pre class="inline">out.pringln(myBean.getName());</pre>
     相当于 &lt;%=
     <pre class="inline">myBean.getName()</pre>

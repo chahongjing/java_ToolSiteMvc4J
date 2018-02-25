@@ -6,11 +6,11 @@ import com.zjy.baseframework.DownloadHelper;
 import com.zjy.bll.common.LoggingProxy;
 import com.zjy.bll.service.TestService;
 import com.zjy.bll.service.TestServiceImpl;
+import com.zjy.entities.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -33,59 +33,9 @@ public class LearnController extends BaseController {
     private TestService testSrv;
 
     // region java
-
-    // endregion
-
-    // region 服务器
-
-    // endregion
-
-    // region maven
-
-    // endregion
-
-    // region echart
-
-    // endregion
-
-    // region angular
-
-    // endregion
-
-    // region vue
-
-    // endregion
-
-    // region 其它
-
-    // endregion
-
-    @RequestMapping("/testangular")
-    public String testangular() {
-        return "testangular";
-    }
-
-    @RequestMapping("/vueDemo")
-    public String vueDemo() {
-        return "vueDemo";
-    }
-
-    @RequestMapping("/vueLearn")
-    public String vueLearn() {
-        return "vueLearn";
-    }
-
     @RequestMapping("/reflectLearn")
     public String reflectLearn() {
         return "reflectLearn";
-    }
-
-    @RequestMapping("/testajax")
-    @ResponseBody
-    public BaseResult testajax(String a, String b, String c) {
-//        int aa = 1, bb = 0;
-//        int cc = aa / bb;
-        return BaseResult.OK("后台返回数据");
     }
 
     @RequestMapping("/fileupload")
@@ -126,14 +76,29 @@ public class LearnController extends BaseController {
         DownloadHelper.download(path, response);
     }
 
-    @RequestMapping("/jsLearn")
-    public String jsLearn() {
-        return "jsLearn";
+    /**
+     *
+     * @param userName
+     * @return
+     */
+    @ModelAttribute("mUserInfo")
+    public UserInfo getUserInfo(@RequestParam("userName") String userName, String arr) {
+        UserInfo user = new UserInfo();
+        user.setUserName(userName);
+        user.setUserCode(arr);
+        return user;
     }
 
     @RequestMapping("/jspLearn")
-    public String jspLearn() {
+    public String jspLearn(Model model, @ModelAttribute("mUserInfo") UserInfo mUserInfo) {
+        model.addAttribute("testAttr", mUserInfo.getUserCode());
+        model.addAttribute("modelattributeUser", mUserInfo.getUserName());
         return "jspLearn";
+    }
+
+    @RequestMapping("/servletLearn")
+    public String servletLearn() {
+        return "servletLearn";
     }
 
     @RequestMapping("/javaLearn")
@@ -156,11 +121,6 @@ public class LearnController extends BaseController {
     @RequestMapping("/sessionLearn")
     public String sessionLearn() {
         return "sessionLearn";
-    }
-
-    @RequestMapping("/otherLearn")
-    public String otherLearn() {
-        return "otherLearn";
     }
 
     @RequestMapping("/springAopLearn/{intVar}")
@@ -253,7 +213,6 @@ public class LearnController extends BaseController {
         return "nioLearn";
     }
 
-
     @RequestMapping("/testProxy")
     @ResponseBody
     public BaseResult testProxy() {
@@ -279,34 +238,73 @@ public class LearnController extends BaseController {
         return "elLearn";
     }
 
-    @RequestMapping("/gitLearn")
-    public String gitLearn() {
-        return "gitLearn";
+    @RequestMapping("/shiroLearn")
+    public String shiroLearn() {
+        return "shiroLearn";
     }
+    // endregion
 
+    // region 服务器
     @RequestMapping("/tomcatLearn")
     public String tomcatLearn() {
         return "tomcatLearn";
     }
+    // endregion
 
+    // region maven
     @RequestMapping("/mavenLearn")
     public String mavenLearn() {
         return "mavenLearn";
     }
+    // endregion
 
+    // region echart
 
-    @RequestMapping("/servletLearn")
-    public String servletLearn() {
-        return "servletLearn";
+    // endregion
+
+    // region angular
+    @RequestMapping("/testangular")
+    public String testangular() {
+        return "testangular";
+    }
+
+    @RequestMapping("/vueDemo")
+    public String vueDemo() {
+        return "vueDemo";
+    }
+
+    @RequestMapping("/vueLearn")
+    public String vueLearn() {
+        return "vueLearn";
     }
 
     @RequestMapping("/angulardemo")
     public String angulardemo() {
         return "angulardemo";
     }
+    // endregion
 
-    @RequestMapping("/shiroLearn")
-    public String shiroLearn() {
-        return "shiroLearn";
+    // region vue
+
+    // endregion
+
+    // region 其它
+    @RequestMapping("/testajax")
+    @ResponseBody
+    public BaseResult testajax(String a, String b, String c) {
+//        int aa = 1, bb = 0;
+//        int cc = aa / bb;
+        return BaseResult.OK("后台返回数据");
     }
+
+    @RequestMapping("/otherLearn")
+    public String otherLearn() {
+        return "otherLearn";
+    }
+
+    @RequestMapping("/gitLearn")
+    public String gitLearn() {
+        return "gitLearn";
+    }
+    // endregion
 }
