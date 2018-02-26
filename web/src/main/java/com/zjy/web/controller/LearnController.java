@@ -82,7 +82,7 @@ public class LearnController extends BaseController {
      * @return
      */
     @ModelAttribute("mUserInfo")
-    public UserInfo getUserInfo(@RequestParam("userName") String userName, String arr) {
+    public UserInfo getUserInfo(@RequestParam(value = "userName", required = false) String userName, String arr) {
         UserInfo user = new UserInfo();
         user.setUserName(userName);
         user.setUserCode(arr);
@@ -295,6 +295,11 @@ public class LearnController extends BaseController {
 //        int aa = 1, bb = 0;
 //        int cc = aa / bb;
         return BaseResult.OK("后台返回数据");
+    }
+
+    @RequestMapping("/jsLearn")
+    public String jsLearn() {
+        return "jsLearn";
     }
 
     @RequestMapping("/otherLearn")
