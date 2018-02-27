@@ -5,12 +5,13 @@
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
         </Console>
 
-        <File name="File" fileName="logs/ToolSiteMvc4J/app.log"
+        <File name="File" fileName="${web:rootDir}logs\app.log"
               filePattern="$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
             <PatternLayout pattern="%d %p %c{1.} [%t] %m%n"/>
         </File>
-        <RollingFile name="RollingFile" fileName="logs/ToolSiteMvc4J/r_log.log"
-                     filePattern="logs/ToolSiteMvc4J/r_log_%d{yyyy-MM-dd}_%i.log">
+
+        <RollingFile name="RollingFile" fileName="${web:rootDir}logs\r_log.log"
+                     filePattern="${web:rootDir}logs\r_log_%d{yyyy-MM-dd}_%i.log">
             <PatternLayout pattern="%d %p %c{1.} [%t] %m%n"/>
             <Policies>
                 <TimeBasedTriggeringPolicy modulate="true" interval="24"/>
@@ -18,12 +19,72 @@
             </Policies>
             <DefaultRolloverStrategy max="20"/>
         </RollingFile>
+
+        <RollingFile name="RollingFile_DEBUG" fileName="${web:rootDir}logs\r_log_debug.log"
+                     filePattern="${web:rootDir}logs\r_log_%d{yyyy-MM-dd}_%i.log">
+            <PatternLayout pattern="%d %p %c{1.} [%t] %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="24"/>
+                <SizeBasedTriggeringPolicy size="51200 KB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+            <Filters>
+                <ThresholdFilter level="info" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingFile>
+
+        <RollingFile name="RollingFile_INFO" fileName="${web:rootDir}logs\r_log_info.log"
+                     filePattern="${web:rootDir}logs\r_log_%d{yyyy-MM-dd}_%i.log">
+            <PatternLayout pattern="%d %p %c{1.} [%t] %m%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="24"/>
+                <SizeBasedTriggeringPolicy size="51200 KB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+            <Filters>
+                <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingFile>
+
+        <RollingFile name="RollingFile_WARNING" fileName="${web:rootDir}logs\r_log_waring.log"
+                     filePattern="${web:rootDir}logs\r_log_%d{yyyy-MM-dd}_%i.log">
+            <PatternLayout pattern="%d %p %c{1.} [%t] %m%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="24"/>
+                <SizeBasedTriggeringPolicy size="51200 KB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+            <Filters>
+                <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingFile>
+
+        <RollingFile name="RollingFile_ERROR" fileName="${web:rootDir}logs\r_log_error.log"
+                     filePattern="${web:rootDir}logs\r_log_%d{yyyy-MM-dd}_%i.log">
+            <PatternLayout pattern="%d %p %c{1.} [%t] %m%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="24"/>
+                <SizeBasedTriggeringPolicy size="51200 KB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+            <Filters>
+                <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingFile>
     </appenders>
     <loggers>
+        <!-- OFF、FATAL、ERROR、WARN、INFO、DEBUG、TRACE、 ALL -->
         <root level="info">
             <appender-ref ref="consolePrint" />
             <!--<appender-ref ref="File" />-->
             <appender-ref ref="RollingFile" />
+            <appender-ref ref="RollingFile_DEBUG" />
+            <appender-ref ref="RollingFile_INFO" />
+            <appender-ref ref="RollingFile_WARNING" />
+            <appender-ref ref="RollingFile_ERROR" />
         </root>
         <!-- 将业务dao接口填写进去,并用控制台输出即可 -->
         <logger name="com.zjy.bll.dao" level="DEBUG" additivity="false">

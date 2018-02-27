@@ -18,12 +18,75 @@
             </Policies>
             <DefaultRolloverStrategy max="20"/>
         </RollingFile>
+
+        <RollingFile name="RollingFile_DEBUG" fileName="logs\r_log_debug.log"
+                     filePattern="logs\r_log_%d{yyyy-MM-dd}_%i.log">
+            <PatternLayout pattern="%d %p %c{1.} [%t] %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="24"/>
+                <SizeBasedTriggeringPolicy size="51200 KB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+            <Filters>
+                <ThresholdFilter level="info" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingFile>
+
+        <RollingFile name="RollingFile_INFO" fileName="logs\r_log_info.log"
+                     filePattern="logs\r_log_%d{yyyy-MM-dd}_%i.log">
+            <PatternLayout pattern="%d %p %c{1.} [%t] %m%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="24"/>
+                <SizeBasedTriggeringPolicy size="51200 KB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+            <Filters>
+                <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingFile>
+
+        <RollingFile name="RollingFile_WARNING" fileName="logs\r_log_waring.log"
+                     filePattern="logs\r_log_%d{yyyy-MM-dd}_%i.log">
+            <PatternLayout pattern="%d %p %c{1.} [%t] %m%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="24"/>
+                <SizeBasedTriggeringPolicy size="51200 KB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+            <Filters>
+                <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingFile>
+
+        <RollingFile name="RollingFile_ERROR" fileName="logs\r_log_error.log"
+                     filePattern="logs\r_log_%d{yyyy-MM-dd}_%i.log">
+            <PatternLayout pattern="%d %p %c{1.} [%t] %m%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="24"/>
+                <SizeBasedTriggeringPolicy size="51200 KB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+            <Filters>
+                <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingFile>
     </appenders>
     <loggers>
+        <!-- OFF、FATAL、ERROR、WARN、INFO、DEBUG、TRACE、 ALL -->
         <root level="info">
             <appender-ref ref="consolePrint" />
             <!--<appender-ref ref="File" />-->
             <appender-ref ref="RollingFile" />
+            <appender-ref ref="RollingFile_DEBUG" />
+            <appender-ref ref="RollingFile_INFO" />
+            <appender-ref ref="RollingFile_WARNING" />
+            <appender-ref ref="RollingFile_ERROR" />
         </root>
+        <logger name="com.zjy.baseframework" level="DEBUG" additivity="false">
+            <appender-ref ref="consolePrint"/>
+        </logger>
     </loggers>
 </configuration>
