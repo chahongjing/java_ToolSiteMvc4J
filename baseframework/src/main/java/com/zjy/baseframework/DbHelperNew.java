@@ -61,10 +61,13 @@ public class DbHelperNew {
     }
 
     public static <T> List<T> getList(String sql, Class<T> clazz, Object... params) {
-        Connection conn = null;
+        Connection conn = getConnection();
+        return getList(conn, sql, clazz, params);
+    }
+
+    public static <T> List<T> getList(Connection conn, String sql, Class<T> clazz, Object... params) {
         List<T> list = null;
         try {
-            conn = getConnection();
             QueryRunner qr = new QueryRunner();
             list = (List<T>) qr.query(conn, sql, new BeanListHandler(clazz), params);
 
@@ -90,6 +93,21 @@ public class DbHelperNew {
         String url = PropertiesHelper.getInstance().getProperties("db.url");
         String user = PropertiesHelper.getInstance().getProperties("db.userName");
         String password = PropertiesHelper.getInstance().getProperties("db.password");
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(url, user, password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return conn;
+    }
+
+    /**
+     * 获取数据库连接，也可以使用c3p0连接池，通过dataSource.getConnection()来获取
+     *
+     * @return
+     */
+    public static Connection getConnection(String url, String user, String password) {
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url, user, password);
