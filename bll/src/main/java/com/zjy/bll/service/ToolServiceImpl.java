@@ -5,6 +5,7 @@ import com.zjy.bll.common.BaseService;
 import com.zjy.bll.dao.ToolDao;
 import com.zjy.entities.TableColumnInfo;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
@@ -41,8 +42,8 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
         }
         for (TableColumnInfo columnInfo : list) {
             fieldType = getFieldType(columnInfo.getDataType());
-            fieldPackage = getTypePackage(columnInfo.getDataType());
-            if(!packages.contains(fieldPackage)) {
+            fieldPackage = getTypePackage(fieldType);
+            if(!org.apache.commons.lang3.StringUtils.isBlank(fieldPackage) && !packages.contains(fieldPackage)) {
                 packages.add(fieldPackage);
                 sbHeader.append("import " + fieldPackage + ";" + newLine);
             }
@@ -91,9 +92,25 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
     }
 
     private String getFieldType(String typeStr) {
-        return "String";
+        String type = null;
+        switch (typeStr.toUpperCase()) {
+            case "":
+                break;
+            default:
+                type = "String";
+                break;
+        }
+        return type;
     }
     private String getTypePackage(String typeStr) {
-        return "com.zjy.baseframework.BaseResult";
+        String type = "";
+        switch (typeStr.toUpperCase()) {
+            case "":
+                break;
+            default:
+                type = "";
+                break;
+        }
+        return type;
     }
 }
