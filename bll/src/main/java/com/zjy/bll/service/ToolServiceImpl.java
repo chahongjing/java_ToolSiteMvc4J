@@ -8,9 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Created by Administrator on 2018/2/27.
@@ -19,7 +17,7 @@ import java.util.Objects;
 public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> implements ToolService {
     @Override
     public String getTableInfo(String type, String url, String user, String password, String tableName) {
-        String filedType = "String";
+        String fieldType = "String";
         String newLine = "\r\n";
         String colComments = "";
         String colName = "";
@@ -27,6 +25,8 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
         StringBuilder sbHeader = new StringBuilder();
         StringBuilder sb = new StringBuilder();
         StringBuilder sbGetterSetter = new StringBuilder();
+        List<String> packages = new ArrayList<>();
+        String fieldPackage;
         sbHeader.append("package com.zjy.xxx;" + newLine);
         sbHeader.append(newLine);
 
@@ -36,20 +36,29 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
         sb.append(" */" + newLine);
         sb.append("public class " + Objects.toString(tableName, "") + " {" + newLine);
         List<TableColumnInfo> list = getTableInfo(url, user, password, tableName);
+        if(list == null) {
+            list = new ArrayList<>();
+        }
         for (TableColumnInfo columnInfo : list) {
+            fieldType = getFieldType(columnInfo.getDataType());
+            fieldPackage = getTypePackage(columnInfo.getDataType());
+            if(!packages.contains(fieldPackage)) {
+                packages.add(fieldPackage);
+                sbHeader.append("import " + fieldPackage + ";" + newLine);
+            }
             colComments = Objects.toString(columnInfo.getColComments(), "");
             colName = columnInfo.getColumnName().substring(0, 1).toLowerCase() + columnInfo.getColumnName().substring(1);
             sb.append("    /**" + newLine);
             sb.append("     * " + colComments + newLine);
             sb.append("     */" + newLine);
-            sb.append("    private " + filedType + " " + colName + ";" + newLine);
+            sb.append("    private " + fieldType + " " + colName + ";" + newLine);
 
             sbGetterSetter.append(newLine);
             sbGetterSetter.append("    /**" + newLine);
             sbGetterSetter.append("     * 获取" + colComments + newLine);
             sbGetterSetter.append("     * @return" + newLine);
             sbGetterSetter.append("     */" + newLine);
-            sbGetterSetter.append("    public " + filedType + " get" + columnInfo.getColumnName() + "() {" + newLine);
+            sbGetterSetter.append("    public " + fieldType + " get" + columnInfo.getColumnName() + "() {" + newLine);
             sbGetterSetter.append("        return " + columnInfo.getColumnName() + ";" + newLine);
             sbGetterSetter.append("    }" + newLine);
             sbGetterSetter.append(newLine);
@@ -57,7 +66,7 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
             sbGetterSetter.append("     * 设置" + colComments + newLine);
             sbGetterSetter.append("     * @param " + columnInfo.getColumnName() + newLine);
             sbGetterSetter.append("     */" + newLine);
-            sbGetterSetter.append("    public void set" + columnInfo.getColumnName() + "(" + filedType + " " + columnInfo.getColumnName() + ") {" + newLine);
+            sbGetterSetter.append("    public void set" + columnInfo.getColumnName() + "(" + fieldType + " " + columnInfo.getColumnName() + ") {" + newLine);
             sbGetterSetter.append("        this." + columnInfo.getColumnName() + " = " + columnInfo.getColumnName() + ";" + newLine);
             sbGetterSetter.append("    }" + newLine);
         }
@@ -69,7 +78,9 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
 
     public List<TableColumnInfo> getTableInfo(String url, String user, String password, String tableName) {
         String sql = "SELECT INITCAP(tabCol.TABLE_NAME) as tableName, INITCAP(tabCol.COLUMN_NAME) as columnName, tabCol.DATA_TYPE as dataType," +
-                "            colCom.COMMENTS AS colComments, tabCol.nullable, tabCom.COMMENTS AS tabComments" +
+                "            colCom.COMMENTS AS colComments, tabCol.nullable, tabCom.COMMENTS AS tabComments," +
+                "            tabCol.DATA_LENGTH as dataLength, tabCol.DATA_PRECISION as dataPrecision," +
+                "            tabCol.DATA_SCALE as dataScale" +
                 "      FROM USER_TAB_COLUMNS tabCol" +
                 "      LEFT JOIN USER_COL_COMMENTS colCom ON UPPER(tabCol.TABLE_NAME) = UPPER(colCom.TABLE_NAME) AND UPPER(tabCol.COLUMN_NAME) = UPPER(colCom.COLUMN_NAME)" +
                 "      LEFT JOIN USER_TAB_COMMENTS tabCom ON UPPER(tabCol.TABLE_NAME) = UPPER(tabCom.TABLE_NAME)" +
@@ -77,5 +88,12 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
                 "     ORDER BY tabCol.COLUMN_ID";
         Connection conn = DbHelperNew.getConnection(url, user, password);
         return DbHelperNew.getList(conn, sql, TableColumnInfo.class, tableName);
+    }
+
+    private String getFieldType(String typeStr) {
+        return "String";
+    }
+    private String getTypePackage(String typeStr) {
+        return "com.zjy.baseframework.BaseResult";
     }
 }

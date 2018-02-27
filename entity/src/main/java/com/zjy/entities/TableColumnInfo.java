@@ -13,6 +13,9 @@ public class TableColumnInfo {
     private String colComments;
     private String nullable;
     private String tabComments;
+    private Integer dataLength;
+    private Integer dataPrecision;
+    private Integer dataScale;
 
     public String getTableName() {
         return tableName;
@@ -68,5 +71,29 @@ public class TableColumnInfo {
      */
     public void setTabComments(String tabComments) {
         this.tabComments = tabComments;
+    }
+
+    public Integer getDataLength() {
+        return dataLength;
+    }
+
+    public void setDataLength(Integer dataLength) {
+        this.dataLength = dataLength;
+    }
+
+    public Integer getDataPrecision() {
+        return dataPrecision;
+    }
+
+    public void setDataPrecision(Integer dataPrecision) {
+        this.dataPrecision = dataPrecision;
+    }
+
+    public Integer getDataScale() {
+        return dataScale;
+    }
+
+    public void setDataScale(Integer dataScale) {
+        this.dataScale = dataScale;
     }
 }
