@@ -22,6 +22,7 @@ import static com.zjy.baseframework.enums.FileSuffix.XLSX;
 public class ExcelHelper<T> {
     // region 变量
     private static final int MaxSheetRow = 65535;
+    private static CellStyle cellDateStyle;
     // endregion
 
     // region excle转list
@@ -158,6 +159,11 @@ public class ExcelHelper<T> {
             throw new IllegalArgumentException("请输入sheet名称");
         }
 
+        if(cellDateStyle == null) {
+            CreationHelper creationHelper = workbook.getCreationHelper();
+            cellDateStyle = workbook.createCellStyle();
+            cellDateStyle.setDataFormat(creationHelper.createDataFormat().getFormat("yyyy-MM-dd HH:mm:ss"));
+        }
         int sheetNum = (int) Math.ceil(list.size() / new Integer(MaxSheetRow - 1).doubleValue());
         Sheet[] sheets = new Sheet[sheetNum];
         // sheet名称
@@ -270,11 +276,13 @@ public class ExcelHelper<T> {
         } else if (clazz == Double.class || clazz == double.class) {
             cell.setCellValue(Double.parseDouble(value.toString()));
         } else if (clazz == Date.class) {
-            Workbook wb = cell.getSheet().getWorkbook();
-            CreationHelper creationHelper = wb.getCreationHelper();
-            CellStyle dateStyle = wb.createCellStyle();
-            dateStyle.setDataFormat(creationHelper.createDataFormat().getFormat("yyyy-MM-dd HH:mm:ss"));
-            cell.setCellStyle(dateStyle);
+            if(cellDateStyle == null) {
+                Workbook wb = cell.getSheet().getWorkbook();
+                CreationHelper creationHelper = wb.getCreationHelper();
+                cellDateStyle = wb.createCellStyle();
+                cellDateStyle.setDataFormat(creationHelper.createDataFormat().getFormat("yyyy-MM-dd HH:mm:ss"));
+            }
+            cell.setCellStyle(cellDateStyle);
             cell.setCellValue((Date) value);
         } else if (clazz == Long.class || clazz == long.class) {
             cell.setCellValue(Long.parseLong(value.toString()));
