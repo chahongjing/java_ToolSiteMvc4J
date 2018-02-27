@@ -22,7 +22,6 @@ import static com.zjy.baseframework.enums.FileSuffix.XLSX;
 public class ExcelHelper<T> {
     // region 变量
     private static final int MaxSheetRow = 65535;
-    private static CellStyle cellDateStyle;
     // endregion
 
     // region excle转list
@@ -159,11 +158,13 @@ public class ExcelHelper<T> {
             throw new IllegalArgumentException("请输入sheet名称");
         }
 
-        if(cellDateStyle == null) {
-            CreationHelper creationHelper = workbook.getCreationHelper();
-            cellDateStyle = workbook.createCellStyle();
-            cellDateStyle.setDataFormat(creationHelper.createDataFormat().getFormat("yyyy-MM-dd HH:mm:ss"));
-        }
+        CellStyle cellDateStyle, cellDataStyle;
+        CreationHelper creationHelper = workbook.getCreationHelper();
+        cellDateStyle = workbook.createCellStyle();
+        cellDateStyle.setDataFormat(creationHelper.createDataFormat().getFormat("yyyy-MM-dd HH:mm:ss"));
+        cellDataStyle = workbook.createCellStyle();
+        cellDataStyle.setDataFormat(creationHelper.createDataFormat().getFormat("#,##0.00"));
+
         int sheetNum = (int) Math.ceil(list.size() / new Integer(MaxSheetRow - 1).doubleValue());
         Sheet[] sheets = new Sheet[sheetNum];
         // sheet名称
@@ -181,13 +182,13 @@ public class ExcelHelper<T> {
             } else {
                 subList = list.subList(i * (MaxSheetRow - 1), (i + 1) * (MaxSheetRow - 1));
             }
-            fillSheet(sheets[i], subList, headers);
+            fillSheet(sheets[i], subList, headers, cellDateStyle, cellDataStyle);
         }
     }
     // endregion
 
     // region 辅助函数
-    private static <T> void fillSheet(Sheet sheet, List<T> list, LinkedHashMap<String, String> headers) {
+    private static <T> void fillSheet(Sheet sheet, List<T> list, LinkedHashMap<String, String> headers, CellStyle cellDateStyle, CellStyle cellDataStyle) {
         // 设置标题
         setHeader(CellUtil.getRow(0, sheet), headers);
 
@@ -210,7 +211,7 @@ public class ExcelHelper<T> {
             for (int i = 0; i < fieldNames.length; i++) {
                 Object objValue = getFieldValueByNameSequence(fieldNames[i], item);
                 cell = CellUtil.getCell(row, i);
-                setCellValue(cell, objValue);
+                setCellValue(cell, objValue, cellDateStyle, cellDataStyle);
             }
             rowNo++;
         }
@@ -264,7 +265,7 @@ public class ExcelHelper<T> {
         return value;
     }
 
-    private static void setCellValue(Cell cell, Object value) {
+    private static void setCellValue(Cell cell, Object value, CellStyle cellDateStyle, CellStyle cellDataStyle) {
         if (value == null) return;
         Class clazz = value.getClass();
         if (clazz == String.class) {
@@ -272,17 +273,19 @@ public class ExcelHelper<T> {
         } else if (clazz == Integer.class || clazz == int.class) {
             cell.setCellValue(Integer.parseInt(value.toString()));
         } else if (clazz == Float.class || clazz == float.class) {
+            if(cellDataStyle != null) {
+                cell.setCellStyle(cellDataStyle);
+            }
             cell.setCellValue(Float.parseFloat(value.toString()));
         } else if (clazz == Double.class || clazz == double.class) {
+            if(cellDataStyle != null) {
+                cell.setCellStyle(cellDataStyle);
+            }
             cell.setCellValue(Double.parseDouble(value.toString()));
         } else if (clazz == Date.class) {
-            if(cellDateStyle == null) {
-                Workbook wb = cell.getSheet().getWorkbook();
-                CreationHelper creationHelper = wb.getCreationHelper();
-                cellDateStyle = wb.createCellStyle();
-                cellDateStyle.setDataFormat(creationHelper.createDataFormat().getFormat("yyyy-MM-dd HH:mm:ss"));
+            if(cellDateStyle != null) {
+                cell.setCellStyle(cellDateStyle);
             }
-            cell.setCellStyle(cellDateStyle);
             cell.setCellValue((Date) value);
         } else if (clazz == Long.class || clazz == long.class) {
             cell.setCellValue(Long.parseLong(value.toString()));

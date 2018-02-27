@@ -1,13 +1,13 @@
 ﻿window.Utility = window.Utility || {};
 window.Utility.Controls = window.Utility.Controls || {};
-(function(ns) {
+(function (ns) {
     // 函数名称： registerNameSpace
     // 函数功能： 注册命名空间
     // 函数参数： nameSpace    命名空间: a.b.c
     // 返 回 值： 无
     // 创 建 人： zengjy01
     // 创建日期： 2014-02-22 21:01:54
-    ns.registerNameSpace = function(nameSpace) {
+    ns.registerNameSpace = function (nameSpace) {
         var arrNameSpace;
         var ns;
 
@@ -32,19 +32,19 @@ window.Utility.Controls = window.Utility.Controls || {};
     // 返 回 值： 无
     // 创 建 人： zengjy01
     // 创建日期： 2014-02-22 21:01:54
-    ns.processAjax = function(optionData) {
+    ns.processAjax = function (optionData) {
         var url, ret;
         var startIndex, endIndex;
         var jReturn;
 
         if (!optionData.url) {
-            return { "Status": "ERROR", "Message": "optionData.url参数未设置!", Value: null }
+            return {"Status": "ERROR", "Message": "optionData.url参数未设置!", Value: null}
         }
         if (optionData.getData && typeof (optionData.getData) != "object") {
-            return { "Status": "ERROR", "Message": "optionData.getData类型不匹配或参数未设置!", Value: null }
+            return {"Status": "ERROR", "Message": "optionData.getData类型不匹配或参数未设置!", Value: null}
         }
         if (optionData.postData && typeof (optionData.postData) != "object") {
-            return { "Status": "ERROR", "Message": "optionData.postData类型不匹配或参数未设置!", Value: null }
+            return {"Status": "ERROR", "Message": "optionData.postData类型不匹配或参数未设置!", Value: null}
         }
 
         if (!optionData.getData) {
@@ -59,10 +59,10 @@ window.Utility.Controls = window.Utility.Controls || {};
             async: (optionData.async === false ? false : true),
             dataType: "text",
             data: optionData.postData,
-            success: function(data) {
+            success: function (data) {
                 ret = handlerAjaxResult(data, optionData);
             },
-            error: function(data) {
+            error: function (data) {
                 ret = handlerAjaxResult(data.responseText, optionData);
             }
         });
@@ -78,11 +78,11 @@ window.Utility.Controls = window.Utility.Controls || {};
             startIndex = data.indexOf("<title>");
             if (startIndex > 0) {
                 endIndex = data.indexOf("</title>");
-                jReturn = { Status: "ERROR", Message: data.substring(startIndex + 7, endIndex), Value: null };
+                jReturn = {Status: "ERROR", Message: data.substring(startIndex + 7, endIndex), Value: null};
             } else if (!data) {
-                jReturn = { Status: "ERROR", Message: "请求返回数据为空！", Value: null };
+                jReturn = {Status: "ERROR", Message: "请求返回数据为空！", Value: null};
             } else {
-                jReturn = { Status: "ERROR", Message: "返回Json数据失败！", Value: data };
+                jReturn = {Status: "ERROR", Message: "返回Json数据失败！", Value: data};
             }
         }
         if (optionData.callBack && typeof optionData.callBack === "function") {
@@ -99,7 +99,7 @@ window.Utility.Controls = window.Utility.Controls || {};
     // 返 回 值： 无
     // 创 建 人： zengjy01
     // 创建日期： 2014-05-11 11:57:24
-    Date.prototype.format = function(format) {
+    Date.prototype.format = function (format) {
         var o = {
             "M+": this.getMonth() + 1,
             "d+": this.getDate(),
@@ -129,7 +129,7 @@ window.Utility.Controls = window.Utility.Controls || {};
     // 返 回 值： 无
     // 创 建 人： zengjy01
     // 创建日期： 2014-05-11 11:57:24
-    String.prototype.toDate = function(format) {
+    String.prototype.toDate = function (format) {
         var t = ['y+', 'M+', 'd+', 'H+', 'h+', 'm+', 's+', 'S'];
         var v = [];
         var iso = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/;
@@ -160,13 +160,36 @@ window.Utility.Controls = window.Utility.Controls || {};
         return new Date(v[0], v[1], v[2], v[3] || v[4], v[5], v[6]);
     }
 
+    String.prototype.format = function (args) {
+        var result = this;
+        if (arguments.length > 0) {
+            if (arguments.length == 1 && typeof (args) == "object") {
+                for (var key in args) {
+                    if (args[key] != undefined) {
+                        var reg = new RegExp("({" + key + "})", "g");
+                        result = result.replace(reg, args[key]);
+                    }
+                }
+            }
+            else {
+                for (var i = 0; i < arguments.length; i++) {
+                    if (arguments[i] != undefined) {
+                        var reg = new RegExp("({[" + i + "]})", "g");
+                        result = result.replace(reg, arguments[i]);
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
     // 函数名称： addYear
     // 函数功能： 年份加减(负值表示减)
     // 函数参数： 无
     // 返 回 值： 无
     // 创 建 人： zengjy01
     // 创建日期： 2014-05-11 11:57:24
-    Date.prototype.addYear = function(value) {
+    Date.prototype.addYear = function (value) {
         this.setFullYear(this.getFullYear() + value);
         return this;
     }
@@ -176,7 +199,7 @@ window.Utility.Controls = window.Utility.Controls || {};
     // 返 回 值： 无
     // 创 建 人： zengjy01
     // 创建日期： 2014-05-11 11:57:24
-    Date.prototype.addMonth = function(value) {
+    Date.prototype.addMonth = function (value) {
         this.setMonth(this.getMonth() + value);
         return this;
     }
@@ -186,7 +209,7 @@ window.Utility.Controls = window.Utility.Controls || {};
     // 返 回 值： 无
     // 创 建 人： zengjy01
     // 创建日期： 2014-05-11 11:57:24
-    Date.prototype.addDay = function(value) {
+    Date.prototype.addDay = function (value) {
         this.setDay(this.getDay() + value);
         return this;
     }
@@ -196,7 +219,7 @@ window.Utility.Controls = window.Utility.Controls || {};
     // 返 回 值： 无
     // 创 建 人： zengjy01
     // 创建日期： 2014-05-11 11:57:24
-    Date.prototype.addHours = function(value) {
+    Date.prototype.addHours = function (value) {
         this.setHours(this.getHours() + value);
         return this;
     }
@@ -206,7 +229,7 @@ window.Utility.Controls = window.Utility.Controls || {};
     // 返 回 值： 无
     // 创 建 人： zengjy01
     // 创建日期： 2014-05-11 11:57:24
-    Date.prototype.addMinutes = function(value) {
+    Date.prototype.addMinutes = function (value) {
         this.setMinutes(this.getMinutes() + value);
         return this;
     }
@@ -216,7 +239,7 @@ window.Utility.Controls = window.Utility.Controls || {};
     // 返 回 值： 无
     // 创 建 人： zengjy01
     // 创建日期： 2014-05-11 11:57:24
-    Date.prototype.addSeconds = function(value) {
+    Date.prototype.addSeconds = function (value) {
         this.setSeconds(this.getSeconds() + value);
         return this;
     }
@@ -226,7 +249,7 @@ window.Utility.Controls = window.Utility.Controls || {};
     // 返 回 值： 无
     // 创 建 人： zengjy01
     // 创建日期： 2014-05-11 11:57:24
-    Date.prototype.minus = function(value) {
+    Date.prototype.minus = function (value) {
         return this.getTime() - value.getTime();
     }
     // 函数名称： minus
@@ -235,7 +258,7 @@ window.Utility.Controls = window.Utility.Controls || {};
     // 返 回 值： 无
     // 创 建 人： zengjy01
     // 创建日期： 2014-05-11 11:57:24
-    Date.prototype.eq = function(value) {
+    Date.prototype.eq = function (value) {
         return this.minus(value) == 0;
     }
     // 函数名称： minus
@@ -244,7 +267,7 @@ window.Utility.Controls = window.Utility.Controls || {};
     // 返 回 值： 无
     // 创 建 人： zengjy01
     // 创建日期： 2014-05-11 11:57:24
-    Date.prototype.gt = function(value) {
+    Date.prototype.gt = function (value) {
         return this.minus(value) > 0;
     }
     // 函数名称： minus
@@ -253,37 +276,60 @@ window.Utility.Controls = window.Utility.Controls || {};
     // 返 回 值： 无
     // 创 建 人： zengjy01
     // 创建日期： 2014-05-11 11:57:24
-    Date.prototype.lt = function(value) {
+    Date.prototype.lt = function (value) {
         return this.minus(value) < 0;
     }
 
     /// 添加转json对象时对日期的处理
     if ($) {
-        $.parseJSON = function(data) {
-            if (!data || typeof data !== "string") {
-                return null;
-            }
-            data = $.trim(data);
+        $.extend({
+            parseJSON: function (data) {
+                if (!data || typeof data !== "string") {
+                    return null;
+                }
+                data = $.trim(data);
 
-            if (window.JSON && window.JSON.parse) {
-                return window.JSON.parse(data, function(key, value) {
-                    var iso, js, re;
-                    iso = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/;
-                    js = /\/Date\((\d+)\)\//gi;
-                    re = RegExp;
-                    if (typeof value === 'string') {
-                        if (js.test(value)) {
-                            return new Date(+re.$1);
+                if (window.JSON && window.JSON.parse) {
+                    return window.JSON.parse(data, function (key, value) {
+                        var iso, js, re;
+                        iso = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/;
+                        js = /\/Date\((\d+)\)\//gi;
+                        re = RegExp;
+                        if (typeof value === 'string') {
+                            if (js.test(value)) {
+                                return new Date(+re.$1);
+                            }
+                            else if (iso.test(value)) {
+                                return new Date(Date.UTC(+re.$1, +re.$2 - 1, +re.$3, +re.$4, +re.$5, +re.$6));
+                            }
                         }
-                        else if (iso.test(value)) {
-                            return new Date(Date.UTC(+re.$1, +re.$2 - 1, +re.$3, +re.$4, +re.$5, +re.$6));
+                        return value;
+                    });
+                }
+                return null;
+            },
+            format: function (source, args) {
+                var result = source;
+                if (typeof(args) == "object") {
+                    if (args.length == undefined) {
+                        for (var key in args) {
+                            if (args[key] != undefined) {
+                                var reg = new RegExp("({" + key + "})", "g");
+                                result = result.replace(reg, args[key]);
+                            }
+                        }
+                    } else {
+                        for (var i = 0; i < args.length; i++) {
+                            if (args[i] != undefined) {
+                                var reg = new RegExp("({[" + i + "]})", "g");
+                                result = result.replace(reg, args[i]);
+                            }
                         }
                     }
-                    return value;
-                });
+                }
+                return result;
             }
-            return null;
-        }
+        })
     }
 
     // 函数名称： plus
@@ -292,7 +338,7 @@ window.Utility.Controls = window.Utility.Controls || {};
     // 返 回 值： 无
     // 创 建 人： zengjy01
     // 创建日期： 2014-05-11 11:57:24
-    Number.prototype.plus = function(num, prec) {
+    Number.prototype.plus = function (num, prec) {
         var p = Math.max(this.getPrecision(), parseFloat(num).getPrecision());
         var m = Math.pow(10, p);
         return Math.round((this * m + num * m) / Math.pow(10, p - prec)) / Math.pow(10, prec);
@@ -304,7 +350,7 @@ window.Utility.Controls = window.Utility.Controls || {};
     // 返 回 值： 无
     // 创 建 人： zengjy01
     // 创建日期： 2014-05-11 11:57:24
-    Number.prototype.minus = function(num, prec) {
+    Number.prototype.minus = function (num, prec) {
         var p = Math.max(this.getPrecision(), parseFloat(num).getPrecision());
         var m = Math.pow(10, p);
         return Math.round((this * m - num * m) / Math.pow(10, p - prec)) / Math.pow(10, prec);
@@ -316,7 +362,7 @@ window.Utility.Controls = window.Utility.Controls || {};
     // 返 回 值： 无
     // 创 建 人： zengjy01
     // 创建日期： 2014-05-11 11:57:24
-    Number.prototype.multiple = function(num, prec) {
+    Number.prototype.multiple = function (num, prec) {
         var m1 = this.getPrecision();
         var m2 = parseFloat(num).getPrecision();
         return Math.round(((this * Math.pow(10, m1)) * (num * Math.pow(10, m2))) / Math.pow(10, m1 + m2 - prec)) / Math.pow(10, prec);
@@ -328,7 +374,7 @@ window.Utility.Controls = window.Utility.Controls || {};
     // 返 回 值： 无
     // 创 建 人： zengjy01
     // 创建日期： 2014-05-11 11:57:24
-    Number.prototype.divide = function(num, prec) {
+    Number.prototype.divide = function (num, prec) {
         var p = Math.max(this.getPrecision(), parseFloat(num).getPrecision());
         var m = Math.pow(10, p);
         return Math.round(((this * m) / (num * m)) * Math.pow(10, prec)) / Math.pow(10, prec);
@@ -340,7 +386,7 @@ window.Utility.Controls = window.Utility.Controls || {};
     // 返 回 值： 无
     // 创 建 人： zengjy01
     // 创建日期： 2014-05-11 11:57:24
-    Number.prototype.getPrecision = function() {
+    Number.prototype.getPrecision = function () {
         var s = this.toString();
         var p = s.indexOf(".");
         return p == -1 ? 0 : (s.length - p - 1);
@@ -352,12 +398,12 @@ window.Utility.Controls = window.Utility.Controls || {};
     // 返 回 值： 无
     // 创 建 人： zengjy01
     // 创建日期： 2013-12-19 22:46:14
-    ns.htmlEncode = function(str) {
+    ns.htmlEncode = function (str) {
         // 复制权 &copy; 注册 &reg; 乘号 &times; 除号 &divide; 单引号 &apos; &mdash;
         //return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/'/g, "&apos;").replace(/"/g, "&quot;");
         var regExp = /[<>&'"]/g;
 
-        return str.toString().replace(regExp, function(strChar, intPosition, strOldText) {
+        return str.toString().replace(regExp, function (strChar, intPosition, strOldText) {
             switch (strChar) {
                 case "<":
                     return "&lt;";
@@ -384,15 +430,15 @@ window.Utility.Controls = window.Utility.Controls || {};
 
 /// 系统常量
 window.Constant = {
-    AjaxStatus: { OK: "OK", NO: "NO", ERROR: "ERROR", UNLOGIN: "UNLOGIN", UNAUTHORIZED: "UNAUTHORIZED" },
+    AjaxStatus: {OK: "OK", NO: "NO", ERROR: "ERROR", UNLOGIN: "UNLOGIN", UNAUTHORIZED: "UNAUTHORIZED"},
     EmptyGuid: "00000000-0000-0000-0000-000000000000"
 }
 
-if($ && $.ajaxSetup) {
+if ($ && $.ajaxSetup) {
     $.ajaxSetup({
         //请求失败遇到异常触发
         error: function (xhr, status, e) {
-            if(status == 'error') {
+            if (status == 'error') {
                 var startIndex = xhr.responseText.indexOf('<title>');
                 var endIndex = xhr.responseText.indexOf('</title>');
                 var message = xhr.responseText.substring(startIndex + 7, endIndex);
