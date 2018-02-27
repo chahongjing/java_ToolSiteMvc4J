@@ -1,6 +1,7 @@
 package com.zjy.bll.service;
 
 import com.zjy.baseframework.DbHelperNew;
+import com.zjy.baseframework.enums.DbType;
 import com.zjy.bll.common.BaseService;
 import com.zjy.bll.dao.ToolDao;
 import com.zjy.entities.TableColumnInfo;
@@ -17,8 +18,8 @@ import java.util.*;
 @Service
 public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> implements ToolService {
     @Override
-    public String getTableInfo(String type, String url, String user, String password, String tableName) {
-        String fieldType = "String";
+    public String getTableInfo(DbType dbType, String url, String user, String password, String tableName) {
+        String fieldType;
         String newLine = "\r\n";
         String colComments = "";
         String colName = "";
@@ -41,7 +42,7 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
             list = new ArrayList<>();
         }
         for (TableColumnInfo columnInfo : list) {
-            fieldType = getFieldType(columnInfo.getDataType());
+            fieldType = getFieldType(dbType, columnInfo.getDataType());
             fieldPackage = getTypePackage(fieldType);
             if(!org.apache.commons.lang3.StringUtils.isBlank(fieldPackage) && !packages.contains(fieldPackage)) {
                 packages.add(fieldPackage);
@@ -91,7 +92,24 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
         return DbHelperNew.getList(conn, sql, TableColumnInfo.class, tableName);
     }
 
-    private String getFieldType(String typeStr) {
+    private String getFieldType(DbType dbType, String typeStr) {
+        String type = null;
+        switch (dbType) {
+            case Oracle:
+                type = getOracleFieldType(typeStr);
+                break;
+            case Mysql:
+                break;
+            case SqlServer:
+                break;
+            default:
+                type = getOracleFieldType(typeStr);
+                break;
+        }
+        return type;
+    }
+
+    private String getOracleFieldType(String typeStr) {
         String type = null;
         switch (typeStr.toUpperCase()) {
             case "":
@@ -102,6 +120,7 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
         }
         return type;
     }
+
     private String getTypePackage(String typeStr) {
         String type = "";
         switch (typeStr.toUpperCase()) {

@@ -8,9 +8,9 @@
     连接地址<input type="text" data-ng-model="model.url" /><br>
     样例：
     <ul>
-        <li>oracle：jdbc:oracle:thin:@127.0.0.1:1521:orcl</li>
-        <li>mysql：jdbc:mysql://localhost/toolsitemvc4j</li>
-        <li>sqlserver：jdbc:sqlserver://PC201404190064\\MSSQL; DatabaseName=ToolSiteMvc4J</li>
+        <c:forEach var="item" items="${dbUrlList}">
+            <li>${item}</li>
+        </c:forEach>
     </ul>
     <br>
     用户名<input type="text" data-ng-model="model.user" /><br>
@@ -32,14 +32,26 @@
             $scope.model = {};
 
             $scope.init = function () {
-                $scope.model.url = 'jdbc:oracle:thin:@127.0.0.1:1521:orcl';
-                $scope.model.user = 'zjy';
-                $scope.model.password = '1024';
+                $scope.model.url = '${dbUrl}';
+                $scope.model.user = '${dbUser}';
+                $scope.model.password = '${dbPassword}';
             };
 
             $scope.model.getTableInfo = function () {
+                if(!$scope.model.url) {
+                    alert("请输入url地址！");
+                    return;
+                }
+                var type = "oracle";
+                if(/oracle/i.test($scope.model.url)) {
+                    type = "oracle";
+                } else if(/mysql/i.test($scope.model.url)) {
+                    type = "mysql";
+                } else if(/sqlserver/i.test($scope.model.url)) {
+                    type = "sqlserver";
+                }
                 var param = {
-                    type: 'oracle',
+                    type: type,
                     url: $scope.model.url,
                     user: $scope.model.user,
                     password: $scope.model.password,
