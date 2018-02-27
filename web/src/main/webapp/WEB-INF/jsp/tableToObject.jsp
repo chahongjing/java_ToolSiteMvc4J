@@ -5,7 +5,14 @@
 <%@ include file="/WEB-INF/jsp/common/endHeadAndBeginBody.jsp" %>
 <%-- html正文 --%>
 <div data-ng-controller="testCtrl" data-ng-init="init()">
-    连接字符串<input type="text" data-ng-model="model.url" /><br>
+    连接地址<input type="text" data-ng-model="model.url" /><br>
+    样例：
+    <ul>
+        <li>oracle：jdbc:oracle:thin:@127.0.0.1:1521:orcl</li>
+        <li>mysql：jdbc:mysql://localhost/toolsitemvc4j</li>
+        <li>sqlserver：jdbc:sqlserver://PC201404190064\\MSSQL; DatabaseName=ToolSiteMvc4J</li>
+    </ul>
+    <br>
     用户名<input type="text" data-ng-model="model.user" /><br>
     密码<input type="text" data-ng-model="model.password" /><br>
     表名<input type="text" data-ng-model="model.tableName" /><br>
@@ -25,6 +32,9 @@
             $scope.model = {};
 
             $scope.init = function () {
+                $scope.model.url = 'jdbc:oracle:thin:@127.0.0.1:1521:orcl';
+                $scope.model.user = 'zjy';
+                $scope.model.password = '1024';
             };
 
             $scope.model.getTableInfo = function () {

@@ -26,22 +26,33 @@ public class DbHelperNew {
         }
     }
 
-    public static int insert(String sql) {
-        return update(sql);
+    public static int insert(String sql, Object... params) {
+        return update(sql, params);
     }
 
-    public static int delete(String sql) {
-        return update(sql);
+    public static int insert(Connection conn, String sql, Object... params) {
+        return update(conn, sql, params);
     }
 
-    public static int update(String sql) {
-        Connection conn = null;
+    public static int delete(String sql, Object... params) {
+        return update(sql, params);
+    }
+
+    public static int delete(Connection conn, String sql, Object... params) {
+        return update(conn, sql, params);
+    }
+
+    public static int update(String sql, Object... params) {
+        Connection conn = getConnection();
+        return update(conn, sql, params);
+    }
+
+    public static int update(Connection conn, String sql, Object... params) {
         int count = -1;
         try {
-            conn = getConnection();
             QueryRunner qr = new QueryRunner();
             // insert方法返回插入行的主键,batch可以批量处理
-            count = qr.update(conn, sql);
+            count = qr.update(conn, sql, params);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -50,9 +61,12 @@ public class DbHelperNew {
         return count;
     }
 
-    public static <T> T get(String sql, Class<T> clazz) {
+    public static <T> T get(String sql, Class<T> clazz, Object... params) {
+        return get(sql, clazz, params);
+    }
 
-        List<T> list = getList(sql, clazz);
+    public static <T> T get(Connection conn, String sql, Class<T> clazz, Object... params) {
+        List<T> list = getList(sql, clazz, params);
         if (list != null && !list.isEmpty()) {
             return list.get(0);
         } else {
@@ -82,7 +96,6 @@ public class DbHelperNew {
         }
         return list;
     }
-
 
     /**
      * 获取数据库连接，也可以使用c3p0连接池，通过dataSource.getConnection()来获取

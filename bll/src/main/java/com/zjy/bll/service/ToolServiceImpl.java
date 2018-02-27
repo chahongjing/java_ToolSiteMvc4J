@@ -22,6 +22,7 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
         String filedType = "String";
         String newLine = "\r\n";
         String colComments = "";
+        String colName = "";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         StringBuilder sbHeader = new StringBuilder();
         StringBuilder sb = new StringBuilder();
@@ -33,14 +34,15 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
         sb.append(" * 创建人：Administrator" + newLine);
         sb.append(" * 创建日期：" + sdf.format(new Date()) + newLine);
         sb.append(" */" + newLine);
-        sb.append("public class " + tableName + " {" + newLine);
+        sb.append("public class " + Objects.toString(tableName, "") + " {" + newLine);
         List<TableColumnInfo> list = getTableInfo(url, user, password, tableName);
         for (TableColumnInfo columnInfo : list) {
             colComments = Objects.toString(columnInfo.getColComments(), "");
+            colName = columnInfo.getColumnName().substring(0, 1).toLowerCase() + columnInfo.getColumnName().substring(1);
             sb.append("    /**" + newLine);
             sb.append("     * " + colComments + newLine);
             sb.append("     */" + newLine);
-            sb.append("    private " + filedType + " " + columnInfo.getColumnName() + ";" + newLine);
+            sb.append("    private " + filedType + " " + colName + ";" + newLine);
 
             sbGetterSetter.append(newLine);
             sbGetterSetter.append("    /**" + newLine);
@@ -66,7 +68,7 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
     }
 
     public List<TableColumnInfo> getTableInfo(String url, String user, String password, String tableName) {
-        String sql = "SELECT tabCol.TABLE_NAME as tableName, tabCol.COLUMN_NAME as columnName, tabCol.DATA_TYPE as dataType," +
+        String sql = "SELECT INITCAP(tabCol.TABLE_NAME) as tableName, INITCAP(tabCol.COLUMN_NAME) as columnName, tabCol.DATA_TYPE as dataType," +
                 "            colCom.COMMENTS AS colComments, tabCol.nullable, tabCom.COMMENTS AS tabComments" +
                 "      FROM USER_TAB_COLUMNS tabCol" +
                 "      LEFT JOIN USER_COL_COMMENTS colCom ON UPPER(tabCol.TABLE_NAME) = UPPER(colCom.TABLE_NAME) AND UPPER(tabCol.COLUMN_NAME) = UPPER(colCom.COLUMN_NAME)" +
