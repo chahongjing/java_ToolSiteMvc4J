@@ -132,4 +132,13 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
         }
         return type;
     }
+
+    private Map<String, Class<?>> getOracleTypeMap() {
+        Map<String, Class<?>> map = new HashMap<>();
+        map.put("CHAR", String.class);
+        map.put("VARCHAR2", String.class);
+        map.put("NUMBER", Integer.class);
+        map.put("DATE", Date.class);
+        return map;
+    }
 }

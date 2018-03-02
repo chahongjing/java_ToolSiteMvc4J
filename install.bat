@@ -1,1 +1,1 @@
-mvn -DskipTests install
+mvn clean install -DskipTests -Pdevelopment
