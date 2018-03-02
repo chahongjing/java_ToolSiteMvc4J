@@ -8,6 +8,7 @@ import com.zjy.entities.TableColumnInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -17,9 +18,11 @@ import java.util.*;
  */
 @Service
 public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> implements ToolService {
+
+    private static Map<String, Class<?>> oracleTypeMap;
     @Override
     public String getTableInfo(DbType dbType, String url, String user, String password, String tableName) {
-        String fieldType;
+        Class<?> fieldType;
         String newLine = "\r\n";
         String colComments = "";
         String colName = "";
@@ -42,8 +45,8 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
             list = new ArrayList<>();
         }
         for (TableColumnInfo columnInfo : list) {
-            fieldType = getFieldType(dbType, columnInfo.getDataType());
-            fieldPackage = getTypePackage(fieldType);
+            fieldType = getFieldType(dbType, columnInfo);
+            fieldPackage = getTypePackage(fieldType.getSimpleName());
             if(!org.apache.commons.lang3.StringUtils.isBlank(fieldPackage) && !packages.contains(fieldPackage)) {
                 packages.add(fieldPackage);
                 sbHeader.append("import " + fieldPackage + ";" + newLine);
@@ -53,14 +56,14 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
             sb.append("    /**" + newLine);
             sb.append("     * " + colComments + newLine);
             sb.append("     */" + newLine);
-            sb.append("    private " + fieldType + " " + colName + ";" + newLine);
+            sb.append("    private " + fieldType.getSimpleName() + " " + colName + ";" + newLine);
 
             sbGetterSetter.append(newLine);
             sbGetterSetter.append("    /**" + newLine);
             sbGetterSetter.append("     * 获取" + colComments + newLine);
             sbGetterSetter.append("     * @return" + newLine);
             sbGetterSetter.append("     */" + newLine);
-            sbGetterSetter.append("    public " + fieldType + " get" + columnInfo.getColumnName() + "() {" + newLine);
+            sbGetterSetter.append("    public " + fieldType.getSimpleName() + " get" + columnInfo.getColumnName() + "() {" + newLine);
             sbGetterSetter.append("        return " + columnInfo.getColumnName() + ";" + newLine);
             sbGetterSetter.append("    }" + newLine);
             sbGetterSetter.append(newLine);
@@ -68,7 +71,7 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
             sbGetterSetter.append("     * 设置" + colComments + newLine);
             sbGetterSetter.append("     * @param " + columnInfo.getColumnName() + newLine);
             sbGetterSetter.append("     */" + newLine);
-            sbGetterSetter.append("    public void set" + columnInfo.getColumnName() + "(" + fieldType + " " + columnInfo.getColumnName() + ") {" + newLine);
+            sbGetterSetter.append("    public void set" + columnInfo.getColumnName() + "(" + fieldType.getSimpleName() + " " + columnInfo.getColumnName() + ") {" + newLine);
             sbGetterSetter.append("        this." + columnInfo.getColumnName() + " = " + columnInfo.getColumnName() + ";" + newLine);
             sbGetterSetter.append("    }" + newLine);
         }
@@ -92,33 +95,55 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
         return DbHelperNew.getList(conn, sql, TableColumnInfo.class, tableName);
     }
 
-    private String getFieldType(DbType dbType, String typeStr) {
-        String type = null;
+    private Class<?> getFieldType(DbType dbType, TableColumnInfo columnInfo) {
+        Class<?> type = null;
         switch (dbType) {
             case Oracle:
-                type = getOracleFieldType(typeStr);
+                type = getOracleFieldType(columnInfo);
                 break;
             case Mysql:
                 break;
             case SqlServer:
                 break;
             default:
-                type = getOracleFieldType(typeStr);
+                type = getOracleFieldType(columnInfo);
                 break;
         }
+        if(type == null) type = String.class;
         return type;
     }
 
-    private String getOracleFieldType(String typeStr) {
-        String type = null;
-        switch (typeStr.toUpperCase()) {
-            case "":
-                break;
-            default:
-                type = "String";
-                break;
+    private Class<?> getOracleFieldType(TableColumnInfo columnInfo) {
+        String strDbType = columnInfo.getDataType().toUpperCase();
+        if("NUMBER".equals(strDbType)) {
+            if(columnInfo.getDataPrecision() == null) {
+                strDbType = "NUMBER";
+            } else {
+                int length = columnInfo.getDataPrecision();
+                if(String.valueOf(length).equals("1")){
+                    strDbType = "NUMBER1_1_" + columnInfo.getDataScale().toString();
+                } else if(String.valueOf(length).equals("2")) {
+                    strDbType = "NUMBER2_2_" + columnInfo.getDataScale().toString();
+                } else if(length >= 3 && length <= 4) {
+                    strDbType = "NUMBER3_4_" + columnInfo.getDataScale().toString();
+                } else if(length >= 5 && length <= 9) {
+                    strDbType = "NUMBER5_9_" + columnInfo.getDataScale().toString();
+                } else if(length >= 10 && length <= 18) {
+                    strDbType = "NUMBER10_18_" + columnInfo.getDataScale().toString();
+                } else if(length >= 19 && length <= 38) {
+                    strDbType = "NUMBER19_38_" + columnInfo.getDataScale().toString();
+                } else {
+                    strDbType = "NUMBER";
+                }
+            }
         }
-        return type;
+        Class<?> clazz = getOracleTypeMap().get(strDbType);
+//        if(columnInfo.getNullable().equalsIgnoreCase("N")) {
+//            if(Arrays.asList(Integer.class, Boolean.class, Byte.class, Short.class, Long.class).contains(clazz)) {
+//
+//            }
+//        }
+        return clazz;
     }
 
     private String getTypePackage(String typeStr) {
@@ -134,11 +159,21 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
     }
 
     private Map<String, Class<?>> getOracleTypeMap() {
-        Map<String, Class<?>> map = new HashMap<>();
-        map.put("CHAR", String.class);
-        map.put("VARCHAR2", String.class);
-        map.put("NUMBER", Integer.class);
-        map.put("DATE", Date.class);
-        return map;
+        if(this.oracleTypeMap == null) {
+            Map<String, Class<?>> map = new HashMap<>();
+            map.put("CHAR", String.class);
+            map.put("VARCHAR2", String.class);
+            map.put("NUMBER", Integer.class);
+            map.put("NUMBER1_1_0", Boolean.class);
+            map.put("NUMBER2_2_0", Byte.class);
+            map.put("NUMBER3_4_0", Short.class);
+            map.put("NUMBER5_9_0", Integer.class);
+            map.put("NUMBER10_18_0", Long.class);
+            map.put("NUMBER19_38_0", BigDecimal.class);
+            map.put("DATE", Date.class);
+            map.put("TIMESTAMP", Date.class);
+            this.oracleTypeMap = map;
+        }
+        return this.oracleTypeMap;
     }
 }
