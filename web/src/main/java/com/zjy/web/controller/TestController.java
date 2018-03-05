@@ -128,8 +128,8 @@ public class TestController extends BaseController implements ServletConfigAware
     }
 
     @RequestMapping(value = "/testPostWithFile.do", method = RequestMethod.POST)
-    public ResponseEntity<BaseResult<UserInfo>> testPostWithFile(MultipartHttpServletRequest request, @RequestParam Integer age,
-                                                                 @RequestParam MultipartFile myfile, UserInfo users) {
+    public ResponseEntity<BaseResult<UserInfo>> testPostWithFile(MultipartHttpServletRequest request, @RequestParam(required = false) Integer age,
+                                                                 @RequestParam MultipartFile[] myfile, UserInfo users) {
         BaseResult<UserInfo> re = BaseResult.OK();
         UserInfo user = new UserInfo();
         user.setUserName("曾军毅postWithFile");

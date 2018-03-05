@@ -46,8 +46,9 @@
 <a href="${ctx}/test/test.do">测试@Value和加载部分页</a>
 <br/>
 <br/>
-<form method="post" action="${ctx}/test/fileupload.do" enctype="multipart/form-data" target="_blank">
+<form method="post" action="${ctx}/test/testPostWithFile.do" enctype="multipart/form-data" target="_blank">
     <input type="text" name="name"/>
+    <input type="hidden" name="age" value="28"/>
     <input type="text" name="test" value="测试部分页render:${username}"/>
     <input type="file" name="myfile" multiple="multiple" />
     <button type="submit" name="tj" value="提交">提交</button>
