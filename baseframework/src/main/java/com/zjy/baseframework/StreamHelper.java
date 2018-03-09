@@ -100,4 +100,37 @@ public class StreamHelper {
         byte[] bytes = s.getBytes();
         return new String(in);
     }
+
+    /**
+     * byte转outputStream
+     * @param in 字节数组
+     * @return
+     * @throws IOException
+     */
+    public static OutputStream byteToOutputStream(byte[] in) throws IOException {
+        OutputStream output = new ByteArrayOutputStream();
+        output.write(in);
+        return output;
+    }
+
+    /**
+     * byte转文件
+     * @param in 字节信息
+     * @param filePath 文件信息
+     * @return
+     * @throws IOException
+     */
+    public static File byteToFile(byte[] in, String filePath) throws IOException {
+        File file = new File(filePath);
+        try (OutputStream output = new FileOutputStream(file);
+             BufferedOutputStream bufferedOutput = new BufferedOutputStream(output)
+        ) {
+            bufferedOutput.write(in);
+            bufferedOutput.flush();
+            output.flush();
+        } catch (Exception e) {
+            throw e;
+        }
+        return file;
+    }
 }
