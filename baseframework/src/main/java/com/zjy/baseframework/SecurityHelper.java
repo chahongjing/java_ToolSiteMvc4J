@@ -2,6 +2,8 @@ package com.zjy.baseframework;
 
 import org.apache.commons.codec.binary.Base64;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -35,6 +37,7 @@ public class SecurityHelper {
     }
 
     public static String encode(String value) throws Exception {
-        return new String(Base64.encodeBase64(value.getBytes()));
+        // new String(Base64.encodeBase64(value.getBytes()))
+        return Base64.encodeBase64String(value.getBytes());
     }
 }
