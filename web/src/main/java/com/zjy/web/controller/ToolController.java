@@ -3,7 +3,6 @@ package com.zjy.web.controller;
 import com.zjy.baseframework.BaseResult;
 import com.zjy.baseframework.enums.DbType;
 import com.zjy.bll.service.ToolService;
-import com.zjy.entities.TableColumnInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -50,5 +49,9 @@ public class ToolController extends BaseController {
         DbType dbType = DbType.getDbTypeByName(type);
         String tableInfo = toolSrv.getTableInfo(dbType, url, user, password, tableName);
         return BaseResult.OK(tableInfo);
+    }
+    @RequestMapping("/sqlGenerate")
+    public String sqlGenerate() {
+        return "tools/sqlGenerate";
     }
 }

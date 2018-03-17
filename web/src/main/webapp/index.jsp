@@ -101,6 +101,7 @@ js<br>
 <a href="${ctx}/learn/gitLearn.do" target="_blank">git学习</a>
 <a href="${ctx}/learn/otherLearn.do" target="_blank">其它</a>
 <a href="${ctx}/tool/tableToObject.do" target="_blank">oracle表转类</a>
+<a href="${ctx}/tool/sqlGenerate.do" target="_blank">sql生成器</a>
 
 <br />
 <br />
