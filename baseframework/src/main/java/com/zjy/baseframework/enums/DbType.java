@@ -1,29 +1,39 @@
 package com.zjy.baseframework.enums;
 
 /**
- * Created by chahongjing on 2018/3/17.
+ * Created by Administrator on 2018/2/27.
  */
 public enum DbType {
-    Mysql("mysql"),
-    Oracle("oracle"),
-    SqlServer("sqlserver");
+    Oracle(0, "oracle"),
+    Mysql(1, "mysql"),
+    SqlServer(2, "oracle");
 
-    private String value;
+    private int value;
+    private String name;
 
-    DbType(String value){
+    DbType(int value, String name){
         this.value = value;
+        this.name = name;
     }
 
-    public String getValue() {
+    public int getValue() {
         return value;
     }
+    public String getName() {
+        return name;
+    }
 
-    public static DbType getDbTypeByName(String value) {
+    public static DbType getDbTypeByValue(int value) {
         for (DbType dbType : DbType.values()) {
-            if(dbType.getValue().equalsIgnoreCase(value)) {
-                return dbType;
-            }
+            if(dbType.getValue() == value) return dbType;
         }
-        throw new RuntimeException(String.format("错误的数据库类型枚举值DbType：%s", value));
+        throw new IllegalArgumentException("无效的数据库类别！value:" + value);
+    }
+
+    public static DbType getDbTypeByName(String name) {
+        for (DbType dbType : DbType.values()) {
+            if(dbType.getName().equals(name)) return dbType;
+        }
+        throw new IllegalArgumentException("无效的数据库类别！name:" + name);
     }
 }
