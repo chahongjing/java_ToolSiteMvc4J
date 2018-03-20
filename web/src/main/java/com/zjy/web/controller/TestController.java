@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.ServletConfigAware;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletConfig;
@@ -55,6 +54,7 @@ public class TestController extends BaseController implements ServletConfigAware
     public void setEnvironment(Environment environment) {
         this.environment = environment;
     }
+
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
@@ -137,12 +137,12 @@ public class TestController extends BaseController implements ServletConfigAware
         for (MultipartFile file : request.getFiles("myfile")) {
 
         }
-       user.setAge(age + users.getAge());
+        user.setAge(age + users.getAge());
         re.setValue(user);
         return new ResponseEntity<>(re, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/testGetEntity.do", produces="application/json;charset=UTF-8")
+    @RequestMapping(value = "/testGetEntity.do", produces = "application/json;charset=UTF-8")
     public ResponseEntity<UserInfo> testGetEntity(Goods goods) {
         UserInfo user = new UserInfo();
         user.setUserName(goods.getName());
@@ -150,7 +150,7 @@ public class TestController extends BaseController implements ServletConfigAware
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/testPostEntity.do", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
+    @RequestMapping(value = "/testPostEntity.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public ResponseEntity<UserInfo> testPostEntity(Goods goods) {
         UserInfo user = new UserInfo();
         user.setUserName(goods.getName());

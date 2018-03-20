@@ -213,7 +213,7 @@ public class WordHelper {
             logger.error("license register failed");
         }
     }
-    
+
     private static String getWebRootAbsolutePath() {
         String folderPath = WordHelper.class.getProtectionDomain().getCodeSource().getLocation().getPath();
         //if (folderPath.indexOf("WEB-INF") > 0) {
