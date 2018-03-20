@@ -62,7 +62,8 @@ public class DbHelperNew {
     }
 
     public static <T> T get(String sql, Class<T> clazz, Object... params) {
-        return get(sql, clazz, params);
+        Connection conn = getConnection();
+        return get(conn, sql, clazz, params);
     }
 
     public static <T> T get(Connection conn, String sql, Class<T> clazz, Object... params) {

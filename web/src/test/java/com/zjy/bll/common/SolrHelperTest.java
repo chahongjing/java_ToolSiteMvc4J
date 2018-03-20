@@ -32,7 +32,7 @@ public class SolrHelperTest extends BaseTestCase {
         title.add("IT");
         good.setTitle(title);
         try {
-            solrHelper.add(good);
+            //solrHelper.add(good);
         } catch (Exception e) {
             logger.error("solr.add异常", e);
         }
@@ -62,7 +62,7 @@ public class SolrHelperTest extends BaseTestCase {
         good3.setPrice(43.4f);
         list.add(good3);
         try {
-            solrHelper.addList(list);
+            //solrHelper.addList(list);
         } catch (Exception e) {
             logger.error("solr.addList异常", e);
         }
@@ -72,7 +72,7 @@ public class SolrHelperTest extends BaseTestCase {
     public void delete() {
 //        solrHelper.delete(1);
         try {
-            solrHelper.delete(2);
+            //solrHelper.delete(2);
         } catch (Exception e) {
             logger.error("solr.delete异常", e);
         }
@@ -86,7 +86,7 @@ public class SolrHelperTest extends BaseTestCase {
         map.put("id", "3");
         List<Goods> list = null;
         try {
-            list = solrHelper.find(map);
+            //list = solrHelper.find(map);
         } catch (Exception e) {
             logger.error("solr.find异常", e);
         }

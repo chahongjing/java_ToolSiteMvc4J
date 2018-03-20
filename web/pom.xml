@@ -191,7 +191,7 @@
                 <version>2.2</version>
                 <configuration>
                     <path>/${project.build.finalName}</path>
-                    <url>http://localhost:8080/manager/text</url>
+                    <url>http://localhost:20000/manager/text</url>
                     <server>tomcat</server>
                     <username>tomcat</username>
                     <password>tomcat</password>

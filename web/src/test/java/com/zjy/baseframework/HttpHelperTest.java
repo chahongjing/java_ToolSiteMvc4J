@@ -32,12 +32,12 @@ public class HttpHelperTest extends BaseTestCase {
         String url = baseUrl + "/test/testPost.do";
         Map<String, String> map = new HashMap<>();
         map.put("age", "28");
-        try {
-            String result = HttpHelper.doPostToString(url, map);
-            logger.info("testPost结果：{}", result);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            String result = HttpHelper.doPostToString(url, map);
+//            logger.info("testPost结果：{}", result);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Test
@@ -47,12 +47,12 @@ public class HttpHelperTest extends BaseTestCase {
         Map<String, String> fileList = new HashMap<>();
         map.put("age", "28");
         fileList.put("myfile", "d:\\a.xls");
-        try {
-            String result = HttpHelper.doPostToString(url, map, fileList);
-            logger.info("testPostWithFile结果：{}", result);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            String result = HttpHelper.doPostToString(url, map, fileList);
+//            logger.info("testPostWithFile结果：{}", result);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Test

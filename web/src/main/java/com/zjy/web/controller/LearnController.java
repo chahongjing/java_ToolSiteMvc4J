@@ -72,12 +72,11 @@ public class LearnController extends BaseController {
         // path是指欲下载的文件的路径。
         String path = "d:\\a.txt";
         File f = new File(path);
-        if(!f.exists()) throw new Exception("未找到文件：" + path);
+        if (!f.exists()) throw new Exception("未找到文件：" + path);
         DownloadHelper.download(path, response);
     }
 
     /**
-     *
      * @param userName
      * @return
      */
