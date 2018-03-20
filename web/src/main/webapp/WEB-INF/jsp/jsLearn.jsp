@@ -5,7 +5,12 @@
 <%@ include file="/WEB-INF/jsp/common/endHeadAndBeginBody.jsp" %>
 <%-- html正文 --%>
 <div>
-    <a href="javascript:void(0)" onclick="blobDownload()">blob下载</a>
+<a href="javascript:void(0)" onclick="blobDownload()">blob下载</a><br/>
+<a href="javascript:void(0)" onclick="upload()">上传文件</a>
+    <form id="formId" enctype="multipart/form-data" action="<c:url value="/learn/fileupload.do" />">
+        <input type="hidden" name="id" value="abcde" />
+        <input type="file" name="myfile" />
+    </form>
 </div>
 
 <%@ include file="/WEB-INF/jsp/common/endBodyAndBeginScript.jsp" %>
@@ -58,6 +63,20 @@
             }
         }
         xhr.send();
+    }
+
+    function upload() {
+        var $form = $('#formId');
+        $.ajax({
+            type: 'POST',
+            url: $form.attr('action'),
+            data: new FormData($form[0]),
+            processData: false,
+            contentType: false, // 如果form没有指定enctype，则可以在此处指定
+            success: function (data) {
+                console.log(data);
+            }
+        });
     }
 </script>
 <%@ include file="/WEB-INF/jsp/common/endScript.jsp" %>
