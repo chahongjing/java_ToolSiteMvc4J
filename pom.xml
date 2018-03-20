@@ -59,6 +59,7 @@
         <java.target.version>1.8</java.target.version>
         <dubbo.version>2.5.8</dubbo.version>
         <zookeeper.client.version>0.10</zookeeper.client.version>
+        <aspose.version>14.9.0</aspose.version>
     </properties>
 
     <dependencyManagement>
@@ -355,6 +356,11 @@
                 <groupId>com.101tec</groupId>
                 <artifactId>zkclient</artifactId>
                 <version>${zookeeper.client.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.aspose</groupId>
+                <artifactId>aspose-words</artifactId>
+                <version>${aspose.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

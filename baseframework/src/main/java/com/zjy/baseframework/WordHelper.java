@@ -1,19 +1,25 @@
 package com.zjy.baseframework;
 
+import com.aspose.words.*;
+import com.zjy.baseframework.enums.FileSuffix;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.xmlbeans.XmlOptions;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTBody;
+import org.slf4j.Logger;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Created by Administrator on 2017/12/7.
  */
 public class WordHelper {
 
-    public static void main (String[] args) throws Exception {
+    protected static Logger logger = LogHelper.getLogger(WordHelper.class);
+
+    public static void main(String[] args) throws Exception {
         InputStream in1 = null;
         InputStream in2 = null;
         OPCPackage src1Package = null;
@@ -44,11 +50,11 @@ public class WordHelper {
         optionsOuter.setSaveOuter();
         String appendString = append.xmlText(optionsOuter);
         String srcString = src.xmlText();
-        String prefix = srcString.substring(0,srcString.indexOf(">")+1);
-        String mainPart = srcString.substring(srcString.indexOf(">")+1,srcString.lastIndexOf("<"));
-        String sufix = srcString.substring( srcString.lastIndexOf("<") );
+        String prefix = srcString.substring(0, srcString.indexOf(">") + 1);
+        String mainPart = srcString.substring(srcString.indexOf(">") + 1, srcString.lastIndexOf("<"));
+        String sufix = srcString.substring(srcString.lastIndexOf("<"));
         String addPart = appendString.substring(appendString.indexOf(">") + 1, appendString.lastIndexOf("<"));
-        CTBody makeBody = CTBody.Factory.parse(prefix+mainPart+addPart+sufix);
+        CTBody makeBody = CTBody.Factory.parse(prefix + mainPart + addPart + sufix);
         src.set(makeBody);
     }
 
@@ -67,6 +73,7 @@ public class WordHelper {
     /**
      * 把is写入到对应的word输出流os中
      * 不考虑异常的捕获，直接抛出
+     *
      * @param is
      * @param os
      * @throws IOException
@@ -83,6 +90,7 @@ public class WordHelper {
     /**
      * 把输入流里面的内容以UTF-8编码当文本取出。
      * 不考虑异常，直接抛出
+     *
      * @param ises
      * @return
      * @throws IOException
@@ -94,7 +102,7 @@ public class WordHelper {
             String line;
             for (InputStream is : ises) {
                 br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-                while ((line=br.readLine()) != null) {
+                while ((line = br.readLine()) != null) {
                     result.append(line);
                 }
             }
@@ -102,4 +110,83 @@ public class WordHelper {
         }
         return null;
     }
+
+    // region aspose html，word相关操作
+    /**
+     * html文件转word文件
+     * @param htmlPath html文件路径
+     * @param wordPath word文件路径
+     */
+    public static void htmlFileToWord(String htmlPath, String wordPath) {
+        LoadOptions loadOptions = new LoadOptions();
+        loadOptions.setLoadFormat(LoadFormat.HTML);
+        loadOptions.setEncoding(StandardCharsets.UTF_8);
+        int saveFormat;
+        if(FileSuffix.DOC.getValue().equalsIgnoreCase(Utils.getExtension(wordPath))) {
+            saveFormat = SaveFormat.DOC;
+        } else if(FileSuffix.DOCX.getValue().equalsIgnoreCase(Utils.getExtension(wordPath))) {
+            saveFormat = SaveFormat.DOCX;
+        } else {
+            saveFormat = SaveFormat.DOC;
+        }
+        try {
+            Document doc = new Document(htmlPath, loadOptions);
+            doc.save(wordPath, SaveOptions.createSaveOptions(saveFormat));
+        } catch (Exception e) {
+            logger.error("html转word失败！", e);
+        }
+    }
+
+    /**
+     * html片段转word
+     * @param htmlBody html内容
+     * @param wordPath word文件路径
+     */
+    public static void htmlToWord(String htmlBody, String wordPath) {
+        OutputStream out = null;
+        int saveFormat;
+        if(FileSuffix.DOC.getValue().equalsIgnoreCase(Utils.getExtension(wordPath))) {
+            saveFormat = SaveFormat.DOC;
+        } else if(FileSuffix.DOCX.getValue().equalsIgnoreCase(Utils.getExtension(wordPath))) {
+            saveFormat = SaveFormat.DOCX;
+        } else {
+            saveFormat = SaveFormat.DOC;
+        }
+        try {
+            out = new FileOutputStream(new File(wordPath));
+            //拼接完整的HTML文档
+            StringBuilder sb = new StringBuilder();
+            sb.append("<!DOCTYPE html><html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8' /></head><body>");
+            sb.append(htmlBody);
+            sb.append("</body></html>");
+            Document doc = new Document();
+            DocumentBuilder builder = new DocumentBuilder(doc);
+            builder.insertHtml(sb.toString());
+            doc.save(out, SaveOptions.createSaveOptions(saveFormat));
+        } catch (Exception ex) {
+            logger.error("html转word失败！", ex);
+        } finally {
+            if (out != null) {
+                try {
+                    out.flush();
+                    out.close();
+                } catch (Exception ex) {
+                }
+            }
+        }
+    }
+
+    /**
+     * word文件转html文件
+     * @param wordPath word文件路径
+     * @param htmlPath html文件路径
+     */
+    public static void wordToHtml(String wordPath, String htmlPath) {
+        try {
+            new Document(wordPath).save(htmlPath, SaveFormat.HTML);
+        } catch (Exception e) {
+            logger.error("word转html失败！", e);
+        }
+    }
+    // endregion
 }

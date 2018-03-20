@@ -13,7 +13,12 @@ public class Utils {
         return Paths.get(StringUtils.removeStart(Utils.class.getClassLoader().getResource("/").getFile(), "/")).getParent().getParent().toAbsolutePath().toString();
     }
 
-    public static String getFileExtension(String fileName) {
+    /**
+     * 获取文件后缀(包括点号)
+     * @param fileName 文件名
+     * @return
+     */
+    public static String getExtension(String fileName) {
         if(StringUtils.isBlank(fileName) || fileName.indexOf('.') == -1) return StringUtils.EMPTY;
         return fileName.substring(fileName.lastIndexOf('.'));
     }
