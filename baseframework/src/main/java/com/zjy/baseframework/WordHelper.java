@@ -199,5 +199,26 @@ public class WordHelper {
             logger.error("word转html失败！", e);
         }
     }
+
+    public static void getLicense() {
+        String path = getWebRootAbsolutePath() + "/license.xml";
+        InputStream is;
+        try {
+            is = new FileInputStream(new File(path));
+            License license = new License();
+            license.setLicense(is);
+        } catch (FileNotFoundException e) {
+            logger.error("license.xml file not found");
+        } catch (Exception e) {
+            logger.error("license register failed");
+        }
+    }
+    
+    private static String getWebRootAbsolutePath() {
+        String folderPath = WordHelper.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        //if (folderPath.indexOf("WEB-INF") > 0) {
+        return folderPath.substring(0, (folderPath.indexOf("classes") + "classes".length()));
+        //}
+    }
     // endregion
 }
