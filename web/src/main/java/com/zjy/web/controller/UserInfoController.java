@@ -7,6 +7,7 @@ import com.zjy.bll.common.UserUtils;
 import com.zjy.bll.request.UserInfoRequest;
 import com.zjy.bll.service.UserInfoService;
 import com.zjy.entities.UserInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -49,7 +50,9 @@ public class UserInfoController extends BaseController {
         if (lastRequest != null && "GET".equalsIgnoreCase(lastRequest.getMethod())) {
             url = WebUtils.getSavedRequest(request).getRequestUrl();
         }
-
+        if(StringUtils.isBlank(url)) {
+            url = request.getRequestURL().toString().replace(request.getRequestURI(), "") + request.getContextPath() + "/";
+        }
         mv.addObject("redirectUrl", url);
         return mv;
     }
