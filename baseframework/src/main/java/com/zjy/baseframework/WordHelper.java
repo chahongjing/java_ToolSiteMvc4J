@@ -182,8 +182,19 @@ public class WordHelper {
      * @param htmlPath html文件路径
      */
     public static void wordToHtml(String wordPath, String htmlPath) {
+        int loadFormat;
+        if(FileSuffix.DOC.getValue().equalsIgnoreCase(Utils.getExtension(wordPath))) {
+            loadFormat = LoadFormat.DOC;
+        } else if(FileSuffix.DOCX.getValue().equalsIgnoreCase(Utils.getExtension(wordPath))) {
+            loadFormat = LoadFormat.DOCX;
+        } else {
+            loadFormat = LoadFormat.DOC;
+        }
+        LoadOptions loadOptions = new LoadOptions();
+        loadOptions.setLoadFormat(loadFormat);
+        loadOptions.setEncoding(StandardCharsets.UTF_8);
         try {
-            new Document(wordPath).save(htmlPath, SaveFormat.HTML);
+            new Document(wordPath, loadOptions).save(htmlPath, SaveFormat.HTML);
         } catch (Exception e) {
             logger.error("word转html失败！", e);
         }
