@@ -7,5 +7,5 @@ package com.zjy.bll.dto;
 public interface HierarchyBase {
     Integer getId();
     Integer getParentId();
-    Integer getXuhao();
+    Integer getSeq();
 }

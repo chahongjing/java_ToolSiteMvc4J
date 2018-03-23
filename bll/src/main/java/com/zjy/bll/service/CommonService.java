@@ -15,5 +15,5 @@ public interface CommonService {
      * @param <T> 类型
      * @return
      */
-    <T extends HierarchyBase> List<T> shiTiJieGouPaiXu(List<T> list);
+    <T extends HierarchyBase> List<T> getHierarchyList(List<T> list);
 }
