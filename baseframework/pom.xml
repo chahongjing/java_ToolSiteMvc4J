@@ -131,4 +131,28 @@
             <artifactId>aspose-words</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                        <configuration>
+                            <groupId>com.aspose</groupId>
+                            <artifactId>aspose-words</artifactId>
+                            <version>${aspose.version}</version>
+                            <packaging>jar</packaging>
+                            <file>${basedir}/../lib/aspose-words-14.9.0-jdk16.jar</file>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
