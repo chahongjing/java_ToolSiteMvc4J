@@ -159,14 +159,7 @@
                             <version>${aspose.version}</version>
                             <packaging>jar</packaging>
                             <file>${basedir}/../lib/aspose-words-14.9.0-jdk16.jar</file>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>install-file</goal>
-                        </goals>
-                        <configuration>
+
                             <groupId>com.baidu</groupId>
                             <artifactId>ueditor</artifactId>
                             <version>${ueditor.version}</version>
