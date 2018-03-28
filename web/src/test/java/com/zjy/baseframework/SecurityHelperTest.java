@@ -18,7 +18,7 @@ public class SecurityHelperTest extends BaseTestCase {
                 "曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅" +
                 "曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅" +
                 "曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅曾军毅";
-        System.out.println(SecurityHelper.encode(abc));
+        System.out.println(SecurityHelper.base64Encode(abc));
     }
 
 }

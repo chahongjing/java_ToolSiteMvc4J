@@ -3,6 +3,7 @@ package com.zjy.baseframework;
 import org.apache.commons.codec.binary.Base64;
 
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -30,12 +31,12 @@ public class SecurityHelper {
         return "";
     }
 
-    public static String decode(String value) throws Exception {
-        return new String(Base64.decodeBase64(value.getBytes()));
+    public static String base64Decode(String value) throws Exception {
+        return new String(Base64.decodeBase64(value.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
     }
 
-    public static String encode(String value) throws Exception {
+    public static String base64Encode(String value) throws Exception {
         // new String(Base64.encodeBase64(value.getBytes()))
-        return Base64.encodeBase64String(value.getBytes());
+        return Base64.encodeBase64String(value.getBytes(StandardCharsets.UTF_8));
     }
 }

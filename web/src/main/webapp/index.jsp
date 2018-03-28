@@ -72,6 +72,7 @@ java<br>
 <a href="${ctx}/learn/nioLearn.do" target="_blank">nio学习</a>
 <a href="${ctx}/learn/shiroLearn.do" target="_blank">shiro学习</a>
 <a href="${ctx}/learn/reflectLearn.do" target="_blank">反射学习</a>
+<a href="${ctx}/learn/encryptLearn.do" target="_blank">加密学习</a>
 
 <hr>
 服务器<br>

@@ -1,10 +1,7 @@
 package com.zjy.web.controller;
 
 import com.baidu.ueditor.ActionEnter;
-import com.zjy.baseframework.BaseResult;
-import com.zjy.baseframework.CookieHelper;
-import com.zjy.baseframework.DownloadHelper;
-import com.zjy.baseframework.UeditorUploader;
+import com.zjy.baseframework.*;
 import com.zjy.bll.common.LoggingProxy;
 import com.zjy.bll.service.TestService;
 import com.zjy.bll.service.TestServiceImpl;
@@ -215,6 +212,35 @@ public class LearnController extends BaseController {
         return "nioLearn";
     }
 
+    @RequestMapping("/encryptLearn")
+    public String encryptLearn() {
+        return "encryptLearn";
+    }
+
+    @RequestMapping("/base64Encrypt")
+    @ResponseBody
+    public BaseResult base64Encrypt(String source) {
+        try {
+            String result = SecurityHelper.base64Encode(source);
+            return BaseResult.OK(result);
+        } catch (Exception e) {
+            logger.error("解密失败！", e);
+            return BaseResult.NO("解密失败！");
+        }
+    }
+
+    @RequestMapping("/base64Decrypt")
+    @ResponseBody
+    public BaseResult base64Decrypt(String source) {
+        try {
+            String result = SecurityHelper.base64Decode(source);
+            return BaseResult.OK(result);
+        } catch (Exception e) {
+            logger.error("加密失败！", e);
+            return BaseResult.NO("加密失败！");
+        }
+    }
+
     @RequestMapping("/testProxy")
     @ResponseBody
     public BaseResult testProxy() {
@@ -302,7 +328,7 @@ public class LearnController extends BaseController {
             request.setCharacterEncoding("utf-8");
             response.setHeader("Content-Type", "text/html");
 
-            String rootPath = request.getSession().getServletContext().getRealPath("/")+ "WEB-INF/";
+            String rootPath = request.getSession().getServletContext().getRealPath("/");
 
             ActionEnter actionEnter = new ActionEnter(request, rootPath);
             String exec = actionEnter.exec();
