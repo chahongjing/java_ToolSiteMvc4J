@@ -17,6 +17,7 @@
 <script>
     var opt = {
         imageUrl: "${ctx}/learn/ueditorPicUpload.do",
+        serverUrl: '${ctx}/learn/ueditorServer.do',
         imagePath: '',
         toolbar: ['image',
             ' undo redo | bold italic underline strikethrough | superscript subscript | forecolor backcolor | removeformat |',

@@ -1,5 +1,6 @@
 package com.zjy.web.controller;
 
+import com.baidu.ueditor.ActionEnter;
 import com.zjy.baseframework.BaseResult;
 import com.zjy.baseframework.CookieHelper;
 import com.zjy.baseframework.DownloadHelper;
@@ -293,6 +294,23 @@ public class LearnController extends BaseController {
     @RequestMapping("/ueditorLearn")
     public String ueditorLearn() {
         return "ueditorLearn";
+    }
+
+    @RequestMapping("ueditorServer")
+    public void ueditorServer(HttpServletRequest request, HttpServletResponse response, String action) {
+        try {
+            request.setCharacterEncoding("utf-8");
+            response.setHeader("Content-Type", "text/html");
+
+            String rootPath = request.getSession().getServletContext().getRealPath("/")+ "WEB-INF/";
+
+            ActionEnter actionEnter = new ActionEnter(request, rootPath);
+            String exec = actionEnter.exec();
+
+            response.getWriter().write(exec);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @RequestMapping("/ueditorPicUpload")
