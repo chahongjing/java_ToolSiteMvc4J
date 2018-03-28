@@ -91,6 +91,9 @@ vue<br>
 <a href="${ctx}/learn/vueDemo.do" target="_blank">vue demo</a>
 <a href="${ctx}/learn/vueLearn.do" target="_blank">vue learn</a>
 <hr>
+ueditor<br>
+<a href="${ctx}/learn/ueditorLearn.do" target="_blank">ueditor</a>
+<hr>
 js<br>
 <a href="${ctx}/learn/jsLearn.do" class="btn btn-success btn-app radius-4" target="_blank">
     <i class="icon-cog fa fa-lastfm bigger-230" style="display:block;"></i>

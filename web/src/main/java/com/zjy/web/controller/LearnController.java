@@ -3,6 +3,7 @@ package com.zjy.web.controller;
 import com.zjy.baseframework.BaseResult;
 import com.zjy.baseframework.CookieHelper;
 import com.zjy.baseframework.DownloadHelper;
+import com.zjy.baseframework.UeditorUploader;
 import com.zjy.bll.common.LoggingProxy;
 import com.zjy.bll.service.TestService;
 import com.zjy.bll.service.TestServiceImpl;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -286,6 +288,53 @@ public class LearnController extends BaseController {
     // region vue
 
     // endregion
+
+    //region ueditor
+    @RequestMapping("/ueditorLearn")
+    public String ueditorLearn() {
+        return "ueditorLearn";
+    }
+
+    @RequestMapping("/ueditorPicUpload")
+    public void ueditorPicUpload(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            request.setCharacterEncoding("utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        response.setCharacterEncoding("utf-8");
+        UeditorUploader up = new UeditorUploader(request);
+        up.setSavePath("upload");
+        String[] fileType = {".gif" , ".png" , ".jpg" , ".jpeg" , ".bmp"};
+        up.setAllowFiles(fileType);
+        up.setMaxSize(10000); //单位KB
+        try {
+            up.upload();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String callback = request.getParameter("callback");
+
+        String result = "{\"name\":\""+ up.getFileName() +"\", \"originalName\": \""+ up.getOriginalName() +"\", \"size\": "+ up.getSize() +", \"state\": \""+ up.getState() +"\", \"type\": \""+ up.getType() +"\", \"url\": \""+ up.getUrl() +"\"}";
+
+        result = result.replaceAll( "\\\\", "\\\\" );
+
+        if( callback == null ){
+            try {
+                response.getWriter().print( result );
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            try {
+                response.getWriter().print("<script>"+ callback +"(" + result + ")</script>");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    //endregion
 
     // region 其它
     @RequestMapping("/testajax")

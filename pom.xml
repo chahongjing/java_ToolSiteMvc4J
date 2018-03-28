@@ -61,6 +61,7 @@
         <dubbo.version>2.5.8</dubbo.version>
         <zookeeper.client.version>0.10</zookeeper.client.version>
         <aspose.version>14.9.0</aspose.version>
+        <ueditor.version>1.1.2</ueditor.version>
     </properties>
 
     <dependencyManagement>
@@ -368,6 +369,11 @@
                 <groupId>com.aspose</groupId>
                 <artifactId>aspose-words</artifactId>
                 <version>${aspose.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baidu</groupId>
+                <artifactId>ueditor</artifactId>
+                <version>${ueditor.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
