@@ -358,6 +358,23 @@ window.Utility.Controls = window.Utility.Controls || {};
     String.prototype.trimRight = String.prototype.trimRight || function () {
         return this.replace(/\s*$/g, "");
     }
+	
+	ns.isNumber = function (value, min, max, prec) {
+		if(isNaN(value)) {
+			return {status: false, code: 1, msg: '请输入数字！'}
+		}
+		value = parseFloat(value);
+		if((prec || prec === 0) && value.getPrecision() > prec) {
+			return {status: false, code: 2, msg: '应保留' + prec + '位小数！'};
+		}
+		if(!isNaN(min) && value < min){
+			return {status: false, code: 3, msg: '输入的数字应大于' + min + '！'};
+		}
+		if(!isNaN(max) && value > max){
+			return {status: false, code: 4, msg: '输入的数字应小于' + max + '！'};
+		}
+		return {status: true, code: 0, msg: ''};
+	}
 
     // 函数名称： htmlEncode
     // 函数功能： html编码
