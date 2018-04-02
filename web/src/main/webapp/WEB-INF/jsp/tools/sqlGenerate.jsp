@@ -140,7 +140,13 @@
                 firstObj: '',
                 secondObj: '',
                 remark: '',
-                result: ''
+                result: '',
+				authorReg: /\{author\}/g,
+				datetimeReg: /\{datetime\}/g,
+				firstNameReg: /\{firstName\}/g,
+				secondNameReg: /\{secondName\}/g,
+				remarkReg: /\{remark\}/g,
+				functionNameReg: /\{functionName\}/g
             };
 
             $scope.init = function() {
@@ -180,9 +186,9 @@
                 }
 
                 result = result || '';
-                result = result.replace(/\{author\}/g, $scope.model.author).replace(/\{datatime\}/g, new Date().format('yyyy-MM-dd HH:mm:ss'))
-                        .replace(/\{firstName\}/g, $scope.model.firstObj).replace(/\{secondName\}/g, $scope.model.secondObj)
-                        .replace(/\{remark\}/g, $scope.model.remark || '请填写备注说明');
+                result = result.replace(authorReg, $scope.model.author).replace(datetimeReg, new Date().format('yyyy-MM-dd HH:mm:ss'))
+                        .replace(firstNameReg, $scope.model.firstObj).replace(secondNameReg, $scope.model.secondObj)
+                        .replace(remarkReg, $scope.model.remark || '请填写备注说明');
                 $scope.model.result = result.trim();
             }
 
@@ -264,7 +270,7 @@
                 var result;
                 if($scope.model.operatorType == 'add') {
                     result = $templateCache.get('oracleAddTable.html');
-                    result = result.replace(/\{functionName\}/g, '创建表 ' + ($scope.model.remark || '请填写备注说明') + '：' + $scope.model.firstObj);
+                    result = result.replace(functionNameReg, getRemark('创建表'));
                 } else if($scope.model.operatorType == 'alter') {
                     throw new Error('unimplement error！');
                 } else if($scope.model.operatorType == 'delete') {
@@ -279,7 +285,7 @@
                 var result;
                 if($scope.model.operatorType == 'add') {
                     result = $templateCache.get('sqlserverAddTable.html');
-                    result = result.replace(/\{functionName\}/g, '创建表 ' + ($scope.model.remark || '请填写备注说明') + '：' + $scope.model.firstObj);
+                    result = result.replace(functionNameReg, getRemark('创建表'));
                 } else if($scope.model.operatorType == 'alter') {
                     throw new Error('unimplement error！');
                 } else if($scope.model.operatorType == 'delete') {
@@ -304,10 +310,10 @@
                 var result;
                 if($scope.model.operatorType == 'add') {
                     result = $templateCache.get('oracleAddField.html');
-                    result = result.replace(/\{functionName\}/g, '添加字段 ' + ($scope.model.remark || '请填写备注说明') + '：' + $scope.model.firstObj + '.' + $scope.model.secondObj);
+                    result = result.replace(functionNameReg, getRemark('添加字段'));
                 } else if($scope.model.operatorType == 'alter') {
                     result = $templateCache.get('oracleAlterField.html');
-                    result = result.replace(/\{functionName\}/g, '修改字段 ' + ($scope.model.remark || '请填写备注说明') + '：' + $scope.model.firstObj + '.' + $scope.model.secondObj);
+                    result = result.replace(functionNameReg, getRemark('修改字段'));
                 } else if($scope.model.operatorType == 'delete') {
                     throw new Error('unimplement error！');
                 } else {
@@ -320,10 +326,10 @@
                 var result;
                 if($scope.model.operatorType == 'add') {
                     result = $templateCache.get('sqlserverAddField.html');
-                    result = result.replace(/\{functionName\}/g, '添加字段 ' + ($scope.model.remark || '请填写备注说明') + '：' + $scope.model.firstObj + '.' + $scope.model.secondObj);
+                    result = result.replace(functionNameReg, getRemark('添加字段'));
                 } else if($scope.model.operatorType == 'alter') {
                     result = $templateCache.get('sqlserverAlterField.html');
-                    result = result.replace(/\{functionName\}/g, "修改字段 " + ($scope.model.remark || '请填写备注说明') + '：' + $scope.model.firstObj + '.' + $scope.model.secondObj);
+                    result = result.replace(functionNameReg, getRemark('修改字段'));
                 } else if($scope.model.operatorType == 'delete') {
                     throw new Error('unimplement error！');
                 } else {
@@ -346,8 +352,8 @@
                 var result;
                 if($scope.model.operatorType == 'add' || $scope.model.operatorType == 'alter') {
                     result = $templateCache.get('oracleAddProc.html');
-                    result = result.replace(/\{functionName\}/g, '创建/修改存储过程 ' + ($scope.model.remark || '请填写备注说明') + '：' + $scope.model.firstObj).
-                    replace(/\{secondName\}/g, $scope.model.secondObj);
+                    result = result.replace(functionNameReg, getRemark('创建/修改存储过程')).
+                    replace(secondNameReg, $scope.model.secondObj);
                 } else if($scope.model.operatorType == 'delete') {
                     throw new Error('unimplement error！');
                 } else {
@@ -360,7 +366,7 @@
                 var result;
                 if($scope.model.operatorType == 'add') {
                     result = $templateCache.get('sqlserverAddProc.html');
-                    result = result.replace(/\{functionName\}/g, '创建存储过程 ' + ($scope.model.remark || '请填写备注说明') + '：' + $scope.model.firstObj);
+                    result = result.replace(functionNameReg, getRemark('创建存储过程'));
                 } else if($scope.model.operatorType == 'alter') {
                     throw new Error('unimplement error！');
                 } else if($scope.model.operatorType == 'delete') {
@@ -389,7 +395,7 @@
                 var result;
                 if($scope.model.operatorType == 'add') {
                     result = $templateCache.get('sqlserverAddFunction.html');
-                    result = result.replace(/\{functionName\}/g, '创建函数 ' + ($scope.model.remark || '请填写备注说明') + '：' + $scope.model.firstObj);
+                    result = result.replace(functionNameReg, getRemark('创建函数'));
                 } else if($scope.model.operatorType == 'alter') {
                 } else if($scope.model.operatorType == 'delete') {
                     throw new Error('unimplement error！');
@@ -417,7 +423,7 @@
                 var result;
                 if($scope.model.operatorType == 'add') {
                     result = $templateCache.get('sqlserverAddView.html');
-                    result = result.replace(/\{functionName\}/g, '创建视图 ' + ($scope.model.remark || '请填写备注说明') + '：' + $scope.model.firstObj);
+                    result = result.replace(functionNameReg, getRemark('创建视图'));
                 } else if($scope.model.operatorType == 'alter') {
                 } else if($scope.model.operatorType == 'delete') {
                     throw new Error('unimplement error！');
@@ -441,7 +447,7 @@
                 var result;
                 if($scope.model.operatorType == 'add') {
                     result = $templateCache.get('oracleAddTrigger.html');
-                    result = result.replace(/\{functionName\}/g, '创建触发器 ' + ($scope.model.remark || '请填写备注说明') + '：' + $scope.model.firstObj);
+                    result = result.replace(functionNameReg, getRemark('创建触发器'));
                 } else if($scope.model.operatorType == 'alter') {
                 } else if($scope.model.operatorType == 'delete') {
                     throw new Error('unimplement error！');
@@ -469,7 +475,7 @@
                 var result;
                 if($scope.model.operatorType == 'add') {
                     result = $templateCache.get('oracleAddSeq.html');
-                    result = result.replace(/\{functionName\}/g, '创建序列 ' + ($scope.model.remark || '请填写备注说明') + '：' + $scope.model.firstObj);
+                    result = result.replace(functionNameReg, getRemark('创建序列'));
                 } else if($scope.model.operatorType == 'alter') {
                     throw new Error('unimplement error！');
                 } else if($scope.model.operatorType == 'delete') {
@@ -483,13 +489,17 @@
             function getSqlserverSeqSql() {
                 throw new Error('unimplement error！');
             }
+			
+			function getRemark(remark) {
+				return remark + ' ' + ($scope.model.remark || '请填写备注说明') + '：' + $scope.model.firstObj;
+			}
         }
     ]);
 </script>
 <%@ include file="/WEB-INF/jsp/common/endScript.jsp" %>
 
 <script type="text/ng-template" id="oracleAddTable.html">
--- {author} {datatime} {functionName}
+-- {author} {datetime} {functionName}
 DECLARE
   num NUMBER;
   tableName VARCHAR2(100);
@@ -510,7 +520,7 @@ COMMENT ON COLUMN {firstName}.id is '主键';
 /
 
 
--- {author} {datatime} {functionName}
+-- {author} {datetime} {functionName}
 DECLARE
   num NUMBER;
   tableName VARCHAR2(100);
@@ -532,7 +542,7 @@ COMMENT ON COLUMN {firstName}.id is '主键';
 /
 </script>
 <script type="text/ng-template" id="sqlserverAddTable.html">
--- {author} {datatime} {functionName}
+-- {author} {datetime} {functionName}
 IF(OBJECT_ID('{firstName}', 'U')IS NULL)
 BEGIN
 CREATE TABLE [DBO].[{firstName}]
@@ -554,71 +564,71 @@ END
 GO
 </script>
 <script type="text/ng-template" id="oracleAddProc.html">
-    -- {author} {datatime} {functionName}
-    CREATE OR REPLACE PROCEDURE {secondName}
-    (
-    ret OUT SYS_REFCURSOR,
+-- {author} {datetime} {functionName}
+CREATE OR REPLACE PROCEDURE {secondName}
+(
+ret OUT SYS_REFCURSOR,
 
-    biaoMing in varchar2,
-    lieMing in varchar2,
-    zhuTi in varchar2,
-    XuHao out int
-    )AS
-    TYPE ref_cursor_type IS REF CURSOR;
-    myrow SYS_USER%rowType;
-    --cursor ret is select * from SYS_USER;
-    mc ref_cursor_type;
-    msql varchar2(200) := 'select * from SYS_USER where rownum < 2';
+biaoMing in varchar2,
+lieMing in varchar2,
+zhuTi in varchar2,
+XuHao out int
+)AS
+TYPE ref_cursor_type IS REF CURSOR;
+myrow SYS_USER%rowType;
+--cursor ret is select * from SYS_USER;
+mc ref_cursor_type;
+msql varchar2(200) := 'select * from SYS_USER where rownum < 2';
 
-    newXuHao int;
-    BEGIN
-    OPEN ret FOR SELECT * FROM sys_user WHERE ROWNUM < 5;
-    FETCH ret INTO myrow;
-    WHILE(ret%found)
-    LOOP
-    DBMS_OUTPUT.PUT_LINE(myrow.username);
-    FETCH ret INTO myrow ;
-    END LOOP;
-    CLOSE ret;
-    DBMS_OUTPUT.PUT_LINE('--------');
-    OPEN mc FOR msql;
-    FETCH mc INTO myrow;
-    WHILE(mc%found)
-    LOOP
-    DBMS_OUTPUT.PUT_LINE(myrow.username);
-    FETCH mc INTO myrow ;
-    END LOOP;
-    CLOSE mc;
-    EXECUTE IMMEDIATE msql
-    INTO myrow;
-    DBMS_OUTPUT.PUT_LINE('--------');
-    DBMS_OUTPUT.PUT_LINE(myrow.username);
+newXuHao int;
+BEGIN
+OPEN ret FOR SELECT * FROM sys_user WHERE ROWNUM < 5;
+FETCH ret INTO myrow;
+WHILE(ret%found)
+LOOP
+DBMS_OUTPUT.PUT_LINE(myrow.username);
+FETCH ret INTO myrow ;
+END LOOP;
+CLOSE ret;
+DBMS_OUTPUT.PUT_LINE('--------');
+OPEN mc FOR msql;
+FETCH mc INTO myrow;
+WHILE(mc%found)
+LOOP
+DBMS_OUTPUT.PUT_LINE(myrow.username);
+FETCH mc INTO myrow ;
+END LOOP;
+CLOSE mc;
+EXECUTE IMMEDIATE msql
+INTO myrow;
+DBMS_OUTPUT.PUT_LINE('--------');
+DBMS_OUTPUT.PUT_LINE(myrow.username);
 
 
-    SELECT XuHao INTO newXuHao FROM Xt_XuHao WHERE BiaoMing = biaoMing AND LieMing = lieMing AND XuHaoZhuTi = zhuTi;
-    DBMS_OUTPUT.PUT_LINE('----newXuHao----');
-    DBMS_OUTPUT.PUT_LINE(newXuHao);
-    IF(newXuHao IS NULL)THEN
-    newXuHao := 1;
-    INSERT INTO Xt_XuHao(BiaoMing, LieMing, XuHaoZhuTi, XuHao) VALUES (biaoMing, lieMing, zhuTi, newXuHao);
-    ELSE
-    newXuHao := newXuHao + 1;
-    UPDATE Xt_XuHao SET XuHao = newXuHao WHERE BiaoMing = biaoMing AND LieMing = lieMing AND XuHaoZhuTi = zhuTi;
-    END IF;
-    XuHao := newXuHao;
-    DBMS_OUTPUT.PUT_LINE('----newXuHao----');
-    DBMS_OUTPUT.PUT_LINE(newXuHao);
-    END;
-    /
-    SET SERVEROUTPUT ON;
-    DECLARE
-    ret SYS_REFCURSOR;
-    BEGIN
-    {secondName}(ret);
-    END;
+SELECT XuHao INTO newXuHao FROM Xt_XuHao WHERE BiaoMing = biaoMing AND LieMing = lieMing AND XuHaoZhuTi = zhuTi;
+DBMS_OUTPUT.PUT_LINE('----newXuHao----');
+DBMS_OUTPUT.PUT_LINE(newXuHao);
+IF(newXuHao IS NULL)THEN
+newXuHao := 1;
+INSERT INTO Xt_XuHao(BiaoMing, LieMing, XuHaoZhuTi, XuHao) VALUES (biaoMing, lieMing, zhuTi, newXuHao);
+ELSE
+newXuHao := newXuHao + 1;
+UPDATE Xt_XuHao SET XuHao = newXuHao WHERE BiaoMing = biaoMing AND LieMing = lieMing AND XuHaoZhuTi = zhuTi;
+END IF;
+XuHao := newXuHao;
+DBMS_OUTPUT.PUT_LINE('----newXuHao----');
+DBMS_OUTPUT.PUT_LINE(newXuHao);
+END;
+/
+SET SERVEROUTPUT ON;
+DECLARE
+ret SYS_REFCURSOR;
+BEGIN
+{secondName}(ret);
+END;
 </script>
 <script type="text/ng-template" id="sqlserverAddProc.html">
--- {author} {datatime} {functionName}
+-- {author} {datetime} {functionName}
 IF(OBJECT_ID('{firstName}', 'P')IS NOT NULL)
 BEGIN
   DROP PROC [DBO].[{firstName}];
@@ -633,7 +643,7 @@ END
 GO
 </script>
 <script type="text/ng-template" id="sqlserverAddFunction.html">
--- {author} {datatime} {functionName}
+-- {author} {datetime} {functionName}
 IF(OBJECT_ID('{firstName}')IS NOT NULL)
 BEGIN
   DROP FUNCTION [DBO].[{firstName}];
@@ -650,7 +660,7 @@ END
 GO
 </script>
 <script type="text/ng-template" id="sqlserverAddView.html">
--- {author} {datatime} {functionName}
+-- {author} {datetime} {functionName}
 IF(OBJECT_ID('{firstName}', 'V')IS NOT NULL)
 BEGIN
   DROP VIEW [DBO].[{firstName}];
@@ -663,7 +673,7 @@ AS
 GO
 </script>
 <script type="text/ng-template" id="oracleAddField.html">
--- {author} {datatime} {functionName}
+-- {author} {datetime} {functionName}
 DECLARE
   num NUMBER;
   tableName VARCHAR2(100);
@@ -682,7 +692,7 @@ END;
 COMMENT ON COLUMN {firstName}.{secondName} is '{remark}';
 
 
--- {author} {datatime} {functionName}
+-- {author} {datetime} {functionName}
 DECLARE
   num NUMBER;
   tableName VARCHAR2(100);
@@ -703,14 +713,14 @@ COMMENT ON COLUMN {firstName}.{secondName} is '{remark}';
 /
 </script>
 <script type="text/ng-template" id="oracleAlterField.html">
-    -- {author} {datatime} {functionName}
+-- {author} {datetime} {functionName}
 DECLARE
   num NUMBER;
   tableName VARCHAR2(100);
   fieldName VARCHAR2(100);
 BEGIN
-  tableName := 'aaaaa';
-  fieldName := 'ccccc';
+  tableName := '{firstName}';
+  fieldName := '{secondName}';
   SELECT COUNT(1) INTO num FROM COLS
    WHERE UPPER(TABLE_NAME) = UPPER(tableName)
     AND UPPER(COLUMN_NAME) = UPPER(fieldName);
@@ -724,7 +734,7 @@ END;
 <script type="text/ng-template" id="oracleDropField.html">
 </script>
 <script type="text/ng-template" id="sqlserverAddField.html">
--- {author} {datatime} {functionName}
+-- {author} {datetime} {functionName}
 IF(COL_LENGTH('{firstName}', '{secondName}') IS NULL)
 BEGIN
   ALTER TABLE [DBO].[{firstName}]
@@ -735,7 +745,7 @@ END
 GO
 </script>
 <script type="text/ng-template" id="sqlserverAlterField.html">
--- {author} {datatime} {functionName}
+-- {author} {datetime} {functionName}
 IF(COL_LENGTH('{firstName}', '{secondName}') IS NOT NULL)
 BEGIN
   ALTER TABLE [DBO].[{firstName}]
@@ -743,7 +753,7 @@ BEGIN
   EXEC sys.sp_updateextendedproperty @name = N'MS_Description', @value = @Reference, @level0type = N'SCHEMA', @level0name = N'dbo',
   @level1type = N'TABLE', @level1name = '{firstName}', @level2type = N'COLUMN', @level2name = '{secondName}'
 
--- {author} {datatime} {functionName}
+-- {author} {datetime} {functionName}
 ALTER TABLE [DBO].[{firstName}]
 DROP COLUMN [{secondName}];
 END
@@ -752,7 +762,7 @@ GO
 <script type="text/ng-template" id="sqlserverDropField.html">
 </script>
 <script type="text/ng-template" id="oracleAddSeq.html">
--- {author} {datatime} {functionName}
+-- {author} {datetime} {functionName}
 DECLARE
   num NUMBER;
   seqName VARCHAR2(100);
@@ -765,16 +775,19 @@ BEGIN
     NOMAXVALUE
     START WITH 1
     INCREMENT BY 1
-    NOCYCLE   -- 一直累加，不循环
-    --NOCACHE -- 不缓存
-    CACHE 10  -- 缓存10条
+	-- 一直累加，不循环
+    NOCYCLE
+	-- 不缓存
+    -- NOCACHE
+	-- 缓存10条
+    CACHE 10
     ';
   END IF;
 END;
 /
 </script>
 <script type="text/ng-template" id="oracleAddTrigger.html">
--- {author} {datatime} {functionName}
+-- {author} {datetime} {functionName}
 CREATE OR REPLACE TRIGGER {firstName}
 BEFORE INSERT ON {secondName}
 FOR EACH ROW
