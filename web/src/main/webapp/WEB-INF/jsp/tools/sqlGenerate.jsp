@@ -186,9 +186,9 @@
                 }
 
                 result = result || '';
-                result = result.replace(authorReg, $scope.model.author).replace(datetimeReg, new Date().format('yyyy-MM-dd HH:mm:ss'))
-                        .replace(firstNameReg, $scope.model.firstObj).replace(secondNameReg, $scope.model.secondObj)
-                        .replace(remarkReg, $scope.model.remark || '请填写备注说明');
+                result = result.replace($scope.model.authorReg, $scope.model.author).replace($scope.model.datetimeReg, new Date().format('yyyy-MM-dd HH:mm:ss'))
+                        .replace($scope.model.firstNameReg, $scope.model.firstObj).replace($scope.model.secondNameReg, $scope.model.secondObj)
+                        .replace($scope.model.remarkReg, $scope.model.remark || '请填写备注说明');
                 $scope.model.result = result.trim();
             }
 
@@ -270,7 +270,7 @@
                 var result;
                 if($scope.model.operatorType == 'add') {
                     result = $templateCache.get('oracleAddTable.html');
-                    result = result.replace(functionNameReg, getRemark('创建表'));
+                    result = result.replace($scope.model.functionNameReg, getRemark('创建表'));
                 } else if($scope.model.operatorType == 'alter') {
                     throw new Error('unimplement error！');
                 } else if($scope.model.operatorType == 'delete') {
@@ -285,7 +285,7 @@
                 var result;
                 if($scope.model.operatorType == 'add') {
                     result = $templateCache.get('sqlserverAddTable.html');
-                    result = result.replace(functionNameReg, getRemark('创建表'));
+                    result = result.replace($scope.model.functionNameReg, getRemark('创建表'));
                 } else if($scope.model.operatorType == 'alter') {
                     throw new Error('unimplement error！');
                 } else if($scope.model.operatorType == 'delete') {
@@ -310,10 +310,10 @@
                 var result;
                 if($scope.model.operatorType == 'add') {
                     result = $templateCache.get('oracleAddField.html');
-                    result = result.replace(functionNameReg, getRemark('添加字段'));
+                    result = result.replace($scope.model.functionNameReg, getRemark('添加字段'));
                 } else if($scope.model.operatorType == 'alter') {
                     result = $templateCache.get('oracleAlterField.html');
-                    result = result.replace(functionNameReg, getRemark('修改字段'));
+                    result = result.replace($scope.model.functionNameReg, getRemark('修改字段'));
                 } else if($scope.model.operatorType == 'delete') {
                     throw new Error('unimplement error！');
                 } else {
@@ -326,10 +326,10 @@
                 var result;
                 if($scope.model.operatorType == 'add') {
                     result = $templateCache.get('sqlserverAddField.html');
-                    result = result.replace(functionNameReg, getRemark('添加字段'));
+                    result = result.replace($scope.model.functionNameReg, getRemark('添加字段'));
                 } else if($scope.model.operatorType == 'alter') {
                     result = $templateCache.get('sqlserverAlterField.html');
-                    result = result.replace(functionNameReg, getRemark('修改字段'));
+                    result = result.replace($scope.model.functionNameReg, getRemark('修改字段'));
                 } else if($scope.model.operatorType == 'delete') {
                     throw new Error('unimplement error！');
                 } else {
@@ -352,8 +352,8 @@
                 var result;
                 if($scope.model.operatorType == 'add' || $scope.model.operatorType == 'alter') {
                     result = $templateCache.get('oracleAddProc.html');
-                    result = result.replace(functionNameReg, getRemark('创建/修改存储过程')).
-                    replace(secondNameReg, $scope.model.secondObj);
+                    result = result.replace($scope.model.functionNameReg, getRemark('创建/修改存储过程')).
+                    replace($scope.model.secondNameReg, $scope.model.secondObj);
                 } else if($scope.model.operatorType == 'delete') {
                     throw new Error('unimplement error！');
                 } else {
@@ -366,7 +366,7 @@
                 var result;
                 if($scope.model.operatorType == 'add') {
                     result = $templateCache.get('sqlserverAddProc.html');
-                    result = result.replace(functionNameReg, getRemark('创建存储过程'));
+                    result = result.replace($scope.model.functionNameReg, getRemark('创建存储过程'));
                 } else if($scope.model.operatorType == 'alter') {
                     throw new Error('unimplement error！');
                 } else if($scope.model.operatorType == 'delete') {
@@ -395,7 +395,7 @@
                 var result;
                 if($scope.model.operatorType == 'add') {
                     result = $templateCache.get('sqlserverAddFunction.html');
-                    result = result.replace(functionNameReg, getRemark('创建函数'));
+                    result = result.replace($scope.model.functionNameReg, getRemark('创建函数'));
                 } else if($scope.model.operatorType == 'alter') {
                 } else if($scope.model.operatorType == 'delete') {
                     throw new Error('unimplement error！');
@@ -423,7 +423,7 @@
                 var result;
                 if($scope.model.operatorType == 'add') {
                     result = $templateCache.get('sqlserverAddView.html');
-                    result = result.replace(functionNameReg, getRemark('创建视图'));
+                    result = result.replace($scope.model.functionNameReg, getRemark('创建视图'));
                 } else if($scope.model.operatorType == 'alter') {
                 } else if($scope.model.operatorType == 'delete') {
                     throw new Error('unimplement error！');
@@ -447,7 +447,7 @@
                 var result;
                 if($scope.model.operatorType == 'add') {
                     result = $templateCache.get('oracleAddTrigger.html');
-                    result = result.replace(functionNameReg, getRemark('创建触发器'));
+                    result = result.replace($scope.model.functionNameReg, getRemark('创建触发器'));
                 } else if($scope.model.operatorType == 'alter') {
                 } else if($scope.model.operatorType == 'delete') {
                     throw new Error('unimplement error！');
@@ -475,7 +475,7 @@
                 var result;
                 if($scope.model.operatorType == 'add') {
                     result = $templateCache.get('oracleAddSeq.html');
-                    result = result.replace(functionNameReg, getRemark('创建序列'));
+                    result = result.replace($scope.model.functionNameReg, getRemark('创建序列'));
                 } else if($scope.model.operatorType == 'alter') {
                     throw new Error('unimplement error！');
                 } else if($scope.model.operatorType == 'delete') {
@@ -491,7 +491,7 @@
             }
 			
 			function getRemark(remark) {
-				return remark + ' ' + ($scope.model.remark || '请填写备注说明') + '：' + $scope.model.firstObj;
+				return remark + ' ' + ($scope.model.remark || '请填写备注说明') + '：' + $scope.model.firstObj + ($scope.model.secondObj ? ('.' + $scope.model.secondObj) : '');
 			}
         }
     ]);
