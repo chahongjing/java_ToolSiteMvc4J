@@ -315,7 +315,8 @@
                     result = $templateCache.get('oracleAlterField.html');
                     result = result.replace($scope.model.functionNameReg, getRemark('修改字段'));
                 } else if($scope.model.operatorType == 'delete') {
-                    throw new Error('unimplement error！');
+                    result = $templateCache.get('oracleDropField.html');
+                    result = result.replace($scope.model.functionNameReg, getRemark('删除字段'));
                 } else {
                     throw new Error('unimplement error！');
                 }
@@ -732,6 +733,22 @@ END;
 /
 </script>
 <script type="text/ng-template" id="oracleDropField.html">
+-- {author} {datetime} {functionName}
+DECLARE
+  num NUMBER;
+  tableName VARCHAR2(100);
+  fieldName VARCHAR2(100);
+BEGIN
+  tableName := '{firstName}';
+  fieldName := '{secondName}';
+  SELECT COUNT(1) INTO num FROM COLS
+   WHERE UPPER(TABLE_NAME) = UPPER(tableName)
+    AND UPPER(COLUMN_NAME) = UPPER(fieldName);
+  IF num > 0 THEN
+    EXECUTE IMMEDIATE 'ALTER TABLE ' || tableName || ' DROP(' || fieldName || ')';
+  END IF;
+END;
+/
 </script>
 <script type="text/ng-template" id="sqlserverAddField.html">
 -- {author} {datetime} {functionName}
