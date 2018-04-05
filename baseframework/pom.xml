@@ -130,10 +130,10 @@
             <groupId>com.aspose</groupId>
             <artifactId>aspose-words</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.baidu</groupId>
-            <artifactId>ueditor</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.baidu</groupId>-->
+            <!--<artifactId>ueditor</artifactId>-->
+        <!--</dependency>-->
 
         <!-- 文件上传 -->
         <dependency>
@@ -149,6 +149,7 @@
                 <artifactId>maven-install-plugin</artifactId>
                 <executions>
                     <execution>
+                        <id>1</id>
                         <phase>initialize</phase>
                         <goals>
                             <goal>install-file</goal>
@@ -159,14 +160,22 @@
                             <version>${aspose.version}</version>
                             <packaging>jar</packaging>
                             <file>${basedir}/../lib/aspose-words-14.9.0-jdk16.jar</file>
-
-                            <groupId>com.baidu</groupId>
-                            <artifactId>ueditor</artifactId>
-                            <version>${ueditor.version}</version>
-                            <packaging>jar</packaging>
-                            <file>${basedir}/../lib/ueditor-1.1.2.jar</file>
                         </configuration>
                     </execution>
+                    <!--<execution>-->
+                        <!--<id>2</id>-->
+                        <!--<phase>initialize</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>install-file</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<groupId>com.baidu</groupId>-->
+                            <!--<artifactId>ueditor</artifactId>-->
+                            <!--<version>${ueditor.version}</version>-->
+                            <!--<packaging>jar</packaging>-->
+                            <!--<file>${basedir}/../lib/ueditor-1.1.2.jar</file>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
                 </executions>
             </plugin>
         </plugins>

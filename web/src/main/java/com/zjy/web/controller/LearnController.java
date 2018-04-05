@@ -1,6 +1,5 @@
 package com.zjy.web.controller;
 
-import com.baidu.ueditor.ActionEnter;
 import com.zjy.baseframework.*;
 import com.zjy.bll.common.LoggingProxy;
 import com.zjy.bll.service.TestService;
@@ -330,10 +329,10 @@ public class LearnController extends BaseController {
 
             String rootPath = request.getSession().getServletContext().getRealPath("/");
 
-            ActionEnter actionEnter = new ActionEnter(request, rootPath);
-            String exec = actionEnter.exec();
-
-            response.getWriter().write(exec);
+//            ActionEnter actionEnter = new ActionEnter(request, rootPath);
+//            String exec = actionEnter.exec();
+//
+//            response.getWriter().write(exec);
         } catch (Exception e) {
             e.printStackTrace();
         }
