@@ -77,6 +77,10 @@
                 console.log(data);
             }
         });
+		// angular $http请求发送FormData 数据要使用
+		// processData: false,
+		// headers: {'Content-Type': undefined},
+		// transformRequest: angular.identity
     }
 </script>
 <%@ include file="/WEB-INF/jsp/common/endScript.jsp" %>
