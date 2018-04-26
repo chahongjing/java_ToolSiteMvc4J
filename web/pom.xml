@@ -180,7 +180,7 @@
                 </excludes>
             </resource>
             <resource>
-                <directory>src/main/resources/profiles/${profiles.active}</directory>
+                <directory>profiles/${profiles.active}</directory>
             </resource>
         </resources>
         <plugins>

@@ -78,9 +78,19 @@
             }
         });
 		// angular $http请求发送FormData 数据要使用
-		// processData: false,
-		// headers: {'Content-Type': undefined},
-		// transformRequest: angular.identity
+//        var $form = $('#loginForm');
+//        var form = $form[0];
+//        var formData = new FormData(form);
+//        $http({
+//            url: form.action,
+//            method: 'post',
+//            data: formData,
+//            headers: {'Content-Type': undefined},
+//            processData: false,
+//            transformRequest: angular.identity
+//        }).success(function(resp) {
+//            window.location = form['redirectUrl'].value;
+//        });
     }
 </script>
 <%@ include file="/WEB-INF/jsp/common/endScript.jsp" %>
