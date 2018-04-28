@@ -10,13 +10,15 @@ import java.io.*;
 
 public class XmlHelper {
 
-    public static void toXml(Object obj, String path) {
+    public static <T> void toXml(T obj, String path) {
         // @XmlRootElement(name = "User")
         JAXBContext context = null;
         try {
             context = JAXBContext.newInstance(obj.getClass());
             FileWriter sw = new FileWriter(path);
             Marshaller marshaller = context.createMarshaller();
+//            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+//            marshaller.marshal(obj, System.out);
             marshaller.marshal(obj, sw);
         } catch (IOException e) {
             e.printStackTrace();
@@ -24,14 +26,16 @@ public class XmlHelper {
             e.printStackTrace();
         }
     }
-    public static Object toObject(Class<?> clazz, String path) {
+    public static <T> T toObject(Class<T> clazz, String path) {
         JAXBContext context = null;
         try {
             context = JAXBContext.newInstance(clazz);
             Unmarshaller unmarshaller = context.createUnmarshaller();
-            Object obj = unmarshaller.unmarshal(new File(path));
+            FileInputStream fis = new FileInputStream(path);
+            InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
+            T obj = (T)unmarshaller.unmarshal(isr);
             return obj;
-        } catch (JAXBException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

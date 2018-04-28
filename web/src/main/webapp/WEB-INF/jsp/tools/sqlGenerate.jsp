@@ -804,11 +804,32 @@ END;
 /
 </script>
 <script type="text/ng-template" id="oracleAddTrigger.html">
--- {author} {datetime} {functionName}
-CREATE OR REPLACE TRIGGER {firstName}
-BEFORE INSERT ON {secondName}
-FOR EACH ROW
-BEGIN
-  SELECT 序列名称.NEXTVAL INTO:NEW.字段名 FROM SYS.DUAL;
-END;
+    -- {author} {datetime} {functionName}
+    CREATE OR REPLACE TRIGGER {firstName}
+    BEFORE INSERT ON {secondName}
+    FOR EACH ROW
+    BEGIN
+    SELECT 序列名称.NEXTVAL INTO:NEW.字段名 FROM SYS.DUAL;
+    END;
+</script>
+<script type="text/ng-template" id="oracleJudge.html">
+    -- {author} {datetime} {functionName}
+    SET SERVEROUTPUT ON;
+    DECLARE
+      num NUMBER;
+      tableName VARCHAR2(100);
+      fieldName VARCHAR2(100);
+    BEGIN
+      SELECT neirong.zidianneirongid INTO num
+        FROM xt_zidianmulu mulu
+       INNER JOIN xt_zidianneirong neirong ON mulu.zidianmuluid = neirong.zidianmuluid
+       WHERE mulu.biaoming = 'tk_shijuan'
+         AND mulu.lieming = 'shijuanzhuangtai'
+    AND neirong.bianma = 'shijuan_caogao';
+      IF num > 0 THEN
+        DELETE FROM tk_shijuan WHERE shijuanzhuangtai = num;
+        DELETE FROM tk_shijuanshiti_temp;
+        DELETE FROM tk_shijuanshiti shijuanshiti WHERE NOT EXISTS (SELECT * FROM tk_shijuan shijuan WHERE shijuan.shijuanid = shijuanshiti.shijuanid);
+      END IF;
+    END;
 </script>
