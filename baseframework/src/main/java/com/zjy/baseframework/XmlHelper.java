@@ -4,6 +4,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.annotation.XmlAttribute;
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.*;
@@ -11,7 +12,14 @@ import java.io.*;
 public class XmlHelper {
 
     public static <T> void toXml(T obj, String path) {
-        // @XmlRootElement(name = "User")
+//        @XmlType(propOrder = {"id", "name", "activities", "transitions"})
+//        @XmlAccessorType(XmlAccessType.FIELD)
+//        @XmlRootElement(name = "wp")
+
+//        @XmlElement(name = "choiceInteraction")
+//        @XmlAttribute(name = "Name")
+//        @XmlElementWrapper(name = "Activities") // list节点外层包含节点
+//        @XmlValue
         JAXBContext context = null;
         try {
             context = JAXBContext.newInstance(obj.getClass());
