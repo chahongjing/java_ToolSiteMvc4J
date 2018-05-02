@@ -17,7 +17,7 @@
 
     <!-- ②：对模型视图名称的解析，即在模型视图名称添加前后缀 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
-          p:prefix="/WEB-INF/jsp/" p:suffix=".jsp"/>
+          p:prefix="${web.view.prefix}" p:suffix="${web.view.suffix}"/>
 
     <!-- 静态文件映射 -->
     <mvc:default-servlet-handler/>
