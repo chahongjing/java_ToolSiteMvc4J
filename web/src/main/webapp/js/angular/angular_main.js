@@ -1,6 +1,7 @@
 /**
  * Created by chahongjing on 2017/5/11.
  */
+'use strict'
 var app = angular.module('myApp', [])
     .config(['$httpProvider', function ($httpProvider) {
             // 默认post处理为form表单提交

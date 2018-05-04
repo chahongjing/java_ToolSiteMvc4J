@@ -3,26 +3,77 @@
  */
 'use strict';
 app.service('commonService', ['$http', function ($http) {
-    /**
-     * get请求
-     * @param url 服务地址
-     * @param param 参数
-     * @returns {*}
-     */
-    this.get = function (url, param) {
-        return $http.get(url, {params: param});
-    };
+	/**
+	 * 获取ajax url，主要是添加context
+	 * @param path 路径
+	 * @returns {*}
+	 */
+	this.getAjaxUrl = function (path) {
+		return this.getContext() + path;
+	};
 
-    /**
-     * post请求
-     * @param url 服务地址
-     * @param postParam post参数
-     * @param urlParam url参数
-     * @returns {*}
-     */
-    this.post = function (url, postParam, urlParam) {
-        return $http.post(url, postParam, {params: urlParam || {}});
-    };
+	/**
+	 * 获取当前应用context
+	 */
+	this.getContext = function () {
+		return ctx;
+	};
+
+	/**
+	 * get请求
+	 * @param url 服务地址
+	 * @param param 参数
+	 * @returns {*}
+	 */
+	this.get = function (url, param) {
+		return $http.get(url, {params: param});
+	};
+
+	/**
+	 * post请求
+	 * @param url 服务地址
+	 * @param postParam post参数
+	 * @param urlParam url参数
+	 * @returns {*}
+	 */
+	this.post = function (url, postParam, urlParam) {
+		return $http.post(url, postParam, {params: urlParam || {}});
+	};
+
+	/**
+	 * 以formdata的形式发起get ajax请求
+	 * @param url 路径
+	 * @param param 参数，object类型
+	 * @returns {*}
+	 */
+	this.getFormData = function (url, formData) {
+		return $http({
+			url: url,
+			method: 'get',
+			data: formData,
+			headers: {'Content-Type': undefined},
+			processData: false,
+			transformRequest: angular.identity
+		});
+	};
+
+	/**
+	 * 以formdata的形式发起post ajax请求
+	 * @param url 路径
+	 * @param param 参数，object类型
+	 * @returns {*}
+	 */
+	this.postFormData = function (url, formData) {
+		return $http({
+			url: url,
+			method: 'post',
+			data: formData,
+			headers: {'Content-Type': undefined},
+			processData: false,
+			transformRequest: angular.identity
+		});
+	};
+
 	/**
 	 * 树操作
 	 * @type {{getTree: treeUtils.getTree, getNodeById: treeUtils.getNodeById, getNodes: treeUtils.getNodes, checkNode: treeUtils.checkNode, checkNodes: treeUtils.checkNodes, selectNode: treeUtils.selectNode, selectNodes: treeUtils.selectNodes, updateNode: treeUtils.updateNode, updateDiyDom: treeUtils.updateDiyDom, expandNodes: treeUtils.expandNodes}}
