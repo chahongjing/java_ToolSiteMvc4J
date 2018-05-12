@@ -7,7 +7,7 @@
     <groupId>com.zjy</groupId>
     <artifactId>ToolSiteMvc4J</artifactId>
     <packaging>pom</packaging>
-    <version>1.0</version>
+    <version>${project.version}</version>
     <modules>
         <module>entity</module>
         <module>bll</module>
@@ -16,6 +16,7 @@
     </modules>
 
     <properties>
+        <project.version>1.0</project.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <jstl.version>1.2</jstl.version>
