@@ -358,6 +358,12 @@ window.Utility.Controls = window.Utility.Controls || {};
     String.prototype.trimRight = String.prototype.trimRight || function () {
         return this.replace(/\s*$/g, "");
     }
+    // 判断以某个字符串结尾
+    String.prototype.endWith = function(endStr){
+        if(endStr === null || endStr === undefined) return false;
+        var lastL = this.length - endStr.length;
+        return (lastL >= 0 && this.lastIndexOf(endStr) == lastL);
+    }
 	
 	ns.isNumber = function (value, min, max, prec) {
 		if(isNaN(value)) {

@@ -106,6 +106,7 @@ public class ZipHelper {
                     }
                 }
             }
+            zipFile.setComment("abc");
             return zipFilePath;
         } catch (ZipException e) {
             e.printStackTrace();

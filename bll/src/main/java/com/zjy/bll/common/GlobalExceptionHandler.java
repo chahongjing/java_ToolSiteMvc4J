@@ -2,6 +2,8 @@ package com.zjy.bll.common;
 
 import com.alibaba.fastjson.JSON;
 import com.zjy.baseframework.BaseResult;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * @author chahongjing
@@ -32,7 +35,13 @@ public class GlobalExceptionHandler {
             response.setContentType(MediaType.APPLICATION_JSON_VALUE); //设置ContentType
             response.setHeader("Cache-Control", "no-cache, must-revalidate");
             try {
-                BaseResult<String> result = BaseResult.ERROR(ex.getMessage());
+                String message;
+                if (ExceptionUtils.getRootCause(ex) != null) {
+                    message = ExceptionUtils.getRootCause(ex).getMessage();
+                } else {
+                    message = ex.getMessage();
+                }
+                BaseResult<String> result = BaseResult.ERROR(Objects.toString(message, StringUtils.EMPTY));
                 response.getWriter().write(JSON.toJSONString(result));
             } catch (IOException e) {
             }

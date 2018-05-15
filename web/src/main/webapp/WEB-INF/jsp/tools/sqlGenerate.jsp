@@ -516,7 +516,7 @@ BEGIN
   END IF;
 END;
 /
-COMMENT ON TABLE {firstName} IS {remark};
+COMMENT ON TABLE {firstName} IS '{remark}';
 COMMENT ON COLUMN {firstName}.id is '主键';
 /
 

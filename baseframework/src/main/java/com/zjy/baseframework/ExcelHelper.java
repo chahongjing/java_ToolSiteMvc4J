@@ -212,6 +212,13 @@ public class ExcelHelper<T> {
                 Object objValue = getFieldValueByNameSequence(fieldNames[i], item);
                 cell = CellUtil.getCell(row, i);
                 setCellValue(cell, objValue, cellDateStyle, cellDataStyle);
+
+//                Hyperlink link = row.getSheet().getWorkbook().getCreationHelper().createHyperlink(Hyperlink.LINK_FILE);
+//                String htmlUri = "excelResources/filename";
+//                link.setAddress(htmlUri);
+//                cell.setHyperlink(link);
+                cell.setCellValue("答案链接");
+                cell.setCellStyle(getLinkStyle(cell));
             }
             rowNo++;
         }
@@ -273,17 +280,17 @@ public class ExcelHelper<T> {
         } else if (clazz == Integer.class || clazz == int.class) {
             cell.setCellValue(Integer.parseInt(value.toString()));
         } else if (clazz == Float.class || clazz == float.class) {
-            if(cellDataStyle != null) {
+            if (cellDataStyle != null) {
                 cell.setCellStyle(cellDataStyle);
             }
             cell.setCellValue(Float.parseFloat(value.toString()));
         } else if (clazz == Double.class || clazz == double.class) {
-            if(cellDataStyle != null) {
+            if (cellDataStyle != null) {
                 cell.setCellStyle(cellDataStyle);
             }
             cell.setCellValue(Double.parseDouble(value.toString()));
         } else if (clazz == Date.class) {
-            if(cellDateStyle != null) {
+            if (cellDateStyle != null) {
                 cell.setCellStyle(cellDateStyle);
             }
             cell.setCellValue((Date) value);
@@ -392,7 +399,7 @@ public class ExcelHelper<T> {
             Class<?> fieldType = field.getType();
             //根据字段类型给字段赋值
             if (Date.class == fieldType) {
-                if(!StringUtils.isBlank(Objects.toString(fieldValue, ""))) {
+                if (!StringUtils.isBlank(Objects.toString(fieldValue, ""))) {
                     field.set(o, fieldValue);
                 }
             } else {
@@ -402,9 +409,19 @@ public class ExcelHelper<T> {
             throw new Exception(o.getClass().getSimpleName() + "类不存在字段名 " + fieldName);
         }
     }
+
+    private static CellStyle getLinkStyle(Cell cell) {
+        CellStyle linkStyle = cell.getRow().getSheet().getWorkbook().createCellStyle();
+        Font cellFont = cell.getRow().getSheet().getWorkbook().createFont();
+        cellFont.setUnderline((byte) 1);
+        cellFont.setColor(IndexedColors.BLUE.index);
+        linkStyle.setFont(cellFont);
+        return linkStyle;
+    }
     // endregion
 
     // region 其它方法
+
     /**
      * 这是一个通用的方法，利用了JAVA的反射机制，可以将放置在JAVA集合中并且符号一定条件的数据以EXCEL 的形式输出到指定IO设备上
      *
