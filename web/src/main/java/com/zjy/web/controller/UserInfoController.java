@@ -60,7 +60,6 @@ public class UserInfoController extends BaseController {
     @RequestMapping("/login")
     public ResponseEntity<BaseResult<String>> login(HttpServletRequest request, UserInfo user) {
         BaseResult<String> re = userInfoService.login(user);
-
         if (re.getStatus() != ResultStatus.OK) {
             return new ResponseEntity<>(re, HttpStatus.OK);
         }

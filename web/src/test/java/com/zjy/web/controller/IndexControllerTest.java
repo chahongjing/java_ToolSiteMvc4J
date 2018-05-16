@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.zjy.baseframework.MongoDbHelper;
 import com.zjy.baseframework.PropertiesHelper;
 import com.zjy.bll.common.BaseTestCase;
+import com.zjy.entities.Sex;
 import com.zjy.entities.UserInfo;
 import org.junit.Test;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -91,7 +92,7 @@ public class IndexControllerTest extends BaseTestCase {
         user.setUserCode("testuser");
         user.setUserName("测试数据");
         user.setPassword("1");
-        user.setSex(true);
+        user.setSex(Sex.Male);
         user.setBirthday(new Date());
         user.setIsSystem(true);
         //mongoTemplate.insert(user, "testcollection");

@@ -27,6 +27,11 @@
             <groupId>org.apache.solr</groupId>
             <artifactId>solr-solrj</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.zjy</groupId>
+            <artifactId>baseframework</artifactId>
+            <version>1.0</version>
+        </dependency>
         <!-- hibernate -->
         <!--<dependency>-->
             <!--<groupId>org.hibernate</groupId>-->

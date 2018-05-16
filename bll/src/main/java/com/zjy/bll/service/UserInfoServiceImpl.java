@@ -6,6 +6,7 @@ import com.zjy.baseframework.enums.ResultStatus;
 import com.zjy.bll.common.BaseService;
 import com.zjy.bll.dao.UserInfoDao;
 import com.zjy.bll.request.UserInfoRequest;
+import com.zjy.entities.Sex;
 import com.zjy.entities.UserInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,7 +69,7 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
         user.setUserCode("testuser");
         user.setUserName("测试数据");
         user.setPassword("1");
-        user.setSex(true);
+        user.setSex(Sex.Male);
         user.setBirthday(new Date());
         user.setIsSystem(true);
 

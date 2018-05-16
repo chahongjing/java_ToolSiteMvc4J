@@ -45,7 +45,7 @@ public class UserInfo {
     /**
      * 性别
      */
-    private boolean sex;
+    private Sex sex;
     /**
      * 年龄
      */
@@ -155,11 +155,11 @@ public class UserInfo {
         this.password = password;
     }
 
-    public boolean getSex() {
+    public Sex getSex() {
         return sex;
     }
 
-    public void setSex(boolean sex) {
+    public void setSex(Sex sex) {
         this.sex = sex;
     }
 

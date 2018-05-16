@@ -2,6 +2,7 @@ package com.zjy.baseframework;
 
 import com.alibaba.fastjson.JSON;
 import com.zjy.bll.common.BaseTestCase;
+import com.zjy.entities.Sex;
 import com.zjy.entities.UserInfo;
 import org.junit.Test;
 
@@ -30,7 +31,7 @@ public class ExcelHelperTest extends BaseTestCase {
         user.setUserCode("1");
         user.setUserName("第一个");
         user.setCreatedOn(new Date());
-        user.setSex(true);
+        user.setSex(Sex.Male);
         list.add(user);
         user = new UserInfo();
         user.setUserCode("2");
