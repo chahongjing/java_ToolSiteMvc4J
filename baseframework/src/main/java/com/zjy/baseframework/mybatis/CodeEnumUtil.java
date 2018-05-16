@@ -3,6 +3,7 @@ package com.zjy.baseframework.mybatis;
 import org.apache.ibatis.type.TypeHandlerRegistry;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -57,7 +58,7 @@ public class CodeEnumUtil {
      * @throws IOException
      */
     public static List<String> list(String packagePath) throws IOException {
-        PathMatchingResourcePatternResolver resourceResolver = new PathMatchingResourcePatternResolver(CodeEnumUtil.class.getClassLoader());
+        ResourcePatternResolver resourceResolver = new PathMatchingResourcePatternResolver(CodeEnumUtil.class.getClassLoader());
         Resource[] resources = resourceResolver.getResources("classpath*:" + packagePath + "/**/*.class");
         List<String> resourcePaths = new ArrayList<>();
         for (Resource resource : resources) {
