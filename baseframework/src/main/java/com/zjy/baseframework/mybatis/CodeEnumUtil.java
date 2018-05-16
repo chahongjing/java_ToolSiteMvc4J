@@ -26,7 +26,7 @@ public class CodeEnumUtil {
         // 扫描所有实体类
         List<String> classNames = null;
         try {
-            classNames = list("com/zjy", "/entities");
+            classNames = list("com/zjy/entities");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -52,22 +52,21 @@ public class CodeEnumUtil {
     /**
      * 返回路径下所有class
      *
-     * @param rootPath        根路径
-     * @param locationPattern 位置表达式
+     * @param packagePath        根路径
      * @return
      * @throws IOException
      */
-    public static List<String> list(String rootPath, String locationPattern) throws IOException {
+    public static List<String> list(String packagePath) throws IOException {
         PathMatchingResourcePatternResolver resourceResolver = new PathMatchingResourcePatternResolver(CodeEnumUtil.class.getClassLoader());
-        Resource[] resources = resourceResolver.getResources("classpath*:" + rootPath + locationPattern + "/**/*.class");
+        Resource[] resources = resourceResolver.getResources("classpath*:" + packagePath + "/**/*.class");
         List<String> resourcePaths = new ArrayList<>();
         for (Resource resource : resources) {
-            resourcePaths.add(preserveSubpackageName(resource.getURI().toString(), rootPath));
+            resourcePaths.add(preserveSubpackageName(resource.getURI().toString()));
         }
         return resourcePaths;
     }
 
-    public static String preserveSubpackageName(String a, String b) {
+    public static String preserveSubpackageName(String a) {
         String substring = a.substring(a.indexOf("!") + 2);
         return substring;
     }
