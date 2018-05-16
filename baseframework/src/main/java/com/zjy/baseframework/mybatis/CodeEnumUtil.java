@@ -41,7 +41,7 @@ public class CodeEnumUtil {
                 // 判断是否实现了BaseCodeEnum接口
                 if (aClass.isEnum() && BaseCodeEnum.class.isAssignableFrom(aClass)) {
                     // 注册
-                    typeHandlerRegistry.register(className, "com.zjy.baseframework.mybatis.CodeEnumTypeHandler");
+                    typeHandlerRegistry.register(className, CodeEnumTypeHandler.class.getTypeName());
                 }
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
