@@ -8,7 +8,6 @@
     <link href="${ctx}/bootstrap/css/font-awesome.css" rel="stylesheet" />
     <link href="${ctx}/bootstrap/css/main.css" rel="stylesheet" />
     <style>
-        body{padding:20px;}
         .font {
             font-family: arial;
             font-weight: 500;
