@@ -327,3 +327,14 @@ button, input[type=button] {transition: 0.3s;-moz-transition: 0.3s;-webkit-trans
 
 .slide-menu .show {
 display:block;}
+
+/* switch */
+label.switch{display:inline-block;width:81px;height:30px;line-height:29px;position:relative;text-align:center;
+    overflow: hidden;border-radius: 2px;cursor:pointer;}
+label.switch div{width:130px;height:100%;position:absolute;left:0;top:0;transition:0.3s;}
+label.switch div span{width:40px;height:100%;display:inline-block;float:left;border:1px solid;border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);}
+label.switch input:checked + div{left:-40px;}
+label.switch input:checked + div > span:nth-child(2){border-radius: 2px 0 0 2	px;}
+label.switch div > span:nth-child(1){background-color: #6087cf;color:#fff;border-radius: 2px 0 0 2px;}
+label.switch div > span:nth-child(2){background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);border-right:none;border-radius: 0 2px 2px 0;}
+label.switch div > span:nth-child(3){background-color: #f0f0f0;color:#666;border-radius: 0 2px 2px 0;}

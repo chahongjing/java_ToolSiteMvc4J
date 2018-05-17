@@ -112,6 +112,17 @@ js<br>
 <br />
 <a href="${ctx}/cost/.do" target="_blank">财务管理</a>
 
+<br/>
+<br/>
+<label class="switch">
+    <input type="checkbox" class="hide" />
+    <div>
+        <span>ON</span>
+        <span></span>
+        <span>OFF</span>
+    </div>
+</label>
+<br/>
 <br />
 <div class="pro">
 <span class="next"></span>
