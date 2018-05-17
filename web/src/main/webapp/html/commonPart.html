@@ -1,0 +1,11 @@
+<script type="text/ng-template" id="pagination.html">
+    <div class="pager">
+        <ul class="pagination">
+            <li class="page-item" data-ng-class="{'isCurrent': item.isCurrent,'disabled': item.isDisabled || item.isCurrent }"
+                data-ng-repeat="item in model.list"
+                data-ng-click="goPage(item)">
+                <a class="page-link" href="#" data-ng-bind="item.name"></a>
+            </li>
+        </ul>
+    </div>
+</script>
