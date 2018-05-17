@@ -63,6 +63,7 @@
         <zookeeper.client.version>0.10</zookeeper.client.version>
         <aspose.version>14.9.0</aspose.version>
         <ueditor.version>1.1.2</ueditor.version>
+        <sitemesh.version>2.4.2</sitemesh.version>
     </properties>
 
     <dependencyManagement>
@@ -370,7 +371,13 @@
                 <groupId>com.aspose</groupId>
                 <artifactId>aspose-words</artifactId>
                 <version>${aspose.version}</version>
+            </dependency><!-- https://mvnrepository.com/artifact/opensymphony/sitemesh -->
+            <dependency>
+                <groupId>opensymphony</groupId>
+                <artifactId>sitemesh</artifactId>
+                <version>${sitemesh.version}</version>
             </dependency>
+
             <!--<dependency>-->
                 <!--<groupId>com.baidu</groupId>-->
                 <!--<artifactId>ueditor</artifactId>-->
