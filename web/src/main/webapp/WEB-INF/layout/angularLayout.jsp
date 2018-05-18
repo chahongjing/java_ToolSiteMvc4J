@@ -8,10 +8,10 @@
     <link href="${ctx}/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
     <link href="${ctx}/bootstrap/css/bootstrap.css" rel="stylesheet"/>
     <link href="${ctx}/bootstrap/css/font-awesome.css" rel="stylesheet"/>
-    <link href="${ctx}/bootstrap/css/main.css" rel="stylesheet"/>
+    <link href="${ctx}/bootstrap/css/common.css" rel="stylesheet"/>
     <sitemesh:write property='head'/>
 </head>
-<body>
+<body data-ng-app="myApp" data-ng-controller="mainCtrl">
 <div class="main">
     <div class="head">
         <div class="logo">

@@ -2,6 +2,7 @@ package com.zjy.web.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.zjy.baseframework.BaseResult;
+import com.zjy.baseframework.LogHelper;
 import com.zjy.baseframework.enums.ResultStatus;
 import com.zjy.bll.common.UserUtils;
 import com.zjy.bll.request.UserInfoRequest;
@@ -13,6 +14,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.SavedRequest;
 import org.apache.shiro.web.util.WebUtils;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +31,8 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/userinfo")
-public class UserInfoController extends BaseController {
+public class UserInfoController {
+    protected Logger logger = LogHelper.getLogger(this.getClass());
 
     //region 属性
 

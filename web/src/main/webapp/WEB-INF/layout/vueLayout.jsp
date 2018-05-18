@@ -11,7 +11,7 @@
     <link href="${ctx}/bootstrap/css/main.css" rel="stylesheet"/>
     <sitemesh:write property='head'/>
 </head>
-<body>
+<body id="myApp">
 <div class="main">
     <div class="head">
         <div class="logo">
@@ -67,9 +67,7 @@
 <script src="${ctx}/js/jquery-1.10.2.js" type="text/javascript"></script>
 <script type="text/javascript">var ctx = '<%= request.getContextPath() %>';</script>
 <script src="${ctx}/js/Utility.js" type="text/javascript"></script>
-<script src="${ctx}/js/angular/angular.js"></script>
-<script src="${ctx}/js/angular/angular_main.js"></script>
-<script src="${ctx}/js/angular/commonService.js"></script>
+<script src="${ctx}/js/vue/vue.js"></script>
 <sitemesh:write property='jsSection'/>
 </body>
 </html>

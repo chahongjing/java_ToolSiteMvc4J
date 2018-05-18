@@ -68,7 +68,6 @@
     </div>
 </div>
 <jsSection>
-    <script src="${ctx}/js/vue/vue.js"></script>
     <script>
         Vue.component('todo-item', {
             // todo-item 组件现在接受一个

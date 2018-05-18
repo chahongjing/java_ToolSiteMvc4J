@@ -66,8 +66,8 @@ app.controller('mainCtrl', ['$scope', 'commonService',
     function ($scope, commonSrv) {
         // 退出登录
         $scope.logout = function () {
-            userSrv.logout().success(function (resp) {
-                if (resp.code == Constant.JsonResultCode.SUCCESS) {
+            commonSrv.get('/userinfo/logout.do').success(function (resp) {
+                if (resp.status == Constant.AjaxStatus.OK) {
                     window.location = commonSrv.getContext();
                 } else {
                     alert(resp.msg);

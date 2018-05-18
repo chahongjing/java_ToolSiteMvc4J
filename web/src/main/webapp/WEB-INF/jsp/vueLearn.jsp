@@ -98,7 +98,6 @@
     </div>
 </div>
 <jsSection>
-    <script src="${ctx}/js/vue/vue.js"></script>
     <script>
         Vue.component('myComponent', {
             template: '<p>abcd<button>测试</button></p>'
