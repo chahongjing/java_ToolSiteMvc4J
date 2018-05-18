@@ -1,12 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="/WEB-INF/jsp/common/commonVar.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
     <title>首页</title>
-    <%@ include file="/WEB-INF/jsp/common/commonCss.jsp" %>
-    <link href="${ctx}/bootstrap/css/bootstrap.css" rel="stylesheet" />
-    <link href="${ctx}/bootstrap/css/font-awesome.css" rel="stylesheet" />
-    <link href="${ctx}/bootstrap/css/main.css" rel="stylesheet" />
     <style>
         .font {
             font-family: arial;
@@ -130,62 +127,64 @@ js<br>
 <span class="next"></span>
 </div>
 <br />
-<%@ include file="/WEB-INF/jsp/common/commonJs.jsp" %>
-<script>
-    $(function () {
-        $('#lnkLogout').click(function () {
-            var result = $.ajax({
-                url: ctx + '/userinfo/logout.do'
+
+<jsSection>
+    <script>
+        $(function () {
+            $('#lnkLogout').click(function () {
+                var result = $.ajax({
+                    url: ctx + '/userinfo/logout.do'
+                });
+
+                result.success(function (data) {
+                    window.location = ctx;
+                });
             });
 
-            result.success(function (data) {
-                window.location = ctx;
+            $('#lnkTestPromise').one('click', function () {
+                console.log('click');
+                var p1 = $.ajax({
+                    url: ctx + '/test/testP1.do'
+                }).then(function (data) {
+                    console.log('testP1');
+
+                    return 'p1';
+                });
+
+                var p2 = $.ajax({
+                    url: ctx + '/test/testP2.do'
+                }).then(function (data) {
+                    console.log('testP2');
+
+                    return 'p2';
+                });
+
+                Promise.all([p1, p2]).then(function (result) {
+                    console.log(result);
+                });
             });
-        });
 
-        $('#lnkTestPromise').one('click', function () {
-            console.log('click');
-            var p1 = $.ajax({
-                url: ctx + '/test/testP1.do'
-            }).then(function (data) {
-                console.log('testP1');
-
-                return 'p1';
-            });
-
-            var p2 = $.ajax({
-                url: ctx + '/test/testP2.do'
-            }).then(function (data) {
-                console.log('testP2');
-
-                return 'p2';
-            });
-
-            Promise.all([p1, p2]).then(function (result) {
-                console.log(result);
-            });
-        });
-
-        $('button[name=ajaxtj]').click(function() {
-            var formData = new FormData();
-            var files = $('input[name=myfile]')[0].files;
-            formData.append("name", "zjy");
-            for(var i = 0; i < files.length; i++) {
-                formData.append("myfile", files[i]);
-            }
-
-            $.ajax({
-                url: ctx + '/test/fileupload.do',
-                type: 'post',
-                processData: false,
-                contentType: false,
-                data: formData,
-                success: function(resp) {
-
+            $('button[name=ajaxtj]').click(function() {
+                var formData = new FormData();
+                var files = $('input[name=myfile]')[0].files;
+                formData.append("name", "zjy");
+                for(var i = 0; i < files.length; i++) {
+                    formData.append("myfile", files[i]);
                 }
+
+                $.ajax({
+                    url: ctx + '/test/fileupload.do',
+                    type: 'post',
+                    processData: false,
+                    contentType: false,
+                    data: formData,
+                    success: function(resp) {
+
+                    }
+                });
             });
         });
-    });
-</script>
+    </script>
+</jsSection>
 </body>
 </html>
