@@ -50,4 +50,4 @@ label.switch input:checked + div{left:-40px;}
 label.switch input:checked + div > span:nth-child(2){border-radius: 2px 0 0 2px;}
 label.switch div > span:nth-child(1){background-color: #6087cf;color:#fff;border-radius: 2px 0 0 2px;}
 label.switch div > span:nth-child(2){width:37px;background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);border-right:none;border-radius: 0 2px 2px 0;}
-label.switch div > span:nth-child(3){background-color: #f0f0f0;color:#666;border-radius: 0 2px 2px 0;}
+label.switch div > span:nth-child(3){background-color: #ddd;color:#666;border-radius: 0 2px 2px 0;}
