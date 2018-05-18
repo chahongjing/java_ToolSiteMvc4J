@@ -1,11 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="/WEB-INF/jsp/common/beginHead.jsp" %>
-<%-- 页头，添加title, mate信息, link样式, script脚本(建议在script节中添加) --%>
-<style>
-</style>
-<title>tomcat学习</title>
-<%@ include file="/WEB-INF/jsp/common/endHeadAndBeginBody.jsp" %>
-<%-- html正文 --%>
+<%@ include file="/WEB-INF/jsp/common/commonVar.jsp" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>vue学习</title>
+</head>
+<body>
 <div>
     <div>
         <p>
@@ -63,7 +63,7 @@
                 即事件不是从内部元素触发的
                 &lt;div v-on:click.self="doThat"&gt;...&lt;/div&gt;<br>
 
-               点击事件将只会触发一次
+                点击事件将只会触发一次
                 &lt;a v-on:click.once="doThis"&gt;&lt;/a&gt;
             </li>
             <li>
@@ -97,19 +97,20 @@
         </div>
     </div>
 </div>
-<%@ include file="/WEB-INF/jsp/common/endBodyAndBeginScript.jsp" %>
-<%-- js脚本 --%>
-<script src="${ctx}/js/vue/vue.js"></script>
-<script>
-    Vue.component('myComponent', {
-        template: '<p>abcd<button>测试</button></p>'
-    });
+<jsSection>
+    <script src="${ctx}/js/vue/vue.js"></script>
+    <script>
+        Vue.component('myComponent', {
+            template: '<p>abcd<button>测试</button></p>'
+        });
 
-    new Vue({
-        el: '#divOne'
-    });
-    new Vue({
-        el: '#divTwo'
-    });
-</script>
-<%@ include file="/WEB-INF/jsp/common/endScript.jsp" %>
+        new Vue({
+            el: '#divOne'
+        });
+        new Vue({
+            el: '#divTwo'
+        });
+    </script>
+</jsSection>
+</body>
+</html>

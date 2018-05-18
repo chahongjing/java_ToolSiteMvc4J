@@ -1,27 +1,29 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="/WEB-INF/jsp/common/beginHead.jsp" %>
-<%-- 页头，添加title, mate信息, link样式, script脚本(建议在script节中添加) --%>
-<style>
-    * {
-        font-family: "Microsoft YaHei UI";
-        font-size: 14px;
-    }
+<%@ include file="/WEB-INF/jsp/common/commonVar.jsp" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>学习spring Aop</title>
+    <style>
+        * {
+            font-family: "Microsoft YaHei UI";
+            font-size: 14px;
+        }
 
-    .bold {
-        font-weight: bold;
-    }
+        .bold {
+            font-weight: bold;
+        }
 
-    .red {
-        color: #f00;
-    }
+        .red {
+            color: #f00;
+        }
 
-    .inline {
-        display: inline-block;
-    }
-</style>
-<title>学习spring Aop</title>
-<%@ include file="/WEB-INF/jsp/common/endHeadAndBeginBody.jsp" %>
-<%-- html正文 --%>
+        .inline {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
 <div>
     <div>
         <p>代理模式<a href="<c:url value="/test/testProxy.do" />" target="_blank">测试代理</a></p>
@@ -48,21 +50,24 @@
     <div>
         <p>基于xml配置文件的配置，此时切面中不需要任何注解，包括@Aspect, @Before等</p>
         <ul>
-            <li>在配置文件中配置切面bean, 如<br>&lt;bean id="loggingAspect" class="com.zjy.bll.common.LoggingAspect"&gt;&lt;/bean&gt;</li>
+            <li>在配置文件中配置切面bean, 如<br>&lt;bean id="loggingAspect" class="com.zjy.bll.common.LoggingAspect"&gt;&lt;/bean&gt;
+            </li>
             <li>配置aop<br>
                 &lt;aop:config&gt;<br>
                 &nbsp;&nbsp;&lt;!-- 配置切点表达式 --&gt;<br>
                 &nbsp;&nbsp;&lt;aop:pointcut expression="execution(* com.zjy.bll.service.*.*(..))" id="pointcut"&gt;&lt;/aop:pointcut&gt;<br>
                 &nbsp;&nbsp;&lt;aop:aspect ref="loggingAspect" order="2"&gt;<br>
                 &nbsp;&nbsp;&nbsp;&nbsp;&lt;aop:before method="beforeMethod" pointcut-ref="pointcut"&gt;&lt;/aop:before&gt;<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&lt;aop:after-throwing method="afterThrowing" pointcut-ref="pointcut" throwing="ex"&gt;&lt;/aop:after-throwing&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;aop:after-throwing method="afterThrowing" pointcut-ref="pointcut"
+                throwing="ex"&gt;&lt;/aop:after-throwing&gt;<br>
                 &nbsp;&nbsp;&lt;/aop:aspect&gt;
                 &lt;/aop:config&gt;<br>
             </li>
         </ul>
     </div>
 </div>
-<%@ include file="/WEB-INF/jsp/common/endBodyAndBeginScript.jsp" %>
-<%-- js脚本 --%>
+<jsSection>
 
-<%@ include file="/WEB-INF/jsp/common/endScript.jsp" %>
+</jsSection>
+</body>
+</html>

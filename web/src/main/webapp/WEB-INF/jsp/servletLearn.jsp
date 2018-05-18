@@ -1,71 +1,78 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="/WEB-INF/jsp/common/beginHead.jsp" %>
-<%-- 页头，添加title, mate信息, link样式, script脚本(建议在script节中添加) --%>
-<style>
-    * {
-        font-family: "Microsoft YaHei UI";
-        font-size: 14px;
-    }
+<%@ include file="/WEB-INF/jsp/common/commonVar.jsp" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>学习servlet</title>
+    <style>
+        * {
+            font-family: "Microsoft YaHei UI";
+            font-size: 14px;
+        }
 
-    .bold {
-        font-weight: bold;
-    }
+        .bold {
+            font-weight: bold;
+        }
 
-    .red {
-        color: #f00;
-    }
+        .red {
+            color: #f00;
+        }
 
-    .green {
-        color: #008000;
-    }
+        .green {
+            color: #008000;
+        }
 
-    .inline {
-        display: inline-block;
-    }
-    p{text-indent: 10px;}
-</style>
-<title>学习servlet</title>
-<%@ include file="/WEB-INF/jsp/common/endHeadAndBeginBody.jsp" %>
-<%-- html正文 --%>
+        .inline {
+            display: inline-block;
+        }
+
+        p {
+            text-indent: 10px;
+        }
+    </style>
+</head>
+<body>
 <div>
     <p>1. 一般继承GenericServlet的子类HttpServlet, HttpServlet继承了GenericServlet,
         GenericServlet继承了servlet和servletconfig</p>
     <p>2. servlet生命周期函数:
-        <ul>
-            <li>constructor: 创建时，只调用一次</li>
-            <li>init(ServletConfig)：初始化时，只调用一次</li>
-            <li>service：可被调用<span class="red">多次</span>，用于处理用户请求</li>
-            <li>destory：关闭时，只调用一次</li>
-        </ul>
+    <ul>
+        <li>constructor: 创建时，只调用一次</li>
+        <li>init(ServletConfig)：初始化时，只调用一次</li>
+        <li>service：可被调用<span class="red">多次</span>，用于处理用户请求</li>
+        <li>destory：关闭时，只调用一次</li>
+    </ul>
     </p>
     <p>3. load-on-startup，值越小越先启动；若小于0或<span class="red">没有填写值</span>，则在调用时才会加载并init</p>
     <p>4. 一个servlet可以有多个servlet-mapping进行映射，并且只能以<span class="red">*或/</span>开头</p>
     <p>5. servlet对象（<span class="red">一般是单例的</span>）：
-        <ul>
-            <li>ServletConfig:封装了servlet信息，可以通过this.getServletConfig()获取（GenericServlet或HttpServlet才能调用），并可以获取ServletContext对象，还包含在配置文件中添加的init-param（必须放在load-on-startup之前）信息.
-                servletConfig.getInitParameter("paramName")
-            </li>
-            <li>ServletContext:当前应用。即application对象（<span class="red">servlet运行环境</span>）。
-                <ul>
-                    <li>可获取当前web应用的初始化参数（非servlet初始化参数）servletContext.getInitParameter("paramName")</li>
-                    <li>获取服务器上文件路径：getRealPath("/note.txt");如: <span class="green">E:\ToolSiteMvc4J\note.txt</span></li>
-                    <li>获取应用名称: getContextPath();如：<span class="green">/ToolSiteMvc4J</span></li>
-                    <li>getResourceAsStream(String path);path是从web的根目录开始寻找
-                        <ul>
-                            <li>相比较:getClass().getClassLoader().getResourceAsString("");在classes中寻找</li>
-                        </ul>
-                    </li>
-                    <li>spring mvc中从controller中获取servletconfig，可以让controller实现ServletConfigAware接口，其后实现setServletConfig方法即可，
-                    普通servlet直接通过this.getServletConfig()即可获取</li>
-                </ul>
-            </li>
-            <li>
-                PageContext:页面上下文,可以获取到其它8个内置对象
-            </li>
-            <li>
-                exception:当page指令中isErrorPage=true时才可以使用
-            </li>
-        </ul>
+    <ul>
+        <li>
+            ServletConfig:封装了servlet信息，可以通过this.getServletConfig()获取（GenericServlet或HttpServlet才能调用），并可以获取ServletContext对象，还包含在配置文件中添加的init-param（必须放在load-on-startup之前）信息.
+            servletConfig.getInitParameter("paramName")
+        </li>
+        <li>ServletContext:当前应用。即application对象（<span class="red">servlet运行环境</span>）。
+            <ul>
+                <li>可获取当前web应用的初始化参数（非servlet初始化参数）servletContext.getInitParameter("paramName")</li>
+                <li>获取服务器上文件路径：getRealPath("/note.txt");如: <span class="green">E:\ToolSiteMvc4J\note.txt</span></li>
+                <li>获取应用名称: getContextPath();如：<span class="green">/ToolSiteMvc4J</span></li>
+                <li>getResourceAsStream(String path);path是从web的根目录开始寻找
+                    <ul>
+                        <li>相比较:getClass().getClassLoader().getResourceAsString("");在classes中寻找</li>
+                    </ul>
+                </li>
+                <li>spring mvc中从controller中获取servletconfig，可以让controller实现ServletConfigAware接口，其后实现setServletConfig方法即可，
+                    普通servlet直接通过this.getServletConfig()即可获取
+                </li>
+            </ul>
+        </li>
+        <li>
+            PageContext:页面上下文,可以获取到其它8个内置对象
+        </li>
+        <li>
+            exception:当page指令中isErrorPage=true时才可以使用
+        </li>
+    </ul>
     </p>
     <p>6. ServletRequest
     <ul>
@@ -118,7 +125,8 @@
     </ul>
     </p>
 </div>
-<%@ include file="/WEB-INF/jsp/common/endBodyAndBeginScript.jsp" %>
-<%-- js脚本 --%>
+<jsSection>
 
-<%@ include file="/WEB-INF/jsp/common/endScript.jsp" %>
+</jsSection>
+</body>
+</html>

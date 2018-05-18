@@ -1,28 +1,30 @@
-<%@ page import="com.zjy.entities.UserInfo" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="/WEB-INF/jsp/common/beginHead.jsp" %>
-<%-- 页头，添加title, mate信息, link样式, script脚本(建议在script节中添加) --%>
-<style>
-    * {
-        font-family: "Microsoft YaHei UI";
-        font-size: 14px;
-    }
+<%@ include file="/WEB-INF/jsp/common/commonVar.jsp" %>
+<%@ page import="com.zjy.entities.UserInfo" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>学习jsp</title>
+    <style>
+        * {
+            font-family: "Microsoft YaHei UI";
+            font-size: 14px;
+        }
 
-    .bold {
-        font-weight: bold;
-    }
+        .bold {
+            font-weight: bold;
+        }
 
-    .red {
-        color: #f00;
-    }
+        .red {
+            color: #f00;
+        }
 
-    .inline {
-        display: inline-block;
-    }
-</style>
-<title>学习jsp</title>
-<%@ include file="/WEB-INF/jsp/common/endHeadAndBeginBody.jsp" %>
-<%-- html正文 --%>
+        .inline {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
 <div>
     <div>
         <p>
@@ -30,7 +32,9 @@
         </p>
         <ul>
             <li>测试mvc Model: <b>${testAttr}</b>。注入Model参数，类似于C#的ViewBag，只不过要在controller中的参数中添加</li>
-            <li>测试@ModelAttribute: <b>${modelattributeUser}</b>。预处理数据，可将此数据传递给controller，参数名为@ModelAttribute(key)中的key值，此处为mUserInfo，与此同时也会把此属性放在Model中key为mUserInfo, 值为返回的对象</li>
+            <li>测试@ModelAttribute: <b>${modelattributeUser}</b>。预处理数据，可将此数据传递给controller，参数名为@ModelAttribute(key)中的key值，此处为mUserInfo，与此同时也会把此属性放在Model中key为mUserInfo,
+                值为返回的对象
+            </li>
             <li>测试从Model中获取@ModelAttribute数据: <b>${mUserInfo.userName}</b>。从Model对象中获取@ModelAttribute中返回的数据</li>
             <li>RedirectAttributes在返回redirect，403请求中使用</li>
         </ul>
@@ -100,34 +104,37 @@
         <li>&lt;%@ page contentType="text/html;chartset=gb2312"%&gt;, 总共有page, include, taglib三种指令</li>
         <li>指令的属性名区分大小写，且指令一般放在页面起始位置</li>
         <li>page指令常用属性，每个page指令可以有<span class="red">一个或多个</span>属性
-             <ul>
-                 <li>session=true|false, 当前页面是否允许使用session, 默认为true，当为false时，表示当前界面禁用session隐含变量，但并不表示此页面未创建session对象</li>
-                 <li>import=package.class, 页面要引入的包，可以有多条page指令进行导入</li>
-                 <li>errorPage=relative_url,当发生错误时要显示的错误页面地址,内部使用的是<span class="red">转发</span>机制</li>
-                 <li>isErrorPage=true|false，指明当前页面是否是错误页面,如果为true，则可以使用exception变量，此时此页面一般不可以直接访问，放在WEB-INF下，如果直接访问则exception为空</li>
-                 <li>contentType=mimeType，通常是调用response.setContentType</li>
-                 <li>pageEncoding=characterSet, 一般和contentType中的编码一致</li>
-                 <li>isELIgnored=true|false，默认为false, 如果为true，那么\${表达式}将会原样输出</li>
+            <ul>
+                <li>session=true|false, 当前页面是否允许使用session, 默认为true，当为false时，表示当前界面禁用session隐含变量，但并不表示此页面未创建session对象
+                </li>
+                <li>import=package.class, 页面要引入的包，可以有多条page指令进行导入</li>
+                <li>errorPage=relative_url,当发生错误时要显示的错误页面地址,内部使用的是<span class="red">转发</span>机制</li>
+                <li>
+                    isErrorPage=true|false，指明当前页面是否是错误页面,如果为true，则可以使用exception变量，此时此页面一般不可以直接访问，放在WEB-INF下，如果直接访问则exception为空
+                </li>
+                <li>contentType=mimeType，通常是调用response.setContentType</li>
+                <li>pageEncoding=characterSet, 一般和contentType中的编码一致</li>
+                <li>isELIgnored=true|false，默认为false, 如果为true，那么\${表达式}将会原样输出</li>
 
-                 <li>language=java</li>
-                 <li>extends=package.class, 指页面继承哪个类，如果有自定义类，可以添加此属性，默认继承HttpJspBase类</li>
-                 <li>buffer=none|8kb|sizekb</li>
-                 <li>autoFlush=true|false</li>
-                 <li>isThreadSafe=true|false</li>
-                 <li>info=text</li>
-             </ul>
+                <li>language=java</li>
+                <li>extends=package.class, 指页面继承哪个类，如果有自定义类，可以添加此属性，默认继承HttpJspBase类</li>
+                <li>buffer=none|8kb|sizekb</li>
+                <li>autoFlush=true|false</li>
+                <li>isThreadSafe=true|false</li>
+                <li>info=text</li>
+            </ul>
         </li>
     </ul>
     </p>
 
     <p>
-        <h3>jsp标签</h3>
-        <br>
-        &lt;jsp:include page="a.jsp"&gt;&lt;/jsp:include&gt;<br><br>
-        &lt;jsp:forward page="a.jsp"&gt;<br>
-        &nbsp;&nbsp;&lt;jsp:param name="" value=""&gt;<br>&nbsp;&nbsp;&lt;/jsp:param&gt;
-        <br>&lt;/jsp:forward&gt;<br>相当于requestDispatcher.forward(request, response); include也可以添加jsp:param,
-        用request.getParameter获取
+    <h3>jsp标签</h3>
+    <br>
+    &lt;jsp:include page="a.jsp"&gt;&lt;/jsp:include&gt;<br><br>
+    &lt;jsp:forward page="a.jsp"&gt;<br>
+    &nbsp;&nbsp;&lt;jsp:param name="" value=""&gt;<br>&nbsp;&nbsp;&lt;/jsp:param&gt;
+    <br>&lt;/jsp:forward&gt;<br>相当于requestDispatcher.forward(request, response); include也可以添加jsp:param,
+    用request.getParameter获取
     <br>
     <ul>
         <li>&lt;jsp:useBean&gt;表示从对应范围内获取bean，若有则直接使用，若没有，则使用反射创建一个对象返回</li>
@@ -136,7 +143,8 @@
     </ul>
     <jsp:useBean id="user" class="com.zjy.entities.UserInfo" scope="session"></jsp:useBean>
     <jsp:setProperty name="user" property="userName" value="zjy"></jsp:setProperty>
-    getProperty:<jsp:getProperty name="user" property="userName"></jsp:getProperty>
+    getProperty:
+    <jsp:getProperty name="user" property="userName"></jsp:getProperty>
     </p>
     <br><br>
     <h3>中文乱码</h3>
@@ -159,7 +167,8 @@
     age
     <jsp:getProperty name="testUser" property="userName"></jsp:getProperty>
 </div>
-<%@ include file="/WEB-INF/jsp/common/endBodyAndBeginScript.jsp" %>
-<%-- js脚本 --%>
+<jsSection>
 
-<%@ include file="/WEB-INF/jsp/common/endScript.jsp" %>
+</jsSection>
+</body>
+</html>

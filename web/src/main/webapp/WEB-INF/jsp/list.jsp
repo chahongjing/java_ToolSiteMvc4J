@@ -1,17 +1,16 @@
-<!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://zjy.com" prefix="myPre"%>
-
+<%@ include file="/WEB-INF/jsp/common/commonVar.jsp" %>
+<%@ taglib uri="http://zjy.com" prefix="myPre" %>
+<!DOCTYPE html>
 <html>
 <head>
     <title>列表</title>
-    <%@ include file="/WEB-INF/jsp/common/commonCss.jsp" %>
 </head>
 <body>
-
 <table>
     <c:forEach var="item" items="${pageinfo.list}" varStatus="status">
-        <tr <c:if test="${status.count%2 == 0}">bgcolor="#CCCCFE"</c:if> align="left">
+        <tr
+                <c:if test="${status.count%2 == 0}">bgcolor="#CCCCFE"</c:if> align="left">
             <td>
                 <c:out value="${item.userName}"></c:out>
             </td>
@@ -38,10 +37,11 @@ empty:${empty " "}
 
 <h2>el tag</h2>
 <myPre:readFile src="/WEB-INF/myTag.tld">
-从页面上传过来的参数：${param.name}
+    从页面上传过来的参数：${param.name}
     <myPre:sonTag/>
 </myPre:readFile>
+<jsSection>
 
-<%@ include file="/WEB-INF/jsp/common/commonJs.jsp" %>
+</jsSection>
 </body>
 </html>

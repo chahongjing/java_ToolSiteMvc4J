@@ -1,11 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="/WEB-INF/jsp/common/beginHead.jsp" %>
-<%-- 页头，添加title, mate信息, link样式, script脚本(建议在script节中添加) --%>
-<style>
-</style>
-<title>shiro学习</title>
-<%@ include file="/WEB-INF/jsp/common/endHeadAndBeginBody.jsp" %>
-<%-- html正文 --%>
+<%@ include file="/WEB-INF/jsp/common/commonVar.jsp" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>shiro学习</title>
+</head>
+<body>
 <div>
     <div>
         <p>
@@ -26,6 +26,8 @@
         </ul>
     </div>
 </div>
-<%@ include file="/WEB-INF/jsp/common/endBodyAndBeginScript.jsp" %>
-<%-- js脚本 --%>
-<%@ include file="/WEB-INF/jsp/common/endScript.jsp" %>
+<jsSection>
+
+</jsSection>
+</body>
+</html>

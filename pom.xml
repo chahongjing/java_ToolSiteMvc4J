@@ -13,6 +13,7 @@
         <module>bll</module>
         <module>web</module>
         <module>baseframework</module>
+        <module>webvue</module>
     </modules>
 
     <properties>

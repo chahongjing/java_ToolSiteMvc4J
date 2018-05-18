@@ -1,10 +1,12 @@
-<!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="ctx" value="<%= request.getContextPath() %>" />
+<!DOCTYPE html>
 <html>
 <head>
     <title>用户登录</title>
-    <%@ include file="/WEB-INF/jsp/common/commonCss.jsp" %>
+    <link rel="shortcut icon" href="${ctx}/favicon.ico" type="image/x-icon" />
     <link href="${ctx}/bootstrap/css/bootstrap.css" rel="stylesheet"/>
     <link href="${ctx}/bootstrap/css/font-awesome.css" rel="stylesheet"/>
     <link href="${ctx}/Controls/Dialog.css" rel="stylesheet"/>
@@ -76,7 +78,9 @@
         </form>
     </div>
 </div>
-<%@ include file="/WEB-INF/jsp/common/commonJs.jsp" %>
+<script type="text/javascript" src="${ctx}/js/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="${ctx}/js/Utility.js"></script>
+<script type="text/javascript">var ctx = '<%= request.getContextPath() %>';</script>
 <script src="${ctx}/Controls/Dialog.js"></script>
 <script src="${ctx}/js/jquery.form.js"></script>
 <script>

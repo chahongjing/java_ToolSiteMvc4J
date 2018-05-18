@@ -1,35 +1,37 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="/WEB-INF/jsp/common/beginHead.jsp" %>
-<%-- 页头，添加title, mate信息, link样式, script脚本(建议在script节中添加) --%>
-<style>
-    * {
-        font-family: "Microsoft YaHei UI";
-        font-size: 14px;
-    }
+<%@ include file="/WEB-INF/jsp/common/commonVar.jsp" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>学习session</title>
+    <style>
+        * {
+            font-family: "Microsoft YaHei UI";
+            font-size: 14px;
+        }
 
-    .bold {
-        font-weight: bold;
-    }
+        .bold {
+            font-weight: bold;
+        }
 
-    .red {
-        color: #f00;
-    }
+        .red {
+            color: #f00;
+        }
 
-    .green {
-        color: #008000;
-    }
+        .green {
+            color: #008000;
+        }
 
-    .inline {
-        display: inline-block;
-    }
+        .inline {
+            display: inline-block;
+        }
 
-    p {
-        text-indent: 10px;
-    }
-</style>
-<title>学习session</title>
-<%@ include file="/WEB-INF/jsp/common/endHeadAndBeginBody.jsp" %>
-<%-- html正文 --%>
+        p {
+            text-indent: 10px;
+        }
+    </style>
+</head>
+<body>
 <div>
     <p>
     <h2>sessionid</h2>
@@ -37,7 +39,9 @@
     不同的会话请求会附带不同的标识
     <ul>
         <li>1.通过在request中的cookie中设置JSESSIONID</li>
-        <li>2.在请求url后面带上JSESSIONID=xxxx, 通过调用response.encodeURL()或encodeRedirectURL()方法在地址后添加jsessionid, 如果不需要添加jsessionid，则直接返回参数</li>
+        <li>2.在请求url后面带上JSESSIONID=xxxx, 通过调用response.encodeURL()或encodeRedirectURL()方法在地址后添加jsessionid,
+            如果不需要添加jsessionid，则直接返回参数
+        </li>
     </ul>
     </p>
     <p>
@@ -56,9 +60,9 @@
             <ul>
                 <li>代码设置5秒内有效期session.setMaxInactiveInterval(5)</li>
                 <li>web.xml设置，tomcat服务器中的web.xml设置默认为30分钟过期，也可以在项目中的web.xml中设置,以为分单位
-                <br>
+                    <br>
                     &lt;session-config&gt;<br>
-                        &lt;session-timeout&gt;30&lt;session-timeout&gt;<br>
+                    &lt;session-timeout&gt;30&lt;session-timeout&gt;<br>
                     &lt;session-config&gt;<br>
                 </li>
             </ul>
@@ -66,18 +70,19 @@
     </ul>
     </p>
     <p>
-        <h2>session api</h2>
-        <ul>
-            <li>getId()</li>
-            <li>isNew()</li>
-            <li>getMaxInactiveInterval()</li>
-            <li>getCreationTime()</li>
-            <li>getLastAccessedTime()</li>
-        </ul>
+    <h2>session api</h2>
+    <ul>
+        <li>getId()</li>
+        <li>isNew()</li>
+        <li>getMaxInactiveInterval()</li>
+        <li>getCreationTime()</li>
+        <li>getLastAccessedTime()</li>
+    </ul>
     </p>
 
 </div>
-<%@ include file="/WEB-INF/jsp/common/endBodyAndBeginScript.jsp" %>
-<%-- js脚本 --%>
+<jsSection>
 
-<%@ include file="/WEB-INF/jsp/common/endScript.jsp" %>
+</jsSection>
+</body>
+</html>
