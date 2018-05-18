@@ -31,7 +31,7 @@ var app = angular.module('myApp', [])
                             $rootScope.requests401.push(req);
                             $rootScope.$broadcast('event:loginRequired');
                             return deferred.promise;
-                        } else if(response.status === 404) {
+                        } else if (response.status === 404) {
                             var jReturn = {Status: 'ERROR'};
                             var startIndex = response.data.indexOf("<title>");
                             if (startIndex > 0) {
@@ -40,10 +40,10 @@ var app = angular.module('myApp', [])
                                 startIndex = response.data.indexOf("<body>");
                                 endIndex = response.data.indexOf("</body>");
                                 var els = $('<div>' + response.data.substring(startIndex + 6, endIndex) + '</div>').children();
-                                if(els && els.length > 0) {
+                                if (els && els.length > 0) {
                                     var message = [];
-                                    for(var i = 0; i < els.length; i++) {
-                                        if(els[i].innerText && $.trim(els[i].innerText)) {
+                                    for (var i = 0; i < els.length; i++) {
+                                        if (els[i].innerText && $.trim(els[i].innerText)) {
                                             message.push(els[i].innerText);
                                         }
                                     }
@@ -53,7 +53,7 @@ var app = angular.module('myApp', [])
                                 jReturn.Message = "返回数据失败！";
                             }
                             //return $q.resolve({data:jReturn});
-                            return $q.reject({data:jReturn});
+                            return $q.reject({data: jReturn});
                         }
                         return $q.reject(response);
                         //return $q.resolve(response);
@@ -62,3 +62,23 @@ var app = angular.module('myApp', [])
             });
         }]
     );
+app.controller('mainCtrl', ['$scope', 'commonService',
+    function ($scope, commonSrv) {
+        // 退出登录
+        $scope.logout = function () {
+            userSrv.logout().success(function (resp) {
+                if (resp.code == Constant.JsonResultCode.SUCCESS) {
+                    window.location = commonSrv.getContext();
+                } else {
+                    alert(resp.msg);
+                }
+            }).error(function () {
+                alert("注销失败！");
+            });
+        }
+
+        // 返回
+        $scope.goBack = function () {
+            history.go(-1);
+        }
+    }]);

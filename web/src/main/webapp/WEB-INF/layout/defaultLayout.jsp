@@ -3,15 +3,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Title<sitemesh:write property='title' /></title>
+    <title>Title<sitemesh:write property='title'/></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="shortcut icon" href="${ctx}/favicon.ico" type="image/x-icon" />
-    <link href="${ctx}/bootstrap/css/bootstrap.css" rel="stylesheet" />
-    <link href="${ctx}/bootstrap/css/font-awesome.css" rel="stylesheet" />
-    <link href="${ctx}/bootstrap/css/main.css" rel="stylesheet" />
+    <link href="${ctx}/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+    <link href="${ctx}/bootstrap/css/bootstrap.css" rel="stylesheet"/>
+    <link href="${ctx}/bootstrap/css/font-awesome.css" rel="stylesheet"/>
+    <link href="${ctx}/bootstrap/css/main.css" rel="stylesheet"/>
     <sitemesh:write property='head'/>
 </head>
-<body data-ng-app="myApp">
+<body data-ng-app="myApp" data-ng-controller="mainCtrl">
 <div class="main">
     <div class="head">
         <div class="logo">
@@ -48,8 +48,8 @@
     </div>
     <div class="body">
         <div class="menu"></div>
-        <div class="right-content">
-            <div class="right-content-main">
+        <div class="right-main">
+            <div class="right-content">
                 <h2>测试</h2>
                 <sitemesh:write property='body'/>
                 <div class="loadingmask">
@@ -64,8 +64,11 @@
     </div>
 </div>
 <script type="text/javascript" src="${ctx}/js/jquery-1.10.2.js"></script>
-<script type="text/javascript" src="${ctx}/js/Utility.js"></script>
 <script type="text/javascript">var ctx = '<%= request.getContextPath() %>';</script>
+<script type="text/javascript" src="${ctx}/js/Utility.js"></script>
+<script src="${ctx}/js/angular/angular.js"></script>
+<script src="${ctx}/js/angular/angular_main.js"></script>
+<script src="${ctx}/js/angular/commonService.js"></script>
 <sitemesh:write property='jsSection'/>
 </body>
 </html>
