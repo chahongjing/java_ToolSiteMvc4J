@@ -64,7 +64,7 @@
         </div>
     </div>
 </div>
-<script src="${ctx}/js/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="${ctx}/js/jquery-3.3.1.js" type="text/javascript"></script>
 <script type="text/javascript">var ctx = '<%= request.getContextPath() %>';</script>
 <script src="${ctx}/js/Utility.js" type="text/javascript"></script>
 <script src="${ctx}/js/angular/angular.js"></script>

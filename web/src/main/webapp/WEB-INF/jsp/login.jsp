@@ -78,7 +78,7 @@
         </form>
     </div>
 </div>
-<script type="text/javascript" src="${ctx}/js/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="${ctx}/js/jquery-3.3.1.js"></script>
 <script type="text/javascript" src="${ctx}/js/Utility.js"></script>
 <script type="text/javascript">var ctx = '<%= request.getContextPath() %>';</script>
 <script src="${ctx}/Controls/Dialog.js"></script>

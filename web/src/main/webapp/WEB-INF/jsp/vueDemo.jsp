@@ -16,14 +16,14 @@
 </head>
 <body>
 <div>
-    <div id="app">
+    <div>
         <p v-if="isShow == 1">isShow == 1</p>
         <p v-else="isShow == 1">isShow != 1</p><!-- v-else-if -->
         <p v-show="isShow == 1">vshow</p>
         <input v-model="isShow"/>v-once:<span v-once="isShow">{{isShow}}</span><br>
         <button v-on:click="toggle($event)">点击切换可缩写为@click</button>
         <ul>
-            <todo-item v-for="item in list" v-bind:title="item.name" v-bind:todo="item" v-bind:key="item.id">
+            <todo-item v-for="item in list" v-bind:key="item.id" v-bind:todo="item">
             </todo-item>
         </ul>
 
@@ -65,16 +65,84 @@
         <span>Selected: {{ selected }}</span>
 
         <hello hello></hello>
+        <pagination v-bind:pagerInfo="pagerInfo" v-bind:click="testMe"></pagination>
     </div>
 </div>
+<script type="text/template" id="tpl">
+    <li v-text="todo.name"></li>
+</script>
+<script type="text/template" id="pagination">
+    <div class="pager">
+        <ul class="pagination">
+            <li class="page-item" v-for="item in list" @click="goPage(item)" :class="getClass(item)">
+                <a class="page-link" href="#" v-text="item.name"></a>
+            </li>
+        </ul>
+    </div>
+</script>
 <jsSection>
     <script>
+        Vue.component('pagination', {
+            props: ['pagerInfo', 'click'],
+            data: function () {
+                return {list: []};
+            },
+            template: '#pagination',
+            created: function () {
+                var pagerInfo = this.$attrs['pagerinfo'];
+                var list = this.handData(pagerInfo);
+                this.list = list;
+            },
+            methods: {
+                handData: function (pagerInfo) {
+                    var list = [], start = pagerInfo.pageNum - 2, end = pagerInfo.pageNum + 2,
+                        pre = pagerInfo.pageNum - 1,
+                        next = pagerInfo.pageNum + 1;
+                    if (start < 1) start = 1;
+                    if (end > pagerInfo.pages) end = pagerInfo.pages;
+                    if (pre < 1) pre = 1;
+                    if (next > pagerInfo.pages) next = pagerInfo.pages;
+                    var obj;
+                    obj = {name: '上一页', value: pre, isDisabled: false};
+                    if (obj.value == pagerInfo.pageNum) {
+                        obj.isDisabled = true;
+                    }
+                    list.push(obj);
+                    for (var i = start; i < end + 1; i++) {
+                        obj = {name: i, value: i, isDisabled: false};
+                        if (pagerInfo.pageNum == i) {
+                            obj.isCurrent = true;
+                            obj.isDisabled = true;
+                        }
+                        list.push(obj);
+                    }
+                    obj = {name: '下一页', value: next, isDisabled: false};
+                    if (obj.value == pagerInfo.pageNum) {
+                        obj.isDisabled = true;
+                    }
+                    list.push(obj);
+                    return list;
+                },
+                getClass: function (pageItem) {
+                    return {'isCurrent': pageItem.isCurrent, 'disabled': pageItem.isDisabled || pageItem.isCurrent}
+                },
+                goPage: function (page) {
+                    if (page.isDisabled) return;
+                    this.click && this.click(page);
+                }
+            }
+        });
+
+        // function getClass(pageItem) {
+        //     return {'isCurrent': pageItem.isCurrent,'disabled': pageItem.isDisabled || pageItem.isCurrent }
+        // }
+
         Vue.component('todo-item', {
             // todo-item 组件现在接受一个
             // "prop"，类似于一个自定义特性。
             // 这个 prop 名为 todo。
             props: ['todo'],
-            template: '<li>{{ todo.name }}</li>'
+            template: '#tpl'
         });
 
         var data = {
@@ -88,11 +156,12 @@
                 {text: 'One', value: 'A'},
                 {text: 'Two', value: 'B'},
                 {text: 'Three', value: 'C'}
-            ]
+            ],
+            pagerInfo: {pageNum: 5, pages: 10}
         };
 
         var vm = new Vue({
-            el: '#app',
+            el: '#myApp',
             data: data,
             methods: {
                 toggle: toggle,
@@ -106,6 +175,9 @@
                     return {
                         backgroundColor: '#eee'
                     }
+                },
+                testMe: function (a) {
+                    console.log(a.value);
                 }
             },
             computed: {

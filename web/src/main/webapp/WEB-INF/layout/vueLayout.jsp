@@ -8,11 +8,11 @@
     <link href="${ctx}/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
     <link href="${ctx}/bootstrap/css/bootstrap.css" rel="stylesheet"/>
     <link href="${ctx}/bootstrap/css/font-awesome.css" rel="stylesheet"/>
-    <link href="${ctx}/bootstrap/css/main.css" rel="stylesheet"/>
+    <link href="${ctx}/bootstrap/css/common.css" rel="stylesheet"/>
     <sitemesh:write property='head'/>
 </head>
-<body id="myApp">
-<div class="main">
+<body>
+<div class="main" id="myApp">
     <div class="head">
         <div class="logo">
             <div class="logoimg fl"><a href="${ctx}" title="首页"></a></div>
@@ -64,7 +64,7 @@
         </div>
     </div>
 </div>
-<script src="${ctx}/js/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="${ctx}/js/jquery-3.3.1.js" type="text/javascript"></script>
 <script type="text/javascript">var ctx = '<%= request.getContextPath() %>';</script>
 <script src="${ctx}/js/Utility.js" type="text/javascript"></script>
 <script src="${ctx}/js/vue/vue.js"></script>
