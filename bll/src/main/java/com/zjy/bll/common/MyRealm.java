@@ -162,14 +162,15 @@ public class MyRealm extends AuthorizingRealm {
     public Object getUser() {
         Subject currentUser = SecurityUtils.getSubject();
         if (null != currentUser) {
-            Session session = currentUser.getSession();
-            if (null != session) {
-                Object obj = session.getAttribute(currentKey);
-                if (obj != null) {
-                    // AuthenticationInfo ai = (AuthenticationInfo)obj;
-                    return obj;
-                }
-            }
+            return currentUser.getPrincipal();
+//            Session session = currentUser.getSession();
+//            if (null != session) {
+//                Object obj = session.getAttribute(currentKey);
+//                if (obj != null) {
+//                    // AuthenticationInfo ai = (AuthenticationInfo)obj;
+//                    return obj;
+//                }
+//            }
         }
         return null;
     }
