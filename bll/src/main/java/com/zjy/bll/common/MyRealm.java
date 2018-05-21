@@ -132,7 +132,7 @@ public class MyRealm extends AuthorizingRealm {
             //info = new SimpleAuthenticationInfo(principal, credentials, realmName);
             //info = new SimpleAuthenticationInfo(principal, sh, realmName);
             //通过关于盐值的构造器，将前端传入的密码在加密时再加入盐值
-            authcInfo = new SimpleAuthenticationInfo(user, sh, salt, getName());
+            authcInfo = new SimpleAuthenticationInfo(user, sh.toString(), salt, "");
 
             this.setSession(currentKey, user);
             // this.setSession(currentKey, authcInfo);
