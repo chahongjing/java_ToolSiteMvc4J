@@ -1,3 +1,4 @@
+<%@ taglib prefix="v-on" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/jsp/common/commonVar.jsp" %>
 <!DOCTYPE html>
@@ -20,8 +21,8 @@
         <p v-if="isShow == 1">isShow == 1</p>
         <p v-else="isShow == 1">isShow != 1</p><!-- v-else-if -->
         <p v-show="isShow == 1">vshow</p>
-        <input v-model="isShow"/>v-once:<span v-once="isShow">{{isShow}}</span><br>
-        <button v-on:click="toggle($event)">点击切换可缩写为@click</button>
+        <input v-model="isShow"/>v-once:<span v-once="isShow" v-text="isShow"></span><br>
+        <button v-on:v-on:click="toggle($event)">点击切换可缩写为@click</button>
         <ul>
             <todo-item v-for="item in list" v-bind:key="item.id" v-bind:todo="item">
             </todo-item>
@@ -145,7 +146,7 @@
             isShow: 1,
             list: [{id: 1, name: 'A'}, {id: 2, name: 'B'}, {id: 3, name: 'C'}, {id: 4, name: 'D'}],
             html: '<p>这是<b style="color:red;">一段</b>文字</p>',
-            checkedNames: [],
+            checkedNames: ['Mike', 'John'],
             picked: '',
             selected: '',
             options: [

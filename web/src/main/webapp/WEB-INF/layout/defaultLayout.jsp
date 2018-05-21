@@ -51,7 +51,6 @@
         <div class="right-main">
             <div class="bread"></div>
             <div class="right-content">
-                <h2>测试</h2>
                 <sitemesh:write property='body'/>
                 <div class="loadingmask">
                     <div class="info">
