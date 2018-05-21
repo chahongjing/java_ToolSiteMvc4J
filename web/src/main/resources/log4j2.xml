@@ -86,7 +86,7 @@
             <appender-ref ref="RollingFile_WARNING" />
             <appender-ref ref="RollingFile_ERROR" />
         </root>
-        <!-- 将业务dao接口填写进去,并用控制台输出即可 -->
+        <!-- 将业务dao接口填写进去,并用控制台输出即可, sql也会输出 -->
         <logger name="com.zjy.bll.dao" level="DEBUG" additivity="false">
             <appender-ref ref="consolePrint"/>
         </logger>
