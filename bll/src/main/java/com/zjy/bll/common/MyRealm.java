@@ -1,5 +1,6 @@
-package com.zjy.baseframework;
+package com.zjy.bll.common;
 
+import com.zjy.entities.UserInfo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -23,7 +24,7 @@ import static org.apache.shiro.web.filter.mgt.DefaultFilter.user;
  */
 public class MyRealm extends AuthorizingRealm {
 
-    protected static String currentKey = "currentUser";
+    public static String currentKey = "currentUser";
 
     protected static Function<String, Object> myfun;
     /**
@@ -114,15 +115,16 @@ public class MyRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
+        UserInfo user = (UserInfo)myfun.apply(token.getUsername());
         //User user = userService.getByUsername(token.getUsername());
-        //if (null != user) {
-            AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(token.getUsername(), token.getPassword(), "");
-            this.setSession(currentKey, myfun.apply(authcInfo.getPrincipals().asList().get(0).toString()));
+        if (null != user) {
+            AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user.getUserCode(), user.getPassword(), "");
+            this.setSession(currentKey, user);
             // this.setSession(currentKey, authcInfo);
             return authcInfo;
-//        } else {
-//            return null;
-//        }
+        } else {
+            return null;
+        }
     }
 
 
@@ -131,7 +133,7 @@ public class MyRealm extends AuthorizingRealm {
      *
      * @see 比如Controller,使用时直接用HttpSession.getAttribute(key)就可以取到
      */
-    private void setSession(Object key, Object value) {
+    protected void setSession(Object key, Object value) {
         Subject currentUser = SecurityUtils.getSubject();
         if (null != currentUser) {
             Session session = currentUser.getSession();
@@ -155,5 +157,15 @@ public class MyRealm extends AuthorizingRealm {
             }
         }
         return null;
+    }
+
+    public void clearSession(String key) {
+        Subject currentUser = SecurityUtils.getSubject();
+        if (null != currentUser) {
+            Session session = currentUser.getSession();
+            if (null != session) {
+                session.setAttribute(currentKey, null);
+            }
+        }
     }
 }

@@ -21,7 +21,7 @@
         <div class="info">
             <ul>
                 <li>
-                    <a class="fr logout licontent" href="javascript:void(0)" data-ng-click="logout()">
+                    <a class="fr logout licontent" href="${ctx}/userinfo/logout.do" data-ng-click="logout()">
                         <i class="fa fa-power-off"></i>&nbsp;注销</a>
                 </li>
                 <li>

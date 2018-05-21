@@ -53,7 +53,7 @@ public class UserInfoController {
         if (lastRequest != null && "GET".equalsIgnoreCase(lastRequest.getMethod())) {
             url = WebUtils.getSavedRequest(request).getRequestUrl();
         }
-        if(StringUtils.isBlank(url)) {
+        if (StringUtils.isBlank(url)) {
             url = request.getRequestURL().toString().replace(request.getRequestURI(), "") + request.getContextPath() + "/";
         }
         mv.addObject("redirectUrl", url);
@@ -62,17 +62,25 @@ public class UserInfoController {
 
     @RequestMapping("/login")
     public ResponseEntity<BaseResult<String>> login(HttpServletRequest request, UserInfo user) {
-        BaseResult<String> re = userInfoService.login(user);
-        if (re.getStatus() != ResultStatus.OK) {
-            return new ResponseEntity<>(re, HttpStatus.OK);
-        }
+        BaseResult<String> re = BaseResult.OK();// userInfoService.login(user);
+//        if (re.getStatus() != ResultStatus.OK) {
+//            return new ResponseEntity<>(re, HttpStatus.OK);
+//        }
 
         Subject subject = SecurityUtils.getSubject();
 //        if (subject.isAuthenticated()) {
 //            return null;
 //        }
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUserCode(), user.getPassword());
-        subject.login(token); // 登录
+        try {
+            subject.login(token); // 登录
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            userUtils.clearSession(UserUtils.currentKey);
+            re.setStatus(ResultStatus.NO);
+            re.setMessage("用户名或密码错误！");
+            return new ResponseEntity<>(re, HttpStatus.OK);
+        }
         logger.info("用户{}登录", user.getUserCode());
         return new ResponseEntity<>(re, HttpStatus.OK);
     }
