@@ -11,6 +11,7 @@ import com.zjy.entities.UserInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.SavedRequest;
 import org.apache.shiro.web.util.WebUtils;
@@ -71,12 +72,14 @@ public class UserInfoController {
 //        if (subject.isAuthenticated()) {
 //            return null;
 //        }
+        //String password = userUtils.getMd5Hash(user.getUserCode(), user.getPassword());
+
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUserCode(), user.getPassword());
         try {
             subject.login(token); // 登录
         } catch (Exception ex) {
             ex.printStackTrace();
-            userUtils.clearSession(UserUtils.currentKey);
+            userUtils.clearSession();
             re.setStatus(ResultStatus.NO);
             re.setMessage("用户名或密码错误！");
             return new ResponseEntity<>(re, HttpStatus.OK);

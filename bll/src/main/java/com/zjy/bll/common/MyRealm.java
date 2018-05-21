@@ -3,18 +3,20 @@ package com.zjy.bll.common;
 import com.zjy.entities.UserInfo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.credential.CredentialsMatcher;
+import org.apache.shiro.authc.credential.SimpleCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.util.ByteSource;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
-
-import static org.apache.shiro.web.filter.mgt.DefaultFilter.user;
 
 /**
  * shiro认证
@@ -27,6 +29,7 @@ public class MyRealm extends AuthorizingRealm {
     public static String currentKey = "currentUser";
 
     protected static Function<String, Object> myfun;
+
     /**
      * 为当前登录的Subject授予角色和权限
      *
@@ -115,10 +118,22 @@ public class MyRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
-        UserInfo user = (UserInfo)myfun.apply(token.getUsername());
+        UserInfo user = (UserInfo) myfun.apply(token.getUsername());
         //User user = userService.getByUsername(token.getUsername());
         if (null != user) {
             AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user.getUserCode(), user.getPassword(), "");
+
+            CustomCredentialsMatcher credentialsMatcher = (CustomCredentialsMatcher)getCredentialsMatcher();
+            ByteSource salt = ByteSource.Util.bytes(user.getUserCode());
+            //SimpleHash sh=new SimpleHash(algorithmName, source, salt, iterations);
+            //   加密类型                       加密资源        盐值加密      加密次数
+            //给从数据库中拿到的密码做MD5的加密
+            SimpleHash sh = new SimpleHash(credentialsMatcher.getHashAlgorithmName(), user.getPassword(), salt, credentialsMatcher.getHashIterations());
+            //info = new SimpleAuthenticationInfo(principal, credentials, realmName);
+            //info = new SimpleAuthenticationInfo(principal, sh, realmName);
+            //通过关于盐值的构造器，将前端传入的密码在加密时再加入盐值
+            authcInfo = new SimpleAuthenticationInfo(user, sh, salt, getName());
+
             this.setSession(currentKey, user);
             // this.setSession(currentKey, authcInfo);
             return authcInfo;
@@ -150,7 +165,7 @@ public class MyRealm extends AuthorizingRealm {
             Session session = currentUser.getSession();
             if (null != session) {
                 Object obj = session.getAttribute(currentKey);
-                if(obj != null) {
+                if (obj != null) {
                     // AuthenticationInfo ai = (AuthenticationInfo)obj;
                     return obj;
                 }
@@ -159,7 +174,7 @@ public class MyRealm extends AuthorizingRealm {
         return null;
     }
 
-    public void clearSession(String key) {
+    public void clearSession() {
         Subject currentUser = SecurityUtils.getSubject();
         if (null != currentUser) {
             Session session = currentUser.getSession();
@@ -167,5 +182,11 @@ public class MyRealm extends AuthorizingRealm {
                 session.setAttribute(currentKey, null);
             }
         }
+    }
+
+    public String getMd5Hash(String salt, String password) {
+        CustomCredentialsMatcher credentialsMatcher = (CustomCredentialsMatcher)getCredentialsMatcher();
+        Object simpleHash = new SimpleHash(credentialsMatcher.getHashAlgorithmName(), password, salt, credentialsMatcher.getHashIterations());
+        return simpleHash.toString();
     }
 }

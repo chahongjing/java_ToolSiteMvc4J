@@ -19,6 +19,8 @@
     </bean>
 
     <bean id="credentialsMatcher" class="com.zjy.bll.common.CustomCredentialsMatcher">
+        <property name="hashAlgorithmName" value="MD5"></property>
+        <property name="hashIterations" value="1024"></property>
     </bean>
 
     <!-- Shiro主过滤器本身功能十分强大,其强大之处就在于它支持任何基于URL路径表达式的、自定义的过滤器的执行 -->
