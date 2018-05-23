@@ -87,6 +87,10 @@
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc6</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+        </dependency>
         <!-- ws/rs -->
         <dependency>
             <groupId>javax.ws.rs</groupId>
