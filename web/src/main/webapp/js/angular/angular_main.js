@@ -126,8 +126,8 @@ app.controller('mainCtrl', ['$rootScope', '$scope', '$timeout', 'commonService',
             if(sub.isSelected) return;
             for(var i = 0; i < $scope.model.menu.length; i++) {
                 var obj = $scope.model.menu[i];
-                for(var i = 0; i < obj.list.length; i++) {
-                    var subObj = obj.list[i];
+                for(var j = 0; j < obj.list.length; j++) {
+                    var subObj = obj.list[j];
                     if(item == subObj) continue;
                     subObj.isSelected = false;
                 }
