@@ -62,8 +62,13 @@ var app = angular.module('myApp', [])
             });
         }]
     );
-app.controller('mainCtrl', ['$scope', 'commonService',
-    function ($scope, commonSrv) {
+app.controller('mainCtrl', ['$rootScope', '$scope', 'commonService',
+    function ($rootScope, $scope, commonSrv) {
+        $scope.model = {loadingReload: 0};
+
+        $scope.init = function () {
+            $scope.model.loadingReload++;
+        }
         // 退出登录
         $scope.logout = function () {
             commonSrv.get('/userinfo/logout.do').success(function (resp) {
@@ -75,6 +80,19 @@ app.controller('mainCtrl', ['$scope', 'commonService',
             }).error(function () {
                 alert("注销失败！");
             });
+        }
+
+        $rootScope.showLoading = $scope.showLoading = function (title) {
+            $scope.model.loadingReload++;
+            if (title) {
+                $scope.model.loadingText = 'title';
+            }
+            $scope.model.isShowLoading = true;
+        }
+
+        $rootScope.hideLoading = $scope.hideLoading = function () {
+            $scope.model.loadingText = '';
+            $scope.model.isShowLoading = false;
         }
 
         // 返回

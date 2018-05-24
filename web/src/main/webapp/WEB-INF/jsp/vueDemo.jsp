@@ -17,7 +17,7 @@
 </head>
 <body>
 <div>
-    <div>
+    <div id="abc">
         <p v-if="isShow == 1">isShow == 1</p>
         <p v-else="isShow == 1">isShow != 1</p><!-- v-else-if -->
         <p v-show="isShow == 1">vshow</p>
@@ -157,6 +157,17 @@
             pagerInfo: {pageNum: 5, pages: 10}
         };
 
+
+//        var vm1 = new Vue({
+//            el: '#twoV',
+//            data: {message: 'mymes'},
+//            methods: {
+//                toggle: function() {
+//                    console.log('dsfasfd');
+//                }
+//            }
+//        });
+
         var vm = new Vue({
             el: '#myApp',
             data: data,
@@ -203,7 +214,7 @@
             }
             <%--components: {--%>
             <%--'hello': () => import('${ctx}/js/vue/component/hello.vue')--%>
-            <%--}--%>
+            <%--}--%>,
         });
 
         console.log(vm.list === data.list);

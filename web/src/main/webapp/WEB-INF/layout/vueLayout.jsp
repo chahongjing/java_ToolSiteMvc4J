@@ -13,6 +13,26 @@
 </head>
 <body>
 <div class="main" id="myApp">
+    <apphead></apphead>
+    <div class="body" id="appBody">
+        <div class="menu"></div>
+        <div class="right-main">
+            <div class="bread"></div>
+            <div class="right-content">
+                <h2>测试</h2>
+                <sitemesh:write property='body'/>
+                <div class="loadingmask">
+                    <div class="info">
+                        <img src="${ctx}/bootstrap/images/loading.gif"/>
+                        <p class="mt10">数据处理中，请等待...</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer"></div>
+        </div>
+    </div>
+</div>
+<script type="text/template" id="appHead">
     <div class="head">
         <div class="logo">
             <div class="logoimg fl"><a href="${ctx}" title="首页"></a></div>
@@ -21,11 +41,11 @@
         <div class="info">
             <ul>
                 <li>
-                    <a class="fr logout licontent" href="${ctx}/userinfo/logout.do" data-ng-click="logout()">
+                    <a class="fr logout licontent" href="javascript:void(0)" @click="logout()">
                         <i class="fa fa-power-off"></i>&nbsp;注销</a>
                 </li>
                 <li>
-                    <a class="fr logout licontent" href="javascript:void(0)" data-ng-click="goBack()">
+                    <a class="fr logout licontent" href="javascript:void(0)" @click="goBack()">
                         <i class="fa fa-reply"></i>&nbsp;返回</a>
                 </li>
                 <li>
@@ -46,28 +66,46 @@
             </ul>
         </div>
     </div>
-    <div class="body">
-        <div class="menu"></div>
-        <div class="right-main">
-            <div class="bread"></div>
-            <div class="right-content">
-                <h2>测试</h2>
-                <sitemesh:write property='body'/>
-                <div class="loadingmask">
-                    <div class="info">
-                        <img src="${ctx}/bootstrap/images/loading.gif"/>
-                        <p class="mt10">数据处理中，请等待...</p>
-                    </div>
-                </div>
-            </div>
-            <div class="footer"></div>
-        </div>
-    </div>
-</div>
+</script>
 <script src="${ctx}/js/jquery-3.3.1.js" type="text/javascript"></script>
 <script type="text/javascript">var ctx = '<%= request.getContextPath() %>';</script>
 <script src="${ctx}/js/Utility.js" type="text/javascript"></script>
 <script src="${ctx}/js/vue/vue.js"></script>
+<script src="${ctx}/js/vue/vueService.js"></script>
+<script>
+    Vue.component('apphead', {
+        template: '#appHead',
+        methods: {
+            // 退出登录
+            logout: function () {
+                window.Utility.get('/userinfo/logout.do').done(function (resp) {
+                    if (resp.status == Constant.AjaxStatus.OK) {
+                        window.location = commonSrv.getContext();
+                    } else {
+                        alert(resp.msg);
+                    }
+                }).fail(function () {
+                    alert("注销失败！");
+                });
+            },
+            showLoading: function (title) {
+                $scope.model.loadingReload++;
+                if (title) {
+                    $scope.model.loadingText = 'title';
+                }
+                $scope.model.isShowLoading = true;
+            },
+            hideLoading: function () {
+                $scope.model.loadingText = '';
+                $scope.model.isShowLoading = false;
+            },
+            // 返回
+            goBack: function () {
+                history.go(-1);
+            }
+        }
+    });
+</script>
 <sitemesh:write property='jsSection'/>
 </body>
 </html>

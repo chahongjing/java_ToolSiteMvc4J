@@ -416,6 +416,51 @@ window.Utility.Controls = window.Utility.Controls || {};
             }
         });
     }
+    ns.htmlEncode = function (value){
+        return $('<div/>').text(value).html();
+    }
+    //Html解码获取Html实体
+    ns.htmlDecode = function htmlDecode(value){
+        return $('<div/>').html(value).text();
+    }
+    ns.getAjaxUrl = function (path) {
+        return this.getContext() + path;
+    },
+    ns.getContext = function () {
+        return ctx;
+    },
+    ns.get = function (path, param) {
+        return $.ajax({
+            type: 'get',
+            url: this.getAjaxUrl(path),
+            data: param
+        });
+    },
+    ns.post = function (path, param) {
+        return $.ajax({
+            type: 'post',
+            url: this.getAjaxUrl(path),
+            data: param
+        });
+    },
+    ns.getFormData = function (path, formData) {
+        return $.ajax({
+            type: 'get',
+            url: this.getAjaxUrl(path),
+            data: formData,
+            processData: false,
+            contentType: false
+        });
+    },
+    postFormData = function (path, formData) {
+        return $.ajax({
+            type: 'post',
+            url: this.getAjaxUrl(path),
+            data: formData,
+            processData: false,
+            contentType: false
+        });
+    }
 })(window.Utility);
 
 /// 系统常量

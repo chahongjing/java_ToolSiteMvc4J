@@ -11,7 +11,7 @@
     <link href="${ctx}/bootstrap/css/common.css" rel="stylesheet"/>
     <sitemesh:write property='head'/>
 </head>
-<body data-ng-app="myApp" data-ng-controller="mainCtrl">
+<body data-ng-app="myApp" data-ng-controller="mainCtrl" data-ng-init="init()">
 <div class="main">
     <div class="head">
         <div class="logo">
@@ -53,17 +53,12 @@
             <div class="right-content">
                 <h2>测试</h2>
                 <sitemesh:write property='body'/>
-                <div class="loadingmask">
-                    <div class="info">
-                        <img src="${ctx}/bootstrap/images/loading.gif"/>
-                        <p class="mt10">数据处理中，请等待...</p>
-                    </div>
-                </div>
             </div>
             <div class="footer"></div>
         </div>
     </div>
 </div>
+<div loading-mask text="model.loadingText" is-show="model.isShowLoading" reload="model.loadingReload"></div>
 <script src="${ctx}/js/jquery-3.3.1.js" type="text/javascript"></script>
 <script type="text/javascript">var ctx = '<%= request.getContextPath() %>';</script>
 <script src="${ctx}/js/Utility.js" type="text/javascript"></script>

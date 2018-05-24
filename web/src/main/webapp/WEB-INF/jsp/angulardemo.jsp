@@ -69,20 +69,23 @@
     <h2>compile</h2>
     <div dir-compile watch-var="{{myChangeVar}}"></div>
     <button data-ng-click="changeVar()">改变变量的值</button>
-</div>
 
+    <button data-ng-click="showLoading()">显示loading</button>
+</div>
+<div data-ng-include="'../js/angular/templates/commonPart.html'"></div>
 <jsSection>
     <script src="/ToolSiteMvc4J/js/angular/directives/ng_repeat_finish.js"></script>
     <script src="/ToolSiteMvc4J/js/angular/directives/test_templateurl.js"></script>
     <script src="/ToolSiteMvc4J/js/angular/directives/testDir.js"></script>
+    <script src="/ToolSiteMvc4J/js/angular/directives/loadingmask.js"></script>
     <script src="/ToolSiteMvc4J/js/angular/templates/includePageCtrl.js"></script>
     <script src="/ToolSiteMvc4J/js/angular/directives/scopeTrue.js"></script>
     <script src="/ToolSiteMvc4J/js/angular/directives/scopeFalse.js"></script>
     <script src="/ToolSiteMvc4J/js/angular/directives/scopeIso.js"></script>
     <script src="/ToolSiteMvc4J/js/angular/directives/dirCompile.js"></script>
     <script>
-        app.controller('testCtrl', ['$scope', '$http', '$timeout', '$q',
-            function ($scope, $http, $timeout, $q) {
+        app.controller('testCtrl', ['$rootScope', '$scope', '$http', '$timeout', '$q',
+            function ($rootScope, $scope, $http, $timeout, $q) {
                 $scope.model = {};
                 $scope.param = 123;
                 $scope.param1 = 123;
@@ -135,6 +138,13 @@
                     promise.then(function (resp) {
                         console.log('success');
                     });
+                }
+
+                $scope.showLoading = function() {
+                    $rootScope.showLoading();
+                    $timeout(function() {
+                        $rootScope.hideLoading();
+                    }, 2000);
                 }
 
                 $scope.changeVar = function () {

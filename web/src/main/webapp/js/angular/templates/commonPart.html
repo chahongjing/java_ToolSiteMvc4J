@@ -4,8 +4,16 @@
             <li class="page-item" data-ng-class="{'isCurrent': item.isCurrent,'disabled': item.isDisabled || item.isCurrent }"
                 data-ng-repeat="item in model.list"
                 data-ng-click="goPage(item)">
-                <a class="page-link" href="#" data-ng-bind="item.name"></a>
+                <a class="page-link" href="javascript:void(0)" data-ng-bind="item.name"></a>
             </li>
         </ul>
     </div>
+</script>
+<script type="text/ng-template" id="loadingmask.html">
+<div class="loadingmask" data-ng-class="{'show': isShow}">
+    <div class="info">
+        <img alt="加载中..."/>
+        <p class="mt10" data-ng-bind-html="getMessage()"></p>
+    </div>
+</div>
 </script>

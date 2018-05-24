@@ -1,5 +1,6 @@
 html,body{width:100%;height:100%;margin:0;padding:0;font-family: "Microsoft YaHei";}
 .main{width:100%;height:100%;}
+#trans-tooltip,#tip-arrow-bottom,#tip-arrow-top{display:none;}
 .head{
     width:100%;margin:auto;height:50px;
     background-color: #4e7cd4;color:#fff;
@@ -30,13 +31,14 @@ html,body{width:100%;height:100%;margin:0;padding:0;font-family: "Microsoft YaHe
 .head .info .menu ul li a{display:block;width:100%;height:100%;color:#fff;}
 
 .body{width:100%;height:calc(100% - 50px);}
-.body .menu{width:250px;height:100%;display:inline-block;float:left;overflow-x: hidden;overflow-y: auto;border-right:1px solid #aaa;}
-.body .right-main{width:calc(100% - 250px);height:100%;display:inline-block;float:left;overflow: hidden;}
-.body .bread{width:100%;height:30px;border-bottom:1px solid #aaa;}
-.body .right-content{width:calc(100% - 15px);height:calc(100% - 47px);overflow-x: hidden;overflow-y: auto;margin-left:15px;margin-top:15px;}
+.body .menu{width:250px;height:100%;display:inline-block;float:left;overflow-x: hidden;overflow-y: auto;border-right:0px solid #aaa;}
+.body .right-main{width:calc(100% - 250px);height:100%;display:inline-block;float:left;overflow: hidden;background-color: #d6dae6;}
+.body .bread{width:100%;height:30px;border-bottom:0px solid #aaa;background-color: #edf1f2;}
+.body .right-content{background-color:#fff;width:calc(100% - 25px);height:calc(100% - 60px);overflow-x: hidden;overflow-y: auto;margin-left:15px;
+    margin-top:15px;border:1px solid #c8cddc;background-color: #f6f8fb;}
 
-
-.loadingmask{display:none;position:fixed;width:100%;height:calc(100%);left:0px;top:0px;background-color:rgba(0,0,0,0.7);z-index: 10000;}
+.loadingmask{display:none;position:fixed;width:100%;height:calc(100%);left:0px;top:0px;background-color:rgba(0,0,0,0.5);z-index: 10000;}
+.loadingmask.show{display:block;}
 .loadingmask .info{display:block;position:absolute;top:50%;margin-top:-24px;text-align:center;width:100%;}
 .loadingmask img{width:30px;height:30px;}
 .loadingmask p{color:#fff;font-size:14px;}
