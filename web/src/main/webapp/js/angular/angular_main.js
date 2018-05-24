@@ -62,12 +62,13 @@ var app = angular.module('myApp', [])
             });
         }]
     );
-app.controller('mainCtrl', ['$rootScope', '$scope', 'commonService',
-    function ($rootScope, $scope, commonSrv) {
+app.controller('mainCtrl', ['$rootScope', '$scope', '$timeout', 'commonService',
+    function ($rootScope, $scope, $timeout, commonSrv) {
         $scope.model = {loadingReload: 0};
 
         $scope.init = function () {
             $scope.model.loadingReload++;
+            getMenu();
         }
         // 退出登录
         $scope.logout = function () {
@@ -98,5 +99,49 @@ app.controller('mainCtrl', ['$rootScope', '$scope', 'commonService',
         // 返回
         $scope.goBack = function () {
             history.go(-1);
+        }
+
+        function getMenu() {
+            var list = [];
+            list.push({id:1,name: '系统管理',isSelected: true, icon: 'fa-cog', list:[{pId:3,name:'导航', icon: 'fa-cog',isSelected: true},{pId:4,name:'日志', icon: 'fa-cog'}]});
+            list.push({id:2,name: '后台管理', icon: 'fa-cog', list:[{pId:5,name:'导航1', icon: 'fa-cog'},{pId:6,name:'日2志', icon: 'fa-cog'}]});
+            $scope.model.menu = list;
+        }
+        $scope.clickFirstMenu = function(item) {
+            if(item.isSelected) {
+                item.isSelected = false;
+                return;
+            }
+            for(var i = 0; i < $scope.model.menu.length; i++) {
+                var obj = $scope.model.menu[i];
+                if(item == obj) {
+                    item.isSelected = !item.isSelected;
+                } else {
+                    obj.isSelected = false;
+                }
+            }
+        }
+        $scope.clickSecondMenu = function(item, sub, $event) {
+            $event.stopPropagation();
+            if(sub.isSelected) return;
+            for(var i = 0; i < $scope.model.menu.length; i++) {
+                var obj = $scope.model.menu[i];
+                for(var i = 0; i < obj.list.length; i++) {
+                    var subObj = obj.list[i];
+                    if(item == subObj) continue;
+                    subObj.isSelected = false;
+                }
+            }
+
+            sub.isSelected = true;
+        }
+
+        $scope.getMenuHeight = function(item) {
+            return item.isSelected ? item.list.length * 36 : 0;
+        }
+        $scope.afterRender = function() {
+            $timeout(function() {
+                $('.sub-menu').css('transition', 'height ease 0.2s');
+            }, 200);
         }
     }]);

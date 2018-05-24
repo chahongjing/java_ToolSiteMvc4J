@@ -33,21 +33,33 @@
                     姓名：${user.userName}
                 </span>
                 </li>
-                <li class="menu" data-ng-hide="">
-                    <div><i class="fa fa-list"></i></div>
-                    <ul>
-                        <%--<li><a href="${ctx}/teacher/teacherlist" data-ng-show="${userType} == ${yongHuType}">教师管理</a></li>--%>
-                        <%--<li><a href="${ctx}/student/studentlist" data-ng-show="${userType} == ${yongHuType}">学生管理</a></li>--%>
-                        <%--<li><a href="${ctx}/paper/paperlist" data-ng-show="${userType} == ${yongHuType}">试卷管理</a></li>--%>
-                        <%--<li><a href="${ctx}/paper/studentpaperlist"--%>
-                        <%--data-ng-show="${userType} == ${teacherType} || ${userType} == ${studentType}">考生作答</a></li>--%>
-                    </ul>
-                </li>
             </ul>
         </div>
     </div>
     <div class="body">
-        <div class="menu"></div>
+        <div class="menu">
+            <div class="slide-menu">
+                <ul class="first-menu">
+                    <li data-ng-repeat="item in model.menu" data-ng-class="{'selected': item.isSelected}"
+                        data-ng-click="clickFirstMenu(item)" ng-repeat-finish="afterRender()">
+                        <div>
+                            <i class="fa {{item.icon}}"></i>
+                            <span data-ng-bind="item.name"></span>
+                            <b class="fa" data-ng-class="{'fa-angle-down':item.isSelected,'fa-angle-right':!item.isSelected}"></b>
+                        </div>
+                        <ul class="sub-menu" data-ng-class="{'show':item.isSelected}" data-ng-style="{'height':getMenuHeight(item)}">
+                            <li data-ng-repeat="sub in item.list" data-ng-class="{'selected': sub.isSelected}"
+                                data-ng-click="clickSecondMenu(item, sub, $event)">
+                                <a href="javascript:void(0)">
+                                    <i class="fa {{sub.icon}}"></i>
+                                    <span data-ng-bind="sub.name"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
         <div class="right-main">
             <div class="bread"></div>
             <div class="right-content">
@@ -65,6 +77,7 @@
 <script src="${ctx}/js/angular/angular.js"></script>
 <script src="${ctx}/js/angular/angular_main.js"></script>
 <script src="${ctx}/js/angular/commonService.js"></script>
+<script src="${ctx}/js/angular/directives/ng_repeat_finish.js"></script>
 <sitemesh:write property='jsSection'/>
 </body>
 </html>

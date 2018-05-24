@@ -173,7 +173,7 @@ js<br>
                 }
 
                 $.ajax({
-                    url: ctx + '/test/fileupload.do',
+                    url: ctx + '/learn/fileupload.do',
                     type: 'post',
                     processData: false,
                     contentType: false,
