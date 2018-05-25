@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemesh>
-    <!-- 指明排除页面，将被排除，不被装饰 -->
-    <mapping path="/userinfo/loginpage*" exclue="true" />
-    <mapping path="/js/**angular**.html" exclue="true" />
-
     <!-- 指明满足“/*”的页面，将被“/WEB-INF/views/decorators/decorator.html”所装饰 -->
     <mapping path="/*" decorator="/WEB-INF/layout/angularLayout.jsp" />
     <mapping path="/**vueDemo**" decorator="/WEB-INF/layout/vueLayout.jsp" />
@@ -11,6 +7,10 @@
     <mapping path="/*/**angular**" decorator="/WEB-INF/layout/angularLayout.jsp" />
 
     <mapping path="/*/**sqlGenerate**" decorator="/WEB-INF/layout/angularLayout.jsp" />
+
+    <!-- 指明排除页面，将被排除，不被装饰 -->
+    <mapping path="/userinfo/loginpage*" exclue="true" />
+    <mapping path="/js/**angular**.html" exclue="true" />
 
    <content-processor>
        <tag-rule-bundle class="com.zjy.bll.common.MyTagRuleBundle" />

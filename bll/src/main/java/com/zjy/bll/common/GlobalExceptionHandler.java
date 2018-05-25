@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
@@ -28,9 +29,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler()
     public ModelAndView processException(NativeWebRequest request, HttpServletResponse response, Exception ex) {
         ModelAndView mv = new ModelAndView();
-        boolean isAjax = "XMLHttpRequest".equalsIgnoreCase(request.getHeader("x-requested-with"));
-
-        if (isAjax && false) {
+        if (WebUtils.isAjax((HttpServletRequest) request) && false) {
             response.setStatus(HttpStatus.OK.value()); //设置状态码
             response.setContentType(MediaType.APPLICATION_JSON_VALUE); //设置ContentType
             response.setHeader("Cache-Control", "no-cache, must-revalidate");

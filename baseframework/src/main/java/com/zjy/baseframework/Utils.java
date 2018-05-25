@@ -1,10 +1,7 @@
 package com.zjy.baseframework;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.nio.file.Paths;
 
 /**
@@ -14,11 +11,6 @@ public class Utils {
     public static String getRootPath() {
         //return ContextLoader.getCurrentWebApplicationContext().getServletContext().getRealPath("/");
         return Paths.get(StringUtils.removeStart(Utils.class.getClassLoader().getResource("/").getFile(), "/")).getParent().getParent().toAbsolutePath().toString();
-    }
-
-    public static String getWebApplicationPath() {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        return (request.getRequestURL().toString().replace(request.getRequestURI().toString(), "") +  request.getContextPath());
     }
 
     /**

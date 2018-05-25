@@ -10,7 +10,7 @@
 <div>
     <a href="javascript:void(0)" onclick="blobDownload()">blob下载</a><br/>
     <a href="javascript:void(0)" onclick="upload()">上传文件</a>
-    <form id="formId" enctype="multipart/form-data" action="<c:url value="/learn/fileupload.do" />">
+    <form id="formId" enctype="multipart/form-data" action="<c:url value="/learn/fileupload1.do" />">
         <input type="hidden" name="id" value="abcde"/>
         <input type="file" name="myfile"/>
     </form>
@@ -76,7 +76,16 @@
                 processData: false,
                 contentType: false, // 如果form没有指定enctype，则可以在此处指定
                 success: function (data) {
-                    console.log(data);
+                    if(data.status == Constant.AjaxStatus.OK) {
+                        alert('上传成功！' + data.value);
+                    } else {
+                        alert(data.message);
+                    }
+                },
+                error: function(xhr,  type, message) {
+                    if(xhr.status == 511) {
+                        window.location.reload();
+                    }
                 }
             });
             // angular $http请求发送FormData 数据要使用

@@ -66,6 +66,26 @@ public class LearnController extends BaseController {
         return mv;
     }
 
+
+    @RequestMapping(value = "/fileupload1")
+    @ResponseBody
+    public BaseResult<String> fileUpload1(MultipartHttpServletRequest request) {
+        BaseResult<String> json = BaseResult.OK("后台返回数据");
+        Path path = Paths.get(request.getSession().getServletContext().getRealPath(""), "upload");
+        File dir = path.toFile();
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        for (MultipartFile file : request.getFiles("myfile")) {
+            try {
+                file.transferTo(Paths.get(path.toString(), file.getOriginalFilename()).toFile());
+            } catch (IOException e) {
+                logger.error("上传文件异常！", e);
+            }
+        }
+        return json;
+    }
+
     @RequestMapping("/download")
     public void download(HttpServletResponse response) throws Exception {
         // path是指欲下载的文件的路径。
