@@ -72,12 +72,10 @@
 
     <button data-ng-click="showLoading()">显示loading</button>
 </div>
-<div data-ng-include="'../js/angular/templates/commonPart.html'"></div>
 <jsSection>
     <script src="/ToolSiteMvc4J/js/angular/directives/ng_repeat_finish.js"></script>
     <script src="/ToolSiteMvc4J/js/angular/directives/test_templateurl.js"></script>
     <script src="/ToolSiteMvc4J/js/angular/directives/testDir.js"></script>
-    <script src="/ToolSiteMvc4J/js/angular/directives/loadingmask.js"></script>
     <script src="/ToolSiteMvc4J/js/angular/templates/includePageCtrl.js"></script>
     <script src="/ToolSiteMvc4J/js/angular/directives/scopeTrue.js"></script>
     <script src="/ToolSiteMvc4J/js/angular/directives/scopeFalse.js"></script>

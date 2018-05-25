@@ -70,6 +70,7 @@
         </div>
     </div>
 </div>
+<div data-ng-include="'js/angular/templates/commonPart.html'"></div>
 <div loading-mask text="model.loadingText" is-show="model.isShowLoading" reload="model.loadingReload"></div>
 <script src="${ctx}/js/jquery-3.3.1.js" type="text/javascript"></script>
 <script type="text/javascript">var ctx = '<%= request.getContextPath() %>';</script>
@@ -78,6 +79,7 @@
 <script src="${ctx}/js/angular/angular_main.js"></script>
 <script src="${ctx}/js/angular/commonService.js"></script>
 <script src="${ctx}/js/angular/directives/ng_repeat_finish.js"></script>
+<script src="/ToolSiteMvc4J/js/angular/directives/loadingmask.js"></script>
 <sitemesh:write property='jsSection'/>
 </body>
 </html>
