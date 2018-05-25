@@ -1,7 +1,6 @@
 package com.zjy.bll.common;
 
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
-import org.apache.shiro.web.util.WebUtils;
 import org.springframework.http.HttpStatus;
 
 import javax.servlet.ServletRequest;
@@ -21,15 +20,13 @@ public class CustomFormAuthenticationFilter extends FormAuthenticationFilter {
                 return true;
             }
         } else {
-            HttpServletRequest httpRequest = WebUtils.toHttp(request);
+            HttpServletRequest httpRequest = (HttpServletRequest)request;
             if (com.zjy.bll.common.WebUtils.isAjax(httpRequest)) {
-                HttpServletResponse httpServletResponse = WebUtils.toHttp(response);
+                HttpServletResponse httpServletResponse = (HttpServletResponse)response;
                 httpServletResponse.sendError(HttpStatus.NETWORK_AUTHENTICATION_REQUIRED.value());
-                return false;
             } else {
                 saveRequestAndRedirectToLogin(request, response);
             }
-
             return false;
         }
     }

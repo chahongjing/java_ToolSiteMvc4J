@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
         ModelAndView mv = new ModelAndView();
         if (WebUtils.isAjax((HttpServletRequest) request) && false) {
             response.setStatus(HttpStatus.OK.value()); //设置状态码
-            response.setContentType(MediaType.APPLICATION_JSON_VALUE); //设置ContentType
+            response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE); //设置ContentType
             response.setHeader("Cache-Control", "no-cache, must-revalidate");
             try {
                 String message;
