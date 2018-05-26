@@ -5,6 +5,9 @@ import com.zjy.bll.common.LoggingProxy;
 import com.zjy.bll.service.TestService;
 import com.zjy.bll.service.TestServiceImpl;
 import com.zjy.entities.UserInfo;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,6 +41,9 @@ public class LearnController extends BaseController {
     }
 
     @RequestMapping("/fileupload")
+    @RequiresRoles("admin")
+    @RequiresPermissions(value = {"admin:testPermission"}, logical = Logical.OR)
+    @ResponseBody
     public ModelAndView fileUpload(MultipartHttpServletRequest request) {
         // @RequestParam("myfile") List<CommonsMultipartFile> myfile
 //        try {
@@ -368,7 +374,7 @@ public class LearnController extends BaseController {
         response.setCharacterEncoding("utf-8");
         UeditorUploader up = new UeditorUploader(request);
         up.setSavePath("upload");
-        String[] fileType = {".gif" , ".png" , ".jpg" , ".jpeg" , ".bmp"};
+        String[] fileType = {".gif", ".png", ".jpg", ".jpeg", ".bmp"};
         up.setAllowFiles(fileType);
         up.setMaxSize(10000); //单位KB
         try {
@@ -379,19 +385,19 @@ public class LearnController extends BaseController {
 
         String callback = request.getParameter("callback");
 
-        String result = "{\"name\":\""+ up.getFileName() +"\", \"originalName\": \""+ up.getOriginalName() +"\", \"size\": "+ up.getSize() +", \"state\": \""+ up.getState() +"\", \"type\": \""+ up.getType() +"\", \"url\": \""+ up.getUrl() +"\"}";
+        String result = "{\"name\":\"" + up.getFileName() + "\", \"originalName\": \"" + up.getOriginalName() + "\", \"size\": " + up.getSize() + ", \"state\": \"" + up.getState() + "\", \"type\": \"" + up.getType() + "\", \"url\": \"" + up.getUrl() + "\"}";
 
-        result = result.replaceAll( "\\\\", "\\\\" );
+        result = result.replaceAll("\\\\", "\\\\");
 
-        if( callback == null ){
+        if (callback == null) {
             try {
-                response.getWriter().print( result );
+                response.getWriter().print(result);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }else{
+        } else {
             try {
-                response.getWriter().print("<script>"+ callback +"(" + result + ")</script>");
+                response.getWriter().print("<script>" + callback + "(" + result + ")</script>");
             } catch (IOException e) {
                 e.printStackTrace();
             }

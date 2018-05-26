@@ -4,6 +4,7 @@ import com.zjy.baseframework.BaseResult;
 import com.zjy.baseframework.PartialViewHelper;
 import com.zjy.entities.Goods;
 import com.zjy.entities.UserInfo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -158,4 +159,14 @@ public class TestController extends BaseController implements ServletConfigAware
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
     // endregion
+
+    @RequestMapping(value = "/testRole.do")
+    @RequiresPermissions("admin")
+    public ResponseEntity<BaseResult<UserInfo>> testGet11() {
+        BaseResult<UserInfo> re = BaseResult.OK();
+        UserInfo user = new UserInfo();
+        user.setUserName("曾军毅get");
+        re.setValue(user);
+        return new ResponseEntity<>(re, HttpStatus.OK);
+    }
 }

@@ -2,6 +2,7 @@ package com.zjy.bll.common;
 
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.context.request.WebRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,7 +12,15 @@ public class WebUtils {
         return (request.getRequestURL().toString().replace(request.getRequestURI().toString(), "") + request.getContextPath());
     }
 
+    public static boolean isAjax(WebRequest request) {
+        return request!= null && isAjax(request.getHeader("X-Requested-With"));
+    }
+
     public static boolean isAjax(HttpServletRequest request) {
-        return "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
+        return request!= null && isAjax(request.getHeader("X-Requested-With"));
+    }
+
+    public static boolean isAjax(String ajaxHeader) {
+        return "XMLHttpRequest".equals(ajaxHeader);
     }
 }

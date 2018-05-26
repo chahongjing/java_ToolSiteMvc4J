@@ -9,6 +9,7 @@
 <%
     Throwable throwable = ((Throwable)request.getAttribute("javax.servlet.error.exception"));
     Throwable rootCause = ExceptionUtils.getRootCause(throwable);
+    rootCause = rootCause == null ? throwable : rootCause;
 %>
 <html>
 <head>

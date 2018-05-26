@@ -226,6 +226,9 @@
                     data: formData,
                     success: function (resp) {
 
+                    },
+                    error:function(xhr, a, b) {
+                        console.log(xhr);
                     }
                 });
             });

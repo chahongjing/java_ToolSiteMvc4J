@@ -80,7 +80,6 @@ public class UserInfoController {
             subject.login(token); // 登录
         } catch (Exception ex) {
             ex.printStackTrace();
-            userUtils.clearSession();
             re.setStatus(ResultStatus.NO);
             re.setMessage("用户名或密码错误！");
             return new ResponseEntity<>(re, HttpStatus.OK);

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * Created by chahongjing on 2017/6/10.
  */
-public class UserUtils extends MyRealm {
+public class UserUtils extends ShiroRealm {
     @Autowired
     private UserInfoService userInfoSvc;
 
