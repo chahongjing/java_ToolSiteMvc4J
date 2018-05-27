@@ -19,7 +19,7 @@ public class BaseController {
 
     @ModelAttribute
     public void init(Model model) {
-        UserInfo currentUser = shiroRealm.getUser();
+        UserInfo currentUser = shiroRealm.getCurrentUser();
         model.addAttribute("user", currentUser);
     }
 }

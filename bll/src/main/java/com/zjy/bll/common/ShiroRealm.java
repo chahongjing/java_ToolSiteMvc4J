@@ -29,18 +29,6 @@ public class ShiroRealm extends AuthorizingRealm {
     @Autowired
     private UserInfoService userInfoSvc;
 
-    public static String currentKey = "currentUser";
-
-    protected static Function<String, Object> myfun;
-
-    public ShiroRealm() {
-        super();
-        if (ShiroRealm.myfun == null) {
-            ShiroRealm.myfun = (userCode) -> userInfoSvc.getByUserCode(userCode);
-        }
-    }
-
-
     /**
      * 获取当前登录用户数据库信息
      *
@@ -51,7 +39,7 @@ public class ShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
-        UserInfo user = (UserInfo) myfun.apply(token.getUsername());
+        UserInfo user = userInfoSvc.getByUserCode(token.getUsername());
         if (null != user) {
             return new SimpleAuthenticationInfo(user, user.getPassword(), ByteSource.Util.bytes(user.getUserCode()),
                     user.getUserCode());
@@ -89,31 +77,51 @@ public class ShiroRealm extends AuthorizingRealm {
         return info;
     }
 
-    public UserInfo getUser() {
+    /**
+     * 当前登录用户信息
+     * @return 用户信息
+     */
+    protected Subject getSubject() {
         Subject currentUser = SecurityUtils.getSubject();
 //        Session session = currentUser.getSession();
-        if (null == currentUser) {
+        if(currentUser == null) {
             throw new UnauthenticatedException("登录超时！");
         }
-        return (UserInfo)currentUser.getPrincipal();
+        return currentUser;
     }
 
+    /**
+     * 获取当前用户
+     * @return
+     */
+    public UserInfo getCurrentUser() {
+        return (UserInfo)getSubject().getPrincipal();
+    }
+
+    /**
+     * 判断是否有角色
+     * @param role
+     * @return
+     */
     public boolean hasRole(String role) {
-        Subject currentUser = SecurityUtils.getSubject();
-        if (null == currentUser) {
-            throw new UnauthenticatedException("登录超时！");
-        }
-        return currentUser.hasRole(role);
+        return getSubject().hasRole(role);
     }
 
+    /**
+     * 判断是否有权限
+     * @param permission
+     * @return
+     */
     public boolean isPermitted(String permission) {
-        Subject currentUser = SecurityUtils.getSubject();
-        if (null == currentUser) {
-            throw new UnauthenticatedException("登录超时！");
-        }
-        return currentUser.isPermitted(permission);
+        return getSubject().isPermitted(permission);
     }
 
+    /**
+     * 获取md5 hash+盐值加密后的值
+     * @param salt 盐值
+     * @param password 密码
+     * @return
+     */
     public String getMd5Hash(String salt, String password) {
         CustomCredentialsMatcher credentialsMatcher = (CustomCredentialsMatcher) getCredentialsMatcher();
         Object simpleHash = new SimpleHash(credentialsMatcher.getHashAlgorithmName(), password, ByteSource.Util.bytes(salt),

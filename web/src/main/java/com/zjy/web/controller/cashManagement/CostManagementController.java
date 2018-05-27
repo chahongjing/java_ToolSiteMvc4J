@@ -36,7 +36,7 @@ public class CostManagementController {
     @ResponseBody
     public BaseResult getList(HttpServletRequest request) {
         BaseResult<PageInfo<Cost>> result = BaseResult.OK();
-        UserInfo user = shiroRealm.getUser();
+        UserInfo user = shiroRealm.getCurrentUser();
         CostRequest costRequest = new CostRequest();
         costRequest.setOrderBy("CreatedOn DESC");
         costRequest.setUserId(user.getUserGuid());
