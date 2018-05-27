@@ -1,15 +1,18 @@
 package com.zjy.bll.common;
 
+import com.zjy.bll.service.UserInfoService;
 import com.zjy.entities.UserInfo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ByteSource;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +26,20 @@ import java.util.function.Function;
  */
 public class ShiroRealm extends AuthorizingRealm {
 
+    @Autowired
+    private UserInfoService userInfoSvc;
+
     public static String currentKey = "currentUser";
 
     protected static Function<String, Object> myfun;
+
+    public ShiroRealm() {
+        super();
+        if (ShiroRealm.myfun == null) {
+            ShiroRealm.myfun = (userCode) -> userInfoSvc.getByUserCode(userCode);
+        }
+    }
+
 
     /**
      * 获取当前登录用户数据库信息
@@ -39,15 +53,8 @@ public class ShiroRealm extends AuthorizingRealm {
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
         UserInfo user = (UserInfo) myfun.apply(token.getUsername());
         if (null != user) {
-            AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user, user.getPassword(), user.getUserName());
-
-            CustomCredentialsMatcher credentialsMatcher = (CustomCredentialsMatcher) getCredentialsMatcher();
-            ByteSource salt = ByteSource.Util.bytes(user.getUserCode());
-            SimpleHash sh = new SimpleHash(credentialsMatcher.getHashAlgorithmName(), user.getPassword(), salt, credentialsMatcher.getHashIterations());
-            //通过关于盐值的构造器，将前端传入的密码在加密时再加入盐值
-            authcInfo = new SimpleAuthenticationInfo(user, sh.toString(), salt, user.getUserName());
-
-            return authcInfo;
+            return new SimpleAuthenticationInfo(user, user.getPassword(), ByteSource.Util.bytes(user.getUserCode()),
+                    user.getUserCode());
         } else {
             return null;
         }
@@ -74,7 +81,6 @@ public class ShiroRealm extends AuthorizingRealm {
 
 //        @RequiresRoles("admin")
 //        @RequiresPermissions(value = {"admin:testPermission"}, logical = Logical.OR)
-
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         //给当前用户设置角色
         info.addRoles(roles);
@@ -83,13 +89,29 @@ public class ShiroRealm extends AuthorizingRealm {
         return info;
     }
 
-    public Object getUser() {
+    public UserInfo getUser() {
         Subject currentUser = SecurityUtils.getSubject();
 //        Session session = currentUser.getSession();
-        if (null != currentUser) {
-            return currentUser.getPrincipal();
+        if (null == currentUser) {
+            throw new UnauthenticatedException("登录超时！");
         }
-        return null;
+        return (UserInfo)currentUser.getPrincipal();
+    }
+
+    public boolean hasRole(String role) {
+        Subject currentUser = SecurityUtils.getSubject();
+        if (null == currentUser) {
+            throw new UnauthenticatedException("登录超时！");
+        }
+        return currentUser.hasRole(role);
+    }
+
+    public boolean isPermitted(String permission) {
+        Subject currentUser = SecurityUtils.getSubject();
+        if (null == currentUser) {
+            throw new UnauthenticatedException("登录超时！");
+        }
+        return currentUser.isPermitted(permission);
     }
 
     public String getMd5Hash(String salt, String password) {

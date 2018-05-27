@@ -1,7 +1,7 @@
 package com.zjy.web.controller;
 
 import com.zjy.baseframework.LogHelper;
-import com.zjy.bll.common.UserUtils;
+import com.zjy.bll.common.ShiroRealm;
 import com.zjy.entities.UserInfo;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +15,11 @@ public class BaseController {
     protected Logger logger = LogHelper.getLogger(this.getClass());
 
     @Autowired
-    protected UserUtils userUils;
+    protected ShiroRealm shiroRealm;
 
     @ModelAttribute
     public void init(Model model) {
-        UserInfo currentUser = userUils.getCurrentUser();
+        UserInfo currentUser = shiroRealm.getUser();
         model.addAttribute("user", currentUser);
     }
 }

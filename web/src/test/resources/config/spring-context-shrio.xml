@@ -4,13 +4,23 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!-- 继承自AuthorizingRealm的自定义Realm,即指定Shiro验证用户登录的类为自定义的ShiroDbRealm.java -->
-    <bean id="myRealm" class="com.zjy.bll.common.ShiroRealm"/>
+    <!--<bean id="myRealm" class="com.zjy.bll.common.ShiroRealmalm"/>-->
 
     <!-- Shiro默认会使用Servlet容器的Session,可通过sessionMode属性来指定使用Shiro原生Session -->
     <!-- 即<property name="sessionMode" value="native"/>,详细说明见官方文档 -->
     <!-- 这里主要是设置自定义的单Realm应用,若有多个Realm,可使用'realms'属性代替 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <property name="realm" ref="myRealm"/>
+        <property name="realm" ref="shiroRealm"/>
+    </bean>
+
+    <bean id="shiroRealm" class="com.zjy.bll.common.ShiroRealm">
+        <!-- 配置密码匹配器 -->
+        <property name="credentialsMatcher" ref="credentialsMatcher"/>
+    </bean>
+
+    <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        <property name="hashAlgorithmName" value="MD5"></property>
+        <property name="hashIterations" value="1024"></property>
     </bean>
 
     <!-- Shiro主过滤器本身功能十分强大,其强大之处就在于它支持任何基于URL路径表达式的、自定义的过滤器的执行 -->
@@ -25,6 +35,11 @@
         <!-- 用户访问未对其授权的资源时,所显示的连接 -->
         <!-- 若想更明显的测试此属性可以修改它的值,如unauthor.jsp,然后用[玄玉]登录后访问/admin/listUser.jsp就看见浏览器会显示unauthor.jsp -->
         <property name="unauthorizedUrl" value="/userinfo/loginpage.do"/>
+        <property name="filters">
+            <map>
+                <entry key="authc" value-ref="formAuthenticationFilter"/>
+            </map>
+        </property>
         <!-- Shiro连接约束配置,即过滤链的定义 -->
         <!-- 此处可配合我的这篇文章来理解各个过滤连的作用http://blog.csdn.net/jadyer/article/details/12172839 -->
         <!-- 下面value值的第一个'/'代表的路径是相对于HttpServletRequest.getContextPath()的值来的 -->
@@ -35,14 +50,20 @@
                 /userinfo/loginpage**=anon
                 /userinfo/login**=anon
                 /userinfo/logout**=anon
+                /druid/**=anon
                 /js/**=anon
+                /bootstrap/**=anon
+                /Controls/**=anon
                 /css/**=anon
+                /test/**=anon
                 /ToolSiteMVC/TestMvc/**=authc
                 /admin/listUser**=authc,perms[admin:manage]
                 /**=authc
             </value>
         </property>
     </bean>
+
+    <bean id="formAuthenticationFilter" class="com.zjy.bll.common.CustomFormAuthenticationFilter"/>
 
     <!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
@@ -56,4 +77,10 @@
         <property name="securityManager" ref="securityManager"/>
       </bean>
     -->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor"/>
+
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
 </beans>

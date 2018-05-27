@@ -20,7 +20,9 @@ public class IndexController extends BaseController {
      * @throws Exception
      */
     @RequestMapping("/")
-    public String ijdex() {
+    public String index() {
+        boolean hasRole = shiroRealm.hasRole("admin");
+        boolean permitted = shiroRealm.isPermitted("admin:testPermission");
         return "index";
     }
     @RequestMapping("/ok")

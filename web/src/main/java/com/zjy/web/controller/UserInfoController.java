@@ -4,14 +4,13 @@ import com.github.pagehelper.PageInfo;
 import com.zjy.baseframework.BaseResult;
 import com.zjy.baseframework.LogHelper;
 import com.zjy.baseframework.enums.ResultStatus;
-import com.zjy.bll.common.UserUtils;
+import com.zjy.bll.common.ShiroRealm;
 import com.zjy.bll.request.UserInfoRequest;
 import com.zjy.bll.service.UserInfoService;
 import com.zjy.entities.UserInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.SavedRequest;
 import org.apache.shiro.web.util.WebUtils;
@@ -40,8 +39,9 @@ public class UserInfoController {
 
     @Autowired
     private UserInfoService userInfoService;
+
     @Autowired
-    private UserUtils userUtils;
+    private ShiroRealm shiroRealm;
     //endregion
 
     //region 登录登出
@@ -95,7 +95,6 @@ public class UserInfoController {
         if (subject.isAuthenticated()) {
             subject.logout();
             // session 会销毁，在SessionListener监听session销毁，清理权限缓存
-            userUtils.logout();
         }
 
         BaseResult<String> re = BaseResult.OK();

@@ -2,7 +2,7 @@ package com.zjy.web.controller.cashManagement;
 
 import com.github.pagehelper.PageInfo;
 import com.zjy.baseframework.BaseResult;
-import com.zjy.bll.common.UserUtils;
+import com.zjy.bll.common.ShiroRealm;
 import com.zjy.bll.request.cashManagement.CostRequest;
 import com.zjy.bll.service.cashManagement.CostService;
 import com.zjy.entities.UserInfo;
@@ -25,7 +25,7 @@ public class CostManagementController {
     private CostService costSvc;
 
     @Autowired
-    private UserUtils userUtils;
+    private ShiroRealm shiroRealm;
 
     @RequestMapping("/")
     public String index() {
@@ -36,7 +36,7 @@ public class CostManagementController {
     @ResponseBody
     public BaseResult getList(HttpServletRequest request) {
         BaseResult<PageInfo<Cost>> result = BaseResult.OK();
-        UserInfo user = userUtils.getCurrentUser();
+        UserInfo user = shiroRealm.getUser();
         CostRequest costRequest = new CostRequest();
         costRequest.setOrderBy("CreatedOn DESC");
         costRequest.setUserId(user.getUserGuid());

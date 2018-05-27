@@ -10,15 +10,15 @@
     <!-- 即<property name="sessionMode" value="native"/>,详细说明见官方文档 -->
     <!-- 这里主要是设置自定义的单Realm应用,若有多个Realm,可使用'realms'属性代替 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <property name="realm" ref="userUtils"/>
+        <property name="realm" ref="shiroRealm"/>
     </bean>
 
-    <bean id="userUtils" class="com.zjy.bll.common.UserUtils">
+    <bean id="shiroRealm" class="com.zjy.bll.common.ShiroRealm">
         <!-- 配置密码匹配器 -->
         <property name="credentialsMatcher" ref="credentialsMatcher"/>
     </bean>
 
-    <bean id="credentialsMatcher" class="com.zjy.bll.common.CustomCredentialsMatcher">
+    <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
         <property name="hashAlgorithmName" value="MD5"></property>
         <property name="hashIterations" value="1024"></property>
     </bean>
