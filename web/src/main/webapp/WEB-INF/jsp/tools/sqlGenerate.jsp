@@ -136,7 +136,6 @@
     </div>
 </div>
 <jsSection>
-    <script src="/ToolSiteMvc4J/js/angular/directives/ng_repeat_finish.js"></script>
     <script>
         app.controller('sqlGenerate', ['$scope', '$http', '$timeout', '$q', '$templateCache',
             function ($scope, $http, $timeout, $q, $templateCache) {
