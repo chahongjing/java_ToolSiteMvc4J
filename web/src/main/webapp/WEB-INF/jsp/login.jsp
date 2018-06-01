@@ -1,7 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="ctx" value="<%= request.getContextPath() %>" />
+<%@ include file="/WEB-INF/jsp/common/commonVar.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -134,10 +132,5 @@
         });
     }
 </script>
-
-<fmt:message key="username">
-    <fmt:param value="a"/>
-    <fmt:param value="b"/>
-</fmt:message>
 </body>
 </html>

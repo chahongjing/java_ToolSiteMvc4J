@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ include file="/WEB-INF/jsp/common/commonVar.jsp" %>
 <!DOCTYPE html>
 <html>
@@ -235,5 +236,9 @@
         });
     </script>
 </jsSection>
+<fmt:message key="username">
+    <fmt:param value="a"/>
+    <fmt:param value="b"/>
+</fmt:message>
 </body>
 </html>
