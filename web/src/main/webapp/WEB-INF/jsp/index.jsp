@@ -220,7 +220,9 @@
                 }
 
                 $.ajax({
-                    url: ctx + '/learn/fileupload.do',
+                    //url: ctx + '/learn/fileupload.do',
+                    //url: 'http://localhost:30000/restfulweb/rest/hello/testPostWithFile',
+                    url: 'http://localhost:30001/api/rest/hello/testPostWithFile',
                     type: 'post',
                     processData: false,
                     contentType: false,

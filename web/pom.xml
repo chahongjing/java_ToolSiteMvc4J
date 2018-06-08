@@ -3,7 +3,7 @@
     <parent>
         <artifactId>ToolSiteMvc4J</artifactId>
         <groupId>com.zjy</groupId>
-        <version>${project.version}</version>
+        <version>1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>web</artifactId>
@@ -14,13 +14,13 @@
         <dependency>
             <groupId>com.zjy</groupId>
             <artifactId>bll</artifactId>
-            <version>${project.version}</version>
+            <version>1.0</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.zjy</groupId>
             <artifactId>baseframework</artifactId>
-            <version>${project.version}</version>
+            <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -192,7 +192,7 @@
                 <!-- 使用maven的tomcat插件打包并部署war文件到tomcat -->
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.2</version>
+                <version>${maven.tomcat.version}</version>
                 <configuration>
                     <path>/${project.build.finalName}</path>
                     <url>http://localhost:20000/manager/text</url>
@@ -200,6 +200,50 @@
                     <username>tomcat</username>
                     <password>tomcat</password>
                 </configuration>
+            </plugin>
+            <!-- java版本和jdk版本，编码 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.source.version}</source>
+                    <target>${java.target.version}</target>
+                    <encoding>${encoding}</encoding>
+                    <!--<testFailureIgnore>true</testFailureIgnore>-->
+                </configuration>
+            </plugin>
+            <!-- 排除jar包中的配置文件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>**/logback.xml</exclude>
+                        <exclude>**/log4j2.xml</exclude>
+                        <exclude>**/*.properties</exclude>
+                        <exclude>**/META-INF/spring/**</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <!-- 将依赖包放到lib文件夹中 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>${maven.dependency.vresion}</version>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${project.build.directory}/lib
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

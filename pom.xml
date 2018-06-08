@@ -7,7 +7,7 @@
     <groupId>com.zjy</groupId>
     <artifactId>ToolSiteMvc4J</artifactId>
     <packaging>pom</packaging>
-    <version>${project.version}</version>
+    <version>1.0</version>
     <modules>
         <module>entity</module>
         <module>bll</module>
@@ -16,7 +16,6 @@
     </modules>
 
     <properties>
-        <project.version>1.0</project.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <jstl.version>1.2</jstl.version>
@@ -57,6 +56,7 @@
         <maven.jar.version>3.0.2</maven.jar.version>
         <maven.dependency.vresion>3.0.2</maven.dependency.vresion>
         <maven.install.vresion>2.5.2</maven.install.vresion>
+        <maven.tomcat.version>2.2</maven.tomcat.version>
         <encoding>UTF-8</encoding>
         <java.source.version>1.8</java.source.version>
         <java.target.version>1.8</java.target.version>
@@ -422,15 +422,6 @@
                             <exclude>**/*.properties</exclude>
                             <exclude>**/META-INF/spring/**</exclude>
                         </excludes>
-                        <!-- 打包jar文件时，配置manifest文件添加main函数入口， 通过java -jar xxxx.jar运行 -->
-                        <!--<archive>-->
-                        <!--<manifest>-->
-                        <!--<addClasspath>true</addClasspath>-->
-                        <!--<classpathPrefix>lib/</classpathPrefix>-->
-                        <!--&lt;!&ndash; 主方法所在类名 &ndash;&gt;-->
-                        <!--<mainClass>com.zjy.App</mainClass>-->
-                        <!--</manifest>-->
-                        <!--</archive>-->
                     </configuration>
                 </plugin>
                 <!-- 将依赖包放到lib文件夹中 -->
@@ -458,6 +449,20 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-install-plugin</artifactId>
                     <version>${maven.install.vresion}</version>
+                </plugin>
+
+                <plugin>
+                    <!-- 使用maven的tomcat插件打包并部署war文件到tomcat -->
+                    <groupId>org.apache.tomcat.maven</groupId>
+                    <artifactId>tomcat7-maven-plugin</artifactId>
+                    <version>${maven.tomcat.version}</version>
+                    <configuration>
+                        <path>/${project.build.finalName}</path>
+                        <url>http://localhost:20000/manager/text</url>
+                        <server>tomcat</server>
+                        <username>tomcat</username>
+                        <password>tomcat</password>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
