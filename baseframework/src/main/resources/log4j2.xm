@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration status="DEBUG">
+
+    <Properties>
+        <Property name="logPath">${web:rootDir}</Property>
+        <Property name="contextName">${web:contextPath}</Property>
+    </Properties>
+
     <appenders>
         <Console name="consolePrint" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
         </Console>
 
-        <File name="File" fileName="${web:rootDir}logs\baseframeword_app.log"
+        <File name="File" fileName="${logPath}logs\${contextName}_app.log"
               filePattern="$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
             <PatternLayout pattern="%d %p %c{1.} [%t] %m%n"/>
         </File>
 
-        <RollingFile name="RollingFile" fileName="${web:rootDir}logs\${web:contextPath}_log.log"
-                     filePattern="${web:rootDir}logs\r_log_%d{yyyy-MM-dd}_%i.log">
+        <RollingFile name="RollingFile" fileName="${logPath}logs\${contextName}_log.log"
+                     filePattern="${logPath}logs\r_log_%d{yyyy-MM-dd}_%i.log">
             <PatternLayout pattern="%d %p %c{1.} [%t] %m%n"/>
             <Policies>
                 <TimeBasedTriggeringPolicy modulate="true" interval="24"/>
@@ -20,8 +26,8 @@
             <DefaultRolloverStrategy max="20"/>
         </RollingFile>
 
-        <RollingFile name="RollingFile_DEBUG" fileName="${web:rootDir}logs\${web:contextPath}_log_debug.log"
-                     filePattern="${web:rootDir}logs\${web:contextPath}_log_%d{yyyy-MM-dd}_%i.log">
+        <RollingFile name="RollingFile_DEBUG" fileName="${logPath}logs\${contextName}_log_debug.log"
+                     filePattern="${logPath}logs\${contextName}_log_%d{yyyy-MM-dd}_%i.log">
             <PatternLayout pattern="%d %p %c{1.} [%t] %m%n"/>
             <Policies>
                 <TimeBasedTriggeringPolicy modulate="true" interval="24"/>
@@ -34,8 +40,8 @@
             </Filters>
         </RollingFile>
 
-        <RollingFile name="RollingFile_INFO" fileName="${web:rootDir}logs\${web:contextPath}_log_info.log"
-                     filePattern="${web:rootDir}logs\${web:contextPath}_log_%d{yyyy-MM-dd}_%i.log">
+        <RollingFile name="RollingFile_INFO" fileName="${logPath}logs\${contextName}_log_info.log"
+                     filePattern="${logPath}logs\${contextName}_log_%d{yyyy-MM-dd}_%i.log">
             <PatternLayout pattern="%d %p %c{1.} [%t] %m%n" />
             <Policies>
                 <TimeBasedTriggeringPolicy modulate="true" interval="24"/>
@@ -48,8 +54,8 @@
             </Filters>
         </RollingFile>
 
-        <RollingFile name="RollingFile_WARNING" fileName="${web:rootDir}logs\${web:contextPath}_log_waring.log"
-                     filePattern="${web:rootDir}logs\${web:contextPath}_log_%d{yyyy-MM-dd}_%i.log">
+        <RollingFile name="RollingFile_WARNING" fileName="${logPath}logs\${contextName}_log_waring.log"
+                     filePattern="${logPath}logs\${contextName}_log_%d{yyyy-MM-dd}_%i.log">
             <PatternLayout pattern="%d %p %c{1.} [%t] %m%n" />
             <Policies>
                 <TimeBasedTriggeringPolicy modulate="true" interval="24"/>
@@ -62,8 +68,8 @@
             </Filters>
         </RollingFile>
 
-        <RollingFile name="RollingFile_ERROR" fileName="${web:rootDir}logs\${web:contextPath}_log_error.log"
-                     filePattern="${web:rootDir}logs\${web:contextPath}_log_%d{yyyy-MM-dd}_%i.log">
+        <RollingFile name="RollingFile_ERROR" fileName="${logPath}logs\${contextName}_log_error.log"
+                     filePattern="${logPath}logs\${contextName}_log_%d{yyyy-MM-dd}_%i.log">
             <PatternLayout pattern="%d %p %c{1.} [%t] %m%n" />
             <Policies>
                 <TimeBasedTriggeringPolicy modulate="true" interval="24"/>
@@ -86,7 +92,7 @@
             <appender-ref ref="RollingFile_WARNING" />
             <appender-ref ref="RollingFile_ERROR" />
         </root>
-        <!-- 将业务dao接口填写进去,并用控制台输出即可 -->
+        <!-- 将业务dao接口填写进去,并用控制台输出即可, sql也会输出 -->
         <logger name="com.zjy.bll.dao" level="DEBUG" additivity="false">
             <appender-ref ref="consolePrint"/>
         </logger>
