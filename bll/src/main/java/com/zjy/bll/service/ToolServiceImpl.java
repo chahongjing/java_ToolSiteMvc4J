@@ -64,15 +64,15 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
             sbGetterSetter.append("     * @return" + newLine);
             sbGetterSetter.append("     */" + newLine);
             sbGetterSetter.append("    public " + fieldType.getSimpleName() + " get" + columnInfo.getColumnName() + "() {" + newLine);
-            sbGetterSetter.append("        return " + columnInfo.getColumnName() + ";" + newLine);
+            sbGetterSetter.append("        return " + colName + ";" + newLine);
             sbGetterSetter.append("    }" + newLine);
             sbGetterSetter.append(newLine);
             sbGetterSetter.append("    /**" + newLine);
             sbGetterSetter.append("     * 设置" + colComments + newLine);
-            sbGetterSetter.append("     * @param " + columnInfo.getColumnName() + newLine);
+            sbGetterSetter.append("     * @param " + colName + newLine);
             sbGetterSetter.append("     */" + newLine);
-            sbGetterSetter.append("    public void set" + columnInfo.getColumnName() + "(" + fieldType.getSimpleName() + " " + columnInfo.getColumnName() + ") {" + newLine);
-            sbGetterSetter.append("        this." + columnInfo.getColumnName() + " = " + columnInfo.getColumnName() + ";" + newLine);
+            sbGetterSetter.append("    public void set" + columnInfo.getColumnName() + "(" + fieldType.getSimpleName() + " " + colName + ") {" + newLine);
+            sbGetterSetter.append("        this." + colName + " = " + colName + ";" + newLine);
             sbGetterSetter.append("    }" + newLine);
         }
         sb.insert(0, sbHeader.toString() + newLine);
