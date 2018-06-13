@@ -24,6 +24,18 @@ public class DbHelperNew {
         if (!DbUtils.loadDriver(driver)) {
             System.out.println("加载数据库驱动失败！");
         }
+        if (!DbUtils.loadDriver("oracle.jdbc.OracleDriver")) {
+            System.out.println("加载数据库驱动失败！");
+        }
+        if (!DbUtils.loadDriver("com.mysql.jdbc.Driver")) {
+            System.out.println("加载数据库驱动失败！");
+        }
+        if (!DbUtils.loadDriver("com.microsoft.sqlserver.jdbc.SQLServerDriver")) {
+            System.out.println("加载数据库驱动失败！");
+        }
+        if (!DbUtils.loadDriver("org.sqlite.JDBC")) {
+            System.out.println("加载数据库驱动失败！");
+        }
     }
 
     public static int insert(String sql, Object... params) {

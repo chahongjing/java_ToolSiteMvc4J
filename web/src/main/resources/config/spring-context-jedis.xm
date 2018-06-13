@@ -16,5 +16,6 @@
         <constructor-arg name="timeout" value="${jedis.timeout}" type="int"/>
         <!-- 如果没有密码，则去掉密码这个配置 -->
         <constructor-arg name="password" value="${jedis.auth}"/>
+        <constructor-arg name="database" value="${jedis.database}"/>
     </bean>
 </beans>
