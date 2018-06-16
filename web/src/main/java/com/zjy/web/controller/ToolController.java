@@ -39,8 +39,9 @@ public class ToolController extends BaseController {
         list.add("oracle：jdbc:oracle:thin:@127.0.0.1:1521:orcl");
         list.add("mysql：jdbc:mysql://localhost/toolsitemvc4j");
         list.add("sqlserver：jdbc:sqlserver://PC201404190064\\\\MSSQL; DatabaseName=ToolSiteMvc4J");
+        list.add("sqlite：jdbc:sqlite://d://app.db");
         model.addAttribute("dbUrlList", list);
-        return "tableToObject";
+        return "tools/tableToObject";
     }
 
     @RequestMapping("/getTableInfo")

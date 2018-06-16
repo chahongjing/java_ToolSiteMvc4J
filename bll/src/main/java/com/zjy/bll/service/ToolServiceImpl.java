@@ -6,7 +6,6 @@ import com.zjy.bll.common.BaseService;
 import com.zjy.bll.dao.ToolDao;
 import com.zjy.entities.TableColumnInfo;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -40,7 +39,7 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
         sb.append(" * 创建日期：" + sdf.format(new Date()) + newLine);
         sb.append(" */" + newLine);
         sb.append("public class " + Objects.toString(tableName, "") + " {" + newLine);
-        List<TableColumnInfo> list = getTableInfo(url, user, password, tableName);
+        List<TableColumnInfo> list = getTableInfo(dbType.getDriver(), url, user, password, tableName);
         if(list == null) {
             list = new ArrayList<>();
         }
@@ -81,7 +80,7 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
         return sb.toString();
     }
 
-    public List<TableColumnInfo> getTableInfo(String url, String user, String password, String tableName) {
+    public List<TableColumnInfo> getTableInfo(String driver, String url, String user, String password, String tableName) {
         String sql = "SELECT INITCAP(tabCol.TABLE_NAME) as tableName, INITCAP(tabCol.COLUMN_NAME) as columnName, tabCol.DATA_TYPE as dataType," +
                 "            colCom.COMMENTS AS colComments, tabCol.nullable, tabCom.COMMENTS AS tabComments," +
                 "            tabCol.DATA_LENGTH as dataLength, tabCol.DATA_PRECISION as dataPrecision," +
@@ -91,6 +90,7 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
                 "      LEFT JOIN USER_TAB_COMMENTS tabCom ON UPPER(tabCol.TABLE_NAME) = UPPER(tabCom.TABLE_NAME)" +
                 "     WHERE UPPER(tabCol.TABLE_NAME) = UPPER(:tableName)" +
                 "     ORDER BY tabCol.COLUMN_ID";
+        DbHelperNew.initDriver(driver);
         Connection conn = DbHelperNew.getConnection(url, user, password);
         return DbHelperNew.getList(conn, sql, TableColumnInfo.class, tableName);
     }

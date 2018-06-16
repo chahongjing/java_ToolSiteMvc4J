@@ -49,6 +49,8 @@
                         type = "mysql";
                     } else if (/sqlserver/i.test($scope.model.url)) {
                         type = "sqlserver";
+                    } else if (/sqlite/i.test($scope.model.url)) {
+                        type = "sqlite";
                     }
                     var param = {
                         type: type,

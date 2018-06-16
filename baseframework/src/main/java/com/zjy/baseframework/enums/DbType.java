@@ -4,16 +4,19 @@ package com.zjy.baseframework.enums;
  * Created by Administrator on 2018/2/27.
  */
 public enum DbType {
-    Oracle(0, "oracle"),
-    Mysql(1, "mysql"),
-    SqlServer(2, "oracle");
+    Oracle(0, "oracle", "oracle.jdbc.OracleDriver"),
+    Mysql(1, "mysql", "com.mysql.jdbc.Driver"),
+    SqlServer(2, "sqlserver", "com.microsoft.sqlserver.jdbc.SQLServerDriver"),
+    Sqlite(3, "sqlite", "org.sqlite.JDBC");
 
     private int value;
     private String name;
+    private String driver;
 
-    DbType(int value, String name){
+    DbType(int value, String name, String driver){
         this.value = value;
         this.name = name;
+        this.driver = driver;
     }
 
     public int getValue() {
@@ -21,6 +24,9 @@ public enum DbType {
     }
     public String getName() {
         return name;
+    }
+    public String getDriver() {
+        return driver;
     }
 
     public static DbType getDbTypeByValue(int value) {

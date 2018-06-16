@@ -142,4 +142,8 @@ public class DbHelperNew {
         }
         return conn;
     }
+
+    public static boolean initDriver(String driver) {
+        return DbUtils.loadDriver(driver);
+    }
 }
