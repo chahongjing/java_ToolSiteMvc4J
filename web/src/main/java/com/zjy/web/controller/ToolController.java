@@ -10,9 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Created by Administrator on 2018/2/27.
@@ -35,12 +33,12 @@ public class ToolController extends BaseController {
         model.addAttribute("dbUrl", Objects.toString(dbUrl, "jdbc:oracle:thin:@127.0.0.1:1521:orcl"));
         model.addAttribute("dbUser", Objects.toString(dbUser, "zjy"));
         model.addAttribute("dbPassword", Objects.toString(dbPassword, "1024"));
-        List<String> list = new ArrayList<>();
-        list.add("oracle：jdbc:oracle:thin:@127.0.0.1:1521:orcl");
-        list.add("mysql：jdbc:mysql://localhost/toolsitemvc4j");
-        list.add("sqlserver：jdbc:sqlserver://PC201404190064\\\\MSSQL; DatabaseName=ToolSiteMvc4J");
-        list.add("sqlite：jdbc:sqlite://d://app.db");
-        model.addAttribute("dbUrlList", list);
+        Map<DbType, String> map = new LinkedHashMap<>();
+        map.put(DbType.Oracle, "jdbc:oracle:thin:@127.0.0.1:1521:orcl");
+        map.put(DbType.Mysql, "jdbc:mysql://localhost/ToolSiteMvc4J");
+        map.put(DbType.SqlServer, "jdbc:sqlserver://PC201404190064\\\\MSSQL; DatabaseName=ToolSiteMvc4J");
+        map.put(DbType.Sqlite, "jdbc:sqlite::resource:db/app.db");
+        model.addAttribute("dbUrlMap", map);
         return "tools/tableToObject";
     }
 
