@@ -507,47 +507,47 @@
     </script>
 </jsSection>
 <script type="text/ng-template" id="oracleAddTable.html">
-    -- {author} {datetime} {functionName}
-    DECLARE
-    num NUMBER;
-    tableName VARCHAR2(100);
-    BEGIN
-    tableName := '{firstName}';
-    SELECT COUNT(1) INTO num FROM USER_TABLES WHERE UPPER(TABLE_NAME) = UPPER(tableName) ;
-    IF num = 0 THEN
+-- {author} {datetime} {functionName}
+DECLARE
+  num NUMBER;
+  tableName VARCHAR2(100);
+BEGIN
+  tableName := '{firstName}';
+  SELECT COUNT(1) INTO num FROM USER_TABLES WHERE UPPER(TABLE_NAME) = UPPER(tableName) ;
+  IF num = 0 THEN
     EXECUTE IMMEDIATE '
     CREATE TABLE {firstName}(
     id INT PRIMARY KEY
     )
     ';
-    END IF;
-    END;
-    /
-    COMMENT ON TABLE {firstName} IS '{remark}';
-    COMMENT ON COLUMN {firstName}.id is '主键';
-    /
+  END IF;
+END;
+/
+COMMENT ON TABLE {firstName} IS '{remark}';
+COMMENT ON COLUMN {firstName}.id is '主键';
+/
 
 
-    -- {author} {datetime} {functionName}
-    DECLARE
-    num NUMBER;
-    tableName VARCHAR2(100);
-    BEGIN
-    tableName := '{firstName}';
-    SELECT COUNT(1) INTO num FROM USER_TABLES WHERE UPPER(TABLE_NAME) = UPPER(tableName) ;
-    IF num > 0 THEN
-    EXECUTE IMMEDIATE 'DROP TABLE ' || tableName;
-    END IF;
-    END;
-    /
-    CREATE TABLE {firstName}
-    (
-    id INT PRIMARY KEY
-    );
-    /
-    COMMENT ON TABLE {firstName} IS '{remark}';
-    COMMENT ON COLUMN {firstName}.id is '主键';
-    /
+-- {author} {datetime} {functionName}
+DECLARE
+num NUMBER;
+tableName VARCHAR2(100);
+BEGIN
+tableName := '{firstName}';
+SELECT COUNT(1) INTO num FROM USER_TABLES WHERE UPPER(TABLE_NAME) = UPPER(tableName) ;
+IF num > 0 THEN
+EXECUTE IMMEDIATE 'DROP TABLE ' || tableName;
+END IF;
+END;
+/
+CREATE TABLE {firstName}
+(
+id INT PRIMARY KEY
+);
+/
+COMMENT ON TABLE {firstName} IS '{remark}';
+COMMENT ON COLUMN {firstName}.id is '主键';
+/
 </script>
 <script type="text/ng-template" id="sqlserverAddTable.html">
     -- {author} {datetime} {functionName}
@@ -681,63 +681,63 @@
     GO
 </script>
 <script type="text/ng-template" id="oracleAddField.html">
-    -- {author} {datetime} {functionName}
-    DECLARE
-    num NUMBER;
-    tableName VARCHAR2(100);
-    fieldName VARCHAR2(100);
-    BEGIN
-    tableName := '{firstName}';
-    fieldName := '{secondName}';
-    SELECT COUNT(1) INTO num FROM COLS
-    WHERE UPPER(TABLE_NAME) = UPPER(tableName)
+-- {author} {datetime} {functionName}
+DECLARE
+  num NUMBER;
+  tableName VARCHAR2(100);
+  fieldName VARCHAR2(100);
+BEGIN
+  tableName := '{firstName}';
+  fieldName := '{secondName}';
+  SELECT COUNT(1) INTO num FROM COLS
+   WHERE UPPER(TABLE_NAME) = UPPER(tableName)
     AND UPPER(COLUMN_NAME) = UPPER(fieldName);
-    IF num = 0 THEN
+  IF num = 0 THEN
     EXECUTE IMMEDIATE 'ALTER TABLE {firstName} ADD({secondName} VARCHAR2(100))';
-    END IF;
-    END;
-    /
-    COMMENT ON COLUMN {firstName}.{secondName} is '{remark}';
+  END IF;
+END;
+/
+COMMENT ON COLUMN {firstName}.{secondName} is '{remark}';
 
 
-    -- {author} {datetime} {functionName}
-    DECLARE
-    num NUMBER;
-    tableName VARCHAR2(100);
-    fieldName VARCHAR2(100);
-    BEGIN
-    tableName := '{firstName}';
-    fieldName := '{secondName}';
-    SELECT COUNT(1) INTO num FROM COLS
-    WHERE UPPER(TABLE_NAME) = UPPER(tableName)
-    AND UPPER(COLUMN_NAME) = UPPER(fieldName);
-    IF num > 0 THEN
-    EXECUTE IMMEDIATE 'ALTER TABLE ' || tableName || ' DROP COLUMN ' || fieldName;
-    END IF;
-    END;
-    /
-    ALTER TABLE {firstName} ADD({secondName} VARCHAR2(100));
-    COMMENT ON COLUMN {firstName}.{secondName} is '{remark}';
-    /
+-- {author} {datetime} {functionName}
+DECLARE
+num NUMBER;
+tableName VARCHAR2(100);
+fieldName VARCHAR2(100);
+BEGIN
+tableName := '{firstName}';
+fieldName := '{secondName}';
+SELECT COUNT(1) INTO num FROM COLS
+WHERE UPPER(TABLE_NAME) = UPPER(tableName)
+AND UPPER(COLUMN_NAME) = UPPER(fieldName);
+IF num > 0 THEN
+EXECUTE IMMEDIATE 'ALTER TABLE ' || tableName || ' DROP COLUMN ' || fieldName;
+END IF;
+END;
+/
+ALTER TABLE {firstName} ADD({secondName} VARCHAR2(100));
+COMMENT ON COLUMN {firstName}.{secondName} is '{remark}';
+/
 </script>
 <script type="text/ng-template" id="oracleAlterField.html">
-    -- {author} {datetime} {functionName}
-    DECLARE
-    num NUMBER;
-    tableName VARCHAR2(100);
-    fieldName VARCHAR2(100);
-    BEGIN
-    tableName := '{firstName}';
-    fieldName := '{secondName}';
-    SELECT COUNT(1) INTO num FROM COLS
-    WHERE UPPER(TABLE_NAME) = UPPER(tableName)
+-- {author} {datetime} {functionName}
+DECLARE
+  num NUMBER;
+  tableName VARCHAR2(100);
+  fieldName VARCHAR2(100);
+BEGIN
+  tableName := '{firstName}';
+  fieldName := '{secondName}';
+  SELECT COUNT(1) INTO num FROM COLS
+   WHERE UPPER(TABLE_NAME) = UPPER(tableName)
     AND UPPER(COLUMN_NAME) = UPPER(fieldName);
-    IF num > 0 THEN
+  IF num > 0 THEN
     EXECUTE IMMEDIATE 'ALTER TABLE ' || tableName || ' MODIFY(' || fieldName || ' VARCHAR2(XXX))';
     -- EXECUTE IMMEDIATE 'ALTER TABLE ' || tableName || ' DROP(' || fieldName || ')';
-    END IF;
-    END;
-    /
+  END IF;
+END;
+/
 </script>
 <script type="text/ng-template" id="oracleDropField.html">
     -- {author} {datetime} {functionName}
