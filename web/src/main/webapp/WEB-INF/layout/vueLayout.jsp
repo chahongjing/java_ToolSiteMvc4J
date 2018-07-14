@@ -95,6 +95,8 @@
 <script type="text/javascript">var ctx = '<%= request.getContextPath() %>';</script>
 <script src="${ctx}/js/Utility.js" type="text/javascript"></script>
 <script src="${ctx}/js/vue/vue.js"></script>
+<script src="${ctx}/js/axios.min.js"></script>
+<script src="${ctx}/js/vue/vue_main.js"></script>
 <script src="${ctx}/js/vue/vueService.js"></script>
 <script>
     Vue.component('apphead', {
@@ -176,6 +178,23 @@
         },
         mounted: function () {
                 var me = this;
+
+    me.commonSrv.get('/test/getMenu.do')
+    //axios.get(ctx + '/test/getMenu11.do')
+    .then(function(resp) {
+    console.log(resp.data);
+    console.log(resp.status);
+    console.log(resp.statusText);
+    console.log(resp.headers);
+    console.log(resp.config);
+    }).catch(function(thrown) {
+    if (axios.isCancel(thrown)) {
+    console.log('Request canceled', thrown.message);
+    } else {
+    // 处理错误
+    }
+    });
+
         window.Utility.get('/test/getMenu.do').done(function (resp) {
         if (resp.status == Constant.AjaxStatus.OK) {
             for(var i = 0; i < resp.value.length; i++) {
