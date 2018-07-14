@@ -23,7 +23,7 @@ public class CommonServiceImpl implements CommonService {
         // 排序
         list.sort(Comparator.comparing(T::getSeq));
         // 取一级数据
-        List<T> parents = list.stream().filter(item -> item.getParentId() == null || item.getParentId() == 0).collect(Collectors.toList());
+        List<T> parents = list.stream().filter(item -> item.getPId() == 0).collect(Collectors.toList());
         List<T> result = new ArrayList<>();
         for (T parent : parents) {
             result.add(parent);
@@ -44,7 +44,7 @@ public class CommonServiceImpl implements CommonService {
         List<T> result = new ArrayList<>();
         for (T child : list) {
             // 是节点子集
-            if (parent.getId().equals(child.getParentId())) {
+            if (parent.getId() == child.getPId()) {
                 result.add(child);
                 // 添加子集数据
                 result.addAll(getHierarchyChildren(child, list));

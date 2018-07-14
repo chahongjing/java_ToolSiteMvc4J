@@ -54,7 +54,8 @@ label.switch input:disabled + div span:nth-child(3){color:#aaa;}
 .radio_checkbox input,.togglecheckbox input{
     display:none;
 }
-.radio_checkbox span,.togglecheckbox span{display:inline-block;line-height:30px;margin-left:28px;}
+.radio_checkbox span,.togglecheckbox span{display:inline-block;line-height:30px;margin-left:28px;
+    font-weight: normal;}
 .radio_checkbox i,.togglecheckbox i{
     display:inline-block;position:absolute;border:1px #777 solid;background-color:#fafafa;overflow:hidden;
 }

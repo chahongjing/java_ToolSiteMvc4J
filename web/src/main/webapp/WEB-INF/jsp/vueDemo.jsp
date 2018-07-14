@@ -17,57 +17,58 @@
 </head>
 <body>
 <div>
-    <div id="abc">
-        <p v-if="isShow == 1">isShow == 1</p>
-        <p v-else="isShow == 1">isShow != 1</p><!-- v-else-if -->
-        <p v-show="isShow == 1">vshow</p>
-        <input v-model="isShow"/>v-once:<span v-once="isShow" v-text="isShow"></span><br>
-        <button v-on:v-on:click="toggle($event)">点击切换可缩写为@click</button>
-        <ul>
-            <todo-item v-for="item in list" v-bind:key="item.id" v-bind:todo="item">
-            </todo-item>
-        </ul>
+    <p><b>input</b></p>
+    <input type="text" v-model="inputValue"/>
+    <input type="text" v-model="inputValue" :disabled="true"/>
+    <br/><br/>
+    <p><b>radio</b></p>
+    <label class="radio_checkbox" v-for="item in repeatList">
+        <input type='radio' name="radio" :value="item.value" v-model="radioChecked"
+               :disabled="radioDisabled" />
+        <i></i>
+        <span v-text="item.name"></span>
+    </label>
+    <span v-text="radioChecked"></span>
+    <br/><br/>
+    <p><b>checkbox</b></p>
+    <label class="radio_checkbox" v-for="item in repeatList">
+        <input type='checkbox' name="checkbox" :value="item.value" v-model="checkboxChecked" :disabled="checkboxDisabled" />
+        <i></i>
+        <span v-text="item.name"></span>
+    </label>
+    <span v-text="checkboxChecked"></span>
+    <br/><br/>
+    <p><b>select</b></p>
+    <select v-model="selectedValue">
+        <option value="" disabled>--全部--</option>
+        <option v-for="item in repeatList" :value="item.value" v-text="item.name"></option>
+    </select>
+    <span v-text="selectedValue"></span>
+    <br/><br/>
+    <p><b>event</b></p>
+    <input type="button" value="测试事件" @click="toggle()"/>
+    <span v-show="showSpan">show显示和隐藏, v-hide</span>
+    <span v-if="!showSpan">v-if, v-else, v-else-if</span>
+    <br><br>
+    <p>once</p>
+    <span v-once="showSpan" v-text="'只调用一次' + showSpan"></span>
+    <br/><br/>
+    <p><b>span</b></p>
+    <p class="testclass" v-text="inputValue" :class="{'red': hasClass}"></p>
+    <span v-text="'v-text: ' + htmlValue"></span><br>
+    <span v-html="'v-html: ' + htmlValue"></span>
+    <br><br>
+    <p>style</p>
+    <div :class="getClass()" :style="getStyle()">abc</div>
+    <br><br>
 
-        <ul>
-            <li v-for="item in list" v-text="item.name"></li>
-        </ul>
+    <ul>
+        <todo-item v-for="item in repeatList" v-bind:key="item.id" v-bind:todo="item">
+        </todo-item>
+    </ul>
 
-        <div :class="getClass()" :style="getStyle()">abc</div>
-        <div v-html="html">
-
-        </div>
-
-        <div>{{html | myFilter}}</div>
-        <div v-text="html"></div>
-
-        <div id='example-3'>
-            <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
-            <label for="jack">Jack</label>
-            <input type="checkbox" id="john" value="John" v-model="checkedNames">
-            <label for="john">John</label>
-            <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
-            <label for="mike">Mike</label>
-            <br>
-            <span>Checked names: {{ checkedNames }}</span>
-        </div>
-        <div id="example-4">
-            <input type="radio" id="one" value="One" v-model="picked">
-            <label for="one">One</label>
-            <br>
-            <input type="radio" id="two" value="Two" v-model="picked">
-            <label for="two">Two</label>
-            <br>
-            <span>Picked: {{ picked }}</span>
-        </div>
-        <select v-model="selected">
-            <option v-for="option in options" v-bind:value="option.value" v-text="option.text">
-            </option>
-        </select>
-        <span>Selected: {{ selected }}</span>
-
-        <hello hello></hello>
-        <pagination v-bind:pagerInfo="pagerInfo" v-bind:click="testMe"></pagination>
-    </div>
+    <hello hello></hello>
+    <pagination v-bind:pagerInfo="pagerInfo" v-bind:click="testMe"></pagination>
 </div>
 <script type="text/template" id="tpl">
     <li v-text="todo.name"></li>
@@ -142,37 +143,29 @@
             template: '#tpl'
         });
 
+        var list = [];
+        list.push({name: '电影', value: 1});
+        list.push({name: '看书', value: 2});
+        list.push({name: '打游戏', value: 3});
+
         var data = {
-            isShow: 1,
-            list: [{id: 1, name: 'A'}, {id: 2, name: 'B'}, {id: 3, name: 'C'}, {id: 4, name: 'D'}],
-            html: '<p>这是<b style="color:red;">一段</b>文字</p>',
-            checkedNames: ['Mike', 'John'],
-            picked: '',
-            selected: '',
-            options: [
-                {text: 'One', value: 'A'},
-                {text: 'Two', value: 'B'},
-                {text: 'Three', value: 'C'}
-            ],
+            inputValue: '测试数据',
+            hasClass: true,
+            radioChecked: 2,
+            radioDisabled: false,
+            repeatList: list,
+            checkboxChecked:[3],
+            checkboxDisabled: false,
+            selectedValue: 3,
+            htmlValue: '<span class="red">v-bind:id绑定属性，可简写为 :id；v-on:click绑定事件，可简写为 @click</span>',
+            showSpan:true,
             pagerInfo: {pageNum: 5, pages: 10}
         };
-
-
-//        var vm1 = new Vue({
-//            el: '#twoV',
-//            data: {message: 'mymes'},
-//            methods: {
-//                toggle: function() {
-//                    console.log('dsfasfd');
-//                }
-//            }
-//        });
 
         var vm = new Vue({
             el: '#myApp',
             data: data,
             methods: {
-                toggle: toggle,
                 getClass: function () {
                     return {
                         bold: true,
@@ -186,6 +179,11 @@
                 },
                 testMe: function (a) {
                     console.log(a.value);
+                },
+                toggle: function () {
+                    this.showSpan = !this.showSpan;
+                    this.hasClass = !this.hasClass;
+                    console.log('myapp');
                 }
             },
             computed: {
@@ -212,16 +210,7 @@
                     return (v || '') + 'filterInfo';
                 }
             }
-            <%--components: {--%>
-            <%--'hello': () => import('${ctx}/js/vue/component/hello.vue')--%>
-            <%--}--%>,
         });
-
-        console.log(vm.list === data.list);
-
-        function toggle($event) {
-            this.isShow = (this.isShow) % 2 + 1;
-        }
     </script>
 </jsSection>
 </body>

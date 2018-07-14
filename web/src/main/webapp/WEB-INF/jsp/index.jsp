@@ -162,17 +162,20 @@
 </div>
 <jsSection>
     <script>
-        app.controller('indexCtrl', ['$rootScope', '$scope', '$http', '$timeout', '$q',
-            function ($rootScope, $scope, $http, $timeout, $q) {
-                $scope.model = {};
+        // app.controller('indexCtrl', ['$rootScope', '$scope', '$http', '$timeout', '$q',
+        //     function ($rootScope, $scope, $http, $timeout, $q) {
+        //         $scope.model = {};
+        //
+        //         $scope.showLoading = function () {
+        //             $rootScope.showLoading();
+        //             $timeout(function () {
+        //                 $rootScope.hideLoading();
+        //             }, 2000);
+        //         }
+        //     }]);
 
-                $scope.showLoading = function () {
-                    $rootScope.showLoading();
-                    $timeout(function () {
-                        $rootScope.hideLoading();
-                    }, 2000);
-                }
-            }]);
+        var data = {};
+
         $(function () {
             $('#lnkLogout').click(function () {
                 var result = $.ajax({

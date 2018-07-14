@@ -5,17 +5,52 @@
 <head>
     <title>测试angular</title>
     <link rel="stylesheet" href="${ctx}/Controls/zTree/css/zTreeStyle/zTreeStyle.css" type="text/css"/>
+    <style>.red{color:#f00;}</style>
 </head>
 <body>
 <div data-ng-controller="testCtrl" data-ng-init="init()">
-    <ul>
-        <li data-ng-repeat="item in model.list" data-ng-bind="item.name" ng-repeat-finish="model.myAfterRender(param)">
-        </li>
-    </ul>
+    <div>
+        <p><b>input</b></p>
+        <input type="text" data-ng-model="model.inputValue"/>
+        <input type="text" data-ng-model="model.inputValue" data-ng-disabled="true" />
+        <br/><br/>
+        <p><b>radio</b></p>
+        <label class="radio_checkbox" data-ng-repeat="item in model.repeatList"
+               ng-repeat-finish="myAfterRender(param)">
+            <input type='radio' name="radio" data-ng-value="item.value" data-ng-model="model.radioChecked"
+                   data-ng-disabled="model.radioDisabled"/>
+            <i></i>
+            <span data-ng-bind="item.name"></span>
+        </label>
+        <span data-ng-bind="model.radioChecked"></span>
+        <br/><br/>
+        <p><b>checkbox</b></p>
+        <label class="radio_checkbox" data-ng-repeat="item in model.repeatList">
+            <input type='checkbox' name="checkbox" data-ng-model="item.isChecked"
+                   data-ng-disabled="model.checkboxDisabled || item.isDisabled"/>
+            <i></i>
+            <span data-ng-bind="item.name + item.isChecked"></span>
+        </label>
+        <br/><br/>
+        <p><b>select</b></p>
+        <select data-ng-options="item.value as item.name for item in model.repeatList"
+                data-ng-model="model.selectedValue">
+            <option value="" disabled>--全部--</option>
+        </select>
+        <span data-ng-bind="model.selectedValue"></span>
+        <br/><br/>
+        <p><b>event</b></p>
+        <input type="button" value="测试事件" data-ng-click="toggle()" />
+        <span data-ng-show="model.showSpan">show显示和隐藏, data-ng-hide, data-ng-switch</span>
+        <span data-ng-if="!model.showSpan">if显示和隐藏</span>
+        <br/><br/>
+        <p><b>span</b></p>
+        <p data-ng-bind="model.inputValue" data-ng-class="{'red': model.hasClass}"></p>
+        <span data-ng-bind-template="{{model.inputValue}}[abc]{{model.inputValue}}"></span>
+    </div>
+    <br><br><br>
 
     <div data-ng-include="includeUrl" data-ng-controller="includePageCtrl" onload="init()"></div>
-    <span data-ng-bind-template="{{param}}[abc]{{paramb}}"></span>
-    <span data-ng-bind="paramb"></span>
     <div test-url>
         <span data-ng-bind="model.name"></span>
     </div>
@@ -53,32 +88,43 @@
                 $scope.paramb = '<div>abc</div>';
 
                 $scope.init = function () {
-                    $scope.model.list = [];
-                    $scope.model.list.push({id: 1, name: '第一条数据'});
-                    $scope.model.list.push({id: 2, name: '第二条数据'});
-                    $scope.model.list.push({id: 3, name: '第三条数据'});
+                    $scope.model.inputValue = '测试数据';
+                    $scope.model.hasClass = true;
+                    var list = [];
+                    list.push({name: '电影', value: 1});
+                    list.push({name: '看书', value: 2});
+                    list.push({name: '打游戏', value: 3});
+                    $scope.model.radioChecked = 2;
+                    $scope.model.radioDisabled = false;
+                    $scope.model.repeatList = list;
+                    $scope.model.checkboxDisabled = false;
+                    $scope.model.selectedValue = 3;
+
+
+
                     $scope.model.name = "父级";
-//                $scope.model.testGet();
-//                $scope.model.testPost();
-
+//                $scope.testGet();
+//                $scope.testPost();
                     $scope.includeUrl = '${ctx}/js/angular/templates/includePage.html';
-
                     $timeout(function () {
                         $scope.$broadcast('callChildFuncId', {a: '参数'});
                     });
-
                     var template = $templateCache.get('my.html');
                     $scope.url = 'http://www.baidu.com';
                     angular.element('#testTemplate').append($compile(template)($scope));
-
                     initTree();
                 };
 
-                $scope.model.myAfterRender = function (param) {
+                $scope.myAfterRender = function (param) {
                     console.log('myAfterRender:' + param);
                 };
 
-                $scope.model.testGet = function () {
+                $scope.toggle = function() {
+                    $scope.model.showSpan = !$scope.model.showSpan;
+                    $scope.model.hasClass = !$scope.model.hasClass;
+                }
+
+                $scope.testGet = function () {
                     $http.get('${ctx}/test/testajax.do', {params: {a: 1}}).success(function (resp) {
                         console.log('success');
                     }).error(function (data, status, headers, config) {
@@ -86,7 +132,7 @@
                     });
                 };
 
-                $scope.model.testPost = function () {
+                $scope.testPost = function () {
                     $http.post('${ctx}/test/testajax.do', {a: 11}, {params: {b: 2}}).success(function (resp) {
                         console.log('success');
                     }).error(function (data, status, headers, config) {

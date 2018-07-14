@@ -5,7 +5,7 @@ package com.zjy.bll.dto;
  * 层级关系实体接口
  */
 public interface HierarchyBase {
-    Integer getId();
-    Integer getParentId();
-    Integer getSeq();
+    int getId();
+    int getPId();
+    int getSeq();
 }

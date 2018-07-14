@@ -2,6 +2,8 @@ package com.zjy.web.controller;
 
 import com.zjy.baseframework.BaseResult;
 import com.zjy.baseframework.PartialViewHelper;
+import com.zjy.bll.dos.Menu;
+import com.zjy.bll.vo.ZTreeNode;
 import com.zjy.entities.Goods;
 import com.zjy.entities.UserInfo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.ServletConfigAware;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -25,9 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author chahongjing
@@ -168,5 +169,77 @@ public class TestController extends BaseController implements ServletConfigAware
         user.setUserName("曾军毅get");
         re.setValue(user);
         return new ResponseEntity<>(re, HttpStatus.OK);
+    }
+
+    @RequestMapping("/getMenu")
+    @ResponseBody
+    public BaseResult getMenu() {
+        List<ZTreeNode> nodeList = new ArrayList<>();
+        List<Menu> list = new ArrayList<>();
+        Menu menuTemp = new Menu();
+        menuTemp.setId(1);
+        menuTemp.setPId(0);
+        menuTemp.setName("业务");
+        menuTemp.setUrl("/abc.do");
+        menuTemp.setSeq(0);
+        menuTemp.setIcon("fa-cog");
+        list.add(menuTemp);
+
+        menuTemp = new Menu();
+        menuTemp.setId(3);
+        menuTemp.setPId(1);
+        menuTemp.setName("业务A");
+        menuTemp.setUrl("/abc.do");
+        menuTemp.setSeq(0);
+        menuTemp.setIcon("fa-cog");
+        list.add(menuTemp);
+
+        menuTemp = new Menu();
+        menuTemp.setId(4);
+        menuTemp.setPId(1);
+        menuTemp.setName("业务B");
+        menuTemp.setUrl("/abc.do");
+        menuTemp.setSeq(1);
+        menuTemp.setIcon("fa-cog");
+        list.add(menuTemp);
+
+        menuTemp = new Menu();
+        menuTemp.setId(2);
+        menuTemp.setPId(0);
+        menuTemp.setName("管理");
+        menuTemp.setUrl("/def.do");
+        menuTemp.setSeq(1);
+        menuTemp.setIcon("fa-cog");
+        list.add(menuTemp);
+
+        menuTemp = new Menu();
+        menuTemp.setId(5);
+        menuTemp.setPId(2);
+        menuTemp.setName("工具");
+        menuTemp.setUrl("/abc.do");
+        menuTemp.setSeq(0);
+        menuTemp.setIcon("fa-cog");
+        list.add(menuTemp);
+
+        menuTemp = new Menu();
+        menuTemp.setId(6);
+        menuTemp.setPId(2);
+        menuTemp.setName("日志");
+        menuTemp.setUrl("/abc.do");
+        menuTemp.setSeq(1);
+        menuTemp.setIcon("fa-cog");
+        list.add(menuTemp);
+
+        ZTreeNode node;
+        for (Menu menu : list) {
+            node = new ZTreeNode();
+            node.setId(menu.getId());
+            node.setPId(menu.getPId());
+            node.setName(menu.getName());
+            node.setSeq(menu.getSeq());
+            node.setData(menu);
+            nodeList.add(node);
+        }
+        return BaseResult.OK(nodeList);
     }
 }

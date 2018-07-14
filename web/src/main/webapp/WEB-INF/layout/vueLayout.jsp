@@ -14,12 +14,11 @@
 <body>
 <div class="main" id="myApp">
     <apphead></apphead>
-    <div class="body" id="appBody">
-        <div class="menu"></div>
+    <div class="body">
+        <appmenu></appmenu>
         <div class="right-main">
             <div class="bread"></div>
             <div class="right-content">
-                <h2>测试</h2>
                 <sitemesh:write property='body'/>
                 <div class="loadingmask">
                     <div class="info">
@@ -67,6 +66,31 @@
         </div>
     </div>
 </script>
+<script type="text/template" id="appMenu">
+        <div class="menu">
+    <div class="slide-menu">
+    <ul class="first-menu">
+    <li v-for="item in list" v-bind:class="{'selected': item.isSelected}" :title="JSON.stringify(item)"
+    @click="clickFirstMenu(item)" ng-repeat-finish="afterRender()">
+    <div>
+    <i :class="'fa ' + item.data.icon"></i>
+    <span v-text="item.name"></span>
+    <b :class="{'fa fa-angle-down':item.isSelected,'fa fa-angle-right':!item.isSelected}"></b>
+    </div>
+    <ul class="sub-menu show" :class="{'sub-menu show':item.isSelected}" :style="{'height':getMenuHeight(item)}">
+    <li v-for="sub in item.children" :class="{'selected': sub.isSelected}"
+    @click="clickSecondMenu(item, sub, $event)">
+    <a href="javascript:void(0)">
+    <i :class="'fa ' + sub.data.icon"></i>
+    <span v-text="sub.name"></span>
+    </a>
+    </li>
+    </ul>
+    </li>
+    </ul>
+    </div>
+        </div>
+ </script>
 <script src="${ctx}/js/jquery-3.3.1.js" type="text/javascript"></script>
 <script type="text/javascript">var ctx = '<%= request.getContextPath() %>';</script>
 <script src="${ctx}/js/Utility.js" type="text/javascript"></script>
@@ -105,7 +129,85 @@
             }
         }
     });
+        Vue.component('appmenu', {
+            data: function () {
+                return {list: []};
+                },
+        template: '#appMenu',
+        methods: {
+        getMenuHeight: function(item) {
+        return (item.isSelected ? item.children.length * 36 : 0) + 'px';
+        },
+        afterRender: function() {
+
+        },
+
+        clickFirstMenu: function(item) {
+        if(item.isSelected) {
+        item.isSelected = false;
+        return;
+        }
+        for(var i = 0; i < this.list.length; i++) {
+        var obj = this.list[i];
+        if(item == obj) {
+        item.isSelected = !item.isSelected;
+        } else {
+        obj.isSelected = false;
+        }
+        }
+        },
+        clickSecondMenu: function(item, sub, $event) {
+        $event.stopPropagation();
+        if(sub.isSelected) return;
+        for(var i = 0; i < this.list.length; i++) {
+        var obj = this.list[i];
+        for(var j = 0; j < obj.children.length; j++) {
+        var subObj = obj.children[j];
+        if(item == subObj) continue;
+        subObj.isSelected = false;
+        }
+        }
+
+        sub.isSelected = true;
+        }
+        },
+        computed: {
+
+        },
+        mounted: function () {
+                var me = this;
+        window.Utility.get('/test/getMenu.do').done(function (resp) {
+        if (resp.status == Constant.AjaxStatus.OK) {
+            for(var i = 0; i < resp.value.length; i++) {
+        resp.value[i].isSelected = false;
+        }
+        var parents = resp.value.filter(function(item) {return item.pId == 0;});
+            for(var i = 0; i < parents.length; i++) {
+                parents[i].children = resp.value.filter(function(item) {return item.pId == parents[i].id;});
+        }
+            me.list = parents;
+
+        setTimeout(function() {
+        $('.sub-menu').css('transition', 'height ease 0.2s');
+        }, 200);
+        } else {
+        alert(resp.msg);
+        }
+        }).fail(function () {
+        alert("注销失败！");
+        });
+        }
+        });
 </script>
 <sitemesh:write property='jsSection'/>
+        <script>
+        var vm = new Vue({
+        el: '#myApp',
+        data: data,
+        methods: {
+
+        }
+        });
+        </script>
 </body>
 </html>

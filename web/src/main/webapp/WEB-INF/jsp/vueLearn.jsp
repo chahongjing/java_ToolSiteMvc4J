@@ -21,7 +21,7 @@
             <li>只有定义在new Vue中定义的属性才是双向绑定的，如果使用var vm = new Vue中未定义变量，然后使用vm.otherP = 'abcd'，则不是响应式的</li>
             <li>v-once指令只会绑定一次，后续变化将不再刷新视图，此指令会影响节点上所有的数据绑定</li>
             <li>元素属性不能使用{{id}}来绑定，应使用v-bind:属性来绑定，如v-bind:id</li>
-            <li>v-bind绑定属性，v-text绑定文本，也可用{{myvar}}，v-bind绑定html</li>
+            <li>v-bind绑定属性，v-text绑定文本,html片断会直接显示在页面上，也可用{{myvar}}，v-html绑定html，html会被浏览器解析</li>
             <li>v-bind:id可缩写为:id, v-on:click可缩写为@click</li>
             <li>computed计算属性，methods方法比较，计算属性基于绑定依赖，如果依赖没有发生变化，会直接返回缓存，而methods每次重新渲染都会重新计算</li>
             <li>&lt;template&gt;是不可见元素</li>
