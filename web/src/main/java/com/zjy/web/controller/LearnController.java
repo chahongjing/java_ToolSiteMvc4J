@@ -405,6 +405,18 @@ public class LearnController extends BaseController {
     }
     //endregion
 
+    // region js
+
+    // endregion
+
+    // region css, html
+
+    @RequestMapping("/cssTest")
+    public String cssTest() {
+        return "cssTest";
+    }
+    // endregion
+
     // region 其它
     @RequestMapping("/testajax")
     @ResponseBody

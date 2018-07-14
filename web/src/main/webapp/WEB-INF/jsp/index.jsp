@@ -130,6 +130,12 @@
         js学习
     </a>
     <hr>
+    前端<br>
+    <a href="${ctx}/learn/cssTest.do" class="btn btn-success btn-app radius-4" target="_blank">
+        <i class="icon-cog fa fa-lastfm bigger-230" style="display:block;"></i>
+        css
+    </a>
+    <hr>
     其它<br>
     <a href="${ctx}/learn/gitLearn.do" target="_blank">git学习</a>
     <a href="${ctx}/learn/otherLearn.do" target="_blank">其它</a>
@@ -141,16 +147,6 @@
     <br/>
     <a href="${ctx}/cost/.do" target="_blank">财务管理</a>
 
-    <br/>
-    <br/>
-    <label class="switch">
-        <input type="checkbox" class="hide"/>
-        <div>
-            <span>ON</span>
-            <span></span>
-            <span>OFF</span>
-        </div>
-    </label>
     <br/>
     <br/>
     <div class="pro">

@@ -2,6 +2,8 @@ html,body{width:100%;height:100%;margin:0;padding:0;font-family: "Microsoft YaHe
 .main{width:100%;height:100%;}
 ul,li{margin:0;padding:0;list-style:none;}
 #trans-tooltip,#tip-arrow-bottom,#tip-arrow-top{display:none;}
+
+/* head */
 .head{
     width:100%;margin:auto;height:50px;
     background-color: #4e7cd4;color:#fff;
@@ -19,6 +21,7 @@ ul,li{margin:0;padding:0;list-style:none;}
 .head .info .logout{display:block;cursor:pointer;}
 .head .info .logout:hover {color:#ddd}
 
+/* body */
 .body{width:100%;height:calc(100% - 50px);}
 .body .menu{width:250px;height:100%;display:inline-block;float:left;overflow-x: hidden;overflow-y: auto;border-right:1px solid #ccc;}
 .body .right-main{width:calc(100% - 250px);height:100%;display:inline-block;float:left;overflow: hidden;background-color: #d6dae6;}
@@ -26,6 +29,7 @@ ul,li{margin:0;padding:0;list-style:none;}
 .body .right-content{background-color:#fff;width:calc(100% - 20px);height:calc(100% - 52px);overflow-x: hidden;overflow-y: auto;margin-left:10px;
     margin-top:10px;border:1px solid #c8cddc;background-color: #f6f8fb;}
 
+/* loadingmask */
 .loadingmask{display:none;position:fixed;width:100%;height:calc(100%);left:0px;top:0px;background-color:rgba(0,0,0,0.5);z-index: 10000;}
 .loadingmask.show{display:block;}
 .loadingmask .info{display:block;position:absolute;top:50%;margin-top:-24px;text-align:center;width:100%;}
@@ -44,6 +48,62 @@ label.switch div > span:nth-child(2){width:37px;background-image: linear-gradien
 label.switch div > span:nth-child(3){background-color: #ddd;color:#666;border-radius: 0 2px 2px 0;}
 label.switch input:disabled + div span:nth-child(1){background-color:#ddd;color:#aaa;}
 label.switch input:disabled + div span:nth-child(3){color:#aaa;}
+
+/* radio & checkbox */
+.radio_checkbox,.togglecheckbox{cursor:pointer;display:inline-block;position:relative;margin-right:10px;}
+.radio_checkbox input,.togglecheckbox input{
+    display:none;
+}
+.radio_checkbox span,.togglecheckbox span{display:inline-block;line-height:30px;margin-left:28px;}
+.radio_checkbox i,.togglecheckbox i{
+    display:inline-block;position:absolute;border:1px #777 solid;background-color:#fafafa;overflow:hidden;
+}
+.radio_checkbox i:after,.togglecheckbox i:after{
+    position:absolute;font: normal normal normal 14px/1 FontAwesome;color:#6087cf;
+    transition:transform 0.2s ease-out;-webkit-transition:-webkit-transform 0.2s ease-out;
+}
+.radio_checkbox input:checked + i,.togglecheckbox input:checked + i {
+    background-color:#f0f0f0;transition:background-color 0.2s ease-in;-webkit-transition:background-color 0.2s ease-in;
+}
+.radio_checkbox input:checked + i:after,.togglecheckbox input:checked + i:after{
+    transform:scale(1) !important;-webkit-transform:scale(1);transition:transform 0.2s ease-in;
+}
+.radio_checkbox input:disabled + i{
+    border-color:#bbb;
+}
+.radio_checkbox input:disabled:checked + i:after,.togglecheckbox input:checked:disabled + i:after{
+    color:#aaa;
+}
+.radio_checkbox input:disabled ~ span,.togglecheckbox input:disabled ~ span{
+    color:#aaa;
+}
+/* radio */
+.radio_checkbox input[type='radio'] + i{border-radius:100%;width:18px;height:18px;left:5px;top:5px;}
+.radio_checkbox input[type='radio'] + i:after{content:'\f111';top:2px;left:2px;width:12px;height:12px;transform:scale(0);-webkit-transform:scale(0);}
+/* checkbox */
+.radio_checkbox input[type='checkbox'] + i{width:18px;height:18px;left:5px;top:5px;}
+.radio_checkbox input[type='checkbox'] + i:after{content:'\f00c';top:2px;left:1px;width:12px;height:12px;transform:scale(0);-webkit-transform:scale(0);}
+/* togglecheckbox */
+.togglecheckbox i{
+    position:absolute;width:40px;height:22px;border-radius:18px;transition:0.2s ease-in;top:3px;
+}
+.togglecheckbox i:after{
+    content:'';left:1px;top:1px;width:18px;height:18px;border:1px #aaa solid;border-radius:18px;background-color:#eee;
+    transition:0.2s ease-in-out;
+}
+.togglecheckbox span{line-height:30px;margin-left:45px;text-align:left;}
+.togglecheckbox input:checked + i{
+    background-color:#6087cf;
+}
+.togglecheckbox input:disabled + i{
+    border-color: #bbb;
+}
+.togglecheckbox input:checked:disabled + i{
+    background-color:#aaa;
+}
+.togglecheckbox input:checked + i:after{
+    left:20px;transition:0.2s ease-in-out;
+}
 
 /* 导航 */
 .slide-menu > ul > li{line-height:35px;position:relative;overflow:hidden;}

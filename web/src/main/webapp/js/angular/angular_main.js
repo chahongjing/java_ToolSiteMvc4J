@@ -103,8 +103,8 @@ app.controller('mainCtrl', ['$rootScope', '$scope', '$timeout', 'commonService',
 
         function getMenu() {
             var list = [];
-            list.push({id:1,name: '系统管理',isSelected: true, icon: 'fa-cog', list:[{pId:3,name:'导航', icon: 'fa-cog',isSelected: true},{pId:4,name:'日志', icon: 'fa-cog'}]});
-            list.push({id:2,name: '后台管理', icon: 'fa-cog', list:[{pId:5,name:'导航1', icon: 'fa-cog'},{pId:6,name:'日2志', icon: 'fa-cog'}]});
+            list.push({id:1,name: 'A',isSelected: true, icon: 'fa-cog', list:[{pId:3,name:'B', icon: 'fa-cog',isSelected: true},{pId:4,name:'C', icon: 'fa-cog'}]});
+            list.push({id:2,name: 'D', icon: 'fa-cog', list:[{pId:5,name:'E', icon: 'fa-cog'},{pId:6,name:'F', icon: 'fa-cog'}]});
             $scope.model.menu = list;
         }
         $scope.clickFirstMenu = function(item) {

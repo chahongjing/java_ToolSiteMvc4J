@@ -12,7 +12,7 @@ app.directive('dirCompile', function ($compile) {
             $scope.param = 'scopeTrue';
             $scope.$watch('watchVar', function (sourcedata) {
                 var html = '';
-                html += '<div data-ng-bind="watchVar + \'普通变量\'"></div>'
+                html += '<div data-ng-bind="watchVar + \'myvar\'"></div>'
                 element.html(html);
                 $compile(element.contents())($scope);
             });
