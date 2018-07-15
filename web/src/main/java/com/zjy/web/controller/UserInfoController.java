@@ -7,6 +7,7 @@ import com.zjy.baseframework.enums.ResultStatus;
 import com.zjy.bll.common.ShiroRealm;
 import com.zjy.bll.request.UserInfoRequest;
 import com.zjy.bll.service.UserInfoService;
+import com.zjy.bll.vo.UserInfoVo;
 import com.zjy.entities.UserInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -117,7 +118,16 @@ public class UserInfoController {
 
         UserInfoRequest uRequest = new UserInfoRequest();
         uRequest.setOrderBy("UserCode DESC");
-        PageInfo query = userInfoService.queryPage(uRequest);
+        PageInfo<UserInfo> query = userInfoService.queryPage(uRequest);
+        List<UserInfo> list1 = query.getList();
+        for (UserInfo userInfo : list1) {
+
+        }
+        PageInfo<UserInfoVo> queryVo = userInfoService.queryPage(uRequest);
+        List<UserInfoVo> list2 = queryVo.getList();
+        for (UserInfoVo userInfoVo : list2) {
+
+        }
         request.getSession().setAttribute("userTest", b);
 
         mv.addObject("pageinfo", query);

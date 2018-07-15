@@ -7,7 +7,7 @@
 		#{sex, jdbcType=BOOLEAN}, #{birthday, jdbcType=TIMESTAMP}, #{isSystem, jdbcType=BOOLEAN})
 	</insert>
 
-	<select id="get" parameterType="String" resultType="com.zjy.entities.UserInfo">
+	<select id="get" parameterType="String" resultType="com.zjy.bll.vo.UserInfoVo">
 		SELECT userguid,userName,userCode,password FROM UserInfo WHERE Id = #{id, jdbcType = VARCHAR}
 	</select>
 
@@ -23,7 +23,7 @@
 		SELECT userguid,userName,userCode,password FROM UserInfo
 		 WHERE 1 = 1
 	</select>
-    <select id="queryPage" resultType="com.zjy.entities.UserInfo">
+    <select id="queryPage" resultType="com.zjy.bll.vo.UserInfoVo">
 		SELECT userguid,userName,userCode,password FROM UserInfo
 		WHERE 2 = 2
 	</select>

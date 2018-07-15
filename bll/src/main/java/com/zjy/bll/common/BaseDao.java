@@ -10,9 +10,9 @@ import java.util.Map;
 public interface BaseDao<T> {
     T get(String id);
 
-    List<T> query(T entity);
+    List<? extends T> query(T entity);
 
-    List<T> queryPage(Map<String, Object> query);
+    List<? extends T> queryPage(Map<String, Object> query);
 
     int add(T entity);
 

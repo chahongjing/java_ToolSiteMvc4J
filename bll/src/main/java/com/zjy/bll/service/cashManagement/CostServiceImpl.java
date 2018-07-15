@@ -2,15 +2,12 @@ package com.zjy.bll.service.cashManagement;
 
 import com.github.pagehelper.PageInfo;
 import com.zjy.bll.common.BaseService;
-import com.zjy.bll.common.PageInfomation;
 import com.zjy.bll.dao.cashManagement.CostDao;
-import com.zjy.bll.request.UserInfoRequest;
 import com.zjy.bll.request.cashManagement.CostRequest;
 import com.zjy.entities.cashManagement.Cost;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,6 +20,6 @@ public class CostServiceImpl extends BaseService<CostDao, Cost> implements CostS
     public PageInfo<Cost> getList(CostRequest request) {
         Map<String, Object> query = new HashMap<>();
         query.put("userId", request.getUserId());
-        return queryPage(request, query);
+        return (PageInfo<Cost>)queryPage(request, query);
     }
 }

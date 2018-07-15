@@ -41,10 +41,10 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
     }
 
     public List<UserInfo> query(UserInfo entity) {
-        return super.query(entity);
+        return (List<UserInfo>)super.query(entity);
     }
 
-    public PageInfo<UserInfo> queryPage(UserInfoRequest request) {
+    public PageInfo<? extends UserInfo>  queryPage(UserInfoRequest request) {
         HashMap<String, Object> query = new HashMap<>();
         return super.queryPage(request, query);
     }

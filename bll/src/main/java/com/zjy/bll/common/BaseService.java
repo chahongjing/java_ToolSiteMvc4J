@@ -27,12 +27,12 @@ public class BaseService<Dao extends BaseDao<T>, T> {
         return dao.get(id);
     }
 
-    public List<T> query(T entity) {
+    public List<? extends T> query(T entity) {
         logger.info("调用query方法:{}: {}", entity.getClass().getName(), JSON.toJSONString(entity));
         return dao.query(entity);
     }
 
-    public PageInfo<T> queryPage(PageInfomation pi, Map<String, Object> query) {
+    public PageInfo<? extends T> queryPage(PageInfomation pi, Map<String, Object> query) {
         logger.info("调用queryPage方法:PageInfomation: {}\tquery: {}", JSON.toJSONString(pi), JSON.toJSONString(query));
         PageHelper.startPage(pi.getPageNum(), pi.getPageSize()).setOrderBy(pi.getOrderBy());
         return new PageInfo<>(dao.queryPage(query));
