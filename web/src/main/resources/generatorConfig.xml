@@ -26,7 +26,6 @@
         <!-- dao -->
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.zjy.bll.dao"  targetProject="../bll/src/main/java">
             <property name="enableSubPackages" value="true" />
-            <property name="BaseDao&gt;&lt;" value=""/>
         </javaClientGenerator>
 
         <table tableName="userinfo" domainObjectName="UserInfo" enableCountByExample="false" enableUpdateByExample="false"
