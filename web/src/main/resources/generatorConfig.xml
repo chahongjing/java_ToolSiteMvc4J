@@ -8,7 +8,7 @@
     <!--<classPathEntry location="../lib/ojdbc6.jar" />-->
 
     <context id="DB2Tables" targetRuntime="MyBatis3">
-        <jdbcConnection driverClass="${db.driverClassName}" connectionURL="${db.url}" userId="${db.userName}"
+        <jdbcConnection driverClass="${db.driverClassName}" connectionURL="${db.phyUrl}" userId="${db.userName}"
                         password="${db.password}" />
 
         <javaTypeResolver >
@@ -26,6 +26,7 @@
         <!-- dao -->
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.zjy.bll.dao"  targetProject="../bll/src/main/java">
             <property name="enableSubPackages" value="true" />
+            <property name="BaseDao&gt;&lt;" value=""/>
         </javaClientGenerator>
 
         <table tableName="userinfo" domainObjectName="UserInfo" enableCountByExample="false" enableUpdateByExample="false"
