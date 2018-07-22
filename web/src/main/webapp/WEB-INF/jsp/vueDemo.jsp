@@ -148,7 +148,7 @@
         list.push({name: '看书', value: 2});
         list.push({name: '打游戏', value: 3});
 
-        var data = {
+        vueData = {
             inputValue: '测试数据',
             hasClass: true,
             radioChecked: 2,
@@ -162,55 +162,27 @@
             pagerInfo: {pageNum: 5, pages: 10}
         };
 
-        var vm = new Vue({
-            el: '#myApp',
-            data: data,
-            methods: {
-                getClass: function () {
-                    return {
-                        bold: true,
-                        red: true
-                    }
-                },
-                getStyle: function () {
-                    return {
-                        backgroundColor: '#eee'
-                    }
-                },
-                testMe: function (a) {
-                    console.log(a.value);
-                },
-                toggle: function () {
-                    this.showSpan = !this.showSpan;
-                    this.hasClass = !this.hasClass;
-                    console.log('myapp');
+        vueMethods = {
+            getClass: function () {
+                return {
+                    bold: true,
+                    red: true
                 }
             },
-            computed: {
-                // 计算属性的 getter
-                reversedMessage: function () {
-                    // `this` 指向 vm 实例
-                    return this.message.split('').reverse().join('')
-                },
-                fullName: {
-                    // getter
-                    get: function () {
-                        return this.firstName + ' ' + this.lastName
-                    },
-                    // setter
-                    set: function (newValue) {
-                        var names = newValue.split(' ')
-                        this.firstName = names[0]
-                        this.lastName = names[names.length - 1]
-                    }
+            getStyle: function () {
+                return {
+                    backgroundColor: '#eee'
                 }
             },
-            filters: {
-                myFilter: function (v) {
-                    return (v || '') + 'filterInfo';
-                }
+            testMe: function (a) {
+                console.log(a.value);
+            },
+            toggle: function () {
+                this.showSpan = !this.showSpan;
+                this.hasClass = !this.hasClass;
+                console.log('myapp');
             }
-        });
+        };
     </script>
 </jsSection>
 </body>

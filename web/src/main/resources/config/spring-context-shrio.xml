@@ -51,6 +51,7 @@
                 /userinfo/login**=anon
                 /userinfo/logout**=anon
                 /druid/**=anon
+                /favicon.ico=anon
                 /js/**=anon
                 /bootstrap/**=anon
                 /Controls/**=anon

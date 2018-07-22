@@ -67,29 +67,28 @@
     </div>
 </script>
 <script type="text/template" id="appMenu">
-        <div class="menu">
+<div class="menu">
     <div class="slide-menu">
-    <ul class="first-menu">
-    <li v-for="item in list" v-bind:class="{'selected': item.isSelected}" :title="JSON.stringify(item)"
-    @click="clickFirstMenu(item)" ng-repeat-finish="afterRender()">
-    <div>
-    <i :class="'fa ' + item.data.icon"></i>
-    <span v-text="item.name"></span>
-    <b :class="{'fa fa-angle-down':item.isSelected,'fa fa-angle-right':!item.isSelected}"></b>
-    </div>
-    <ul class="sub-menu show" :class="{'sub-menu show':item.isSelected}" :style="{'height':getMenuHeight(item)}">
-    <li v-for="sub in item.children" :class="{'selected': sub.isSelected}"
-    @click="clickSecondMenu(item, sub, $event)">
-    <a href="javascript:void(0)">
-    <i :class="'fa ' + sub.data.icon"></i>
-    <span v-text="sub.name"></span>
-    </a>
-    </li>
+        <ul class="first-menu">
+        <li v-for="item in list" v-bind:class="{'selected': item.isSelected}" :title="JSON.stringify(item)"
+            @click="clickFirstMenu(item)" ng-repeat-finish="afterRender()">
+            <div>
+                <i :class="'fa ' + item.data.icon"></i>
+                <span v-text="item.name"></span>
+                <b :class="{'fa fa-angle-down':item.isSelected,'fa fa-angle-right':!item.isSelected}"></b>
+            </div>
+            <ul class="sub-menu show" :class="{'sub-menu show':item.isSelected}" :style="{'height':getMenuHeight(item)}">
+                <li v-for="sub in item.children" :class="{'selected': sub.isSelected}"
+                    @click="clickSecondMenu(item, sub, $event)">
+                    <a href="javascript:void(0)"><i :class="'fa ' + sub.data.icon"></i>
+                        <span v-text="sub.name"></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
     </ul>
-    </li>
-    </ul>
-    </div>
-        </div>
+</div>
+</div>
  </script>
 <script src="${ctx}/js/jquery-3.3.1.js" type="text/javascript"></script>
 <script type="text/javascript">var ctx = '<%= request.getContextPath() %>';</script>
@@ -103,15 +102,14 @@
         template: '#appHead',
         methods: {
             // 退出登录
-            logout: function () {
-                window.Utility.get('/userinfo/logout.do').done(function (resp) {
-                    if (resp.status == Constant.AjaxStatus.OK) {
-                        window.location = commonSrv.getContext();
+            logout: function() {
+                var me = this;
+                me.commonSrv.get('/userinfo/logout.do').then(function (resp) {
+                    if (resp.data.status == Constant.AjaxStatus.OK) {
+                        window.location = me.commonSrv.getContext();
                     } else {
                         alert(resp.msg);
                     }
-                }).fail(function () {
-                    alert("注销失败！");
                 });
             },
             showLoading: function (title) {
@@ -131,102 +129,102 @@
             }
         }
     });
-        Vue.component('appmenu', {
-            data: function () {
-                return {list: []};
-                },
+    Vue.component('appmenu', {
+        data: function () {
+            return {list: []};
+        },
         template: '#appMenu',
         methods: {
-        getMenuHeight: function(item) {
-        return (item.isSelected ? item.children.length * 36 : 0) + 'px';
-        },
-        afterRender: function() {
-
-        },
-
-        clickFirstMenu: function(item) {
-        if(item.isSelected) {
-        item.isSelected = false;
-        return;
-        }
-        for(var i = 0; i < this.list.length; i++) {
-        var obj = this.list[i];
-        if(item == obj) {
-        item.isSelected = !item.isSelected;
-        } else {
-        obj.isSelected = false;
-        }
-        }
-        },
-        clickSecondMenu: function(item, sub, $event) {
-        $event.stopPropagation();
-        if(sub.isSelected) return;
-        for(var i = 0; i < this.list.length; i++) {
-        var obj = this.list[i];
-        for(var j = 0; j < obj.children.length; j++) {
-        var subObj = obj.children[j];
-        if(item == subObj) continue;
-        subObj.isSelected = false;
-        }
-        }
-
-        sub.isSelected = true;
-        }
+            getMenuHeight: function(item) {
+                return (item.isSelected ? item.children.length * 36 : 0) + 'px';
+            },
+            afterRender: function() { },
+            clickFirstMenu: function(item) {
+                if(item.isSelected) {
+                    item.isSelected = false;
+                    return;
+                }
+                for(var i = 0; i < this.list.length; i++) {
+                    var obj = this.list[i];
+                    if(item == obj) {
+                        item.isSelected = !item.isSelected;
+                    } else {
+                        obj.isSelected = false;
+                    }
+                }
+            },
+            clickSecondMenu: function(item, sub, $event) {
+                $event.stopPropagation();
+                for(var i = 0; i < this.list.length; i++) {
+                    var obj = this.list[i];
+                    for(var j = 0; j < obj.children.length; j++) {
+                        var subObj = obj.children[j];
+                        if(item == subObj) continue;
+                        subObj.isSelected = false;
+                    }
+                }
+                sub.isSelected = true;
+            }
         },
         computed: {
 
         },
         mounted: function () {
-                var me = this;
+            var me = this;
+            me.commonSrv.get('/test/getMenu.do')
+        //axios.get(ctx + '/test/getMenu11.do')
+            .then(function(resp) {
+                console.log(resp.data);
+                console.log(resp.status);
+                console.log(resp.statusText);
+                console.log(resp.headers);
+                console.log(resp.config);
+            }).catch(function(thrown) {
+                if (axios.isCancel(thrown)) {
+                    console.log('Request canceled', thrown.message);
+                } else {
+                    // 处理错误
+                }
+            });
 
-    me.commonSrv.get('/test/getMenu.do')
-    //axios.get(ctx + '/test/getMenu11.do')
-    .then(function(resp) {
-    console.log(resp.data);
-    console.log(resp.status);
-    console.log(resp.statusText);
-    console.log(resp.headers);
-    console.log(resp.config);
-    }).catch(function(thrown) {
-    if (axios.isCancel(thrown)) {
-    console.log('Request canceled', thrown.message);
-    } else {
-    // 处理错误
-    }
+            window.Utility.get('/test/getMenu.do').done(function (resp) {
+                if (resp.status == Constant.AjaxStatus.OK) {
+                    for(var i = 0; i < resp.value.length; i++) {
+                        resp.value[i].isSelected = false;
+                    }
+                    var parents = resp.value.filter(function(item) {return item.pId == 0;});
+                    for(var i = 0; i < parents.length; i++) {
+                        parents[i].children = resp.value.filter(function(item) {return item.pId == parents[i].id;});
+                    }
+                    me.list = parents;
+
+                    setTimeout(function() {
+                        $('.sub-menu').css('transition', 'height ease 0.2s');
+                    }, 200);
+                } else {
+                    alert(resp.msg);
+                }
+            }).fail(function () {
+                alert("注销失败！");
+            });
+        }
     });
 
-        window.Utility.get('/test/getMenu.do').done(function (resp) {
-        if (resp.status == Constant.AjaxStatus.OK) {
-            for(var i = 0; i < resp.value.length; i++) {
-        resp.value[i].isSelected = false;
-        }
-        var parents = resp.value.filter(function(item) {return item.pId == 0;});
-            for(var i = 0; i < parents.length; i++) {
-                parents[i].children = resp.value.filter(function(item) {return item.pId == parents[i].id;});
-        }
-            me.list = parents;
-
-        setTimeout(function() {
-        $('.sub-menu').css('transition', 'height ease 0.2s');
-        }, 200);
-        } else {
-        alert(resp.msg);
-        }
-        }).fail(function () {
-        alert("注销失败！");
-        });
-        }
-        });
+    var vueDefaultData = {};
+    var vueDefaultMethods = {};
+    var vueDefaultComputed = {};
+    var vueData = {};
+    var vueMethods = {};
+    var vueComputed = {};
 </script>
 <sitemesh:write property='jsSection'/>
-        <script>
-        var vm = new Vue({
+<script>
+    var vm = new Vue({
         el: '#myApp',
-        data: data,
-        methods: {
-
-        }
-        });
-        </script>
+        data: $.extend(true, vueDefaultData, vueData),
+        methods: $.extend(true, vueDefaultMethods, vueMethods),
+        computed: $.extend(true, vueDefaultComputed, vueComputed)
+    });
+</script>
 </body>
 </html>
