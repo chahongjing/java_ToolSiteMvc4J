@@ -240,7 +240,7 @@ public class TestController extends BaseController implements ServletConfigAware
             node.setData(menu);
             nodeList.add(node);
         }
-        
+
         return BaseResult.OK(nodeList);
     }
 }

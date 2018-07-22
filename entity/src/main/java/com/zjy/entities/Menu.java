@@ -1,4 +1,4 @@
-package com.zjy.bll.dos;
+package com.zjy.entities;
 
 import com.zjy.bll.dto.HierarchyBase;
 
