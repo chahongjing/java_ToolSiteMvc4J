@@ -1,6 +1,6 @@
 package com.zjy.bll.service;
 
-import com.zjy.bll.dto.HierarchyBase;
+import com.zjy.baseframework.interfaces.IHierarchyBase;
 
 import java.util.List;
 
@@ -11,9 +11,10 @@ import java.util.List;
 public interface CommonService {
     /**
      * 层级关系排序
+     *
      * @param list 列表
-     * @param <T> 类型
+     * @param <T>  类型
      * @return
      */
-    <T extends HierarchyBase> List<T> getHierarchyList(List<T> list);
+    <T extends IHierarchyBase> List<T> getHierarchyList(List<T> list);
 }

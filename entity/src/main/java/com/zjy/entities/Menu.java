@@ -1,8 +1,9 @@
 package com.zjy.entities;
 
-import com.zjy.bll.dto.HierarchyBase;
 
-public class Menu implements HierarchyBase {
+import com.zjy.baseframework.interfaces.IHierarchyBase;
+
+public class Menu implements IHierarchyBase {
     private int id;
     private int pId;
     private String name;

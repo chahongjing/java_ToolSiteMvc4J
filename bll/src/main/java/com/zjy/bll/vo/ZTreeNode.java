@@ -1,8 +1,8 @@
 package com.zjy.bll.vo;
 
-import com.zjy.bll.dto.HierarchyBase;
+import com.zjy.baseframework.interfaces.IHierarchyBase;
 
-public class ZTreeNode implements HierarchyBase {
+public class ZTreeNode implements IHierarchyBase {
     private int id;
     private int pId;
     private String name;

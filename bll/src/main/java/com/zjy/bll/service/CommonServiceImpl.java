@@ -1,6 +1,6 @@
 package com.zjy.bll.service;
 
-import com.zjy.bll.dto.HierarchyBase;
+import com.zjy.baseframework.interfaces.IHierarchyBase;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -19,7 +19,7 @@ public class CommonServiceImpl implements CommonService {
      * @param <T> 类型
      * @return
      */
-    public <T extends HierarchyBase> List<T> getHierarchyList(List<T> list) {
+    public <T extends IHierarchyBase> List<T> getHierarchyList(List<T> list) {
         // 排序
         list.sort(Comparator.comparing(T::getSeq));
         // 取一级数据
@@ -40,7 +40,7 @@ public class CommonServiceImpl implements CommonService {
      * @param <T> 类型
      * @return
      */
-    private <T extends HierarchyBase> List<T> getHierarchyChildren(T parent, List<T> list) {
+    private <T extends IHierarchyBase> List<T> getHierarchyChildren(T parent, List<T> list) {
         List<T> result = new ArrayList<>();
         for (T child : list) {
             // 是节点子集
