@@ -2,9 +2,9 @@ package com.zjy.web.controller;
 
 import com.zjy.baseframework.BaseResult;
 import com.zjy.baseframework.PartialViewHelper;
-import com.zjy.bll.dos.Menu;
 import com.zjy.bll.vo.ZTreeNode;
 import com.zjy.entities.Goods;
+import com.zjy.entities.Menu;
 import com.zjy.entities.UserInfo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeansException;
@@ -226,6 +226,42 @@ public class TestController extends BaseController implements ServletConfigAware
         menuTemp.setPId(2);
         menuTemp.setName("日志");
         menuTemp.setUrl("/abc.do");
+        menuTemp.setSeq(1);
+        menuTemp.setIcon("fa-cog");
+        list.add(menuTemp);
+
+        menuTemp = new Menu();
+        menuTemp.setId(6);
+        menuTemp.setPId(2);
+        menuTemp.setName("用户管理");
+        menuTemp.setUrl("/userinfo/user.do");
+        menuTemp.setSeq(1);
+        menuTemp.setIcon("fa-cog");
+        list.add(menuTemp);
+
+        menuTemp = new Menu();
+        menuTemp.setId(6);
+        menuTemp.setPId(2);
+        menuTemp.setName("角色管理");
+        menuTemp.setUrl("/sys/role.do");
+        menuTemp.setSeq(1);
+        menuTemp.setIcon("fa-cog");
+        list.add(menuTemp);
+
+        menuTemp = new Menu();
+        menuTemp.setId(6);
+        menuTemp.setPId(2);
+        menuTemp.setName("功能管理");
+        menuTemp.setUrl("/sys/role.do");
+        menuTemp.setSeq(1);
+        menuTemp.setIcon("fa-cog");
+        list.add(menuTemp);
+
+        menuTemp = new Menu();
+        menuTemp.setId(6);
+        menuTemp.setPId(2);
+        menuTemp.setName("权限管理");
+        menuTemp.setUrl("/sys/role.do");
         menuTemp.setSeq(1);
         menuTemp.setIcon("fa-cog");
         list.add(menuTemp);

@@ -2,18 +2,18 @@ package com.zjy.bll.service;
 
 import com.github.pagehelper.PageInfo;
 import com.zjy.baseframework.BaseResult;
+import com.zjy.baseframework.ServiceException;
 import com.zjy.baseframework.enums.ResultStatus;
 import com.zjy.bll.common.BaseService;
 import com.zjy.bll.dao.UserInfoDao;
 import com.zjy.bll.request.UserInfoRequest;
+import com.zjy.bll.vo.UserInfoVo;
 import com.zjy.entities.Sex;
 import com.zjy.entities.UserInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author chahongjing
@@ -21,6 +21,31 @@ import java.util.List;
  */
 @Service
 public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> implements UserInfoService {
+
+    @Override
+    public UserInfoVo getVo(String userGuid) {
+        UserInfoVo vo = (UserInfoVo)dao.get(userGuid);
+        if(vo == null) {
+            vo = new UserInfoVo();
+            vo.setUserGuid(userGuid);
+            vo.setSex(Sex.Male);
+            vo.setIsSave(false);
+        } else {
+            vo.setIsSave(true);
+        }
+        return vo;
+    }
+
+    @Override
+    public void saveUser(UserInfoVo userInfo) {
+        UserInfoVo vo = getVo(userInfo.getUserGuid());
+        beforeCheck(userInfo);
+        if(vo.getIsSave()) {
+            update(userInfo);
+        } else {
+            add(userInfo);
+        }
+    }
 
     public BaseResult<String> login(UserInfo user) {
         BaseResult<String> result = new BaseResult<>();
@@ -89,5 +114,13 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
     @Override
     public UserInfo getByUserCode(String userCode){
         return dao.getByUserCode(userCode);
+    }
+
+
+    protected void beforeCheck(UserInfoVo userInfo) {
+        Map<String, Long> map = dao.queryRepeatCount(userInfo.getUserGuid(), userInfo.getUserCode());
+        if(map != null && map.containsKey("CODECOUNT") && map.get("CODECOUNT").intValue() > 0) {
+            throw new ServiceException("编号重复！");
+        }
     }
 }

@@ -11,6 +11,7 @@
     <property name="logFile" value="${logPath}/${contextName}" />
     <property name="logFileEncoding" value="UTF-8" />
     <property name="pattern" value="%-30(%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread]) %-5level %class\\_%method\\(%line\\) - %msg%n" />
+    <property name="sqlPattern" value="%-23(%d{yyyy-MM-dd HH:mm:ss.SSS}) %-5level - %msg%n" />
 
     <!-- 上下文名称：<contextName>, 每个logger都关联到logger上下文，
         默认上下文名称为“default”。但可以使用<contextName>设置成其他名字，用于区分不同应用程序的记录。
@@ -127,7 +128,7 @@
         </triggeringPolicy>
         <encoder>
             <charset>${logFileEncoding}</charset>
-            <pattern>${pattern}</pattern>
+            <pattern>${sqlPattern}</pattern>
         </encoder>
     </appender>
 
@@ -135,7 +136,7 @@
         level:设置打印级别，大小写无关：TRACE, DEBUG, INFO, WARN, ERROR, ALL 和 OFF，不能设置为INHERITED或者同义词NULL。默认是DEBUG。
         <root>可以包含零个或多个<appender-ref>元素，标识这个appender将会添加到这个loger。 -->
     <root>
-        <level value="INFO"/>
+        <level value="DEBUG"/>
         <appender-ref ref="stdout"/>
         <appender-ref ref="debug_file"/>
         <appender-ref ref="info_file"/>
@@ -150,6 +151,7 @@
         <logger>可以包含零个或多个<appender-ref>元素，标识这个appender将会添加到这个logger。-->
     <!-- 将业务dao接口填写进去,并用控制台输出即可, sql也会输出 -->
     <logger name="com.zjy.bll.dao" level="DEBUG" additivity="false">
+        <appender-ref ref="stdout"/>
         <appender-ref ref="sql_file"/>
     </logger>
 </configuration>

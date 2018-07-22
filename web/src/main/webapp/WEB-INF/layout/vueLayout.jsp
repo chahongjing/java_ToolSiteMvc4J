@@ -104,7 +104,7 @@
             // 退出登录
             logout: function() {
                 var me = this;
-                me.commonSrv.get('/userinfo/logout.do').then(function (resp) {
+                me.commonSrv.get('/userinfo/logout').then(function (resp) {
                     if (resp.data.status == Constant.AjaxStatus.OK) {
                         window.location = me.commonSrv.getContext();
                     } else {
@@ -164,6 +164,7 @@
                     }
                 }
                 sub.isSelected = true;
+                window.location = ctx + sub.data.url;
             }
         },
         computed: {
@@ -171,14 +172,14 @@
         },
         mounted: function () {
             var me = this;
-            me.commonSrv.get('/test/getMenu.do')
+            me.commonSrv.get('/test/getMenu')
         //axios.get(ctx + '/test/getMenu11.do')
             .then(function(resp) {
-                console.log(resp.data);
-                console.log(resp.status);
-                console.log(resp.statusText);
-                console.log(resp.headers);
-                console.log(resp.config);
+                // console.log(resp.data);
+                // console.log(resp.status);
+                // console.log(resp.statusText);
+                // console.log(resp.headers);
+                // console.log(resp.config);
             }).catch(function(thrown) {
                 if (axios.isCancel(thrown)) {
                     console.log('Request canceled', thrown.message);
@@ -187,7 +188,7 @@
                 }
             });
 
-            window.Utility.get('/test/getMenu.do').done(function (resp) {
+            window.Utility.get('/test/getMenu').done(function (resp) {
                 if (resp.status == Constant.AjaxStatus.OK) {
                     for(var i = 0; i < resp.value.length; i++) {
                         resp.value[i].isSelected = false;
@@ -213,9 +214,12 @@
     var vueDefaultData = {};
     var vueDefaultMethods = {};
     var vueDefaultComputed = {};
-    var vueData = {};
-    var vueMethods = {};
-    var vueComputed = {};
+    var vueDefaultMounted = function() {};
+
+    var vueData = vueDefaultData;
+    var vueMethods = vueDefaultMethods;
+    var vueComputed = vueDefaultComputed;
+    var vueMounted = vueDefaultMounted;
 </script>
 <sitemesh:write property='jsSection'/>
 <script>
@@ -223,7 +227,8 @@
         el: '#myApp',
         data: $.extend(true, vueDefaultData, vueData),
         methods: $.extend(true, vueDefaultMethods, vueMethods),
-        computed: $.extend(true, vueDefaultComputed, vueComputed)
+        computed: $.extend(true, vueDefaultComputed, vueComputed),
+        mounted: vueMounted || vueDefaultMounted
     });
 </script>
 </body>

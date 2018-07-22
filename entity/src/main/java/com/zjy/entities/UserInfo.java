@@ -1,7 +1,5 @@
 package com.zjy.entities;
 
-import com.alibaba.fastjson.annotation.JSONField;
-
 import java.util.Date;
 
 /**
@@ -32,7 +30,7 @@ public class UserInfo {
     /**
      * 代码
      */
-    @JSONField(name="user_code")
+//    @JSONField(name="user_code")
     private String userCode;
     /**
      * 名称

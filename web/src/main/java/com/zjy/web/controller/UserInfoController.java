@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -39,7 +40,7 @@ public class UserInfoController {
     //region 属性
 
     @Autowired
-    private UserInfoService userInfoService;
+    private UserInfoService userInfoSrv;
 
     @Autowired
     private ShiroRealm shiroRealm;
@@ -113,17 +114,17 @@ public class UserInfoController {
         UserInfo b = new UserInfo();
         b.setUserCode("b");
         b.setUserName("曾军毅从controller获取数据");
-        List<UserInfo> test = userInfoService.test("a", b);
-        List<UserInfo> list = userInfoService.query(new UserInfo());
+        List<UserInfo> test = userInfoSrv.test("a", b);
+        List<UserInfo> list = userInfoSrv.query(new UserInfo());
 
         UserInfoRequest uRequest = new UserInfoRequest();
         uRequest.setOrderBy("UserCode DESC");
-        PageInfo<UserInfo> query = userInfoService.queryPage(uRequest);
+        PageInfo<UserInfo> query = userInfoSrv.queryPage(uRequest);
         List<UserInfo> list1 = query.getList();
         for (UserInfo userInfo : list1) {
 
         }
-        PageInfo<UserInfoVo> queryVo = userInfoService.queryPage(uRequest);
+        PageInfo<UserInfoVo> queryVo = userInfoSrv.queryPage(uRequest);
         List<UserInfoVo> list2 = queryVo.getList();
         for (UserInfoVo userInfoVo : list2) {
 
@@ -134,4 +135,34 @@ public class UserInfoController {
 
         return mv;
     }
+
+    // region 用户管理
+
+
+    @RequestMapping("/user")
+    public String userList() {
+        return "sys/user";
+    }
+
+    @RequestMapping("/userEdit")
+    public String editUser(String userGuid, Model model) {
+        model.addAttribute("userGuid", userGuid);
+        return "sys/userEdit";
+    }
+
+    @RequestMapping("/getUserInfo")
+    @ResponseBody
+    public BaseResult<UserInfoVo> getUserInfo(String userGuid) {
+        UserInfoVo userInfo = userInfoSrv.getVo(userGuid);
+        return BaseResult.OK(userInfo);
+    }
+
+    @RequestMapping("/saveUser")
+    @ResponseBody
+    public BaseResult<String> saveUser(UserInfoVo userInfo) {
+        userInfoSrv.saveUser(userInfo);
+        return BaseResult.OK("");
+    }
+
+    // endregion
 }

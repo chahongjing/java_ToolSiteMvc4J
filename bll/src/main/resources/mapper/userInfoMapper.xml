@@ -1,21 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zjy.bll.dao.UserInfoDao">
-    <insert id="add" parameterType="UserInfo">
-		INSERT INTO userinfo(UserGuid, UserCode, UserName, Password, Sex, Birthday, IsSystem)
+	<insert id="add">
+		INSERT INTO userinfo(UserGuid, UserCode, UserName, Password, Sex, Birthday, IsSystem, isDisabled)
 		VALUES(#{userGuid, jdbcType=VARCHAR}, #{userCode, jdbcType=VARCHAR}, #{userName, jdbcType=VARCHAR}, #{password, jdbcType=VARCHAR},
-		#{sex, jdbcType=BOOLEAN}, #{birthday, jdbcType=TIMESTAMP}, #{isSystem, jdbcType=BOOLEAN})
+		#{sex, jdbcType=INTEGER}, #{birthday, jdbcType=TIMESTAMP}, #{isSystem, jdbcType=BOOLEAN}, #{isDisabled, jdbcType=BOOLEAN})
 	</insert>
+	<update id="update">
+        update userinfo
+           set UserName = #{userName, jdbcType=VARCHAR},Password = #{password, jdbcType=VARCHAR}, Sex = #{sex, jdbcType=INTEGER},
+           Birthday = #{birthday, jdbcType=TIMESTAMP}, IsSystem = #{isSystem, jdbcType=BOOLEAN}, isDisabled = #{isDisabled, jdbcType=BOOLEAN}
+         where UserGuid = #{userGuid, jdbcType=VARCHAR}
+	</update>
 
-	<select id="get" parameterType="String" resultType="com.zjy.bll.vo.UserInfoVo">
-		SELECT userguid,userName,userCode,password FROM UserInfo WHERE Id = #{id, jdbcType = VARCHAR}
+	<select id="get" resultType="com.zjy.bll.vo.UserInfoVo">
+		SELECT userguid,userName,userCode,password FROM UserInfo WHERE userguid = #{id, jdbcType = VARCHAR}
 	</select>
 
-	<select id="getByUserCode" parameterType="String" resultType="com.zjy.entities.UserInfo">
-		SELECT userguid,userName,userCode,password, sex FROM UserInfo WHERE userCode = #{userCode, jdbcType = VARCHAR}
+	<select id="getByUserCode" resultType="com.zjy.entities.UserInfo">
+		SELECT userguid,userName,userCode,password, sex, isDisabled, isSystem FROM UserInfo WHERE userCode = #{userCode, jdbcType = VARCHAR}
 	</select>
 
-    <insert id="delete" parameterType="String">
+	<select id="queryRepeatCount" resultType="Map">
+		select count(case when userCode = #{userCode, jdbcType=VARCHAR} then 1 else null end) as codeCount
+		  from UserInfo
+		 where UserGuid &lt;&gt; #{userGuid, jdbcType=VARCHAR}
+	</select>
+
+    <insert id="delete">
 		DELETE FROM userinfo WHERE UserGuid = #{id, jdbcType=VARCHAR}
 	</insert>
 

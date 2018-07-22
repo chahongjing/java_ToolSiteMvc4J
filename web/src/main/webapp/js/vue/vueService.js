@@ -3,7 +3,7 @@
  */
 Vue.prototype.commonSrv = {
     getAjaxUrl: function (path) {
-        return this.getContext() + path;
+        return this.getContext() + path + '.do';
     },
     getContext: function () {
         return ctx;
