@@ -29,7 +29,6 @@ import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
-import java.util.stream.Stream;
 
 /**
  * @author chahongjing
@@ -241,7 +240,7 @@ public class TestController extends BaseController implements ServletConfigAware
             node.setData(menu);
             nodeList.add(node);
         }
-        IntegerStream.range(1, 10).
+        
         return BaseResult.OK(nodeList);
     }
 }
