@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <properties resource="application.properties"/>
+    <!--<classPathEntry location="../lib/ojdbc6.jar" />-->
+
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <jdbcConnection driverClass="${db.driverClassName}" connectionURL="${db.url}" userId="${db.userName}"
+                        password="${db.password}" />
+
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+        <!-- model -->
+        <javaModelGenerator targetPackage="com.zjy.entities" targetProject="../entity/src/main/java/">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+        <!-- xml -->
+        <sqlMapGenerator targetPackage="mapper"  targetProject="../bll/src/main/resources">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+        <!-- dao -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.zjy.bll.dao"  targetProject="../bll/src/main/java">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+
+        <table tableName="userinfo" domainObjectName="UserInfo" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="true"/>
+            <!--<generatedKey column="ID" sqlStatement="DB2" identity="true" />-->
+            <!--<columnOverride column="DATE_FIELD" property="startDate" />-->
+            <!--<ignoreColumn column="FRED" />-->
+            <!--<columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" />-->
+        </table>
+    </context>
+</generatorConfiguration>
