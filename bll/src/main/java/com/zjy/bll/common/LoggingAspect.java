@@ -30,19 +30,19 @@ public class LoggingAspect {
     public void beforeMethod(JoinPoint joinPoint) {
         String name = joinPoint.getSignature().getName();
         List<Object> args = Arrays.asList(joinPoint.getArgs());
-        System.out.println("beforeMethod method:" + name + " with agrs:" + args);
+//        System.out.println("beforeMethod method:" + name + " with agrs:" + args);
     }
     @After("execution(* com.zjy.bll.service.*.*(..))")
     public void afterMethod(JoinPoint joinPoint) {
         String name = joinPoint.getSignature().getName();
         List<Object> args = Arrays.asList(joinPoint.getArgs());
-        System.out.println("afterMethod method:" + name + " with agrs:" + args);
+//        System.out.println("afterMethod method:" + name + " with agrs:" + args);
     }
     @AfterReturning(value = "execution(* com.zjy.bll.service.*.*(..))", returning = "result")
     public void afterReturning(JoinPoint joinPoint, Object result) {
         String name = joinPoint.getSignature().getName();
         List<Object> args = Arrays.asList(joinPoint.getArgs());
-        System.out.println("afterReturning method:" + name + " with agrs:" + args);
+//        System.out.println("afterReturning method:" + name + " with agrs:" + args);
     }
 
     /**
@@ -54,7 +54,7 @@ public class LoggingAspect {
     public void afterThrowing(JoinPoint joinPoint, Exception ex) {
         String name = joinPoint.getSignature().getName();
         List<Object> args = Arrays.asList(joinPoint.getArgs());
-        System.out.println("AfterThrowing method:" + name + " with agrs:" + args);
+//        System.out.println("AfterThrowing method:" + name + " with agrs:" + args);
     }
 
     /**
@@ -68,15 +68,15 @@ public class LoggingAspect {
         try {
             String name = pjd.getSignature().getName();
             List<Object> args = Arrays.asList(pjd.getArgs());
-            System.out.println("before around method:" + name + " with agrs:" + args);
+//            System.out.println("before around method:" + name + " with agrs:" + args);
             result = pjd.proceed();
-            System.out.println("return around method:" + name + " with agrs:" + args);
+//            System.out.println("return around method:" + name + " with agrs:" + args);
         } catch (Throwable ex) {
             ex.printStackTrace();
-            System.out.println("around occurs exception:" + ex);
+//            System.out.println("around occurs exception:" + ex);
             throw new RuntimeException(ex);
         }
-        System.out.println("after around method:");
+//        System.out.println("after around method:");
         return result;
     }
 }
