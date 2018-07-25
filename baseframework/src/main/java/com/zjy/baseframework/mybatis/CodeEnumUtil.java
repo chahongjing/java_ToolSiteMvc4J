@@ -27,6 +27,7 @@ public class CodeEnumUtil {
         // 扫描所有实体类
         List<String> classNames = null;
         try {
+            // 枚举所在的包
             classNames = list("com/zjy/entities");
         } catch (IOException e) {
             e.printStackTrace();
