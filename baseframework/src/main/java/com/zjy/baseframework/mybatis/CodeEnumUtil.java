@@ -23,12 +23,14 @@ public class CodeEnumUtil {
         return null;
     }
 
-    public static void registerTypeHandle(TypeHandlerRegistry typeHandlerRegistry) {
+    public static void registerTypeHandle(TypeHandlerRegistry typeHandlerRegistry, List<String> packages) {
         // 扫描所有实体类
-        List<String> classNames = null;
+        List<String> classNames = new ArrayList<>();
         try {
             // 枚举所在的包
-            classNames = list("com/zjy/entities");
+            for (String pack : packages) {
+                classNames.addAll(list(pack));
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
