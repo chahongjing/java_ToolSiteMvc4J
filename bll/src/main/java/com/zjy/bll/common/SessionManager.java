@@ -10,6 +10,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * <b>类 名：</b>SessionManager<br/>
@@ -36,12 +37,8 @@ public class SessionManager extends DefaultWebSessionManager {
 
         Cookie[] cookies = rq.getCookies();
         if (cookies != null) {
-            for (int a = 0; a < cookies.length; a++) {
-                Cookie c = cookies[a];
-                if (c.getName().equals(SHIRO_SESSIONID_COOKIE_NAME)) {
-                    jsessionid = c.getValue();
-                }
-            }
+            Cookie cookie = Arrays.stream(cookies).filter(item -> item.getName().equalsIgnoreCase(SHIRO_SESSIONID_COOKIE_NAME)).findFirst().orElse(null);
+            if(cookie != null) jsessionid = cookie.getValue();
         }
 
         if (StringUtils.isBlank(jsessionid)) {
