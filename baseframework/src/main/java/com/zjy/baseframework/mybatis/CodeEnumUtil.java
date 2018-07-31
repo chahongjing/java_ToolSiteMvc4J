@@ -38,6 +38,7 @@ public class CodeEnumUtil {
         for (String className : classNames) {
             // 处理路径成为类名
             className = className.replace('/', '.').replaceAll("\\.class", "");
+            if(className.indexOf("BaseTestCase") > -1) continue;
             // 取得Class
             Class<?> aClass = null;
             try {

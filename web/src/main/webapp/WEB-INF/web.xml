@@ -13,6 +13,10 @@
         </listener-class>
     </listener>
 
+    <session-config>
+        <session-timeout>1200</session-timeout>
+        <tracking-mode>URL</tracking-mode>
+    </session-config>
     <!-- myServlet -->
     <servlet>
         <servlet-name>myServlet</servlet-name>
