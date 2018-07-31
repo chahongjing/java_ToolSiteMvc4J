@@ -11,11 +11,16 @@
     <!-- 这里主要是设置自定义的单Realm应用,若有多个Realm,可使用'realms'属性代替 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="shiroRealm"/>
+        <property name="sessionManager" ref="sessionManager" />
     </bean>
 
     <bean id="shiroRealm" class="com.zjy.bll.common.ShiroRealm">
         <!-- 配置密码匹配器 -->
         <property name="credentialsMatcher" ref="credentialsMatcher"/>
+    </bean>
+
+    <!-- 自定义会话管理配置 -->
+    <bean id="sessionManager" class="com.zjy.bll.common.SessionManager">
     </bean>
 
     <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">

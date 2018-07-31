@@ -1,4 +1,4 @@
-package com.iflytek.core.common;
+package com.zjy.bll.common;
 
 import org.apache.commons.lang3.StringUtils;
 
