@@ -33,10 +33,6 @@
 </head>
 <body>
 <div>
-    <p>
-    <h2>bean属性操作</h2>
-    可使用beanutils工具类
-    </p>
 
 </div>
 <jsSection>

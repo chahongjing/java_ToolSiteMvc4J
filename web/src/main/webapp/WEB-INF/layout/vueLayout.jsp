@@ -174,30 +174,31 @@
             var me = this;
             var param = {test: new Date(), test2: (new Date()).format("yyyy-MM-dd HH:mm:ss")};
             param.test3 = 'Sat Nov 25 2017 00:00:00 GMT+0800 (中国标准时间)';
-            me.commonSrv.get('/test/getMenu',param)
-        //axios.get(ctx + '/test/getMenu11.do')
-            .then(function(resp) {
-                // console.log(resp.data);
-                // console.log(resp.status);
-                // console.log(resp.statusText);
-                // console.log(resp.headers);
-                // console.log(resp.config);
-            }).catch(function(thrown) {
-                if (axios.isCancel(thrown)) {
-                    console.log('Request canceled', thrown.message);
-                } else {
-                    // 处理错误
-                }
-            });
+            param.test4 = [1, 2];
+            // me.commonSrv.get('/test/getMenu',param)
+            // //axios.get(ctx + '/test/getMenu11.do')
+            // .then(function(resp) {
+            //     // console.log(resp.data);
+            //     // console.log(resp.status);
+            //     // console.log(resp.statusText);
+            //     // console.log(resp.headers);
+            //     // console.log(resp.config);
+            // }).catch(function(thrown) {
+            //     if (axios.isCancel(thrown)) {
+            //         console.log('Request canceled', thrown.message);
+            //     } else {
+            //         // 处理错误
+            //     }
+            // });
 
-            window.Utility.get('/test/getMenu').done(function (resp) {
-                if (resp.status == Constant.AjaxStatus.OK) {
-                    for(var i = 0; i < resp.value.length; i++) {
-                        resp.value[i].isSelected = false;
+            me.commonSrv.get('/test/getMenu', param).then(function (resp) {
+                if (resp.data.status == Constant.AjaxStatus.OK) {
+                    for(var i = 0; i < resp.data.value.length; i++) {
+                        resp.data.value[i].isSelected = false;
                     }
-                    var parents = resp.value.filter(function(item) {return item.pId == 0;});
+                    var parents = resp.data.value.filter(function(item) {return item.pId == 0;});
                     for(var i = 0; i < parents.length; i++) {
-                        parents[i].children = resp.value.filter(function(item) {return item.pId == parents[i].id;});
+                        parents[i].children = resp.data.value.filter(function(item) {return item.pId == parents[i].id;});
                     }
                     me.list = parents;
 
@@ -207,8 +208,6 @@
                 } else {
                     alert(resp.msg);
                 }
-            }).fail(function () {
-                alert("注销失败！");
             });
         }
     });

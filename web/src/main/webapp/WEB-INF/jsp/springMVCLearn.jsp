@@ -47,6 +47,11 @@
     <br>
     还有@NumberFormat 和 @DateTimeFormat支持，还引入mvc XML的命名空间用于支持mvc配置，如&lt;mvc:annotation-driven&gt;
 
+    <p>
+    <h2>数组参数接收</h2>
+    var list = [];// 注意参数名也要编码
+    <br>@RequestParam("list[]") int[] list
+    </p>
 </div>
 <jsSection>
 

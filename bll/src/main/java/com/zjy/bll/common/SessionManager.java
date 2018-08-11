@@ -41,9 +41,10 @@ public class SessionManager extends DefaultWebSessionManager {
             if(cookie != null) jsessionId = cookie.getValue();
         }
 
-        if (StringUtils.isBlank(jsessionId)) {
-            jsessionId = rq.getHeader(SHIRO_SESSIONID_COOKIE_NAME);
+        if (StringUtils.isNotBlank(jsessionId)) {
+            return super.getSessionId(request, response);
         }
+        jsessionId = rq.getHeader(SHIRO_SESSIONID_COOKIE_NAME);
 
         if (StringUtils.isBlank(jsessionId)) {
             jsessionId = rq.getParameter(SHIRO_SESSIONID_COOKIE_NAME);

@@ -40,8 +40,14 @@
 		WHERE 2 = 2
 	</select>
     <select id="test" resultType="com.zjy.entities.UserInfo">
+
 		SELECT userguid,userName,userCode,password FROM UserInfo
 		WHERE 'a' = #{a, jdbcType=VARCHAR}
 		  AND 'b' = #{b.userCode, jdbcType=VARCHAR}
 	</select>
+
+	<!--<include refid="field"><property name="tableName" value="userinfo"/></include>-->
+	<sql id="field">
+		${tableName}.username
+	</sql>
 </mapper>

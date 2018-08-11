@@ -6,30 +6,84 @@
     <title>新增/编辑用户</title>
 </head>
 <body>
-{{userInfo}}
-<form>
-    <input type="hidden" name="userGuid" v-model="userInfo.userGuid" />
-    编号<input type="text" name="userCode" v-model="userInfo.userCode" /><br/>
-    姓名<input type="text" name="userName" v-model="userInfo.userName" /><br/>
-    密码<input type="password" name="password" v-model="userInfo.password" /><br/>
-    性别
-    <label class="radio_checkbox" v-for="item in sexList">
-        <input type='radio' name="sex" :value="item.key" v-model="userInfo.sex"/>
-        <i></i>
-        <span v-text="item.name"></span>
-    </label><br />
-    年龄<input type="text" name="age" v-model="userInfo.age" /><br/>
-    生日<input type="text" name="birthday" v-model="userInfo.birthday" /><br/>
-    头像<input type="text" name="photo" v-model="userInfo.photo" /><br/>
-    是否禁用
-    <label class="radio_checkbox" v-for="item in isDisabledList">
-        <input type='radio' name="isDisabled" :value="item.key" v-model="userInfo.isDisabled"/>
-        <i></i>
-        <span v-text="item.name"></span>
-    </label>
-    <br/><br />
-    <input type="button" value="保存" @click="saveUser()" :disabled="isButtonDisabled" />
-</form>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <div class="panel panel-default" style="margin-top:20px;">
+                <div class="panel-heading font-bold">Horizontal form</div>
+                <div class="panel-body">
+                    <form class="bs-example form-horizontal">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">编号</label>
+                            <div class="col-lg-10">
+                                <input class="form-control" type="text" name="userCode" v-model="userInfo.userCode" />
+                                <span class="help-block m-b-none">Example block-level help text here.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">姓名</label>
+                            <div class="col-lg-10">
+                                <input class="form-control" type="text" name="userName" v-model="userInfo.userName" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">密码</label>
+                            <div class="col-lg-10">
+                                <input class="form-control" type="password" name="password" v-model="userInfo.password" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">性别</label>
+                            <div class="col-lg-10">
+                                <label class="radio_checkbox" v-for="item in sexList">
+                                    <input type='radio' name="sex" :value="item.key" v-model="userInfo.sex"/>
+                                    <i></i>
+                                    <span v-text="item.name"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">年龄</label>
+                            <div class="col-lg-10">
+                                <input class="form-control" type="text" name="age" v-model="userInfo.age" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">生日</label>
+                            <div class="col-lg-10">
+                                <input class="form-control" type="text" name="birthday" v-model="userInfo.birthday" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">头像</label>
+                            <div class="col-lg-10">
+                                <input class="form-control" type="text" name="photo" v-model="userInfo.photo" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">是否禁用</label>
+                            <div class="col-lg-10">
+                                <label class="radio_checkbox" v-for="item in isDisabledList">
+                                    <input type='radio' name="isDisabled" :value="item.key" v-model="userInfo.isDisabled"/>
+                                    <i></i>
+                                    <span v-text="item.name"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-offset-2 col-lg-10">
+                                <input class="btn btn-sm btn-info" type="button" value="保存" @click="saveUser()"
+                                       :disabled="isButtonDisabled" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <jsSection>
     <script>

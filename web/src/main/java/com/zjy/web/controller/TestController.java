@@ -173,7 +173,8 @@ public class TestController extends BaseController implements ServletConfigAware
 
     @RequestMapping("/getMenu")
     @ResponseBody
-    public BaseResult getMenu(Date test, Date test2, Date test3) {
+    public BaseResult getMenu(Date test, Date test2, Date test3, @RequestParam("test4[]") int[] test4) {
+
         List<ZTreeNode> nodeList = new ArrayList<>();
         List<Menu> list = new ArrayList<>();
         Menu menuTemp = new Menu();

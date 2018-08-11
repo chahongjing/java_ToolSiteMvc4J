@@ -166,6 +166,17 @@
 %>
     age
     <jsp:getProperty name="testUser" property="userName"></jsp:getProperty>
+
+    <p>include指令和标签区别
+    <ul>
+        <li>
+            &lt;%@ include file="list.jsp"%&gt;:静态包含，只会生成一个servlet
+        </li>
+        <li>
+            &lt;/jsp:include&gt;:动态包含，会生成两个servlet
+        </li>
+    </ul>
+    </p>
 </div>
 <jsSection>
 

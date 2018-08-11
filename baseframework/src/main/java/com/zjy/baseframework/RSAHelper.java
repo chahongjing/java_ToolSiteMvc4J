@@ -1,6 +1,7 @@
 package com.zjy.baseframework;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.collections.bag.HashBag;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -43,6 +44,8 @@ public class RSAHelper {
         // 解密
         PrivateKey privateKey = restorePrivateKey(keyMap.get(PRIVATE_KEY));
         System.out.println("RSA decoded: " + RSADecode(privateKey, encodedText));
+
+        String[] s = new String[]{"A", "B", "C", "D","E"};
     }
 
     /**
