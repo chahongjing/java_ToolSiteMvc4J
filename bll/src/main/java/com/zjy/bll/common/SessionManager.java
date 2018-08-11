@@ -30,7 +30,7 @@ public class SessionManager extends DefaultWebSessionManager {
     @Override
     protected Serializable getSessionId(ServletRequest request, ServletResponse response) {
         // 如果header中包含“”参数，则使用此sid会话
-        String jsessionid = request.getParameter(SHIRO_SESSIONID_COOKIE_NAME);
+        String jsessionId = null;
         //logger.info("SessionManager::getSessionId::getParameter:sid={}", sid);
         HttpServletRequest rq = (HttpServletRequest) request;
         HttpServletResponse rs = (HttpServletResponse) response;
@@ -38,26 +38,26 @@ public class SessionManager extends DefaultWebSessionManager {
         Cookie[] cookies = rq.getCookies();
         if (cookies != null) {
             Cookie cookie = Arrays.stream(cookies).filter(item -> item.getName().equalsIgnoreCase(SHIRO_SESSIONID_COOKIE_NAME)).findFirst().orElse(null);
-            if(cookie != null) jsessionid = cookie.getValue();
+            if(cookie != null) jsessionId = cookie.getValue();
         }
 
-        if (StringUtils.isBlank(jsessionid)) {
-            jsessionid = rq.getHeader(SHIRO_SESSIONID_COOKIE_NAME);
+        if (StringUtils.isBlank(jsessionId)) {
+            jsessionId = rq.getHeader(SHIRO_SESSIONID_COOKIE_NAME);
         }
 
-        if (StringUtils.isBlank(jsessionid)) {
-            jsessionid = rq.getParameter(SHIRO_SESSIONID_COOKIE_NAME);
-            if (StringUtils.isBlank(jsessionid)) {
+        if (StringUtils.isBlank(jsessionId)) {
+            jsessionId = rq.getParameter(SHIRO_SESSIONID_COOKIE_NAME);
+            if (StringUtils.isBlank(jsessionId)) {
                 return super.getSessionId(request, response);
             }
         }
 
-        Cookie cookie = new Cookie(SHIRO_SESSIONID_COOKIE_NAME, jsessionid);
+        Cookie cookie = new Cookie(SHIRO_SESSIONID_COOKIE_NAME, jsessionId);
         rs.addCookie(cookie);
         // 设置当前session状态
         request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_SOURCE, ShiroHttpServletRequest.URL_SESSION_ID_SOURCE); // session来源与url
-        request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID, jsessionid);
+        request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID, jsessionId);
         request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_IS_VALID, true);
-        return jsessionid;
+        return jsessionId;
     }
 }

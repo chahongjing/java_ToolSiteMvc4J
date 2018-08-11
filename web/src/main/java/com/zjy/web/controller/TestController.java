@@ -173,14 +173,14 @@ public class TestController extends BaseController implements ServletConfigAware
 
     @RequestMapping("/getMenu")
     @ResponseBody
-    public BaseResult getMenu() {
+    public BaseResult getMenu(Date test, Date test2, Date test3) {
         List<ZTreeNode> nodeList = new ArrayList<>();
         List<Menu> list = new ArrayList<>();
         Menu menuTemp = new Menu();
         menuTemp.setId(1);
         menuTemp.setPId(0);
         menuTemp.setName("业务");
-        menuTemp.setUrl("/abc.do");
+        menuTemp.setUrl("/abc");
         menuTemp.setSeq(0);
         menuTemp.setIcon("fa-cog");
         list.add(menuTemp);
@@ -189,7 +189,7 @@ public class TestController extends BaseController implements ServletConfigAware
         menuTemp.setId(3);
         menuTemp.setPId(1);
         menuTemp.setName("业务A");
-        menuTemp.setUrl("/abc.do");
+        menuTemp.setUrl("/abc");
         menuTemp.setSeq(0);
         menuTemp.setIcon("fa-cog");
         list.add(menuTemp);

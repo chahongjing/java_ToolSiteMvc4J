@@ -172,7 +172,9 @@
         },
         mounted: function () {
             var me = this;
-            me.commonSrv.get('/test/getMenu')
+            var param = {test: new Date(), test2: (new Date()).format("yyyy-MM-dd HH:mm:ss")};
+            param.test3 = 'Sat Nov 25 2017 00:00:00 GMT+0800 (中国标准时间)';
+            me.commonSrv.get('/test/getMenu',param)
         //axios.get(ctx + '/test/getMenu11.do')
             .then(function(resp) {
                 // console.log(resp.data);
