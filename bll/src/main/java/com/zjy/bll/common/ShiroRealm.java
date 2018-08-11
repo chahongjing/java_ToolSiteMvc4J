@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 
 /**
  * shiro认证
@@ -118,11 +117,11 @@ public class ShiroRealm extends AuthorizingRealm {
 
     /**
      * 获取md5 hash+盐值加密后的值
-     * @param salt 盐值
      * @param password 密码
+     * @param salt 盐值
      * @return
      */
-    public String getMd5Hash(String salt, String password) {
+    public String getMd5Hash(String password, String salt) {
         CustomCredentialsMatcher credentialsMatcher = (CustomCredentialsMatcher) getCredentialsMatcher();
         Object simpleHash = new SimpleHash(credentialsMatcher.getHashAlgorithmName(), password, ByteSource.Util.bytes(salt),
                 credentialsMatcher.getHashIterations());

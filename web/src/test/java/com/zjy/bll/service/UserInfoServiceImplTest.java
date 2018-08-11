@@ -28,6 +28,6 @@ public class UserInfoServiceImplTest extends BaseTestCase {
 //        System.out.println("Message msgUs is ===> " + msgUs);
 //        System.out.println("Message msgCs is ===> " + msgCs);
 
-        userInfoService.testtr();
+//        userInfoService.testtr();
     }
 }

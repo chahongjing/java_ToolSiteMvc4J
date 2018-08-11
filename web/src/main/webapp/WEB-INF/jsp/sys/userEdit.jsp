@@ -14,6 +14,7 @@
                 <div class="panel-heading font-bold">Horizontal form</div>
                 <div class="panel-body">
                     <form class="bs-example form-horizontal">
+                        <input type="hidden" name="userGuid" v-model="userInfo.userGuid" />
                         <div class="form-group">
                             <label class="col-lg-2 control-label">编号</label>
                             <div class="col-lg-10">
@@ -101,13 +102,14 @@
 
         vueMounted = function (){
             var me = this;
+            me.isButtonDisabled = true;
             this.commonSrv.get('/userinfo/getUserInfo', {userGuid:this.userGuid}).then(function(resp) {
                 if (resp.data.status == Constant.AjaxStatus.OK) {
                     me.userInfo = resp.data.value;
-                    me.isButtonDisabled = false;
                 } else {
                     alert(resp.data.message);
                 }
+                me.isButtonDisabled = false;
             });
         };
 

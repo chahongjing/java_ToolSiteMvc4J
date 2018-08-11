@@ -19,9 +19,11 @@ public interface UserInfoService {
 
     BaseResult<String> login(UserInfo user);
 
+    BaseResult<String> logout();
+
     List<UserInfo> query(UserInfo user);
 
-    PageInfo queryPage(UserInfoRequest request);
+    PageInfo queryPageList(UserInfoRequest request);
 
     UserInfo get(String id);
 
@@ -30,8 +32,4 @@ public interface UserInfoService {
     int add(UserInfo entity);
 
     int delete(String id);
-
-    void testtr();
-
-    List<UserInfo> test(String aa, UserInfo bb);
 }

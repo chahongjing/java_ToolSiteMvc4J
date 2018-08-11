@@ -5,15 +5,22 @@ import com.zjy.baseframework.BaseResult;
 import com.zjy.baseframework.ServiceException;
 import com.zjy.baseframework.enums.ResultStatus;
 import com.zjy.bll.common.BaseService;
+import com.zjy.bll.common.ShiroRealm;
 import com.zjy.bll.dao.UserInfoDao;
 import com.zjy.bll.request.UserInfoRequest;
 import com.zjy.bll.vo.UserInfoVo;
 import com.zjy.entities.Sex;
 import com.zjy.entities.UserInfo;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author chahongjing
@@ -22,21 +29,48 @@ import java.util.*;
 @Service
 public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> implements UserInfoService {
 
+    @Autowired
+    protected ShiroRealm shiroRealm;
+
+    /**
+     * 添加用户
+     * @param entity
+     * @return
+     */
     @Override
-    public UserInfoVo getVo(String userGuid) {
-        UserInfoVo vo = (UserInfoVo)dao.get(userGuid);
-        if(vo == null) {
-            vo = new UserInfoVo();
-            vo.setUserGuid(userGuid);
-            vo.setSex(Sex.Male);
-            vo.setIsSave(false);
-        } else {
-            vo.setIsSave(true);
-        }
-        return vo;
+    @Transactional
+    public int add(UserInfo entity) {
+        return super.add(entity);
     }
 
+    /**
+     * 修改用户
+     * @param entity
+     * @return
+     */
     @Override
+    @Transactional
+    public int update(UserInfo entity){
+        return super.update(entity);
+    }
+
+    /**
+     * 删除用户
+     * @param id
+     * @return
+     */
+    @Override
+    @Transactional
+    public int delete(String id) {
+        return super.delete(id);
+    }
+
+    /**
+     * 保存用户
+     * @param userInfo
+     */
+    @Override
+    @Transactional
     public void saveUser(UserInfoVo userInfo) {
         UserInfoVo vo = getVo(userInfo.getUserGuid());
         beforeCheck(userInfo);
@@ -47,17 +81,27 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
         }
     }
 
+    /**
+     * 登录
+     * @param user
+     * @return
+     */
+    @Override
     public BaseResult<String> login(UserInfo user) {
         BaseResult<String> result = new BaseResult<>();
-        UserInfo dbUser = dao.getByUserCode(user.getUserCode());
-
-        if (dbUser == null) {
+        Subject subject = SecurityUtils.getSubject();
+//        if (subject.isAuthenticated()) {
+//            return null;
+//        }
+//        String password = userUtils.getMd5Hash(user.getPassword(), user.getUserCode());
+        UsernamePasswordToken token = new UsernamePasswordToken(user.getUserCode(), user.getPassword());
+        try {
+            // 登录
+            subject.login(token);
+        } catch (Exception ex) {
+            logger.error("用户名或密码错误！", ex);
             result.setStatus(ResultStatus.NO);
-            result.setMessage("用户不存在！");
-            return result;
-        } else if (!dbUser.getPassword().equals(user.getPassword())) {
-            result.setStatus(ResultStatus.NO);
-            result.setMessage("用户密码错误！");
+            result.setMessage("用户名或密码错误！");
             return result;
         }
         // 登录成功
@@ -65,57 +109,49 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
         return result;
     }
 
+    @Override
+    public BaseResult<String> logout() {
+        Subject subject = SecurityUtils.getSubject();
+        if (subject.isAuthenticated()) {
+            subject.logout();
+            // session 会销毁，在SessionListener监听session销毁，清理权限缓存
+        }
+
+        return BaseResult.OK();
+    }
+
+    @Override
     public List<UserInfo> query(UserInfo entity) {
-        return (List<UserInfo>)super.query(entity);
-    }
-
-    public PageInfo<? extends UserInfo>  queryPage(UserInfoRequest request) {
-        HashMap<String, Object> query = new HashMap<>();
-        return super.queryPage(request, query);
+        return (List<UserInfo>)super.queryList(entity);
     }
 
     @Override
-    @Transactional
-    public int add(UserInfo entity) {
-        return dao.add(entity);
-    }
-
-    @Override
-    @Transactional
-    public int delete(String id) {
-        return dao.delete(id);
-    }
-
-    @Override
-    @Transactional
-    public void testtr() {
+    public PageInfo<? extends UserInfo> queryPageList(UserInfoRequest request) {
         UserInfo user = new UserInfo();
-        user.setUserGuid("D8E6B877-3645-4063-A25C-495606B95349");
-        user.setUserCode("testuser");
-        user.setUserName("测试数据");
-        user.setPassword("1");
-        user.setSex(Sex.Male);
-        user.setBirthday(new Date());
-        user.setIsSystem(true);
-
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        System.out.println(sdf.format(user.getBirthday()));
-
-        //dao.add(user);
-        //int a = 1 / 0;
-        dao.delete("D8E6B877-3645-4063-A25C-495606B95349");
-    }
-
-    @Override
-    public List<UserInfo> test(String aa, UserInfo bb) {
-        return dao.test(aa, bb);
+        user.setUserName(request.getUserName());
+        user.setUserCode(request.getUserName());
+        return super.queryPageList(request, user);
     }
 
     @Override
     public UserInfo getByUserCode(String userCode){
-        return dao.getByUserCode(userCode);
+        return dao.getByCode(userCode);
     }
 
+    @Override
+    public UserInfoVo getVo(String userGuid) {
+        UserInfoVo vo = (UserInfoVo)super.get(userGuid);
+        if(vo == null) {
+            vo = new UserInfoVo();
+            vo.setUserGuid(userGuid);
+            vo.setSex(Sex.Male);
+            vo.setIsSave(false);
+            vo.setIsDisabled(false);
+        } else {
+            vo.setIsSave(true);
+        }
+        return vo;
+    }
 
     protected void beforeCheck(UserInfoVo userInfo) {
         Map<String, Long> map = dao.queryRepeatCount(userInfo.getUserGuid(), userInfo.getUserCode());

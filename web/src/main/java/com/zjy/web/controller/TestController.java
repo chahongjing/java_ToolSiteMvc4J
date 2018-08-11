@@ -280,4 +280,34 @@ public class TestController extends BaseController implements ServletConfigAware
 
         return BaseResult.OK(nodeList);
     }
+
+
+    @RequestMapping("/loginindex")
+    public ModelAndView loginindex(HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("list");
+
+        UserInfo b = new UserInfo();
+        b.setUserCode("b");
+        b.setUserName("曾军毅从controller获取数据");
+//        List<UserInfo> list = userInfoSrv.query(new UserInfo());
+//
+//        UserInfoRequest uRequest = new UserInfoRequest();
+//        uRequest.setOrderBy("UserCode DESC");
+//        PageInfo<UserInfo> query = userInfoSrv.queryByMapFilter(uRequest);
+//        List<UserInfo> list1 = query.getList();
+//        for (UserInfo userInfo : list1) {
+//
+//        }
+//        PageInfo<UserInfoVo> queryVo = userInfoSrv.queryByMapFilter(uRequest);
+//        List<UserInfoVo> list2 = queryVo.getList();
+//        for (UserInfoVo userInfoVo : list2) {
+//
+//        }
+        request.getSession().setAttribute("userTest", b);
+
+        mv.addObject("pageinfo", null);
+
+        return mv;
+    }
 }

@@ -20,6 +20,6 @@ public class CostServiceImpl extends BaseService<CostDao, Cost> implements CostS
     public PageInfo<Cost> getList(CostRequest request) {
         Map<String, Object> query = new HashMap<>();
         query.put("userId", request.getUserId());
-        return (PageInfo<Cost>)queryPage(request, query);
+        return (PageInfo<Cost>) queryPageListByMapFilter(request, query);
     }
 }

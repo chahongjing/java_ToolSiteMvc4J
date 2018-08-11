@@ -5,7 +5,6 @@ import com.zjy.entities.UserInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,8 +13,7 @@ import java.util.Map;
  */
 @Repository
 public interface UserInfoDao extends BaseDao<UserInfo> {
-    UserInfo getByUserCode(String userCode);
-    List<UserInfo> test(@Param("a") String aa, @Param("b") UserInfo bb);
+    UserInfo getByCode(String userCode);
 
     Map<String, Long> queryRepeatCount(@Param("userGuid") String userGuid, @Param("userCode") String userCode);
 }
