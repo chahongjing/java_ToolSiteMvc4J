@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 @RequestMapping("/userinfo")
-public class UserInfoController {
+public class UserInfoController extends BaseController {
     protected Logger logger = LogHelper.getLogger(this.getClass());
     //region 属性
 
@@ -88,6 +88,13 @@ public class UserInfoController {
     @ResponseBody
     public BaseResult<String> saveUser(UserInfoVo userInfo) {
         userInfoSrv.saveUser(userInfo);
+        return BaseResult.OK("");
+    }
+
+    @RequestMapping("/delete")
+    @ResponseBody
+    public BaseResult<String> delete(UserInfoVo userInfo) {
+        userInfoSrv.delete(userInfo.getUserGuid());
         return BaseResult.OK("");
     }
 

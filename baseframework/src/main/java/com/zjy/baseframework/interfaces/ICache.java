@@ -5,6 +5,6 @@ package com.zjy.baseframework.interfaces;
  */
 public interface ICache {
     <T> T get(String key);
-     void set(String key, Object value);
-    boolean clear(String key);
+    <T> void set(String key, T value);
+    boolean delete(String key);
 }

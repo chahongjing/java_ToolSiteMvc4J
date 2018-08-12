@@ -16,9 +16,6 @@
 			<if test='userName != null and userName != ""'>
 				UserName = #{userName, jdbcType=VARCHAR},
 			</if>
-			<if test='password != null and password != ""'>
-				Password = #{password, jdbcType=VARCHAR},
-			</if>
 			<if test='sex != null'>
 				Sex = #{sex, jdbcType=INTEGER},
 			</if>
@@ -48,7 +45,7 @@
 	</select>
 
 	<!-- 查询简单列表 -->
-	<select id="query" resultType="com.zjy.entities.UserInfo">
+	<select id="query" resultType="com.zjy.bll.vo.UserInfoVo">
 		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="UserInfo"/></include>
 		FROM UserInfo
 		WHERE 1 = 1

@@ -92,7 +92,7 @@
             userGuid: '<c:out value="${userGuid}" />',
             userInfo: {userGuid: null},
             sexList: [{key:'Male',name:'男'},{key:'Female',name:'女'}],
-            isDisabledList: [{key:1,name:'是'},{key:0,name:'否'}],
+            isDisabledList: [{key:true,name:'是'},{key:false,name:'否'}],
             isButtonDisabled: true
         };
 

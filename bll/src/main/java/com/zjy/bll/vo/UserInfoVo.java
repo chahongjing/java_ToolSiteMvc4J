@@ -4,6 +4,7 @@ import com.zjy.entities.UserInfo;
 
 public class UserInfoVo extends UserInfo {
     private String mingcheng;
+    private String sexName;
     private boolean isSave;
 
     public String getMingcheng() {
@@ -20,5 +21,13 @@ public class UserInfoVo extends UserInfo {
 
     public void setIsSave(boolean isSave) {
         this.isSave = isSave;
+    }
+
+    public String getSexName() {
+        return sexName;
+    }
+
+    public void setSexName(String sexName) {
+        this.sexName = sexName;
     }
 }

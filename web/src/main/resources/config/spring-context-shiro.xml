@@ -21,6 +21,10 @@
 
     <!-- 自定义会话管理配置 -->
     <bean id="sessionManager" class="com.zjy.bll.common.SessionManager">
+        <property name="sessionDAO" ref="sessionDAO" />
+    </bean>
+
+    <bean id="sessionDAO" class="com.zjy.bll.common.RedisShiroSessionDao">
     </bean>
 
     <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">

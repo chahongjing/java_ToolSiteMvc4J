@@ -11,7 +11,7 @@ import java.sql.SQLException;
 /**
  * Created by Administrator on 2018/5/15.
  */
-public class CodeEnumTypeHandler<E extends Enum<?> & BaseCodeEnum> extends BaseTypeHandler<BaseCodeEnum> {
+public class CodeEnumTypeHandler<E extends Enum<?> & IBaseCodeEnum> extends BaseTypeHandler<IBaseCodeEnum> {
 
     private Class<E> type;
 
@@ -23,7 +23,7 @@ public class CodeEnumTypeHandler<E extends Enum<?> & BaseCodeEnum> extends BaseT
     }
 
     @Override
-    public void setNonNullParameter(PreparedStatement ps, int i, BaseCodeEnum parameter, JdbcType jdbcType)
+    public void setNonNullParameter(PreparedStatement ps, int i, IBaseCodeEnum parameter, JdbcType jdbcType)
             throws SQLException {
         ps.setInt(i, parameter.getCode());
     }

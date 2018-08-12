@@ -18,12 +18,12 @@ public class CacheHelper implements ICache {
     }
 
     @Override
-    public void set(String key, Object value){
+    public <T> void set(String key, T value){
         map.put(key, value);
     }
 
     @Override
-    public boolean clear(String key){
+    public boolean delete(String key){
         map.remove(key);
         return true;
     }

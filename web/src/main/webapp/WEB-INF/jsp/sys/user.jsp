@@ -21,18 +21,27 @@
     <table class="table table-hover">
         <thead>
         <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
+            <th scope="col">姓名</th>
+            <th scope="col">编号</th>
+            <th scope="col">性别</th>
+            <th scope="col">是否系统用户</th>
+            <th scope="col">操作</th>
         </tr>
         </thead>
         <tbody>
         <tr v-for="item in userList">
-            <th scope="row" v-text="item.userName"></th>
+            <th scope="row">
+                <a href="javascript:void(0)" v-text="item.userName" @click="editUser(item)">
+                </a>
+            </th>
             <td v-text="item.userCode"></td>
-            <td v-text="item.sex"></td>
-            <td v-text="item.isSystem"></td>
+            <td v-text="item.sexName"></td>
+            <td v-text="item.isSystem ? '是' : '否'"></td>
+            <td class="table-oper">
+                <a href="javascript:void(0)" class="fabutton" title="删除用户" @click="deleteUser(item)">
+                    <i class="fa fa-times text-danger" v-if="!item.isSystem"></i>
+                </a>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -46,6 +55,8 @@
 
         vueMethods = {
             addUser: addUser,
+            editUser: editUser,
+            deleteUser: deleteUser,
             search: search
         };
 
@@ -61,6 +72,23 @@
                     alert(resp.data.message);
                 }
             });
+        }
+
+        function editUser(user){
+            window.location = ctx + '/userinfo/userEdit.do?userGuid=' + user.userGuid;
+        }
+
+        function deleteUser(user) {
+            var me = this;
+            if(confirm("是否要删除用户！")) {
+                me.commonSrv.get('/userinfo/delete', {userGuid: user.userGuid}).then(function(resp) {
+                    if (resp.data.status == Constant.AjaxStatus.OK) {
+                        search(me);
+                    } else {
+                        alert(resp.data.message);
+                    }
+                });
+            }
         }
 
         function search(that){

@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class CodeEnumUtil {
 
-    public static <E extends Enum<?> & BaseCodeEnum> E codeOf(Class<E> enumClass, int code) {
+    public static <E extends Enum<?> & IBaseCodeEnum> E codeOf(Class<E> enumClass, int code) {
         E[] enumConstants = enumClass.getEnumConstants();
         for (E e : enumConstants) {
             if (e.getCode() == code)
@@ -43,8 +43,8 @@ public class CodeEnumUtil {
             Class<?> aClass = null;
             try {
                 aClass = Class.forName(className, false, CodeEnumUtil.class.getClassLoader());
-                // 判断是否实现了BaseCodeEnum接口
-                if (aClass.isEnum() && BaseCodeEnum.class.isAssignableFrom(aClass)) {
+                // 判断是否实现了IBaseCodeEnum接口
+                if (aClass.isEnum() && IBaseCodeEnum.class.isAssignableFrom(aClass)) {
                     // 注册
                     typeHandlerRegistry.register(className, CodeEnumTypeHandler.class.getTypeName());
                 }

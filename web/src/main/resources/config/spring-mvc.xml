@@ -28,10 +28,10 @@
     <!-- json格式化器 -->
     <mvc:annotation-driven>
         <mvc:message-converters>
-            <ref bean="stringHttpMessageConverter"/>
             <!-- <bean class="org.springframework.http.converter.StringHttpMessageConverter" />
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" /> -->
             <ref bean="jsonConverter"/>
+            <ref bean="stringHttpMessageConverter"/>
         </mvc:message-converters>
     </mvc:annotation-driven>
 
@@ -50,7 +50,7 @@
     </bean>
 
     <!-- json格式化器 -->
-    <bean id="jsonConverter" class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+    <bean id="jsonConverter" class="com.zjy.baseframework.JsonHttpMessageConverter">
         <property name="supportedMediaTypes">
             <list>
                 <value>application/json;charset=UTF-8</value>

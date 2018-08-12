@@ -156,3 +156,4 @@ ul.sub-menu > li > a > b {position:absolute;top:0px;right:0;width:0px;height:0px
 .slide-menu ul.sub-menu > li.selected > a > b {display:block;
 }
 .table{border:1px solid #ddd;}
+.fabutton{padding:3px 5px;}

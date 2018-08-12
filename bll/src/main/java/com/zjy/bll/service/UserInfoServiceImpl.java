@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -130,7 +129,13 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
         UserInfo user = new UserInfo();
         user.setUserName(request.getUserName());
         user.setUserCode(request.getUserName());
-        return super.queryPageList(request, user);
+        PageInfo<UserInfoVo> pageInfo = (PageInfo<UserInfoVo>)super.queryPageList(request, user);
+        for (UserInfoVo userInfo : pageInfo.getList()) {
+            if(userInfo.getSex() != null) {
+                userInfo.setSexName(userInfo.getSex().getName());
+            }
+        }
+        return pageInfo;
     }
 
     @Override
