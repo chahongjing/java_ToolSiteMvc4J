@@ -103,4 +103,19 @@ public class IndexControllerTest extends BaseTestCase {
         //return mongoTemplate.findAll(clazz, "testcollection");
     	return null;
     }
+
+    public static void main(String[] args) {
+        List<UserInfo> list = new ArrayList<>();
+        UserInfo user = new UserInfo();
+        user.setUserGuid("1");
+        user.setUserName("2");
+        list.add(user);
+        user = new UserInfo();
+        user.setUserGuid("1");
+        user.setUserName("2");
+        list.add(user);
+
+        Map<String, String> map = list.stream().collect(Collectors.toMap(item -> item.getUserGuid(), item -> item.getUserName()));
+        System.out.println(map);
+    }
 }
