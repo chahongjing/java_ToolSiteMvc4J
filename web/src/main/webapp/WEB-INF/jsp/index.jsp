@@ -61,6 +61,31 @@
 </head>
 <body>
 <div data-ng-controller="indexCtrl">
+    <div class="col-sm-6" v-for="item in list">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="clearfix">
+                    <a href="" class="pull-left thumb-md avatar b-3x m-r">
+                    </a>
+                    <div class="clear">
+                        <div class="h3 m-t-xs m-b-xs">
+                            {{item.name}}
+                            <i class="fa fa-circle text-success pull-right text-xs m-t-sm"></i>
+                        </div>
+                        <small class="text-muted" v-text="item.subTitle"></small>
+                    </div>
+                </div>
+            </div>
+            <div class="list-group no-radius alt">
+                <a class="list-group-item" href="javascript:void(0)"
+                   @click="goPage(sub)" v-for="sub in item.children">
+                    <i class="fa fa-comment fa-fw text-muted {{sub.iconClass}}"></i>
+                    {{sub.name}}
+                </a>
+            </div>
+        </div>
+    </div>
+
     <h2>Hello World!</h2><span class="font"><% out.println("<div>abc</div>"); %></span>
     <br/>
     <br/>
@@ -83,67 +108,6 @@
         <button type="submit" name="tj" value="提交">提交</button>
         <button type="button" name="ajaxtj" value="提交">ajax提交</button>
     </form>
-    <br/>
-    <hr>
-    java<br>
-    <a href="${ctx}/learn/download.do">下载</a>
-    <a href="${ctx}/learn/servletLearn.do" target="_blank">学习servlet</a>
-    <a href="${ctx}/learn/jspLearn.do?arr=1&arr=2&userName=曾军毅" target="_blank">学习jsp</a>
-    <a href="${ctx}/learn/elLearn.do" target="_blank">学习el</a>
-    <a href="${ctx}/learn/springAopLearn/123.do" target="_blank">学习spring aop</a>
-    <a href="${ctx}/learn/springBeanLearn/123.do" target="_blank">学习spring Bean</a>
-    <a href="${ctx}/learn/springMVCLearn/123.do" target="_blank">学习springMVC</a>
-    <a href="${ctx}/learn/cookieLearn.do" target="_blank">学习cookie</a>
-    <a href="${ctx}/learn/sessionLearn.do" target="_blank">学习session</a>
-    <a href="${ctx}/learn/javaLearn.do" target="_blank">java后台学习</a>
-    <a href="${ctx}/learn/filterLearn.do" target="_blank">filter学习</a>
-    <a href="${ctx}/learn/springTransactionLearn.do" target="_blank">事务学习</a>
-    <a href="${ctx}/learn/nioLearn.do" target="_blank">nio学习</a>
-    <a href="${ctx}/learn/shiroLearn.do" target="_blank">shiro学习</a>
-    <a href="${ctx}/learn/reflectLearn.do" target="_blank">反射学习</a>
-    <a href="${ctx}/learn/encryptLearn.do" target="_blank">加密学习</a>
-
-    <hr>
-    服务器<br>
-    <a href="${ctx}/learn/tomcatLearn.do" target="_blank">学习tomcat</a>
-    <hr>
-    maven<br>
-    <a href="${ctx}/learn/mavenLearn.do" target="_blank">maven学习</a>
-    <hr>
-    echarts<br>
-    <a href="${ctx}/echarts/index.do" target="_blank">echarts图表</a>
-    <hr>
-    angular<br>
-    <a href="${ctx}/learn/testangular.do" target="_blank">测试angular</a>
-    <a href="${ctx}/learn/angulardemo.do" target="_blank">angular demo</a>
-    <hr>
-    vue<br>
-    <a href="${ctx}/learn/vueDemo.do" target="_blank">vue demo</a>
-    <a href="${ctx}/learn/vueLearn.do" target="_blank">vue learn</a>
-    <hr>
-    ueditor<br>
-    <a href="${ctx}/learn/ueditorLearn.do" target="_blank">ueditor</a>
-    <hr>
-    js<br>
-    <a href="${ctx}/learn/jsLearn.do" class="btn btn-success btn-app radius-4" target="_blank">
-        <i class="icon-cog fa fa-lastfm bigger-230" style="display:block;"></i>
-        js学习
-    </a>
-    <hr>
-    前端<br>
-    <a href="${ctx}/learn/cssTest.do" class="btn btn-success btn-app radius-4" target="_blank">
-        <i class="icon-cog fa fa-lastfm bigger-230" style="display:block;"></i>
-        css
-    </a>
-    <hr>
-    其它<br>
-    <a href="${ctx}/learn/gitLearn.do" target="_blank">git学习</a>
-    <a href="${ctx}/learn/otherLearn.do" target="_blank">其它</a>
-    <a href="${ctx}/tool/tableToObject.do" target="_blank">oracle表转类</a>
-    <a href="${ctx}/tool/sqlGenerate.do" target="_blank">sql生成器</a>
-
-    <br/>
-    <br/>
     <br/>
     <a href="${ctx}/cost/.do" target="_blank">财务管理</a>
 
@@ -177,16 +141,6 @@
         var data = {};
 
         $(function () {
-            $('#lnkLogout').click(function () {
-                var result = $.ajax({
-                    url: ctx + '/userinfo/logout.do'
-                });
-
-                result.success(function (data) {
-                    window.location = ctx;
-                });
-            });
-
             $('#lnkTestPromise').one('click', function () {
                 console.log('click');
                 var p1 = $.ajax({
@@ -235,6 +189,130 @@
                 });
             });
         });
+
+        var list = [];
+        // region java
+        var first = {name: 'java', children:[]};
+        list.push(first);
+        second = {name:  '下载', href: '/learn/download.do', iconClass:''};
+        first.children.push(second);
+        second = {name:  '学习servlet', href: '/learn/servletLearn.do', iconClass:''};
+        first.children.push(second);
+        second = {name:  '学习jsp', href: '/learn/jspLearn.do?arr=1&arr=2&userName=曾军毅', iconClass:''};
+        first.children.push(second);
+        second = {name:  '学习el', href: '/learn/elLearn.do', iconClass:''};
+        first.children.push(second);
+        second = {name:  '学习spring aop', href: '/learn/springAopLearn/123.do', iconClass:''};
+        first.children.push(second);
+        second = {name:  '学习spring Bean', href: '/learn/springBeanLearn/123.do', iconClass:''};
+        first.children.push(second);
+        second = {name:  '学习springMVC', href: '/learn/springMVCLearn/123.do', iconClass:''};
+        first.children.push(second);
+        second = {name:  '学习cookie', href: '/learn/cookieLearn.do', iconClass:''};
+        first.children.push(second);
+        second = {name:  '学习session', href: '/learn/sessionLearn.do', iconClass:''};
+        first.children.push(second);
+        second = {name:  'java后台学习', href: '/learn/javaLearn.do', iconClass:''};
+        first.children.push(second);
+        second = {name:  'filter学习', href: '/learn/filterLearn.do', iconClass:''};
+        first.children.push(second);
+        second = {name:  '事务学习', href: '/learn/springTransactionLearn.do', iconClass:''};
+        first.children.push(second);
+        second = {name:  'nio学习', href: '/learn/nioLearn.do', iconClass:''};
+        first.children.push(second);
+        second = {name:  'shiro学习', href: '/learn/shiroLearn.do', iconClass:''};
+        first.children.push(second);
+        second = {name:  '反射学习', href: '/learn/reflectLearn.do', iconClass:''};
+        first.children.push(second);
+        second = {name:  '加密学习', href: '/learn/encryptLearn.do', iconClass:''};
+        first.children.push(second);
+        // endregion
+
+        // region 服务器
+        first = {name: '服务器', children:[]};
+        list.push(first);
+        second = {name:  '学习tomcat', href: '/learn/tomcatLearn.do', iconClass:''};
+        first.children.push(second);
+        // endregion
+
+        // region maven
+        first = {name: 'maven', children:[]};
+        list.push(first);
+        second = {name:  'maven学习', href: '/learn/mavenLearn.do', iconClass:''};
+        first.children.push(second);
+        // endregion
+
+        // region echarts
+        first = {name: 'echarts', children:[]};
+        list.push(first);
+        second = {name:  'echarts图表', href: '/echarts/index.do', iconClass:''};
+        first.children.push(second);
+        // endregion
+
+        // region angular
+        first = {name: 'angular', children:[]};
+        list.push(first);
+        second = {name:  '测试angular', href: '/learn/testangular.do', iconClass:''};
+        first.children.push(second);
+        second = {name:  'angular demo', href: '/learn/angulardemo.do', iconClass:''};
+        first.children.push(second);
+        // endregion
+
+        // region vue
+        first = {name: 'vue', children:[]};
+        list.push(first);
+        second = {name:  'vue demo', href: '/learn/vueDemo.do', iconClass:''};
+        first.children.push(second);
+        second = {name:  'vue learn', href: '/learn/vueLearn.do', iconClass:''};
+        first.children.push(second);
+        // endregion
+
+        // region ueditor
+        first = {name: 'ueditor', children:[]};
+        list.push(first);
+        second = {name:  'ueditor', href: '/learn/ueditorLearn.do', iconClass:''};
+        first.children.push(second);
+        // endregion
+
+        // region js
+        first = {name: 'js', children:[]};
+        list.push(first);
+        second = {name:  'js学习', href: '/learn/jsLearn.do', iconClass:''};
+        first.children.push(second);
+        // endregion
+
+        // region 前端
+        first = {name: '前端', children:[]};
+        list.push(first);
+        second = {name:  'css', href: '/learn/cssTest.do', iconClass:''};
+        first.children.push(second);
+        // endregion
+
+        // region 其它
+        first = {name: '其它', children:[]};
+        list.push(first);
+        second = {name:  'git学习', href: '/learn/gitLearn.do', iconClass:''};
+        first.children.push(second);
+        second = {name:  'oracle表转类', href: '/tool/tableToObject.do', iconClass:''};
+        first.children.push(second);
+        second = {name:  'sql生成器', href: '/tool/sqlGenerate.do', iconClass:''};
+        first.children.push(second);
+        second = {name:  '其它', href: '/learn/otherLearn.do', iconClass:''};
+        first.children.push(second);
+        // endregion
+
+        vueData = {list: list};
+
+        vueMethods = {
+            goPage: goPage
+        };
+
+        vueMounted = function (){
+        };
+
+        function goPage(item) {
+            window.location = ctx + item.href;
+        }
     </script>
 </jsSection>
 <fmt:message key="username">

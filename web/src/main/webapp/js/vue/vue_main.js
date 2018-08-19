@@ -147,12 +147,12 @@ Vue.component('appmenu', {
                 for(var i = 0; i < parents.length; i++) {
                     parents[i].children = resp.data.value.filter(function(item) {return item.pId == parents[i].id;});
                 }
-                if(!menuInfo.first.selected && parents.length > 0) {
-                    menuInfo.first.selected = parents[0];
-                }
-                if(!menuInfo.second.selected && parents.length > 0 && parents[0].children.length > 0) {
-                    menuInfo.second.selected = parents[0].children[0];
-                }
+                // if(!menuInfo.first.selected && parents.length > 0) {
+                //     menuInfo.first.selected = parents[0];
+                // }
+                // if(!menuInfo.second.selected && parents.length > 0 && parents[0].children.length > 0) {
+                //     menuInfo.second.selected = parents[0].children[0];
+                // }
                 if(menuInfo.first.selected) {
                     menuInfo.first.selected.isSelected = true;
                 }
@@ -169,5 +169,55 @@ Vue.component('appmenu', {
                 alert(resp.msg);
             }
         });
+    }
+});
+Vue.component('pagination', {
+    props: ['pagerInfo', 'click'],
+    data: function () {
+        return {list: []};
+    },
+    template: '#pagination',
+    created: function () {
+        var pagerInfo = this.$attrs['pagerinfo'];
+        var list = this.handData(pagerInfo);
+        this.list = list;
+    },
+    methods: {
+        handData: function (pagerInfo) {
+            var list = [], start = pagerInfo.pageNum - 2, end = pagerInfo.pageNum + 2,
+                pre = pagerInfo.pageNum - 1,
+                next = pagerInfo.pageNum + 1;
+            if (start < 1) start = 1;
+            if (end > pagerInfo.pages) end = pagerInfo.pages;
+            if (pre < 1) pre = 1;
+            if (next > pagerInfo.pages) next = pagerInfo.pages;
+            var obj;
+            obj = {name: '上一页', value: pre, isDisabled: false};
+            if (obj.value == pagerInfo.pageNum) {
+                obj.isDisabled = true;
+            }
+            list.push(obj);
+            for (var i = start; i < end + 1; i++) {
+                obj = {name: i, value: i, isDisabled: false};
+                if (pagerInfo.pageNum == i) {
+                    obj.isCurrent = true;
+                    obj.isDisabled = true;
+                }
+                list.push(obj);
+            }
+            obj = {name: '下一页', value: next, isDisabled: false};
+            if (obj.value == pagerInfo.pageNum) {
+                obj.isDisabled = true;
+            }
+            list.push(obj);
+            return list;
+        },
+        getClass: function (pageItem) {
+            return {'isCurrent': pageItem.isCurrent, 'disabled': pageItem.isDisabled || pageItem.isCurrent}
+        },
+        goPage: function (page) {
+            if (page.isDisabled) return;
+            this.click && this.click(page);
+        }
     }
 });

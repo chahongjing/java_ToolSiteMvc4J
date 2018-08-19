@@ -6,11 +6,11 @@
     <title>用户列表</title>
 </head>
 <body>
-<div>
-    <input type="button" value="添加" @click="addUser()"/>
+<div class="right-header">
+    <a href="javascript:void(0)" class="btn m-b-xs w-xs btn-primary" @click="addUser()"><i class="fa fa-plus"></i>&nbsp;添加</a>
 </div>
 <div>
-    <nav class="navbar navbar-light bg-light">
+    <nav class="navbar navbar-light bg-light" style="margin-top:10px;">
         <form class="form-inline">
             <input class="form-control mr-sm-2" type="text" placeholder="Search" v-model="searchKey">
             <input type="button" class="btn btn-outline-success my-2 my-sm-0" @click="search()" value="Search"/>
@@ -45,19 +45,30 @@
         </tr>
         </tbody>
     </table>
+    <pagination v-bind:pagerInfo="pagerInfo" v-bind:click="testMe"></pagination>
 </div>
 <div>
     sdf
 </div>
+<script type="text/template" id="pagination">
+    <div class="pager">
+        <ul class="pagination">
+            <li class="page-item" v-for="item in list" @click="goPage(item)" :class="getClass(item)">
+                <a class="page-link" href="#" v-text="item.name"></a>
+            </li>
+        </ul>
+    </div>
+</script>
 <jsSection>
     <script>
-        vueData = {userList:[],searchKey:''};
+        vueData = {userList:[],searchKey:'',pagerInfo:null};
 
         vueMethods = {
             addUser: addUser,
             editUser: editUser,
             deleteUser: deleteUser,
-            search: search
+            search: search,
+            testMe: testMe
         };
 
         vueMounted = function (){
@@ -97,11 +108,16 @@
             me.commonSrv.get('/userinfo/queryPageList', {userName: me.searchKey}).then(function(resp) {
                 if (resp.data.status == Constant.AjaxStatus.OK) {
                     me.userList = resp.data.value.list;
+                    me.pagerInfo = resp.data.value;
                 } else {
                     alert(resp.data.message);
                 }
                 me.isButtonDisabled = false;
             });
+        }
+
+        function testMe(s) {
+            console.log(s);
         }
     </script>
 </jsSection>
