@@ -34,8 +34,10 @@
 <script type="text/template" id="appHead">
     <div class="head">
         <div class="logo">
-            <div class="logoimg fl"><a href="${ctx}" title="首页"></a></div>
-            <span class="fl title pl10"></span>
+            <a href="javascript:void(0)" title="首页">
+                <i class="fa fa-android fa-2 white" style="width:50px;height:50px;display:inline-block;"></i>
+            </a>
+            <span class="fl title pl10">首页</span>
         </div>
         <div class="info">
             <ul>
@@ -97,120 +99,6 @@
 <script src="${ctx}/js/vue/vue_main.js"></script>
 <script src="${ctx}/js/vue/vueService.js"></script>
 <script>
-    Vue.component('apphead', {
-        template: '#appHead',
-        methods: {
-            // 退出登录
-            logout: function() {
-                var me = this;
-                me.commonSrv.get('/userinfo/logout').then(function (resp) {
-                    if (resp.data.status == Constant.AjaxStatus.OK) {
-                        window.location = me.commonSrv.getContext();
-                    } else {
-                        alert(resp.msg);
-                    }
-                });
-            },
-            showLoading: function (title) {
-                $scope.model.loadingReload++;
-                if (title) {
-                    $scope.model.loadingText = 'title';
-                }
-                $scope.model.isShowLoading = true;
-            },
-            hideLoading: function () {
-                $scope.model.loadingText = '';
-                $scope.model.isShowLoading = false;
-            },
-            // 返回
-            goBack: function () {
-                history.go(-1);
-            }
-        }
-    });
-    Vue.component('appmenu', {
-        data: function () {
-            return {list: []};
-        },
-        template: '#appMenu',
-        methods: {
-            getMenuHeight: function(item) {
-                return (item.isSelected ? item.children.length * 36 : 0) + 'px';
-            },
-            afterRender: function() { },
-            clickFirstMenu: function(item) {
-                if(item.isSelected) {
-                    item.isSelected = false;
-                    return;
-                }
-                for(var i = 0; i < this.list.length; i++) {
-                    var obj = this.list[i];
-                    if(item == obj) {
-                        item.isSelected = !item.isSelected;
-                    } else {
-                        obj.isSelected = false;
-                    }
-                }
-            },
-            clickSecondMenu: function(item, sub, $event) {
-                $event.stopPropagation();
-                for(var i = 0; i < this.list.length; i++) {
-                    var obj = this.list[i];
-                    for(var j = 0; j < obj.children.length; j++) {
-                        var subObj = obj.children[j];
-                        if(item == subObj) continue;
-                        subObj.isSelected = false;
-                    }
-                }
-                sub.isSelected = true;
-                window.location = ctx + sub.data.url;
-            }
-        },
-        computed: {
-
-        },
-        mounted: function () {
-            var me = this;
-            var param = {test: new Date(), test2: (new Date()).format("yyyy-MM-dd HH:mm:ss")};
-            param.test3 = 'Sat Nov 25 2017 00:00:00 GMT+0800 (中国标准时间)';
-            param.test4 = [1, 2];
-            // me.commonSrv.get('/test/getMenu',param)
-            // //axios.get(ctx + '/test/getMenu11.do')
-            // .then(function(resp) {
-            //     // console.log(resp.data);
-            //     // console.log(resp.status);
-            //     // console.log(resp.statusText);
-            //     // console.log(resp.headers);
-            //     // console.log(resp.config);
-            // }).catch(function(thrown) {
-            //     if (axios.isCancel(thrown)) {
-            //         console.log('Request canceled', thrown.message);
-            //     } else {
-            //         // 处理错误
-            //     }
-            // });
-
-            me.commonSrv.get('/test/getMenu', param).then(function (resp) {
-                if (resp.data.status == Constant.AjaxStatus.OK) {
-                    for(var i = 0; i < resp.data.value.length; i++) {
-                        resp.data.value[i].isSelected = false;
-                    }
-                    var parents = resp.data.value.filter(function(item) {return item.pId == 0;});
-                    for(var i = 0; i < parents.length; i++) {
-                        parents[i].children = resp.data.value.filter(function(item) {return item.pId == parents[i].id;});
-                    }
-                    me.list = parents;
-
-                    setTimeout(function() {
-                        $('.sub-menu').css('transition', 'height ease 0.2s');
-                    }, 200);
-                } else {
-                    alert(resp.msg);
-                }
-            });
-        }
-    });
-
     var vueDefaultData = {};
     var vueDefaultMethods = {};
     var vueDefaultComputed = {};

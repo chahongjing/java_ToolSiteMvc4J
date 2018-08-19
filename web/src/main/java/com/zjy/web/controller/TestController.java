@@ -232,7 +232,7 @@ public class TestController extends BaseController implements ServletConfigAware
         list.add(menuTemp);
 
         menuTemp = new Menu();
-        menuTemp.setId(6);
+        menuTemp.setId(7);
         menuTemp.setPId(2);
         menuTemp.setName("用户管理");
         menuTemp.setUrl("/userinfo/user.do");
@@ -241,7 +241,7 @@ public class TestController extends BaseController implements ServletConfigAware
         list.add(menuTemp);
 
         menuTemp = new Menu();
-        menuTemp.setId(6);
+        menuTemp.setId(8);
         menuTemp.setPId(2);
         menuTemp.setName("角色管理");
         menuTemp.setUrl("/sys/role.do");
@@ -250,7 +250,7 @@ public class TestController extends BaseController implements ServletConfigAware
         list.add(menuTemp);
 
         menuTemp = new Menu();
-        menuTemp.setId(6);
+        menuTemp.setId(9);
         menuTemp.setPId(2);
         menuTemp.setName("功能管理");
         menuTemp.setUrl("/sys/role.do");
@@ -259,7 +259,7 @@ public class TestController extends BaseController implements ServletConfigAware
         list.add(menuTemp);
 
         menuTemp = new Menu();
-        menuTemp.setId(6);
+        menuTemp.setId(10);
         menuTemp.setPId(2);
         menuTemp.setName("权限管理");
         menuTemp.setUrl("/sys/role.do");

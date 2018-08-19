@@ -53,10 +53,10 @@
             display: none;
         }
 
-        a {
-            display: inline-block;
-            margin-right: 10px;
-        }
+        /*a {*/
+            /*display: inline-block;*/
+            /*margin-right: 10px;*/
+        /*}*/
     </style>
 </head>
 <body>

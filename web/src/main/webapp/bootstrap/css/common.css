@@ -6,14 +6,15 @@ ul,li{margin:0;padding:0;list-style:none;}
 /* head */
 .head{
     width:100%;margin:auto;height:50px;
-    background-color: #4e7cd4;color:#fff;
+    background-color: #1199c4;color:#fff;
 }
-.head .logo{width:calc(100% - 405px);height:100%;display:inline-block;margin:0;padding:0;}
+.head .logo{width:calc(100% - 405px);height:100%;display:inline-block;margin:0;padding:0;float:left;}
 .head .logo .logoimg{background:url('../../favicon2.ico') no-repeat;background-size:80%;width:50px;height:50px;
     background-position: 5px 5px;cursor:pointer;display:inline-block;}
+.head .logo i:before{display:block;margin-top:11px;margin-left:11px;}
 .head .logo .logoimg a{display:block;width:100%;height:100%;}
 .head .logo .title{line-height: 50px;font-size:22px;color:#fff;}
-.head .info{width:400px;height:100%;display:inline-block;margin:0;padding:0;}
+.head .info{width:400px;height:100%;display:inline-block;margin:0;padding:0;float:right;}
 .head .info ul,.head .info ul li{list-style: none;margin:0;padding:0;line-height:50px;cursor:default;}
 .head .info ul li{display:inline-block;float:right;border-right:1px solid #6d8dcc;transition: 0.4s;}
 .head .info ul li:nth-child(1){border-right:none;}
@@ -23,7 +24,7 @@ ul,li{margin:0;padding:0;list-style:none;}
 
 /* body */
 .body{width:100%;height:calc(100% - 50px);}
-.body .menu{width:250px;height:100%;display:inline-block;float:left;overflow-x: hidden;overflow-y: auto;border-right:1px solid #ccc;}
+.body .menu{width:250px;height:100%;display:inline-block;float:left;overflow-x: hidden;overflow-y: auto;border-right:1px solid #ccc;background-color:#edf1f2;}
 .body .right-main{width:calc(100% - 250px);height:100%;display:inline-block;float:left;overflow: hidden;background-color: #d6dae6;}
 .body .bread{width:100%;height:30px;border-bottom:0px solid #aaa;background-color: #f5f5f5;}
 .body .right-content{background-color:#fff;width:calc(100% - 20px);height:calc(100% - 52px);overflow-x: hidden;overflow-y: auto;margin-left:10px;
@@ -141,7 +142,7 @@ label.switch input:disabled + div span:nth-child(3){color:#aaa;}
 }
 .slide-menu ul.sub-menu > li > a {color:#616161;
 }
-.slide-menu ul.sub-menu > li > a > span{display:block;text-indent:25px;
+.slide-menu ul.sub-menu > li > a > span{display:block;text-indent:36px;
 }
 .slide-menu > ul > li.selected ul.sub-menu:before {content:'';position:absolute;top:35px;left:20px;border-left:1px dotted #9dbdd6;height:100%;
     z-index:1;
@@ -157,3 +158,11 @@ ul.sub-menu > li > a > b {position:absolute;top:0px;right:0;width:0px;height:0px
 }
 .table{border:1px solid #ddd;}
 .fabutton{padding:3px 5px;}
+
+.fa-2{font-size:2em}
+.fa-3{font-size:4em}
+.fa-4{font-size:7em}
+.fa-5{font-size:12em}
+.fa-6{font-size:20em}
+
+.white{color:#fff;}

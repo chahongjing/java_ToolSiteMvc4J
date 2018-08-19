@@ -74,6 +74,7 @@ app.controller('mainCtrl', ['$rootScope', '$scope', '$timeout', 'commonService',
         $scope.logout = function () {
             commonSrv.get('/userinfo/logout.do').success(function (resp) {
                 if (resp.status == Constant.AjaxStatus.OK) {
+                    sessionStorage.clear();
                     window.location = commonSrv.getContext();
                 } else {
                     alert(resp.msg);
