@@ -45,19 +45,25 @@
         </tr>
         </tbody>
     </table>
+
+
+
+
     <pagination v-bind:pagerInfo="pagerInfo" v-bind:click="testMe"></pagination>
 </div>
 <div>
     sdf
 </div>
 <script type="text/template" id="pagination">
-    <div class="pager">
-        <ul class="pagination">
-            <li class="page-item" v-for="item in list" @click="goPage(item)" :class="getClass(item)">
-                <a class="page-link" href="#" v-text="item.name"></a>
-            </li>
-        </ul>
-    </div>
+    <ul class="pagination pagination-sm">
+        <li :disabled="pagerInfo.isFirstPage" title="上一页"><a href="javascript:void(0)" @click="goPage(pagerInfo.pageNum - 1)"><i class="fa fa-chevron-left"></i></a></li>
+        <li v-if="pagerInfo.pageNum > 2"><a href="javascript:void(0)" v-text="pagerInfo.pageNum - 2" @click="goPage(pagerInfo.pageNum - 2)"></a></li>
+        <li v-if="pagerInfo.pageNum > 1"><a href="javascript:void(0)" v-text="pagerInfo.pageNum - 1" @click="goPage(pagerInfo.pageNum - 1)"></a></li>
+        <li class='current' disabled="disabled"><a href="javascript:void(0)" v-text="pagerInfo.pageNum"></a></li>
+        <li v-if="pagerInfo.pageNum + 1 <= pagerInfo.lastPage"><a href="javascript:void(0)" v-text="pagerInfo.pageNum + 1" @click="goPage(pagerInfo.pageNum + 1)"></a></li>
+        <li v-if="pagerInfo.pageNum + 2 <= pagerInfo.lastPage"><a href="javascript:void(0)" v-text="pagerInfo.pageNum + 2" @click="goPage(pagerInfo.pageNum + 2)"></a></li>
+        <li :disabled="pagerInfo.isLastPage" title="下一页"><a href="javascript:void(0)"><i class="fa fa-chevron-right" @click="goPage(pagerInfo.pageNum + 1)"></i></a></li>
+    </ul>
 </script>
 <jsSection>
     <script>

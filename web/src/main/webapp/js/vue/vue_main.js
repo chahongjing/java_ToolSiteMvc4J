@@ -182,8 +182,28 @@ Vue.component('pagination', {
         var list = this.handData(pagerInfo);
         this.list = list;
     },
+    computed: {
+        pagerInfo: function () {
+            var pagerInfo = this.$attrs['pagerinfo'];
+            if(!pagerInfo) {
+                pagerInfo = {
+                    isFirstPage:false,
+                    pageNum:1,
+                    lastPage: 10,
+                    isLastPage:false
+                };
+            }
+            return pagerInfo;
+        },
+        getDataabc: function() {
+            var list = [];
+            var obj = {name: '上一页', value: 1, isDisabled: false};
+            list.push(obj);
+            return list;
+        }
+    },
     methods: {
-        handData: function (pagerInfo) {
+        handData: function (pagerInfo) {return;
             var list = [], start = pagerInfo.pageNum - 2, end = pagerInfo.pageNum + 2,
                 pre = pagerInfo.pageNum - 1,
                 next = pagerInfo.pageNum + 1;
