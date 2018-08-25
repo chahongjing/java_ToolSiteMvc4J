@@ -10,9 +10,19 @@
 <div>
     <a href="javascript:void(0)" onclick="blobDownload()">blob下载</a><br/>
     <a href="javascript:void(0)" onclick="upload()">上传文件</a>
-    <form id="formId" enctype="multipart/form-data" action="<c:url value="/learn/fileupload1.do" />">
+    <form id="formId" enctype="multipart/form-data" action="<c:url value="/learn/fileupload1" />">
         <input type="hidden" name="id" value="abcde"/>
         <input type="file" name="myfile"/>
+    </form>
+    <a href="javascript:void(0)" id="lnkTestPromise">测试promise</a>
+
+    <form method="post" action="${ctx}/test/testPostWithFile" enctype="multipart/form-data" target="_blank">
+        <input type="text" name="name"/>
+        <input type="hidden" name="age" value="28"/>
+        <input type="text" name="test" value="测试部分页render:${username}"/>
+        <input type="file" name="myfile" multiple="multiple"/>
+        <button type="submit" name="tj" value="提交">提交</button>
+        <button type="button" name="ajaxtj" value="提交">ajax提交</button>
     </form>
 </div>
 <jsSection>
@@ -20,7 +30,7 @@
     <script>
         // blob下载
         function blobDownload() {
-            var url = ctx + "/learn/download.do";
+            var url = ctx + "/learn/download";
             var xhr;
             if (window.XMLHttpRequest) {
                 xhr = new XMLHttpRequest();
@@ -103,6 +113,57 @@
 //            window.location = form['redirectUrl'].value;
 //        });
         }
+
+
+        $(function () {
+            $('#lnkTestPromise').one('click', function () {
+                console.log('click');
+                var p1 = $.ajax({
+                    url: ctx + '/test/testP1'
+                }).then(function (data) {
+                    console.log('testP1');
+
+                    return 'p1';
+                });
+
+                var p2 = $.ajax({
+                    url: ctx + '/test/testP2'
+                }).then(function (data) {
+                    console.log('testP2');
+
+                    return 'p2';
+                });
+
+                Promise.all([p1, p2]).then(function (result) {
+                    console.log(result);
+                });
+            });
+
+            $('button[name=ajaxtj]').click(function () {
+                var formData = new FormData();
+                var files = $('input[name=myfile]')[0].files;
+                formData.append("name", "zjy");
+                for (var i = 0; i < files.length; i++) {
+                    formData.append("myfile", files[i]);
+                }
+
+                $.ajax({
+                    //url: ctx + '/learn/fileupload',
+                    //url: 'http://localhost:30000/restfulweb/rest/hello/testPostWithFile',
+                    url: 'http://localhost:30001/api/rest/hello/testPostWithFile',
+                    type: 'post',
+                    processData: false,
+                    contentType: false,
+                    data: formData,
+                    success: function (resp) {
+
+                    },
+                    error:function(xhr, a, b) {
+                        console.log(xhr);
+                    }
+                });
+            });
+        });
     </script>
 
 </jsSection>

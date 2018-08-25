@@ -5,11 +5,43 @@
 <head>
     <title>css学习</title>
     <style>
+        .next {
+            display: inline-block;
+            width: 100px;
+            height: 46px;
+            background-color: #D0DCED;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            float: left;
+            position: relative;
+        }
+
+        .next:before {
+            position: absolute;
+            top: 0px;
+            right: -25px;
+            z-index: 1;
+            content: '';
+            border: 23px solid black;
+            border-right: none;
+            border-color: transparent transparent transparent white;
+        }
+
+        .next:after {
+            position: absolute;
+            top: 0;
+            right: -23px;
+            z-index: 1;
+            content: '';
+            border: 23px solid white;
+            border-right: none;
+            border-color: transparent transparent transparent #D0DCED;
+        }
     </style>
 </head>
 <body>
 <div>
-
     <p>switch</p>
     <label class="switch">
         <input type="checkbox" class="hide"/>
@@ -41,6 +73,12 @@
         <span v-text="item.name"></span>
     </label>
     <br/><br/>
+    <div class="pro">
+        <span class="next"></span>
+        <span class="next"></span>
+        <span class="next"></span>
+        <span class="next"></span>
+    </div>
 </div>
 
 <jsSection>

@@ -1,5 +1,8 @@
 package com.zjy.entities;
 
+import com.zjy.entities.enums.Sex;
+import com.zjy.entities.enums.YesNo;
+
 import java.util.Date;
 
 /**
@@ -26,7 +29,7 @@ public class UserInfo {
     /**
      * 用户Guid
      */
-    private String userGuid;
+    private String userId;
     /**
      * 代码
      */
@@ -44,10 +47,6 @@ public class UserInfo {
      * 性别
      */
     private Sex sex;
-    /**
-     * 年龄
-     */
-    private Integer age;
     /**
      * 生日
      */
@@ -67,7 +66,7 @@ public class UserInfo {
     /**
      * 是否禁用
      */
-    private boolean isDisabled;
+    private YesNo isDisabled;
 
     /**
      * 公司名称
@@ -87,7 +86,7 @@ public class UserInfo {
     /**
      * 是否系统级
      */
-    private boolean isSystem;
+    private YesNo isSystem;
 
     public String getCreatedBy() {
         return createdBy;
@@ -121,12 +120,12 @@ public class UserInfo {
         this.modifiedOn = modifiedOn;
     }
 
-    public String getUserGuid() {
-        return userGuid;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUserGuid(String userGuid) {
-        this.userGuid = userGuid;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getUserCode() {
@@ -193,11 +192,11 @@ public class UserInfo {
         this.departmentGuid = departmentGuid;
     }
 
-    public boolean getIsDisabled() {
+    public YesNo getIsDisabled() {
         return isDisabled;
     }
 
-    public void setIsDisabled(boolean disabled) {
+    public void setIsDisabled(YesNo disabled) {
         isDisabled = disabled;
     }
 
@@ -225,19 +224,11 @@ public class UserInfo {
         this.permissionGuid = permissionGuid;
     }
 
-    public boolean getIsSystem() {
+    public YesNo getIsSystem() {
         return isSystem;
     }
 
-    public void setIsSystem(boolean system) {
+    public void setIsSystem(YesNo system) {
         isSystem = system;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
     }
 }

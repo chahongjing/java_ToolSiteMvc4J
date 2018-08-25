@@ -13,7 +13,7 @@ import java.util.List;
  * @create 2016-12-05 22:16
  */
 public interface UserInfoService {
-    UserInfoVo getVo(String userGuid);
+    UserInfoVo getVo(String userId);
 
     void saveUser(UserInfoVo userInfo);
 

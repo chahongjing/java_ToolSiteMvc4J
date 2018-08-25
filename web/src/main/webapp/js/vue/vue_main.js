@@ -110,7 +110,7 @@ Vue.component('appmenu', {
         param.test3 = 'Sat Nov 25 2017 00:00:00 GMT+0800 (中国标准时间)';
         param.test4 = [1, 2];
         // me.commonSrv.get('/test/getMenu',param)
-        // //axios.get(ctx + '/test/getMenu11.do')
+        // //axios.get(ctx + '/test/getMenu11')
         // .then(function(resp) {
         //     // console.log(resp.data);
         //     // console.log(resp.status);
@@ -125,7 +125,7 @@ Vue.component('appmenu', {
         //     }
         // });
 
-        me.commonSrv.get('/test/getMenu', param).then(function (resp) {
+        me.commonSrv.get('/menu/queryMenu', param).then(function (resp) {
             if (resp.data.status == Constant.AjaxStatus.OK) {
                 var menuInfo = sessionStorage.getItem("menuInfo");
                 if(!menuInfo) {
@@ -143,7 +143,7 @@ Vue.component('appmenu', {
                         menuInfo.second.selected = menu;
                     }
                 }
-                var parents = resp.data.value.filter(function(item) {return item.pId == 0;});
+                var parents = resp.data.value.filter(function(item) {return !item.pId;});
                 for(var i = 0; i < parents.length; i++) {
                     parents[i].children = resp.data.value.filter(function(item) {return item.pId == parents[i].id;});
                 }
@@ -241,3 +241,8 @@ Vue.component('pagination', {
         }
     }
 });
+
+YesNo={
+    YES:1,
+    NO:0
+}

@@ -39,7 +39,7 @@ public class CostManagementController {
         UserInfo user = shiroRealm.getCurrentUser();
         CostRequest costRequest = new CostRequest();
         costRequest.setOrderBy("CreatedOn DESC");
-        costRequest.setUserId(user.getUserGuid());
+        costRequest.setUserId(user.getUserId());
         result.setValue(costSvc.getList(costRequest));
         return result;
     }

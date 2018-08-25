@@ -5,19 +5,20 @@ import com.zjy.baseframework.BaseResult;
 import com.zjy.baseframework.ServiceException;
 import com.zjy.baseframework.enums.ResultStatus;
 import com.zjy.bll.common.BaseService;
-import com.zjy.bll.common.ShiroRealm;
 import com.zjy.bll.dao.UserInfoDao;
 import com.zjy.bll.request.UserInfoRequest;
 import com.zjy.bll.vo.UserInfoVo;
-import com.zjy.entities.Sex;
 import com.zjy.entities.UserInfo;
+import com.zjy.entities.enums.Sex;
+import com.zjy.entities.enums.YesNo;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -27,9 +28,6 @@ import java.util.Map;
  */
 @Service
 public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> implements UserInfoService {
-
-    @Autowired
-    protected ShiroRealm shiroRealm;
 
     /**
      * 添加用户
@@ -71,11 +69,13 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
     @Override
     @Transactional
     public void saveUser(UserInfoVo userInfo) {
-        UserInfoVo vo = getVo(userInfo.getUserGuid());
+        UserInfoVo vo = getVo(userInfo.getUserId());
         beforeCheck(userInfo);
+        // 处理密码
         if(vo.getIsSave()) {
             update(userInfo);
         } else {
+            userInfo.setPassword(shiroRealm.getMd5Hash(userInfo.getPassword(), userInfo.getUserCode()));
             add(userInfo);
         }
     }
@@ -92,7 +92,6 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
 //        if (subject.isAuthenticated()) {
 //            return null;
 //        }
-//        String password = userUtils.getMd5Hash(user.getPassword(), user.getUserCode());
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUserCode(), user.getPassword());
         try {
             // 登录
@@ -143,15 +142,20 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
         return dao.getByCode(userCode);
     }
 
+    public UserInfoVo get(String userId) {
+        return (UserInfoVo)super.get(userId);
+    }
+
     @Override
-    public UserInfoVo getVo(String userGuid) {
-        UserInfoVo vo = (UserInfoVo)super.get(userGuid);
+    public UserInfoVo getVo(String userId) {
+        UserInfoVo vo = get(userId);
         if(vo == null) {
             vo = new UserInfoVo();
-            vo.setUserGuid(userGuid);
+            vo.setUserId(userId);
             vo.setSex(Sex.Male);
             vo.setIsSave(false);
-            vo.setIsDisabled(false);
+            vo.setIsSystem(YesNo.NO);
+            vo.setIsDisabled(YesNo.NO);
         } else {
             vo.setIsSave(true);
         }
@@ -159,7 +163,10 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
     }
 
     protected void beforeCheck(UserInfoVo userInfo) {
-        Map<String, Long> map = dao.queryRepeatCount(userInfo.getUserGuid(), userInfo.getUserCode());
+        if(StringUtils.isBlank(userInfo.getUserCode())) {
+            throw new ServiceException("请输入用户编号！");
+        }
+        Map<String, BigDecimal> map = dao.queryRepeatCount(userInfo.getUserId(), userInfo.getUserCode());
         if(map != null && map.containsKey("CODECOUNT") && map.get("CODECOUNT").intValue() > 0) {
             throw new ServiceException("编号重复！");
         }

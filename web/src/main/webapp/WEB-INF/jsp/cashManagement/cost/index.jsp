@@ -31,7 +31,7 @@
                 $scope.model = {};
 
                 $scope.init = function () {
-                    commonSvc.get('${ctx}/cost/getList.do').success(function (resp) {
+                    commonSvc.get('${ctx}/cost/getList').success(function (resp) {
                         console.log('success');
                     }).error(function (data, status, headers, config) {
                         console.log('error');

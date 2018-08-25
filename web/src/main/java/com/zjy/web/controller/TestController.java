@@ -62,7 +62,7 @@ public class TestController extends BaseController implements ServletConfigAware
         this.applicationContext = applicationContext;
     }
 
-    @RequestMapping("/test.do")
+    @RequestMapping("/test")
     public String test(HttpServletRequest request, HttpServletResponse response) {
         logger.info("测试日志方法{}", new Date());
         logger.info("从Properties读取配置信息：" + url);
@@ -82,7 +82,7 @@ public class TestController extends BaseController implements ServletConfigAware
     }
 
     //region 延迟和回调
-    @RequestMapping("/testP1.do")
+    @RequestMapping("/testP1")
     public ResponseEntity<BaseResult<String>> testP1() {
         BaseResult<String> re = BaseResult.OK();
         try {
@@ -93,14 +93,14 @@ public class TestController extends BaseController implements ServletConfigAware
         return new ResponseEntity<>(re, HttpStatus.OK);
     }
 
-    @RequestMapping("/testP2.do")
+    @RequestMapping("/testP2")
     public ResponseEntity<BaseResult<String>> testP2() {
         BaseResult<String> re = BaseResult.OK();
 
         return new ResponseEntity<>(re, HttpStatus.OK);
     }
 
-    @RequestMapping("/redirect.do")
+    @RequestMapping("/redirect")
     public ModelAndView redirect() {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("redirect:/testP2");
@@ -110,27 +110,25 @@ public class TestController extends BaseController implements ServletConfigAware
     //endregion
 
     // region 测试get,post,postWithFile请求
-    @RequestMapping(value = "/testGet.do", method = RequestMethod.GET)
+    @RequestMapping(value = "/testGet", method = RequestMethod.GET)
     public ResponseEntity<BaseResult<UserInfo>> testGet(Integer age) {
         BaseResult<UserInfo> re = BaseResult.OK();
         UserInfo user = new UserInfo();
         user.setUserName("曾军毅get");
-        user.setAge(age);
         re.setValue(user);
         return new ResponseEntity<>(re, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/testPost.do", method = RequestMethod.POST)
+    @RequestMapping(value = "/testPost", method = RequestMethod.POST)
     public ResponseEntity<BaseResult<UserInfo>> testPost(Integer age) {
         BaseResult<UserInfo> re = BaseResult.OK();
         UserInfo user = new UserInfo();
         user.setUserName("曾军毅post");
-        user.setAge(age);
         re.setValue(user);
         return new ResponseEntity<>(re, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/testPostWithFile.do", method = RequestMethod.POST)
+    @RequestMapping(value = "/testPostWithFile", method = RequestMethod.POST)
     public ResponseEntity<BaseResult<UserInfo>> testPostWithFile(MultipartHttpServletRequest request, @RequestParam(required = false) Integer age,
                                                                  @RequestParam MultipartFile[] myfile, UserInfo users) {
         BaseResult<UserInfo> re = BaseResult.OK();
@@ -139,12 +137,11 @@ public class TestController extends BaseController implements ServletConfigAware
         for (MultipartFile file : request.getFiles("myfile")) {
 
         }
-        user.setAge(age + users.getAge());
         re.setValue(user);
         return new ResponseEntity<>(re, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/testGetEntity.do", produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/testGetEntity", produces = "application/json;charset=UTF-8")
     public ResponseEntity<UserInfo> testGetEntity(Goods goods) {
         UserInfo user = new UserInfo();
         user.setUserName(goods.getName());
@@ -152,7 +149,7 @@ public class TestController extends BaseController implements ServletConfigAware
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/testPostEntity.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/testPostEntity", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public ResponseEntity<UserInfo> testPostEntity(Goods goods) {
         UserInfo user = new UserInfo();
         user.setUserName(goods.getName());
@@ -161,7 +158,7 @@ public class TestController extends BaseController implements ServletConfigAware
     }
     // endregion
 
-    @RequestMapping(value = "/testRole.do")
+    @RequestMapping(value = "/testRole")
     @RequiresPermissions("admin")
     public ResponseEntity<BaseResult<UserInfo>> testGet11() {
         BaseResult<UserInfo> re = BaseResult.OK();
@@ -170,117 +167,6 @@ public class TestController extends BaseController implements ServletConfigAware
         re.setValue(user);
         return new ResponseEntity<>(re, HttpStatus.OK);
     }
-
-    @RequestMapping("/getMenu")
-    @ResponseBody
-    public BaseResult getMenu(Date test, Date test2, Date test3, @RequestParam("test4[]") int[] test4) {
-
-        List<ZTreeNode> nodeList = new ArrayList<>();
-        List<Menu> list = new ArrayList<>();
-        Menu menuTemp = new Menu();
-        menuTemp.setId(1);
-        menuTemp.setPId(0);
-        menuTemp.setName("业务");
-        menuTemp.setUrl("/abc");
-        menuTemp.setSeq(0);
-        menuTemp.setIcon("fa-cog");
-        list.add(menuTemp);
-
-        menuTemp = new Menu();
-        menuTemp.setId(3);
-        menuTemp.setPId(1);
-        menuTemp.setName("业务A");
-        menuTemp.setUrl("/abc");
-        menuTemp.setSeq(0);
-        menuTemp.setIcon("fa-cog");
-        list.add(menuTemp);
-
-        menuTemp = new Menu();
-        menuTemp.setId(4);
-        menuTemp.setPId(1);
-        menuTemp.setName("业务B");
-        menuTemp.setUrl("/abc.do");
-        menuTemp.setSeq(1);
-        menuTemp.setIcon("fa-cog");
-        list.add(menuTemp);
-
-        menuTemp = new Menu();
-        menuTemp.setId(2);
-        menuTemp.setPId(0);
-        menuTemp.setName("管理");
-        menuTemp.setUrl("/def.do");
-        menuTemp.setSeq(1);
-        menuTemp.setIcon("fa-cog");
-        list.add(menuTemp);
-
-        menuTemp = new Menu();
-        menuTemp.setId(5);
-        menuTemp.setPId(2);
-        menuTemp.setName("工具");
-        menuTemp.setUrl("/abc.do");
-        menuTemp.setSeq(0);
-        menuTemp.setIcon("fa-cog");
-        list.add(menuTemp);
-
-        menuTemp = new Menu();
-        menuTemp.setId(6);
-        menuTemp.setPId(2);
-        menuTemp.setName("日志");
-        menuTemp.setUrl("/abc.do");
-        menuTemp.setSeq(1);
-        menuTemp.setIcon("fa-cog");
-        list.add(menuTemp);
-
-        menuTemp = new Menu();
-        menuTemp.setId(7);
-        menuTemp.setPId(2);
-        menuTemp.setName("用户管理");
-        menuTemp.setUrl("/userinfo/user.do");
-        menuTemp.setSeq(1);
-        menuTemp.setIcon("fa-cog");
-        list.add(menuTemp);
-
-        menuTemp = new Menu();
-        menuTemp.setId(8);
-        menuTemp.setPId(2);
-        menuTemp.setName("角色管理");
-        menuTemp.setUrl("/sys/role.do");
-        menuTemp.setSeq(1);
-        menuTemp.setIcon("fa-cog");
-        list.add(menuTemp);
-
-        menuTemp = new Menu();
-        menuTemp.setId(9);
-        menuTemp.setPId(2);
-        menuTemp.setName("功能管理");
-        menuTemp.setUrl("/sys/role.do");
-        menuTemp.setSeq(1);
-        menuTemp.setIcon("fa-cog");
-        list.add(menuTemp);
-
-        menuTemp = new Menu();
-        menuTemp.setId(10);
-        menuTemp.setPId(2);
-        menuTemp.setName("权限管理");
-        menuTemp.setUrl("/sys/role.do");
-        menuTemp.setSeq(1);
-        menuTemp.setIcon("fa-cog");
-        list.add(menuTemp);
-
-        ZTreeNode node;
-        for (Menu menu : list) {
-            node = new ZTreeNode();
-            node.setId(menu.getId());
-            node.setPId(menu.getPId());
-            node.setName(menu.getName());
-            node.setSeq(menu.getSeq());
-            node.setData(menu);
-            nodeList.add(node);
-        }
-
-        return BaseResult.OK(nodeList);
-    }
-
 
     @RequestMapping("/loginindex")
     public ModelAndView loginindex(HttpServletRequest request) {

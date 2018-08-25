@@ -4,26 +4,26 @@ package com.zjy.entities;
 import com.zjy.baseframework.interfaces.IHierarchyBase;
 
 public class Menu implements IHierarchyBase {
-    private int id;
-    private int pId;
+    private String menuId;
+    private String pId;
     private String name;
     private String url;
     private int seq;
     private String icon;
 
-    public int getId() {
-        return id;
+    public String getMenuId() {
+        return menuId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setMenuId(String menuId) {
+        this.menuId = menuId;
     }
 
-    public int getPId() {
+    public String getPId() {
         return pId;
     }
 
-    public void setPId(int pId) {
+    public void setPId(String pId) {
         this.pId = pId;
     }
 
@@ -57,5 +57,10 @@ public class Menu implements IHierarchyBase {
 
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+    @Override
+    public String getId() {
+        return getMenuId();
     }
 }

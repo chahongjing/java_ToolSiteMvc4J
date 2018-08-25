@@ -26,7 +26,7 @@
                 };
 
                 $scope.base64Encrypt = function () {
-                    $http.get('${ctx}/learn/base64Encrypt.do', {params: {source: $scope.model.source}}).success(function (resp) {
+                    $http.get('${ctx}/learn/base64Encrypt', {params: {source: $scope.model.source}}).success(function (resp) {
                         console.log(resp);
                         $scope.model.target = resp.value || '';
                     }).error(function (data, status, headers, config) {
@@ -35,7 +35,7 @@
                 }
 
                 $scope.base64Decrypt = function () {
-                    $http.get('${ctx}/learn/base64Decrypt.do', {params: {source: $scope.model.source}}).success(function (resp) {
+                    $http.get('${ctx}/learn/base64Decrypt', {params: {source: $scope.model.source}}).success(function (resp) {
                         console.log(resp);
                         $scope.model.target = resp.value || '';
                     }).error(function (data, status, headers, config) {

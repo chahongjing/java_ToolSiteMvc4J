@@ -65,7 +65,7 @@
                         password: $scope.model.password,
                         tableName: $scope.model.tableName
                     };
-                    $http.get('${ctx}/tool/getTableInfo.do', {params: param}).success(function (resp) {
+                    $http.get('${ctx}/tool/getTableInfo', {params: param}).success(function (resp) {
                         console.log('success');
                         $scope.model.result = resp.value;
                     }).error(function (data, status, headers, config) {

@@ -34,7 +34,7 @@
 <script type="text/template" id="appHead">
     <div class="head">
         <div class="logo">
-            <a href="javascript:void(0)" title="首页">
+            <a href="${ctx}" title="首页">
                 <i class="fa fa-android fa-2 white" style="width:50px;height:50px;display:inline-block;"></i>
             </a>
             <span class="fl title pl10">首页</span>
@@ -94,6 +94,7 @@
 <script src="${ctx}/js/jquery-3.3.1.js" type="text/javascript"></script>
 <script type="text/javascript">var ctx = '<%= request.getContextPath() %>';</script>
 <script src="${ctx}/js/Utility.js" type="text/javascript"></script>
+<script src="${ctx}/bootstrap/js/bootstrap.js" type="text/javascript"></script>
 <script src="${ctx}/js/vue/vue.js"></script>
 <script src="${ctx}/js/axios.min.js"></script>
 <script src="${ctx}/js/vue/vue_main.js"></script>

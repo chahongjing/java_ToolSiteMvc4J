@@ -21,7 +21,6 @@ public class RedisShiroSessionDao extends AbstractSessionDAO {
 
     @Override
     public void update(Session session) throws UnknownSessionException {
-        log.info("更新seesion,id=[{}]", session.getId().toString());
         try {
             cacheHelper.set(session.getId().toString(), session);
         } catch (Exception e) {
@@ -31,7 +30,6 @@ public class RedisShiroSessionDao extends AbstractSessionDAO {
 
     @Override
     public void delete(Session session) {
-        log.info("删除seesion,id=[{}]", session.getId().toString());
         try {
             cacheHelper.delete(session.getId().toString());
         } catch (Exception e) {
@@ -42,7 +40,6 @@ public class RedisShiroSessionDao extends AbstractSessionDAO {
 
     @Override
     public Collection<Session> getActiveSessions() {
-        log.info("获取存活的session");
         return Collections.emptySet();
     }
 
@@ -50,7 +47,6 @@ public class RedisShiroSessionDao extends AbstractSessionDAO {
     protected Serializable doCreate(Session session) {
         Serializable sessionId = generateSessionId(session);
         assignSessionId(session, sessionId);
-        log.info("创建seesion,id=[{}]", session.getId().toString());
         try {
             cacheHelper.set(sessionId.toString(), session);
         } catch (Exception e) {
@@ -61,7 +57,6 @@ public class RedisShiroSessionDao extends AbstractSessionDAO {
 
     @Override
     protected Session doReadSession(Serializable sessionId) {
-        log.info("获取seesion,id=[{}]", sessionId.toString());
         Session session = null;
         try {
             session = (Session) cacheHelper.get(sessionId.toString());

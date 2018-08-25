@@ -3,26 +3,26 @@ package com.zjy.bll.vo;
 import com.zjy.baseframework.interfaces.IHierarchyBase;
 
 public class ZTreeNode implements IHierarchyBase {
-    private int id;
-    private int pId;
+    private String id;
+    private String pId;
     private String name;
     private int seq;
     private Object data;
 
     @Override
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getPId() {
+    public String getPId() {
         return pId;
     }
 
-    public void setPId(int pId) {
+    public void setPId(String pId) {
         this.pId = pId;
     }
 

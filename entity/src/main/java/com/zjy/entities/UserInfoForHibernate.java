@@ -1,9 +1,8 @@
 package com.zjy.entities;
 
-import com.alibaba.fastjson.annotation.JSONField;
+import java.util.Date;
 
 //import javax.persistence.*;
-import java.util.Date;
 
 /**
  * @author chahongjing
@@ -33,7 +32,7 @@ public class UserInfoForHibernate {
      */
     //@Id//声明此列为主键
 //    @GeneratedValue(strategy = GenerationType.AUTO)
-    private String userGuid;
+    private String userId;
     /**
      * 代码
      */
@@ -126,12 +125,12 @@ public class UserInfoForHibernate {
         this.modifiedOn = modifiedOn;
     }
 
-    public String getUserGuid() {
-        return userGuid;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUserGuid(String userGuid) {
-        this.userGuid = userGuid;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getUserCode() {

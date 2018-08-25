@@ -72,7 +72,7 @@ app.controller('mainCtrl', ['$rootScope', '$scope', '$timeout', 'commonService',
         }
         // 退出登录
         $scope.logout = function () {
-            commonSrv.get('/userinfo/logout.do').success(function (resp) {
+            commonSrv.get('/userinfo/logout').success(function (resp) {
                 if (resp.status == Constant.AjaxStatus.OK) {
                     sessionStorage.clear();
                     window.location = commonSrv.getContext();

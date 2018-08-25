@@ -1,13 +1,12 @@
 package com.zjy.web.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.zjy.baseframework.MongoDbHelper;
 import com.zjy.baseframework.PropertiesHelper;
 import com.zjy.bll.common.BaseTestCase;
-import com.zjy.entities.Sex;
+import com.zjy.entities.enums.Sex;
 import com.zjy.entities.UserInfo;
+import com.zjy.entities.enums.YesNo;
 import org.junit.Test;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -88,13 +87,13 @@ public class IndexControllerTest extends BaseTestCase {
     @Test
     public void test2() {
         UserInfo user = new UserInfo();
-        user.setUserGuid("D8E6B877-3645-4063-A25C-495606B95349");
+        user.setUserId("D8E6B877-3645-4063-A25C-495606B95349");
         user.setUserCode("testuser");
         user.setUserName("测试数据");
         user.setPassword("1");
         user.setSex(Sex.Male);
         user.setBirthday(new Date());
-        user.setIsSystem(true);
+        user.setIsSystem(YesNo.NO);
         //mongoTemplate.insert(user, "testcollection");
         List<UserInfo> list = get(UserInfo.class);
     }

@@ -72,15 +72,15 @@ public class UserInfoController extends BaseController {
     }
 
     @RequestMapping("/userEdit")
-    public String editUser(String userGuid, Model model) {
-        model.addAttribute("userGuid", userGuid);
+    public String editUser(String userId, Model model) {
+        model.addAttribute("userId", userId);
         return "sys/userEdit";
     }
 
     @RequestMapping("/getUserInfo")
     @ResponseBody
-    public BaseResult<UserInfoVo> getUserInfo(String userGuid) {
-        UserInfoVo userInfo = userInfoSrv.getVo(userGuid);
+    public BaseResult<UserInfoVo> getUserInfo(String userId) {
+        UserInfoVo userInfo = userInfoSrv.getVo(userId);
         return BaseResult.OK(userInfo);
     }
 
@@ -94,7 +94,7 @@ public class UserInfoController extends BaseController {
     @RequestMapping("/delete")
     @ResponseBody
     public BaseResult<String> delete(UserInfoVo userInfo) {
-        userInfoSrv.delete(userInfo.getUserGuid());
+        userInfoSrv.delete(userInfo.getUserId());
         return BaseResult.OK("");
     }
 

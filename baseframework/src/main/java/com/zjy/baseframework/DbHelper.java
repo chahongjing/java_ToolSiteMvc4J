@@ -52,7 +52,7 @@ public class DbHelper {
     }
 
     public static int testInsert() {
-        String sql = "insert into userinfo(UserGuid, UserCode, UserName, [Password], Sex, Birthday, IsSystem)\n" +
+        String sql = "insert into userinfo(UserId, UserCode, UserName, [Password], Sex, Birthday, IsSystem)\n" +
                 "values(?, 'testuser', '测试数据', '1', 1, getdate(), 1)";
         try (Connection conn = getConnection()) {
             PreparedStatement pSta = conn.prepareStatement(sql);
@@ -69,7 +69,7 @@ public class DbHelper {
     }
 
     public static int testUpdate() {
-        String sql = "update userinfo set birthday = ? where userguid = ?";
+        String sql = "update userinfo set birthday = ? where userId = ?";
         try (Connection conn = getConnection()) {
             // 获取数据库连接
             PreparedStatement pSta = conn.prepareStatement(sql);
@@ -92,7 +92,7 @@ public class DbHelper {
     }
 
     public static int testDelete() {
-        String sql = "delete from userinfo where userguid = ?";
+        String sql = "delete from userinfo where userId = ?";
         try (Connection conn = getConnection()) {
             PreparedStatement pSta = conn.prepareStatement(sql);
             pSta.setString(1, "D8E6B877-3645-4063-A25C-495606B95349");

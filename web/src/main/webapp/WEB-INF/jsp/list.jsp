@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ include file="/WEB-INF/jsp/common/commonVar.jsp" %>
 <%@ taglib uri="http://zjy.com" prefix="myPre" %>
 <!DOCTYPE html>
@@ -17,6 +18,11 @@
         </tr>
     </c:forEach>
 </table>
+
+<fmt:message key="username">
+    <fmt:param value="a"/>
+    <fmt:param value="b"/>
+</fmt:message>
 
 <h2>el学习</h2>
 <jsp:useBean id="userTest2" class="com.zjy.entities.UserInfo" scope="session"></jsp:useBean>

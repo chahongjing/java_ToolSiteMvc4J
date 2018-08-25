@@ -6,39 +6,42 @@ import org.slf4j.Logger;
 import java.beans.PropertyEditorSupport;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
+import java.util.*;
 
 public class MyCustomDateEditor extends PropertyEditorSupport {
     protected Logger logger = LogHelper.getLogger(this.getClass());
-    private DateFormat datesdf;
-    private DateFormat utcsfd;
-    private DateFormat gmtsdf;
+    private DateFormat dateSdf;
+    private DateFormat dateTimeSdf;
+    private DateFormat utcSfd;
+    private DateFormat gmtSdf;
+    private List<DateFormat> sdf;
 
     public MyCustomDateEditor() {
         super();
-        datesdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        utcsfd = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        utcsfd.setTimeZone(TimeZone.getTimeZone("UTC"));
-        gmtsdf = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss 'GMT'Z", Locale.US);
+        sdf = new ArrayList<>();
+        dateSdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.add(dateSdf);
+        dateTimeSdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.add(dateTimeSdf);
+        utcSfd = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        utcSfd.setTimeZone(TimeZone.getTimeZone("UTC"));
+        sdf.add(utcSfd);
+        gmtSdf = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss 'GMT'Z", Locale.US);
+        sdf.add(gmtSdf);
     }
 
     @Override
     public void setAsText(String text) throws IllegalArgumentException {
         Date date = null;
-        try {
-            date = utcsfd.parse(text);
-        } catch (Exception e) {
+        for (DateFormat dateFormat : sdf) {
             try {
-                date = datesdf.parse(text);
-            } catch (Exception e2) {
-                try {
-                    date = gmtsdf.parse(text);
-                } catch (Exception e3) {
-                    logger.error("解析Date失败！", e3);
-                }
+                date = dateFormat.parse(text);
+                break;
+            } catch (Exception e) {
             }
+        }
+        if(date == null) {
+            logger.error("解析Date失败！", text);
         }
         setValue(date);
     }

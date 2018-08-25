@@ -18,6 +18,9 @@ import java.util.Map;
 
 public class BaseService<Dao extends BaseDao<T>, T> {
 
+    @Autowired
+    protected ShiroRealm shiroRealm;
+
     /**
      * 公共dao
      */

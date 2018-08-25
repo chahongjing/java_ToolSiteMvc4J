@@ -30,18 +30,18 @@ public class CodeEnumTypeHandler<E extends Enum<?> & IBaseCodeEnum> extends Base
 
     @Override
     public E getNullableResult(ResultSet rs, String columnName) throws SQLException {
-        if (rs.wasNull()) {
-            return null;
-        }
+//        if (rs.wasNull()) {
+//            return null;
+//        }
         int i = rs.getInt(columnName);
         return getTypeValue(i);
     }
 
     @Override
     public E getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
-        if (rs.wasNull()) {
-            return null;
-        }
+//        if (rs.wasNull()) {
+//            return null;
+//        }
         int i = rs.getInt(columnIndex);
         return getTypeValue(i);
     }

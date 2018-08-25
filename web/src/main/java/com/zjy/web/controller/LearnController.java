@@ -291,6 +291,11 @@ public class LearnController extends BaseController {
         return "elLearn";
     }
 
+    @RequestMapping("/el")
+    public String elDemo() {
+        return "list";
+    }
+
     @RequestMapping("/shiroLearn")
     public String shiroLearn() {
         return "shiroLearn";
@@ -321,6 +326,11 @@ public class LearnController extends BaseController {
         return "testangular";
     }
 
+    @RequestMapping("/angulardemo")
+    public String angulardemo() {
+        return "angulardemo";
+    }
+
     @RequestMapping("/vueDemo")
     public String vueDemo() {
         return "vueDemo";
@@ -329,11 +339,6 @@ public class LearnController extends BaseController {
     @RequestMapping("/vueLearn")
     public String vueLearn() {
         return "vueLearn";
-    }
-
-    @RequestMapping("/angulardemo")
-    public String angulardemo() {
-        return "angulardemo";
     }
     // endregion
 

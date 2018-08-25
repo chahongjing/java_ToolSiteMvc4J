@@ -33,7 +33,7 @@
 </head>
 <body>
 <div>
-
+    <a href="javascript:alert('请在单元测试中查看！')" id="lntAddSolrIndex">solr</a>
 </div>
 <jsSection>
 

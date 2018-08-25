@@ -5,7 +5,7 @@ package com.zjy.baseframework.interfaces;
  * 层级关系实体接口
  */
 public interface IHierarchyBase {
-    int getId();
-    int getPId();
+    String getId();
+    String getPId();
     int getSeq();
 }

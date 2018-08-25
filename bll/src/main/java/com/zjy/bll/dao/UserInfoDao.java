@@ -5,6 +5,7 @@ import com.zjy.entities.UserInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 /**
@@ -15,5 +16,5 @@ import java.util.Map;
 public interface UserInfoDao extends BaseDao<UserInfo> {
     UserInfo getByCode(String userCode);
 
-    Map<String, Long> queryRepeatCount(@Param("userGuid") String userGuid, @Param("userCode") String userCode);
+    Map<String, BigDecimal> queryRepeatCount(@Param("userId") String userId, @Param("userCode") String userCode);
 }

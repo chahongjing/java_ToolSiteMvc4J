@@ -4,6 +4,7 @@ import com.zjy.bll.service.UserInfoService;
 import com.zjy.entities.UserInfo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.authz.UnauthenticatedException;
@@ -122,7 +123,7 @@ public class ShiroRealm extends AuthorizingRealm {
      * @return
      */
     public String getMd5Hash(String password, String salt) {
-        CustomCredentialsMatcher credentialsMatcher = (CustomCredentialsMatcher) getCredentialsMatcher();
+        HashedCredentialsMatcher credentialsMatcher = (HashedCredentialsMatcher)getCredentialsMatcher();
         Object simpleHash = new SimpleHash(credentialsMatcher.getHashAlgorithmName(), password, ByteSource.Util.bytes(salt),
                 credentialsMatcher.getHashIterations());
         return simpleHash.toString();

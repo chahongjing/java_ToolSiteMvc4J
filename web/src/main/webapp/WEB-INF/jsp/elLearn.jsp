@@ -25,6 +25,7 @@
 </head>
 <body>
 
+<a href="${ctx}/learn/el?code=zjy&name=曾&name=军">el样例</a>
 <jsSection>
 
 </jsSection>

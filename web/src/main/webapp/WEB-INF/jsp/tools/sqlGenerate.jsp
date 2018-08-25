@@ -517,7 +517,7 @@ BEGIN
   IF num = 0 THEN
     EXECUTE IMMEDIATE '
     CREATE TABLE {firstName}(
-    id INT PRIMARY KEY
+      id INT PRIMARY KEY
     )
     ';
   END IF;
@@ -530,14 +530,14 @@ COMMENT ON COLUMN {firstName}.id is '主键';
 
 -- {author} {datetime} {functionName}
 DECLARE
-num NUMBER;
-tableName VARCHAR2(100);
+  num NUMBER;
+  tableName VARCHAR2(100);
 BEGIN
-tableName := '{firstName}';
-SELECT COUNT(1) INTO num FROM USER_TABLES WHERE UPPER(TABLE_NAME) = UPPER(tableName) ;
-IF num > 0 THEN
-EXECUTE IMMEDIATE 'DROP TABLE ' || tableName;
-END IF;
+  tableName := '{firstName}';
+  SELECT COUNT(1) INTO num FROM USER_TABLES WHERE UPPER(TABLE_NAME) = UPPER(tableName) ;
+  IF num > 0 THEN
+    EXECUTE IMMEDIATE 'DROP TABLE ' || tableName;
+  END IF;
 END;
 /
 CREATE TABLE {firstName}
@@ -703,17 +703,17 @@ COMMENT ON COLUMN {firstName}.{secondName} is '{remark}';
 -- {author} {datetime} {functionName}
 DECLARE
 num NUMBER;
-tableName VARCHAR2(100);
-fieldName VARCHAR2(100);
+  tableName VARCHAR2(100);
+  fieldName VARCHAR2(100);
 BEGIN
-tableName := '{firstName}';
-fieldName := '{secondName}';
-SELECT COUNT(1) INTO num FROM COLS
-WHERE UPPER(TABLE_NAME) = UPPER(tableName)
-AND UPPER(COLUMN_NAME) = UPPER(fieldName);
-IF num > 0 THEN
-EXECUTE IMMEDIATE 'ALTER TABLE ' || tableName || ' DROP COLUMN ' || fieldName;
-END IF;
+  tableName := '{firstName}';
+  fieldName := '{secondName}';
+  SELECT COUNT(1) INTO num FROM COLS
+   WHERE UPPER(TABLE_NAME) = UPPER(tableName)
+     AND UPPER(COLUMN_NAME) = UPPER(fieldName);
+  IF num > 0 THEN
+    EXECUTE IMMEDIATE 'ALTER TABLE ' || tableName || ' DROP COLUMN ' || fieldName;
+  END IF;
 END;
 /
 ALTER TABLE {firstName} ADD({secondName} VARCHAR2(100));
@@ -740,22 +740,22 @@ END;
 /
 </script>
 <script type="text/ng-template" id="oracleDropField.html">
-    -- {author} {datetime} {functionName}
-    DECLARE
-    num NUMBER;
-    tableName VARCHAR2(100);
-    fieldName VARCHAR2(100);
-    BEGIN
-    tableName := '{firstName}';
-    fieldName := '{secondName}';
-    SELECT COUNT(1) INTO num FROM COLS
-    WHERE UPPER(TABLE_NAME) = UPPER(tableName)
-    AND UPPER(COLUMN_NAME) = UPPER(fieldName);
-    IF num > 0 THEN
+-- {author} {datetime} {functionName}
+DECLARE
+  num NUMBER;
+  tableName VARCHAR2(100);
+  fieldName VARCHAR2(100);
+BEGIN
+  tableName := '{firstName}';
+  fieldName := '{secondName}';
+  SELECT COUNT(1) INTO num FROM COLS
+   WHERE UPPER(TABLE_NAME) = UPPER(tableName)
+     AND UPPER(COLUMN_NAME) = UPPER(fieldName);
+  IF num > 0 THEN
     EXECUTE IMMEDIATE 'ALTER TABLE ' || tableName || ' DROP(' || fieldName || ')';
-    END IF;
-    END;
-    /
+  END IF;
+END;
+/
 </script>
 <script type="text/ng-template" id="sqlserverAddField.html">
     -- {author} {datetime} {functionName}

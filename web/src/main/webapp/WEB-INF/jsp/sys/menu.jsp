@@ -3,11 +3,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>用户列表</title>
+    <title>功能列表</title>
 </head>
 <body>
 <div class="right-header">
-    <a href="javascript:void(0)" class="btn m-b-xs w-xs btn-primary" @click="addUser()"><i class="fa fa-plus"></i>&nbsp;添加</a>
+    <a href="javascript:void(0)" class="btn m-b-xs w-xs btn-primary" @click="addMenu()"><i class="fa fa-plus"></i>&nbsp;添加</a>
 </div>
 <div>
     <nav class="navbar navbar-light bg-light" style="margin-top:10px;">
@@ -21,25 +21,30 @@
     <table class="table table-hover">
         <thead>
         <tr>
-            <th scope="col">姓名</th>
-            <th scope="col">编号</th>
-            <th scope="col">性别</th>
-            <th scope="col">是否系统用户</th>
+            <th scope="col">名称</th>
+            <th scope="col">父级</th>
+            <th scope="col">地址</th>
+            <th scope="col">图标</th>
+            <th scope="col">序号</th>
             <th scope="col">操作</th>
         </tr>
         </thead>
         <tbody>
-        <tr v-for="item in userList">
+        <tr v-for="item in menuList">
             <th scope="row">
-                <a href="javascript:void(0)" v-text="item.userName" @click="editUser(item)">
+                <a href="javascript:void(0)" v-text="item.name" @click="editMenu(item)">
                 </a>
             </th>
-            <td v-text="item.userCode"></td>
-            <td v-text="item.sexName"></td>
-            <td v-text="item.isSystem == 'YES' ? '是' : '否'"></td>
+            <td v-text="item.pName"></td>
+            <td v-text="item.url"></td>
+            <td><i :class="item.icon" v-if="item.icon"></i></td>
+            <td v-text="item.seq"></td>
             <td class="table-oper">
-                <a href="javascript:void(0)" class="fabutton" title="删除用户" @click="deleteUser(item)">
-                    <i class="fa fa-times text-danger" v-if="item.isSystem != 'YES'"></i>
+                <a href="javascript:void(0)" class="fabutton" title="删除用户" @click="deleteMenu(item)">
+                    <i class="fa fa-times text-danger"></i>
+                </a>
+                <a href="javascript:void(0)" class="fabutton" title="权限" @click="quanXian(item)">
+                    <i class="fa fa-list"></i>
                 </a>
             </td>
         </tr>
@@ -61,38 +66,38 @@
 </script>
 <jsSection>
     <script>
-        vueData = {userList:[],searchKey:'',pagerInfo:null};
+        vueData = {menuList:[],searchKey:'',pagerInfo:null};
 
         vueMethods = {
-            addUser: addUser,
-            editUser: editUser,
-            deleteUser: deleteUser,
+            addMenu: addMenu,
+            editMenu: editMenu,
+            deleteMenu: deleteMenu,
             search: search,
-            testMe: testMe
+            quanXian: quanXian
         };
 
         vueMounted = function (){
             search(this);
         };
 
-        function addUser(){
+        function addMenu(){
             this.commonSrv.get("/comm/getId").then(function(resp) {
                 if (resp.data.status == Constant.AjaxStatus.OK) {
-                    window.location = ctx + '/userinfo/userEdit?userId=' + resp.data.value;
+                    window.location = ctx + '/menu/menuEdit?menuId=' + resp.data.value;
                 } else {
                     alert(resp.data.message);
                 }
             });
         }
 
-        function editUser(user){
-            window.location = ctx + '/userinfo/userEdit?userId=' + user.userId;
+        function editMenu(menu){
+            window.location = ctx + '/menu/menuEdit?menuId=' + menu.menuId;
         }
 
-        function deleteUser(user) {
+        function deleteMenu(menu) {
             var me = this;
             if(confirm("是否要删除用户！")) {
-                me.commonSrv.get('/userinfo/delete', {userId: user.userId}).then(function(resp) {
+                me.commonSrv.get('/menu/delete', {menuId: menu.menuId}).then(function(resp) {
                     if (resp.data.status == Constant.AjaxStatus.OK) {
                         search(me);
                     } else {
@@ -105,9 +110,9 @@
         function search(that){
             var me = that || this;
             me.isButtonDisabled = true;
-            me.commonSrv.get('/userinfo/queryPageList', {userName: me.searchKey}).then(function(resp) {
+            me.commonSrv.get('/menu/queryPageList', {menuName: me.searchKey}).then(function(resp) {
                 if (resp.data.status == Constant.AjaxStatus.OK) {
-                    me.userList = resp.data.value.list;
+                    me.menuList = resp.data.value.list;
                     me.pagerInfo = resp.data.value;
                 } else {
                     alert(resp.data.message);
@@ -116,8 +121,8 @@
             });
         }
 
-        function testMe(s) {
-            console.log(s);
+        function quanXian(menu) {
+            window.location = ctx + '/permission/list?menuId=' + menu.menuId;
         }
     </script>
 </jsSection>

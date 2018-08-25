@@ -1,13 +1,10 @@
 package com.zjy.bll.dao;
 
-import com.zjy.entities.UserInfoForHibernate;
+import org.springframework.stereotype.Repository;
+
 //import org.hibernate.Session;
 //import org.hibernate.SessionFactory;
 //import org.hibernate.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
-import java.util.UUID;
 
 /**
  * Created by chahongjing on 2017/5/5.
@@ -24,7 +21,7 @@ public class UserInfoForHibernateDao {
 //
 //        UserInfoForHibernate user = new UserInfoForHibernate();
 //        user.setUserName("hello spring");
-//        user.setUserGuid(UUID.randomUUID().toString());
+//        user.setUserId(UUID.randomUUID().toString());
 //        session.save(user);
 //
 //        transaction.commit();//提交事务

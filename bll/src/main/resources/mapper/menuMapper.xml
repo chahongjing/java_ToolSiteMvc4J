@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zjy.bll.dao.MenuDao">
+	<!-- 基本操作区 -->
+	<!-- 添加 -->
+	<insert id="add">
+		INSERT INTO menu(<include refid="field"></include>)
+		VALUES(#{menuId, jdbcType=VARCHAR}, #{pId, jdbcType=VARCHAR}, #{name, jdbcType=VARCHAR}, #{seq, jdbcType=INTEGER},
+		#{url, jdbcType=VARCHAR}, #{icon, jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 更新 -->
+	<update id="update">
+        update menu
+        <set>
+			<if test='pId != null and pId != ""'>
+				pId = #{pId, jdbcType=VARCHAR},
+			</if>
+			<if test='name != null and name != ""'>
+				name = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test='seq != null'>
+				seq = #{seq, jdbcType=INTEGER},
+			</if>
+			<if test='url != null and url != ""'>
+				url = #{url, jdbcType=VARCHAR},
+			</if>
+			<if test='icon != null and icon != ""'>
+				icon = #{icon, jdbcType=VARCHAR},
+			</if>
+		</set>
+         where menuId = #{menuId, jdbcType=VARCHAR}
+	</update>
+
+	<!-- 删除 -->
+	<delete id="delete">
+		DELETE FROM menu WHERE menuId = #{id, jdbcType=VARCHAR}
+	</delete>
+
+	<!-- 获取 -->
+	<select id="get" resultType="com.zjy.bll.vo.MenuVo">
+		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="menu"/></include>
+		  FROM menu
+		 WHERE menuId = #{id, jdbcType = VARCHAR}
+	</select>
+
+	<!-- 查询简单列表 -->
+	<select id="query" resultType="com.zjy.bll.vo.MenuVo">
+		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="menu"/></include>,
+		     parent.name as pName
+		FROM menu
+		left join menu parent on menu.pid = parent.menuid
+		WHERE 1 = 1
+		<if test='name != null and name != ""'>
+			and menu.name like '%' || #{name, jdbcType=VARCHAR} || '%'
+		</if>
+		order by parent.seq, menu.seq
+	</select>
+
+	<!-- 查询复杂列表 -->
+	<select id="queryByMapFilter" resultType="com.zjy.bll.vo.MenuVo">
+		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="menu"/></include>
+		FROM menu
+		WHERE 2 = 2
+	</select>
+
+	<!-- 查询是否重复 -->
+	<select id="queryRepeatCount" resultType="Map">
+		select count(case when name = #{name, jdbcType=VARCHAR} then 1 else null end) as nameCount
+		  from menu
+		 where menuId &lt;&gt; #{menuId, jdbcType=VARCHAR}
+	</select>
+
+	<select id="queryParentList" resultType="com.zjy.bll.vo.MenuVo">
+		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="menu"/></include>
+		  FROM menu
+		 WHERE pId is null or pId = ''
+		 order by seq
+	</select>
+
+	<!-- 其它操作区 -->
+
+
+	<!-- 公共信息 -->
+	<!-- 字段 -->
+	<sql id="field">
+		menuId, pId, name, seq, url, icon
+	</sql>
+	 <!-- 带前缀的字段 -->
+	<sql id="fieldWithPrefix">
+		${tableName}.menuId, ${tableName}.pId, ${tableName}.name, ${tableName}.seq, ${tableName}.url, ${tableName}.icon
+	</sql>
+</mapper>

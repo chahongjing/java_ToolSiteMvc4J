@@ -163,6 +163,9 @@
         </ul>
     </div>
 </div>
+
+
+<a href="${ctx}/test/test">测试@Value和加载部分页</a>
 <jsSection>
 
 </jsSection>

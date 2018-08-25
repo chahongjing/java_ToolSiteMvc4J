@@ -2,7 +2,7 @@ package com.zjy.baseframework;
 
 import com.alibaba.fastjson.JSON;
 import com.zjy.bll.common.BaseTestCase;
-import com.zjy.entities.Sex;
+import com.zjy.entities.enums.Sex;
 import com.zjy.entities.UserInfo;
 import org.junit.Test;
 

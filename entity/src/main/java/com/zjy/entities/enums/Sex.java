@@ -1,4 +1,4 @@
-package com.zjy.entities;
+package com.zjy.entities.enums;
 
 import com.zjy.baseframework.mybatis.CodeEnumUtil;
 import com.zjy.baseframework.mybatis.IBaseCodeEnum;

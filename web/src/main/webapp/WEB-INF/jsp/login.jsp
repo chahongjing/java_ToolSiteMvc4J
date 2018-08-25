@@ -59,7 +59,7 @@
     <h1>
         <i class="fa fa-leaf green"></i><span class="red">后台管理</span><span class="grey" id="id-text2">系统</span>
     </h1>
-    <h4 class="copy-right blue">&copy; Zjy Office</h4>
+    <h4 class="copy-right blue"><i class="fa fa-copyright"></i>&nbsp;Zjy Office</h4>
     <div class="login-form">
         <form id="formLogin" action="${ctx}/userinfo/login" method="post">
             <input type="hidden" id="RedirectUrl" name="RedirectUrl" value="<c:out value="${redirectUrl}"/>"/>
