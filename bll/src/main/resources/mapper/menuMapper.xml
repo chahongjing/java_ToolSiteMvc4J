@@ -5,7 +5,7 @@
 	<!-- 添加 -->
 	<insert id="add">
 		INSERT INTO menu(<include refid="field"></include>)
-		VALUES(#{menuId, jdbcType=VARCHAR}, #{pId, jdbcType=VARCHAR}, #{name, jdbcType=VARCHAR}, #{seq, jdbcType=INTEGER},
+		VALUES(#{menuId, jdbcType=VARCHAR}, #{pId, jdbcType=VARCHAR}, #{name, jdbcType=VARCHAR}, #{code, jdbcType=VARCHAR}, #{seq, jdbcType=INTEGER},
 		#{url, jdbcType=VARCHAR}, #{icon, jdbcType=VARCHAR})
 	</insert>
 
@@ -18,6 +18,9 @@
 			</if>
 			<if test='name != null and name != ""'>
 				name = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test='code != null and code != ""'>
+				code = #{code, jdbcType=VARCHAR},
 			</if>
 			<if test='seq != null'>
 				seq = #{seq, jdbcType=INTEGER},
@@ -66,7 +69,7 @@
 
 	<!-- 查询是否重复 -->
 	<select id="queryRepeatCount" resultType="Map">
-		select count(case when name = #{name, jdbcType=VARCHAR} then 1 else null end) as nameCount
+		select count(case when code = #{code, jdbcType=VARCHAR} then 1 else null end) as codeCount
 		  from menu
 		 where menuId &lt;&gt; #{menuId, jdbcType=VARCHAR}
 	</select>
@@ -84,10 +87,10 @@
 	<!-- 公共信息 -->
 	<!-- 字段 -->
 	<sql id="field">
-		menuId, pId, name, seq, url, icon
+		menuId, pId, name, code, seq, url, icon
 	</sql>
 	 <!-- 带前缀的字段 -->
 	<sql id="fieldWithPrefix">
-		${tableName}.menuId, ${tableName}.pId, ${tableName}.name, ${tableName}.seq, ${tableName}.url, ${tableName}.icon
+		${tableName}.menuId, ${tableName}.pId, ${tableName}.name, ${tableName}.code, ${tableName}.seq, ${tableName}.url, ${tableName}.icon
 	</sql>
 </mapper>

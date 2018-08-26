@@ -54,31 +54,31 @@ public class MenuServiceImpl extends BaseService<MenuDao, Menu> implements MenuS
 
     /**
      * 保存用户
-     * @param userInfo
+     * @param menuInfo
      */
     @Override
     @Transactional
-    public void saveMenu(MenuVo userInfo) {
-        MenuVo vo = getVo(userInfo.getMenuId());
-        beforeCheck(userInfo);
+    public void saveMenu(MenuVo menuInfo) {
+        MenuVo vo = getVo(menuInfo.getMenuId());
+        beforeCheck(menuInfo);
         // 处理密码
         if(vo.getIsSave()) {
-            update(userInfo);
+            update(menuInfo);
         } else {
-            add(userInfo);
+            add(menuInfo);
         }
     }
 
     @Override
     public PageInfo<? extends Menu> queryPageList(MenuRequest request) {
-        Menu user = new Menu();
-        user.setName(request.getName());
-        PageInfo<MenuVo> pageInfo = (PageInfo<MenuVo>)super.queryPageList(request, user);
+        Menu menu = new Menu();
+        menu.setName(request.getName());
+        PageInfo<MenuVo> pageInfo = (PageInfo<MenuVo>)super.queryPageList(request, menu);
         return pageInfo;
     }
 
-    public MenuVo get(String userId) {
-        return (MenuVo)super.get(userId);
+    public MenuVo get(String menuId) {
+        return (MenuVo)super.get(menuId);
     }
 
     @Override
@@ -98,7 +98,7 @@ public class MenuServiceImpl extends BaseService<MenuDao, Menu> implements MenuS
         if(StringUtils.isBlank(menu.getName())) {
             throw new ServiceException("请输入功能名称！");
         }
-        Map<String, BigDecimal> map = dao.queryRepeatCount(menu.getMenuId(), menu.getName());
+        Map<String, BigDecimal> map = dao.queryRepeatCount(menu.getMenuId(), menu.getCode());
         if(map != null && map.containsKey("CODECOUNT") && map.get("CODECOUNT").intValue() > 0) {
             throw new ServiceException("功能名称重复！");
         }

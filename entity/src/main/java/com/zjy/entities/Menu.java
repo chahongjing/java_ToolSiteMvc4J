@@ -7,6 +7,7 @@ public class Menu implements IHierarchyBase {
     private String menuId;
     private String pId;
     private String name;
+    private String code;
     private String url;
     private int seq;
     private String icon;
@@ -57,6 +58,14 @@ public class Menu implements IHierarchyBase {
 
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     @Override
