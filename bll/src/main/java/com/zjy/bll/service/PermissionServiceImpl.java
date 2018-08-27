@@ -67,4 +67,9 @@ public class PermissionServiceImpl extends BaseService<PermissionDao, Permission
             throw new ServiceException("功能名称重复！");
         }
     }
+    @Override
+    @Transactional
+    public int delete(String id) {
+        return super.delete(id);
+    }
 }

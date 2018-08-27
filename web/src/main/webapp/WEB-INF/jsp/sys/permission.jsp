@@ -22,9 +22,8 @@
         <thead>
         <tr>
             <th scope="col">名称</th>
-            <th scope="col">父级</th>
-            <th scope="col">地址</th>
-            <th scope="col">图标</th>
+            <th scope="col">编码</th>
+            <th scope="col">菜单</th>
             <th scope="col">序号</th>
             <th scope="col">操作</th>
         </tr>
@@ -35,9 +34,8 @@
                 <a href="javascript:void(0)" v-text="item.name" @click="editPermission(item)">
                 </a>
             </th>
-            <td v-text="item.pName"></td>
-            <td v-text="item.url"></td>
-            <td><i :class="item.icon" v-if="item.icon"></i></td>
+            <td v-text="item.code"></td>
+            <td v-text="item.menuName"></td>
             <td v-text="item.seq"></td>
             <td class="table-oper">
                 <a href="javascript:void(0)" class="fabutton" title="删除用户" @click="deletePermission(item)">
@@ -53,6 +51,7 @@
 </div>
 <jsSection>
     <script>
+        var menuId = '${menuId}';
         vueData = {permissionList:[],searchKey:'',pagerInfo:null};
 
         vueMethods = {
@@ -70,7 +69,7 @@
         function addPermission(){
             this.commonSrv.get("/comm/getId").then(function(resp) {
                 if (resp.data.status == Constant.AjaxStatus.OK) {
-                    window.location = ctx + '/permission/permissionEdit?permissionId=' + resp.data.value;
+                    window.location = ctx + '/permission/permissionEdit?permissionId=' + resp.data.value + '&menuId=' + menuId;
                 } else {
                     alert(resp.data.message);
                 }

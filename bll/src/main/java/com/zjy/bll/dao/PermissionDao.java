@@ -10,5 +10,5 @@ import java.util.Map;
 
 @Repository
 public interface PermissionDao extends BaseDao<Permission> {
-    Map<String, BigDecimal> queryRepeatCount(@Param("permissionId") String permissionId, @Param("name") String name);
+    Map<String, BigDecimal> queryRepeatCount(@Param("permissionId") String permissionId, @Param("code") String code);
 }

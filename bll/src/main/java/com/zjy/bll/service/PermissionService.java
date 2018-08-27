@@ -9,4 +9,5 @@ public interface PermissionService {
     PermissionVo get(String permissionId);
     PermissionVo getVo(String permissionId);
     void savePermission(PermissionVo permissionInfo);
+    int delete(String id);
 }

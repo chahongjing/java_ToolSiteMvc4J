@@ -3,7 +3,9 @@ package com.zjy.web.controller;
 import com.github.pagehelper.PageInfo;
 import com.zjy.baseframework.BaseResult;
 import com.zjy.bll.request.PermissionRequest;
+import com.zjy.bll.service.MenuService;
 import com.zjy.bll.service.PermissionService;
+import com.zjy.bll.vo.MenuVo;
 import com.zjy.bll.vo.PermissionVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,8 +17,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/permission")
 public class PermissionController extends BaseController {
 
-        @Autowired
-        private PermissionService permissionSrv;
+    @Autowired
+    private PermissionService permissionSrv;
+
+    @Autowired
+    private MenuService menuSrv;
 
         @RequestMapping("/list")
         public String list(String menuId, Model model) {
@@ -25,8 +30,9 @@ public class PermissionController extends BaseController {
         }
 
         @RequestMapping("/permissionEdit")
-        public String editPermission(String permissionId, Model model) {
+        public String editPermission(String permissionId, String menuId, Model model) {
             model.addAttribute("permissionId", permissionId);
+            model.addAttribute("menuId", menuId);
             return "sys/permissionEdit";
         }
 
@@ -39,9 +45,14 @@ public class PermissionController extends BaseController {
 
         @RequestMapping("/getPermissionInfo")
         @ResponseBody
-        public BaseResult<PermissionVo> getPermissionInfo(String permissionId) {
-            PermissionVo userInfo = permissionSrv.getVo(permissionId);
-            return BaseResult.OK(userInfo);
+        public BaseResult<PermissionVo> getPermissionInfo(String permissionId, String menuId) {
+            PermissionVo permissionVo = permissionSrv.getVo(permissionId);
+            if(!permissionVo.getIsSave()) {
+                permissionVo.setMenuId(menuId);
+                MenuVo menu = menuSrv.getVo(menuId);
+                permissionVo.setMenuName(menu.getName());
+            }
+            return BaseResult.OK(permissionVo);
         }
 
         @RequestMapping("/savePermission")
@@ -50,4 +61,11 @@ public class PermissionController extends BaseController {
             permissionSrv.savePermission(permission);
             return BaseResult.OK("");
         }
+
+    @RequestMapping("/delete")
+    @ResponseBody
+    public BaseResult<String> delete(String permissionId) {
+        permissionSrv.delete(permissionId);
+        return BaseResult.OK("");
     }
+}

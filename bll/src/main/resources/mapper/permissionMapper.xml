@@ -35,22 +35,24 @@
 
 	<!-- 获取 -->
 	<select id="get" resultType="com.zjy.bll.vo.PermissionVo">
-		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="permission"/></include>
+		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="permission"/></include>,
+		        menu.name as menuName
 		  FROM permission
-		 WHERE permissionId = #{id, jdbcType = VARCHAR}
+		 inner join menu on menu.menuid = permission.menuid
+		 WHERE permission.permissionId = #{id, jdbcType = VARCHAR}
 	</select>
 
 	<!-- 查询简单列表 -->
 	<select id="query" resultType="com.zjy.bll.vo.PermissionVo">
 		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="permission"/></include>,
-		        menu.name as pName
+		        menu.name as menuName
 		FROM permission
 		left join menu on permission.menuid = menu.menuId
 		WHERE 1 = 1
 		<if test='name != null and name != ""'>
 			and permission.name like '%' || #{name, jdbcType=VARCHAR} || '%'
 		</if>
-		order by parent.seq, permission.seq
+		order by menu.seq, permission.seq
 	</select>
 
 	<!-- 查询复杂列表 -->

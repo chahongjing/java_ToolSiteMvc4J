@@ -84,4 +84,11 @@ public class MenuController extends BaseController {
         menuSrv.saveMenu(menu);
         return BaseResult.OK("");
     }
+
+    @RequestMapping("/delete")
+    @ResponseBody
+    public BaseResult<String> delete(String menuId) {
+        menuSrv.delete(menuId);
+        return BaseResult.OK("");
+    }
 }
