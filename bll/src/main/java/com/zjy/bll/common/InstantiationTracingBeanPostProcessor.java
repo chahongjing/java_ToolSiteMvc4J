@@ -1,8 +1,8 @@
 package com.zjy.bll.common;
 
-import com.zjy.baseframework.mybatis.CodeEnumUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.mybatis.spring.SqlSessionFactoryBean;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
@@ -19,7 +19,7 @@ import java.util.List;
 public class InstantiationTracingBeanPostProcessor implements ApplicationListener<ContextRefreshedEvent> {
 
     @Autowired
-    private SqlSessionFactoryBean sqlSessionFactory;
+    private FactoryBean<SqlSessionFactory> sqlSessionFactory;
 
     @Value("${enumPackages}")
     private String enumPackages;
