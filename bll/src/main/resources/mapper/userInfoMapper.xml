@@ -10,27 +10,27 @@
 	</insert>
 
 	<!-- 更新 -->
-	<update id="update">
-        update UserInfo
-        <set>
-			<if test='userName != null and userName != ""'>
-				UserName = #{userName, jdbcType=VARCHAR},
-			</if>
-			<if test='sex != null'>
-				Sex = #{sex, jdbcType=INTEGER},
-			</if>
-			<if test='birthday != null'>
-				Birthday = #{birthday, jdbcType=TIMESTAMP},
-			</if>
-			<if test='isSystem != null'>
-				IsSystem = #{isSystem, jdbcType=INTEGER},
-			</if>
-			<if test='isDisabled != null'>
-				isDisabled = #{isDisabled, jdbcType=INTEGER},
-			</if>
-		</set>
-         where UserId = #{userId, jdbcType=VARCHAR}
-	</update>
+	<!--<update id="update">-->
+        <!--update UserInfo-->
+        <!--<set>-->
+			<!--<if test='userName != null and userName != ""'>-->
+				<!--UserName = #{userName, jdbcType=VARCHAR},-->
+			<!--</if>-->
+			<!--<if test='sex != null'>-->
+				<!--Sex = #{sex, jdbcType=INTEGER},-->
+			<!--</if>-->
+			<!--<if test='birthday != null'>-->
+				<!--Birthday = #{birthday, jdbcType=TIMESTAMP},-->
+			<!--</if>-->
+			<!--<if test='isSystem != null'>-->
+				<!--IsSystem = #{isSystem, jdbcType=INTEGER},-->
+			<!--</if>-->
+			<!--<if test='isDisabled != null'>-->
+				<!--isDisabled = #{isDisabled, jdbcType=INTEGER},-->
+			<!--</if>-->
+		<!--</set>-->
+         <!--where UserId = #{userId, jdbcType=VARCHAR}-->
+	<!--</update>-->
 
 	<!-- 删除 -->
 	<delete id="delete">
