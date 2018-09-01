@@ -1,8 +1,5 @@
 package com.zjy.entities;
 
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.enums.FieldStrategy;
 import com.zjy.entities.enums.Sex;
 import com.zjy.entities.enums.YesNo;
 
@@ -32,7 +29,7 @@ public class UserInfo {
     /**
      * 用户Guid
      */
-    @TableId
+//    @TableId
     private String userId;
     /**
      * 代码
@@ -92,7 +89,7 @@ public class UserInfo {
      */
     private YesNo isSystem;
 
-    @TableField(strategy = FieldStrategy.NOT_EMPTY)
+    //    @TableField(strategy = FieldStrategy.NOT_EMPTY)
     private int age;
 
     public String getCreatedBy() {
