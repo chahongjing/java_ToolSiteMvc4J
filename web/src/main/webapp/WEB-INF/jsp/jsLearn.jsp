@@ -24,6 +24,23 @@
         <button type="submit" name="tj" value="提交">提交</button>
         <button type="button" name="ajaxtj" value="提交">ajax提交</button>
     </form>
+
+    <div>
+        <p>Array</p>
+        <ul>
+            <li>Array.isArray(myArr)</li>
+            <li>myArr.every(function(item) { return item.abc > 1; })</li>
+            <li>myArr.filter(function(item) { return item.abc > 1; })</li>
+            <li>找到第一个适合的元素。myArr.find(function(item) { return item.abc > 1; })</li>
+            <li>找到第一个适合的元素的索引。myArr.indexOf(element, 3), myArr.findIndex(function(item) { return item.abc > 1; })</li>
+            <li>是否符合条件。myArr.includes(element), myArr.some(function(item) { return item.abc > 1; });</li>
+            <li>myArr.keys()</li>
+            <li>myArr.reduce(callback[, initialValue])</li>
+            <li>reverse, shift, sort, unshift, splice, myArr.slice([begin[, end]])</li>
+            <li>Array.prototype.push.apply(arr1, arr2);</li>
+            <li>Math.max.apply(null, [2,1,3]);</li>
+        </ul>
+    </div>
 </div>
 <jsSection>
     <%-- js脚本 --%>
