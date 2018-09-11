@@ -54,6 +54,26 @@
         <li>hashtable键值都不能为空，每个方法都加了Synchronize,容量为11,2n+1，可指定大小，实际大小为2的幂次方,dictionary</li>
     </ul>
     </p>
+
+    <p>
+    <h2>apache commons</h2>
+    <ul>
+        <li>org.apache.commons.io.IOUtils</li>
+        <li>org.apache.commons.io.FileUtils</li>
+        <li>org.apache.commons.io.FilenameUtils</li>
+        <li>org.springframework.util.StringUtils</li>
+        <li>org.apache.commons.lang3.StringUtils</li>
+        <li>org.apache.commons.lang3.StringEscapeUtils</li>
+        <li>org.apache.commons.lang3.ArrayUtils</li>
+        <li>org.apache.commons.collections.CollectionUtils</li>
+        <li>org.apache.http.client.utils.URLEncodedUtils</li>
+        <li>org.apache.commons.codec.digest.DigestUtils</li>
+        <li>org.apache.commons.beanutils.PropertyUtils</li>
+        <li>org.apache.commons.beanutils.BeanUtils</li>
+        <li>org.apache.http.util.EntityUtils</li>
+    </ul>
+    </p>
+
     <p>
     <h2>java虚拟机</h2>
     <ul>
