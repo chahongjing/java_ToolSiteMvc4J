@@ -55,21 +55,21 @@
         list.push(first);
         second = {name:  '下载', href: '/learn/download', iconClass:''};
         first.children.push(second);
-        second = {name:  '学习servlet', href: '/learn/servletLearn', iconClass:''};
+        second = {name:  'servlet学习', href: '/learn/servletLearn', iconClass:''};
         first.children.push(second);
-        second = {name:  '学习jsp', href: '/learn/jspLearn?arr=1&arr=2&userName=曾军毅', iconClass:''};
+        second = {name:  'jsp学习', href: '/learn/jspLearn?arr=1&arr=2&userName=曾军毅', iconClass:''};
         first.children.push(second);
-        second = {name:  '学习el', href: '/learn/elLearn', iconClass:''};
+        second = {name:  'el学习', href: '/learn/elLearn', iconClass:''};
         first.children.push(second);
-        second = {name:  '学习spring aop', href: '/learn/springAopLearn/123', iconClass:''};
+        second = {name:  'spring aop学习', href: '/learn/springAopLearn/123', iconClass:''};
         first.children.push(second);
-        second = {name:  '学习spring Bean', href: '/learn/springBeanLearn/123', iconClass:''};
+        second = {name:  'spring Bean学习', href: '/learn/springBeanLearn/123', iconClass:''};
         first.children.push(second);
-        second = {name:  '学习springMVC', href: '/learn/springMVCLearn/123', iconClass:''};
+        second = {name:  'springMVC学习', href: '/learn/springMVCLearn/123', iconClass:''};
         first.children.push(second);
-        second = {name:  '学习cookie', href: '/learn/cookieLearn', iconClass:''};
+        second = {name:  'cookie学习', href: '/learn/cookieLearn', iconClass:''};
         first.children.push(second);
-        second = {name:  '学习session', href: '/learn/sessionLearn', iconClass:''};
+        second = {name:  'session学习', href: '/learn/sessionLearn', iconClass:''};
         first.children.push(second);
         second = {name:  'java后台学习', href: '/learn/javaLearn', iconClass:''};
         first.children.push(second);
@@ -90,7 +90,7 @@
         // region 服务器
         first = {name: '服务器', children:[]};
         list.push(first);
-        second = {name:  '学习tomcat', href: '/learn/tomcatLearn', iconClass:''};
+        second = {name:  'tomcat学习', href: '/learn/tomcatLearn', iconClass:''};
         first.children.push(second);
         // endregion
 
