@@ -66,7 +66,7 @@ public class TestController extends BaseController implements ServletConfigAware
     public String test(HttpServletRequest request, HttpServletResponse response) {
         logger.info("测试日志方法{}", new Date());
         logger.info("从Properties读取配置信息：" + url);
-        
+
 //        Object[] arg = new Object[] { "Erica", Calendar.getInstance().getTime() };
 //        messageSource.getMessage("username", arg, Locale.CHINA);
 
