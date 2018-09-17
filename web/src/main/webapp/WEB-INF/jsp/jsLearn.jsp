@@ -4,6 +4,13 @@
 <html>
 <head>
     <title>学习js</title>
+    <style>
+        .list{padding-left:20px;}
+        .list, .list li{
+            list-style-type:circle;
+        }
+        .list li{padding:5px 0;}
+    </style>
 </head>
 <body>
 <%-- html正文 --%>
@@ -27,7 +34,7 @@
 
     <div>
         <p>Array</p>
-        <ul>
+        <ul class="list">
             <li>Array.isArray(myArr)</li>
             <li>myArr.every(function(item) { return item.abc > 1; })</li>
             <li>myArr.filter(function(item) { return item.abc > 1; })</li>

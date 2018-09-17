@@ -130,6 +130,11 @@ public class LearnController extends BaseController {
         return "javaLearn";
     }
 
+    @RequestMapping("/jvmLearn")
+    public String jvmLearn() {
+        return "jvmLearn";
+    }
+
     @RequestMapping("/filterLearn")
     public String filterLearn() {
         return "filterLearn";

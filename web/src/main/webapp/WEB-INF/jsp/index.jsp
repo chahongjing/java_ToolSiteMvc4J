@@ -73,6 +73,8 @@
         first.children.push(second);
         second = {name:  'java后台学习', href: '/learn/javaLearn', iconClass:''};
         first.children.push(second);
+        second = {name:  'jvm学习', href: '/learn/jvmLearn', iconClass:''};
+        first.children.push(second);
         second = {name:  'filter学习', href: '/learn/filterLearn', iconClass:''};
         first.children.push(second);
         second = {name:  '事务学习', href: '/learn/springTransactionLearn', iconClass:''};

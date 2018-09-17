@@ -6,6 +6,7 @@ import com.zjy.bll.vo.ZTreeNode;
 import com.zjy.entities.Goods;
 import com.zjy.entities.Menu;
 import com.zjy.entities.UserInfo;
+import org.apache.commons.collections.SetUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Value;
@@ -66,7 +67,6 @@ public class TestController extends BaseController implements ServletConfigAware
     public String test(HttpServletRequest request, HttpServletResponse response) {
         logger.info("测试日志方法{}", new Date());
         logger.info("从Properties读取配置信息：" + url);
-
 //        Object[] arg = new Object[] { "Erica", Calendar.getInstance().getTime() };
 //        messageSource.getMessage("username", arg, Locale.CHINA);
 
