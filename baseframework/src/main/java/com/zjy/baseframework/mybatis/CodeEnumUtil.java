@@ -14,11 +14,13 @@ import java.util.List;
  */
 public class CodeEnumUtil {
 
-    public static <E extends Enum<?> & IBaseCodeEnum> E codeOf(Class<E> enumClass, int code) {
+    public static <E extends Enum<E> & IBaseCodeEnum> E codeOf(Class<E> enumClass, Integer value) {
+        if (value == null) return null;
         E[] enumConstants = enumClass.getEnumConstants();
-        for (E e : enumConstants) {
-            if (e.getCode() == code)
-                return e;
+        for (E item : enumConstants) {
+            if (value.equals(item.getCode())) {
+                return item;
+            }
         }
         return null;
     }
