@@ -25,7 +25,7 @@ public class CodeEnumTypeHandler<E extends Enum<?> & IBaseCodeEnum> extends Base
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, IBaseCodeEnum parameter, JdbcType jdbcType)
             throws SQLException {
-        ps.setInt(i, parameter.getCode());
+        ps.setInt(i, parameter.getValue());
     }
 
     @Override
@@ -57,7 +57,7 @@ public class CodeEnumTypeHandler<E extends Enum<?> & IBaseCodeEnum> extends Base
 
     private E getTypeValue(int val) {
         try {
-            return CodeEnumUtil.codeOf(type, val);
+            return CodeEnumUtil.getByValue(type, val);
         } catch (Exception ex) {
             throw new IllegalArgumentException("Cannot convert " + val + " to " + type.getSimpleName() + " by ordinal value.", ex);
         }

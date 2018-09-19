@@ -4,7 +4,7 @@ package com.zjy.baseframework.mybatis;
  * Created by Administrator on 2018/5/15.
  */
 public interface IBaseCodeEnum {
-    int getCode();
+    int getValue();
 
-    IBaseCodeEnum getByCode(int code);
+    IBaseCodeEnum getByValue(int code);
 }

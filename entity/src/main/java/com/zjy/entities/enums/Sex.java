@@ -10,22 +10,22 @@ public enum Sex implements IBaseCodeEnum {
     Male(0, "男"),         //开启
     Female(1, "女");
 
-    private int code;
+    private int value;
 
     private String name;
 
-    Sex(int code, String name) {
-        this.code = code;
+    Sex(int value, String name) {
+        this.value = value;
         this.name = name;
     }
 
     @Override
-    public int getCode() { return this.code; }
+    public int getValue() { return this.value; }
 
     public String getName() {
         return name;
     }
-    public Sex getByCode(int code){
-        return CodeEnumUtil.codeOf(Sex.class, code);
+    public Sex getByValue(int value){
+        return CodeEnumUtil.getByValue(Sex.class, value);
     }
 }
