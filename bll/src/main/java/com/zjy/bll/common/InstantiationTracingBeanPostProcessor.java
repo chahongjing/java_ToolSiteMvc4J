@@ -1,6 +1,6 @@
 package com.zjy.bll.common;
 
-import com.zjy.baseframework.mybatis.CodeEnumUtil;
+import com.zjy.baseframework.mybatis.CodeEnumTypeHandler;
 import org.apache.commons.lang3.StringUtils;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +43,7 @@ public class InstantiationTracingBeanPostProcessor implements ApplicationListene
                         packages.add(pack);
                     }
                 }
-                CodeEnumUtil.registerTypeHandle(sqlSessionFactory.getObject().getConfiguration().getTypeHandlerRegistry(), packages);
+                CodeEnumTypeHandler.registerTypeHandle(sqlSessionFactory.getObject().getConfiguration().getTypeHandlerRegistry(), packages);
             } catch (Exception e) {
                 e.printStackTrace();
             }

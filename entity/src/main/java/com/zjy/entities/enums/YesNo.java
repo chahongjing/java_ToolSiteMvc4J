@@ -1,10 +1,9 @@
 package com.zjy.entities.enums;
 
-import com.zjy.baseframework.mybatis.CodeEnumUtil;
-import com.zjy.baseframework.mybatis.IBaseCodeEnum;
+import com.zjy.baseframework.mybatis.IBaseEnum;
 
-public enum YesNo implements IBaseCodeEnum {
-    NO(0, "否"),         //开启
+public enum YesNo implements IBaseEnum {
+    NO(0, "否"),
     YES(1, "是");
 
     private int value;
@@ -17,12 +16,11 @@ public enum YesNo implements IBaseCodeEnum {
     }
 
     @Override
-    public int getValue() { return this.value; }
+    public int getValue() {
+        return this.value;
+    }
 
     public String getName() {
         return name;
-    }
-    public YesNo getByValue(int value){
-        return CodeEnumUtil.getByValue(YesNo.class, value);
     }
 }
