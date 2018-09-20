@@ -1,11 +1,11 @@
 package com.zjy.entities.enums;
 
-import com.zjy.baseframework.mybatis.IEnumBase;
+import com.zjy.baseframework.mybatis.IBaseEnum;
 
 /**
  * Created by Administrator on 2018/5/15.
  */
-public enum Sex implements IEnumBase {
+public enum Sex implements IBaseEnum {
     Male(0, "男"),         //开启
     Female(1, "女");
 
