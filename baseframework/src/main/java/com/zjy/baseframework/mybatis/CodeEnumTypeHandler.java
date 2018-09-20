@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2018/5/15.
  */
-public class CodeEnumTypeHandler<E extends Enum<E> & IEnumBase> extends BaseTypeHandler<IEnumBase> {
+public class CodeEnumTypeHandler<E extends Enum<E> & IBaseEnum> extends BaseTypeHandler<IBaseEnum> {
 
     private Class<E> type;
 
@@ -30,7 +30,7 @@ public class CodeEnumTypeHandler<E extends Enum<E> & IEnumBase> extends BaseType
     }
 
     @Override
-    public void setNonNullParameter(PreparedStatement ps, int i, IEnumBase parameter, JdbcType jdbcType)
+    public void setNonNullParameter(PreparedStatement ps, int i, IBaseEnum parameter, JdbcType jdbcType)
             throws SQLException {
         ps.setInt(i, parameter.getValue());
     }
@@ -64,7 +64,7 @@ public class CodeEnumTypeHandler<E extends Enum<E> & IEnumBase> extends BaseType
 
     private E getTypeValue(int val) {
         try {
-            return IEnumBase.getByValue(type, new Integer(val));
+            return IBaseEnum.getByValue(type, new Integer(val));
         } catch (Exception ex) {
             throw new IllegalArgumentException("Cannot convert " + val + " to " + type.getSimpleName() + " by ordinal value.", ex);
         }
@@ -91,7 +91,7 @@ public class CodeEnumTypeHandler<E extends Enum<E> & IEnumBase> extends BaseType
             try {
                 aClass = Class.forName(className, false, CodeEnumTypeHandler.class.getClassLoader());
                 // 判断是否实现了IBaseCodeEnum接口
-                if (aClass.isEnum() && IEnumBase.class.isAssignableFrom(aClass)) {
+                if (aClass.isEnum() && IBaseEnum.class.isAssignableFrom(aClass)) {
                     // 注册
                     typeHandlerRegistry.register(className, CodeEnumTypeHandler.class.getTypeName());
                 }
