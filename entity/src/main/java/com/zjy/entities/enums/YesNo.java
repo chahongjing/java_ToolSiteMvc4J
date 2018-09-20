@@ -1,8 +1,8 @@
 package com.zjy.entities.enums;
 
-import com.zjy.baseframework.mybatis.IBaseEnum;
+import com.zjy.baseframework.mybatis.IEnumBase;
 
-public enum YesNo implements IBaseEnum {
+public enum YesNo implements IEnumBase {
     NO(0, "否"),
     YES(1, "是");
 
