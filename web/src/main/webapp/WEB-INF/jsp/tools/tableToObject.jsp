@@ -16,8 +16,8 @@
     连接地址<input type="text" style="width:400px;" data-ng-model="model.url"/><br>
     样例：
     <ul class="connList">
-        <c:forEach var="item" items="${dbUrlMap}">
-            <li><span class="key">${item.key}</span><span class="value">${item.value}</span></li>
+        <c:forEach var="item" items="${dbSet}">
+            <li><span class="key">${item}</span><span class="value">${item.url}</span></li>
         </c:forEach>
     </ul>
     <br>

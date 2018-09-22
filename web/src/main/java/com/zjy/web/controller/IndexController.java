@@ -25,6 +25,7 @@ public class IndexController extends BaseController {
         boolean permitted = shiroRealm.isPermitted("admin:testPermission");
         return "index";
     }
+
     @RequestMapping("/ok")
     public String ok(HttpServletRequest request, HttpServletResponse response) {
         ExcelHelper<String> e = new ExcelHelper<>();

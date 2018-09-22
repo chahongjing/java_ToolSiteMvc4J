@@ -125,6 +125,11 @@ public class LearnController extends BaseController {
         return "servletLearn";
     }
 
+    @RequestMapping("/threadLearn")
+    public String threadLearn() {
+        return "threadLearn";
+    }
+
     @RequestMapping("/javaLearn")
     public String javaLearn() {
         return "javaLearn";

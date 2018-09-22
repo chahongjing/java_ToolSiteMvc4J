@@ -30,22 +30,17 @@ public class ToolController extends BaseController {
     //region 数据库表转类
     @RequestMapping("/tableToObject")
     public String tableToObject(Model model) {
-        model.addAttribute("dbUrl", Objects.toString(dbUrl, "jdbc:oracle:thin:@127.0.0.1:1521:orcl"));
+        model.addAttribute("dbUrl", Objects.toString(dbUrl, DbType.Oracle.getUrl()));
         model.addAttribute("dbUser", Objects.toString(dbUser, "zjy"));
         model.addAttribute("dbPassword", Objects.toString(dbPassword, "1024"));
-        Map<DbType, String> map = new LinkedHashMap<>();
-        map.put(DbType.Oracle, "jdbc:oracle:thin:@127.0.0.1:1521:orcl");
-        map.put(DbType.Mysql, "jdbc:mysql://localhost/ToolSiteMvc4J");
-        map.put(DbType.SqlServer, "jdbc:sqlserver://PC201404190064\\\\MSSQL; DatabaseName=ToolSiteMvc4J");
-        map.put(DbType.Sqlite, "jdbc:sqlite::resource:db/app.db");
-        model.addAttribute("dbUrlMap", map);
+        model.addAttribute("dbSet", EnumSet.allOf(DbType.class));
         return "tools/tableToObject";
     }
 
     @RequestMapping("/getTableInfo")
     @ResponseBody
     public BaseResult getTableInfo(String type, String url, String user, String password, String tableName) {
-        DbType dbType = DbType.getDbTypeByName(type);
+        DbType dbType = DbType.getByCode(type);
         String tableInfo = toolSrv.getTableInfo(dbType, url, user, password, tableName);
         return BaseResult.OK(tableInfo);
     }

@@ -22,4 +22,15 @@ public interface IBaseEnum {
         }
         return null;
     }
+
+    static <E extends Enum<E> & IBaseEnum> E getByCode(Class<E> enumClass, String code) {
+        if (code == null) return null;
+        E[] enumConstants = enumClass.getEnumConstants();
+        for (E item : enumConstants) {
+            if (code.equals(item.getCode())) {
+                return item;
+            }
+        }
+        return null;
+    }
 }

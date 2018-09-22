@@ -28,6 +28,6 @@ public class WebUtils {
     }
 
     public static boolean isAjax(String ajaxHeader) {
-        return "XMLHttpRequest".equals(ajaxHeader);
+        return "XMLHttpRequest".equalsIgnoreCase(ajaxHeader);
     }
 }

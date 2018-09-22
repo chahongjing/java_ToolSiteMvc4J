@@ -26,4 +26,8 @@ public enum Sex implements IBaseEnum {
     public String getName() {
         return name;
     }
+
+    public static Sex getByValue(int value) {
+        return IBaseEnum.getByValue(Sex.class, value);
+    }
 }

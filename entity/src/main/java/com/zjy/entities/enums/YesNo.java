@@ -23,4 +23,8 @@ public enum YesNo implements IBaseEnum {
     public String getName() {
         return name;
     }
+
+    public static YesNo getByValue(int value) {
+        return IBaseEnum.getByValue(YesNo.class, value);
+    }
 }

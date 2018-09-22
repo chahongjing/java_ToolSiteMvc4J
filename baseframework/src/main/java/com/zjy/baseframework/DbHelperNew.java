@@ -1,6 +1,7 @@
 package com.zjy.baseframework;
 
 
+import com.zjy.baseframework.enums.DbType;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
@@ -22,19 +23,12 @@ public class DbHelperNew {
         // 如果要使用c3p0连接池，则要使用QueryRunner qr = new QueryRunner(dataSource);
         String driver = PropertiesHelper.getInstance().getProperties("db.driverClassName");
         if (!DbUtils.loadDriver(driver)) {
-            System.out.println("加载数据库驱动失败！");
+            System.out.println("加载数据库驱动失败！" + driver);
         }
-        if (!DbUtils.loadDriver("oracle.jdbc.OracleDriver")) {
-            System.out.println("加载数据库驱动失败！");
-        }
-        if (!DbUtils.loadDriver("com.mysql.jdbc.Driver")) {
-            System.out.println("加载数据库驱动失败！");
-        }
-        if (!DbUtils.loadDriver("com.microsoft.sqlserver.jdbc.SQLServerDriver")) {
-            System.out.println("加载数据库驱动失败！");
-        }
-        if (!DbUtils.loadDriver("org.sqlite.JDBC")) {
-            System.out.println("加载数据库驱动失败！");
+        for (DbType dbType : DbType.values()) {
+            if (!DbUtils.loadDriver(dbType.getDriver())) {
+                System.out.println("加载数据库驱动失败！" + dbType.getDriver());
+            }
         }
     }
 

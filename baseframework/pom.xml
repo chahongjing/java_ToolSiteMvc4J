@@ -43,6 +43,10 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
         <!-- poi -->
         <dependency>
             <groupId>org.apache.poi</groupId>
@@ -130,10 +134,10 @@
             <!--<groupId>org.apache.logging.log4j</groupId>-->
             <!--<artifactId>log4j-jcl</artifactId>-->
         <!--</dependency>-->
-        <dependency>
-            <groupId>com.aspose</groupId>
-            <artifactId>aspose-words</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.aspose</groupId>-->
+            <!--<artifactId>aspose-words</artifactId>-->
+        <!--</dependency>-->
         <!--<dependency>-->
             <!--<groupId>com.baidu</groupId>-->
             <!--<artifactId>ueditor</artifactId>-->
@@ -161,26 +165,26 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-install-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>1</id>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>install-file</goal>
-                        </goals>
-                        <configuration>
-                            <groupId>com.aspose</groupId>
-                            <artifactId>aspose-words</artifactId>
-                            <version>${aspose.version}</version>
-                            <packaging>jar</packaging>
-                            <file>${basedir}/../lib/aspose-words-14.9.0-jdk16.jar</file>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-install-plugin</artifactId>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>1</id>-->
+                        <!--<phase>initialize</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>install-file</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<groupId>com.aspose</groupId>-->
+                            <!--<artifactId>aspose-words</artifactId>-->
+                            <!--<version>${aspose.version}</version>-->
+                            <!--<packaging>jar</packaging>-->
+                            <!--<file>${basedir}/../lib/aspose-words-14.9.0-jdk16.jar</file>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
         </plugins>
     </build>
 </project>
