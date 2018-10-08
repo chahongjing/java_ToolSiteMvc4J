@@ -13,6 +13,7 @@ import com.zjy.entities.enums.Sex;
 import com.zjy.entities.enums.YesNo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Service;
@@ -96,10 +97,14 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
         try {
             // 登录
             subject.login(token);
-        } catch (Exception ex) {
-            logger.error("用户名或密码错误！", ex);
+        }catch(AuthenticationException ex) {
             result.setStatus(ResultStatus.NO);
             result.setMessage("用户名或密码错误！");
+            return result;
+        } catch (Exception ex) {
+            logger.error("登录异常！", ex);
+            result.setStatus(ResultStatus.NO);
+            result.setMessage("登录异常！");
             return result;
         }
         // 登录成功
