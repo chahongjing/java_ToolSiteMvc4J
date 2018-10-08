@@ -48,6 +48,25 @@
             <li>Math.max.apply(null, [2,1,3]);</li>
         </ul>
     </div>
+
+
+    <div>
+        <p>amd cmd commonjs</p>
+        <ul class="list">
+            <li>服务端：commonjs，框架有node.js</li>
+            <li>浏览器：amd, cmd; amd框架有requirejs, cmd框架有seajs</li>
+            <li>commonjs, var math = require('math'); math.add(2, 3);只有math.js加载完成后才会执行后一句代码，同步的，服务端文件都在本地，
+            加载时间为读取文件时间，但浏览器端却要从服务器下载文件，导致页面卡住，因此就有了amd异步加载模块</li>
+            <li><pre>AMD, <br>require(['math'], function (math) { <br>math.add(2, 3);<br>});<br>
+                //AMD <br>define(['./a','./b'],function(a,b){<br> a.doSomething()<br> b.dosomething()<br> })<br>
+                //CMD <br>define(function(require,exports,module){ <br>var a=require('./a') <br>a.doSomethimg()
+                <br>var b=require('./b') <br>b.doSomething() <br>})</pre>
+            </li>
+            <li>AMD和CMD最大的区别是对依赖模块的执行时机处理不同,注意不是加载的时机或者方式不同
+                加载模块都是异步的,只不过AMD依赖前置,js可以方便知道依赖模块是谁,立即加载,而CMD就近依赖,需要使用把模块变为字符串解析一遍才知道依赖了那些模块,这也是很多人诟病CMD的一点,牺牲性能来带来开发的便利性,实际上解析模块用的时间短到可以忽略
+            </li>
+        </ul>
+    </div>
 </div>
 <jsSection>
     <%-- js脚本 --%>
