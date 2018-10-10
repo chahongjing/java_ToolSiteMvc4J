@@ -698,6 +698,7 @@ BEGIN
 END;
 /
 COMMENT ON COLUMN {firstName}.{secondName} is '{remark}';
+/
 
 
 -- {author} {datetime} {functionName}
