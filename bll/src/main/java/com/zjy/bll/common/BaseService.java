@@ -3,6 +3,9 @@ package com.zjy.bll.common;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.zjy.baseframework.ServiceException;
+import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionFactoryBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,9 @@ import java.util.Map;
  */
 
 public class BaseService<Dao extends BaseDao<T>, T> {
+
+    @Autowired
+    private SqlSessionFactoryBean sqlSessionFactory;
 
     @Autowired
     protected ShiroRealm shiroRealm;
@@ -113,5 +119,13 @@ public class BaseService<Dao extends BaseDao<T>, T> {
         logger.info("调用queryPageListByMapFilter方法:PageInfomation: {}\tquery: {}", JSON.toJSONString(pi), JSON.toJSONString(query));
         PageHelper.startPage(pi.getPageNum(), pi.getPageSize()).setOrderBy(pi.getOrderBy());
         return new PageInfo<>(this.queryListByMapFilter(query));
+    }
+
+    private void getSession() {
+        try {
+            SqlSession sqlSession = sqlSessionFactory.getObject().openSession();
+        } catch (Exception e) {
+            new ServiceException("");
+        }
     }
 }
