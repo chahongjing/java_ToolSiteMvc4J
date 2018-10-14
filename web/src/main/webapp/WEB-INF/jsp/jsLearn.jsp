@@ -82,6 +82,7 @@ define(function(require,exports,module){
     </div>
 </div>
 <jsSection>
+    <script src="${ctx}/tool/getEnums"></script>
     <%-- js脚本 --%>
     <script>
         // blob下载

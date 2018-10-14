@@ -1,6 +1,8 @@
 package com.zjy.baseframework.mybatis;
 
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Created by Administrator on 2018/5/15.
  */
@@ -9,7 +11,10 @@ public interface IBaseEnum {
         throw new UnsupportedOperationException("未实现getValue方法");
     }
     default String getCode(){
-        throw new UnsupportedOperationException("未实现getCode方法");
+        return StringUtils.EMPTY;
+    }
+    default String getName(){
+        return StringUtils.EMPTY;
     }
 
     static <E extends Enum<E> & IBaseEnum> E getByValue(Class<E> enumClass, Integer value) {

@@ -1,7 +1,11 @@
 package com.zjy.bll.service;
 
+import com.alibaba.fastjson.JSON;
 import com.zjy.baseframework.DbHelperNew;
+import com.zjy.baseframework.EnumHelper;
+import com.zjy.baseframework.beans.EnumBean;
 import com.zjy.baseframework.enums.DbType;
+import com.zjy.baseframework.mybatis.IBaseEnum;
 import com.zjy.bll.common.BaseService;
 import com.zjy.bll.dao.ToolDao;
 import com.zjy.entities.TableColumnInfo;
@@ -19,6 +23,7 @@ import java.util.*;
 public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> implements ToolService {
 
     private static Map<String, Class<?>> oracleTypeMap;
+
     @Override
     public String getTableInfo(DbType dbType, String url, String user, String password, String tableName) {
         Class<?> fieldType;
@@ -40,13 +45,13 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
         sb.append(" */" + newLine);
         sb.append("public class " + Objects.toString(tableName, "") + " {" + newLine);
         List<TableColumnInfo> list = getTableInfo(dbType.getDriver(), url, user, password, tableName);
-        if(list == null) {
+        if (list == null) {
             list = new ArrayList<>();
         }
         for (TableColumnInfo columnInfo : list) {
             fieldType = getFieldType(dbType, columnInfo);
             fieldPackage = getTypePackage(fieldType.getSimpleName());
-            if(!org.apache.commons.lang3.StringUtils.isBlank(fieldPackage) && !packages.contains(fieldPackage)) {
+            if (!org.apache.commons.lang3.StringUtils.isBlank(fieldPackage) && !packages.contains(fieldPackage)) {
                 packages.add(fieldPackage);
                 sbHeader.append("import " + fieldPackage + ";" + newLine);
             }
@@ -109,28 +114,28 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
                 type = getOracleFieldType(columnInfo);
                 break;
         }
-        if(type == null) type = String.class;
+        if (type == null) type = String.class;
         return type;
     }
 
     private Class<?> getOracleFieldType(TableColumnInfo columnInfo) {
         String strDbType = columnInfo.getDataType().toUpperCase();
-        if("NUMBER".equals(strDbType)) {
-            if(columnInfo.getDataPrecision() == null) {
+        if ("NUMBER".equals(strDbType)) {
+            if (columnInfo.getDataPrecision() == null) {
                 strDbType = "NUMBER";
             } else {
                 int length = columnInfo.getDataPrecision();
-                if(String.valueOf(length).equals("1")){
+                if (String.valueOf(length).equals("1")) {
                     strDbType = "NUMBER1_1_" + columnInfo.getDataScale().toString();
-                } else if(String.valueOf(length).equals("2")) {
+                } else if (String.valueOf(length).equals("2")) {
                     strDbType = "NUMBER2_2_" + columnInfo.getDataScale().toString();
-                } else if(length >= 3 && length <= 4) {
+                } else if (length >= 3 && length <= 4) {
                     strDbType = "NUMBER3_4_" + columnInfo.getDataScale().toString();
-                } else if(length >= 5 && length <= 9) {
+                } else if (length >= 5 && length <= 9) {
                     strDbType = "NUMBER5_9_" + columnInfo.getDataScale().toString();
-                } else if(length >= 10 && length <= 18) {
+                } else if (length >= 10 && length <= 18) {
                     strDbType = "NUMBER10_18_" + columnInfo.getDataScale().toString();
-                } else if(length >= 19 && length <= 38) {
+                } else if (length >= 19 && length <= 38) {
                     strDbType = "NUMBER19_38_" + columnInfo.getDataScale().toString();
                 } else {
                     strDbType = "NUMBER";
@@ -159,7 +164,7 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
     }
 
     private Map<String, Class<?>> getOracleTypeMap() {
-        if(this.oracleTypeMap == null) {
+        if (this.oracleTypeMap == null) {
             Map<String, Class<?>> map = new HashMap<>();
             map.put("CHAR", String.class);
             map.put("VARCHAR2", String.class);
@@ -175,5 +180,14 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
             this.oracleTypeMap = map;
         }
         return this.oracleTypeMap;
+    }
+
+    public String getEnums() {
+        Map<Class<IBaseEnum>, Map<String, EnumBean>> enumBeanList = EnumHelper.getEnumBeanList();
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<Class<IBaseEnum>, Map<String, EnumBean>> classMapEntry : enumBeanList.entrySet()) {
+            sb.append(String.format("window.%s=%s;\r\n", classMapEntry.getKey().getSimpleName(), JSON.toJSONString(classMapEntry.getValue())));
+        }
+        return sb.toString();
     }
 }

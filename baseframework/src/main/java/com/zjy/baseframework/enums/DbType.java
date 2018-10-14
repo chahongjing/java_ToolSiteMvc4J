@@ -1,10 +1,12 @@
 package com.zjy.baseframework.enums;
 
+import com.zjy.baseframework.annotations.SerializeEnum;
 import com.zjy.baseframework.mybatis.IBaseEnum;
 
 /**
  * Created by Administrator on 2018/2/27.
  */
+@SerializeEnum
 public enum DbType implements IBaseEnum {
     Oracle(0, "oracle", "oracle.jdbc.OracleDriver", "jdbc:oracle:thin:@127.0.0.1:1521:orcl"),
     Mysql(1, "mysql", "com.mysql.jdbc.Driver", "jdbc:mysql://localhost/ToolSiteMvc4J"),

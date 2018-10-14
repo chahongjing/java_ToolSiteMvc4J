@@ -7,4 +7,6 @@ import com.zjy.baseframework.enums.DbType;
  */
 public interface ToolService {
     String getTableInfo(DbType dbType, String url, String user, String password, String tableName);
+
+    String getEnums();
 }

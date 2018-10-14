@@ -1,15 +1,14 @@
 package com.zjy.bll.common;
 
+import com.zjy.baseframework.EnumHelper;
+import com.zjy.baseframework.ReflectionHelper;
 import com.zjy.baseframework.mybatis.CodeEnumTypeHandler;
-import org.apache.commons.lang3.StringUtils;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,9 +19,6 @@ public class InstantiationTracingBeanPostProcessor implements ApplicationListene
 
     @Autowired
     private SqlSessionFactoryBean sqlSessionFactory;
-
-    @Value("${enumPackages}")
-    private String enumPackages;
 
     /**
      * spring容器加载完成后事件
@@ -35,18 +31,17 @@ public class InstantiationTracingBeanPostProcessor implements ApplicationListene
         if (event.getApplicationContext().getParent() == null) {
             //root application context 没有parent，他就是老大.
             // 需要执行的逻辑代码，当spring容器初始化完成后就会执行该方法。
-            //sqlSessionFactory = (SqlSessionFactoryBean) SpringContextHolder.getBean("sqlSessionFactory");
+            // 获取所有类型
+            List<Class> classList = ReflectionHelper.getProjectClassList();
+            // 注册mbatis枚举类
             try {
-                List<String> packages = new ArrayList<>();
-                if (StringUtils.isNoneBlank(enumPackages)) {
-                    for (String pack : enumPackages.split(",|;")) {
-                        packages.add(pack);
-                    }
-                }
-                CodeEnumTypeHandler.registerTypeHandle(sqlSessionFactory.getObject().getConfiguration().getTypeHandlerRegistry(), packages);
+                //sqlSessionFactory = (SqlSessionFactoryBean) SpringContextHolder.getBean("sqlSessionFactory");
+                CodeEnumTypeHandler.registerTypeHandle(sqlSessionFactory.getObject().getConfiguration().getTypeHandlerRegistry(), classList);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            // 初始化要序列化的枚举
+            EnumHelper.initAllSerializeEnum(classList);
         }
     }
 }

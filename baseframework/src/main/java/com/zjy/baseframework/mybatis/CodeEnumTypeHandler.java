@@ -1,18 +1,14 @@
 package com.zjy.baseframework.mybatis;
 
+import com.zjy.baseframework.annotations.MybatisFieldEnum;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandlerRegistry;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.core.io.support.ResourcePatternResolver;
 
-import java.io.IOException;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -70,56 +66,17 @@ public class CodeEnumTypeHandler<E extends Enum<E> & IBaseEnum> extends BaseType
         }
     }
 
-    public static void registerTypeHandle(TypeHandlerRegistry typeHandlerRegistry, List<String> packages) {
-        // 扫描所有实体类
-        List<String> classNames = new ArrayList<>();
-        try {
-            // 枚举所在的包
-            for (String pack : packages) {
-                classNames.addAll(list(pack));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        for (String className : classNames) {
-            // 处理路径成为类名
-            className = className.replace('/', '.').replaceAll("\\.class", "");
-            if(className.indexOf("BaseTestCase") > -1) continue;
-            // 取得Class
-            Class<?> aClass = null;
-            try {
-                aClass = Class.forName(className, false, CodeEnumTypeHandler.class.getClassLoader());
-                // 判断是否实现了IBaseCodeEnum接口
-                if (aClass.isEnum() && IBaseEnum.class.isAssignableFrom(aClass)) {
-                    // 注册
-                    typeHandlerRegistry.register(className, CodeEnumTypeHandler.class.getTypeName());
+    public static void registerTypeHandle(TypeHandlerRegistry typeHandlerRegistry, List<Class> classList) {
+        for (Class aClass : classList) {
+            // 判断是否实现了IBaseCodeEnum接口, 有MybatisFieldEnum注解
+            if (aClass.isEnum() && IBaseEnum.class.isAssignableFrom(aClass) && aClass.isAnnotationPresent(MybatisFieldEnum.class)) {
+                // 注册
+                try {
+                    typeHandlerRegistry.register(aClass.getTypeName(), CodeEnumTypeHandler.class.getTypeName());
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
                 }
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
             }
         }
-    }
-
-    /**
-     * 返回路径下所有class
-     *
-     * @param packagePath        根路径
-     * @return
-     * @throws IOException
-     */
-    public static List<String> list(String packagePath) throws IOException {
-        ResourcePatternResolver resourceResolver = new PathMatchingResourcePatternResolver(CodeEnumTypeHandler.class.getClassLoader());
-        Resource[] resources = resourceResolver.getResources("classpath*:" + packagePath + "/**/*.class");
-        List<String> resourcePaths = new ArrayList<>();
-        for (Resource resource : resources) {
-            resourcePaths.add(preserveSubpackageName(resource.getURI().toString()));
-        }
-        return resourcePaths;
-    }
-
-    public static String preserveSubpackageName(String a) {
-        String substring = a.substring(a.indexOf("!") + 2);
-        return substring;
     }
 }
