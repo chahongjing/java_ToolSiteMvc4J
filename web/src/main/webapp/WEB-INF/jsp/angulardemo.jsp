@@ -144,6 +144,28 @@
                     console.log('这是父页面方法,通过$parent调用父方法!');
                 }
 
+                $scope.blobDownload = function() {
+                    // $http.post(url, param, {responseType: "arraybuffer"}); // {responseType: "blob"}
+                    biJiSrv.export($scope.model.searchParm).success(function (resp, status, responseHeaders, xhr) {
+                        var fileName = responseHeaders()['content-disposition'];
+                        if (fileName) {
+                            fileName = decodeURIComponent(fileName).replace(/attachment;\s*filename=/g, '');
+                            if (fileName.lastIndexOf('.') > -1) {
+                                var suffix = fileName.substr(fileName.lastIndexOf('.'));
+                            }
+                        } else {
+                            fileName = '笔记.zip'
+                        }
+                        var file = new Blob([resp], {type: "application/x-zip-compressed"});
+                        var a = document.createElement("a");
+                        document.body.appendChild(a);
+                        a.download = fileName;
+                        a.href = URL.createObjectURL(file);
+                        a.click();
+                        document.body.removeChild(a);
+                    });
+                }
+
                 var m = $scope.$on('callParentFuncId', function ($event, param) {
                     console.log('这是父页面方法,通过emit+on调用父方法!' + JSON.stringify(param));
                 });
