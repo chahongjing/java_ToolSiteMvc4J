@@ -1,6 +1,7 @@
 package com.zjy.baseframework;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
@@ -36,14 +37,12 @@ public class ReflectionHelper {
 
     public static List<Class> getProjectClassList() {
         if(CollectionUtils.isEmpty(allClassList)) {
-            List<String> packages = new ArrayList<>();
-            packages.add("com/zjy/baseframework");
-            packages.add("com/zjy/entities");
-            packages.add("com/zjy/bll");
-            packages.add("com/zjy/web");
-            // 枚举所在的包
-            for (String pack : packages) {
-                allClassList.addAll(ReflectionHelper.getClassFromPackage(pack));
+            String enumPackages = PropertiesHelper.getInstance().getProperties("enumPackages");
+            if (StringUtils.isNoneBlank(enumPackages)) {
+                for (String pack : enumPackages.split(",|;")) {
+                    // 枚举所在的包
+                    allClassList.addAll(ReflectionHelper.getClassFromPackage(pack.replace(".", "/")));
+                }
             }
         }
         return allClassList;

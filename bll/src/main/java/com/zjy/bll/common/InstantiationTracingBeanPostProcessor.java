@@ -1,6 +1,7 @@
 package com.zjy.bll.common;
 
 import com.zjy.baseframework.EnumHelper;
+import com.zjy.baseframework.PackageUtils;
 import com.zjy.baseframework.ReflectionHelper;
 import com.zjy.baseframework.mybatis.CodeEnumTypeHandler;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -9,6 +10,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -29,6 +31,11 @@ public class InstantiationTracingBeanPostProcessor implements ApplicationListene
     public void onApplicationEvent(ContextRefreshedEvent event) {
         //需要执行的逻辑代码，当spring容器初始化完成后就会执行该方法。
         if (event.getApplicationContext().getParent() == null) {
+            try {
+                System.out.println(PackageUtils.getClassName("com/zjy/web"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             //root application context 没有parent，他就是老大.
             // 需要执行的逻辑代码，当spring容器初始化完成后就会执行该方法。
             // 获取所有类型
