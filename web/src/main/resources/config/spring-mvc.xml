@@ -58,10 +58,22 @@
                 <value>text/html;charset=UTF-8</value>
             </list>
         </property>
-        <property name="features">
-            <array value-type="com.alibaba.fastjson.serializer.SerializerFeature">
-                <value>DisableCircularReferenceDetect</value>
-            </array>
+        <property name="fastJsonConfig">
+            <bean class="com.alibaba.fastjson.support.config.FastJsonConfig">
+                <property name="charset" value="UTF-8" />
+                <!--<property name="dateFormat" value="yyyy-MM-dd HH:mm:ss" />-->
+                <!--<property name="serializeFilters">-->
+                    <!--<list>-->
+                        <!--<bean class="com.iflytek.libra.common.json.Long2StringValueFilter" />-->
+                        <!--<bean class="com.iflytek.libra.common.json.DateFormaterFilter" />-->
+                    <!--</list>-->
+                <!--</property>-->
+                <property name="serializerFeatures">
+                    <array value-type="com.alibaba.fastjson.serializer.SerializerFeature">
+                        <value>DisableCircularReferenceDetect</value>
+                    </array>
+                </property>
+            </bean>
         </property>
     </bean>
 
