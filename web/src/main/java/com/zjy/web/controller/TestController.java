@@ -29,6 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -94,9 +95,11 @@ public class TestController extends BaseController implements ServletConfigAware
     }
 
     @RequestMapping("/testP2")
-    public ResponseEntity<BaseResult<String>> testP2() {
-        BaseResult<String> re = BaseResult.OK();
-
+    public ResponseEntity<BaseResult<UserInfo>> testP2() {
+        BaseResult<UserInfo> re = BaseResult.OK();
+        UserInfo user = new UserInfo();
+        user.setBirthday(new Date());
+        re.setValue(user);
         return new ResponseEntity<>(re, HttpStatus.OK);
     }
 

@@ -1,5 +1,6 @@
 package com.zjy.entities;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.zjy.entities.enums.Sex;
 import com.zjy.entities.enums.YesNo;
 

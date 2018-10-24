@@ -50,7 +50,7 @@
     </bean>
 
     <!-- json格式化器 -->
-    <bean id="jsonConverter" class="com.zjy.baseframework.JsonHttpMessageConverter">
+    <bean id="jsonConverter" class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
         <property name="supportedMediaTypes">
             <list>
                 <value>application/json;charset=UTF-8</value>
@@ -61,13 +61,12 @@
         <property name="fastJsonConfig">
             <bean class="com.alibaba.fastjson.support.config.FastJsonConfig">
                 <property name="charset" value="UTF-8" />
-                <!--<property name="dateFormat" value="yyyy-MM-dd HH:mm:ss" />-->
-                <!--<property name="serializeFilters">-->
-                    <!--<list>-->
-                        <!--<bean class="com.iflytek.libra.common.json.Long2StringValueFilter" />-->
-                        <!--<bean class="com.iflytek.libra.common.json.DateFormaterFilter" />-->
-                    <!--</list>-->
-                <!--</property>-->
+                <property name="serializeFilters">
+                    <list>
+                        <bean class="com.zjy.bll.common.Long2StringFilter" />
+                        <bean class="com.zjy.bll.common.DateFormaterFilter" />
+                    </list>
+                </property>
                 <property name="serializerFeatures">
                     <array value-type="com.alibaba.fastjson.serializer.SerializerFeature">
                         <value>DisableCircularReferenceDetect</value>

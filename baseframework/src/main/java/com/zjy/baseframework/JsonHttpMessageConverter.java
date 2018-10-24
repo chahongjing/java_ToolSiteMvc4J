@@ -18,7 +18,7 @@ public class JsonHttpMessageConverter extends FastJsonHttpMessageConverter {
     private static String dateFormat;
 
     static {
-        dateFormat = "yyyy-MM-dd HH:mm:ss";
+        dateFormat = "yyyy-MM-ddTHH:mm:ssZ";
         mapping.put(Date.class, new SimpleDateFormatSerializer(dateFormat));
     }
 

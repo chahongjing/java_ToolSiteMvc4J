@@ -10,23 +10,22 @@ import java.util.*;
 
 public class MyCustomDateEditor extends PropertyEditorSupport {
     protected Logger logger = LogHelper.getLogger(this.getClass());
-    private DateFormat dateSdf;
-    private DateFormat dateTimeSdf;
-    private DateFormat utcSfd;
-    private DateFormat gmtSdf;
-    private List<DateFormat> sdf;
+    private final static DateFormat dateSdf = new SimpleDateFormat("yyyy-MM-dd");
+    private final static DateFormat dateTimeSdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private final static DateFormat utcSfd = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    private final static DateFormat gmtSdf = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss 'GMT'Z", Locale.US);
+    private final List<DateFormat> sdf;
+
+    static {
+        utcSfd.setTimeZone(TimeZone.getTimeZone("UTC"));
+    }
 
     public MyCustomDateEditor() {
         super();
         sdf = new ArrayList<>();
-        dateSdf = new SimpleDateFormat("yyyy-MM-dd");
         sdf.add(dateSdf);
-        dateTimeSdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         sdf.add(dateTimeSdf);
-        utcSfd = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        utcSfd.setTimeZone(TimeZone.getTimeZone("UTC"));
         sdf.add(utcSfd);
-        gmtSdf = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss 'GMT'Z", Locale.US);
         sdf.add(gmtSdf);
     }
 
@@ -40,9 +39,25 @@ public class MyCustomDateEditor extends PropertyEditorSupport {
             } catch (Exception e) {
             }
         }
-        if(date == null) {
+        if (date == null) {
             logger.error("解析Date失败！", text);
         }
         setValue(date);
+    }
+
+    public static DateFormat getDateSdf() {
+        return dateSdf;
+    }
+
+    public static DateFormat getDateTimeSdf() {
+        return dateTimeSdf;
+    }
+
+    public static DateFormat getUtcSfd() {
+        return utcSfd;
+    }
+
+    public static DateFormat getGmtSdf() {
+        return gmtSdf;
     }
 }
