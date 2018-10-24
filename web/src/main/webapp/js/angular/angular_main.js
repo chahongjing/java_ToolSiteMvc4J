@@ -10,6 +10,9 @@ var app = angular.module('myApp', [])
             $httpProvider.defaults.transformRequest = [function (data) {
                 return angular.isObject(data) && String(data) !== '[object File]' ? $.param(data) : data;
             }];
+			$httpProvider.defaults.transformResponse = [function(data, headers){
+				return $.parseJSON(data);
+			}];
             $httpProvider.interceptors.push(function ($rootScope, $q) {
                 return {
                     'request': function (config) {

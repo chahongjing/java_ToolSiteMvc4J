@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,7 +44,7 @@ public class MenuController extends BaseController {
         List<MenuVo> list = menuSrv.queryAllMenu();
         List<ZTreeNode> nodeList = new ArrayList<>();
         ZTreeNode node;
-        for (Menu menu : list) {
+        for (MenuVo menu : list) {
             node = new ZTreeNode();
             node.setId(menu.getMenuId());
             node.setPId(menu.getPId());

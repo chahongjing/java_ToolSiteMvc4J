@@ -2,6 +2,8 @@ package com.zjy.bll.vo;
 
 import com.zjy.entities.Menu;
 
+import java.util.Date;
+
 public class MenuVo extends Menu {
     private boolean isSave;
     private String pName;
