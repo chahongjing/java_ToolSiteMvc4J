@@ -25,9 +25,15 @@
         <span data-ng-bind="model.radioChecked"></span>
         <br/><br/>
         <p><b>checkbox</b></p>
+		<label class="radio_checkbox">
+            <input type='checkbox' name="checkbox" data-ng-model="model.allCheck"
+			    data-ng-click='checkAll()' />
+            <i></i>
+            <span>全选</span>
+        </label>
         <label class="radio_checkbox" data-ng-repeat="item in model.repeatList">
             <input type='checkbox' name="checkbox" data-ng-model="item.isChecked"
-                   data-ng-disabled="model.checkboxDisabled || item.isDisabled"/>
+                   data-ng-disabled="model.checkboxDisabled || item.isDisabled" data-ng-click='checkItem(item)' />
             <i></i>
             <span data-ng-bind="item.name + item.isChecked"></span>
         </label>
@@ -165,6 +171,31 @@
                         document.body.removeChild(a);
                     });
                 }
+				
+				$scope.checkItem = function(item) {
+				    refreshAllCheck();
+				}
+				
+				$scope.checkAll = function() {
+				    for(var i = 0; i < $scope.model.repeatList.length; i++) {
+					    $scope.model.repeatList[i].isChecked = $scope.model.allCheck
+					}
+				}
+				
+				function refreshAllCheck() {
+				    var isAllCheck = true;
+					if(!$scope.model.repeatList || $scope.model.repeatList.length == 0) {
+					    $scope.model.allCheck = false;
+						return;
+					}
+				    for(var i = 0; i < $scope.model.repeatList.length; i++) {
+					    if(!$scope.model.repeatList[i].isChecked) {
+						    isAllCheck = false;
+							break;
+						}
+					}
+					$scope.model.allCheck = isAllCheck;
+				}
 
                 var m = $scope.$on('callParentFuncId', function ($event, param) {
                     console.log('这是父页面方法,通过emit+on调用父方法!' + JSON.stringify(param));
