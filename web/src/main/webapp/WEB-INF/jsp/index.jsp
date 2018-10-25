@@ -75,6 +75,8 @@
         first.children.push(second);
         second = {name:  'thread后台学习', href: '/learn/threadLearn', iconClass:''};
         first.children.push(second);
+        second = {name:  'exception后台学习', href: '/learn/exceptionLearn', iconClass:''};
+        first.children.push(second);
         second = {name:  'jvm学习', href: '/learn/jvmLearn', iconClass:''};
         first.children.push(second);
         second = {name:  'filter学习', href: '/learn/filterLearn', iconClass:''};
