@@ -24,22 +24,64 @@ Vue.prototype.commonSrv = {
             data: param
         });
     },
+    /**
+     * 以formdata的形式发起get ajax请求
+     * @param path 路径
+     * @param param 参数，object类型
+     * @returns {*}
+     */
     getFormData: function (path, formData) {
-        return $.ajax({
-            type: 'get',
+        return axios({
             url: this.getAjaxUrl(path),
+            method: 'get',
             data: formData,
-            processData: false,
-            contentType: false
+            transformRequest: [function (data) {
+                return $.param(data);
+            }],
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
         });
     },
+    /**
+     * 以formdata的形式发起post ajax请求
+     * @param path 路径
+     * @param param 参数，object类型
+     * @returns {*}
+     */
     postFormData: function (path, formData) {
-        return $.ajax({
-            type: 'post',
+        return axios({
             url: this.getAjaxUrl(path),
+            method: 'post',
             data: formData,
-            processData: false,
-            contentType: false
+            // transformRequest: [function (data) {
+            //     return $.param(data);
+            // }],
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
+    },
+    /**
+     * 以formdata的形式发起post ajax请求
+     * @param path 路径
+     * @param param 参数，object类型
+     * @returns {*}
+     */
+    postFormDataWithFile: function (path, formData) {
+        var config = {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        };
+        return axios.post(this.getAjaxUrl(path), formData, config);
+        return axios({
+            url: this.getAjaxUrl(path),
+            method: 'post',
+            data: formData,
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
         });
     }
 };

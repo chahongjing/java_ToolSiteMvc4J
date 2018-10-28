@@ -98,37 +98,11 @@ define(function(require,exports,module){
             xhr.responseType = "blob";
             xhr.onload = function () {
                 if (this.status == 200) {
-                    // application/x-zip-compressed
-                    var contentType = this.getResponseHeader('Content-Type');
-                    var fileName = this.getResponseHeader('Content-Disposition');
-                    if (fileName) {
-                        fileName = decodeURIComponent(fileName).replace(/attachment;\s*filename=/g, '');
-                        if (fileName.lastIndexOf('.') > -1) {
-                            var suffix = fileName.substr(fileName.lastIndexOf('.'));
-                        }
-                    }
-                    var blob = new Blob([this.response], {type: contentType});
-                    var a = document.createElement("a");
-                    a.style.display = 'none';
-                    a.download = fileName;
-                    a.href = URL.createObjectURL(blob);
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
+                    Utility.blobDownload([this.response], this.getResponseHeader('Content-Disposition'), this.getResponseHeader('Content-Type'));
                 } else {
-                    var reader = new FileReader();
-                    var text = reader.readAsText(this.response, 'utf-8');
-                    reader.onload = function (e) {
-                        var result = reader.result;
-                        console.log(result);
-                        var startIndex = result.indexOf("<title>");
-                        if (startIndex > 0) {
-                            var endIndex = result.indexOf("</title>");
-                            alert(result.substring(startIndex + 7, endIndex));
-                        } else {
-                            alert(result);
-                        }
-                    }
+                    Utility.readBlobAsText(this.response, function(data) {
+                        alert(data);
+                    });
                 }
             }
             xhr.send();

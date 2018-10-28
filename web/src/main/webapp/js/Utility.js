@@ -452,7 +452,7 @@ window.Utility.Controls = window.Utility.Controls || {};
             contentType: false
         });
     },
-    postFormData = function (path, formData) {
+    ns.postFormData = function (path, formData) {
         return $.ajax({
             type: 'post',
             url: this.getAjaxUrl(path),
@@ -460,7 +460,31 @@ window.Utility.Controls = window.Utility.Controls || {};
             processData: false,
             contentType: false
         });
-    }
+    },
+        ns.blobDownload = function(data, headers) {
+            var fileName = headers['content-disposition'];
+            ns.blobDownload(data, fileName, headers);
+        },
+        ns.blobDownload = function(data, fileName, contentType) {
+        if (fileName) {
+            fileName = decodeURIComponent(fileName).replace(/attachment;\s*filename=/ig, '');
+        }
+        var file = new Blob([resp], {type: contentType});
+        var a = document.createElement("a");
+        a.style.display = 'none';
+        a.download = fileName;
+        a.href = URL.createObjectURL(file);
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    },
+        ns.readBlobAsText = function(data, callback) {
+            var reader = new FileReader();
+            var text = reader.readAsText(data, 'utf-8');
+            reader.onload = function (e) {
+                callback && callback(reader.result);
+            }
+        }
 })(window.Utility);
 
 /// 系统常量

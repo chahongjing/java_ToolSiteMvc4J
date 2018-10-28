@@ -153,22 +153,7 @@
                 $scope.blobDownload = function() {
                     // $http.post(url, param, {responseType: "arraybuffer"}); // {responseType: "blob"}
                     biJiSrv.export($scope.model.searchParm).success(function (resp, status, responseHeaders, xhr) {
-                        var fileName = responseHeaders()['content-disposition'];
-                        if (fileName) {
-                            fileName = decodeURIComponent(fileName).replace(/attachment;\s*filename=/g, '');
-                            if (fileName.lastIndexOf('.') > -1) {
-                                var suffix = fileName.substr(fileName.lastIndexOf('.'));
-                            }
-                        } else {
-                            fileName = '笔记.zip'
-                        }
-                        var file = new Blob([resp], {type: "application/x-zip-compressed"});
-                        var a = document.createElement("a");
-                        document.body.appendChild(a);
-                        a.download = fileName;
-                        a.href = URL.createObjectURL(file);
-                        a.click();
-                        document.body.removeChild(a);
+                        Utility.blobDownload([resp], responseHeaders());
                     });
                 }
 				
