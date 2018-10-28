@@ -57,6 +57,13 @@ Vue.prototype.commonSrv = {
             // transformRequest: [function (data) {
             //     return $.param(data);
             // }],
+            // transformRequest: [function (data) {
+            //     var ret = ''
+            //     for (var it in data) {
+            //         ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+            //     }
+            //     return ret
+            // }],
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }

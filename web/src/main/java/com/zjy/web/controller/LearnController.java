@@ -24,6 +24,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Date;
 
 /**
  * Created by chahongjing on 2018/1/21.
@@ -75,7 +76,7 @@ public class LearnController extends BaseController {
 
     @RequestMapping(value = "/fileupload1")
     @ResponseBody
-    public BaseResult<String> fileUpload1(MultipartHttpServletRequest request) {
+    public BaseResult<String> fileUpload1(MultipartHttpServletRequest request, Integer ab, Date test) {
         BaseResult<String> json = BaseResult.OK("后台返回数据");
         Path path = Paths.get(request.getSession().getServletContext().getRealPath(""), "upload");
         File dir = path.toFile();

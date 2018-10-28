@@ -102,6 +102,13 @@ Vue.component('appmenu', {
             menuInfo.second.selected = sub;
             sessionStorage.setItem("menuInfo", JSON.stringify(menuInfo));
             window.location = ctx + sub.data.url;
+        },
+        test:function() {
+            var formData = new FormData();
+            formData.append("ab", 123)
+            formData.append("test", new Date())
+            //formData.append("file", $('#myfile')[0].files[0]);
+            this.commonSrv.postFormData('/learn/fileupload1', formData)
         }
     },
     computed: {
@@ -127,7 +134,6 @@ Vue.component('appmenu', {
         //         // 处理错误
         //     }
         // });
-
         me.commonSrv.get('/menu/queryMenu', param).then(function (resp) {
             if (resp.data.status == Constant.AjaxStatus.OK) {
                 var menuInfo = sessionStorage.getItem("menuInfo");
