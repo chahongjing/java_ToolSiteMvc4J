@@ -20,12 +20,12 @@ public class ReflectionHelper {
 
     public static Class getClass(Class clazz) {
         Type superClass = clazz.getGenericSuperclass();
-        if(superClass instanceof ParameterizedType) {
-            ParameterizedType parameterizedType = (ParameterizedType)superClass;
+        if (superClass instanceof ParameterizedType) {
+            ParameterizedType parameterizedType = (ParameterizedType) superClass;
             Type[] typeArgs = parameterizedType.getActualTypeArguments();
-            if(typeArgs != null && typeArgs.length > 0) {
-                if(typeArgs[0] instanceof Class) {
-                    clazz = (Class)typeArgs[0];
+            if (typeArgs != null && typeArgs.length > 0) {
+                if (typeArgs[0] instanceof Class) {
+                    clazz = (Class) typeArgs[0];
                 }
             }
         }
@@ -36,7 +36,7 @@ public class ReflectionHelper {
     }
 
     public static List<Class> getProjectClassList() {
-        if(CollectionUtils.isEmpty(allClassList)) {
+        if (CollectionUtils.isEmpty(allClassList)) {
             String enumPackages = PropertiesHelper.getInstance().getProperties("enumPackages");
             if (StringUtils.isNoneBlank(enumPackages)) {
                 for (String pack : enumPackages.split(",|;")) {
@@ -51,7 +51,7 @@ public class ReflectionHelper {
     /**
      * 返回路径下所有class
      *
-     * @param packagePath        根路径
+     * @param packagePath 根路径
      * @return
      * @throws IOException
      */
@@ -73,7 +73,7 @@ public class ReflectionHelper {
                 continue;
             }
             className = className.replace('/', '.').replaceAll("\\.class", "");
-            if(className.indexOf("BaseTestCase") > -1) continue;
+            if (className.indexOf("BaseTestCase") > -1) continue;
             // 取得Class
             try {
                 Class<?> aClass = Class.forName(className, false, ReflectionHelper.class.getClassLoader());
@@ -88,5 +88,22 @@ public class ReflectionHelper {
     public static String preserveSubpackageName(String a) {
         String substring = a.substring(a.indexOf("!") + 2);
         return substring;
+    }
+
+    //得到泛型类T
+    private Class getMyClass() {
+        //返回表示此 Class 所表示的实体类的 直接父类 的 Type。注意，是直接父类
+        //这里type结果是 com.dfsj.generic.GetInstanceUtil<com.dfsj.generic.User>
+        Type type = getClass().getGenericSuperclass();
+
+        // 判断 是否泛型
+        if (type instanceof ParameterizedType) {
+            // 返回表示此类型实际类型参数的Type对象的数组.
+            // 当有多个泛型类时，数组的长度就不是1了
+            Type[] ptype = ((ParameterizedType) type).getActualTypeArguments();
+            return (Class) ptype[0];  //将第一个泛型T对应的类返回（这里只有一个）
+        } else {
+            return Object.class;//若没有给定泛型，则返回Object类
+        }
     }
 }

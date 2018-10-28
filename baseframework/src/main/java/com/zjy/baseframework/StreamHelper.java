@@ -1,7 +1,6 @@
 package com.zjy.baseframework;
 
 import java.io.*;
-import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -103,6 +102,7 @@ public class StreamHelper {
 
     /**
      * byte转outputStream
+     *
      * @param in 字节数组
      * @return
      * @throws IOException
@@ -115,22 +115,44 @@ public class StreamHelper {
 
     /**
      * byte转文件
-     * @param in 字节信息
+     *
+     * @param in       字节信息
      * @param filePath 文件信息
      * @return
      * @throws IOException
      */
     public static File byteToFile(byte[] in, String filePath) throws IOException {
         File file = new File(filePath);
-        try (OutputStream output = new FileOutputStream(file);
-             BufferedOutputStream bufferedOutput = new BufferedOutputStream(output)
-        ) {
-            bufferedOutput.write(in);
-            bufferedOutput.flush();
-            output.flush();
-        } catch (Exception e) {
-            throw e;
-        }
+        OutputStream output = new FileOutputStream(file);
+        BufferedOutputStream bufferedOutput = new BufferedOutputStream(output);
+        bufferedOutput.write(in);
+        bufferedOutput.flush();
+        output.flush();
+        output.close();
         return file;
+    }
+
+    /**
+     * ByteArrayOutputStream 转 ByteArrarInputStream
+     * @param out
+     * @return
+     */
+    public ByteArrayInputStream parse(ByteArrayOutputStream out) {
+        return new ByteArrayInputStream(out.toByteArray());
+    }
+
+    /**
+     * ByteArrarInputStream 转 ByteArrayOutputStream
+     * @param in
+     * @return
+     * @throws Exception
+     */
+    public ByteArrayOutputStream parse(InputStream in) throws Exception {
+        ByteArrayOutputStream swapStream = new ByteArrayOutputStream();
+        int ch;
+        while ((ch = in.read()) != -1) {
+            swapStream.write(ch);
+        }
+        return swapStream;
     }
 }
