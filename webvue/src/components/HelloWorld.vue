@@ -1,12 +1,12 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-	<i class='fa fa-cog'></i>
-  <router-link to="/myPage">
-    <button class="btn btn-default">点击a跳转</button>
-  </router-link>
+    <i class='fa fa-cog'></i>
+    <router-link to="/myPage">
+      <button class="btn btn-default">点击a跳转</button>
+    </router-link>
 
-  <button class="btn btn-default" @click="goPage">点击事件跳转</button>
+    <button class="btn btn-default" @click="goPage">点击事件跳转</button>
     <h2>Essential Links</h2>
     <ul>
       <li>
@@ -90,38 +90,41 @@
 </template>
 
 <script>
-export default {
-  name: 'HelloWorld',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
-  },
-  methods:{
-    goPage: function() {
-      //this.$router.push({path: '/myPage', params:{ id:'1'}});
-      //this.$router.push({name: 'myPage', params:{ id:'1'}});
-      this.$router.push({path: '/myPage', query:{ id:'1'}});
-      //this.$router.push({name: 'myPage', query:{ id:'1'}});
+  export default {
+    name: 'HelloWorld',
+    data () {
+      return {
+        msg: 'Welcome to Your Vue.js App'
+      }
+    },
+    methods: {
+      goPage: function () {
+        //this.$router.push({path: '/myPage', params:{ id:'1'}});
+        //this.$router.push({name: 'myPage', params:{ id:'1'}});
+        this.$router.push({path: '/myPage', query: {id: '1'}});
+        //this.$router.push({name: 'myPage', query:{ id:'1'}});
+      }
     }
   }
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+  h1, h2 {
+    font-weight: normal;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  li {
+    display: inline-block;
+    margin: 0 10px;
+  }
+
+  a {
+    color: #42b983;
+  }
 </style>

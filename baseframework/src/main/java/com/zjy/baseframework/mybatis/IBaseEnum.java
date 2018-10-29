@@ -1,19 +1,20 @@
 package com.zjy.baseframework.mybatis;
 
-
 import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by Administrator on 2018/5/15.
  */
 public interface IBaseEnum {
-    default int getValue(){
+    default int getValue() {
         throw new UnsupportedOperationException("未实现getValue方法");
     }
-    default String getCode(){
+
+    default String getCode() {
         return StringUtils.EMPTY;
     }
-    default String getName(){
+
+    default String getName() {
         return StringUtils.EMPTY;
     }
 
@@ -29,7 +30,7 @@ public interface IBaseEnum {
     }
 
     static <E extends Enum<E> & IBaseEnum> E getByCode(Class<E> enumClass, String code) {
-        if (code == null) return null;
+        if (StringUtils.isBlank(code)) return null;
         E[] enumConstants = enumClass.getEnumConstants();
         for (E item : enumConstants) {
             if (code.equals(item.getCode())) {
