@@ -8,13 +8,19 @@ var app = angular.module('myApp', [])
             $httpProvider.defaults.headers.common["x-requested-with"] = "XMLHttpRequest";
             $httpProvider.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
             $httpProvider.defaults.transformRequest = [function (data) {
-                if(!(data instanceof FormData)) {
+                if(data && !(data instanceof FormData)) {
                     data = $.param(data);
                 }
                 return data;
             }];
 			$httpProvider.defaults.transformResponse = [function(data, headers){
-				return $.parseJSON(data);
+                var ret;
+                try{
+                    ret = $.parseJSON(data);
+                } catch (ex) {
+                    ret = data;
+                }
+                return ret;
 			}];
             $httpProvider.interceptors.push(function ($rootScope, $q) {
                 return {

@@ -4,12 +4,18 @@ axios.defaults.paramsSerializer = function(params) {
     return $.param(params);
 };
 axios.defaults.transformResponse = [function (data) {
-    return $.parseJSON(data);
+    var ret;
+    try{
+        ret = $.parseJSON(data);
+    } catch (ex) {
+        ret = data;
+    }
+    return ret;
 }]
 // 添加请求拦截器
 axios.interceptors.request.use(function (config) {
     if (config.method === 'post') {
-        if(!(config.data instanceof FormData)) {
+        if(config.data && !(config.data instanceof FormData)) {
             config.data = $.param(config.data);
         }
     }

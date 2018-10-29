@@ -53,6 +53,8 @@
         <p><b>span</b></p>
         <p data-ng-bind="model.inputValue" data-ng-class="{'red': model.hasClass}"></p>
         <span data-ng-bind-template="{{model.inputValue}}[abc]{{model.inputValue}}"></span>
+        <input type="file" id="myfile" >
+        <button data-ng-click="testPost()" value="测试">测试</button>
     </div>
     <br><br><br>
 
@@ -139,7 +141,12 @@
                 };
 
                 $scope.testPost = function () {
-                    $http.post('${ctx}/test/testajax', {a: 11}, {params: {b: 2}}).success(function (resp) {
+                    var formData = new FormData();
+                    formData.append("a", 1);
+                    formData.append("d", new Date());
+                    formData.append('myfile', $('#myfile')[0].files[0]);
+                    commonSrv.postFormData('/learn/fileupload1', formData);return;
+                    $http.post('${ctx}/learn/testajax', {a: 11}, {params: {b: 2}}).success(function (resp) {
                         console.log('success');
                     }).error(function (data, status, headers, config) {
                         console.log('error');
