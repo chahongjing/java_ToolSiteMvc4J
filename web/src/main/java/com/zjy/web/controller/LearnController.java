@@ -76,7 +76,7 @@ public class LearnController extends BaseController {
 
     @RequestMapping(value = "/fileupload1")
     @ResponseBody
-    public BaseResult<String> fileUpload1(MultipartHttpServletRequest request, Integer ab, Date test) {
+    public BaseResult<String> fileUpload1(MultipartHttpServletRequest request, Integer a, Date d) {
         BaseResult<String> json = BaseResult.OK("后台返回数据");
         Path path = Paths.get(request.getSession().getServletContext().getRealPath(""), "upload");
         File dir = path.toFile();
@@ -441,7 +441,7 @@ public class LearnController extends BaseController {
     // region 其它
     @RequestMapping("/testajax")
     @ResponseBody
-    public BaseResult testajax(String a, String b, String c) {
+    public BaseResult testajax(String a, String b, String c, Date d) {
 //        int aa = 1, bb = 0;
 //        int cc = aa / bb;
         return BaseResult.OK("后台返回数据");

@@ -50,24 +50,7 @@ Vue.prototype.commonSrv = {
      * @returns {*}
      */
     postFormData: function (path, formData) {
-        return axios({
-            url: this.getAjaxUrl(path),
-            method: 'post',
-            data: formData,
-            // transformRequest: [function (data) {
-            //     return $.param(data);
-            // }],
-            // transformRequest: [function (data) {
-            //     var ret = ''
-            //     for (var it in data) {
-            //         ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
-            //     }
-            //     return ret
-            // }],
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        });
+        return axios.post(this.getAjaxUrl(path), formData);
     },
     /**
      * 以formdata的形式发起post ajax请求
@@ -76,19 +59,6 @@ Vue.prototype.commonSrv = {
      * @returns {*}
      */
     postFormDataWithFile: function (path, formData) {
-        var config = {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        };
-        return axios.post(this.getAjaxUrl(path), formData, config);
-        return axios({
-            url: this.getAjaxUrl(path),
-            method: 'post',
-            data: formData,
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        });
+        return axios.post(this.getAjaxUrl(path), formData);
     }
 };

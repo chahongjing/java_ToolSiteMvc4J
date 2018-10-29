@@ -7,9 +7,9 @@ axios.defaults.transformResponse = [function (data) {
 }]
 // 添加请求拦截器
 axios.interceptors.request.use(function (config) {
-    if (config.method === 'post') {
-        config.data = $.param(config.data);
-    }
+    // if (config.method === 'post') {
+    //     config.data = $.param(config.data);
+    // }
     // 在发送请求之前做些什么
     return config;
 }, function (error) {
@@ -105,9 +105,9 @@ Vue.component('appmenu', {
         },
         test:function() {
             var formData = new FormData();
-            formData.append("ab", 123)
-            formData.append("test", new Date())
-            //formData.append("file", $('#myfile')[0].files[0]);
+            formData.append("a", 123)
+            formData.append("d", new Date())
+            formData.append("myfile", $('#myfile')[0].files[0]);
             this.commonSrv.postFormData('/learn/fileupload1', formData)
         }
     },
