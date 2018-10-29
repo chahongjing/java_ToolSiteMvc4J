@@ -1,3 +1,4 @@
+axios.defaults.headers.common["x-requested-with"] = "XMLHttpRequest";
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 axios.defaults.paramsSerializer = function(params) {
     return $.param(params);
@@ -7,9 +8,11 @@ axios.defaults.transformResponse = [function (data) {
 }]
 // 添加请求拦截器
 axios.interceptors.request.use(function (config) {
-    // if (config.method === 'post') {
-    //     config.data = $.param(config.data);
-    // }
+    if (config.method === 'post') {
+        if(!(config.data instanceof FormData)) {
+            config.data = $.param(config.data);
+        }
+    }
     // 在发送请求之前做些什么
     return config;
 }, function (error) {
@@ -107,8 +110,8 @@ Vue.component('appmenu', {
             var formData = new FormData();
             formData.append("a", 123)
             formData.append("d", new Date())
-            formData.append("myfile", $('#myfile')[0].files[0]);
-            this.commonSrv.postFormData('/learn/fileupload1', formData)
+            //formData.append("myfile", $('#myfile')[0].files[0]);
+            this.commonSrv.postFormData('/learn/testajax', formData)
         }
     },
     computed: {
@@ -134,7 +137,7 @@ Vue.component('appmenu', {
         //         // 处理错误
         //     }
         // });
-        me.commonSrv.get('/menu/queryMenu', param).then(function (resp) {
+        me.commonSrv.post('/menu/queryMenu', param).then(function (resp) {
             if (resp.data.status == Constant.AjaxStatus.OK) {
                 var menuInfo = sessionStorage.getItem("menuInfo");
                 if(!menuInfo) {
