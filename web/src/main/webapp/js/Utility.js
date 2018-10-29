@@ -485,6 +485,11 @@ window.Utility.Controls = window.Utility.Controls || {};
                 callback && callback(reader.result);
             }
         }
+    ns.readArrayBufferAsText = function(data) {
+        var enc = new TextDecoder('utf-8');
+        var res = enc.decode(new Uint8Array(data));
+        return res;
+    }
 })(window.Utility);
 
 /// 系统常量
