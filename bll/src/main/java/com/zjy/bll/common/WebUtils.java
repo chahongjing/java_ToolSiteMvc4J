@@ -14,7 +14,7 @@ public class WebUtils {
         return ContextLoader.getCurrentWebApplicationContext();
     }
 
-    public static String getWebApplicationPath() {
+    public static String getWebApplicationUrlPath() {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         return (request.getRequestURL().toString().replace(request.getRequestURI().toString(), "") + request.getContextPath());
     }
