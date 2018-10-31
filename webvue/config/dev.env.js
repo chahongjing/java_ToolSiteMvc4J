@@ -6,5 +6,5 @@ module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
   HOST: 'localhost',
   PORT: 8081,
-  baseUrl:'"http://localhost:8081/toolsitemvc4j"'
+  baseUrl:'"http://localhost:8099/"'
 })

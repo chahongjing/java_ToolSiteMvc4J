@@ -20,6 +20,16 @@ var router = new Router({
       path: '/myPage',
       name: 'myPage',
       component: resolve => require(['../components/myPage'], resolve)
+    },
+    {
+      path: '/configInfoList',
+      name: 'configInfoList',
+      component: resolve => require(['../components/sys/configInfoList'], resolve)
+    },
+    {
+      path: '/addConfigInfo',
+      name: 'addConfigInfo',
+      component: resolve => require(['../components/sys/configInfoEdit'], resolve)
     }
   ]
 });

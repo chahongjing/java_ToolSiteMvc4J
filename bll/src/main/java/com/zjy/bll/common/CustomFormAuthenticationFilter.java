@@ -1,5 +1,8 @@
 package com.zjy.bll.common;
 
+import com.alibaba.fastjson.JSON;
+import com.zjy.baseframework.BaseResult;
+import com.zjy.baseframework.enums.ResultStatus;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.springframework.http.HttpStatus;
@@ -8,6 +11,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 
 public class CustomFormAuthenticationFilter extends FormAuthenticationFilter {
 
@@ -23,12 +27,21 @@ public class CustomFormAuthenticationFilter extends FormAuthenticationFilter {
         } else {
             HttpServletRequest httpRequest = (HttpServletRequest) request;
             // ajax不跳转，发送一个未登录状态码, 不发送302跳转
-            if (com.zjy.bll.common.WebUtils.isAjax(httpRequest)) {
-                HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-                httpServletResponse.sendError(HttpStatus.NETWORK_AUTHENTICATION_REQUIRED.value());
-            } else {
-                saveRequestAndRedirectToLogin(request, response);
-            }
+//            if (com.zjy.bll.common.WebUtils.isAjax(httpRequest)) {
+//                HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+//                httpServletResponse.sendError(HttpStatus.NETWORK_AUTHENTICATION_REQUIRED.value());
+//
+//            } else {
+//                saveRequestAndRedirectToLogin(request, response);
+//            }
+
+            HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+            httpServletResponse.setCharacterEncoding("UTF-8");
+            PrintWriter out = httpServletResponse.getWriter();
+            out.print(JSON.toJSONString(new BaseResult(ResultStatus.UNAUTHENTICATION)));
+            out.flush();
+            out.close();
+
             return false;
         }
     }
