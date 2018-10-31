@@ -118,6 +118,14 @@
             </li>
         </ul>
     </div>
+    <div>
+        <p>其它说明</p>
+        <ul>
+            <li>jmx，用来监控tomcat运行实例的相关数据信息</li>
+            <li>ajp，tomcat和apache服务通信使用，tomcat处理html等资源能力比apache差，apache用来处理静态资源，像jsp,servlet等需要由apache交给
+			tomcat容器来处理，传递通道则使用ajp通道。</li>
+        </ul>
+    </div>
 </div>
 <jsSection>
 
