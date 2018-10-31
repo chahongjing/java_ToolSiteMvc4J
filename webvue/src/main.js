@@ -13,6 +13,7 @@ Vue.prototype.qs = Qs;
 
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+axios.defaults.headers.common["x-requested-with"] = "XMLHttpRequest";
 axios.defaults.paramsSerializer = function(params) {
     return $.param(params);
 };
