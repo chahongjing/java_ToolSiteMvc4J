@@ -9,6 +9,11 @@ package com.zjy.baseframework;
 //import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTBody;
 //import org.slf4j.Logger;
 
+import org.apache.commons.io.IOUtils;
+
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+
 /**
  * Created by Administrator on 2017/12/7.
  */
@@ -218,4 +223,29 @@ public class WordHelper {
 //        //}
 //    }
 //    // endregion
+
+//    public static void htmlStrToFile(String filePath, String html, boolean isHandleHead) {
+//        String htmlHead = "<html><head></head><body>";
+//        String htmlTail = "</body></html>";
+//        if(isHandleHead){
+//            html = htmlHead + html + htmlTail;
+//        }
+//        Document doc = Jsoup.parse(htmlHead + html + htmlTail, StandardCharsets.UTF_8);
+//        if(isHandleHead) {
+//            Element metaElement = doc.head().appendElement("meta");
+//            metaElement.attr("http-equiv","Content-Type");
+//            metaElement.attr("content","text/html; charset=" + StandardCharsets.UTF_8);
+//        }
+//        InputStream inputStream = null;
+//        try (OutputStream out = new BufferedOutputStream(new FileOutputStream(filePath))){
+//            inputStream = new ByteArrayInputStream(doc.html().getBytes(StandardCharsets.UTF_8));
+//            IOUtils.copy(inputStream, out);
+//        } catch (Exception e) {
+//            throw new RuntimeException("创建临时文件出错", e);
+//        } finally {
+//            if(inputStream != null) {
+//                try{inputStream.close();}catch (Exception ex){}
+//            }
+//        }
+//    }
 }

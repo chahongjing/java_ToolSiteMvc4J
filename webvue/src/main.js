@@ -6,8 +6,8 @@ import router from './router'
 import axios from 'axios'
 import Qs from 'qs'
 
-Vue.config.productionTip = false
-axios.defaults.baseURL = process.env.baseUrl
+Vue.prototype.serverHost = process.env.baseUrl;
+axios.defaults.baseURL = Vue.prototype.serverHost
 Vue.prototype.axios = axios;
 Vue.prototype.qs = Qs;
 /* eslint-disable no-new */
