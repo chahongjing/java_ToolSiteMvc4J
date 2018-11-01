@@ -8,6 +8,9 @@
     <router-link to="/configInfoList">
       <button class="btn btn-default">点击a跳转config</button>
     </router-link>
+    <router-link to="/login">
+      <button class="btn btn-default" @click="goToLogin">登录</button>
+    </router-link>
 
     <button class="btn btn-default" @click="goPage">点击事件跳转</button>
     <h2>Essential Links</h2>

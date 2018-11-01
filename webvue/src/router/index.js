@@ -17,20 +17,25 @@ var router = new Router({
       component: resolve => require(['../components/HelloWorld'], resolve)
     },
     {
+      path: '/login',
+      name: 'login',
+      component: resolve => require(['../components/user/login'], resolve)
+    },
+    {
       path: '/myPage',
       name: 'myPage',
       component: resolve => require(['../components/myPage'], resolve)
-    },
-    {
-      path: '/configInfoList',
-      name: 'configInfoList',
-      component: resolve => require(['../components/sys/configInfoList'], resolve)
-    },
-    {
-      path: '/addConfigInfo',
-      name: 'addConfigInfo',
-      component: resolve => require(['../components/sys/configInfoEdit'], resolve)
     }
+    // {
+    //   path: '/configInfoList',
+    //   name: 'configInfoList',
+    //   component: resolve => require(['../components/sys/configInfoList'], resolve)
+    // },
+    // {
+    //   path: '/addConfigInfo',
+    //   name: 'addConfigInfo',
+    //   component: resolve => require(['../components/sys/configInfoEdit'], resolve)
+    // }
   ]
 });
 
@@ -41,11 +46,11 @@ router.beforeEach(function (to, from, next) {
         
     }
     //已登录的情况再去登录页，跳转至首页
-    if (to.name === 'login') {
+    //if (to.name === 'login') {
         //if (auth.IsLogin) {
-            vueRouter.push({name: 'home'});
+            //vueRouter.push({name: 'home'});
         //}
-    }
+    //}
     // 如果没有权限，则返回到没权限页面
     if(false) {
     	next({
