@@ -44,7 +44,15 @@
     },
     methods: {
       addConfigInfo() {
-          this.$router.push({path: '/addConfigInfo', query: {id: '1'}});
+        var me = this;
+        this.axios.get('/api/comm/getId').then(function(resp) {
+        me.$router.push({path: '/sys/configInfoEdit', query: {id: resp.data.value}});
+        });
+          
+      },
+      editConfigInfo(configInfo) {
+        this.$router.push({path: '/sys/configInfoEdit', query: {id: configInfo.id}});
+          
       }
     },
     mounted: function() {

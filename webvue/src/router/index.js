@@ -47,8 +47,8 @@ var router = new Router({
           component: resolve => require(['../components/sys/configInfoList'], resolve)
         },
         {
-          path: 'addConfigInfo',
-          name: 'addConfigInfo',
+          path: 'configInfoEdit',
+          name: 'configInfoEdit',
           component: resolve => require(['../components/sys/configInfoEdit'], resolve)
         },
         {

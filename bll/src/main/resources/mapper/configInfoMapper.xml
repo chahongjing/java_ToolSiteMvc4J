@@ -57,7 +57,7 @@
 	<!-- 获取 -->
 	<select id="get" resultType="com.zjy.bll.vo.ConfigInfoVo">
 		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="config"/></include>
-		  FROM ConfigInfo
+		  FROM ConfigInfo config
 		 WHERE id = #{id, jdbcType = VARCHAR}
 	</select>
 
