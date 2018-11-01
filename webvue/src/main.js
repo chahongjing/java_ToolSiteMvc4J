@@ -8,8 +8,6 @@ import Qs from 'qs'
 
 Vue.prototype.serverHost = process.env.baseUrl;
 axios.defaults.baseURL = Vue.prototype.serverHost
-Vue.prototype.axios = axios;
-Vue.prototype.qs = Qs;
 
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
@@ -43,6 +41,8 @@ axios.interceptors.response.use(function (response) {
     return Promise.resolve({data: {status: window.Constant.AjaxStatus.ERROR, message: 'error reuqest!'}});
     //return Promise.reject(error);
 });
+Vue.prototype.axios = axios;
+Vue.prototype.qs = Qs;
 
 /* eslint-disable no-new */
 new Vue({

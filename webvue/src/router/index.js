@@ -14,18 +14,18 @@ var router = new Router({
     {
       path: '/',
       name: 'home',
-      component: resolve => require(['../components/HelloWorld'], resolve)
+      component: resolve => require(['../components/index'], resolve)
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: resolve => require(['../components/user/login'], resolve)
     },
     {
       path: '/main',
       name: 'main',
       component: resolve => require(['../components/headerAndMenu'], resolve),
       children: [
-        {
-          path: 'myPage',
-          name: 'myPage',
-          component: resolve => require(['../components/myPage'], resolve)
-        },
         {
             path: '*',  //*号表示匹配任意内容
             title: '首页',
@@ -37,20 +37,30 @@ var router = new Router({
       ]
     },
     {
-      path: '/login',
-      name: 'login',
-      component: resolve => require(['../components/user/login'], resolve)
+      path: '/sys',
+      name: 'sys',
+      component: resolve => require(['../components/headerAndMenu'], resolve),
+      children: [
+        {
+          path: 'configInfoList',
+          name: 'configInfoList',
+          component: resolve => require(['../components/sys/configInfoList'], resolve)
+        },
+        {
+          path: 'addConfigInfo',
+          name: 'addConfigInfo',
+          component: resolve => require(['../components/sys/configInfoEdit'], resolve)
+        },
+        {
+            path: '*',  //*号表示匹配任意内容
+            title: '首页',
+            redirect: '/',
+            extra: {
+                inMenu: false
+            }
+        }
+      ]
     }
-    // {
-    //   path: '/configInfoList',
-    //   name: 'configInfoList',
-    //   component: resolve => require(['../components/sys/configInfoList'], resolve)
-    // },
-    // {
-    //   path: '/addConfigInfo',
-    //   name: 'addConfigInfo',
-    //   component: resolve => require(['../components/sys/configInfoEdit'], resolve)
-    // }
   ]
 });
 
