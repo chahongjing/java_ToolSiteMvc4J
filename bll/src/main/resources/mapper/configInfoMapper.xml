@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zjy.bll.dao.ConfigInfoDao">
+	<!-- 基本操作区 -->
+	<!-- 添加 -->
+	<insert id="add">
+		INSERT INTO ConfigInfo(<include refid="field"></include>)
+		VALUES(#{createBy, jdbcType=VARCHAR}, #{createOn, jdbcType=TIMESTAMP}, #{modifiedBy, jdbcType=VARCHAR},
+		#{modifiedOn, jdbcType=TIMESTAMP}, #{id, jdbcType=VARCHAR}, #{name, jdbcType=VARCHAR}, #{type, jdbcType=INTEGER},
+		#{account, jdbcType=VARCHAR}, #{password, jdbcType=VARCHAR}, #{contactPerson, jdbcType=VARCHAR},
+		#{contacts, jdbcType=VARCHAR}, #{relateWebsite, jdbcType=VARCHAR}, #{memo, jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 更新 -->
+	<update id="update">
+        update ConfigInfo
+        <set>
+			<if test='ModifiedBy != null'>
+				ModifiedBy = #{modifiedBy, jdbcType=VARCHAR},
+			</if>
+			<if test='ModifiedOn != null'>
+				ModifiedOn = #{modifiedOn, jdbcType=TIMESTAMP},
+			</if>
+			<if test='Name != null and Name != ""'>
+				Name = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test='Type != null'>
+				Type = #{type, jdbcType=INTEGER},
+			</if>
+			<if test='Account != null Account != ""'>
+				Account = #{account, jdbcType=VARCHAR},
+			</if>
+			<if test='Password != null and Password != ""'>
+				Password = #{password, jdbcType=VARCHAR},
+			</if>
+			<if test='ContactPerson != null and ContactPerson != ""'>
+				ContactPerson = #{contactPerson, jdbcType=VARCHAR},
+			</if>
+			<if test='Contacts != null and Contacts != ""'>
+				Contacts = #{contacts, jdbcType=VARCHAR},
+			</if>
+			<if test='RelateWebsite != null and RelateWebsite != ""'>
+				RelateWebsite = #{relateWebsite, jdbcType=VARCHAR},
+			</if>
+			<if test='Memo != null and Memo != ""'>
+				Memo = #{memo, jdbcType=VARCHAR},
+			</if>
+		</set>
+         where id = #{id, jdbcType=VARCHAR}
+	</update>
+
+	<!-- 删除 -->
+	<delete id="delete">
+		DELETE FROM ConfigInfo WHERE id = #{id, jdbcType=VARCHAR}
+	</delete>
+
+	<!-- 获取 -->
+	<select id="get" resultType="com.zjy.bll.vo.ConfigInfoVo">
+		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="config"/></include>
+		  FROM ConfigInfo
+		 WHERE id = #{id, jdbcType = VARCHAR}
+	</select>
+
+	<!-- 查询简单列表 -->
+	<select id="query" resultType="com.zjy.bll.vo.ConfigInfoVo">
+		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="config"/></include>,
+		     parent.name as pName
+		FROM ConfigInfo config
+		WHERE 1 = 1
+		<if test='name != null and name != ""'>
+			and config.name like '%' || #{name, jdbcType=VARCHAR} || '%'
+		</if>
+		order by config.createdOn desc
+	</select>
+
+	<!-- 查询复杂列表 -->
+	<select id="queryByMapFilter" resultType="com.zjy.bll.vo.ConfigInfoVo">
+		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="config"/></include>
+		FROM ConfigInfo config
+		WHERE 2 = 2
+	</select>
+
+	<!-- 其它操作区 -->
+
+
+	<!-- 公共信息 -->
+	<!-- 字段 -->
+	<sql id="field">
+		CreateBy, CreateOn, ModifiedBy, ModifiedOn, ID, Name, Type, Account, Password, ContactPerson, Contacts, RelateWebsite, Memo
+	</sql>
+	 <!-- 带前缀的字段 -->
+	<sql id="fieldWithPrefix">
+		${tableName}.CreateBy, ${tableName}.CreateOn, ${tableName}.ModifiedBy, ${tableName}.ModifiedOn, ${tableName}.ID, ${tableName}.Name, ${tableName}.Type, ${tableName}.Account, ${tableName}.Password, ${tableName}.ContactPerson, ${tableName}.Contacts, ${tableName}.RelateWebsite, ${tableName}.Memo
+	</sql>
+</mapper>
