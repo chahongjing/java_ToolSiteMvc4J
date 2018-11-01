@@ -71,10 +71,15 @@
     methods: {
       goBack() {
           this.$router.back(-1);
+      },
+      save: function() {
+        this.axios.post('/api/configInfo/getConfigInfo', {id: 1}).then(function(resp) {
+        console.log(resp);
+        });
       }
     },
     mounted: function() {
-      this.axios.get('/api/menu/queryMenu').then(function(resp) {
+      this.axios.get('/api/configInfo/getConfigInfo', {params: {id: 1}}).then(function(resp) {
       console.log(resp);
       });
     }
