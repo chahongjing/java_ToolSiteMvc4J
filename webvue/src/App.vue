@@ -1,16 +1,6 @@
 <template>
   <div id="app">
-    <app-header></app-header>
-    <div class="body">
-      <app-menu></app-menu>
-      <div class="right-main">
-        <div class="bread"></div>
-        <div class="right-content">
-          <router-view/>
-        </div>
-        <div class="footer"></div>
-      </div>
-    </div>
+    <router-view/>
     <div class="loadingmask">
       <div class="info">
         <img src="${ctx}/bootstrap/images/loading.gif"/>

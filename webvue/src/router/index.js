@@ -17,14 +17,29 @@ var router = new Router({
       component: resolve => require(['../components/HelloWorld'], resolve)
     },
     {
+      path: '/main',
+      name: 'main',
+      component: resolve => require(['../components/headerAndMenu'], resolve),
+      children: [
+        {
+          path: 'myPage',
+          name: 'myPage',
+          component: resolve => require(['../components/myPage'], resolve)
+        },
+        {
+            path: '*',  //*号表示匹配任意内容
+            title: '首页',
+            redirect: '/',
+            extra: {
+                inMenu: false
+            }
+        }
+      ]
+    },
+    {
       path: '/login',
       name: 'login',
       component: resolve => require(['../components/user/login'], resolve)
-    },
-    {
-      path: '/myPage',
-      name: 'myPage',
-      component: resolve => require(['../components/myPage'], resolve)
     }
     // {
     //   path: '/configInfoList',
