@@ -65,6 +65,7 @@
                 /bootstrap/**=anon
                 /Controls/**=anon
                 /css/**=anon
+                /configInfo/**=anon
                 /test/**=anon
                 /ToolSiteMVC/TestMvc/**=authc
                 /admin/listUser**=authc,perms[admin:manage]

@@ -48,7 +48,7 @@
       }
     },
     mounted: function() {
-      this.axios.get('/api/menu/queryMenu').then(function(resp) {
+      this.axios.get('/api/configInfo/queryPageList').then(function(resp) {
       console.log(resp);
       });
     }
