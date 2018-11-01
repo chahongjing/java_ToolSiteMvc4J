@@ -70,6 +70,8 @@
 </script>
 <script type="text/template" id="appMenu">
 <div class="menu">
+    <%--<input type="file" name="file" value="" id="myfile" />--%>
+    <%--<input type="button" @click="test()" />--%>
     <div class="slide-menu">
         <ul class="first-menu">
         <li v-for="item in list" v-bind:class="{'selected': item.isSelected}" :title="item.name"
