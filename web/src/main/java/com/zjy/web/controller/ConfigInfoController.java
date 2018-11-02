@@ -28,8 +28,8 @@ public class ConfigInfoController extends BaseController {
 
     @RequestMapping("/getConfigInfo")
     @ResponseBody
-    public BaseResult<ConfigInfoVo> getConfigInfo(String configInfoId) {
-        ConfigInfoVo userInfo = configInfoSrv.getVo(configInfoId);
+    public BaseResult<ConfigInfoVo> getConfigInfo(String id) {
+        ConfigInfoVo userInfo = configInfoSrv.getVo(id);
         return BaseResult.OK(userInfo);
     }
 

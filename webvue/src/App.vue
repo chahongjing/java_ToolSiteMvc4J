@@ -11,14 +11,10 @@
 </template>
 
 <script>
-  import appHeader from './components/appHeader'
-  import appMenu from './components/appMenu'
   export default {
-    name: 'App',
-    components: {appHeader, appMenu}
+    name: 'App'
   }
 </script>
-
 
 <style>
   #app {

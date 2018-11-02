@@ -5,7 +5,7 @@
 	<!-- 添加 -->
 	<insert id="add">
 		INSERT INTO ConfigInfo(<include refid="field"></include>)
-		VALUES(#{createBy, jdbcType=VARCHAR}, #{createOn, jdbcType=TIMESTAMP}, #{modifiedBy, jdbcType=VARCHAR},
+		VALUES(#{createdBy, jdbcType=VARCHAR}, #{createdOn, jdbcType=TIMESTAMP}, #{modifiedBy, jdbcType=VARCHAR},
 		#{modifiedOn, jdbcType=TIMESTAMP}, #{id, jdbcType=VARCHAR}, #{name, jdbcType=VARCHAR}, #{type, jdbcType=INTEGER},
 		#{account, jdbcType=VARCHAR}, #{password, jdbcType=VARCHAR}, #{contactPerson, jdbcType=VARCHAR},
 		#{contacts, jdbcType=VARCHAR}, #{relateWebsite, jdbcType=VARCHAR}, #{memo, jdbcType=VARCHAR})
@@ -63,8 +63,7 @@
 
 	<!-- 查询简单列表 -->
 	<select id="query" resultType="com.zjy.bll.vo.ConfigInfoVo">
-		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="config"/></include>,
-		     parent.name as pName
+		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="config"/></include>
 		FROM ConfigInfo config
 		WHERE 1 = 1
 		<if test='name != null and name != ""'>
@@ -86,10 +85,10 @@
 	<!-- 公共信息 -->
 	<!-- 字段 -->
 	<sql id="field">
-		CreateBy, CreateOn, ModifiedBy, ModifiedOn, ID, Name, Type, Account, Password, ContactPerson, Contacts, RelateWebsite, Memo
+		CreatedBy, CreatedOn, ModifiedBy, ModifiedOn, ID, Name, Type, Account, Password, ContactPerson, Contacts, RelateWebsite, Memo
 	</sql>
 	 <!-- 带前缀的字段 -->
 	<sql id="fieldWithPrefix">
-		${tableName}.CreateBy, ${tableName}.CreateOn, ${tableName}.ModifiedBy, ${tableName}.ModifiedOn, ${tableName}.ID, ${tableName}.Name, ${tableName}.Type, ${tableName}.Account, ${tableName}.Password, ${tableName}.ContactPerson, ${tableName}.Contacts, ${tableName}.RelateWebsite, ${tableName}.Memo
+		${tableName}.CreatedBy, ${tableName}.CreatedOn, ${tableName}.ModifiedBy, ${tableName}.ModifiedOn, ${tableName}.ID, ${tableName}.Name, ${tableName}.Type, ${tableName}.Account, ${tableName}.Password, ${tableName}.ContactPerson, ${tableName}.Contacts, ${tableName}.RelateWebsite, ${tableName}.Memo
 	</sql>
 </mapper>

@@ -5,8 +5,8 @@ import com.zjy.entities.enums.ConfigType;
 import java.util.Date;
 
 public class ConfigInfo {
-    private String createBy;
-    private Date createOn;
+    private String createdBy;
+    private Date createdOn;
     private String modifiedBy;
     private Date modifiedOn;
     private String id;
@@ -19,20 +19,20 @@ public class ConfigInfo {
     private String relateWebsite;
     private String memo;
 
-    public String getCreateBy() {
-        return createBy;
+    public String getCreatedBy() {
+        return createdBy;
     }
 
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 
-    public Date getCreateOn() {
-        return createOn;
+    public Date getCreatedOn() {
+        return createdOn;
     }
 
-    public void setCreateOn(Date createOn) {
-        this.createOn = createOn;
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
     }
 
     public String getModifiedBy() {

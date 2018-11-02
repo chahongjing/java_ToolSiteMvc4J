@@ -82,16 +82,16 @@
       },
       save: function() {
       var me = this;
-        this.axios.post('/api/configInfo/saveConfigInfo', me.configInfo).then(function(resp) {
-          me.configInfo = resp.data.value;
+        this.axios.post('/configInfo/saveConfigInfo', me.configInfo).then(function(resp) {
         console.log(resp);
         });
       }
     },
     mounted: function() {
       var me = this;
-      this.axios.get('/api/configInfo/getConfigInfo', {params: {id: 1}}).then(function(resp) {
-        me.configInfo = resp.data;
+      this.configInfo.id = this.$route.query.id;
+      this.axios.get('/configInfo/getConfigInfo', me.configInfo).then(function(resp) {
+        me.configInfo = resp.data.value;
       console.log(resp);
       });
     }

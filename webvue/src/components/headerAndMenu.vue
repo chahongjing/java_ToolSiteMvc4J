@@ -28,9 +28,4 @@
 </script>
 
 <style scoped>
-  .logo a i {
-    width: 50px;
-    height: 50px;
-    display: inline-block;
-  }
 </style>

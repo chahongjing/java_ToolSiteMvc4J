@@ -53,7 +53,7 @@
                     alert('请输入密码!');
                     return false;
                 }
-                this.axios.post('/api/userinfo/login', {userCode: $.trim(userCode.val()), password:$.trim(password.val())}).then(function(resp) {
+                this.axios.post('/userinfo/login', {userCode: $.trim(userCode.val()), password:$.trim(password.val())}).then(function(resp) {
                   if (resp.data.status == Constant.AjaxStatus.OK) {
                       var url = $("#RedirectUrl").val();
                       url = url ? url : "/Login1.aspx";
