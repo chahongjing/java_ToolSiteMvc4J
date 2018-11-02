@@ -170,7 +170,9 @@ ul.sub-menu > li > a > b {position:absolute;top:0px;right:0;width:0px;height:0px
 .w100p{width:100%;}
 .h100p{height:100%;}
 
+.ml5{margin-left:5px;}
 .mr5{margin-right:5px;}
+.pl5{padding-left:5px;}
 .pr5{padding-right:5px;}
 
 .block{display:block;}
@@ -181,3 +183,7 @@ ul.sub-menu > li > a > b {position:absolute;top:0px;right:0;width:0px;height:0px
 /* 列表按钮组 */
 .list-header-but-group{height:50px;line-height: 43px;padding:0 10px;}
 .searchbar{padding:10px 10px;}
+
+.text-left{text-align:left;}
+.text-center{text-align:center;}
+.text-right{text-align:right;}

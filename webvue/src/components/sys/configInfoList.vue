@@ -46,11 +46,12 @@
       </tbody>
     </table>
     </div>
-    <pagination v-bind:pager-info='pager'></pagination>
+    <pagination :pager-info='pager'></pagination>
 </div>
 </template>
 
 <script>
+  import commonSrv from '../../common/commonService'
   import pagination from '../common/pagination'
   export default {
     name: 'configInfoList',
@@ -77,8 +78,11 @@
         var me = this;
         this.axios.get('/configInfo/queryPageList', {name: this.searchKey}).then(function(resp) {
           me.list = resp.data.value.list;
-          me.pager = resp.data.value;
+          me.pager = commonSrv.getPagerInfo(resp.data.value, me.goPage);
         });
+      },
+      goPage(page) {
+        console.log(page);
       }
     },
     mounted: function() {
