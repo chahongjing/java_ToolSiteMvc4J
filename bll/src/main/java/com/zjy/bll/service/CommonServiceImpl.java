@@ -1,17 +1,24 @@
 package com.zjy.bll.service;
 
+import com.alibaba.fastjson.JSON;
+import com.zjy.baseframework.EnumHelper;
+import com.zjy.baseframework.beans.EnumBean;
 import com.zjy.baseframework.interfaces.IHierarchyBase;
+import com.zjy.baseframework.mybatis.IBaseEnum;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
  * Created by jyzeng on 2018/3/23.
  * 公共服务类
  */
+@Service
 public class CommonServiceImpl implements CommonService {
 
     /**
@@ -52,5 +59,14 @@ public class CommonServiceImpl implements CommonService {
             }
         }
         return result;
+    }
+
+    public String getEnums() {
+        Map<Class<IBaseEnum>, Map<String, EnumBean>> enumBeanList = EnumHelper.getEnumBeanList();
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<Class<IBaseEnum>, Map<String, EnumBean>> classMapEntry : enumBeanList.entrySet()) {
+            sb.append(String.format("window.%s=%s;\r\n", classMapEntry.getKey().getSimpleName(), JSON.toJSONString(classMapEntry.getValue())));
+        }
+        return sb.toString();
     }
 }

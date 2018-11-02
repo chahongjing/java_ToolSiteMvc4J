@@ -23,45 +23,47 @@
 </template>
 
 <script>
+import Vue from 'vue'
   export default {
     name: 'login',
     data () {
       return {
-        
       }
     },
     mounted: function() {
       $('.form-control i').click(function () {
-            $(this).siblings('input').focus();
-        });
-        $('input[name=UserCode], input[name=Password]').bind('keypress', function (event) {
-            if (event && event.keyCode == "13") {
-                $("#btnLogin").click();
-            }
-        });
+          $(this).siblings('input').focus();
+      });
+      $('input[name=UserCode], input[name=Password]').bind('keypress', function (event) {
+          if (event && event.keyCode == "13") {
+              $("#btnLogin").click();
+          }
+      });
     },
     methods: {
       login: function () {
         var userCode = $("input[name=UserCode]");
-                var password = $("input[name=Password]");
+        var password = $("input[name=Password]");
 
-                if ($.trim(userCode.val()) == "") {
-                    alert('请输入用户名!');
-                    return false;
-                }
-                if ($.trim(password.val()) == "") {
-                    alert('请输入密码!');
-                    return false;
-                }
-                this.axios.post('/userinfo/login', {userCode: $.trim(userCode.val()), password:$.trim(password.val())}).then(function(resp) {
-                  if (resp.data.status == Constant.AjaxStatus.OK) {
-                      var url = $("#RedirectUrl").val();
-                      url = url ? url : "/Login1.aspx";
-                      window.location = '/';
-                  } else if (resp.data.status == Constant.AjaxStatus.NO) {
-                      alert(resp.data.message);
-                  }
-                });
+        if ($.trim(userCode.val()) == "") {
+            alert('请输入用户名!');
+            return false;
+        }
+        if ($.trim(password.val()) == "") {
+            alert('请输入密码!');
+            return false;
+        }
+        var me = this;
+        this.axios.post('/userinfo/login', {userCode: $.trim(userCode.val()), password:$.trim(password.val())}).then(function(resp) {
+          if (resp.data.status == Constant.AjaxStatus.OK) {
+              var url = $("#RedirectUrl").val();
+              url = url ? url : "/Login1.aspx";
+              me.user = resp.data.value;
+              window.location = '/';
+          } else if (resp.data.status == Constant.AjaxStatus.NO) {
+              alert(resp.data.message);
+          }
+        });
       }
     }
   }

@@ -15,34 +15,34 @@
 	<update id="update">
         update ConfigInfo
         <set>
-			<if test='ModifiedBy != null'>
+			<if test='modifiedBy != null'>
 				ModifiedBy = #{modifiedBy, jdbcType=VARCHAR},
 			</if>
-			<if test='ModifiedOn != null'>
+			<if test='modifiedOn != null'>
 				ModifiedOn = #{modifiedOn, jdbcType=TIMESTAMP},
 			</if>
-			<if test='Name != null and Name != ""'>
+			<if test='name != null and name != ""'>
 				Name = #{name, jdbcType=VARCHAR},
 			</if>
-			<if test='Type != null'>
+			<if test='type != null'>
 				Type = #{type, jdbcType=INTEGER},
 			</if>
-			<if test='Account != null Account != ""'>
+			<if test='account != null and account != ""'>
 				Account = #{account, jdbcType=VARCHAR},
 			</if>
-			<if test='Password != null and Password != ""'>
+			<if test='password != null and password != ""'>
 				Password = #{password, jdbcType=VARCHAR},
 			</if>
-			<if test='ContactPerson != null and ContactPerson != ""'>
+			<if test='contactPerson != null and contactPerson != ""'>
 				ContactPerson = #{contactPerson, jdbcType=VARCHAR},
 			</if>
-			<if test='Contacts != null and Contacts != ""'>
+			<if test='contacts != null and contacts != ""'>
 				Contacts = #{contacts, jdbcType=VARCHAR},
 			</if>
-			<if test='RelateWebsite != null and RelateWebsite != ""'>
+			<if test='relateWebsite != null and relateWebsite != ""'>
 				RelateWebsite = #{relateWebsite, jdbcType=VARCHAR},
 			</if>
-			<if test='Memo != null and Memo != ""'>
+			<if test='memo != null and memo != ""'>
 				Memo = #{memo, jdbcType=VARCHAR},
 			</if>
 		</set>

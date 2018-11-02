@@ -10,14 +10,10 @@
           <router-link to="/login">
             <button class="btn btn-default">登录</button>
           </router-link>
-          <router-link to="/main/myPage">
-            <button class="btn btn-default">main</button>
           </router-link>
           <router-link to="/sys/configInfoList">
             <button class="btn btn-default">配置</button>
           </router-link>
-
-          <button class="btn btn-default" @click="goPage">点击事件跳转</button>
         </div>
         <div class="footer"></div>
       </div>

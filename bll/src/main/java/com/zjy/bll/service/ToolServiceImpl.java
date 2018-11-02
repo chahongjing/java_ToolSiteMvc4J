@@ -182,12 +182,5 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
         return this.oracleTypeMap;
     }
 
-    public String getEnums() {
-        Map<Class<IBaseEnum>, Map<String, EnumBean>> enumBeanList = EnumHelper.getEnumBeanList();
-        StringBuilder sb = new StringBuilder();
-        for (Map.Entry<Class<IBaseEnum>, Map<String, EnumBean>> classMapEntry : enumBeanList.entrySet()) {
-            sb.append(String.format("window.%s=%s;\r\n", classMapEntry.getKey().getSimpleName(), JSON.toJSONString(classMapEntry.getValue())));
-        }
-        return sb.toString();
-    }
+
 }

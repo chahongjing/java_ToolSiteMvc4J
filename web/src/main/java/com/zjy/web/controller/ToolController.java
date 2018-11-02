@@ -48,14 +48,4 @@ public class ToolController extends BaseController {
     public String sqlGenerate() {
         return "tools/sqlGenerate";
     }
-
-    /**
-     * 返回所有枚举对象
-     * @return
-     */
-    @RequestMapping(value = "/getEnums", produces="application/javascript;charset=UTF-8")
-    @ResponseBody
-    public String getEnums() {
-        return toolSrv.getEnums();
-    }
 }

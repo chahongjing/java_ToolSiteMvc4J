@@ -39,6 +39,7 @@ public class ConfigInfoServiceImpl extends BaseService<ConfigInfoDao, ConfigInfo
         configInfo.setName(request.getName());
         PageInfo<ConfigInfoVo> pageInfo = (PageInfo<ConfigInfoVo>) super.queryPageList(request, configInfo);
         for (ConfigInfoVo vo : pageInfo.getList()) {
+            if(vo.getType() == null) continue;
             vo.setTypeName(vo.getType().getName());
         }
         return pageInfo;
@@ -53,7 +54,9 @@ public class ConfigInfoServiceImpl extends BaseService<ConfigInfoDao, ConfigInfo
             vo.setIsSave(false);
         } else {
             vo.setIsSave(true);
-            vo.setTypeName(vo.getType().getName());
+            if(vo.getType() != null){
+                vo.setTypeName(vo.getType().getName());
+            }
         }
         return vo;
     }

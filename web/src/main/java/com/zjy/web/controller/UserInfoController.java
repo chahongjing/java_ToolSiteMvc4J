@@ -54,7 +54,7 @@ public class UserInfoController extends BaseController {
 
     @RequestMapping("/login")
     @ResponseBody
-    public BaseResult<String> login(UserInfo user) {
+    public BaseResult<UserInfo> login(UserInfo user) {
         return userInfoSrv.login(user);
     }
 

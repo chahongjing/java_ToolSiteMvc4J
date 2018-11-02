@@ -1,5 +1,6 @@
 package com.zjy.bll.service;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.zjy.baseframework.BaseResult;
 import com.zjy.baseframework.ServiceException;
@@ -87,8 +88,8 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
      * @return
      */
     @Override
-    public BaseResult<String> login(UserInfo user) {
-        BaseResult<String> result = new BaseResult<>();
+    public BaseResult<UserInfo> login(UserInfo user) {
+        BaseResult<UserInfo> result = new BaseResult<>();
         Subject subject = SecurityUtils.getSubject();
 //        if (subject.isAuthenticated()) {
 //            return null;
@@ -108,7 +109,10 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
             return result;
         }
         // 登录成功
+        UserInfo userInfo = getByUserCode(user.getUserCode());
+        userInfo.setPassword(null);
         result.setStatus(ResultStatus.OK);
+        result.setValue(userInfo);
         return result;
     }
 

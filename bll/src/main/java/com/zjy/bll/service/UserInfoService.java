@@ -17,7 +17,7 @@ public interface UserInfoService {
 
     void saveUser(UserInfoVo userInfo);
 
-    BaseResult<String> login(UserInfo user);
+    BaseResult<UserInfo> login(UserInfo user);
 
     BaseResult<String> logout();
 

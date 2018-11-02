@@ -28,8 +28,7 @@
     name: 'appMenu',
     data () {
       return {
-        list: [],
-        msg: 'Welcome to Your Vue.js App'
+        list: []
       }
     }
   }
