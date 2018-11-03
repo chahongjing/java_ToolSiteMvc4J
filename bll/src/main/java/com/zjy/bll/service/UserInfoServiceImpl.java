@@ -1,6 +1,5 @@
 package com.zjy.bll.service;
 
-import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.zjy.baseframework.BaseResult;
 import com.zjy.baseframework.ServiceException;
@@ -21,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -75,9 +75,11 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
         beforeCheck(userInfo);
         // 处理密码
         if(vo.getIsSave()) {
+            userInfo.setModifiedOn(new Date());
             update(userInfo);
         } else {
             userInfo.setPassword(shiroRealm.getMd5Hash(userInfo.getPassword(), userInfo.getUserCode()));
+            userInfo.setCreatedOn(new Date());
             add(userInfo);
         }
     }
@@ -141,6 +143,12 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
         for (UserInfoVo userInfo : pageInfo.getList()) {
             if(userInfo.getSex() != null) {
                 userInfo.setSexName(userInfo.getSex().getName());
+            }
+            if(userInfo.getIsDisabled() != null) {
+                userInfo.setIsDisabledName(userInfo.getIsDisabled().getName());
+            }
+            if(userInfo.getIsSystem() != null) {
+                userInfo.setIsSystemName(userInfo.getIsSystem().getName());
             }
         }
         return pageInfo;

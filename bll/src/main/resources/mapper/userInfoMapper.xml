@@ -6,9 +6,9 @@
     <insert id="add">
         INSERT INTO UserInfo(<include refid="field"></include>)
         VALUES(#{userId, jdbcType=VARCHAR}, #{userCode, jdbcType=VARCHAR}, #{userName, jdbcType=VARCHAR},
-        #{password, jdbcType=VARCHAR},
-        #{sex, jdbcType=INTEGER}, #{birthday, jdbcType=TIMESTAMP}, #{isSystem, jdbcType=INTEGER},
-        #{isDisabled, jdbcType=INTEGER})
+        #{password, jdbcType=VARCHAR}, #{sex, jdbcType=INTEGER}, #{birthday, jdbcType=TIMESTAMP}, #{isSystem, jdbcType=INTEGER},
+        #{isDisabled, jdbcType=INTEGER}, #{createdBy, jdbcType=VARCHAR}, #{createdOn, jdbcType=TIMESTAMP},
+        #{modifiedBy, jdbcType=VARCHAR}, #{modifiedOn, jdbcType=TIMESTAMP})
     </insert>
 
     <!-- 更新 -->
@@ -29,6 +29,12 @@
             </if>
             <if test='isDisabled != null'>
                 isDisabled = #{isDisabled, jdbcType=INTEGER},
+            </if>
+            <if test='modifiedBy != null and modifiedBy != ""'>
+                modifiedBy = #{modifiedBy, jdbcType=VARCHAR},
+            </if>
+            <if test='modifiedOn != null'>
+                modifiedOn = #{modifiedOn, jdbcType=TIMESTAMP},
             </if>
         </set>
         where UserId = #{userId, jdbcType=VARCHAR}
@@ -117,11 +123,12 @@
     <!-- 公共信息 -->
     <!-- 字段 -->
     <sql id="field">
-		UserId, UserCode, UserName, Password, Sex, Birthday, isSystem, isDisabled
+		UserId, UserCode, UserName, Password, Sex, Birthday, isSystem, isDisabled, createdBy, createdOn, modifiedBy, modifiedOn
 	</sql>
     <!-- 带前缀的字段 -->
     <sql id="fieldWithPrefix">
 		${tableName}.UserId, ${tableName}.UserCode, ${tableName}.UserName, ${tableName}.Password, ${tableName}.Sex,
-		${tableName}.Birthday, ${tableName}.isSystem, ${tableName}.isDisabled
+		${tableName}.Birthday, ${tableName}.isSystem, ${tableName}.isDisabled, ${tableName}.createdBy, ${tableName}.createdOn,
+		${tableName}.modifiedBy, ${tableName}.modifiedOn
 	</sql>
 </mapper>

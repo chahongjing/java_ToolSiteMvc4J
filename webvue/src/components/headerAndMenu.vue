@@ -4,7 +4,20 @@
     <div class="body">
       <app-menu></app-menu>
       <div class="right-main">
-        <div class="bread"></div>
+        <div class="bread">
+          <ul>
+            <li>
+              <a class='w100p h100p inline-block' href='javascript:void(0)' title='首页'><i class='fa fa-home mr0' @click='goPage()'></i></a>
+            </li>
+            <li class='bread-item' v-for='item in menuList' :title='item.text'>
+              <span class='split'>&gt;</span>
+              <a class='w100p h100p inline-block' href='javascript:void(0)' v-text='item.text' @click='goPage(item)'></a>
+            </li>
+          </ul>
+          <button type="button" class="btn btn-outline-purple btn-sm fr mr5 mt2" @click='goBack()'>
+            <i class='fa fa-reply mr5'></i>返回
+          </button>
+        </div>
         <div class="right-content">
           <router-view/>
         </div>
@@ -21,6 +34,26 @@
     name: 'headerAndMenu',
     data () {
       return {
+        menuList:[]
+      }
+    },
+    mounted:function() {
+      var list = [];
+      list.push({path:'/',text:'一级模块'});
+      list.push({path:'/',text:'二级模块'});
+      list.push({path:'/',text:'三级模块'});
+      this.menuList = list;
+    },
+    methods: {
+      goPage(item) {
+        if(item == null) {
+          console.log('返回首页');
+        } else {
+          console.log(item.text);
+        }
+      },
+      goBack:function() {
+        this.$router.back(-1);
       }
     },
     components: {appHeader, appMenu}

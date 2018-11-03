@@ -1,7 +1,7 @@
 <template>
   <div class='maincontent w100p h100p'>
     <div class='list-header-but-group'>
-      <button type="button inline-block" class="btn btn-outline-purple" @click="addConfigInfo()">
+      <button type="button inline-block" class="btn btn-outline-purple" @click="addUser()">
         <i class='fa fa-plus mr5'></i>添加
       </button>
     </div>
@@ -40,13 +40,11 @@
           <tr>
           <th class='w50'>#</th>
             <th class='w150'>名称</th>
-            <th class='w100'>类型</th>
-            <th class='w100'>账户</th>
-            <th class='w100'>密码</th>
-            <th class='w100'>联系人</th>
-            <th class='w100'>联系方式</th>
-            <th class='w100'>相关站点</th>
-            <th class='w100'>备注</th>
+            <th class='w100'>编码</th>
+            <th class='w150'>创建时间</th>
+            <th class='w50'>性别</th>
+            <th class='w50'>系统用户</th>
+            <th class='w50'>是否禁用</th>
             <th class='w100'>操作</th>
           </tr>
         </thead>
@@ -54,15 +52,13 @@
           <tr v-for="(item, index) in list">
             <td class="text-center" v-text='index + 1'></td>
             <td>
-              <a class='block w100p h100p' href='javascript:void(0)' v-text='item.name' @click='editConfigInfo(item)'></a>
+              <a class='block w100p h100p' href='javascript:void(0)' v-text='item.userName' @click='editUser(item)'></a>
             </td>
-            <td v-text='item.typeName'></td>
-            <td v-text='item.account'></td>
-            <td v-text='item.password'></td>
-            <td v-text='item.contactPerson'></td>
-            <td v-text='item.contacts'></td>
-            <td v-text='item.relateWebsite'></td>
-            <td v-text='item.memo'></td>
+            <td v-text='item.userCode'></td>
+            <td v-text='$options.filters.formatDate(item.createdOn)'></td>
+            <td v-text='item.sexName'></td>
+            <td v-text='item.isSystemName'></td>
+            <td v-text='item.isDisabledName'></td>
             <td><a class='inline-block' href='javascript:void(0)' @click='deleteItem(item)'><i class='fa fa-trash'></i></a></td>
           </tr>
         </tbody>
@@ -78,7 +74,7 @@
   import commonSrv from '../../common/commonService'
   import pagination from '../common/pagination'
   export default {
-    name: 'configInfoList',
+    name: 'userList',
     data () {
       return {
         searchKey:null,
@@ -87,20 +83,20 @@
       }
     },
     methods: {
-      addConfigInfo() {
+      addUser() {
         var me = this;
         this.axios.get('/comm/getId').then(function(resp) {
-          me.$router.push({path: '/sys/configInfoEdit', query: {id: resp.data.value}});
+          me.$router.push({path: '/user/userEdit', query: {id: resp.data.value}});
         });
         
       },
-      editConfigInfo(configInfo) {
-        this.$router.push({path: '/sys/configInfoEdit', query: {id: configInfo.id}});
+      editUser(user) {
+        this.$router.push({path: '/user/userEdit', query: {id: user.userId}});
         
       },
       search() {
         var me = this;
-        this.axios.get('/configInfo/queryPageList', {name: this.searchKey,pageNum:this.pager.pageNum,pageSize:this.pager.pageSize}).then(function(resp) {
+        this.axios.get('/userinfo/queryPageList', {userName: this.searchKey,pageNum:this.pager.pageNum,pageSize:this.pager.pageSize}).then(function(resp) {
           me.list = resp.data.value.list;
           me.pager = commonSrv.getPagerInfo(resp.data.value, me.goPage);
         });
@@ -111,7 +107,7 @@
       },
       deleteItem:function(item) {
         var me = this;
-        this.axios.get('/configInfo/delete', {configInfoId: item.id}).then(function(resp) {
+        this.axios.get('/userinfo/delete', {userId: item.userId}).then(function(resp) {
           me.search();
         });
       }

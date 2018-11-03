@@ -15,12 +15,12 @@ axios.defaults.transformResponse = [function (data) {
 }]
 // 添加请求拦截器
 axios.interceptors.request.use(function (config) {
-  if (config.method === 'post') {
-    config.data = $.param(config.data);
+  if (config.data && !(config.data instanceof FormData)) {
+      config.data = $.param(config.data);
   }
-    // 在发送请求之前做些什么
-    return config;
-  }, function (error) {
+  // 在发送请求之前做些什么
+  return config;
+}, function (error) {
     // 对请求错误做些什么
     return Promise.reject(error);
 });
@@ -55,7 +55,7 @@ var axiosIns = {
    * @param param 参数，object类型
    * @returns {*}
    */
-   getFormData: function (path, formData) {
+  getFormData: function (path, formData) {
     return axios({
      url: this.getAjaxUrl(path),
      method: 'get',
@@ -74,11 +74,11 @@ var axiosIns = {
    * @param param 参数，object类型
    * @returns {*}
    */
-   postFormData: function (path, formData) {
+  postFormData: function (path, formData) {
     return axios({
-        url: this.getAjaxUrl(path),
-        method: 'post',
-        data: formData,
+      url: this.getAjaxUrl(path),
+      method: 'post',
+      data: formData,
         // transformRequest: [function (data) {
         //     return $.param(data);
         // }],
@@ -90,23 +90,23 @@ var axiosIns = {
         //     return ret
         // }],
         headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
+          'Content-Type': 'application/x-www-form-urlencoded'
         }
-      });
-    },
-    /**
-     * 以formdata的形式发起post ajax请求
-     * @param path 路径
-     * @param param 参数，object类型
-     * @returns {*}
-     */
-     postFormDataWithFile: function (path, formData) {
-      var config = {
-       headers: {
-         'Content-Type': 'multipart/form-data'
-       }
-     };    
-     return axios.post(this.getAjaxUrl(path), formData, config);
-   }
- };
- export default axiosIns;
+    });
+  },
+  /**
+   * 以formdata的形式发起post ajax请求
+   * @param path 路径
+   * @param param 参数，object类型
+   * @returns {*}
+   */
+  postFormDataWithFile: function (path, formData) {
+    var config = {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    };    
+    return axios.post(this.getAjaxUrl(path), formData, config);
+  }
+};
+export default axiosIns;

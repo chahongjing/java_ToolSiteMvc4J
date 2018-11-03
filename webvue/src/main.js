@@ -4,15 +4,17 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from './common/axios'
-import Qs from 'qs'
+import filters from './common/filters';
+import store from './store/store';
 
 Vue.prototype.serverHost = process.env.baseUrl;
 Vue.prototype.axios = axios;
-
+Object.keys(filters).forEach(k => Vue.filter(k, filters[k]));
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  router,
-  components: { App},
-  template: '<App/>'
+	el: '#app',
+	store,
+	router,
+	components: { App},
+	template: '<App/>'
 })

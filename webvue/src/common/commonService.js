@@ -3,6 +3,7 @@ var commonService = {
 		var pagerInfo = {callback:callback};
 		if(pager) {
 			pagerInfo.pageNum = pager.pageNum;
+			pagerInfo.pageSize = pager.pageSize;
 			pagerInfo.pages = pager.pages;
 		}
 		return pagerInfo;
