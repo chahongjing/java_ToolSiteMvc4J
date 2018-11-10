@@ -22,6 +22,7 @@
     <!-- 自定义会话管理配置 -->
     <bean id="sessionManager" class="com.zjy.bll.common.SessionManager">
         <property name="sessionDAO" ref="sessionDAO" />
+        <property name="sessionIdCookie.path" value="/" />
     </bean>
 
     <bean id="sessionDAO" class="com.zjy.bll.common.RedisShiroSessionDao">
@@ -65,8 +66,7 @@
                 /bootstrap/**=anon
                 /Controls/**=anon
                 /css/**=anon
-                /comm/**=anon
-                /userinfo/**=anon
+                /static/**=anon
                 /test/**=anon
                 /ToolSiteMVC/TestMvc/**=authc
                 /admin/listUser**=authc,perms[admin:manage]

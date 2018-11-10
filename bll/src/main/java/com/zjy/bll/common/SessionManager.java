@@ -4,14 +4,13 @@ import com.zjy.baseframework.CookieHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.web.servlet.ShiroHttpServletRequest;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.apache.shiro.web.util.WebUtils;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.Serializable;
-import java.util.Arrays;
 
 /**
  * <b>类 名：</b>SessionManager<br/>
@@ -26,39 +25,33 @@ import java.util.Arrays;
  */
 public class SessionManager extends DefaultWebSessionManager {
 
-    static String SHIRO_SESSIONID_COOKIE_NAME = "JSESSIONID";
+    private static String SHIRO_SESSIONID_COOKIE_NAME = "JSESSIONID";
 
     @Override
     protected Serializable getSessionId(ServletRequest request, ServletResponse response) {
-        // 如果header中包含“”参数，则使用此sid会话
         String jsessionId = null;
-        //logger.info("SessionManager::getSessionId::getParameter:sid={}", sid);
-        HttpServletRequest rq = (HttpServletRequest) request;
-        HttpServletResponse rs = (HttpServletResponse) response;
+        HttpServletRequest rq = WebUtils.toHttp(request);
+        HttpServletResponse rs = WebUtils.toHttp(response);
 
-        Cookie[] cookies = rq.getCookies();
-        if (cookies != null) {
-            Cookie cookie = Arrays.stream(cookies).filter(item -> item.getName().equalsIgnoreCase(SHIRO_SESSIONID_COOKIE_NAME)).findFirst().orElse(null);
-            if(cookie != null) jsessionId = cookie.getValue();
+        jsessionId = rq.getHeader(SHIRO_SESSIONID_COOKIE_NAME);
+        if(StringUtils.isBlank(jsessionId)) {
+            jsessionId = CookieHelper.getCookie(rq, SHIRO_SESSIONID_COOKIE_NAME);
+        }
+        if(StringUtils.isBlank(jsessionId)) {
+            jsessionId = CookieHelper.getCookie(rq, SHIRO_SESSIONID_COOKIE_NAME);
+        }
+        if(StringUtils.isBlank(jsessionId)) {
+            jsessionId = rq.getParameter(SHIRO_SESSIONID_COOKIE_NAME);
         }
 
         if (StringUtils.isNotBlank(jsessionId)) {
+            // 设置当前session状态
+            request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_SOURCE, ShiroHttpServletRequest.URL_SESSION_ID_SOURCE); // session来源与url
+            request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID, jsessionId);
+            request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_IS_VALID, true);
+            return jsessionId;
+        } else {
             return super.getSessionId(request, response);
         }
-        jsessionId = rq.getHeader(SHIRO_SESSIONID_COOKIE_NAME);
-
-        if (StringUtils.isBlank(jsessionId)) {
-            jsessionId = rq.getParameter(SHIRO_SESSIONID_COOKIE_NAME);
-            if (StringUtils.isBlank(jsessionId)) {
-                return super.getSessionId(request, response);
-            }
-        }
-
-        CookieHelper.addCookie(rs, SHIRO_SESSIONID_COOKIE_NAME, jsessionId, "/");
-        // 设置当前session状态
-        request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_SOURCE, ShiroHttpServletRequest.URL_SESSION_ID_SOURCE); // session来源与url
-        request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID, jsessionId);
-        request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_IS_VALID, true);
-        return jsessionId;
     }
 }

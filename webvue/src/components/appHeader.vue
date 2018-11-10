@@ -10,12 +10,12 @@
       <ul>
         <li>
           <a class="fr logout licontent" href="javascript:void(0)" @click="logout()">
-            <i class="fa fa-power-off"></i>&nbsp;注销
+            <i class="fa fa-power-off"></i>注销
           </a>
         </li>
         <li>
           <a class="fr logout licontent" href="javascript:void(0)" @click="goBack()">
-            <i class="fa fa-reply"></i>&nbsp;返回
+            <i class="fa fa-reply"></i>返回
           </a>
         </li>
         <li>

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class EnumHelper {
-    static List<Class<IBaseEnum>> serializeEnumList = new ArrayList<>();
+    private static List<Class<IBaseEnum>> serializeEnumList = new ArrayList<>();
     @SuppressWarnings("restriction")
     public static String getDescription(Enum<?> enu) throws NoSuchFieldException, SecurityException {
         Class<? extends Enum> sc = enu.getClass();
@@ -29,7 +29,7 @@ public class EnumHelper {
     public static void initAllSerializeEnum(List<Class> classList) {
         for (Class aClass : classList) {
             if (aClass.isEnum() && IBaseEnum.class.isAssignableFrom(aClass) && aClass.isAnnotationPresent(SerializeEnum.class)) {
-                serializeEnumList.add(aClass);
+                serializeEnumList.add((Class<IBaseEnum>)aClass);
             }
         }
     }

@@ -7,17 +7,25 @@ axios.defaults.baseURL = process.env.baseUrl;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 axios.defaults.headers.common["x-requested-with"] = "XMLHttpRequest";
 axios.defaults.withCredentials = true;
+
 axios.defaults.paramsSerializer = function (params) {
   return $.param(params);
 };
+axios.defaults.transformRequest  = [function (data) {
+  if (data && !(data instanceof FormData)) {
+    data = $.param(data);
+  }
+  return data;
+}]
 axios.defaults.transformResponse = [function (data) {
-  return $.parseJSON(data);
+  var resp = $.parseJSON(data);
+  if(resp.status == window.Constant.AjaxStatus.UNAUTHENTICATION){
+    window.location.hash = "/login";
+  }
+  return resp;
 }]
 // 添加请求拦截器
 axios.interceptors.request.use(function (config) {
-  if (config.data && !(config.data instanceof FormData)) {
-      config.data = $.param(config.data);
-  }
   // 在发送请求之前做些什么
   return config;
 }, function (error) {
@@ -28,9 +36,6 @@ axios.interceptors.request.use(function (config) {
 // 添加响应拦截器
 axios.interceptors.response.use(function (response) {
   // 对响应数据做点什么
-  if(response.data && response.data.status == window.Constant.AjaxStatus.UNAUTHENTICATION){
-    window.location.hash = "/login";
-  }
   return response;
 }, function (error) {
   // 对响应错误做点什么
@@ -41,10 +46,11 @@ axios.interceptors.response.use(function (response) {
 
 var axiosIns = {
   getAjaxUrl: function (path) {
-    return this.getContext() + path;
+    if(path.indexOf('http') == 0) return path;
+    return this.getContext() + process.env.proxyPrefix + path;
   },
   getContext: function () {
-    return '/api';
+    return '';
   },
   get: function (path, param) {
     return axios.get(this.getAjaxUrl(path), {params: param});
@@ -82,16 +88,6 @@ var axiosIns = {
       url: this.getAjaxUrl(path),
       method: 'post',
       data: formData,
-        // transformRequest: [function (data) {
-        //     return $.param(data);
-        // }],
-        // transformRequest: [function (data) {
-        //     var ret = ''
-        //     for (var it in data) {
-        //         ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
-        //     }
-        //     return ret
-        // }],
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }

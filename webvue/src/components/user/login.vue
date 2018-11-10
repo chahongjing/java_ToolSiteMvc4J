@@ -61,10 +61,9 @@
         this.axios.post('/userinfo/login', {userCode: $.trim(userCode.val()), password:$.trim(password.val())}).then(function(resp) {
           if (resp.data.status == Constant.AjaxStatus.OK) {
             var url = $("#RedirectUrl").val();
-            url = url ? url : "/Login1.aspx";
             me.user = resp.data.value;
             me.$store.commit("USER_SIGNIN", me.user);
-            window.location = '/';
+            window.location.hash = "/";
           } else if (resp.data.status == Constant.AjaxStatus.NO) {
             alert(resp.data.message);
           }
