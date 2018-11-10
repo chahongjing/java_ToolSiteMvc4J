@@ -1,5 +1,6 @@
 package com.zjy.bll.common;
 
+import com.zjy.baseframework.CookieHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.web.servlet.ShiroHttpServletRequest;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
@@ -53,8 +54,7 @@ public class SessionManager extends DefaultWebSessionManager {
             }
         }
 
-        Cookie cookie = new Cookie(SHIRO_SESSIONID_COOKIE_NAME, jsessionId);
-        rs.addCookie(cookie);
+        CookieHelper.addCookie(rs, SHIRO_SESSIONID_COOKIE_NAME, jsessionId, "/");
         // 设置当前session状态
         request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_SOURCE, ShiroHttpServletRequest.URL_SESSION_ID_SOURCE); // session来源与url
         request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID, jsessionId);

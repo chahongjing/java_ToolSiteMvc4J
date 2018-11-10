@@ -1,5 +1,7 @@
 package com.zjy.baseframework;
 
+import org.apache.commons.lang3.StringUtils;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,9 +15,14 @@ import java.nio.charset.StandardCharsets;
  */
 public class CookieHelper {
     public static boolean addCookie(HttpServletResponse response, String key, String value) {
+        return addCookie(response, key, value, null);
+    }
+
+    public static boolean addCookie(HttpServletResponse response, String key, String value, String path) {
         try {
             value = URLEncoder.encode(value, StandardCharsets.UTF_8.name());
             Cookie cookie = new Cookie(key, value);
+            if(StringUtils.isNoneBlank(path)) cookie.setPath(path.trim());
             response.addCookie(cookie);
             return true;
         } catch (UnsupportedEncodingException e) {

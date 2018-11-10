@@ -65,9 +65,7 @@
                 /bootstrap/**=anon
                 /Controls/**=anon
                 /css/**=anon
-                /configInfo/**=anon
                 /comm/**=anon
-                /menu/**=anon
                 /userinfo/**=anon
                 /test/**=anon
                 /ToolSiteMVC/TestMvc/**=authc

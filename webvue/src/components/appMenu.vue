@@ -61,8 +61,6 @@
             setTimeout(function() {
                 $('.sub-menu').css('transition', 'height ease 0.2s');
             }, 200);
-        } else {
-            alert(resp.msg);
         }
       });
     },

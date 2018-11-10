@@ -489,6 +489,6 @@ window.Utility.Controls = window.Utility.Controls || {};
 
 /// 系统常量
 window.Constant = {
-    AjaxStatus: { OK: "OK", NO: "NO", ERROR: "ERROR", UNLOGIN: "UNLOGIN", UNAUTHORIZED: "UNAUTHORIZED" },
+    AjaxStatus: { OK: "OK", NO: "NO", ERROR: "ERROR", UNLOGIN: "UNLOGIN", UNAUTHORIZED: "UNAUTHORIZED",UNAUTHENTICATION:"UNAUTHENTICATION" },
     EmptyGuid: "00000000-0000-0000-0000-000000000000"
 }
