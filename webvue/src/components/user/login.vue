@@ -60,10 +60,15 @@
         var me = this;
         this.axios.post('/userinfo/login', {userCode: $.trim(userCode.val()), password:$.trim(password.val())}).then(function(resp) {
           if (resp.data.status == Constant.AjaxStatus.OK) {
-            var url = $("#RedirectUrl").val();
             me.user = resp.data.value;
             me.$store.commit("USER_SIGNIN", me.user);
-            window.location.hash = "/";
+            window.Utility.initialQuery();
+            if(window.Query.redirect) {
+              window.Query.redirect = decodeURIComponent(window.Query.redirect);
+              window.location.hash = window.Query.redirect;
+            } else {
+              window.location.hash = "/";
+            }
           } else if (resp.data.status == Constant.AjaxStatus.NO) {
             alert(resp.data.message);
           }

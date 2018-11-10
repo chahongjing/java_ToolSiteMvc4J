@@ -159,6 +159,7 @@ ul.sub-menu > li > a > b {position:absolute;top:0px;right:0;width:0px;height:0px
 }
 .slide-menu ul.sub-menu > li.selected > a > b {display:block;
 }
+/*表格*/
 .table{margin:0;table-layout: fixed}
 .table td,.table th{height:40px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;cursor:default;border:1px solid #d5dade;}
 .table thead td,.table thead th,.table th{background-color:#f1f3f6;text-align: center;padding-left:5px;padding-right:5px;border-bottom-width:1px;}

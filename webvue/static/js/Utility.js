@@ -484,6 +484,31 @@ window.Utility.Controls = window.Utility.Controls || {};
             reader.onload = function (e) {
                 callback && callback(reader.result);
             }
+        },
+        ns.initialQuery = function(url) {
+            var reg, regKeyValue;
+            var arrQuery, arrKeyValue;
+
+            reg = new RegExp("\\?(.*)$", "i");
+            regKeyValue = new RegExp("(.+)=(.*)", "i");
+
+            if (!url) {
+                url = window.location.href;
+            }
+
+            // 将查询信息放在window.Query集合里
+            window.Query = [];
+            arrQuery = url.match(reg);
+            if (!arrQuery || !arrQuery[1]) {
+                return;
+            }
+            arrQuery = arrQuery[1].split("&");
+
+            for (i = 0; i < arrQuery.length; i++) {
+                arrKeyValue = arrQuery[i].match(regKeyValue);
+                if (!arrKeyValue) { continue; }
+                window.Query[arrKeyValue[1]] = arrKeyValue[2];
+            }
         }
 })(window.Utility);
 
