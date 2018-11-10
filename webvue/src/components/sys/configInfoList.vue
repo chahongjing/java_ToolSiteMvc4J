@@ -1,7 +1,7 @@
 <template>
   <div class='maincontent w100p h100p'>
     <div class='list-header-but-group'>
-      <button type="button inline-block" class="btn btn-outline-purple" @click="addConfigInfo()">
+      <button type="button inline-block" class="btn btn-outline-purple" @click="add()">
         <i class='fa fa-plus mr5'></i>添加
       </button>
     </div>
@@ -35,7 +35,7 @@
       </form>
     </div>
     <div class='table-list'>
-      <table class="table table-bordered table-hover">
+      <table class="table table-hover">
         <thead>
           <tr>
           <th class='w50'>#</th>
@@ -54,7 +54,7 @@
           <tr v-for="(item, index) in list">
             <td class="text-center" v-text='index + 1'></td>
             <td>
-              <a class='block w100p h100p' href='javascript:void(0)' v-text='item.name' @click='editConfigInfo(item)'></a>
+              <a class='block w100p h100p' href='javascript:void(0)' v-text='item.name' @click='edit(item)'></a>
             </td>
             <td v-text='item.typeName'></td>
             <td v-text='item.account'></td>
@@ -87,14 +87,14 @@
       }
     },
     methods: {
-      addConfigInfo() {
+      add() {
         var me = this;
         this.axios.get('/comm/getId').then(function(resp) {
           me.$router.push({path: '/sys/configInfoEdit', query: {id: resp.data.value}});
         });
         
       },
-      editConfigInfo(configInfo) {
+      edit(configInfo) {
         this.$router.push({path: '/sys/configInfoEdit', query: {id: configInfo.id}});
         
       },
@@ -111,7 +111,7 @@
       },
       deleteItem:function(item) {
         var me = this;
-        this.axios.get('/configInfo/delete', {configInfoId: item.id}).then(function(resp) {
+        this.axios.get('/configInfo/delete', {id: item.id}).then(function(resp) {
           me.search();
         });
       }

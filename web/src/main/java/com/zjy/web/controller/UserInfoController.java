@@ -77,24 +77,24 @@ public class UserInfoController extends BaseController {
         return "sys/userEdit";
     }
 
-    @RequestMapping("/getUserInfo")
+    @RequestMapping("/getDetail")
     @ResponseBody
-    public BaseResult<UserInfoVo> getUserInfo(String userId) {
-        UserInfoVo userInfo = userInfoSrv.getVo(userId);
+    public BaseResult<UserInfoVo> getDetail(String id) {
+        UserInfoVo userInfo = userInfoSrv.getVo(id);
         return BaseResult.OK(userInfo);
     }
 
-    @RequestMapping("/saveUser")
+    @RequestMapping("/save")
     @ResponseBody
-    public BaseResult<String> saveUser(UserInfoVo userInfo) {
+    public BaseResult<String> save(UserInfoVo userInfo) {
         userInfoSrv.saveUser(userInfo);
         return BaseResult.OK("");
     }
 
     @RequestMapping("/delete")
     @ResponseBody
-    public BaseResult<String> delete(UserInfoVo userInfo) {
-        userInfoSrv.delete(userInfo.getUserId());
+    public BaseResult<String> delete(String id) {
+        userInfoSrv.delete(id);
         return BaseResult.OK("");
     }
 

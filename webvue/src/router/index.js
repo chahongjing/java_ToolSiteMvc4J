@@ -54,6 +54,16 @@ var router = new Router({
     component: resolve => require(['../components/headerAndMenu'], resolve),
     children: [
     {
+      path: 'menuList',
+      name: 'menuList',
+      component: resolve => require(['../components/sys/menuList'], resolve)
+    },
+    {
+      path: 'menuEdit',
+      name: 'menuEdit',
+      component: resolve => require(['../components/sys/menuEdit'], resolve)
+    },
+    {
       path: 'configInfoList',
       name: 'configInfoList',
       component: resolve => require(['../components/sys/configInfoList'], resolve)

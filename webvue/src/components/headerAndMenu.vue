@@ -3,7 +3,7 @@
     <app-header></app-header>
     <div class="body">
       <app-menu></app-menu>
-      <div class="right-main">
+      <div class="right-main" :class='{"fullwin":!showMenu}'>
         <div class="bread">
           <ul>
             <li>
@@ -14,7 +14,7 @@
               <a class='w100p h100p inline-block' href='javascript:void(0)' v-text='item.text' @click='goPage(item)'></a>
             </li>
           </ul>
-          <button type="button" class="btn btn-outline-purple btn-sm fr mr5 mt2" @click='goBack()'>
+          <button type="button" class="btn btn-outline-purple btn-sm fr mr5 mt4" @click='goBack()'>
             <i class='fa fa-reply mr5'></i>返回
           </button>
         </div>
@@ -34,6 +34,7 @@
     name: 'headerAndMenu',
     data () {
       return {
+        showMenu:true,
         menuList:[]
       }
     },
@@ -61,4 +62,5 @@
 </script>
 
 <style scoped>
+.right-main.fullwin{width:calc(100% - 1px);}
 </style>

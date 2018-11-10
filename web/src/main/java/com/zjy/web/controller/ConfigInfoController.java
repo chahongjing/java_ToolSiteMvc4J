@@ -26,24 +26,24 @@ public class ConfigInfoController extends BaseController {
         return BaseResult.OK(pageInfo);
     }
 
-    @RequestMapping("/getConfigInfo")
+    @RequestMapping("/getDetail")
     @ResponseBody
-    public BaseResult<ConfigInfoVo> getConfigInfo(String id) {
+    public BaseResult<ConfigInfoVo> getDetail(String id) {
         ConfigInfoVo userInfo = configInfoSrv.getVo(id);
         return BaseResult.OK(userInfo);
     }
 
-    @RequestMapping("/saveConfigInfo")
+    @RequestMapping("/save")
     @ResponseBody
-    public BaseResult<String> saveConfigInfo(ConfigInfoVo configInfo) {
+    public BaseResult<String> save(ConfigInfoVo configInfo) {
         configInfoSrv.saveConfigInfo(configInfo);
         return BaseResult.OK("");
     }
 
     @RequestMapping("/delete")
     @ResponseBody
-    public BaseResult<String> delete(String configInfoId) {
-        configInfoSrv.delete(configInfoId);
+    public BaseResult<String> delete(String id) {
+        configInfoSrv.delete(id);
         return BaseResult.OK("");
     }
 }

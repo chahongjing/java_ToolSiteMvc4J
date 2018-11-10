@@ -110,13 +110,13 @@
         },
         getDetail: function(id) {
           var me = this;
-          this.axios.get('/configInfo/getConfigInfo', {id:id}).then(function(resp) {
+          this.axios.get('/configInfo/getDetail', {id:id}).then(function(resp) {
             me.configInfo = resp.data.value;
           });
         },
         save: function() {
           var me = this;
-          this.axios.post('/configInfo/saveConfigInfo', me.configInfo).then(function(resp) {
+          this.axios.post('/configInfo/save', me.configInfo).then(function(resp) {
             me.goBack();
           });
         },

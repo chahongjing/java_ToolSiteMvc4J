@@ -17,6 +17,9 @@
         <router-link to="/user/userList">
           <button class="btn btn-default">用户管理</button>
         </router-link>
+        <router-link to="/sys/menuList">
+          <button class="btn btn-default">菜单</button>
+        </router-link>
       </div>
       <div class="footer"></div>
     </div>

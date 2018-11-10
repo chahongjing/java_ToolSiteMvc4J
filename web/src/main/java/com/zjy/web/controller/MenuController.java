@@ -26,6 +26,34 @@ public class MenuController extends BaseController {
     @Autowired
     private MenuService menuSrv;
 
+    @RequestMapping("/queryPageList")
+    @ResponseBody
+    public BaseResult<PageInfo> queryPageList(MenuRequest userInfo) {
+        PageInfo<Menu> pageInfo = menuSrv.queryPageList(userInfo);
+        return BaseResult.OK(pageInfo);
+    }
+
+    @RequestMapping("/getDetail")
+    @ResponseBody
+    public BaseResult<MenuVo> getDetail(String id) {
+        MenuVo userInfo = menuSrv.getVo(id);
+        return BaseResult.OK(userInfo);
+    }
+
+    @RequestMapping("/save")
+    @ResponseBody
+    public BaseResult<String> save(MenuVo menu) {
+        menuSrv.saveMenu(menu);
+        return BaseResult.OK("");
+    }
+
+    @RequestMapping("/delete")
+    @ResponseBody
+    public BaseResult<String> delete(String id) {
+        menuSrv.delete(id);
+        return BaseResult.OK("");
+    }
+
     @RequestMapping("/list")
     public String tableToObject() {
         return "sys/menu";
@@ -36,7 +64,6 @@ public class MenuController extends BaseController {
         model.addAttribute("menuId", menuId);
         return "sys/menuEdit";
     }
-
     @RequestMapping("/queryMenu")
     @ResponseBody
     public BaseResult queryMenu() {
@@ -56,39 +83,10 @@ public class MenuController extends BaseController {
         return BaseResult.OK(nodeList);
     }
 
-
-    @RequestMapping("/queryPageList")
-    @ResponseBody
-    public BaseResult<PageInfo> queryPageList(MenuRequest userInfo) {
-        PageInfo<Menu> pageInfo = menuSrv.queryPageList(userInfo);
-        return BaseResult.OK(pageInfo);
-    }
-
-    @RequestMapping("/getMenuInfo")
-    @ResponseBody
-    public BaseResult<MenuVo> getMenuInfo(String menuId) {
-        MenuVo userInfo = menuSrv.getVo(menuId);
-        return BaseResult.OK(userInfo);
-    }
-
     @RequestMapping("/queryParentList")
     @ResponseBody
     public BaseResult<List<MenuVo>> queryParentList() {
         List<MenuVo> list = menuSrv.queryParentList();
         return BaseResult.OK(list);
-    }
-
-    @RequestMapping("/saveMenu")
-    @ResponseBody
-    public BaseResult<String> saveUser(MenuVo menu) {
-        menuSrv.saveMenu(menu);
-        return BaseResult.OK("");
-    }
-
-    @RequestMapping("/delete")
-    @ResponseBody
-    public BaseResult<String> delete(String menuId) {
-        menuSrv.delete(menuId);
-        return BaseResult.OK("");
     }
 }

@@ -117,13 +117,13 @@
       },
       getDetail: function(id) {
         var me = this;
-        this.axios.get('/userinfo/getUserInfo', {userId:id}).then(function(resp) {
+        this.axios.get('/userinfo/getDetail', {id:id}).then(function(resp) {
           me.user = resp.data.value;
         });
       },
       save: function() {
         var me = this;
-        this.axios.post('/userinfo/saveUser', me.user).then(function(resp) {
+        this.axios.post('/userinfo/save', me.user).then(function(resp) {
           me.goBack();
         });
       },

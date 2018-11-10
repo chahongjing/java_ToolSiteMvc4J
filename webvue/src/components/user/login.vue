@@ -17,7 +17,7 @@
            <i class="fa fa-lock"></i>
          </div>
          <div class="form-button">
-          <button type="button" class="pull-right btn btn-sm btn-primary" id="btnLogin" @click="login">
+          <button type="button" class="pull-right btn btn-sm btn-purple" id="btnLogin" @click="login">
             <i class="fa fa-key"></i><span class="bigger-110">登 录</span>
           </button>
         </div>
@@ -90,7 +90,7 @@ font-size:32px;
 }
 .blue {color:#478fca;
 }
-.login-content .login-form{box-shadow:rgba(0,0,0,0.15) 0 0 2px 1px;padding:20px 35px;
+.login-content .login-form{box-shadow:rgba(114,102,186,0.15) 0 0 2px 1px;padding:20px 35px;
   background-color:#f7f7f7;width:400px;height:260px;}
   .login-form .header {font-size:19px;margin-top:15px;
   }
@@ -112,9 +112,9 @@ font-size:32px;
   .form-button {
     margin-top:30px;
   }
-  .form-button button {background-color:#428bca;width:100px;height:35px;border:4px solid #428bca;border-radius:0;
+  .form-button button {width:100px;height:35px;border-radius:0;border-width:2px;
     transition: 0.2s;-moz-transition: 0.2s;-webkit-transition: 0.2s;-o-transition: 0.2s;
   }
-  .form-button button:hover {background-color:#025aa5;border-color:#428bca;
+  .form-button button:hover {background-color:#5645b7;border-color:#897bda;
   }
 </style>
