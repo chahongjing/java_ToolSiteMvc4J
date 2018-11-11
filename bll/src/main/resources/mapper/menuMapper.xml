@@ -76,9 +76,16 @@
 
 	<select id="queryParentList" resultType="com.zjy.bll.vo.MenuVo">
 		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="menu"/></include>
-		  FROM menu
-		 WHERE pId is null or pId = ''
-		 order by seq
+		FROM menu
+		WHERE pId is null or pId = ''
+		order by seq
+	</select>
+
+	<select id="queryPageMenuList" resultType="com.zjy.bll.vo.MenuVo">
+		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="menu"/></include>
+		FROM menu
+		WHERE url is not null and url &lt;&gt; ''
+		order by seq
 	</select>
 
 	<!-- 其它操作区 -->

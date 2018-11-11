@@ -94,8 +94,8 @@
         });
         
       },
-      edit(configInfo) {
-        this.$router.push({path: '/sys/configInfoEdit', query: {id: configInfo.id}});
+      edit(entity) {
+        this.$router.push({path: '/sys/configInfoEdit', query: {id: entity.id}});
         
       },
       search() {
@@ -109,9 +109,9 @@
         this.pager.pageNum = page;
         this.search();
       },
-      deleteItem:function(item) {
+      deleteItem:function(entity) {
         var me = this;
-        this.axios.get('/configInfo/delete', {id: item.id}).then(function(resp) {
+        this.axios.get('/configInfo/delete', {id: entity.id}).then(function(resp) {
           me.search();
         });
       }

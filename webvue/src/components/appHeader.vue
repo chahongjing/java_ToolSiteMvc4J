@@ -1,7 +1,7 @@
 <template>
   <div class="head">
     <div class="logo">
-      <a class='fl' href="${ctx}" title="首页">
+      <a class='fl' href="#/" title="首页">
         <i class="fa fa-android fa-2 white"></i>
       </a>
       <span class="fl title pl10">首页</span>

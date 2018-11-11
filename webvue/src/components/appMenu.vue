@@ -97,6 +97,7 @@
               }
           }
           sub.isSelected = true;
+          this.$router.push({path: sub.data.url});
       },
       toggleMenu() {
         var temp = !this.showMenu;

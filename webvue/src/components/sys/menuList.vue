@@ -76,8 +76,8 @@
         });
         
       },
-      edit(menu) {
-        this.$router.push({path: '/sys/menuEdit', query: {id: menu.menuId}});
+      edit(entity) {
+        this.$router.push({path: '/sys/menuEdit', query: {id: entity.menuId}});
         
       },
       search() {
@@ -91,9 +91,9 @@
         this.pager.pageNum = page;
         this.search();
       },
-      deleteItem:function(item) {
+      deleteItem:function(entity) {
         var me = this;
-        this.axios.get('/menu/delete', {id: item.menuId}).then(function(resp) {
+        this.axios.get('/menu/delete', {id: entity.menuId}).then(function(resp) {
           me.search();
         });
       }

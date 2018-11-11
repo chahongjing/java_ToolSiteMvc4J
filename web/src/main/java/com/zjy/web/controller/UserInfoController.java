@@ -86,8 +86,8 @@ public class UserInfoController extends BaseController {
 
     @RequestMapping("/save")
     @ResponseBody
-    public BaseResult<String> save(UserInfoVo userInfo) {
-        userInfoSrv.saveUser(userInfo);
+    public BaseResult<String> save(UserInfoVo vo) {
+        userInfoSrv.save(vo);
         return BaseResult.OK("");
     }
 
@@ -98,11 +98,10 @@ public class UserInfoController extends BaseController {
         return BaseResult.OK("");
     }
 
-
     @RequestMapping("/queryPageList")
     @ResponseBody
-    public BaseResult<PageInfo> queryPageList(UserInfoRequest userInfo) {
-        PageInfo<UserInfo> pageInfo = userInfoSrv.queryPageList(userInfo);
+    public BaseResult<PageInfo> queryPageList(UserInfoRequest request) {
+        PageInfo<UserInfoVo> pageInfo = (PageInfo<UserInfoVo>)userInfoSrv.queryPageList(request);
         return BaseResult.OK(pageInfo);
     }
     // endregion

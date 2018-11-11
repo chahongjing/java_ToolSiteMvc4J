@@ -6,7 +6,6 @@ import com.zjy.bll.request.MenuRequest;
 import com.zjy.bll.service.MenuService;
 import com.zjy.bll.vo.MenuVo;
 import com.zjy.bll.vo.ZTreeNode;
-import com.zjy.entities.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,8 +27,8 @@ public class MenuController extends BaseController {
 
     @RequestMapping("/queryPageList")
     @ResponseBody
-    public BaseResult<PageInfo> queryPageList(MenuRequest userInfo) {
-        PageInfo<Menu> pageInfo = menuSrv.queryPageList(userInfo);
+    public BaseResult<PageInfo> queryPageList(MenuRequest request) {
+        PageInfo<MenuVo> pageInfo = (PageInfo<MenuVo>)menuSrv.queryPageList(request);
         return BaseResult.OK(pageInfo);
     }
 
@@ -42,8 +41,8 @@ public class MenuController extends BaseController {
 
     @RequestMapping("/save")
     @ResponseBody
-    public BaseResult<String> save(MenuVo menu) {
-        menuSrv.saveMenu(menu);
+    public BaseResult<String> save(MenuVo vo) {
+        menuSrv.save(vo);
         return BaseResult.OK("");
     }
 
@@ -87,6 +86,13 @@ public class MenuController extends BaseController {
     @ResponseBody
     public BaseResult<List<MenuVo>> queryParentList() {
         List<MenuVo> list = menuSrv.queryParentList();
+        return BaseResult.OK(list);
+    }
+
+    @RequestMapping("/queryPageMenuList")
+    @ResponseBody
+    public BaseResult<List<MenuVo>> queryPageList() {
+        List<MenuVo> list = menuSrv.queryPageMenuList();
         return BaseResult.OK(list);
     }
 }

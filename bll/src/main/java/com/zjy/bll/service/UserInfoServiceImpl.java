@@ -33,6 +33,7 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
 
     /**
      * 添加用户
+     *
      * @param entity
      * @return
      */
@@ -44,17 +45,19 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
 
     /**
      * 修改用户
+     *
      * @param entity
      * @return
      */
     @Override
     @Transactional
-    public int update(UserInfo entity){
+    public int update(UserInfo entity) {
         return super.update(entity);
     }
 
     /**
      * 删除用户
+     *
      * @param id
      * @return
      */
@@ -66,26 +69,69 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
 
     /**
      * 保存用户
-     * @param userInfo
+     *
+     * @param vo
      */
     @Override
     @Transactional
-    public void saveUser(UserInfoVo userInfo) {
-        UserInfoVo vo = getVo(userInfo.getUserId());
-        beforeCheck(userInfo);
+    public void save(UserInfoVo vo) {
+        UserInfoVo voDb = getVo(vo.getUserId());
+        beforeCheck(vo);
         // 处理密码
-        if(vo.getIsSave()) {
-            userInfo.setModifiedOn(new Date());
-            update(userInfo);
+        if (voDb.getIsSave()) {
+            vo.setModifiedOn(new Date());
+            update(vo);
         } else {
-            userInfo.setPassword(shiroRealm.getMd5Hash(userInfo.getPassword(), userInfo.getUserCode()));
-            userInfo.setCreatedOn(new Date());
-            add(userInfo);
+            vo.setPassword(shiroRealm.getMd5Hash(vo.getPassword(), vo.getUserCode()));
+            vo.setCreatedOn(new Date());
+            add(vo);
         }
+    }
+
+    @Override
+    public UserInfoVo get(String id) {
+        return (UserInfoVo) super.get(id);
+    }
+
+    @Override
+    public UserInfoVo getVo(String id) {
+        UserInfoVo vo = get(id);
+        if (vo == null) {
+            vo = new UserInfoVo();
+            vo.setUserId(id);
+            vo.setSex(Sex.Male);
+            vo.setIsSave(false);
+            vo.setIsSystem(YesNo.NO);
+            vo.setIsDisabled(YesNo.NO);
+        } else {
+            vo.setIsSave(true);
+        }
+        return vo;
+    }
+
+    @Override
+    public PageInfo<? extends UserInfo> queryPageList(UserInfoRequest request) {
+        UserInfo user = new UserInfo();
+        user.setUserName(request.getUserName());
+        user.setUserCode(request.getUserName());
+        PageInfo<UserInfoVo> pageInfo = (PageInfo<UserInfoVo>) super.queryPageList(request, user);
+        for (UserInfoVo userInfo : pageInfo.getList()) {
+            if (userInfo.getSex() != null) {
+                userInfo.setSexName(userInfo.getSex().getName());
+            }
+            if (userInfo.getIsDisabled() != null) {
+                userInfo.setIsDisabledName(userInfo.getIsDisabled().getName());
+            }
+            if (userInfo.getIsSystem() != null) {
+                userInfo.setIsSystemName(userInfo.getIsSystem().getName());
+            }
+        }
+        return pageInfo;
     }
 
     /**
      * 登录
+     *
      * @param user
      * @return
      */
@@ -100,7 +146,7 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
         try {
             // 登录
             subject.login(token);
-        }catch(AuthenticationException ex) {
+        } catch (AuthenticationException ex) {
             result.setStatus(ResultStatus.NO);
             result.setMessage("用户名或密码错误！");
             return result;
@@ -131,60 +177,20 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
 
     @Override
     public List<UserInfo> query(UserInfo entity) {
-        return (List<UserInfo>)super.queryList(entity);
+        return (List<UserInfo>) super.queryList(entity);
     }
 
     @Override
-    public PageInfo<? extends UserInfo> queryPageList(UserInfoRequest request) {
-        UserInfo user = new UserInfo();
-        user.setUserName(request.getUserName());
-        user.setUserCode(request.getUserName());
-        PageInfo<UserInfoVo> pageInfo = (PageInfo<UserInfoVo>)super.queryPageList(request, user);
-        for (UserInfoVo userInfo : pageInfo.getList()) {
-            if(userInfo.getSex() != null) {
-                userInfo.setSexName(userInfo.getSex().getName());
-            }
-            if(userInfo.getIsDisabled() != null) {
-                userInfo.setIsDisabledName(userInfo.getIsDisabled().getName());
-            }
-            if(userInfo.getIsSystem() != null) {
-                userInfo.setIsSystemName(userInfo.getIsSystem().getName());
-            }
-        }
-        return pageInfo;
-    }
-
-    @Override
-    public UserInfo getByUserCode(String userCode){
+    public UserInfo getByUserCode(String userCode) {
         return dao.getByCode(userCode);
     }
 
-    public UserInfoVo get(String userId) {
-        return (UserInfoVo)super.get(userId);
-    }
-
-    @Override
-    public UserInfoVo getVo(String userId) {
-        UserInfoVo vo = get(userId);
-        if(vo == null) {
-            vo = new UserInfoVo();
-            vo.setUserId(userId);
-            vo.setSex(Sex.Male);
-            vo.setIsSave(false);
-            vo.setIsSystem(YesNo.NO);
-            vo.setIsDisabled(YesNo.NO);
-        } else {
-            vo.setIsSave(true);
-        }
-        return vo;
-    }
-
-    protected void beforeCheck(UserInfoVo userInfo) {
-        if(StringUtils.isBlank(userInfo.getUserCode())) {
+    protected void beforeCheck(UserInfoVo vo) {
+        if (StringUtils.isBlank(vo.getUserCode())) {
             throw new ServiceException("请输入用户编号！");
         }
-        Map<String, BigDecimal> map = dao.queryRepeatCount(userInfo.getUserId(), userInfo.getUserCode());
-        if(map != null && map.containsKey("CODECOUNT") && map.get("CODECOUNT").intValue() > 0) {
+        Map<String, BigDecimal> map = dao.queryRepeatCount(vo.getUserId(), vo.getUserCode());
+        if (map != null && map.containsKey("CODECOUNT") && map.get("CODECOUNT").intValue() > 0) {
             throw new ServiceException("编号重复！");
         }
     }

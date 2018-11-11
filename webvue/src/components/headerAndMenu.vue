@@ -7,7 +7,7 @@
         <div class="bread">
           <ul>
             <li>
-              <a class='w100p h100p inline-block' href='javascript:void(0)' title='首页'><i class='fa fa-home mr0' @click='goPage()'></i></a>
+              <a class='w100p h100p inline-block' href='javascript:void(0)' title='首页'><i class='fa fa-home mr0' @click='goHomePage()'></i></a>
             </li>
             <li class='bread-item' v-for='item in menuList' :title='item.text'>
               <span class='split'>&gt;</span>
@@ -52,6 +52,9 @@
         } else {
           console.log(item.text);
         }
+      },
+      goHomePage() {
+        this.$router.push({path: '/'});
       },
       goBack:function() {
         this.$router.back(-1);

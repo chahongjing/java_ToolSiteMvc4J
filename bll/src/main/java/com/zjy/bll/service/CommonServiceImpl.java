@@ -23,8 +23,9 @@ public class CommonServiceImpl implements CommonService {
 
     /**
      * 层级关系排序
+     *
      * @param list 列表
-     * @param <T> 类型
+     * @param <T>  类型
      * @return
      */
     public <T extends IHierarchyBase> List<T> getHierarchyList(List<T> list) {
@@ -43,9 +44,10 @@ public class CommonServiceImpl implements CommonService {
 
     /**
      * 获取子集数据
+     *
      * @param parent 父结点
-     * @param list 列表
-     * @param <T> 类型
+     * @param list   列表
+     * @param <T>    类型
      * @return
      */
     private <T extends IHierarchyBase> List<T> getHierarchyChildren(T parent, List<T> list) {

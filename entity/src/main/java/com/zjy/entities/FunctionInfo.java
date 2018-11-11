@@ -1,19 +1,12 @@
 package com.zjy.entities;
 
-public class Permission {
-    private String permissionId;
+public class FunctionInfo {
     private String functionId;
+    private String menuId;
     private String name;
     private String code;
+    private String path;
     private int seq;
-
-    public String getPermissionId() {
-        return permissionId;
-    }
-
-    public void setPermissionId(String permissionId) {
-        this.permissionId = permissionId;
-    }
 
     public String getFunctionId() {
         return functionId;
@@ -39,11 +32,27 @@ public class Permission {
         this.code = code;
     }
 
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
     public int getSeq() {
         return seq;
     }
 
     public void setSeq(int seq) {
         this.seq = seq;
+    }
+
+    public String getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(String menuId) {
+        this.menuId = menuId;
     }
 }

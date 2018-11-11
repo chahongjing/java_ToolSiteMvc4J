@@ -14,20 +14,6 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">名称：</label>
-          <div class="form-content">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">&yen;</span>
-              </div>
-              <input type="text" class="form-control">
-              <div class="input-group-append">
-                <span class="input-group-text">@qq.com</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
           <button type="button" class="btn btn-purple ml20" @click='search()'>
             <i class='fa fa-search mr5'></i>搜索
           </button>
@@ -40,11 +26,9 @@
           <tr>
           <th class='w50'>#</th>
             <th class=''>名称</th>
-            <th class=''>编码</th>
-            <th class='w155'>创建时间</th>
-            <th class='w70'>性别</th>
-            <th class='w70'>系统用户</th>
-            <th class='w70 text-center'>是否禁用</th>
+            <th class=''>功能</th>
+            <th class='w150'>编码</th>
+            <th class='w50'>序号</th>
             <th class='w100'>操作</th>
           </tr>
         </thead>
@@ -52,13 +36,11 @@
           <tr v-for="(item, index) in list">
             <td class="text-center" v-text='index + 1'></td>
             <td>
-              <a class='block w100p h100p' href='javascript:void(0)' v-text='item.userName' @click='edit(item)'></a>
+              <a class='block w100p h100p' href='javascript:void(0)' v-text='item.name' @click='edit(item)'></a>
             </td>
-            <td v-text='item.userCode'></td>
-            <td class='text-center' v-text='$options.filters.formatDate(item.createdOn)'></td>
-            <td class='text-center' v-text='item.sexName'></td>
-            <td class='text-center' v-text='item.isSystemName'></td>
-            <td class='text-center' v-text='item.isDisabledName'></td>
+            <td v-text='item.functionName'></td>
+            <td v-text='item.code'></td>
+            <td class="text-center" v-text='item.seq'></td>
             <td><a class='inline-block' href='javascript:void(0)' @click='deleteItem(item)'><i class='fa fa-trash'></i></a></td>
           </tr>
         </tbody>
@@ -74,31 +56,36 @@
   import commonSrv from '../../common/commonService'
   import pagination from '../common/pagination'
   export default {
-    name: 'userList',
+    name: 'permissionList',
     data () {
       return {
         searchKey:null,
+        functionId:null,
         list: [],
-        pager: {pageNum:1,pageSize:5}
+        pager: {pageNum:1, pageSize:5}
       }
     },
     methods: {
       add() {
         var me = this;
         this.axios.get('/comm/getId').then(function(resp) {
-          me.$router.push({path: '/user/userEdit', query: {id: resp.data.value}});
+          me.$router.push({path: '/sys/permissionEdit', query: {id: resp.data.value, functionId: me.functionId}});
         });
         
       },
       edit(entity) {
-        this.$router.push({path: '/user/userEdit', query: {id: entity.userId}});
+        this.$router.push({path: '/sys/permissionEdit', query: {id: entity.permissionId}});
         
       },
       search() {
         var me = this;
-        this.axios.get('/userinfo/queryPageList', {userName: this.searchKey,pageNum:this.pager.pageNum,pageSize:this.pager.pageSize}).then(function(resp) {
-          me.list = resp.data.value.list;
-          me.pager = commonSrv.getPagerInfo(resp.data.value, me.goPage);
+        this.axios.get('/permission/queryPageList', {name: this.searchKey,functionId: this.functionId,pageNum:this.pager.pageNum,pageSize:this.pager.pageSize}).then(function(resp) {
+          if(resp.data.status == Constant.AjaxStatus.OK) {
+            me.list = resp.data.value.list;
+            me.pager = commonSrv.getPagerInfo(resp.data.value, me.goPage);
+          } else {
+            alert(resp.data.message);
+          }
         });
       },
       goPage(page) {
@@ -107,12 +94,13 @@
       },
       deleteItem:function(entity) {
         var me = this;
-        this.axios.get('/userinfo/delete', {id: entity.userId}).then(function(resp) {
+        this.axios.get('/permission/delete', {id: entity.permissionId}).then(function(resp) {
           me.search();
         });
       }
     },
     mounted: function() {
+      this.functionId = this.$route.query.functionId;
       this.search();
     },
     components:{pagination}

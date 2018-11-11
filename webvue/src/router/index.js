@@ -64,6 +64,36 @@ var router = new Router({
       component: resolve => require(['../components/sys/menuEdit'], resolve)
     },
     {
+      path: 'functionList',
+      name: 'functionList',
+      component: resolve => require(['../components/sys/functionList'], resolve)
+    },
+    {
+      path: 'functionEdit',
+      name: 'functionEdit',
+      component: resolve => require(['../components/sys/functionEdit'], resolve)
+    },
+    {
+      path: 'permissionList',
+      name: 'permissionList',
+      component: resolve => require(['../components/sys/permissionList'], resolve)
+    },
+    {
+      path: 'permissionEdit',
+      name: 'permissionEdit',
+      component: resolve => require(['../components/sys/permissionEdit'], resolve)
+    },
+    {
+      path: 'roleList',
+      name: 'roleList',
+      component: resolve => require(['../components/sys/roleList'], resolve)
+    },
+    {
+      path: 'roleEdit',
+      name: 'roleEdit',
+      component: resolve => require(['../components/sys/roleEdit'], resolve)
+    },
+    {
       path: 'configInfoList',
       name: 'configInfoList',
       component: resolve => require(['../components/sys/configInfoList'], resolve)
@@ -72,6 +102,11 @@ var router = new Router({
       path: 'configInfoEdit',
       name: 'configInfoEdit',
       component: resolve => require(['../components/sys/configInfoEdit'], resolve)
+    },
+    {
+      path: 'roleGrantPermission',
+      name: 'roleGrantPermission',
+      component: resolve => require(['../components/sys/roleGrantPermission'], resolve)
     },
     {
       path: '*',  //*号表示匹配任意内容

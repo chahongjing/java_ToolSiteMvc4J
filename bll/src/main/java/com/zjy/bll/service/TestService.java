@@ -5,5 +5,6 @@ package com.zjy.bll.service;
  */
 public interface TestService {
     int add(int a, int b);
+
     int sub(int a, int b);
 }

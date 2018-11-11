@@ -14,4 +14,5 @@ import java.util.Map;
 public interface MenuDao extends BaseDao<Menu> {
     Map<String, BigDecimal> queryRepeatCount(@Param("menuId") String menuId, @Param("code") String code);
     List<MenuVo> queryParentList();
+    List<MenuVo> queryPageMenuList();
 }

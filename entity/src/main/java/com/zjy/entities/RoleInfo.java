@@ -1,26 +1,17 @@
 package com.zjy.entities;
 
-public class Permission {
-    private String permissionId;
-    private String functionId;
+public class RoleInfo {
+    private String roleId;
     private String name;
     private String code;
     private int seq;
 
-    public String getPermissionId() {
-        return permissionId;
+    public String getRoleId() {
+        return roleId;
     }
 
-    public void setPermissionId(String permissionId) {
-        this.permissionId = permissionId;
-    }
-
-    public String getFunctionId() {
-        return functionId;
-    }
-
-    public void setFunctionId(String functionId) {
-        this.functionId = functionId;
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
     }
 
     public String getName() {

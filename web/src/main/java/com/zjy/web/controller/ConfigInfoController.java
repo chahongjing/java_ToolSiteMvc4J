@@ -21,8 +21,8 @@ public class ConfigInfoController extends BaseController {
 
     @RequestMapping("/queryPageList")
     @ResponseBody
-    public BaseResult<PageInfo> queryPageList(ConfigInfoRequest userInfo) {
-        PageInfo<ConfigInfoVo> pageInfo = (PageInfo<ConfigInfoVo>) configInfoSrv.queryPageList(userInfo);
+    public BaseResult<PageInfo> queryPageList(ConfigInfoRequest request) {
+        PageInfo<ConfigInfoVo> pageInfo = (PageInfo<ConfigInfoVo>) configInfoSrv.queryPageList(request);
         return BaseResult.OK(pageInfo);
     }
 
@@ -35,8 +35,8 @@ public class ConfigInfoController extends BaseController {
 
     @RequestMapping("/save")
     @ResponseBody
-    public BaseResult<String> save(ConfigInfoVo configInfo) {
-        configInfoSrv.saveConfigInfo(configInfo);
+    public BaseResult<String> save(ConfigInfoVo vo) {
+        configInfoSrv.save(vo);
         return BaseResult.OK("");
     }
 

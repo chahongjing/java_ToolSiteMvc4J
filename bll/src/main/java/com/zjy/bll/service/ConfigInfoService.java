@@ -9,11 +9,15 @@ import com.zjy.entities.ConfigInfo;
  * Created by Administrator on 2018/11/1.
  */
 public interface ConfigInfoService {
-    PageInfo<? extends ConfigInfo> queryPageList(ConfigInfoRequest request);
+    int add(ConfigInfo po);
 
-    ConfigInfoVo getVo(String configInfoId);
-
-    void saveConfigInfo(ConfigInfoVo configInfo);
+    int update(ConfigInfo po);
 
     int delete(String id);
+
+    void save(ConfigInfoVo vo);
+
+    ConfigInfoVo getVo(String id);
+
+    PageInfo<? extends ConfigInfo> queryPageList(ConfigInfoRequest request);
 }

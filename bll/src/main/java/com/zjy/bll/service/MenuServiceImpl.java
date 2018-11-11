@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 public class MenuServiceImpl extends BaseService<MenuDao, Menu> implements MenuService {
     /**
      * 添加用户
+     *
      * @param entity
      * @return
      */
@@ -32,17 +33,19 @@ public class MenuServiceImpl extends BaseService<MenuDao, Menu> implements MenuS
 
     /**
      * 修改用户
+     *
      * @param entity
      * @return
      */
     @Override
     @Transactional
-    public int update(Menu entity){
+    public int update(Menu entity) {
         return super.update(entity);
     }
 
     /**
      * 删除用户
+     *
      * @param id
      * @return
      */
@@ -54,39 +57,40 @@ public class MenuServiceImpl extends BaseService<MenuDao, Menu> implements MenuS
 
     /**
      * 保存用户
-     * @param menuInfo
+     *
+     * @param vo
      */
     @Override
     @Transactional
-    public void saveMenu(MenuVo menuInfo) {
-        MenuVo vo = getVo(menuInfo.getMenuId());
-        beforeCheck(menuInfo);
+    public void save(MenuVo vo) {
+        MenuVo voDb = getVo(vo.getMenuId());
+        beforeCheck(vo);
         // 处理密码
-        if(vo.getIsSave()) {
-            update(menuInfo);
+        if (voDb.getIsSave()) {
+            update(vo);
         } else {
-            add(menuInfo);
+            add(vo);
         }
     }
 
     @Override
     public PageInfo<? extends Menu> queryPageList(MenuRequest request) {
-        Menu menu = new Menu();
-        menu.setName(request.getName());
-        PageInfo<MenuVo> pageInfo = (PageInfo<MenuVo>)super.queryPageList(request, menu);
+        Menu po = new Menu();
+        po.setName(request.getName());
+        PageInfo<MenuVo> pageInfo = (PageInfo<MenuVo>) super.queryPageList(request, po);
         return pageInfo;
     }
 
-    public MenuVo get(String menuId) {
-        return (MenuVo)super.get(menuId);
+    public MenuVo get(String id) {
+        return (MenuVo) super.get(id);
     }
 
     @Override
-    public MenuVo getVo(String menuId) {
-        MenuVo vo = get(menuId);
-        if(vo == null) {
+    public MenuVo getVo(String id) {
+        MenuVo vo = get(id);
+        if (vo == null) {
             vo = new MenuVo();
-            vo.setMenuId(menuId);
+            vo.setMenuId(id);
             vo.setIsSave(false);
         } else {
             vo.setIsSave(true);
@@ -94,12 +98,12 @@ public class MenuServiceImpl extends BaseService<MenuDao, Menu> implements MenuS
         return vo;
     }
 
-    protected void beforeCheck(MenuVo menu) {
-        if(StringUtils.isBlank(menu.getName())) {
+    protected void beforeCheck(MenuVo po) {
+        if (StringUtils.isBlank(po.getName())) {
             throw new ServiceException("请输入功能名称！");
         }
-        Map<String, BigDecimal> map = dao.queryRepeatCount(menu.getMenuId(), menu.getCode());
-        if(map != null && map.containsKey("CODECOUNT") && map.get("CODECOUNT").intValue() > 0) {
+        Map<String, BigDecimal> map = dao.queryRepeatCount(po.getMenuId(), po.getCode());
+        if (map != null && map.containsKey("CODECOUNT") && map.get("CODECOUNT").intValue() > 0) {
             throw new ServiceException("功能名称重复！");
         }
     }
@@ -108,8 +112,13 @@ public class MenuServiceImpl extends BaseService<MenuDao, Menu> implements MenuS
         return dao.queryParentList();
     }
 
+    @Override
+    public List<MenuVo> queryPageMenuList(){
+        return dao.queryPageMenuList();
+    }
+
     public List<MenuVo> queryAllMenu() {
-        List<MenuVo> result = new ArrayList<>(), list = (List<MenuVo>)dao.query(null);
+        List<MenuVo> result = new ArrayList<>(), list = (List<MenuVo>) dao.query(null);
         List<MenuVo> parentList = list.stream().filter(item -> StringUtils.isBlank(item.getPId())).collect(Collectors.toList());
         List<MenuVo> children = list.stream().filter(item -> StringUtils.isNotBlank(item.getPId())).collect(Collectors.toList());
         for (MenuVo parent : parentList) {

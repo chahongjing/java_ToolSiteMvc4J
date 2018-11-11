@@ -13,9 +13,17 @@ import java.util.List;
  * @create 2016-12-05 22:16
  */
 public interface UserInfoService {
-    UserInfoVo getVo(String userId);
+    int add(UserInfo po);
 
-    void saveUser(UserInfoVo userInfo);
+    int update(UserInfo po);
+
+    int delete(String id);
+
+    void save(UserInfoVo vo);
+
+    UserInfoVo getVo(String id);
+
+    PageInfo<? extends UserInfo> queryPageList(UserInfoRequest request);
 
     BaseResult<UserInfo> login(UserInfo user);
 
@@ -23,13 +31,5 @@ public interface UserInfoService {
 
     List<UserInfo> query(UserInfo user);
 
-    PageInfo queryPageList(UserInfoRequest request);
-
-    UserInfo get(String id);
-
     UserInfo getByUserCode(String userCode);
-
-    int add(UserInfo entity);
-
-    int delete(String id);
 }

@@ -1,11 +1,7 @@
 package com.zjy.bll.service;
 
-import com.alibaba.fastjson.JSON;
 import com.zjy.baseframework.DbHelperNew;
-import com.zjy.baseframework.EnumHelper;
-import com.zjy.baseframework.beans.EnumBean;
 import com.zjy.baseframework.enums.DbType;
-import com.zjy.baseframework.mybatis.IBaseEnum;
 import com.zjy.bll.common.BaseService;
 import com.zjy.bll.dao.ToolDao;
 import com.zjy.entities.TableColumnInfo;

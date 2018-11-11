@@ -3,9 +3,9 @@ package com.zjy.web.controller;
 import com.github.pagehelper.PageInfo;
 import com.zjy.baseframework.BaseResult;
 import com.zjy.bll.request.PermissionRequest;
-import com.zjy.bll.service.MenuService;
+import com.zjy.bll.service.FunctionInfoService;
 import com.zjy.bll.service.PermissionService;
-import com.zjy.bll.vo.MenuVo;
+import com.zjy.bll.vo.FunctionInfoVo;
 import com.zjy.bll.vo.PermissionVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +21,7 @@ public class PermissionController extends BaseController {
     private PermissionService permissionSrv;
 
     @Autowired
-    private MenuService menuSrv;
+    private FunctionInfoService functionInfoSrv;
 
         @RequestMapping("/list")
         public String list(String menuId, Model model) {
@@ -38,34 +38,34 @@ public class PermissionController extends BaseController {
 
         @RequestMapping("/queryPageList")
         @ResponseBody
-        public BaseResult<PageInfo<PermissionVo>> queryPageList(PermissionRequest permissionInfo) {
-            PageInfo<PermissionVo> pageInfo = permissionSrv.queryPageList(permissionInfo);
+        public BaseResult<PageInfo<PermissionVo>> queryPageList(PermissionRequest request) {
+            PageInfo<PermissionVo> pageInfo = (PageInfo<PermissionVo>)permissionSrv.queryPageList(request);
             return BaseResult.OK(pageInfo);
         }
 
-        @RequestMapping("/getPermissionInfo")
+        @RequestMapping("/getDetail")
         @ResponseBody
-        public BaseResult<PermissionVo> getPermissionInfo(String permissionId, String menuId) {
-            PermissionVo permissionVo = permissionSrv.getVo(permissionId);
+        public BaseResult<PermissionVo> getDetail(String id, String functionId) {
+            PermissionVo permissionVo = permissionSrv.getVo(id);
             if(!permissionVo.getIsSave()) {
-                permissionVo.setMenuId(menuId);
-                MenuVo menu = menuSrv.getVo(menuId);
-                permissionVo.setMenuName(menu.getName());
+                permissionVo.setFunctionId(functionId);
+                FunctionInfoVo functionInfo = functionInfoSrv.getVo(functionId);
+                permissionVo.setFunctionName(functionInfo.getName());
             }
             return BaseResult.OK(permissionVo);
         }
 
-        @RequestMapping("/savePermission")
+        @RequestMapping("/save")
         @ResponseBody
-        public BaseResult<String> saveUser(PermissionVo permission) {
-            permissionSrv.savePermission(permission);
+        public BaseResult<String> save(PermissionVo vo) {
+            permissionSrv.save(vo);
             return BaseResult.OK("");
         }
 
     @RequestMapping("/delete")
     @ResponseBody
-    public BaseResult<String> delete(String permissionId) {
-        permissionSrv.delete(permissionId);
+    public BaseResult<String> delete(String id) {
+        permissionSrv.delete(id);
         return BaseResult.OK("");
     }
 }

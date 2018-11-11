@@ -3,22 +3,18 @@
     <app-header></app-header>
     <div class="body">
       <app-menu></app-menu>
-      <div class="right-main">
-        <div class="bread"></div>
+      <div class="right-main" :class='{"fullwin":!showMenu}'>
+        <div class="bread">
+          <ul>
+            <li>
+              <a class='w100p h100p inline-block' href='javascript:void(0)' title='首页'><i class='fa fa-home mr0' @click='goHomePage()'></i></a>
+            </li>
+          </ul>
+        </div>
         <div class="right-content">
-          <h1>{{ msg }}</h1>
           <router-link to="/login">
             <button class="btn btn-default">登录</button>
           </router-link>
-        </router-link>
-        <router-link to="/sys/configInfoList">
-          <button class="btn btn-default">配置</button>
-        </router-link>
-        <router-link to="/user/userList">
-          <button class="btn btn-default">用户管理</button>
-        </router-link>
-        <router-link to="/sys/menuList">
-          <button class="btn btn-default">菜单</button>
         </router-link>
       </div>
       <div class="footer"></div>
@@ -34,7 +30,7 @@
     name: 'index',
     data () {
       return {
-        msg: 'Welcome to Your Vue index'
+        showMenu: 'true'
       }
     },
     components: {appHeader, appMenu},
@@ -44,7 +40,9 @@
     //this.$router.push({name: 'myPage', params:{ id:'1'}});
     this.$router.push({path: '/myPage', query: {id: '1'}});
     //this.$router.push({name: 'myPage', query:{ id:'1'}});
-  }
+  },
+      goHomePage() {
+      }
 }
 }
 </script>

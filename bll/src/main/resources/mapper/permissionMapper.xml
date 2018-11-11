@@ -5,15 +5,15 @@
 	<!-- 添加 -->
 	<insert id="add">
 		INSERT INTO Permission(<include refid="field"></include>)
-		VALUES(#{permissionId, jdbcType=VARCHAR}, #{menuId, jdbcType=VARCHAR}, #{name, jdbcType=VARCHAR}, #{code, jdbcType=VARCHAR}, #{seq, jdbcType=INTEGER})
+		VALUES(#{permissionId, jdbcType=VARCHAR}, #{functionId, jdbcType=VARCHAR}, #{name, jdbcType=VARCHAR}, #{code, jdbcType=VARCHAR}, #{seq, jdbcType=INTEGER})
 	</insert>
 
 	<!-- 更新 -->
 	<update id="update">
         update Permission
         <set>
-			<if test='menuId != null and menuId != ""'>
-				menuId = #{menuId, jdbcType=VARCHAR},
+			<if test='functionId != null and functionId != ""'>
+				functionId = #{functionId, jdbcType=VARCHAR},
 			</if>
 			<if test='name != null and name != ""'>
 				name = #{name, jdbcType=VARCHAR},
@@ -35,24 +35,24 @@
 
 	<!-- 获取 -->
 	<select id="get" resultType="com.zjy.bll.vo.PermissionVo">
-		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="permission"/></include>,
-		        menu.name as menuName
-		  FROM permission
-		 inner join menu on menu.menuid = permission.menuid
-		 WHERE permission.permissionId = #{id, jdbcType = VARCHAR}
+		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="p"/></include>,
+		        f.name as functionName
+		  FROM permission p
+		 inner join functioninfo f on p.functionId = f.functionId
+		 WHERE p.permissionId = #{id, jdbcType = VARCHAR}
 	</select>
 
 	<!-- 查询简单列表 -->
 	<select id="query" resultType="com.zjy.bll.vo.PermissionVo">
-		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="permission"/></include>,
-		        menu.name as menuName
-		FROM permission
-		left join menu on permission.menuid = menu.menuId
+		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="p"/></include>,
+		        f.name as functionName
+		FROM permission p
+		inner join functioninfo f on p.functionId = f.functionId
 		WHERE 1 = 1
 		<if test='name != null and name != ""'>
-			and permission.name like '%' || #{name, jdbcType=VARCHAR} || '%'
+			and p.name like '%' || #{name, jdbcType=VARCHAR} || '%'
 		</if>
-		order by menu.seq, permission.seq
+		order by f.seq, p.seq
 	</select>
 
 	<!-- 查询复杂列表 -->
@@ -70,15 +70,20 @@
 	</select>
 
 	<!-- 其它操作区 -->
-
+	<select id="queryAllPermissionList" resultType="com.zjy.bll.vo.PermissionVo">
+		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="permission"/></include>
+		FROM permission
+		WHERE 2 = 2
+		order by seq
+	</select>
 
 	<!-- 公共信息 -->
 	<!-- 字段 -->
 	<sql id="field">
-		permissionId, menuId, name, code, seq
+		permissionId, functionId, name, code, seq
 	</sql>
 	 <!-- 带前缀的字段 -->
 	<sql id="fieldWithPrefix">
-		${tableName}.permissionId, ${tableName}.menuId, ${tableName}.name, ${tableName}.code, ${tableName}.seq
+		${tableName}.permissionId, ${tableName}.functionId, ${tableName}.name, ${tableName}.code, ${tableName}.seq
 	</sql>
 </mapper>

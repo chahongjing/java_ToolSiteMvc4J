@@ -4,7 +4,7 @@ import com.zjy.entities.Permission;
 
 public class PermissionVo extends Permission {
     private boolean isSave;
-    private String menuName;
+    private String functionName;
 
     public boolean getIsSave() {
         return isSave;
@@ -14,11 +14,11 @@ public class PermissionVo extends Permission {
         this.isSave = isSave;
     }
 
-    public String getMenuName() {
-        return menuName;
+    public String getFunctionName() {
+        return functionName;
     }
 
-    public void setMenuName(String menuName) {
-        this.menuName = menuName;
+    public void setFunctionName(String functionName) {
+        this.functionName = functionName;
     }
 }

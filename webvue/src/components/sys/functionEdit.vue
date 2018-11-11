@@ -1,23 +1,33 @@
 <template>
   <div class="mypanel" style="width:500px;margin:auto;margin-top:20px;">
-    <div class="panel-heading font-bold">菜单信息</div>
+    <div class="panel-heading font-bold">功能信息</div>
     <div class="panel-body">
       <form class='myform form-label-w120 block-form-group'>
         <div class="form-group">
           <label class="form-label">名称：</label>
           <div class="form-content">
             <input type="text" class="form-control" placeholder="名称" autofocus 
-            v-model='menu.name'>
+            v-model='functionInfo.name'>
           </div>
           <div class='form-info'>
             <i class='fa'></i>
           </div>
         </div>
-        <div class="form-group">
-          <label class="form-label">父级：</label>
-          <div class="form-content">
-            <select class="form-control" v-model='menu.pId'
-            placeholder='请选择类型'>
+      <div class="form-group">
+        <label class="form-label">编码：</label>
+        <div class="form-content">
+          <input type="text" class="form-control" placeholder="编码"
+          v-model='functionInfo.code'>
+        </div>
+        <div class='form-info'>
+          <i class='fa fa-question-circle-o'></i>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">菜单：</label>
+        <div class="form-content">
+          <select class="form-control" v-model='functionInfo.menuId'
+          placeholder='请选择类型'>
             <option>--请选择类型--</option>
             <option v-for='item in menuList':value="item.menuId" v-text="item.name"></option>
           </select>
@@ -27,20 +37,10 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="form-label">编码：</label>
-        <div class="form-content">
-          <input type="text" class="form-control" placeholder="编码"
-          v-model='menu.code'>
-        </div>
-        <div class='form-info'>
-          <i class='fa fa-question-circle-o'></i>
-        </div>
-      </div>
-      <div class="form-group">
         <label class="form-label">路径：</label>
         <div class="form-content">
           <input type="text" class="form-control" placeholder="路径"
-          v-model='menu.url'>
+          v-model='functionInfo.path'>
         </div>
         <div class='form-info'>
           <i class='fa fa-question-circle-o'></i>
@@ -50,17 +50,7 @@
         <label class="form-label">序号：</label>
         <div class="form-content">
           <input type="num" class="form-control" step='1' placeholder="序号"
-          v-model='menu.seq'>
-        </div>
-        <div class='form-info'>
-          <i class='fa fa-question-circle-o'></i>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">图标：</label>
-        <div class="form-content">
-          <input type="text" class="form-control" placeholder="图标"
-          v-model='menu.icon'>
+          v-model='functionInfo.seq'>
         </div>
         <div class='form-info'>
           <i class='fa fa-question-circle-o'></i>
@@ -76,10 +66,10 @@
 
 <script>
   export default {
-    name: 'menuEdit',
+    name: 'functionEdit',
     data () {
       return {
-        menu:{menuId:null,name:null,code:null,url:null,seq:null,icon:null},
+        functionInfo:{functionId:null,menuId:null,name:null,code:null,path:null,seq:null},
         menuList:[]
         }
       },
@@ -89,19 +79,27 @@
         },
         getDetail: function(id) {
           var me = this;
-          this.axios.get('/menu/getDetail', {id:id}).then(function(resp) {
-            me.menu = resp.data.value;
+          this.axios.get('/function/getDetail', {id:id}).then(function(resp) {
+            if(resp.data.status == Constant.AjaxStatus.OK) {
+              me.functionInfo = resp.data.value;
+            } else {
+              alert(resp.data.message);
+            }
           });
         },
         save: function() {
           var me = this;
-          this.axios.post('/menu/save', me.menu).then(function(resp) {
-            me.goBack();
+          this.axios.post('/function/save', me.functionInfo).then(function(resp) {
+            if(resp.data.status == Constant.AjaxStatus.OK) {
+              me.goBack();
+            } else {
+              alert(resp.data.message);
+            }
           });
         },
         getMenuList() {
           var me = this;
-          this.axios.post('/menu/queryParentList', me.menu).then(function(resp) {
+          this.axios.post('/menu/queryPageMenuList', me.menu).then(function(resp) {
             if(resp.data.status == Constant.AjaxStatus.OK) {
               me.menuList = resp.data.value;
             } else {
