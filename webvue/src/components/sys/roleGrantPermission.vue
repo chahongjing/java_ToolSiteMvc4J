@@ -7,7 +7,7 @@
           <i></i>
           <span v-text='firstMenu.name'></span>
         </label>
-        <div class='inline-block fr'>
+        <div class='inline-block fr' v-if='firstMenu.subList.length > 0'>
           <label class="radio_checkbox checkall">
             <input type='checkbox' />
             <i></i>
@@ -24,7 +24,7 @@
               <i></i>
               <span v-text='secondMenu.name'></span>
             </label>
-            <div class='inline-block fr'>
+            <div class='inline-block fr' v-if='secondMenu.subList.length > 0'>
               <label class="radio_checkbox checkall">
                 <input type='checkbox' />
                 <i></i>
@@ -41,7 +41,7 @@
                   <i></i>
                   <span v-text='functionItem.name'></span>
                 </label>
-                <div class='inline-block fr'>
+                <div class='inline-block fr' v-if='functionItem.subList.length > 0'>
                   <label class="radio_checkbox checkall">
                     <input type='checkbox' />
                     <i></i>

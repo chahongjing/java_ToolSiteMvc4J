@@ -15,8 +15,7 @@
           <router-link to="/login">
             <button class="btn btn-default">登录</button>
           </router-link>
-        </router-link>
-      </div>
+      	</div>
       <div class="footer"></div>
     </div>
   </div>

@@ -1,28 +1,30 @@
 <template>
-  <div class="login-content">
-    <h1>
-      <i class="fa fa-leaf green"></i><span class="red">后台管理</span><span class="grey" id="id-text2">系统</span>
-    </h1>
-    <h4 class="copy-right blue"><i class="fa fa-copyright"></i>&nbsp;Zjy Office</h4>
-    <div class="login-form">
-      <form id="formLogin" method="post" beforesubmit='return false'>
-        <input type="hidden" id="RedirectUrl" name="RedirectUrl" value=""/>
-        <h4 class="header blue"><i class="fa fa-coffee green"></i>请输入您的信息</h4>
-        <div class="form-control">
-          <input type="text" name="UserCode" maxlength="30" placeholder="请输入账户"
-          autofocus/><i class="fa fa-user"></i>
-        </div>
-        <div class="form-control">
-         <input type="password" name="Password" maxlength="30" placeholder="请输入密码"/>
-           <i class="fa fa-lock"></i>
-         </div>
-         <div class="form-button">
-          <button type="button" class="pull-right btn btn-sm btn-purple" id="btnLogin" @click="login">
-            <i class="fa fa-key"></i><span class="bigger-110">登 录</span>
-          </button>
-        </div>
-      </form>
-    </div>
+  <div class='main'>
+	  <div class="login-content">
+	    <h1>
+	      <i class="fa fa-leaf green"></i><span class="red">后台管理</span><span class="grey" id="id-text2">系统</span>
+	    </h1>
+	    <h4 class="copy-right blue"><i class="fa fa-copyright"></i>&nbsp;Zjy Office</h4>
+	    <div class="login-form">
+	      <form id="formLogin" method="post" beforesubmit='return false'>
+	        <input type="hidden" id="RedirectUrl" name="RedirectUrl" value=""/>
+	        <h4 class="header blue"><i class="fa fa-coffee green"></i>请输入您的信息</h4>
+	        <div class="form-control">
+	          <input type="text" name="UserCode" maxlength="30" placeholder="请输入账户"
+	          autofocus/><i class="fa fa-user"></i>
+	        </div>
+	        <div class="form-control">
+	         <input type="password" name="Password" maxlength="30" placeholder="请输入密码"/>
+	           <i class="fa fa-lock"></i>
+	         </div>
+	         <div class="form-button">
+	          <button type="button" class="pull-right btn btn-sm btn-purple" id="btnLogin" @click="login">
+	            <i class="fa fa-key"></i><span class="bigger-110">登 录</span>
+	          </button>
+	        </div>
+	      </form>
+	    </div>
+	  </div>
   </div>
 </template>
 
@@ -78,8 +80,8 @@
   }
 </script>
 
-<style>
-  html,body {background: #dfe0e2 url('../../../static/bootstrap/img/pattern.jpg') repeat;margin:0;padding:0;width:100%;height:100%;
+<style scoped>
+.main{background: #dfe0e2 url('../../../static/bootstrap/img/pattern.jpg') repeat;width:100%;height:100%;
 }
 .login-content {
   width:400px;height:360px;position:absolute;top:45%;left:50%;margin-left:-200px;margin-top:-250px;
