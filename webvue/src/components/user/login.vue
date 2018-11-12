@@ -99,27 +99,27 @@ font-size:32px;
   background-color:#f7f7f7;width:400px;height:260px;}
   .login-form .header {font-size:19px;margin-top:15px;
   }
-  .form-control {height:34px;width:100%;border:none;position:relative;margin-top:25px;
+.login-form  .form-control {height:34px;width:100%;border:none;position:relative;margin-top:25px;
   }
-  .form-control input {width:100%;height:100%;height:34px;position:absolute;left:0;top:0;outline:none;
+.login-form  .form-control input {width:100%;height:100%;height:34px;position:absolute;left:0;top:0;outline:none;
     text-indent:10px;font-size:14px;border:1px solid #d5d5d5;line-height:34px;
     transition: 0.2s;-moz-transition: 0.2s;-webkit-transition: 0.2s;-o-transition: 0.2s;
   }
-  .form-control input:hover {
+.login-form  .form-control input:hover {
     border-color: #b5b5b5;
   }
 
-  .form-control input:focus {
+.login-form  .form-control input:focus {
     border-color: #f59942;
   }
-  .form-control i {position:absolute;right:10px;top:10px;color:#55595c;
+.login-form  .form-control i {position:absolute;right:10px;top:10px;color:#55595c;
   }
-  .form-button {
+.login-form  .form-button {
     margin-top:30px;
   }
-  .form-button button {width:100px;height:35px;border-radius:0;border-width:2px;
+.login-form  .form-button button {width:100px;height:35px;border-radius:0;border-width:2px;
     transition: 0.2s;-moz-transition: 0.2s;-webkit-transition: 0.2s;-o-transition: 0.2s;
   }
-  .form-button button:hover {background-color:#5645b7;border-color:#897bda;
+.login-form  .form-button button:hover {background-color:#5645b7;border-color:#897bda;
   }
 </style>
