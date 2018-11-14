@@ -7,6 +7,7 @@ import com.zjy.bll.dao.RoleInfoDao;
 import com.zjy.bll.request.RoleInfoRequest;
 import com.zjy.bll.vo.*;
 import com.zjy.entities.RoleInfo;
+import com.zjy.entities.enums.PermissionType;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.util.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,6 +130,7 @@ public class RoleInfoServiceImpl extends BaseService<RoleInfoDao, RoleInfo> impl
             firtMenu.setId(id);
             firtMenu.setRelativeId(menuVo.getMenuId());
             firtMenu.setName(menuVo.getName());
+            firtMenu.setType(PermissionType.FirstMenu);
             firtMenu.setIsCheck(false);
             if(list.size() == 0) firtMenu.setShowDetail(true);
             list.add(firtMenu);
@@ -140,6 +142,7 @@ public class RoleInfoServiceImpl extends BaseService<RoleInfoDao, RoleInfo> impl
                 secondMenu.setId(id);
                 secondMenu.setRelativeId(child.getMenuId());
                 secondMenu.setName(child.getName());
+                secondMenu.setType(PermissionType.SecondMenu);
                 secondMenu.setIsCheck(false);
                 if(firtMenu.getSubList().size() == 0) secondMenu.setShowDetail(true);
                 firtMenu.getSubList().add(secondMenu);
@@ -151,6 +154,7 @@ public class RoleInfoServiceImpl extends BaseService<RoleInfoDao, RoleInfo> impl
                     functionItem.setId(id);
                     functionItem.setRelativeId(function.getFunctionId());
                     functionItem.setName(function.getName());
+                    functionItem.setType(PermissionType.FunctionItem);
                     functionItem.setIsCheck(false);
                     if(secondMenu.getSubList().size() == 0) functionItem.setShowDetail(true);
                     secondMenu.getSubList().add(functionItem);
@@ -162,6 +166,7 @@ public class RoleInfoServiceImpl extends BaseService<RoleInfoDao, RoleInfo> impl
                         permissionItem.setId(id);
                         permissionItem.setRelativeId(permission.getPermissionId());
                         permissionItem.setName(permission.getName());
+                        permissionItem.setType(PermissionType.Permission);
                         permissionItem.setIsCheck(false);
                         if(functionItem.getSubList().size() == 0) permissionItem.setShowDetail(true);
                         functionItem.getSubList().add(permissionItem);
@@ -170,6 +175,11 @@ public class RoleInfoServiceImpl extends BaseService<RoleInfoDao, RoleInfo> impl
             }
         }
         return list;
+    }
+
+    @Override
+    public void savePermission(List<RelateCheckVo> list) {
+
     }
 
     protected void beforeCheck(RoleInfoVo po) {

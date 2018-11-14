@@ -1,5 +1,7 @@
 package com.zjy.bll.vo;
 
+import com.zjy.entities.enums.PermissionType;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +10,8 @@ public class RelateCheckVo {
     private String name;
     private String relativeId;
     private boolean isCheck;
+    private boolean isChildrenChecked;
+    private PermissionType type;
     private boolean showDetail;
     List<RelateCheckVo> subList;
 
@@ -61,5 +65,21 @@ public class RelateCheckVo {
 
     public void setShowDetail(boolean showDetail) {
         this.showDetail = showDetail;
+    }
+
+    public boolean getIsChildrenChecked() {
+        return isChildrenChecked;
+    }
+
+    public void setChildrenChecked(boolean isChildrenChecked) {
+        this.isChildrenChecked = isChildrenChecked;
+    }
+
+    public PermissionType getType() {
+        return type;
+    }
+
+    public void setType(PermissionType type) {
+        this.type = type;
     }
 }

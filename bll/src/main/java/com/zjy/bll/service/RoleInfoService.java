@@ -22,4 +22,6 @@ public interface RoleInfoService {
     PageInfo<? extends RoleInfo> queryPageList(RoleInfoRequest request);
 
     List<RelateCheckVo> getRolePermission(String id);
+
+    void savePermission(List<RelateCheckVo> list);
 }
