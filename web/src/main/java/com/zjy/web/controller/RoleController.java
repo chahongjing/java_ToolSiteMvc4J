@@ -1,5 +1,6 @@
 package com.zjy.web.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.zjy.baseframework.BaseResult;
 import com.zjy.bll.request.RoleInfoRequest;
@@ -68,5 +69,13 @@ public class RoleController extends BaseController {
     public BaseResult<List<RelateCheckVo>> getRolePermission(String id) {
         List<RelateCheckVo> list = roleInfoSrv.getRolePermission(id);
         return BaseResult.OK(list);
+    }
+
+    @RequestMapping("/savePermission")
+    @ResponseBody
+    public BaseResult savePermission(String listStr) {
+        List<RelateCheckVo> list = JSON.parseArray(listStr, RelateCheckVo.class);
+        roleInfoSrv.savePermission(list);
+        return BaseResult.OK();
     }
 }
