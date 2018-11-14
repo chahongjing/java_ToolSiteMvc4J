@@ -3,13 +3,13 @@
     <div class="mypanel" v-for='firstMenu in list'>
       <div class="panel-heading font-bold" :class='{"noboderbottom":firstMenu.subList.length == 0 || !firstMenu.showDetail}'>
         <label class="radio_checkbox">
-          <input type='checkbox' v-model='firstMenu.isCheck' />
+          <input type='checkbox' v-model='firstMenu.isCheck' @change='save(firstMenu)' />
           <i></i>
           <span v-text='firstMenu.name'></span>
         </label>
         <div class='inline-block fr' v-if='firstMenu.subList.length > 0'>
           <label class="radio_checkbox checkall">
-            <input type='checkbox' />
+            <input type='checkbox' v-model='firstMenu.isChildrenChecked' @change='saveGroup(firstMenu)' />
             <i></i>
             <span>全选</span>
           </label>
@@ -20,13 +20,13 @@
         <div class="mypanel subpanel" v-for='secondMenu in firstMenu.subList'>
           <div class="panel-heading font-bold" :class='{"noboderbottom":secondMenu.subList.length == 0 || !secondMenu.showDetail}'>
             <label class="radio_checkbox">
-              <input type='checkbox' v-model='secondMenu.isCheck' />
+              <input type='checkbox' v-model='secondMenu.isCheck' @change='save(secondMenu)' />
               <i></i>
               <span v-text='secondMenu.name'></span>
             </label>
             <div class='inline-block fr' v-if='secondMenu.subList.length > 0'>
               <label class="radio_checkbox checkall">
-                <input type='checkbox' />
+                <input type='checkbox' v-model='secondMenu.isChildrenChecked' @change='saveGroup(secondMenu)' />
                 <i></i>
                 <span>全选</span>
               </label>
@@ -37,13 +37,13 @@
             <div class="mypanel subpanel" v-for='functionItem in secondMenu.subList'>
               <div class="panel-heading font-bold" :class='{"noboderbottom":functionItem.subList.length == 0 || !functionItem.showDetail}'>
                 <label class="radio_checkbox">
-                  <input type='checkbox' v-model='functionItem.isCheck' />
+                  <input type='checkbox' v-model='functionItem.isCheck' @change='save(functionItem)' />
                   <i></i>
                   <span v-text='functionItem.name'></span>
                 </label>
                 <div class='inline-block fr' v-if='functionItem.subList.length > 0'>
                   <label class="radio_checkbox checkall">
-                    <input type='checkbox' />
+                    <input type='checkbox' v-model='functionItem.isChildrenChecked' @change='saveGroup(functionItem)' />
                     <i></i>
                     <span>全选</span>
                   </label>
@@ -52,7 +52,7 @@
               </div>
               <div class="panel-body" :class='{"hidedetail":!functionItem.showDetail}' v-if='functionItem.subList.length > 0'>
                 <label class="radio_checkbox" v-for="permission in functionItem.subList">
-                  <input type='checkbox' v-model="permission.isCheck"/>
+                  <input type='checkbox' v-model="permission.isCheck"  @change='save(permission)' />
                   <i></i>
                   <span v-text="permission.name"></span>
                 </label>
@@ -70,8 +70,8 @@
     name: 'roleGrantPermission',
     data () {
       return {
-        list:[{id:null,name:null,relativeId:null,isCheck:false,
-          subList:[{id:null,name:null,relativeId:null,isCheck:false,subList:[{id:null,name:null,relativeId:null,isCheck:false,subList:[{id:null,name:null,relativeId:null,isCheck:false,subList:[]}]}]}]}]
+        list:[{id:null,name:null,relativeId:null,isCheck:false,isChildrenChecked:null,type:null,
+          subList:[{id:null,name:null,relativeId:null,isCheck:false,isChildrenChecked:null,type:null,subList:[{id:null,name:null,relativeId:null,isCheck:false,isChildrenChecked:null,type:null,subList:[{id:null,name:null,relativeId:null,isCheck:false,isChildrenChecked:null,type:null,subList:[]}]}]}]}]
         }
       },
       methods: {
@@ -83,20 +83,87 @@
           this.axios.get('/role/getRolePermission', {id:id}).then(function(resp) {
             if(resp.data.status == Constant.AjaxStatus.OK) {
               me.list = resp.data.value;
+              me.refreshCheckbox();
             } else {
               alert(resp.data.message);
             }
           });
         },
-        save: function() {
-          var me = this;
-          this.axios.post('/role/save', me.role).then(function(resp) {
+        save: function(entity) {
+          //this.refreshCheckbox();
+          return;
+          // 处理联动
+          this.axios.post('/role/savePermission', {list: JSON.stringify(entity)}).then(function(resp) {
             if(resp.data.status == Constant.AjaxStatus.OK) {
-              me.goBack();
             } else {
               alert(resp.data.message);
             }
           });
+        },
+        saveGroup: function(entity) {
+          var changed = [entity];
+          this.checkChildren(entity, entity.subList, changed);
+          //this.refreshCheckbox();
+          return;
+          // 处理联动
+          this.axios.post('/role/savePermission', {list: JSON.stringify(changed)}).then(function(resp) {
+            if(resp.data.status == Constant.AjaxStatus.OK) {
+              
+            } else {
+              alert(resp.data.message);
+            }
+          });
+        },
+        refreshCheckbox() {
+          if(!this.list) return;
+          for(var i = 0; i < this.list.length; i++) {
+            var temp = this.list[i];
+            if(this.getChildrenStatus(temp.subList) == 1) {
+              temp.isCheck = true;
+            } else {
+              temp.isCheck = false;
+            }
+          }
+        },
+        // 1全选中；0没有子节点；-1不是全选中
+        getChildrenStatus(list) {
+          var me = this;
+          if(!list || list.length == 0) return 0;
+          var childrenStatus = [];
+          for(var i = 0; i < list.length; i++) {
+            var temp = list[i];
+            var type = temp.type == PermissionType.Permission.key ? 'isCheck' : 'isChildrenChecked';
+            if(!temp.subList || temp.subList.length == 0) {
+                childrenStatus.push(temp[type] ? 1: -1);
+            } else {
+              childrenStatus.push(me.getChildrenStatus(temp.subList));
+              if(childrenStatus[childrenStatus.length - 1] == 1) {
+                temp[type] = true;
+              } else {
+                temp[type] = false;
+              }
+            }
+          }
+          if(childrenStatus.length == 0) return 0;
+          if(childrenStatus.some(function(item) {return !item.isCheck})) return -1;
+          return 1;
+        },
+        checkChildren(item, children, changed) {
+          if(!children || children.length == 0) return;
+          for(var i = 0; i < children.length; i++) {
+            if(children[i].type == PermissionType.Permission.key) {
+              if(children[i].isCheck !== item.isChildrenChecked) {
+                changed.push(children[i]);
+                children[i].isCheck = item.isChildrenChecked;
+                this.checkChildren(children[i], children[i].subList, changed);
+              }
+            } else {
+              if(children[i].isChildrenChecked != PermissionType.Permission.key) {
+                children[i].isChildrenChecked = item.isChildrenChecked;
+                this.checkChildren(children[i], children[i].subList, changed);
+              }
+            }
+          }
         }
       },
       mounted: function() {
