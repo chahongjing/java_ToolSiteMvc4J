@@ -10,7 +10,7 @@ public class RelateCheckVo {
     private String name;
     private String relativeId;
     private boolean isCheck;
-    private boolean isChildrenChecked;
+    private boolean singleCheck;
     private PermissionType type;
     private boolean showDetail;
     List<RelateCheckVo> subList;
@@ -67,12 +67,12 @@ public class RelateCheckVo {
         this.showDetail = showDetail;
     }
 
-    public boolean getIsChildrenChecked() {
-        return isChildrenChecked;
+    public boolean getSingleCheck() {
+        return singleCheck;
     }
 
-    public void setChildrenChecked(boolean isChildrenChecked) {
-        this.isChildrenChecked = isChildrenChecked;
+    public void setSingleCheck(boolean singleCheck) {
+        this.singleCheck = singleCheck;
     }
 
     public PermissionType getType() {

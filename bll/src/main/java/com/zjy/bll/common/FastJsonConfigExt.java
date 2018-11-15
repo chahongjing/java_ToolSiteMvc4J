@@ -17,7 +17,7 @@ public class FastJsonConfigExt extends FastJsonConfig {
         serializeConfig.put(BigInteger.class, ToStringSerializer.instance);
         serializeConfig.put(Long.class, ToStringSerializer.instance);
         serializeConfig.put(Long.TYPE, ToStringSerializer.instance);
-        serializeConfig.put(Date.class, new DateFormaterFilter());
+        serializeConfig.addFilter(Date.class, new DateFormaterFilter());
         this.setSerializeConfig(serializeConfig);
     }
 }

@@ -3,13 +3,13 @@
     <div class="mypanel" v-for='firstMenu in list'>
       <div class="panel-heading font-bold" :class='{"noboderbottom":firstMenu.subList.length == 0 || !firstMenu.showDetail}'>
         <label class="radio_checkbox">
-          <input type='checkbox' v-model='firstMenu.isCheck' @change='save(firstMenu)' />
+          <input type='checkbox' v-model='firstMenu.singleCheck' @change='save(firstMenu)' />
           <i></i>
           <span v-text='firstMenu.name'></span>
         </label>
-        <div class='inline-block fr' v-if='firstMenu.subList.length > 0'>
+        <div class='inline-block fr'>
           <label class="radio_checkbox checkall">
-            <input type='checkbox' v-model='firstMenu.isChildrenChecked' @change='saveGroup(firstMenu)' />
+            <input type='checkbox' v-model='firstMenu.isCheck' @change='saveGroup(firstMenu)' />
             <i></i>
             <span>全选</span>
           </label>
@@ -20,13 +20,13 @@
         <div class="mypanel subpanel" v-for='secondMenu in firstMenu.subList'>
           <div class="panel-heading font-bold" :class='{"noboderbottom":secondMenu.subList.length == 0 || !secondMenu.showDetail}'>
             <label class="radio_checkbox">
-              <input type='checkbox' v-model='secondMenu.isCheck' @change='save(secondMenu)' />
+              <input type='checkbox' v-model='secondMenu.singleCheck' @change='save(secondMenu)' />
               <i></i>
               <span v-text='secondMenu.name'></span>
             </label>
-            <div class='inline-block fr' v-if='secondMenu.subList.length > 0'>
+            <div class='inline-block fr'>
               <label class="radio_checkbox checkall">
-                <input type='checkbox' v-model='secondMenu.isChildrenChecked' @change='saveGroup(secondMenu)' />
+                <input type='checkbox' v-model='secondMenu.isCheck' @change='saveGroup(secondMenu)' />
                 <i></i>
                 <span>全选</span>
               </label>
@@ -37,13 +37,13 @@
             <div class="mypanel subpanel" v-for='functionItem in secondMenu.subList'>
               <div class="panel-heading font-bold" :class='{"noboderbottom":functionItem.subList.length == 0 || !functionItem.showDetail}'>
                 <label class="radio_checkbox">
-                  <input type='checkbox' v-model='functionItem.isCheck' @change='save(functionItem)' />
+                  <input type='checkbox' v-model='functionItem.singleCheck' @change='save(functionItem)' />
                   <i></i>
                   <span v-text='functionItem.name'></span>
                 </label>
-                <div class='inline-block fr' v-if='functionItem.subList.length > 0'>
+                <div class='inline-block fr'>
                   <label class="radio_checkbox checkall">
-                    <input type='checkbox' v-model='functionItem.isChildrenChecked' @change='saveGroup(functionItem)' />
+                    <input type='checkbox' v-model='functionItem.isCheck' @change='saveGroup(functionItem)' />
                     <i></i>
                     <span>全选</span>
                   </label>
@@ -70,8 +70,8 @@
     name: 'roleGrantPermission',
     data () {
       return {
-        list:[{id:null,name:null,relativeId:null,isCheck:false,isChildrenChecked:null,type:null,
-          subList:[{id:null,name:null,relativeId:null,isCheck:false,isChildrenChecked:null,type:null,subList:[{id:null,name:null,relativeId:null,isCheck:false,isChildrenChecked:null,type:null,subList:[{id:null,name:null,relativeId:null,isCheck:false,isChildrenChecked:null,type:null,subList:[]}]}]}]}]
+        list:[{id:null,name:null,relativeId:null,isCheck:false,singleCheck:false,type:null,
+          subList:[{id:null,name:null,relativeId:null,isCheck:false,singleCheck:false,type:null,subList:[{id:null,name:null,relativeId:null,isCheck:false,singleCheck:false,type:null,subList:[{id:null,name:null,relativeId:null,isCheck:false,singleCheck:false,type:null,subList:[]}]}]}]}]
         }
       },
       methods: {
@@ -90,7 +90,7 @@
           });
         },
         save: function(entity) {
-          //this.refreshCheckbox();
+          this.refreshCheckbox();
           return;
           // 处理联动
           this.axios.post('/role/savePermission', {list: JSON.stringify(entity)}).then(function(resp) {
@@ -103,7 +103,7 @@
         saveGroup: function(entity) {
           var changed = [entity];
           this.checkChildren(entity, entity.subList, changed);
-          //this.refreshCheckbox();
+          this.refreshCheckbox();
           return;
           // 处理联动
           this.axios.post('/role/savePermission', {list: JSON.stringify(changed)}).then(function(resp) {
@@ -132,34 +132,33 @@
           var childrenStatus = [];
           for(var i = 0; i < list.length; i++) {
             var temp = list[i];
-            var type = temp.type == PermissionType.Permission.key ? 'isCheck' : 'isChildrenChecked';
             if(!temp.subList || temp.subList.length == 0) {
-                childrenStatus.push(temp[type] ? 1: -1);
+                childrenStatus.push(temp.isCheck ? 1: -1);
             } else {
               childrenStatus.push(me.getChildrenStatus(temp.subList));
               if(childrenStatus[childrenStatus.length - 1] == 1) {
-                temp[type] = true;
+                temp.isCheck = true;
               } else {
-                temp[type] = false;
+                temp.isCheck = false;
               }
             }
           }
           if(childrenStatus.length == 0) return 0;
-          if(childrenStatus.some(function(item) {return !item.isCheck})) return -1;
+          if(childrenStatus.some(function(item) {return item == -1})) return -1;
           return 1;
         },
         checkChildren(item, children, changed) {
           if(!children || children.length == 0) return;
           for(var i = 0; i < children.length; i++) {
             if(children[i].type == PermissionType.Permission.key) {
-              if(children[i].isCheck !== item.isChildrenChecked) {
+              if(children[i].isCheck !== item.isCheck) {
                 changed.push(children[i]);
-                children[i].isCheck = item.isChildrenChecked;
+                children[i].isCheck = item.isCheck;
                 this.checkChildren(children[i], children[i].subList, changed);
               }
             } else {
-              if(children[i].isChildrenChecked != PermissionType.Permission.key) {
-                children[i].isChildrenChecked = item.isChildrenChecked;
+              if(children[i].isCheck != PermissionType.Permission.key) {
+                children[i].isCheck = item.isCheck;
                 this.checkChildren(children[i], children[i].subList, changed);
               }
             }
@@ -173,13 +172,16 @@
 </script>
 
 <style scoped>
-.mypanel{margin:auto; width:calc(100% - 30px);margin-top:15px;}
+.mypanel{margin:auto; width:calc(100% - 30px);margin-top:15px;border-color:#5ba66c;}
 .panel-body{overflow: hidden;transition:0.3s;padding:8px;}
 .subpanel{width:100%;margin-bottom:10px;margin-top:0;}
 .subpanel:last-child{margin-bottom:0;}
+.mypanel.subpanel{border-color:#a0ccfb;}
+.subpanel .mypanel.subpanel{border-color:#ac80f3;}
 .radio_checkbox{margin-bottom:0;}
 .panel-heading{padding:8px;}
-.showdetailarray{display: inline-block;width: 30px;height: 29px;line-height: 28px;margin-right:0;text-align:center;cursor:pointer}
+.showdetailarray{display: inline-block;width: 30px;height: 29px;line-height: 28px;margin-right:0;
+	text-align:center;cursor:pointer}
 .checkall{margin-right:0;}
 .hidedetail{height:0;padding:0;}
 .noboderbottom{border-bottom-width:0;}
