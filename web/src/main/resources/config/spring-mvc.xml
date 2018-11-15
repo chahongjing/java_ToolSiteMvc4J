@@ -59,14 +59,8 @@
             </list>
         </property>
         <property name="fastJsonConfig">
-            <bean class="com.alibaba.fastjson.support.config.FastJsonConfig">
+            <bean class="com.zjy.bll.common.FastJsonConfigExt">
                 <property name="charset" value="UTF-8" />
-                <property name="serializeFilters">
-                    <list>
-                        <bean class="com.zjy.bll.common.Long2StringFilter" />
-                        <bean class="com.zjy.bll.common.DateFormaterFilter" />
-                    </list>
-                </property>
                 <property name="serializerFeatures">
                     <array value-type="com.alibaba.fastjson.serializer.SerializerFeature">
                         <value>DisableCircularReferenceDetect</value>
