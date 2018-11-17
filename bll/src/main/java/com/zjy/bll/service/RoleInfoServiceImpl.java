@@ -5,20 +5,16 @@ import com.zjy.baseframework.ServiceException;
 import com.zjy.bll.common.BaseService;
 import com.zjy.bll.dao.RoleInfoDao;
 import com.zjy.bll.request.RoleInfoRequest;
-import com.zjy.bll.vo.*;
+import com.zjy.bll.vo.RoleInfoVo;
 import com.zjy.entities.RoleInfo;
-import com.zjy.entities.enums.PermissionType;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.util.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class RoleInfoServiceImpl extends BaseService<RoleInfoDao, RoleInfo> implements RoleInfoService {
@@ -94,6 +90,7 @@ public class RoleInfoServiceImpl extends BaseService<RoleInfoDao, RoleInfo> impl
         return pageInfo;
     }
 
+    @Override
     public RoleInfoVo get(String id) {
         return (RoleInfoVo) super.get(id);
     }
@@ -112,74 +109,8 @@ public class RoleInfoServiceImpl extends BaseService<RoleInfoDao, RoleInfo> impl
     }
 
     @Override
-    public List<RelateCheckVo> getRolePermission(String id) {
-        List<RelateCheckVo> list = new ArrayList<>();
-        // 获取所有一级菜单和二级菜单
-        List<MenuVo> menuVos = menuSrv.queryAllMenu();
-        // 获取菜单下所有页面
-        List<FunctionInfoVo> functionInfoVos = functionInfoSrv.queryAllFunctionList();
-        // 获取页面下所有权限
-        List<PermissionVo> permissionVos = permissionSrv.queryAllPermissionList();
-        // 获取角色下的权限
-        // 组织数据
-        RelateCheckVo firtMenu, secondMenu, functionItem, permissionItem;
-        // 一级
-        for (MenuVo menuVo : menuVos) {
-            if(menuVo.getPId() != null) continue;
-            firtMenu = new RelateCheckVo();
-            firtMenu.setId(id);
-            firtMenu.setRelativeId(menuVo.getMenuId());
-            firtMenu.setName(menuVo.getName());
-            firtMenu.setType(PermissionType.FirstMenu);
-            firtMenu.setIsCheck(false);
-            if(list.size() == 0) firtMenu.setShowDetail(true);
-            list.add(firtMenu);
-            // 二级
-            List<MenuVo> children = menuVos.stream().filter(item -> menuVo.getMenuId().equalsIgnoreCase(item.getPId())).collect(Collectors.toList());
-            if(CollectionUtils.isEmpty(children)) continue;
-            for (MenuVo child : children) {
-                secondMenu = new RelateCheckVo();
-                secondMenu.setId(id);
-                secondMenu.setRelativeId(child.getMenuId());
-                secondMenu.setName(child.getName());
-                secondMenu.setType(PermissionType.SecondMenu);
-                secondMenu.setIsCheck(false);
-                if(firtMenu.getSubList().size() == 0) secondMenu.setShowDetail(true);
-                firtMenu.getSubList().add(secondMenu);
-                // 功能
-                List<FunctionInfoVo> functions = functionInfoVos.stream().filter(item -> child.getMenuId().equals(item.getMenuId())).collect(Collectors.toList());
-                if(CollectionUtils.isEmpty(functions)) continue;
-                for (FunctionInfoVo function : functions) {
-                    functionItem = new RelateCheckVo();
-                    functionItem.setId(id);
-                    functionItem.setRelativeId(function.getFunctionId());
-                    functionItem.setName(function.getName());
-                    functionItem.setType(PermissionType.FunctionItem);
-                    functionItem.setIsCheck(false);
-                    if(secondMenu.getSubList().size() == 0) functionItem.setShowDetail(true);
-                    secondMenu.getSubList().add(functionItem);
-                    // 权限
-                    List<PermissionVo> permissions = permissionVos.stream().filter(item -> function.getFunctionId().equals(item.getFunctionId())).collect(Collectors.toList());
-                    if(CollectionUtils.isEmpty(permissions)) continue;
-                    for (PermissionVo permission : permissions) {
-                        permissionItem = new RelateCheckVo();
-                        permissionItem.setId(id);
-                        permissionItem.setRelativeId(permission.getPermissionId());
-                        permissionItem.setName(permission.getName());
-                        permissionItem.setType(PermissionType.Permission);
-                        permissionItem.setIsCheck(false);
-                        if(functionItem.getSubList().size() == 0) permissionItem.setShowDetail(true);
-                        functionItem.getSubList().add(permissionItem);
-                    }
-                }
-            }
-        }
-        return list;
-    }
-
-    @Override
-    public void savePermission(List<RelateCheckVo> list) {
-
+    public List<RoleInfoVo> queryAllRole() {
+        return dao.queryAllRole();
     }
 
     protected void beforeCheck(RoleInfoVo po) {

@@ -59,7 +59,14 @@
             <td class='text-center' v-text='item.sexName'></td>
             <td class='text-center' v-text='item.isSystemName'></td>
             <td class='text-center' v-text='item.isDisabledName'></td>
-            <td><a class='inline-block' href='javascript:void(0)' @click='deleteItem(item)'><i class='fa fa-trash'></i></a></td>
+            <td>
+              <a class='inline-block' href='javascript:void(0)' @click='grant(item)'>
+                <i class='fa fa-id-badge'></i>
+              </a>
+              <a class='inline-block' href='javascript:void(0)' @click='deleteItem(item)'>
+                <i class='fa fa-trash'></i>
+              </a>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -110,6 +117,9 @@
         this.axios.get('/userinfo/delete', {id: entity.userId}).then(function(resp) {
           me.search();
         });
+      },
+      grant(entity) {
+        this.$router.push({path: '/user/userRole', query: {id: entity.userId}});
       }
     },
     mounted: function() {

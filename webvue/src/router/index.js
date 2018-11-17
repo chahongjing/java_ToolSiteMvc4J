@@ -30,6 +30,11 @@ var router = new Router({
         path: 'userEdit',
         name: 'userEdit',
         component: resolve => require(['../components/user/userEdit'], resolve)
+      },
+      {
+        path: 'userRole',
+        name: 'userRole',
+        component: resolve => require(['../components/user/userRole'], resolve)
       }
     ]
   },

@@ -2,7 +2,6 @@ package com.zjy.bll.service;
 
 import com.github.pagehelper.PageInfo;
 import com.zjy.bll.request.RoleInfoRequest;
-import com.zjy.bll.vo.RelateCheckVo;
 import com.zjy.bll.vo.RoleInfoVo;
 import com.zjy.entities.RoleInfo;
 
@@ -21,7 +20,5 @@ public interface RoleInfoService {
 
     PageInfo<? extends RoleInfo> queryPageList(RoleInfoRequest request);
 
-    List<RelateCheckVo> getRolePermission(String id);
-
-    void savePermission(List<RelateCheckVo> list);
+    List<RoleInfoVo> queryAllRole();
 }

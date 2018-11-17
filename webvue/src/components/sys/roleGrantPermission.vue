@@ -80,7 +80,7 @@
         },
         getRolePermission: function(id) {
           var me = this;
-          this.axios.get('/role/getRolePermission', {id:id}).then(function(resp) {
+          this.axios.get('/rolePermission/getRolePermission', {id:id}).then(function(resp) {
             if(resp.data.status == Constant.AjaxStatus.OK) {
               me.list = resp.data.value;
               me.refreshCheckbox();
@@ -91,9 +91,9 @@
         },
         save: function(entity) {
           this.refreshCheckbox();
-          return;
+          var changed = [entity];
           // 处理联动
-          this.axios.post('/role/savePermission', {list: JSON.stringify(entity)}).then(function(resp) {
+          this.axios.post('/rolePermission/savePermission', {listStr: JSON.stringify(changed)}).then(function(resp) {
             if(resp.data.status == Constant.AjaxStatus.OK) {
             } else {
               alert(resp.data.message);
@@ -104,9 +104,8 @@
           var changed = [entity];
           this.checkChildren(entity, entity.subList, changed);
           this.refreshCheckbox();
-          return;
           // 处理联动
-          this.axios.post('/role/savePermission', {list: JSON.stringify(changed)}).then(function(resp) {
+          this.axios.post('/rolePermission/savePermission', {listStr: JSON.stringify(changed)}).then(function(resp) {
             if(resp.data.status == Constant.AjaxStatus.OK) {
               
             } else {

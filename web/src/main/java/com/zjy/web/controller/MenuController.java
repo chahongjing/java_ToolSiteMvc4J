@@ -66,7 +66,8 @@ public class MenuController extends BaseController {
     @RequestMapping("/queryMenu")
     @ResponseBody
     public BaseResult queryMenu() {
-        List<MenuVo> list = menuSrv.queryAllMenu();
+        List<MenuVo> list = menuSrv.queryPermissionMenu();
+        // List<MenuVo> list = menuSrv.queryAllMenu();
         List<ZTreeNode> nodeList = new ArrayList<>();
         ZTreeNode node;
         for (MenuVo menu : list) {

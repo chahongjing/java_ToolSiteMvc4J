@@ -7,7 +7,9 @@ import com.zjy.bll.dao.FunctionInfoDao;
 import com.zjy.bll.request.FunctionInfoRequest;
 import com.zjy.bll.vo.FunctionInfoVo;
 import com.zjy.entities.FunctionInfo;
+import com.zjy.entities.Permission;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +19,10 @@ import java.util.Map;
 
 @Service
 public class FunctionInfoServiceImpl extends BaseService<FunctionInfoDao, FunctionInfo> implements FunctionInfoService {
+
+    @Autowired
+    protected PermissionService permissionSrv;
+
     /**
      * 添加用户
      *
@@ -26,6 +32,13 @@ public class FunctionInfoServiceImpl extends BaseService<FunctionInfoDao, Functi
     @Override
     @Transactional
     public int add(FunctionInfo entity) {
+        Permission permission = new Permission();
+        permission.setPermissionId(entity.getFunctionId());
+        permission.setFunctionId(entity.getFunctionId());
+        permission.setName("进入页面");
+        permission.setCode("enter");
+        permission.setSeq(0);
+        permissionSrv.add(permission);
         return super.add(entity);
     }
 
@@ -50,6 +63,7 @@ public class FunctionInfoServiceImpl extends BaseService<FunctionInfoDao, Functi
     @Override
     @Transactional
     public int delete(String id) {
+        permissionSrv.delete(id);
         return super.delete(id);
     }
 

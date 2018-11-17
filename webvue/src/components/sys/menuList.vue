@@ -65,7 +65,7 @@
       return {
         searchKey:null,
         list: [],
-        pager: {pageNum:1, pageSize:5}
+        pager: {pageNum:1, pageSize:10}
       }
     },
     methods: {

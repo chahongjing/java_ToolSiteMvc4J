@@ -42,7 +42,7 @@
 		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="f"/></include>,
 		        menu.name as menuName
 		  FROM FunctionInfo f
-		 inner join menu on menu.menuid = f.menuid
+		  left join menu on menu.menuid = f.menuid
 		 WHERE f.functionId = #{id, jdbcType = VARCHAR}
 	</select>
 

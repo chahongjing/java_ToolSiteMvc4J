@@ -47,6 +47,12 @@
 		</if>
 		order by r.seq
 	</select>
+	<select id="queryAllRole" resultType="com.zjy.bll.vo.RoleInfoVo">
+		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="r"/></include>
+		FROM RoleInfo r
+		WHERE 1 = 1
+		order by r.seq
+	</select>
 
 	<!-- 查询复杂列表 -->
 	<select id="queryByMapFilter" resultType="com.zjy.bll.vo.RoleInfoVo">
@@ -63,7 +69,14 @@
 	</select>
 
 	<!-- 其它操作区 -->
+	<insert id="addRP">
+		insert into RolePermission(roleId, permissionId)
+		values(#{id, jdbcType=VARCHAR}, #{relativeId, jdbcType=VARCHAR})
+	</insert>
 
+	<delete id="deleteRP">
+		delete from RolePermission where roleId = #{id, jdbcType=VARCHAR} and permissionId = #{relativeId, jdbcType=VARCHAR}
+	</delete>
 
 	<!-- 公共信息 -->
 	<!-- 字段 -->

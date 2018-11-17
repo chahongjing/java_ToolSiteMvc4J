@@ -75,6 +75,7 @@ public class PermissionServiceImpl extends BaseService<PermissionDao, Permission
     public PageInfo<? extends Permission> queryPageList(PermissionRequest request) {
         Permission po = new Permission();
         po.setName(request.getName());
+        po.setFunctionId(request.getFunctionId());
         PageInfo<PermissionVo> pageInfo = (PageInfo<PermissionVo>) super.queryPageList(request, po);
         return pageInfo;
     }

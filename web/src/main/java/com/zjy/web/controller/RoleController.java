@@ -1,19 +1,15 @@
 package com.zjy.web.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.zjy.baseframework.BaseResult;
 import com.zjy.bll.request.RoleInfoRequest;
 import com.zjy.bll.service.RoleInfoService;
-import com.zjy.bll.vo.RelateCheckVo;
 import com.zjy.bll.vo.RoleInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.List;
 
 /**
  * Created by Administrator on 2018/2/27.
@@ -62,20 +58,5 @@ public class RoleController extends BaseController {
     public String editMenu(String menuId, Model model) {
         model.addAttribute("menuId", menuId);
         return "sys/menuEdit";
-    }
-
-    @RequestMapping("/getRolePermission")
-    @ResponseBody
-    public BaseResult<List<RelateCheckVo>> getRolePermission(String id) {
-        List<RelateCheckVo> list = roleInfoSrv.getRolePermission(id);
-        return BaseResult.OK(list);
-    }
-
-    @RequestMapping("/savePermission")
-    @ResponseBody
-    public BaseResult savePermission(String listStr) {
-        List<RelateCheckVo> list = JSON.parseArray(listStr, RelateCheckVo.class);
-        roleInfoSrv.savePermission(list);
-        return BaseResult.OK();
     }
 }

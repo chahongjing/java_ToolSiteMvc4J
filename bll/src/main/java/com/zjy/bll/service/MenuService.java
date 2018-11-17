@@ -24,5 +24,7 @@ public interface MenuService {
 
     List<MenuVo> queryPageMenuList();
 
+    List<MenuVo> queryPermissionMenu();
+
     List<MenuVo> queryAllMenu();
 }

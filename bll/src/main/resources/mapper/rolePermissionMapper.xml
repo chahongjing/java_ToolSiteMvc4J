@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zjy.bll.dao.RolePermissionDao">
+	<!-- 基本操作区 -->
+	<!-- 添加 -->
+	<insert id="add">
+		insert into RolePermission(<include refid="field"></include>)
+		values(#{roleId, jdbcType=VARCHAR}, #{permissionId, jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 删除 -->
+	<delete id="deleteEntity">
+		delete from RolePermission where roleId = #{roleId, jdbcType=VARCHAR} and permissionId = #{permissionId, jdbcType=VARCHAR}
+	</delete>
+
+	<!-- 查询简单列表 -->
+	<select id="query" resultType="com.zjy.bll.vo.RolePermissionVo">
+		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="rp"/></include>
+		FROM RolePermission rp
+		WHERE 1 = 1
+		<if test='roleId != null and roleId != ""'>
+			and rp.roleId = #{roleId, jdbcType=VARCHAR}
+		</if>
+		<if test='permissionId != null and permissionId != ""'>
+			and rp.permissionId = #{permissionId, jdbcType=VARCHAR}
+		</if>
+	</select>
+
+	<select id="queryByRoleList" resultType="com.zjy.bll.vo.RolePermissionVo">
+		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="rp"/></include>
+		FROM RolePermission rp
+		WHERE 1 = 1
+		<if test='roleIdList != null and roleIdList.size() > 0'>
+			and rp.roleId in (
+			<foreach collection="roleIdList" item="roleId" index="index" separator="," open="" close="">
+				#{roleId, jdbcType=VARCHAR}
+			</foreach>
+			)
+		</if>
+	</select>
+
+	<!-- 公共信息 -->
+	<!-- 字段 -->
+	<sql id="field">
+		roleId, permissionId
+	</sql>
+	 <!-- 带前缀的字段 -->
+	<sql id="fieldWithPrefix">
+		${tableName}.roleId, ${tableName}.permissionId
+	</sql>
+</mapper>

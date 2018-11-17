@@ -49,6 +49,9 @@
 		FROM permission p
 		inner join functioninfo f on p.functionId = f.functionId
 		WHERE 1 = 1
+		<if test='functionId != null and functionId != ""'>
+			and p.functionId = #{functionId, jdbcType=VARCHAR}
+		</if>
 		<if test='name != null and name != ""'>
 			and p.name like '%' || #{name, jdbcType=VARCHAR} || '%'
 		</if>

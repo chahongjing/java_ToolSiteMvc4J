@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zjy.bll.dao.UserRoleDao">
+	<!-- 基本操作区 -->
+	<!-- 添加 -->
+	<insert id="add">
+		insert into userRole(<include refid="field"></include>)
+		values(#{userId, jdbcType=VARCHAR}, #{roleId, jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 删除 -->
+	<delete id="deleteEntity">
+		delete from userRole where userId = #{userId, jdbcType=VARCHAR} and roleId = #{roleId, jdbcType=VARCHAR}
+	</delete>
+
+	<!-- 查询简单列表 -->
+	<select id="query" resultType="com.zjy.bll.vo.UserRoleVo">
+		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="ur"/></include>
+		FROM UserRole ur
+		WHERE 1 = 1
+		<if test='roleId != null and roleId != ""'>
+			and ur.roleId = #{roleId, jdbcType=VARCHAR}
+		</if>
+		<if test='userId != null and userId != ""'>
+			and ur.userId = #{userId, jdbcType=VARCHAR}
+		</if>
+	</select>
+
+	<!-- 公共信息 -->
+	<!-- 字段 -->
+	<sql id="field">
+		userId, roleId
+	</sql>
+	 <!-- 带前缀的字段 -->
+	<sql id="fieldWithPrefix">
+		${tableName}.userId, ${tableName}.roleId
+	</sql>
+</mapper>
