@@ -116,6 +116,10 @@ public class ShiroRealm extends AuthorizingRealm {
         return getSubject().isPermitted(permission);
     }
 
+    public void clearCachedAuthorizationInfo() {
+        super.clearCachedAuthorizationInfo(SecurityUtils.getSubject().getPrincipals());
+    }
+
     /**
      * 获取md5 hash+盐值加密后的值
      * @param password 密码
