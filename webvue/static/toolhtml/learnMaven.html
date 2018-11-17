@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'> 
+	<title>学习maven</title>
+	<link rel='stylesheet' type='text/css' href='../bootstrap/css/bootstrap.min.css'>
+	<link rel='stylesheet' type='text/css' href='../css/common.css'>
+</head> 
+<body class='elearn'>
+	<h2>maven命令</h2>
+	<p>
+		<ul>
+			<li>
+				mvn install -DskipTests，不执行测试用例，但编译测试用例类生成相应的class文件至target/test-classes下
+			</li>
+			<li>mvn install -Dmaven.test.skip=true，不执行测试用例，也不编译测试用例类。</li>
+			<li>mvn test -compile，编译测试程序</li>
+			<li>mvn clean</li>
+			<li>mvn jar:jar，只打jar包</li>
+		</ul>
+	</p>
+	<hr>
+</body> 
+</html>

@@ -286,3 +286,9 @@ ul.sub-menu > li > a > b {position:absolute;top:0px;right:0;width:0px;height:0px
     border-top-right-radius: 3px;
 }
 .mypanel .panel-body{padding:15px;}
+
+.elearn{padding:15px;}
+.elearn .list{padding-left:20px;list-style-type:circle;}
+.elearn .list > li{padding:5px 0;list-style-type:circle;}
+.elearn .list > li > .list > li{padding:5px 0;list-style-type:square;}
+.elearn .list > li > .list > li > .list > li{padding:5px 0;list-style-type:disc;}

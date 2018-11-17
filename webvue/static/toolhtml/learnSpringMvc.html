@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'> 
+	<title>学习加密</title>
+	<link rel='stylesheet' type='text/css' href='../bootstrap/css/bootstrap.min.css'>
+	<link rel='stylesheet' type='text/css' href='../css/common.css'>
+</head> 
+<body class='elearn'>
+	<h2></h2>
+	<p>
+
+	</p>
+	<hr>
+
+	spring 2.5之前用@controller，之后用注解：
+	<ul>
+		<li>@RequestParam</li>
+		<li>@ModelAttribute</li>
+		<li>@SessionAttributes</li>
+		<li>@InitBinder</li>
+	</ul>
+	<br>
+	spring3.0引入restful风格，如:
+	<ul>
+		<li>@PathVariable(rest @PathParam)</li>
+		<li>@CookieValue</li>
+		<li>@RequestHandler</li>
+		<li>@RequestBody</li>
+		<li>@ResponseBody</li>
+		<li>@ResponseStatus</li>
+		<li>@RequestPart</li>
+		<li>@ExceptionHandler</li>
+	</ul>
+	<br>
+	还有@NumberFormat 和 @DateTimeFormat支持，还引入mvc XML的命名空间用于支持mvc配置，如&lt;mvc:annotation-driven&gt;
+
+	<p>
+		<h2>数组参数接收</h2>
+		var list = [];// 注意参数名也要编码
+		<br>@RequestParam("list[]") int[] list
+	</p>
+</body> 
+</html>

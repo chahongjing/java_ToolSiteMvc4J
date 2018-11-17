@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'> 
+	<title>学习EL</title>
+	<link rel='stylesheet' type='text/css' href='../bootstrap/css/bootstrap.min.css'>
+	<link rel='stylesheet' type='text/css' href='../css/common.css'>
+</head> 
+<body class='elearn'>
+	<h2></h2>
+	<p>
+		<ul>
+			<li>&lt;c:url value="/learn/fileupload1" /&gt;</li>
+			<li>${username}</li>
+		</ul>
+	</p>
+	<hr>
+
+	<pre>
+		&lt;table&gt;
+		&lt;c:forEach var="item" items="${pageinfo.list}" varStatus="status"&gt;
+		&lt;tr
+		&lt;c:if test="${status.count%2 == 0}"&gt;bgcolor="#CCCCFE"&lt;/c:if&gt; align="left"&gt;
+		&lt;td&gt;
+		&lt;c:out value="${item.userName}"&gt;&lt;/c:out&gt;
+		&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;/c:forEach&gt;
+		&lt;/table&gt;
+
+		&lt;fmt:message key="username"&gt;
+		&lt;fmt:param value="a"/&gt;
+		&lt;fmt:param value="b"/&gt;
+		&lt;/fmt:message&gt;
+
+		&lt;h2&gt;el学习&lt;/h2&gt;
+		&lt;jsp:useBean id="userTest2" class="com.zjy.entities.UserInfo" scope="session"&gt;&lt;/jsp:useBean&gt;
+		&lt;jsp:setProperty name="userTest2" property="userName" value="曾军毅jsp获取数据"&gt;&lt;/jsp:setProperty&gt;
+
+		jsp获取数据：${sessionScope.userTest2.userName}&lt;br&gt;
+		controller获取数据：${sessionScope.userTest.userName}
+		&lt;br&gt;
+		param&lt;br&gt;
+		code:${param.code}
+		&lt;br&gt;
+		name:${paramValues.name[0]},${paramValues.name[1]}
+
+		empty:${empty " "}
+
+		&lt;p&gt;c:url&lt;/p&gt;
+		&lt;c:url value="/test/a.html"&gt;&lt;/c:url&gt;
+
+		&lt;h2&gt;el tag&lt;/h2&gt;
+		&lt;myPre:readFile src="/WEB-INF/myTag.tld"&gt;
+		从页面上传过来的参数：${param.name}
+		&lt;myPre:sonTag/&gt;
+		&lt;/myPre:readFile&gt;
+	</pre>
+</body> 
+</html>
