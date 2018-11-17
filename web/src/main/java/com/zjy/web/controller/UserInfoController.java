@@ -8,6 +8,8 @@ import com.zjy.bll.service.UserInfoService;
 import com.zjy.bll.vo.UserInfoVo;
 import com.zjy.entities.UserInfo;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.web.util.SavedRequest;
 import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
@@ -92,6 +94,7 @@ public class UserInfoController extends BaseController {
     }
 
     @RequestMapping("/delete")
+    @RequiresPermissions(value = {"admin:testPermission"}, logical = Logical.OR)
     @ResponseBody
     public BaseResult<String> delete(String id) {
         userInfoSrv.delete(id);

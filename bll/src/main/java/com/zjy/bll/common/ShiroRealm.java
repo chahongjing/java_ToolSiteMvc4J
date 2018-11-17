@@ -1,6 +1,10 @@
 package com.zjy.bll.common;
 
+import com.zjy.bll.service.RolePermissionService;
 import com.zjy.bll.service.UserInfoService;
+import com.zjy.bll.service.UserRoleService;
+import com.zjy.bll.vo.RolePermissionVo;
+import com.zjy.bll.vo.UserRoleVo;
 import com.zjy.entities.UserInfo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -17,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * shiro认证
@@ -28,6 +33,12 @@ public class ShiroRealm extends AuthorizingRealm {
 
     @Autowired
     private UserInfoService userInfoSvc;
+
+    @Autowired
+    private UserRoleService userRoleSrv;
+
+    @Autowired
+    private RolePermissionService rolePermissionSrv;
 
     /**
      * 获取当前登录用户数据库信息
@@ -64,9 +75,11 @@ public class ShiroRealm extends AuthorizingRealm {
         List<String> roles = new ArrayList<>();
         List<String> permissions = new ArrayList<>();
 
-        roles.add("admin");
-        permissions.add("admin:testPermission");
-
+        List<UserRoleVo> userRoleList = userRoleSrv.queryListByUserId(user.getUserId());
+        List<String> roleIdList = userRoleList.stream().map(item -> item.getRoleId()).collect(Collectors.toList());
+        List<RolePermissionVo> permissionList = rolePermissionSrv.queryRolePermission(roleIdList);
+//        roles.add("admin");
+//        permissions.add("admin:testPermission");
 //        @RequiresRoles("admin")
 //        @RequiresPermissions(value = {"admin:testPermission"}, logical = Logical.OR)
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
