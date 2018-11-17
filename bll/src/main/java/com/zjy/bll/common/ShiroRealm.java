@@ -19,7 +19,6 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -72,12 +71,14 @@ public class ShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         UserInfo user = (UserInfo) principals.getPrimaryPrincipal();
-        List<String> roles = new ArrayList<>();
-        List<String> permissions = new ArrayList<>();
+        List<String> permissions;
 
         List<UserRoleVo> userRoleList = userRoleSrv.queryListByUserId(user.getUserId());
         List<String> roleIdList = userRoleList.stream().map(item -> item.getRoleId()).collect(Collectors.toList());
+        List<String> roles = userRoleList.stream().map(item -> item.getRoleCode()).collect(Collectors.toList());
         List<RolePermissionVo> permissionList = rolePermissionSrv.queryRolePermission(roleIdList);
+        permissions = permissionList.stream().filter(item -> org.apache.commons.lang3.StringUtils.isNotBlank(item.getPermissionCode())
+                && org.apache.commons.lang3.StringUtils.isNotBlank(item.getRoleCode())).map(item -> item.getRoleCode() + ":" + item.getPermissionCode()).collect(Collectors.toList());
 //        roles.add("admin");
 //        permissions.add("admin:testPermission");
 //        @RequiresRoles("admin")
@@ -92,12 +93,13 @@ public class ShiroRealm extends AuthorizingRealm {
 
     /**
      * 当前登录用户信息
+     *
      * @return 用户信息
      */
     protected Subject getSubject() {
         Subject currentUser = SecurityUtils.getSubject();
 //        Session session = currentUser.getSession();
-        if(currentUser == null) {
+        if (currentUser == null) {
             throw new UnauthenticatedException("登录超时！");
         }
         return currentUser;
@@ -105,14 +107,16 @@ public class ShiroRealm extends AuthorizingRealm {
 
     /**
      * 获取当前用户
+     *
      * @return
      */
     public UserInfo getCurrentUser() {
-        return (UserInfo)getSubject().getPrincipal();
+        return (UserInfo) getSubject().getPrincipal();
     }
 
     /**
      * 判断是否有角色
+     *
      * @param role
      * @return
      */
@@ -122,6 +126,7 @@ public class ShiroRealm extends AuthorizingRealm {
 
     /**
      * 判断是否有权限
+     *
      * @param permission
      * @return
      */
@@ -135,12 +140,13 @@ public class ShiroRealm extends AuthorizingRealm {
 
     /**
      * 获取md5 hash+盐值加密后的值
+     *
      * @param password 密码
-     * @param salt 盐值
+     * @param salt     盐值
      * @return
      */
     public String getMd5Hash(String password, String salt) {
-        HashedCredentialsMatcher credentialsMatcher = (HashedCredentialsMatcher)getCredentialsMatcher();
+        HashedCredentialsMatcher credentialsMatcher = (HashedCredentialsMatcher) getCredentialsMatcher();
         Object simpleHash = new SimpleHash(credentialsMatcher.getHashAlgorithmName(), password, ByteSource.Util.bytes(salt),
                 credentialsMatcher.getHashIterations());
         return simpleHash.toString();

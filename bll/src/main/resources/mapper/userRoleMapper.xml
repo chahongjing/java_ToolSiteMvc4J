@@ -16,7 +16,7 @@
 	<!-- 查询简单列表 -->
 	<select id="query" resultType="com.zjy.bll.vo.UserRoleVo">
 		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="ur"/></include>,
-		        r.code
+		        r.code as rolecode
 		FROM UserRole ur
 		inner join RoleInfo r on ur.roleId = r.roleId
 		WHERE 1 = 1

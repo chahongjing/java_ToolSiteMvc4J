@@ -3,13 +3,13 @@ package com.zjy.bll.vo;
 import com.zjy.entities.UserRole;
 
 public class UserRoleVo extends UserRole {
-    private String code;
+    private String roleCode;
 
-    public String getCode() {
-        return code;
+    public String getRoleCode() {
+        return roleCode;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
     }
 }

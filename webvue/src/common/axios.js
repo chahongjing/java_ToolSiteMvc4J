@@ -18,11 +18,13 @@ axios.defaults.transformRequest  = [function (data) {
   return data;
 }]
 axios.defaults.transformResponse = [function (data) {
-  var resp = $.parseJSON(data);
-  if(resp.status == window.Constant.AjaxStatus.UNAUTHENTICATION){
-    window.location.hash = "/login";
+  if(data){
+    var data = $.parseJSON(data);
+    if(data.status == window.Constant.AjaxStatus.UNAUTHENTICATION){
+      window.location.hash = "/login";
+    }
   }
-  return resp;
+  return data;
 }]
 // 添加请求拦截器
 axios.interceptors.request.use(function (config) {

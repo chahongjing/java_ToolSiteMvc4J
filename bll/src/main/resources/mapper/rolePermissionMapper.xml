@@ -28,9 +28,10 @@
 
 	<select id="queryByRoleList" resultType="com.zjy.bll.vo.RolePermissionVo">
 		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="rp"/></include>,
-		       r.code as permissionCode
+		       r.code as roleCode, p.code as permissionCode
 		FROM RolePermission rp
-		inner join permission p on rp.permissionId = r.permissionId
+		left join roleInfo r on rp.roleId = r.roleId
+		left join permission p on rp.permissionId = p.permissionId
 		WHERE 1 = 1
 		<if test='roleIdList != null and roleIdList.size() > 0'>
 			and rp.roleId in (

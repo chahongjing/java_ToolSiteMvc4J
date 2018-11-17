@@ -88,13 +88,13 @@ public class UserInfoController extends BaseController {
 
     @RequestMapping("/save")
     @ResponseBody
+    @RequiresPermissions(value = {"admin:userEdit_enter"}, logical = Logical.OR)
     public BaseResult<String> save(UserInfoVo vo) {
         userInfoSrv.save(vo);
         return BaseResult.OK("");
     }
 
     @RequestMapping("/delete")
-    @RequiresPermissions(value = {"admin:testPermission"}, logical = Logical.OR)
     @ResponseBody
     public BaseResult<String> delete(String id) {
         userInfoSrv.delete(id);
