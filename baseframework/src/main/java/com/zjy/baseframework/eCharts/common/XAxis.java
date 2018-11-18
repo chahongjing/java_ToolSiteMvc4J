@@ -58,6 +58,15 @@ public class XAxis
     /// </summary>
     private String nameLocation;
 
+    private boolean show;
+
+    private SplitLine splitLine;
+
+    private float min;
+
+    private float max;
+    private float interval;
+
     /// <summary>
     /// 构造函数
     /// </summary>
@@ -170,5 +179,45 @@ public class XAxis
 
     public void setNameLocation(String nameLocation) {
         this.nameLocation = nameLocation;
+    }
+
+    public boolean getShow() {
+        return show;
+    }
+
+    public void setShow(boolean show) {
+        this.show = show;
+    }
+
+    public SplitLine getSplitLine() {
+        return splitLine;
+    }
+
+    public void setSplitLine(SplitLine splitLine) {
+        this.splitLine = splitLine;
+    }
+
+    public float getMin() {
+        return min;
+    }
+
+    public void setMin(float min) {
+        this.min = min;
+    }
+
+    public float getMax() {
+        return max;
+    }
+
+    public void setMax(float max) {
+        this.max = max;
+    }
+
+    public float getInterval() {
+        return interval;
+    }
+
+    public void setInterval(float interval) {
+        this.interval = interval;
     }
 }

@@ -27,17 +27,32 @@ public class YAxis
     /**
      * 分段数(如分5段)
      */
-    private float splitNumber;
+    private Float splitNumber;
+
+    /**
+     * 分段数(如分5段)
+     */
+    private SplitLine splitLine;
 
     /**
      * 每段间隔(如每段20度)
      */
-    private float interval;
+    private Float interval;
 
     /**
      * 总值(如20 * 5 = 100度)
      */
-    private float max;
+    private Float max;
+
+    /**
+     * 总值(如20 * 5 = 100度)
+     */
+    private Float min;
+
+    /**
+     * 总值(如20 * 5 = 100度)
+     */
+    private Float minInterval;
     /**
      * 数据
      */
@@ -62,7 +77,7 @@ public class YAxis
      * @param type 取值类型
      */
     public YAxis(String name, AxisValueType type)
-    {this(name, type, 10, 10, 100); }
+    {this(name, type, 10f, 10f, 100f); }
 
     /**
      * 构造函数
@@ -71,7 +86,7 @@ public class YAxis
      * @param interval 间隔
      * @param max 最大值
      */
-    public YAxis(String name, int splitNumber, int interval, int max)
+    public YAxis(String name, Float splitNumber, Float interval, Float max)
     { this(name, AxisValueType.Value, splitNumber, interval, max);}
 
     /**
@@ -82,7 +97,7 @@ public class YAxis
      * @param interval 间隔
      * @param max 最大值
      */
-    public YAxis(String name, AxisValueType type, int splitNumber, int interval, int max)
+    public YAxis(String name, AxisValueType type, Float splitNumber, Float interval, Float max)
     {
         this.name = name;
         this.type = type.toString().toLowerCase();
@@ -116,28 +131,12 @@ public class YAxis
         this.axisLabel = axisLabel;
     }
 
-    public float getSplitNumber() {
+    public Float getSplitNumber() {
         return splitNumber;
     }
 
-    public void setSplitNumber(float splitNumber) {
+    public void setSplitNumber(Float splitNumber) {
         this.splitNumber = splitNumber;
-    }
-
-    public float getInterval() {
-        return interval;
-    }
-
-    public void setInterval(float interval) {
-        this.interval = interval;
-    }
-
-    public float getMax() {
-        return max;
-    }
-
-    public void setMax(float max) {
-        this.max = max;
     }
 
     public List<String> getData() {
@@ -146,5 +145,45 @@ public class YAxis
 
     public void setData(List<String> data) {
         this.data = data;
+    }
+
+    public SplitLine getSplitLine() {
+        return splitLine;
+    }
+
+    public void setSplitLine(SplitLine splitLine) {
+        this.splitLine = splitLine;
+    }
+
+    public Float getInterval() {
+        return interval;
+    }
+
+    public void setInterval(Float interval) {
+        this.interval = interval;
+    }
+
+    public Float getMax() {
+        return max;
+    }
+
+    public void setMax(Float max) {
+        this.max = max;
+    }
+
+    public Float getMin() {
+        return min;
+    }
+
+    public void setMin(Float min) {
+        this.min = min;
+    }
+
+    public Float getMinInterval() {
+        return minInterval;
+    }
+
+    public void setMinInterval(Float minInterval) {
+        this.minInterval = minInterval;
     }
 }

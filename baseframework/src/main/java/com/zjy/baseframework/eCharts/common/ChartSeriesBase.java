@@ -18,6 +18,12 @@ public class ChartSeriesBase {
      * 类型(line, Gauge)
      */
     private String type;
+    /**
+     * 每一项的配置，如每个点的颜色，形状
+     */
+    private ItemStyle itemStyle;
+
+    private ItemStyle lineStyle;
 
     /**
      * 构造函数
@@ -57,5 +63,21 @@ public class ChartSeriesBase {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public ItemStyle getItemStyle() {
+        return itemStyle;
+    }
+
+    public void setItemStyle(ItemStyle itemStyle) {
+        this.itemStyle = itemStyle;
+    }
+
+    public ItemStyle getLineStyle() {
+        return lineStyle;
+    }
+
+    public void setLineStyle(ItemStyle lineStyle) {
+        this.lineStyle = lineStyle;
     }
 }

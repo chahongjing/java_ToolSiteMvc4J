@@ -10,7 +10,7 @@ public class LineChartSeriesData extends ChartSeriesDataBase {
      * 构造函数
      * @param value 值
      */
-    public LineChartSeriesData(String value) {
+    public LineChartSeriesData(Object value) {
         this(value, null);
     }
 
@@ -19,7 +19,7 @@ public class LineChartSeriesData extends ChartSeriesDataBase {
      * @param value 值
      * @param name 名称
      */
-    public LineChartSeriesData(String value, String name) {
+    public LineChartSeriesData(Object value, String name) {
         super.setName(name);
         super.setValue(value);
     }

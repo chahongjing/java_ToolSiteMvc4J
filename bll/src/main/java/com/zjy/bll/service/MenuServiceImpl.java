@@ -134,7 +134,7 @@ public class MenuServiceImpl extends BaseService<MenuDao, Menu> implements MenuS
     public List<MenuVo> queryPermissionMenu() {
         String userId = shiroRealm.getCurrentUser().getUserId();
         List<UserRoleVo> roleList = userRoleSrv.queryListByUserId(userId);
-        String roleId = "9ca5cbcc-7f4a-4402-bc2e-90ae2103dbed";
+        //String roleId = "9ca5cbcc-7f4a-4402-bc2e-90ae2103dbed";
         List<String> roleIdList = roleList.stream().map(item -> item.getRoleId()).collect(Collectors.toList());
 //        List<String> roleIdList = new ArrayList<>();
         //roleIdList.add(roleId);

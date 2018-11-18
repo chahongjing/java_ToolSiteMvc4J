@@ -1,6 +1,7 @@
 package com.zjy.web.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.zjy.baseframework.BaseResult;
 import com.zjy.baseframework.eCharts.common.*;
 import com.zjy.baseframework.eCharts.dashBoard.DashBoard;
 import com.zjy.baseframework.eCharts.dashBoard.DashBoardSeries;
@@ -13,6 +14,7 @@ import com.zjy.baseframework.eCharts.histogram.HistogramSeriesData;
 import com.zjy.baseframework.eCharts.lineChart.LineChart;
 import com.zjy.baseframework.eCharts.lineChart.LineChartSeries;
 import com.zjy.baseframework.eCharts.lineChart.LineChartSeriesData;
+import com.zjy.baseframework.eCharts.normalDistribution.NormalDistribution;
 import com.zjy.baseframework.eCharts.pie.Pie;
 import com.zjy.baseframework.eCharts.pie.PieSeries;
 import com.zjy.baseframework.eCharts.pie.PieSeriesData;
@@ -22,6 +24,7 @@ import com.zjy.baseframework.eCharts.radar.RadarSeries;
 import com.zjy.baseframework.eCharts.radar.RadarSeriesData;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,6 +44,22 @@ public class EchartsController {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("echarts");
 
+        Map<String, Object> chartsOption = getChartsOptionData();
+        for (Map.Entry<String, Object> entry : chartsOption.entrySet()) {
+            mv.addObject(entry.getKey(), entry.getValue());
+        }
+        return mv;
+    }
+
+    @RequestMapping("/getChartsOption")
+    @ResponseBody
+    public BaseResult<Map<String, Object>> getChartsOption() {
+        Map<String, Object> chartsOptionData = getChartsOptionData();
+        return BaseResult.OK(chartsOptionData);
+    }
+
+    private Map<String, Object> getChartsOptionData() {
+        Map<String, Object> result = new HashMap<>();
         Map<String, Float> list = new HashMap<>();
         list.put("一季度", 0.3f);
         list.put("二季度", 0.8f);
@@ -72,7 +91,7 @@ public class EchartsController {
         // 刻度格式化器
         dbs.setAxisLabel(new AxisLabel(formatter));
         db.getSeries().add(dbs);
-        mv.addObject("dashBoard", JSON.toJSONString(db));
+        result.put("dashBoard", JSON.toJSONString(db));
         //endregion
 
         //region 折线图
@@ -91,23 +110,45 @@ public class EchartsController {
         lc.getXAxis().get(0).getAxisLabel().setRotate(8);
         // y轴相关信息
         lc.setYAxis(new ArrayList<>());
-        lc.getYAxis().add(new YAxis("排名百分比", 10, 10, 100));
+        lc.getYAxis().add(new YAxis("排名百分比", 10f, 10f, 100f));
         lc.getYAxis().get(0).setAxisLabel(new AxisLabel(formatter));
 
         List<LineChartSeriesData> li1 = new ArrayList<>();
         List<LineChartSeriesData> li2 = new ArrayList<>();
+        int flag = 0;
         for (Map.Entry<String, Float> entry : list.entrySet()) {
             LineChartSeriesData lcsd = new LineChartSeriesData(String.valueOf(Math.round(entry.getValue() * 100)));
+            lcsd.setSymbolSize(14);
+            if (flag < 3) {
+                ItemStyle itemStyle = new ItemStyle();
+                ItemStyleNormal itemStyleNormal = new ItemStyleNormal();
+                itemStyle.setNormal(itemStyleNormal);
+                if(flag %2 == 0) {
+                    itemStyleNormal.setColor("#ff9800");
+                } else {
+                    itemStyleNormal.setColor("green");
+                }
+                lcsd.setItemStyle(itemStyle);
+            }
+            flag++;
             li1.add(lcsd);
             LineChartSeriesData lcsd2 = new LineChartSeriesData(String.valueOf(Math.round(entry.getValue() * 100)));
             li2.add(lcsd2);
         }
         // 折线图的值
-        lc.getSeries().add(new LineChartSeries(xueXi, li1));
+        LineChartSeries line1 = new LineChartSeries(xueXi, li1);
+        ItemStyle itemStyle = new ItemStyle();
+        line1.setItemStyle(itemStyle);
+        ItemStyleNormal itemStyleNormal = new ItemStyleNormal();
+        itemStyle.setNormal(itemStyleNormal);
+        LineStyle lineStyle = new LineStyle();
+        itemStyleNormal.setLineStyle(lineStyle);
+        lineStyle.setColor("#2A3CC9");
+        lc.getSeries().add(line1);
         Collections.reverse(li2);
         // 折线图的值
         lc.getSeries().add(new LineChartSeries(chengZhang, li2));
-        mv.addObject("lineChart", JSON.toJSONString(lc));
+        result.put("lineChart", JSON.toJSONString(lc));
         //endregion
 
         //region 柱状图
@@ -127,7 +168,7 @@ public class EchartsController {
         his.getXAxis().get(0).setAxisTick(new AxisTick(true));
         // y轴相关信息
         his.setYAxis(new ArrayList<>());
-        his.getYAxis().add(new YAxis("排名百分比", AxisValueType.Value, 10, 10, 100));
+        his.getYAxis().add(new YAxis("排名百分比", AxisValueType.Value, 10f, 10f, 100f));
         his.getYAxis().get(0).setAxisLabel(new AxisLabel(formatter));
 
         List<HistogramSeriesData> hsd1 = new ArrayList<>();
@@ -144,7 +185,7 @@ public class EchartsController {
         // 柱状图的值
         his.getSeries().add(new HistogramSeries(chengZhang, hsd2));
 
-        mv.addObject("histogram", JSON.toJSONString(his));
+        result.put("histogram", JSON.toJSONString(his));
         //endregion
 
         //region 雷达图
@@ -178,7 +219,7 @@ public class EchartsController {
         });
 
         radar.getSeries().add(new RadarSeries(xueXi, radarData));
-        mv.addObject("radar", JSON.toJSONString(radar));
+        result.put("radar", JSON.toJSONString(radar));
         //endregion
 
         //region 饼图
@@ -215,9 +256,134 @@ public class EchartsController {
         series.getItemStyle().getEmphasis().setShadowColor("rgba(0, 0, 0, 0.5)");
         series.getItemStyle().getEmphasis().setShadowOffsetX(0);
         pie.getSeries().add(series);
-        mv.addObject("pie", JSON.toJSONString(pie));
+        result.put("pie", JSON.toJSONString(pie));
         //endregion
 
-        return mv;
+        // region 正态分布
+        NormalDistribution nd = new NormalDistribution(new ChartTitle("a", "b"));
+        List<String> color = new ArrayList<>();
+        color.add("#6087CF");
+        nd.setColor(color);
+
+        lc.setTooltip(new ChartToolTip(TriggerType.Item));
+        // x轴相关信息, 数据值
+        nd.setXAxis(new ArrayList<>());
+        List<String> temp = Arrays.asList("[0,10]", "(10,20]", "(20,30]", "(30,40]", "(40,50]", "(50,60]", "(60,70]", "(70,80]", "(80,90]", "(90,100]");
+        nd.getXAxis().add(new XAxis("", AxisValueType.Category, temp));
+        nd.getXAxis().get(0).setBoundaryGap(true);
+        nd.getXAxis().get(0).setShow(true);
+        nd.getXAxis().get(0).setAxisTick(new AxisTick(true));
+
+        XAxis xAxis = new XAxis("", AxisValueType.Value, new ArrayList<>());
+        xAxis.setShow(false);
+        SplitLine sl = new SplitLine();
+        LineStyle ls = new LineStyle();
+        ls.setType("dashed");
+        sl.setLineStyle(ls);
+        xAxis.setSplitLine(sl);
+        xAxis.setMin(0);
+        xAxis.setMax(100);
+        xAxis.setInterval(10);
+        nd.getXAxis().add(xAxis);
+
+        // y轴相关信息
+        nd.setYAxis(new ArrayList<>());
+        YAxis yAxis = new YAxis("人数", AxisValueType.Value, 1f, 2f, 20f);
+        yAxis.setMin(0f);
+        yAxis.setMinInterval(1f);
+        nd.getYAxis().add(yAxis);
+        yAxis = new YAxis("正态分布", AxisValueType.Value, null, null, null);
+        sl = new SplitLine();
+        ls = new LineStyle();
+        ls.setType("dashed");
+        sl.setLineStyle(ls);
+        yAxis.setSplitLine(sl);
+        nd.getYAxis().add(yAxis);
+        nd.getYAxis().get(0).setAxisLabel(new AxisLabel(formatter));
+
+        hsd1 = new ArrayList<>();
+        HistogramSeriesData hsd = new HistogramSeriesData("0");
+        hsd1.add(hsd);
+        hsd = new HistogramSeriesData("1");
+        hsd1.add(hsd);
+        hsd = new HistogramSeriesData("1");
+        hsd1.add(hsd);
+        hsd = new HistogramSeriesData("0");
+        hsd1.add(hsd);
+        hsd = new HistogramSeriesData("11");
+        hsd1.add(hsd);
+        hsd = new HistogramSeriesData("4");
+        hsd1.add(hsd);
+        hsd = new HistogramSeriesData("3");
+        hsd1.add(hsd);
+        hsd = new HistogramSeriesData("1");
+        hsd1.add(hsd);
+        hsd = new HistogramSeriesData("1");
+        hsd1.add(hsd);
+        hsd = new HistogramSeriesData("0");
+        hsd1.add(hsd);
+        nd.getSeries().add(new HistogramSeries("新名称", hsd1));
+
+        li1 = new ArrayList<>();
+        LineChartSeriesData lcsd = new LineChartSeriesData(Arrays.asList(20,0.031598805961163566));
+        li1.add(lcsd);
+        lcsd = new LineChartSeriesData(Arrays.asList(29, 0.10908348502912833));
+        li1.add(lcsd);
+        lcsd = new LineChartSeriesData(Arrays.asList( 41, 0.30001130522517055));
+        li1.add(lcsd);
+        lcsd = new LineChartSeriesData(Arrays.asList(42, 0.31579663312669004));
+        li1.add(lcsd);
+        lcsd = new LineChartSeriesData(Arrays.asList(44, 0.34460888602692685));
+        li1.add(lcsd);
+        lcsd = new LineChartSeriesData(Arrays.asList(45, 0.3572527440577784));
+        li1.add(lcsd);
+        lcsd = new LineChartSeriesData(Arrays.asList(45, 0.3572527440577784));
+        li1.add(lcsd);
+        lcsd = new LineChartSeriesData(Arrays.asList(46, 0.36848324918372943));
+        li1.add(lcsd);
+        lcsd = new LineChartSeriesData(Arrays.asList(47, 0.3781403330778938));
+        li1.add(lcsd);
+        lcsd = new LineChartSeriesData(Arrays.asList(48, 0.38608357867285736));
+        li1.add(lcsd);
+        lcsd = new LineChartSeriesData(Arrays.asList(49, 0.3921956146701));
+        li1.add(lcsd);
+        lcsd = new LineChartSeriesData(Arrays.asList(50, 0.3963850003307883));
+        li1.add(lcsd);
+        lcsd = new LineChartSeriesData(Arrays.asList(50, 0.3963850003307883));
+        li1.add(lcsd);
+        lcsd = new LineChartSeriesData(Arrays.asList(51, 0.3985885014804987));
+        li1.add(lcsd);
+        lcsd = new LineChartSeriesData(Arrays.asList(53, 0.39693473096110676));
+        li1.add(lcsd);
+        lcsd = new LineChartSeriesData(Arrays.asList(56, 0.37971579948649725));
+        li1.add(lcsd);
+        lcsd = new LineChartSeriesData(Arrays.asList(60, 0.3333351771416598));
+        li1.add(lcsd);
+        lcsd = new LineChartSeriesData(Arrays.asList(63, 0.2865994148782126));
+        li1.add(lcsd);
+        lcsd = new LineChartSeriesData(Arrays.asList(67, 0.2182246931301749));
+        li1.add(lcsd);
+        lcsd = new LineChartSeriesData(Arrays.asList(69, 0.1847041443497608));
+        li1.add(lcsd);
+        lcsd = new LineChartSeriesData(Arrays.asList(77, 0.07735540294824718));
+        li1.add(lcsd);
+        lcsd = new LineChartSeriesData(Arrays.asList(83, 0.0325319675819848));
+        li1.add(lcsd);
+        // 折线图的值
+        line1 = new LineChartSeries("第二个", li1);
+        line1.setShowSymbol(false);
+        line1.setSmooth(true);
+        line1.setxAxisIndex(1f);
+        line1.setyAxisIndex(1f);
+        ItemStyle iStyle = new ItemStyle();
+        ItemStyleNormal isn = new ItemStyleNormal();
+        isn.setColor("#CA4E4B");
+        iStyle.setNormal(isn);
+        line1.setLineStyle(iStyle);
+        nd.getSeries().add(line1);
+        result.put("normalDistribution", JSON.toJSONString(nd));
+        // endregion
+
+        return result;
     }
 }

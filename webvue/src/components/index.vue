@@ -102,6 +102,8 @@
     list.push(first);
     second = {name:  'js学习', href: 'learnJs.html', iconClass:''};
     first.children.push(second);
+    second = {name:  'echarts', href: 'echarts.html', iconClass:''};
+    first.children.push(second);
     // endregion
 
     // region 其它

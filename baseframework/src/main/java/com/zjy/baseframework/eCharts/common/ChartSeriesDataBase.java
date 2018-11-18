@@ -10,6 +10,15 @@ public class ChartSeriesDataBase
      */
     private String name;
     /**
+     * 节点样式，如圆圈，方块
+     */
+    private String symbol;
+    /**
+     * 节点样式，如圆圈，方块
+     */
+    private Integer symbolSize;
+
+    /**
      * 值
      */
     private Object value;
@@ -56,5 +65,21 @@ public class ChartSeriesDataBase
 
     public void setItemStyle(ItemStyle itemStyle) {
         this.itemStyle = itemStyle;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
+
+    public Integer getSymbolSize() {
+        return symbolSize;
+    }
+
+    public void setSymbolSize(Integer symbolSize) {
+        this.symbolSize = symbolSize;
     }
 }
