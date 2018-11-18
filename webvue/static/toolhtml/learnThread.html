@@ -9,7 +9,7 @@
 <body class='elearn'>
 	<h2>多线程</h2>
 	<p>
-	<ul class='list'>
+		<ul class='list'>
 			<li>继承Thread类, 它继承Runnable接口</li>
 			<li>实现Runnable接口，实现run方法，没有返回值不能抛出受检查的异常</li>
 			<li>实现Callable接口，实现call方法，他有返回值，可以抛出受检查的异常</li>
@@ -23,6 +23,14 @@
 					<li>https://www.cnblogs.com/fengsehng/p/6048609.html</li>
 				</ul>
 			</li>
+		</ul>
+	</p>
+	<hr>
+	<h2>锁类型</h2>
+	<p>
+		<ul class='list'>
+			<li>可重入锁：当前线程如果获取到对象锁，当再次进入到此对象的同步代码时可以直接执行而不用等待。</li>
+			<li>自旋锁：当未获到锁时会进行循环，如无限循环，直到获取到锁后退出。</li>
 		</ul>
 	</p>
 </body> 
