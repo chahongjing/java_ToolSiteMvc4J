@@ -13,7 +13,7 @@ module.exports = {
     proxyTable: {
         '/api': {
             // 测试环境
-            target: 'http://localhost:8080/ToolSiteMvc4J',
+            target: 'http://localhost:9999/ToolSiteMvc4J',
             changeOrigin: true,  //是否跨域
             pathRewrite: {
                 '^/api': ''   //需要rewrite重写的,
