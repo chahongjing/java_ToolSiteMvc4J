@@ -65,10 +65,11 @@
 	<select id="query" resultType="com.zjy.bll.vo.ConfigInfoVo">
 		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="config"/></include>
 		FROM ConfigInfo config
-		WHERE 1 = 1
-		<if test='name != null and name != ""'>
-			and config.name like '%' || #{name, jdbcType=VARCHAR} || '%'
-		</if>
+		<where>
+			<if test='name != null and name != ""'>
+				and config.name like '%' || #{name, jdbcType=VARCHAR} || '%'
+			</if>
+		</where>
 		order by config.createdOn desc
 	</select>
 
@@ -76,7 +77,6 @@
 	<select id="queryByMapFilter" resultType="com.zjy.bll.vo.ConfigInfoVo">
 		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="config"/></include>
 		FROM ConfigInfo config
-		WHERE 2 = 2
 	</select>
 
 	<!-- 其它操作区 -->

@@ -36,6 +36,10 @@ public class ToolController extends BaseController {
         model.addAttribute("dbSet", EnumSet.allOf(DbType.class));
         return "tools/tableToObject";
     }
+    @RequestMapping("/sqlGenerate")
+    public String sqlGenerate() {
+        return "tools/sqlGenerate";
+    }
 
     @RequestMapping("/getTableInfo")
     @ResponseBody
@@ -44,8 +48,23 @@ public class ToolController extends BaseController {
         String tableInfo = toolSrv.getTableInfo(dbType, url, user, password, tableName);
         return BaseResult.OK(tableInfo);
     }
-    @RequestMapping("/sqlGenerate")
-    public String sqlGenerate() {
-        return "tools/sqlGenerate";
+
+    @RequestMapping("/getDriverUrlList")
+    @ResponseBody
+    public BaseResult getDriverUrlList() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("dbUrl", Objects.toString(dbUrl, DbType.Oracle.getUrl()));
+        map.put("dbUser", Objects.toString(dbUser, "zjy"));
+        map.put("dbPassword", Objects.toString(dbPassword, "1024"));
+        List<Map<String, String>> list = new ArrayList<>();
+        Map<String, String> dbType;
+        for (DbType dbTypeEnum : EnumSet.allOf(DbType.class)) {
+            dbType = new HashMap<>();
+            dbType.put("name", dbTypeEnum.getCode());
+            dbType.put("url", dbTypeEnum.getUrl());
+            list.add(dbType);
+        }
+        map.put("dbSet", list);
+        return BaseResult.OK(map);
     }
 }

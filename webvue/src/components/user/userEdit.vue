@@ -7,7 +7,7 @@
           <label class="form-label">编号：</label>
           <div class="form-content">
             <input type="text" class="form-control" placeholder="编号" autofocus 
-            v-model='user.userCode'>
+            v-model='user.userCode' v-focus />
           </div>
           <div class='form-info'>
             <i class='fa'></i>
@@ -118,13 +118,21 @@
       getDetail: function(id) {
         var me = this;
         this.axios.get('/userinfo/getDetail', {id:id}).then(function(resp) {
-          me.user = resp.data.value;
+          if(resp.data.status == ResultStatus.OK.key) {
+            me.user = resp.data.value;
+          } else if(resp.data.status == ResultStatus.NO.key) {
+
+          }
         });
       },
       save: function() {
         var me = this;
         this.axios.post('/userinfo/save', me.user).then(function(resp) {
-          me.goBack();
+          if(resp.data.status == ResultStatus.OK.key) {
+            me.goBack();
+          } else if(resp.data.status == ResultStatus.NO.key) {
+
+          }
         });
       },
       getEnumList() {

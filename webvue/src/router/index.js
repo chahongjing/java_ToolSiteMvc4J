@@ -8,116 +8,106 @@ var router = new Router({
   routes: [
   {
     path: '/',
-    name: 'home',
-    component: resolve => require(['../components/index'], resolve)
+    name: '首页',
+    component: resolve => require(['../components/headerAndMenu'], resolve),
+    children:[{
+      path: '/',
+      name: '首页',
+      component: resolve => require(['../components/index'], resolve)
+    }]
   },
   {
     path: '/login',
-    name: 'login',
+    name: '用户登录',
     component: resolve => require(['../components/user/login'], resolve)
   },
   {
     path: '/user',
-    name: 'user',
+    name: '用户',
     component: resolve => require(['../components/headerAndMenu'], resolve),
     children: [
       {
         path: 'userList',
-        name: 'userList',
+        name: '用户列表',
         component: resolve => require(['../components/user/userList'], resolve)
       },
       {
         path: 'userEdit',
-        name: 'userEdit',
+        name: '用户详情',
         component: resolve => require(['../components/user/userEdit'], resolve)
       },
       {
         path: 'userRole',
-        name: 'userRole',
+        name: '用户角色',
         component: resolve => require(['../components/user/userRole'], resolve)
       }
     ]
   },
   {
-    path: '/main',
-    name: 'main',
-    component: resolve => require(['../components/headerAndMenu'], resolve),
-    children: [
-      {
-        path: '*',  //*号表示匹配任意内容
-        title: '首页',
-        redirect: '/',
-        extra: {
-          inMenu: false
-        }
-      }
-    ]
-  },
-  {
     path: '/sys',
-    name: 'sys',
+    name: '系统模块',
     component: resolve => require(['../components/headerAndMenu'], resolve),
     children: [
     {
       path: 'menuList',
-      name: 'menuList',
+      name: '菜单列表',
       component: resolve => require(['../components/sys/menuList'], resolve)
     },
     {
       path: 'menuEdit',
-      name: 'menuEdit',
+      name: '菜单详情',
       component: resolve => require(['../components/sys/menuEdit'], resolve)
     },
     {
       path: 'functionList',
-      name: 'functionList',
+      name: '功能列表',
       component: resolve => require(['../components/sys/functionList'], resolve)
     },
     {
       path: 'functionEdit',
-      name: 'functionEdit',
+      name: '功能详情',
       component: resolve => require(['../components/sys/functionEdit'], resolve)
     },
     {
       path: 'permissionList',
-      name: 'permissionList',
+      name: '权限列表',
       component: resolve => require(['../components/sys/permissionList'], resolve)
     },
     {
       path: 'permissionEdit',
-      name: 'permissionEdit',
+      name: '权限详情',
       component: resolve => require(['../components/sys/permissionEdit'], resolve)
     },
     {
       path: 'roleList',
-      name: 'roleList',
+      name: '角色列表',
       component: resolve => require(['../components/sys/roleList'], resolve)
     },
     {
       path: 'roleEdit',
-      name: 'roleEdit',
+      name: '角色详情',
       component: resolve => require(['../components/sys/roleEdit'], resolve)
     },
     {
       path: 'configInfoList',
-      name: 'configInfoList',
+      name: '配置列表',
       component: resolve => require(['../components/sys/configInfoList'], resolve)
     },
     {
       path: 'configInfoEdit',
-      name: 'configInfoEdit',
+      name: '配置详情',
       component: resolve => require(['../components/sys/configInfoEdit'], resolve)
     },
     {
       path: 'roleGrantPermission',
-      name: 'roleGrantPermission',
+      name: '角色授权',
       component: resolve => require(['../components/sys/roleGrantPermission'], resolve)
     },
     {
       path: '*',  //*号表示匹配任意内容
       title: '首页',
       redirect: '/',
-      extra: {
+      meta: {
         inMenu: false
       }
     }
@@ -128,6 +118,7 @@ var router = new Router({
 
 router.beforeEach(function (to, from, next) {
   var user = router.app.$store.state.user;
+  // me.$store.commit("USER_SIGNIN", me.user);
   if(!user.userId && to && to.path != '/login') {
     next({
      path: '/login',
@@ -153,6 +144,18 @@ router.beforeEach(function (to, from, next) {
     }
     // 不跳转传false
     // next(false);
+    // 处理面包屑
+    var bread = router.app.$store.state.bread;
+    var i = 0;
+    for(; i < bread.length; i++) {
+      if(bread[i].path == to.path) {
+        var current = bread[i];
+        bread.splice(i, bread.length - i);
+        break;
+      }
+    }
+    bread.push(to);
+
     next();
   });
 export default router;

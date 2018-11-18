@@ -53,10 +53,11 @@
 		     parent.name as pName
 		FROM menu
 		left join menu parent on menu.pid = parent.menuid
-		WHERE 1 = 1
-		<if test='name != null and name != ""'>
-			and menu.name like '%' || #{name, jdbcType=VARCHAR} || '%'
-		</if>
+		<where>
+			<if test='name != null and name != ""'>
+				and menu.name like '%' || #{name, jdbcType=VARCHAR} || '%'
+			</if>
+		</where>
 		order by parent.seq, menu.seq
 	</select>
 
@@ -64,7 +65,6 @@
 	<select id="queryByMapFilter" resultType="com.zjy.bll.vo.MenuVo">
 		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="menu"/></include>
 		FROM menu
-		WHERE 2 = 2
 	</select>
 
 	<!-- 查询是否重复 -->

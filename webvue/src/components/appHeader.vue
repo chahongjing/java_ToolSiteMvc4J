@@ -14,16 +14,10 @@
           </a>
         </li>
         <li>
-          <a class="fr logout licontent" href="javascript:void(0)" @click="goBack()">
-            <i class="fa fa-reply"></i>返回
-          </a>
-        </li>
-        <li>
-          <span class="licontent">
-            姓名：
+          <span class="licontent" v-text='"姓名：" + user.userName'>
           </span>
         </li>
-        <li class="menu" data-ng-hide="">
+        <li class="menu">
           <div><i class="fa fa-list"></i></div>
           <ul></ul>
         </li>
@@ -37,7 +31,22 @@
     name: 'appHeader',
     data () {
       return {
+        user:{userName:''}
       }
+    },
+    methods: {
+      logout: function() {
+        var me = this;
+        this.axios.get('/userinfo/logout').then(function(resp) {
+          if(resp.data.status == ResultStatus.OK.key) {
+            me.$store.commit("USER_SIGNOUT");
+            me.$router.push({path: '/login'});
+          }
+        });
+      },
+    },
+    mounted: function() {
+      this.user = this.$store.state.user;
     }
   }
 </script>
@@ -48,4 +57,5 @@
     height: 50px;
     display: inline-block;
   }
+  .menu{display:none !important;}
 </style>

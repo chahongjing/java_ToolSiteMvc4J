@@ -6,13 +6,12 @@ import com.zjy.entities.FunctionInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
 @Repository
 public interface FunctionInfoDao extends BaseDao<FunctionInfo> {
-    Map<String, BigDecimal> queryRepeatCount(@Param("functionId") String permissionId, @Param("code") String code);
+    Map<String, Integer> queryRepeatCount(@Param("functionId") String permissionId, @Param("code") String code);
 
     List<FunctionInfoVo> queryFunctionList();
 

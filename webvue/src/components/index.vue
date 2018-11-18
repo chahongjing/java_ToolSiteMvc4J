@@ -1,42 +1,26 @@
 <template>
-	<div class='h100p'>
-		<app-header></app-header>
-		<div class="body">
-			<app-menu></app-menu>
-			<div class="right-main" :class='{"fullwin":!showMenu}'>
-				<div class="bread">
-					<ul>
-						<li>
-							<a class='w100p h100p inline-block' href='javascript:void(0)' title='首页'><i class='fa fa-home mr0' @click='goHomePage()'></i></a>
-						</li>
-					</ul>
-				</div>
-				<div class="right-content p15">
-					<div class="card border-info fl" v-for='group in list'>
-						<div class="card-header text-center" v-text='group.name'></div>
-						<div class="card-body text-info">
-							<div class="list-group">
-								<a :href="'/static/toolhtml/' + item.href" class="list-group-item list-group-item-action"
-								v-for='item in group.children' target='_blank'>
-								<i class='fa fa-comment fa-fw'></i><span v-text='item.name'></span>
-							</a>
-							<a href="#" class="list-group-item list-group-item-action">
-								<router-link to="/login">
-									<button class="btn btn-default">登录</button>
-								</router-link>
-							</a>
+    <div>
+        <div class="card border-info fl" v-for='group in list'>
+            <div class="card-header text-center" v-text='group.name'></div>
+            <div class="card-body text-info">
+                <div class="list-group">
+                <a :href="'/static/toolhtml/' + item.href" class="list-group-item list-group-item-action"
+                v-for='item in group.children' target='_blank'>
+                <i class='fa fa-comment fa-fw'></i><span v-text='item.name'></span>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action">
+                <router-link to="/login">
+                <button class="btn btn-default">登录</button>
+                </router-link>
+                </a>
 
-						</div>
-					</div>
-					<div class="card-footer text-muted">
-						2 days ago
-					</div>
-				</div>
-			</div>
-			<div class="footer"></div>
-		</div>
-	</div>
-</div>
+                </div>
+            </div>
+            <div class="card-footer text-muted">
+                2 days ago
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -125,9 +109,9 @@
     list.push(first);
     second = {name:  'git学习', href: 'learnGit.html', iconClass:''};
     first.children.push(second);
-    second = {name:  'oracle表转类', href: '/tool/tableToObject', iconClass:''};
+    second = {name:  'oracle表转类', href: 'tableToObject.html', iconClass:''};
     first.children.push(second);
-    second = {name:  'sql生成器', href: '/tool/sqlGenerate', iconClass:''};
+    second = {name:  'sql生成器', href: 'generateSql.html', iconClass:''};
     first.children.push(second);
     // endregion
 

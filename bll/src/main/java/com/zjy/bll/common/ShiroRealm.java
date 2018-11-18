@@ -6,6 +6,7 @@ import com.zjy.bll.service.UserRoleService;
 import com.zjy.bll.vo.RolePermissionVo;
 import com.zjy.bll.vo.UserRoleVo;
 import com.zjy.entities.UserInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
@@ -77,8 +78,8 @@ public class ShiroRealm extends AuthorizingRealm {
         List<String> roleIdList = userRoleList.stream().map(item -> item.getRoleId()).collect(Collectors.toList());
         List<String> roles = userRoleList.stream().map(item -> item.getRoleCode()).collect(Collectors.toList());
         List<RolePermissionVo> permissionList = rolePermissionSrv.queryRolePermission(roleIdList);
-        permissions = permissionList.stream().filter(item -> org.apache.commons.lang3.StringUtils.isNotBlank(item.getPermissionCode())
-                && org.apache.commons.lang3.StringUtils.isNotBlank(item.getRoleCode())).map(item -> item.getRoleCode() + ":" + item.getPermissionCode()).collect(Collectors.toList());
+        permissions = permissionList.stream().filter(item -> StringUtils.isNotBlank(item.getPermissionCode()))
+                .map(item -> item.getPermissionCode()).collect(Collectors.toList());
 //        roles.add("admin");
 //        permissions.add("admin:testPermission");
 //        @RequiresRoles("admin")

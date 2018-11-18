@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -114,9 +113,9 @@ public class FunctionInfoServiceImpl extends BaseService<FunctionInfoDao, Functi
         if (StringUtils.isBlank(po.getName())) {
             throw new ServiceException("请输入功能名称！");
         }
-        Map<String, BigDecimal> map = dao.queryRepeatCount(po.getFunctionId(), po.getCode());
-        if (map != null && map.containsKey("CODECOUNT") && map.get("CODECOUNT").intValue() > 0) {
-            throw new ServiceException("功能名称重复！");
+        Map<String, Integer> map = dao.queryRepeatCount(po.getFunctionId(), po.getCode());
+        if (map != null && map.containsKey("codeCount") && map.get("codeCount") > 0) {
+            throw new ServiceException("功能编码重复！");
         }
     }
 

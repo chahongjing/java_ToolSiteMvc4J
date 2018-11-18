@@ -17,13 +17,14 @@
 	<select id="query" resultType="com.zjy.bll.vo.RolePermissionVo">
 		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="rp"/></include>
 		FROM RolePermission rp
-		WHERE 1 = 1
-		<if test='roleId != null and roleId != ""'>
-			and rp.roleId = #{roleId, jdbcType=VARCHAR}
-		</if>
-		<if test='permissionId != null and permissionId != ""'>
-			and rp.permissionId = #{permissionId, jdbcType=VARCHAR}
-		</if>
+		<where>
+			<if test='roleId != null and roleId != ""'>
+				and rp.roleId = #{roleId, jdbcType=VARCHAR}
+			</if>
+			<if test='permissionId != null and permissionId != ""'>
+				and rp.permissionId = #{permissionId, jdbcType=VARCHAR}
+			</if>
+		</where>
 	</select>
 
 	<select id="queryByRoleList" resultType="com.zjy.bll.vo.RolePermissionVo">
@@ -32,14 +33,15 @@
 		FROM RolePermission rp
 		left join roleInfo r on rp.roleId = r.roleId
 		left join permission p on rp.permissionId = p.permissionId
-		WHERE 1 = 1
-		<if test='roleIdList != null and roleIdList.size() > 0'>
-			and rp.roleId in (
-			<foreach collection="roleIdList" item="roleId" index="index" separator="," open="" close="">
-				#{roleId, jdbcType=VARCHAR}
-			</foreach>
-			)
-		</if>
+		<where>
+			<if test='roleIdList != null and roleIdList.size() > 0'>
+				and rp.roleId in (
+				<foreach collection="roleIdList" item="roleId" index="index" separator="," open="" close="">
+					#{roleId, jdbcType=VARCHAR}
+				</foreach>
+				)
+			</if>
+		</where>
 	</select>
 
 	<!-- 公共信息 -->

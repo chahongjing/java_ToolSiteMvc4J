@@ -19,13 +19,14 @@
 		        r.code as rolecode
 		FROM UserRole ur
 		inner join RoleInfo r on ur.roleId = r.roleId
-		WHERE 1 = 1
-		<if test='roleId != null and roleId != ""'>
-			and ur.roleId = #{roleId, jdbcType=VARCHAR}
-		</if>
-		<if test='userId != null and userId != ""'>
-			and ur.userId = #{userId, jdbcType=VARCHAR}
-		</if>
+		<where>
+			<if test='roleId != null and roleId != ""'>
+				and ur.roleId = #{roleId, jdbcType=VARCHAR}
+			</if>
+			<if test='userId != null and userId != ""'>
+				and ur.userId = #{userId, jdbcType=VARCHAR}
+			</if>
+		</where>
 	</select>
 
 	<!-- 公共信息 -->

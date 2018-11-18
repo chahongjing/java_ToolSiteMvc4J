@@ -11,10 +11,10 @@
             </li>
             <li class='bread-item' v-for='item in menuList' :title='item.text'>
               <span class='split'>&gt;</span>
-              <a class='w100p h100p inline-block' href='javascript:void(0)' v-text='item.text' @click='goPage(item)'></a>
+              <a class='w100p h100p inline-block' href='javascript:void(0)' v-text='item.name' @click='goPage(item)'></a>
             </li>
           </ul>
-          <button type="button" class="btn btn-outline-purple btn-sm fr mr5 mt4" @click='goBack()'>
+           <button type="button" class="btn btn-outline-purple btn-sm fr mr5 mt4" @click='goBack()'>
             <i class='fa fa-reply mr5'></i>返回
           </button>
         </div>
@@ -39,25 +39,33 @@
       }
     },
     mounted:function() {
-      var list = [];
-      list.push({path:'/',text:'一级模块'});
-      list.push({path:'/',text:'二级模块'});
-      list.push({path:'/',text:'三级模块'});
-      this.menuList = list;
+      this.setBread();
     },
     methods: {
       goPage(item) {
         if(item == null) {
           console.log('返回首页');
         } else {
-          console.log(item.text);
+          this.$router.push({path:item.path, query:item.query,params:item.params});
         }
       },
       goHomePage() {
+        this.$store.commit("CLEAR_BREAD");
         this.$router.push({path: '/'});
       },
       goBack:function() {
-        this.$router.back(-1);
+        var bread = this.$store.state.bread;
+        if(bread.length == 1) {
+          this.$store.commit("CLEAR_BREAD");
+          this.$router.push({path: '/'});
+          return;
+        }
+        bread.pop();
+        var item = bread[bread.length - 1];
+        this.$router.push({path:item.path, query:item.query,params:item.params});
+      },
+      setBread: function() {
+        this.menuList = this.$store.state.bread;
       }
     },
     components: {appHeader, appMenu}

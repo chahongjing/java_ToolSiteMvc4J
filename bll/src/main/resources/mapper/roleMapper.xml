@@ -41,16 +41,16 @@
 	<select id="query" resultType="com.zjy.bll.vo.RoleInfoVo">
 		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="r"/></include>
 		FROM RoleInfo r
-		WHERE 1 = 1
-		<if test='name != null and name != ""'>
-			and r.name like '%' || #{name, jdbcType=VARCHAR} || '%'
-		</if>
+		<where>
+			<if test='name != null and name != ""'>
+				and r.name like '%' || #{name, jdbcType=VARCHAR} || '%'
+			</if>
+		</where>
 		order by r.seq
 	</select>
 	<select id="queryAllRole" resultType="com.zjy.bll.vo.RoleInfoVo">
 		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="r"/></include>
 		FROM RoleInfo r
-		WHERE 1 = 1
 		order by r.seq
 	</select>
 
@@ -58,7 +58,6 @@
 	<select id="queryByMapFilter" resultType="com.zjy.bll.vo.RoleInfoVo">
 		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="r"/></include>
 		FROM RoleInfo r
-		WHERE 2 = 2
 	</select>
 
 	<!-- 查询是否重复 -->

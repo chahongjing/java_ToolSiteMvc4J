@@ -84,8 +84,8 @@ label.switch input:disabled + div span:nth-child(3){color:#aaa;}
     color:#aaa;
 }
 /* radio */
-.radio_checkbox input[type='radio'] + i{border-radius:100%;width:15px;height:15px;left:5px;top:8px;}
-.radio_checkbox input[type='radio'] + i:after{content:'\f111';top:2px;left:2px;width:9px;height:9px;transform:scale(0);-webkit-transform:scale(0);}
+.radio_checkbox input[type='radio'] + i{border-radius:100%;width:14px;height:14px;left:5px;top:8px;}
+.radio_checkbox input[type='radio'] + i:after{content:'\f111';top:1px;left:1px;width:10px;height:10px;transform:scale(0);-webkit-transform:scale(0);}
 /* checkbox */
 .radio_checkbox input[type='checkbox'] + i{width:16px;height:16px;left:5px;top:6px;}
 .radio_checkbox input[type='checkbox'] + i:after{content:'\f00c';top:2px;left:2px;width:12px;height:12px;transform:scale(0);-webkit-transform:scale(0);}
@@ -197,6 +197,8 @@ ul.sub-menu > li > a > b {position:absolute;top:0px;right:0;width:0px;height:0px
 .w155{width:155px;}
 .w180{width:180px;}
 .w100p{width:100%;}
+
+.minw100{min-width:100px;}
 .h100p{height:100%;}
 
 .mt2{margin-top:2px;}
@@ -246,7 +248,7 @@ ul.sub-menu > li > a > b {position:absolute;top:0px;right:0;width:0px;height:0px
 
 /* 列表 */
 .list-header-but-group{height:45px;line-height: 38px;padding:0 10px;border-bottom:1px solid #ccc;}
-.searchbar{padding:10px 10px 5px;}
+.searchbar{padding:15px 10px 5px;}
 .maincontent{width:100%;height:100%;display:flex;flex-flow:column;padding:5px 10px;}
 .table-list{flex:1;overflow: auto;}
 

@@ -62,11 +62,12 @@
             <property name="tableName" value="UserInfo"/>
         </include>
         FROM UserInfo
-        WHERE 1 = 1
-        <if test='userName != null and userName != ""'>
-            and (userName like '%' || #{userName, jdbcType=VARCHAR} || '%' or userCode like '%' ||
-            #{userName, jdbcType=VARCHAR} || '%')
-        </if>
+        <where>
+            <if test='userName != null and userName != ""'>
+                and (userName like '%' || #{userName, jdbcType=VARCHAR} || '%' or userCode like '%' ||
+                #{userName, jdbcType=VARCHAR} || '%')
+            </if>
+        </where>
 
         <!-- where 标签和trim 标签 -->
         <!--<trim prefix="WHERE" prefixOverrides="AND | OR">-->
@@ -97,7 +98,6 @@
             <property name="tableName" value="UserInfo"/>
         </include>
         FROM UserInfo
-        WHERE 2 = 2
     </select>
 
     <!-- 通过编码获取 -->

@@ -38,9 +38,9 @@
       <table class="table table-hover">
         <thead>
           <tr>
-          <th class='w50'>#</th>
-            <th class=''>名称</th>
-            <th class=''>编码</th>
+            <th class='w50'>#</th>
+            <th>名称</th>
+            <th class='w100'>编码</th>
             <th class='w155'>创建时间</th>
             <th class='w70'>性别</th>
             <th class='w70'>系统用户</th>

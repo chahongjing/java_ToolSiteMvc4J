@@ -11,7 +11,7 @@
 	        <h4 class="header blue"><i class="fa fa-coffee green"></i>请输入您的信息</h4>
 	        <div class="form-control">
 	          <input type="text" name="UserCode" maxlength="30" placeholder="请输入账户"
-	          autofocus/><i class="fa fa-user"></i>
+	          v-focus /><i class="fa fa-user"></i>
 	        </div>
 	        <div class="form-control">
 	         <input type="password" name="Password" maxlength="30" placeholder="请输入密码"/>
