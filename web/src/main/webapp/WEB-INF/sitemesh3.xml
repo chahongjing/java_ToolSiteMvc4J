@@ -6,12 +6,14 @@
 
     <mapping path="/*/**angular**" decorator="/WEB-INF/layout/angularLayout.jsp" />
 
-    <mapping path="/*/**sqlGenerate**" decorator="/WEB-INF/layout/angularLayout.jsp" />
-    <mapping path="/*/**tableToObject**" decorator="/WEB-INF/layout/angularLayout.jsp" />
+    <!--<mapping path="/*/**sqlGenerate**" decorator="/WEB-INF/layout/angularLayout.jsp" />-->
+    <!--<mapping path="/*/**tableToObject**" decorator="/WEB-INF/layout/angularLayout.jsp" />-->
 
     <!-- 指明排除页面，将被排除，不被装饰 -->
     <mapping path="/userinfo/loginpage*" exclue="true" />
     <mapping path="/js/**angular**.html" exclue="true" />
+    <mapping path="/index.html" exclue="true" />
+    <mapping path="/static/**" exclue="true" />
 
    <content-processor>
        <tag-rule-bundle class="com.zjy.bll.common.MyTagRuleBundle" />
