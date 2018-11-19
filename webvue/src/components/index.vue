@@ -4,7 +4,7 @@
             <div class="card-header text-center" v-text='group.name'></div>
             <div class="card-body text-info">
                 <div class="list-group">
-                <a :href="'/static/toolhtml/' + item.href" class="list-group-item list-group-item-action"
+                <a :href="context + '/static/toolhtml/' + item.href" class="list-group-item list-group-item-action"
                 v-for='item in group.children' target='_blank'>
                 <i class='fa fa-comment fa-fw'></i><span v-text='item.name'></span>
                 </a>
@@ -121,6 +121,7 @@
     	name: 'index',
     	data () {
     		return {
+                context: '/ToolSiteMvc4J',
     			list: list,
     			showMenu: 'true'
     		}
