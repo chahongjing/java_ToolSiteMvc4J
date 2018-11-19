@@ -528,7 +528,7 @@ window.Utility.Controls = window.Utility.Controls || {};
 window.Constant = {
     AjaxStatus: { OK: "OK", NO: "NO", ERROR: "ERROR", UNLOGIN: "UNLOGIN", UNAUTHORIZED: "UNAUTHORIZED",UNAUTHENTICATION:"UNAUTHENTICATION" },
     EmptyGuid: "00000000-0000-0000-0000-000000000000",Context:'/ToolSiteMvc4J',
-    // Host:'localhost',Port:'8088'
+    Host:'localhost',Port:'8088'
     // Host:'localhost',Port:'9999'
-    Host:'10.4.132.60',Port:'20001'
+    // Host:'10.4.132.60',Port:'20000'
 }
