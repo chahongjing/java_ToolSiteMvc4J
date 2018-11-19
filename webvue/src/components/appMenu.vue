@@ -91,7 +91,9 @@
       },
       clickSecondMenu: function(item, sub, $event) {
           $event.stopPropagation();
-          if(sub.isSelected) return;
+          if(!sub.isSelected) {
+            this.$store.commit("CLEAR_BREAD");
+          }
           for(var i = 0; i < this.list.length; i++) {
               var obj = this.list[i];
               for(var j = 0; j < obj.children.length; j++) {
@@ -101,7 +103,6 @@
               }
           }
           sub.isSelected = true;
-          this.$store.commit("CLEAR_BREAD");
           this.$router.push({path: sub.data.url});
       },
       toggleMenu() {

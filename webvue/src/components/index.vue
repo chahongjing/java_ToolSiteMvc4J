@@ -1,24 +1,20 @@
 <template>
     <div>
-        <div class="card border-info fl" v-for='group in list'>
-            <div class="card-header text-center" v-text='group.name'></div>
-            <div class="card-body text-info">
-                <div class="list-group">
-                <a :href="'static/toolhtml/' + item.href" class="list-group-item list-group-item-action"
-                v-for='item in group.children' target='_blank'>
-                <i class='fa fa-comment fa-fw'></i><span v-text='item.name'></span>
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">
-                <router-link to="/login">
-                <button class="btn btn-default">登录</button>
-                </router-link>
-                </a>
-
-                </div>
-            </div>
-            <div class="card-footer text-muted">
-                2 days ago
-            </div>
+        <div class='box' v-for='group in list'>
+	        <div class="card border-info">
+	            <div class="card-header text-center" v-text='group.name'></div>
+	            <div class="card-body text-info">
+	                <div class="list-group">
+	                <a :href="'static/toolhtml/' + item.href" class="list-group-item list-group-item-action"
+	                v-for='item in group.children' target='_blank'>
+	                <i class='fa fa-comment fa-fw'></i><span v-text='item.name'></span>
+	                </a>
+	                </div>
+	            </div>
+	            <div class="card-footer text-muted">
+	                2 days ago
+	            </div>
+	        </div>
         </div>
     </div>
 </template>
@@ -140,7 +136,8 @@
 </script>
 
 <style scoped>
-	.card{display:inline-block;}
+    .box{width:33%;float:left;padding:0 15px;margin-bottom:15px;}
+	.card{display:inline-block;width:100%;}
 	.p15{padding:15px;}
 	.card-body {padding:0;}
 	.card-body .list-group .list-group-item{border-left:0;border-right:0;}

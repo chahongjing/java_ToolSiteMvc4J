@@ -145,16 +145,18 @@ router.beforeEach(function (to, from, next) {
     // 不跳转传false
     // next(false);
     // 处理面包屑
-    var bread = router.app.$store.state.bread;
-    var i = 0;
-    for(; i < bread.length; i++) {
-      if(bread[i].path == to.path) {
-        var current = bread[i];
-        bread.splice(i, bread.length - i);
-        break;
+    if(to.path != from.path) {
+      var bread = router.app.$store.state.bread;
+      var i = 0;
+      for(; i < bread.length; i++) {
+        if(bread[i].path == to.path) {
+          var current = bread[i];
+          bread.splice(i, bread.length - i);
+          break;
+        }
       }
+      bread.push(to);
     }
-    bread.push(to);
 
     next();
   });
