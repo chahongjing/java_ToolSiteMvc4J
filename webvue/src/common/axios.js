@@ -3,7 +3,7 @@
  */
 import axios from 'axios';
 
-axios.defaults.baseURL = process.env.baseUrl;
+axios.defaults.baseURL = 'http://' + process.env.baseHost + (process.env.basePort ? (':' + process.env.basePort) : '');
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 axios.defaults.headers.common["x-requested-with"] = "XMLHttpRequest";
 axios.defaults.withCredentials = true;
@@ -61,7 +61,7 @@ var axiosIns = {
     return this.getContext() + process.env.proxyPrefix + path;
   },
   getContext: function () {
-    return '';
+    return process.env.context;
   },
   get: function (path, param) {
     return axios.get(this.getAjaxUrl(path), {params: param}).catch(function (resp) {

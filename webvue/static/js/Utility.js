@@ -510,10 +510,25 @@ window.Utility.Controls = window.Utility.Controls || {};
                 window.Query[arrKeyValue[1]] = arrKeyValue[2];
             }
         }
+        ns.getServerUrl = function() {
+            var str = 'http://' + Constant.Host;
+            if(Constant.Port || Constant.Port != 80) {
+                str += ':' + Constant.Port;
+            }
+            if(Constant.Context) {
+                str += Constant.Context
+            } else {
+                str += '/';
+            }
+            return str;
+        }
 })(window.Utility);
 
 /// 系统常量
 window.Constant = {
     AjaxStatus: { OK: "OK", NO: "NO", ERROR: "ERROR", UNLOGIN: "UNLOGIN", UNAUTHORIZED: "UNAUTHORIZED",UNAUTHENTICATION:"UNAUTHENTICATION" },
-    EmptyGuid: "00000000-0000-0000-0000-000000000000"
+    EmptyGuid: "00000000-0000-0000-0000-000000000000",Context:'/ToolSiteMvc4J',
+    // Host:'localhost',Port:'8088'
+    // Host:'localhost',Port:'9999'
+    Host:'10.4.132.60',Port:'20001'
 }

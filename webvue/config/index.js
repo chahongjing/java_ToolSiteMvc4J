@@ -4,26 +4,50 @@
 
 const path = require('path')
 
+var devEnv = require('./dev.env');
+var context = devEnv.context;
+var host = devEnv.baseHost;
+var port = devEnv.basePort;
+var targetHost = devEnv.targetHost;
+var targetPort = devEnv.targetPort;
+var prefix = devEnv.proxyPrefix;
+if(context) context = context.replace(/'|"/g, "");
+if(host) host = host.replace(/'|"/g, "");
+if(port) port = port.replace(/'|"/g, "");
+if(targetHost) targetHost = targetHost.replace(/'|"/g, "");
+if(targetPort) targetPort = targetPort.replace(/'|"/g, "");
+if(prefix) prefix = prefix.replace(/'|"/g, "");
+
+var targetUrl = targetHost + (targetPort ? (':' + targetPort) : '');
+var proxyTable = {};
+var pathRewrite = {};
+pathRewrite['^' + context + prefix] = context;
+proxyTable[context + prefix] = {
+    target: targetUrl,
+    changeOrigin: true,  //是否跨域
+    pathRewrite: pathRewrite
+}
+
 module.exports = {
   dev: {
-
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {
-        '/api': {
-            // 测试环境
-            target: 'http://localhost:9999/ToolSiteMvc4J',
-            changeOrigin: true,  //是否跨域
-            pathRewrite: {
-                '^/api': ''   //需要rewrite重写的,
-            }              
-        }
-    },
+    // proxyTable: {
+    //     '/api': {
+    //         // 测试环境
+    //         target: 'http://localhost:8088/ToolSiteMvc4J',
+    //         changeOrigin: true,  //是否跨域
+    //         pathRewrite: {
+    //             '^/api': ''   //需要rewrite重写的,
+    //         }              
+    //     }
+    // },
+    proxyTable: proxyTable,
 
     // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
-    port: 8099, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    host: host, // can be overwritten by process.env.HOST
+    port: port || 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,
