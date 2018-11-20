@@ -122,6 +122,6 @@
 .tog i{color:transparent;font-size:18px;margin-left:1px;transition: 0.3s;}
 .menu:hover .tog{background-color: #3e72d2;}
 .menu:hover .tog i{color:#fff;}
-.hidemenu{width:0px;}
+.hidemenu{width:0px;border:0;}
 .hidemenu i.fa-angle-left:before{content:"\f105";}
 </style>

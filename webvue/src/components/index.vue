@@ -16,6 +16,10 @@
 	            </div>
 	        </div>
         </div>
+        <div style='display:none;'>
+            <input type='file' id='myfile' />
+            <button @click='test'>测试</button>
+        </div>
     </div>
 </template>
 
@@ -130,7 +134,15 @@
 			    //this.$router.push({name: 'myPage', query:{ id:'1'}});
 			},
 			goHomePage() {
-			}
+			},
+            test() {
+                var formData = new FormData();
+                formData.append('userCode', 'zjy');
+                formData.append('userName', '曾军毅');
+                this.axios.postFormData('/userinfo/testPostWithFile', formData).then(function(resp) {
+                    console.log(resp);
+                });
+            }
 		}
 	}
 </script>
