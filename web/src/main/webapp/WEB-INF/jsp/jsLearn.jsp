@@ -82,7 +82,6 @@ define(function(require,exports,module){
     </div>
 </div>
 <jsSection>
-    <script src="${ctx}/tool/getEnums"></script>
     <%-- js脚本 --%>
     <script>
         // blob下载
@@ -173,15 +172,17 @@ define(function(require,exports,module){
             $('button[name=ajaxtj]').click(function () {
                 var formData = new FormData();
                 var files = $('input[name=myfile]')[0].files;
-                formData.append("name", "zjy");
-                for (var i = 0; i < files.length; i++) {
-                    formData.append("myfile", files[i]);
+                formData.append("userName", "zjy");
+                if(files && files.length > 0) {
+                    for (var i = 0; i < files.length; i++) {
+                        formData.append("myfile", files[i]);
+                    }
                 }
 
                 $.ajax({
                     //url: ctx + '/learn/fileupload',
                     //url: 'http://localhost:30000/restfulweb/rest/hello/testPostWithFile',
-                    url: 'http://localhost:30001/api/rest/hello/testPostWithFile',
+                    url: ctx + '/userinfo/testPostWithFile',
                     type: 'post',
                     processData: false,
                     contentType: false,
