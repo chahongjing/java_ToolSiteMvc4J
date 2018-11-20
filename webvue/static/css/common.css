@@ -9,7 +9,7 @@ ul,li{margin:0;padding:0;list-style:none;}
     background-color: #7266ba;color:#fff;
 }
 .head .logo{width:calc(100% - 405px);height:100%;display:inline-block;margin:0;padding:0;float:left;}
-.head .logo i:before{display:block;margin-top:12px;margin-left:11px;}
+.head .logo i:before{display:block;margin-top:9px;margin-left:11px;}
 .head .logo .title{line-height: 50px;font-size:22px;color:#fff;}
 .head .info{width:400px;height:100%;display:inline-block;margin:0;padding:0;float:right;}
 .head .info ul,.head .info ul li{list-style: none;margin:0;padding:0;line-height:50px;cursor:default;}
@@ -88,7 +88,7 @@ label.switch input:disabled + div span:nth-child(3){color:#aaa;}
     color:#aaa;
 }
 /* radio */
-.radio_checkbox input[type='radio'] + i{border-radius:100%;width:15px;height:15px;left:5px;top:8px;}
+.radio_checkbox input[type='radio'] + i{border-radius:100%;width:15px;height:15px;left:5px;top:7px;}
 .radio_checkbox input[type='radio'] + i:after{content:' ';top:2px;left:2px;width:9px;height:9px;transform:scale(0);-webkit-transform:scale(0);
 background-color: #2068ed;border-radius: 50%;}
 /* checkbox */

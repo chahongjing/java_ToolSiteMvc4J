@@ -180,7 +180,8 @@
 .radio_checkbox{margin-bottom:0;}
 .panel-heading{padding:8px;}
 .showdetailarray{display: inline-block;width: 30px;height: 29px;line-height: 28px;margin-right:0;
-	text-align:center;cursor:pointer}
+	text-align:center;cursor:pointer;color:#999;transition:0.2s;}
+.showdetailarray:hover{color:#333;}
 .checkall{margin-right:0;}
 .hidedetail{height:0;padding:0;}
 .noboderbottom{border-bottom-width:0;}
