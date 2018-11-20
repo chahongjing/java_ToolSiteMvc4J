@@ -23,7 +23,7 @@
             <i class='fa fa-question-circle-o'></i>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" v-if='!user.isSave'>
           <label class="form-label">密码：</label>
           <div class="form-content">
             <input type="password" class="form-control" placeholder="密码"
@@ -33,7 +33,7 @@
             <i class='fa fa-question-circle-o'></i>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" v-if='!user.isSave'>
           <label class="form-label">确认密码：</label>
           <div class="form-content">
             <input type="password" class="form-control" placeholder="确认密码"
@@ -106,7 +106,7 @@
     name: 'userEdit',
     data () {
       return {
-        user:{userId:null,userName:null,password:null,passwordAgain:null,sex:null,birthday:null,isDisabled:null,isSystem:null},
+        user:{userId:null,userName:null,password:null,passwordAgain:null,sex:null,birthday:null,isDisabled:null,isSystem:null,isSave:true},
         sexList:[],
         YesNoList:[]
       }

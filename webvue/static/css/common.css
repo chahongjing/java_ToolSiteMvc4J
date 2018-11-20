@@ -9,7 +9,7 @@ ul,li{margin:0;padding:0;list-style:none;}
     background-color: #7266ba;color:#fff;
 }
 .head .logo{width:calc(100% - 405px);height:100%;display:inline-block;margin:0;padding:0;float:left;}
-.head .logo i:before{display:block;margin-top:9px;margin-left:11px;}
+.head .logo i:before{display:block;margin-top:10px;margin-left:11px;}
 .head .logo .title{line-height: 50px;font-size:22px;color:#fff;}
 .head .info{width:400px;height:100%;display:inline-block;margin:0;padding:0;float:right;}
 .head .info ul,.head .info ul li{list-style: none;margin:0;padding:0;line-height:50px;cursor:default;}
