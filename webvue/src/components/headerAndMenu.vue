@@ -7,11 +7,12 @@
         <div class="bread">
           <ul>
             <li>
-              <a class='w100p h100p inline-block' href='javascript:void(0)' title='首页'><i class='fa fa-home mr0' @click='goHomePage()'></i></a>
+              <a class='w100p h100p inline-block pl8' href='javascript:void(0)' title='首页'><i class='fa fa-home mr0' @click='goHomePage()'></i></a>
             </li>
             <li class='bread-item' v-for='item in menuList' :title='item.text'>
-              <span class='split'>&gt;</span>
-              <a class='w100p h100p inline-block' href='javascript:void(0)' v-text='item.name' @click='goPage(item)'></a>
+              <span class='w100p h100p inline-block'>
+                <a class='w100p h100p inline-block' href='javascript:void(0)' v-text='item.name' @click='goPage(item)'></a>
+              </span>
             </li>
           </ul>
            <button type="button" class="btn btn-outline-purple btn-sm fr mr5 mt4" @click='goBack()'>
@@ -73,5 +74,4 @@
 </script>
 
 <style scoped>
-.right-main.fullwin{width:calc(100% - 1px);}
 </style>
