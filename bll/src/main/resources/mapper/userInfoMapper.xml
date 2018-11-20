@@ -4,11 +4,11 @@
     <!-- 基本操作区 -->
     <!-- 添加 -->
     <insert id="add">
-        INSERT INTO UserInfo(<include refid="field"></include>)
+        INSERT INTO UserInfo(<include refid="field"></include>, password)
         VALUES(#{userId, jdbcType=VARCHAR}, #{userCode, jdbcType=VARCHAR}, #{userName, jdbcType=VARCHAR},
-        #{password, jdbcType=VARCHAR}, #{sex, jdbcType=INTEGER}, #{birthday, jdbcType=TIMESTAMP}, #{isSystem, jdbcType=INTEGER},
+        #{sex, jdbcType=INTEGER}, #{birthday, jdbcType=TIMESTAMP}, #{isSystem, jdbcType=INTEGER},
         #{isDisabled, jdbcType=INTEGER}, #{createdBy, jdbcType=VARCHAR}, #{createdOn, jdbcType=TIMESTAMP},
-        #{modifiedBy, jdbcType=VARCHAR}, #{modifiedOn, jdbcType=TIMESTAMP})
+        #{modifiedBy, jdbcType=VARCHAR}, #{modifiedOn, jdbcType=TIMESTAMP}, #{password, jdbcType=VARCHAR})
     </insert>
 
     <!-- 更新 -->
@@ -105,7 +105,7 @@
         SELECT
         <include refid="fieldWithPrefix">
             <property name="tableName" value="UserInfo"/>
-        </include>
+        </include>, userinfo.password
         FROM UserInfo
         WHERE userCode = #{userCode, jdbcType = VARCHAR}
     </select>
@@ -123,11 +123,11 @@
     <!-- 公共信息 -->
     <!-- 字段 -->
     <sql id="field">
-		UserId, UserCode, UserName, Password, Sex, Birthday, isSystem, isDisabled, createdBy, createdOn, modifiedBy, modifiedOn
+		UserId, UserCode, UserName, Sex, Birthday, isSystem, isDisabled, createdBy, createdOn, modifiedBy, modifiedOn
 	</sql>
     <!-- 带前缀的字段 -->
     <sql id="fieldWithPrefix">
-		${tableName}.UserId, ${tableName}.UserCode, ${tableName}.UserName, ${tableName}.Password, ${tableName}.Sex,
+		${tableName}.UserId, ${tableName}.UserCode, ${tableName}.UserName, ${tableName}.Sex,
 		${tableName}.Birthday, ${tableName}.isSystem, ${tableName}.isDisabled, ${tableName}.createdBy, ${tableName}.createdOn,
 		${tableName}.modifiedBy, ${tableName}.modifiedOn
 	</sql>
