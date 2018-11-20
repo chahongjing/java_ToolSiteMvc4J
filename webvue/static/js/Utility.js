@@ -346,6 +346,19 @@ window.Utility.Controls = window.Utility.Controls || {};
         return p == -1 ? 0 : (s.length - p - 1);
     }
 
+    // 如(3, '￥', ',', '.')
+    Number.prototype.format = function (precision, prefixSymbol, thousand, decimal) {
+        precision = !isNaN(precision = Math.abs(precision)) ? precision : 2;
+        prefixSymbol = !prefixSymbol ? '' : prefixSymbol;
+        thousand = thousand || ",";
+        decimal = decimal || ".";
+        var number = this,
+            negative = number < 0 ? "-" : "",
+            i = parseInt(number = Math.abs(+number || 0).toFixed(precision), 10) + "",
+            j = (j = i.length) > 3 ? j % 3 : 0;
+        return prefixSymbol + negative + (j ? i.substr(0, j) + thousand : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand) + (precision ? decimal + Math.abs(number - i).toFixed(precision).slice(2) : "");
+    };
+
     // 用正则表达式去掉字符串前后空格
     String.prototype.trim = String.prototype.trim || function () {
         return this.replace(/(^\s*)|(\s*$)/g, "");
@@ -528,7 +541,7 @@ window.Utility.Controls = window.Utility.Controls || {};
 window.Constant = {
     AjaxStatus: { OK: "OK", NO: "NO", ERROR: "ERROR", UNLOGIN: "UNLOGIN", UNAUTHORIZED: "UNAUTHORIZED",UNAUTHENTICATION:"UNAUTHENTICATION" },
     EmptyGuid: "00000000-0000-0000-0000-000000000000",Context:'/ToolSiteMvc4J',
-    Host:'localhost',Port:'8088'
+    // Host:'localhost',Port:'8088'
     // Host:'localhost',Port:'9999'
-    // Host:'10.4.132.60',Port:'20000'
+    Host:'10.4.132.60',Port:'20000'
 }
