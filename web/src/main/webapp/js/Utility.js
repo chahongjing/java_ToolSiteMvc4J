@@ -346,6 +346,19 @@ window.Utility.Controls = window.Utility.Controls || {};
         return p == -1 ? 0 : (s.length - p - 1);
     }
 
+    // 如(3, '￥', ',', '.')
+    Number.prototype.format = function (precision, prefixSymbol, thousand, decimal) {
+        precision = !isNaN(precision = Math.abs(precision)) ? precision : 2;
+        prefixSymbol = !prefixSymbol ? '' : prefixSymbol;
+        thousand = thousand || ",";
+        decimal = decimal || ".";
+        var number = this,
+            negative = number < 0 ? "-" : "",
+            i = parseInt(number = Math.abs(+number || 0).toFixed(precision), 10) + "",
+            j = (j = i.length) > 3 ? j % 3 : 0;
+        return prefixSymbol + negative + (j ? i.substr(0, j) + thousand : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand) + (precision ? decimal + Math.abs(number - i).toFixed(precision).slice(2) : "");
+    };
+
     // 用正则表达式去掉字符串前后空格
     String.prototype.trim = String.prototype.trim || function () {
         return this.replace(/(^\s*)|(\s*$)/g, "");
@@ -484,11 +497,48 @@ window.Utility.Controls = window.Utility.Controls || {};
             reader.onload = function (e) {
                 callback && callback(reader.result);
             }
+        },
+        ns.initialQuery = function(url) {
+            var reg, regKeyValue;
+            var arrQuery, arrKeyValue;
+
+            reg = new RegExp("\\?(.*)$", "i");
+            regKeyValue = new RegExp("(.+)=(.*)", "i");
+
+            if (!url) {
+                url = window.location.href;
+            }
+
+            // 将查询信息放在window.Query集合里
+            window.Query = [];
+            arrQuery = url.match(reg);
+            if (!arrQuery || !arrQuery[1]) {
+                return;
+            }
+            arrQuery = arrQuery[1].split("&");
+
+            for (i = 0; i < arrQuery.length; i++) {
+                arrKeyValue = arrQuery[i].match(regKeyValue);
+                if (!arrKeyValue) { continue; }
+                window.Query[arrKeyValue[1]] = arrKeyValue[2];
+            }
+        }
+        ns.getServerUrl = function() {
+            var str = 'http://' + Constant.Host;
+            if(Constant.Port || Constant.Port != 80) {
+                str += ':' + Constant.Port;
+            }
+            if(Constant.Context) {
+                str += Constant.Context
+            } else {
+                str += '/';
+            }
+            return str;
         }
 })(window.Utility);
 
 /// 系统常量
 window.Constant = {
-    AjaxStatus: { OK: "OK", NO: "NO", ERROR: "ERROR", UNLOGIN: "UNLOGIN", UNAUTHORIZED: "UNAUTHORIZED" },
+    AjaxStatus: { OK: "OK", NO: "NO", ERROR: "ERROR", UNLOGIN: "UNLOGIN", UNAUTHORIZED: "UNAUTHORIZED",UNAUTHENTICATION:"UNAUTHENTICATION" },
     EmptyGuid: "00000000-0000-0000-0000-000000000000"
 }
