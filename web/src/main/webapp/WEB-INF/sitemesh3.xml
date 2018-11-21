@@ -2,7 +2,7 @@
 <sitemesh>
     <!-- 指明满足“/*”的页面，将被“/WEB-INF/views/decorators/decorator.html”所装饰 -->
     <mapping path="/*" decorator="/WEB-INF/layout/vueLayout.jsp" />
-    <mapping path="/**vueDemo**" decorator="/WEB-INF/layout/vueLayout.jsp" />
+    <mapping path="/learn/vueDemo" decorator="/WEB-INF/layout/vueLayout.jsp" />
 
     <mapping path="/*/**angular**" decorator="/WEB-INF/layout/angularLayout.jsp" />
 
