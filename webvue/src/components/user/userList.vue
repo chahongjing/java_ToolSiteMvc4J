@@ -97,7 +97,6 @@
 		},
 		methods: {
 			add() {
-				this.$toaster.success('成功！');
 				var me = this;
 				this.axios.get('/comm/getId').then(function(resp) {
 					me.$router.push({path: '/user/userEdit', query: {id: resp.data.value}});

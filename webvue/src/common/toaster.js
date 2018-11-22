@@ -1,18 +1,30 @@
+import Vue from 'vue';
 import Toastr from 'vue-toastr';
+import 'vue-toastr/dist/vue-toastr.css'
+
+const VueComponent = Vue.extend(Toastr);
+const vm = new VueComponent().$mount();
+vm.defaultProgressBar = false;
+let init = false;
+
+
+if (!init) {
+	document.body.appendChild(vm.$el);
+	init = true;
+}
 
 const toaster = {
 	success: function(msg) {
-		Toastr.s(msg);
-		alert(msg);
+		vm.s(msg);
 	},
 	warning: function(msg) {
-		alert(msg);
+		vm.w(msg);
 	},
 	info: function(msg) {
-		alert(msg);
+		vm.i(msg);
 	},
 	error: function(msg) {
-		alert(msg);
+		vm.e(msg);
 	}
 };
 

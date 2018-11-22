@@ -129,6 +129,7 @@
         var me = this;
         this.axios.post('/userinfo/save', me.user).then(function(resp) {
           if(resp.data.status == ResultStatus.OK.key) {
+            me.$toaster.success('保存成功！');
             me.goBack();
           } else if(resp.data.status == ResultStatus.NO.key) {
 
