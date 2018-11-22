@@ -62,7 +62,7 @@
         searchKey:null,
         functionId:null,
         list: [],
-        pager: {pageNum:1, pageSize:10}
+        pager: {pageNum:1, pageSize:10,loading:true}
       }
     },
     methods: {
@@ -79,6 +79,7 @@
       },
       search() {
         var me = this;
+        me.pager.loading = true;
         this.axios.get('/permission/queryPageList', {name: this.searchKey,functionId: this.functionId,pageNum:this.pager.pageNum,pageSize:this.pager.pageSize}).then(function(resp) {
           if(resp.data.status == Constant.AjaxStatus.OK) {
             me.list = resp.data.value.list;
@@ -94,8 +95,10 @@
       },
       deleteItem:function(entity) {
         var me = this;
-        this.axios.get('/permission/delete', {id: entity.permissionId}).then(function(resp) {
-          me.search();
+        this.$confirm.confirm('确定要删除权限吗？', function() {
+          me.axios.get('/permission/delete', {id: entity.permissionId}).then(function(resp) {
+            me.search();
+          });
         });
       }
     },

@@ -40,11 +40,6 @@ var router = new Router({
         path: 'userRole',
         name: '用户角色',
         component: resolve => require(['../components/user/userRole'], resolve)
-      },
-      {
-        path: 'test',
-        name: '测试页面',
-        component: resolve => require(['../components/user/test'], resolve)
       }
     ]
   },

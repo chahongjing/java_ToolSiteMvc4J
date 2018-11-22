@@ -66,7 +66,7 @@
       return {
         searchKey:null,
         list: [],
-        pager: {pageNum:1, pageSize:10}
+        pager: {pageNum:1, pageSize:10,loading:true}
       }
     },
     methods: {
@@ -82,6 +82,7 @@
       },
       search() {
         var me = this;
+        me.pager.loading = true;
         this.axios.get('/role/queryPageList', {name: this.searchKey,pageNum:this.pager.pageNum,pageSize:this.pager.pageSize}).then(function(resp) {
           if(resp.data.status == Constant.AjaxStatus.OK) {
             me.list = resp.data.value.list;
@@ -97,12 +98,14 @@
       },
       deleteItem:function(entity) {
         var me = this;
-        this.axios.get('/role/delete', {id: entity.roleId}).then(function(resp) {
-          if(resp.data.status == Constant.AjaxStatus.OK) {
-            me.search();
-          } else {
-            alert(resp.data.message);
-          }
+        this.$confirm.confirm('确定要删除角色吗？', function() {
+          me.axios.get('/role/delete', {id: entity.roleId}).then(function(resp) {
+            if(resp.data.status == Constant.AjaxStatus.OK) {
+              me.search();
+            } else {
+              alert(resp.data.message);
+            }
+          });
         });
       },
       grant(entity) {

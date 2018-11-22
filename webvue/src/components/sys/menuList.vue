@@ -65,7 +65,7 @@
       return {
         searchKey:null,
         list: [],
-        pager: {pageNum:1, pageSize:10}
+        pager: {pageNum:1, pageSize:10,loading:true}
       }
     },
     methods: {
@@ -82,6 +82,7 @@
       },
       search() {
         var me = this;
+        me.pager.loading = true;
         this.axios.get('/menu/queryPageList', {name: this.searchKey,pageNum:this.pager.pageNum,pageSize:this.pager.pageSize}).then(function(resp) {
           me.list = resp.data.value.list;
           me.pager = commonSrv.getPagerInfo(resp.data.value, me.goPage);
@@ -93,8 +94,10 @@
       },
       deleteItem:function(entity) {
         var me = this;
-        this.axios.get('/menu/delete', {id: entity.menuId}).then(function(resp) {
-          me.search();
+        this.$confirm.confirm('确定要删除菜单吗？', function() {
+          me.axios.get('/menu/delete', {id: entity.menuId}).then(function(resp) {
+            me.search();
+          });
         });
       }
     },

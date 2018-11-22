@@ -1,8 +1,9 @@
 <template>
   <div class='list-pager'>
     <div class='footer-left inline-block pl5' :style="{'width':'calc(100% - ' + width + 'px)'}">
-      共<span v-text='pagerInfo && pagerInfo.total || 0'></span>条记录,
-      当前<span v-text='pagerInfo && pagerInfo.pageNum || 0'></span>/<span v-text='(pagerInfo && pagerInfo.pages || 0)'></span>页
+      共&nbsp;<span v-text='pagerInfo && pagerInfo.total || 0'></span>&nbsp;条记录,
+      当前&nbsp;<span v-text='pagerInfo && pagerInfo.pageNum || 0'></span>/<span v-text='(pagerInfo && pagerInfo.pages || 0)'></span>&nbsp;页
+      <i class='fa fa-refresh fa-spin text-success' v-if='pagerInfo && pagerInfo.loading'></i>
     </div>
     <div class='footer-right inline-block text-right pr5' :style="{'width':width + 'px'}">
       <ul class="pagination inline-block">
@@ -18,7 +19,7 @@
 <script>
   export default {
     name: 'pagination',
-    props: {pagerInfo:{pageNum:null, pages:null, total: null, callback:null}},
+    props: {pagerInfo:{pageNum:null, pages:null, total: null, callback:null,loading:false}},
     data () {
       return {
         width:0

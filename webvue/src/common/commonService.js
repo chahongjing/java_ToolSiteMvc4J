@@ -6,6 +6,7 @@ var commonService = {
 			pagerInfo.pageSize = pager.pageSize;
 			pagerInfo.pages = pager.pages;
 			pagerInfo.total = pager.total;
+			pagerInfo.loading = false;
 		}
 		return pagerInfo;
 	}
