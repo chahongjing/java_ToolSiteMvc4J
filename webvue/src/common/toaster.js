@@ -1,5 +1,8 @@
+import Toastr from 'vue-toastr';
+
 const toaster = {
 	success: function(msg) {
+		Toastr.s(msg);
 		alert(msg);
 	},
 	warning: function(msg) {
