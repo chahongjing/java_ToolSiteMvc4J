@@ -36,7 +36,7 @@
 				<div class="form-group">
 					<label class="form-label">名称：</label>
 					<div class="form-content">
-						<date-picker v-model="date"></date-picker>
+						<datetimepicker></datetimepicker>
 					</div>
 				</div>
 				
@@ -93,6 +93,7 @@
 <script>
 	import commonSrv from '../../common/commonService'
 	import pagination from '../common/pagination'
+import datetimepicker from '../common/datetimepicker';
 
 	export default {
 		name: 'userList',
@@ -162,6 +163,6 @@
 		mounted: function() {
 			this.search();
 		},
-		components:{pagination}
+		components:{pagination,datetimepicker}
 	}
 </script>

@@ -9,7 +9,7 @@ import store from './store/store';
 import directives from './common/directives';
 import confirm from './common/confirm';
 import toaster from './common/toaster';
-import datePicker from 'vue-bootstrap-datetimepicker';
+import datetimepicker from './components/common/datetimepicker';
 
 Vue.prototype.serverHost = process.env.baseUrl;
 Vue.prototype.axios = axios;
@@ -17,7 +17,6 @@ Object.keys(filters).forEach(k => Vue.filter(k, filters[k]));
 Object.keys(directives).forEach(k => Vue.directive(k, directives[k]));
 Vue.prototype.$confirm = confirm;
 Vue.prototype.$toaster = toaster;
-Vue.use(datePicker);
 /* eslint-disable no-new */
 new Vue({
 	el: '#app',
