@@ -33,12 +33,16 @@
 						</div>
 					</div>
 				</div>
-				<div class="form-group">
-					<label class="form-label">名称：</label>
-					<div class="form-content">
-						<datetimepicker></datetimepicker>
-					</div>
-				</div>
+        <div class="form-group">
+          <label class="form-label">名称：</label>
+          <div class="form-content">
+            <datetimepicker v-model='mydate'></datetimepicker>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">{{mydate}}</label>
+          
+        </div>
 				
 				<div class="form-group">
 					<button type="button" class="btn btn-purple ml20" @click='search()'>
@@ -99,7 +103,7 @@ import datetimepicker from '../common/datetimepicker';
 		name: 'userList',
 		data () {
 			return {
-				date:null,
+				mydate:new Date(),
 				searchKey:null,
 				list: [],
 				pager: {pageNum:1,pageSize:5,loading:true}
