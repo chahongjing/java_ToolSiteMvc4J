@@ -114,6 +114,7 @@
         var me = this;
         this.$confirm.confirm('确定要删除配置吗？', function() {
           me.axios.get('/configInfo/delete', {id: entity.id}).then(function(resp) {
+              me.$toaster.success('删除成功！');
             me.search();
           });
         });

@@ -96,6 +96,7 @@
         var me = this;
         this.$confirm.confirm('确定要删除菜单吗？', function() {
           me.axios.get('/menu/delete', {id: entity.menuId}).then(function(resp) {
+              me.$toaster.success('删除成功！');
             me.search();
           });
         });

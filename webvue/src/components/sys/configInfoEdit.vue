@@ -117,6 +117,7 @@
         save: function() {
           var me = this;
           this.axios.post('/configInfo/save', me.configInfo).then(function(resp) {
+              me.$toaster.success('保存成功！');
             me.goBack();
           });
         },

@@ -101,6 +101,7 @@
         this.$confirm.confirm('确定要删除角色吗？', function() {
           me.axios.get('/role/delete', {id: entity.roleId}).then(function(resp) {
             if(resp.data.status == Constant.AjaxStatus.OK) {
+              me.$toaster.success('删除成功！');
               me.search();
             } else {
               alert(resp.data.message);

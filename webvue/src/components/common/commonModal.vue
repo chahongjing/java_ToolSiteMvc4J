@@ -1,6 +1,6 @@
 <template>
   <div class="modal fade" tabindex="-1" :class='{show:showModal}'>
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered" :style='getStyle()'>
       <div class='blankheader'></div>
       <div class="modal-content">
           <slot name='headerSlot' />
@@ -15,7 +15,7 @@
 <script>
   export default {
     name: 'commonModal',
-    props:['showModal'],
+    props:{showModal:false,width:null,height:null},
     watch:{
       showModal(curVal, oldVal) {
         var thisEl = $(this.$el);
@@ -31,6 +31,18 @@
         }
       }
     },
+    methods: {
+      getStyle: function() {
+        var obj = {};
+        if(this.width > 0) {
+          obj.width = this.width + 'px';
+        }
+        if(this.height > 0) {
+          obj.height = this.height + 'px';
+        }
+        return obj;
+      }
+    },
     mounted: function() {
     }
   }
@@ -41,4 +53,5 @@
   .blankheader{display:flex;flex:1;}
   .blankfooter{display:flex;flex:1.6;}
   .modal.fade.show{opacity:1;}
+  .modal-content{    border-radius: .3rem;}
 </style>

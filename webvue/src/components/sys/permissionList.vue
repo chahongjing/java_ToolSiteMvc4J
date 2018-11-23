@@ -97,6 +97,7 @@
         var me = this;
         this.$confirm.confirm('确定要删除权限吗？', function() {
           me.axios.get('/permission/delete', {id: entity.permissionId}).then(function(resp) {
+              me.$toaster.success('删除成功！');
             me.search();
           });
         });

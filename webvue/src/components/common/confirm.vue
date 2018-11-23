@@ -1,9 +1,9 @@
 <template>
-  <common-modal :show-modal='showDialog'>
+  <common-modal :show-modal='showDialog' :width='width'>
     <div class="modal-header" slot='headerSlot'>
       <h5 class="modal-title" v-text='title'></h5>
       <button type="button" class="close" @click='defaultClose()'>
-        <span class='text-danger closeicon' title="关闭">&times;</span>
+        <span class='closeicon' title="关闭">&times;</span>
       </button>
     </div>
     <div class="modal-body" slot="bodySlot" v-text='message'>
@@ -27,6 +27,7 @@
     data () {
       return {
         showDialog: false,
+        width:350,
         title: '确认信息',
         message: '确定要退出吗？',
         closeBtn: {show: true, cls:'', showIcon: true, iconCls:'',text: '关闭', fn: null},
@@ -89,4 +90,9 @@
 
 <style scoped>
   .closeicon{font-size:26px;}
+  .modal-header{padding:10px 10px 10px 15px;background-color: #7266ba;color:#fff;}
+  .modal-header .close{padding:10px;margin:-10px -10px -10px auto;opacity:0.8;color:#fff;}
+  .modal-header .close:hover{opacity:1;}
+  .modal-body{font-size:16px;}
+  .modal-footer{padding:10px;border-top-color:#d0d2d5;}
 </style>

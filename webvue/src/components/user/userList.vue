@@ -34,6 +34,13 @@
 					</div>
 				</div>
 				<div class="form-group">
+					<label class="form-label">名称：</label>
+					<div class="form-content">
+						<date-picker v-model="date"></date-picker>
+					</div>
+				</div>
+				
+				<div class="form-group">
 					<button type="button" class="btn btn-purple ml20" @click='search()'>
 						<i class='fa fa-search mr5'></i>搜索
 					</button>
@@ -86,10 +93,12 @@
 <script>
 	import commonSrv from '../../common/commonService'
 	import pagination from '../common/pagination'
+
 	export default {
 		name: 'userList',
 		data () {
 			return {
+				date:null,
 				searchKey:null,
 				list: [],
 				pager: {pageNum:1,pageSize:5,loading:true}
@@ -123,6 +132,7 @@
 				var me = this;
 				this.$confirm.confirm('确定要删除用户吗？', function() {
 					me.axios.get('/userinfo/delete', {id: entity.userId}).then(function(resp) {
+						me.$toaster.success('删除成功！');
 						me.search();
 					});
 				});
@@ -133,7 +143,7 @@
 			confirm1() {
 				var option = {
 					title: '提示1',
-					message: '确定要退出吗1？',
+					message: '确定要退出吗1确定要退出吗1确定要退出吗1确定要退出吗1确定要退出吗1？',
 					closeBtn: {fn: null},
 					confirmBtn: {fn: function() {console.log('adsf');}}
 				}

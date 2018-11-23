@@ -91,6 +91,7 @@
           var me = this;
           this.axios.post('/function/save', me.functionInfo).then(function(resp) {
             if(resp.data.status == Constant.AjaxStatus.OK) {
+              me.$toaster.success('保存成功！');
               me.goBack();
             } else {
               alert(resp.data.message);

@@ -106,6 +106,7 @@
         this.$confirm.confirm('确定要删除功能吗？', function() {
           me.axios.get('/function/delete', {id: entity.functionId}).then(function(resp) {
             if(resp.data.status == Constant.AjaxStatus.OK) {
+              me.$toaster.success('删除成功！');
               me.search();
             } else {
               alert(resp.data.message);
