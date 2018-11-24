@@ -16,6 +16,21 @@
 	            </div>
 	        </div>
         </div>
+        <div class='box'>
+            <div class="card border-info">
+                <div class="card-header text-center">其它</div>
+                <div class="card-body text-info">
+                    <div class="list-group">
+                    <router-link to="/test/test" class="list-group-item list-group-item-action">
+                      <i class='fa fa-comment fa-fw'></i><span>测试</span>
+                    </router-link>
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                    2 days ago
+                </div>
+            </div>
+        </div>
         <div style='display:none;'>
             <input type='file' id='myfile' />
             <button @click='test'>测试</button>

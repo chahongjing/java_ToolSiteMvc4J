@@ -2,7 +2,6 @@ package com.zjy.web.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.zjy.baseframework.BaseResult;
-import com.zjy.baseframework.PartialViewHelper;
 import com.zjy.bll.request.UserInfoRequest;
 import com.zjy.bll.service.UserInfoService;
 import com.zjy.bll.vo.UserInfoVo;
@@ -19,24 +18,15 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.ServletConfigAware;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author chahongjing
@@ -145,46 +135,6 @@ public class UserInfoController extends BaseController implements ServletConfigA
     public BaseResult<PageInfo> queryPageList(UserInfoRequest request) {
         PageInfo<UserInfoVo> pageInfo = (PageInfo<UserInfoVo>) userInfoSrv.queryPageList(request);
         return BaseResult.OK(pageInfo);
-    }
-    // endregion
-
-    // region 学习方法
-    @RequestMapping(value = "/testPostWithFile", method = RequestMethod.POST)
-    public ResponseEntity<BaseResult<UserInfo>> testPostWithFile(MultipartHttpServletRequest request,
-                                                                 @RequestParam(required = false) Integer age,
-                                                                 @RequestParam MultipartFile[] myfile,
-                                                                 UserInfo users) {
-        BaseResult<UserInfo> re = BaseResult.OK();
-        UserInfo user = new UserInfo();
-        user.setUserName("曾军毅postWithFile");
-        for (MultipartFile file : request.getFiles("myfile")) {
-
-        }
-        re.setValue(user);
-        return new ResponseEntity<>(re, HttpStatus.OK);
-    }
-    @RequestMapping("/redirect")
-    public ModelAndView redirect(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("redirect:/testP2");
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("username", "23ab33");
-        try {
-            String content = PartialViewHelper.renderTest("/index.jsp", request, response, map);
-        } catch (Exception e) {
-            logger.error("执行视图错误！", e);
-        }
-
-        return mv;
-    }
-
-    @RequestMapping(value = "/testPostEntity", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public ResponseEntity<UserInfo> testPostEntity(UserInfo userForm) {
-        UserInfo user = new UserInfo();
-        user.setUserName(userForm.getUserName());
-        user.setDepartmentName("testPostEntity");
-        return new ResponseEntity<>(user, HttpStatus.OK);
     }
     // endregion
 }

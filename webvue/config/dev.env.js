@@ -12,7 +12,8 @@ module.exports = merge(prodEnv, {
   // targetHost:'"http://10.4.132.60"',
   // targetPort:'"8088"',
   //targetPort:'"8080"',
-  targetPort:'"9999"',
+  targetPort:'"21000"',
+  //targetPort:'"9999"',
   // targetPort:'"20000"',
   proxyPrefix: '"/api"'
 })

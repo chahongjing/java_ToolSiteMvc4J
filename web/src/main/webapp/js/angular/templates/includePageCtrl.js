@@ -7,11 +7,11 @@ app.controller('includePageCtrl', ['$scope', '$http',
 
         $scope.init = function () {
             $scope.$parent.parentFunc();
-            var m = $scope.$emit('callParentFuncId', {a: '参数'});
+            var m = $scope.$emit('callParentFuncId', {a: 'param'});
         };
 
         $scope.$on('callChildFuncId', function($event, param) {
-            console.log('这是子页面方法！通过broadcast+on调用子方法!' + JSON.stringify(param));
+            console.log('children page！broadcast+on call!' + JSON.stringify(param));
         });
 
         $scope.testclick = function() {

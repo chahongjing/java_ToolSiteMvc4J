@@ -2,6 +2,7 @@
  * Created by jyzeng on 2018/11/2.
  */
 import axios from 'axios';
+import toaster from './toaster';
 
 axios.defaults.baseURL = 'http://' + process.env.baseHost + (process.env.basePort ? (':' + process.env.basePort) : '');
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
@@ -18,7 +19,7 @@ axios.defaults.transformRequest  = [function (data) {
   return data;
 }]
 axios.defaults.transformResponse = [function (data) {
-  if(data){
+  if(data && !(data instanceof Blob)){
     var data = $.parseJSON(data);
     if(data.status == window.Constant.AjaxStatus.UNAUTHENTICATION){
       window.location.hash = "/login";
@@ -46,6 +47,13 @@ axios.interceptors.response.use(function (response) {
     // 用户未授权
     result.status = ResultStatus.UNAUTHORIZED.key;
     result.message = ResultStatus.UNAUTHORIZED.name;
+  } else if(error.response.status == 500) {
+    if(error.response.data instanceof Blob) {
+      Utility.readBlobAsText(error.response.data, function(data) {
+        var res = JSON.parse(data);
+        alert(res.message);
+      });
+    } 
   } else {
     result.status = ResultStatus.ERROR.key;
     result.message = ResultStatus.ERROR.name;
@@ -92,6 +100,13 @@ var axiosIns = {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
     });
-  }
+  },
+  postDownload: function (path, param) {
+    return axios.post(this.getAjaxUrl(path), param, {responseType: 'blob'}).catch(function (resp) {
+      if(resp.status == ResultStatus.UNAUTHORIZED.key) {
+        alert(resp.message);
+      }
+    });
+  },
 };
 export default axiosIns;

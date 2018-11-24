@@ -53,8 +53,10 @@
         <p><b>span</b></p>
         <p data-ng-bind="model.inputValue" data-ng-class="{'red': model.hasClass}"></p>
         <span data-ng-bind-template="{{model.inputValue}}[abc]{{model.inputValue}}"></span>
-        <input type="file" id="myfile" >
-        <button data-ng-click="testPost()" value="测试">测试</button>
+        <p><b>测试文件相关</b></p>
+        <input type="file" id="myfile" multiple />
+        <button data-ng-click="testUpload()" value="测试">上传文件</button>
+        <button data-ng-click="testDownload()" value="测试">下载</button>
     </div>
     <br><br><br>
 
@@ -140,27 +142,28 @@
                     });
                 };
 
-                $scope.testPost = function () {
+                $scope.testUpload = function () {
                     var formData = new FormData();
-                    formData.append("a", 1);
-                    formData.append("d", new Date());
-                    formData.append('myfile', $('#myfile')[0].files[0]);
-                    commonSrv.postFormData('/learn/fileupload1', formData);return;
-                    $http.post('${ctx}/learn/testajax', {a: 11}, {params: {b: 2}}).success(function (resp) {
-                        console.log('success');
-                    }).error(function (data, status, headers, config) {
-                        console.log('error');
-                    });
+                    formData.append("userName", '曾军毅');
+                    formData.append("userCode", 'zjy');
+                    formData.append("birthday", new Date());
+                    var files = $('#myfile')[0].files;
+                    if(files && files.length > 0) {
+                        for(var i = 0; i < files.length; i++) {
+                            formData.append('myfile', files[i]);
+                        }
+                    }
+                    commonSrv.postFormData('/learn/testPostWithFile', formData);
                 };
 
                 $scope.parentFunc = function () {
                     console.log('这是父页面方法,通过$parent调用父方法!');
                 }
 
-                $scope.blobDownload = function() {
+                $scope.testDownload = function() {
                     // $http.post(url, param, {responseType: "arraybuffer"}); // {responseType: "blob"}
-                    biJiSrv.export($scope.model.searchParm).success(function (resp, status, responseHeaders, xhr) {
-                        Utility.blobDownload([resp], responseHeaders());
+                    commonSrv.postDownload('/learn/download').success(function (resp, status, responseHeaders, xhr) {
+                        Utility.blobDownload(resp, responseHeaders());
                     });
                 }
 				

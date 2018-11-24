@@ -34,7 +34,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="form-label">名称：</label>
+					<label class="form-label">创建日期：</label>
 					<div class="form-content">
 						<date-time-picker v-model='mydate' :option='dateOpt'></date-time-picker>
 					</div>
@@ -82,6 +82,9 @@
 					</tr>
 				</tbody>
 			</table>
+			<div class='nodata' v-if='!list || list.length == 0'>
+				 <div>没有数据！</div>
+			</div>
 		</div>
 		<div class='footer-pager'>
 			<pagination :pager-info='pager'></pagination>

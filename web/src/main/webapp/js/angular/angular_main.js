@@ -11,7 +11,12 @@ var app = angular.module('myApp', [])
                 return angular.isObject(data) && String(data) !== '[object File]' ? $.param(data) : data;
             }];
 			$httpProvider.defaults.transformResponse = [function(data, headers){
-				return $.parseJSON(data);
+			    if(data && !(data instanceof Blob)) {
+                    try{
+                        return $.parseJSON(data)
+                    } catch(e) {}
+                }
+				return data;
 			}];
             $httpProvider.interceptors.push(function ($rootScope, $q) {
                 return {
@@ -57,6 +62,13 @@ var app = angular.module('myApp', [])
                             }
                             //return $q.resolve({data:jReturn});
                             return $q.reject({data: jReturn});
+                        } else if(response.status === 500) {
+                            if(response.data instanceof Blob) {
+                                Utility.readBlobAsText(response.data, function(data) {
+                                    var res = JSON.parse(data);
+                                    alert(res.message);
+                                });
+                            }
                         }
                         return $q.reject(response);
                         //return $q.resolve(response);

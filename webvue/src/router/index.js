@@ -112,6 +112,18 @@ var router = new Router({
       }
     }
     ]
+  },
+  {
+    path:'/test',
+    name:'测试',
+    component: resolve => require(['../components/headerAndMenu'], resolve),
+    children: [
+    {
+        path: 'test',
+        name: '测试',
+        component: resolve => require(['../components/test'], resolve)
+      }
+    ]
   }
   ]
 });

@@ -171,6 +171,8 @@ ul.sub-menu > li > a > b {position:absolute;top:0px;right:0;width:0px;height:0px
 .table thead td,.table thead th,.table th{background-color:#f1f3f6;text-align: center;padding-left:5px;padding-right:5px;border-bottom-width:1px;}
 .table tbody tr:hover td{background-color: #fffad4;}
 .table tbody tr td{border-left-width:0;border-right-width: 0;padding-left:7px;padding-right:7px;}
+.nodata{width:100%;height:calc(100% - 42px);line-height: 100%;position:relative;}
+.nodata > div{position:absolute;top:50%;left:50%;transform: translate(-50%,-50%);font-weight:bold;}
 
 /* 公共 */
 .pointer{cursor: pointer;}
@@ -201,6 +203,7 @@ ul.sub-menu > li > a > b {position:absolute;top:0px;right:0;width:0px;height:0px
 .w150{width:150px;}
 .w155{width:155px;}
 .w180{width:180px;}
+.w300{width:300px;}
 .w100p{width:100%;}
 
 .minw100{min-width:100px;}

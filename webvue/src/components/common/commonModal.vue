@@ -49,7 +49,7 @@
 </script>
 
 <style scoped>
-  .modal-dialog-centered{flex-flow:column;}
+  .modal-dialog-centered{flex-flow:column;margin-left:auto;margin-right:auto;}
   .blankheader{display:flex;flex:1;}
   .blankfooter{display:flex;flex:1.6;}
   .modal.fade.show{opacity:1;}

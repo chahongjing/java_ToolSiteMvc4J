@@ -1,6 +1,7 @@
 package com.zjy.web.controller;
 
 import com.zjy.baseframework.*;
+import com.zjy.baseframework.enums.ResultStatus;
 import com.zjy.bll.common.LoggingProxy;
 import com.zjy.bll.service.TestService;
 import com.zjy.bll.service.TestServiceImpl;
@@ -9,6 +10,8 @@ import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +28,8 @@ import java.nio.ByteBuffer;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by chahongjing on 2018/1/21.
@@ -93,14 +98,7 @@ public class LearnController extends BaseController {
         return json;
     }
 
-    @RequestMapping("/download")
-    public void download(HttpServletResponse response) throws Exception {
-        // path是指欲下载的文件的路径。
-        String path = "d:\\a.txt";
-        File f = new File(path);
-        if (!f.exists()) throw new Exception("未找到文件：" + path);
-        DownloadHelper.download(path, response);
-    }
+
 
     /**
      * @param userName
@@ -460,6 +458,67 @@ public class LearnController extends BaseController {
     @RequestMapping("/gitLearn")
     public String gitLearn() {
         return "gitLearn";
+    }
+    // endregion
+
+    // region 最新
+    @RequestMapping(value = "/testPostWithFile", method = RequestMethod.POST)
+    public ResponseEntity<BaseResult<UserInfo>> testPostWithFile(MultipartHttpServletRequest request,
+                                                                 @RequestParam(required = false) Integer age,
+                                                                 @RequestParam MultipartFile[] myfile,
+                                                                 UserInfo users) {
+        BaseResult<UserInfo> re = BaseResult.OK();
+        UserInfo user = new UserInfo();
+        user.setUserName("曾军毅postWithFile");
+        for (MultipartFile file : request.getFiles("myfile")) {
+
+        }
+        re.setValue(user);
+        return new ResponseEntity<>(re, HttpStatus.OK);
+    }
+
+    @RequestMapping("/download")
+    @ResponseBody
+    public BaseResult download(HttpServletResponse response) throws Exception {
+        // path是指欲下载的文件的路径。
+        BaseResult result = BaseResult.OK();
+        try{
+            String path = "d:\\a.txt";
+            File f = new File(path);
+            if (!f.exists()) throw new Exception("未找到文件：" + path);
+            DownloadHelper.download(path, response);
+            return null;
+        } catch (Exception e) {
+            response.reset();
+            response.setStatus(org.apache.http.HttpStatus.SC_INTERNAL_SERVER_ERROR);
+            result.setStatus(ResultStatus.ERROR);
+            result.setMessage(e.getMessage());
+        }
+        return result;
+    }
+
+    @RequestMapping("/redirect")
+    public ModelAndView redirect(HttpServletRequest request, HttpServletResponse response) {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("redirect:/testP2");
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("username", "23ab33");
+        try {
+            String content = PartialViewHelper.renderTest("/index.jsp", request, response, map);
+        } catch (Exception e) {
+            logger.error("执行视图错误！", e);
+        }
+
+        return mv;
+    }
+
+    @RequestMapping(value = "/testPostEntity", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public ResponseEntity<UserInfo> testPostEntity(UserInfo userForm) {
+        UserInfo user = new UserInfo();
+        user.setUserName(userForm.getUserName());
+        user.setDepartmentName("testPostEntity");
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
     // endregion
 }

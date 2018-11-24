@@ -476,13 +476,14 @@ window.Utility.Controls = window.Utility.Controls || {};
     },
         ns.blobDownload = function(data, headers) {
             var fileName = headers['content-disposition'];
-            ns.blobDownload(data, fileName, headers);
+            var contentType = headers['content-type'];
+            ns.blobDownloadWithFileName(data, fileName, contentType);
         },
-        ns.blobDownload = function(data, fileName, contentType) {
+        ns.blobDownloadWithFileName = function(data, fileName, contentType) {
         if (fileName) {
             fileName = decodeURIComponent(fileName).replace(/attachment;\s*filename=/ig, '');
         }
-        var file = new Blob([resp], {type: contentType});
+        var file = new Blob([data], {type: contentType});
         var a = document.createElement("a");
         a.style.display = 'none';
         a.download = fileName;

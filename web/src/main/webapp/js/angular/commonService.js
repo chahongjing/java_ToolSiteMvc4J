@@ -73,6 +73,16 @@ app.service('commonService', ['$http', function ($http) {
     };
 
     /**
+     * 以formdata的形式发起post ajax请求
+     * @param path 路径
+     * @param param 参数，object类型
+     * @returns {*}
+     */
+    this.postDownload = function (path, param) {
+        return $http.post(this.getAjaxUrl(path), param, {responseType: 'blob'});
+    };
+
+    /**
      * 获取文件名称
      * @param path
      * @returns {*}
