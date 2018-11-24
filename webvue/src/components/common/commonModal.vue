@@ -53,5 +53,5 @@
   .blankheader{display:flex;flex:1;}
   .blankfooter{display:flex;flex:1.6;}
   .modal.fade.show{opacity:1;}
-  .modal-content{border-radius: .3rem;border-width:0;}
+  .modal-content{border-radius: .3rem;border-width:0;box-shadow: 0 0 10px #224acd;}
 </style>

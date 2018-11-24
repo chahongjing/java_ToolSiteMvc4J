@@ -263,6 +263,8 @@ ul.sub-menu > li > a > b {position:absolute;top:0px;right:0;width:0px;height:0px
 .myform.form-group-w250 .form-group{width:250px;}
 .myform.form-group-w280 .form-group{width:280px;}
 .myform.form-group-w300 .form-group{width:300px;}
+.myform .form-group.btn100{width:100px;}
+.myform .form-group.btn120{width:120px;}
 .myform .form-group .form-content > .form-control{width:100%;}
 .myform .form-group{display:inline-block;position:relative;}
 .myform .form-group .form-label{display:inline-block;width:100px;float:left;line-height: 33.3px;text-align:right;padding-right:5px;margin-bottom:0;}

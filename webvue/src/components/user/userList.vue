@@ -39,7 +39,7 @@
 						<date-time-picker v-model='mydate' :option='dateOpt'></date-time-picker>
 					</div>
 				</div>
-				<div class="form-group">
+				<div class="form-group btn100">
 					<button type="button" class="btn btn-purple ml20" @click='search()'>
 						<i class='fa fa-search mr5'></i>搜索
 					</button>
