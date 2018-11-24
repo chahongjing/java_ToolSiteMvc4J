@@ -54,7 +54,6 @@
 
 <script>
   import commonSrv from '../../common/commonService'
-  import pagination from '../common/pagination'
   export default {
     name: 'permissionList',
     data () {
@@ -106,7 +105,6 @@
     mounted: function() {
       this.functionId = this.$route.query.functionId;
       this.search();
-    },
-    components:{pagination}
+    }
   }
 </script>

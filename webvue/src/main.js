@@ -9,7 +9,8 @@ import store from './store/store';
 import directives from './common/directives';
 import confirm from './common/confirm';
 import toaster from './common/toaster';
-import datetimepicker from './components/common/datetimepicker';
+import pagination from './components/common/pagination'
+import dateTimePicker from './components/common/dateTimePicker';
 
 Vue.prototype.serverHost = process.env.baseUrl;
 Vue.prototype.axios = axios;
@@ -17,6 +18,8 @@ Object.keys(filters).forEach(k => Vue.filter(k, filters[k]));
 Object.keys(directives).forEach(k => Vue.directive(k, directives[k]));
 Vue.prototype.$confirm = confirm;
 Vue.prototype.$toaster = toaster;
+Vue.component('pagination', pagination);
+Vue.component('dateTimePicker', dateTimePicker);
 /* eslint-disable no-new */
 new Vue({
 	el: '#app',

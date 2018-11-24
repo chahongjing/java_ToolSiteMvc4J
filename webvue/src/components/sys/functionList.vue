@@ -63,7 +63,6 @@
 
 <script>
   import commonSrv from '../../common/commonService'
-  import pagination from '../common/pagination'
   export default {
     name: 'functionList',
     data () {
@@ -120,7 +119,6 @@
     },
     mounted: function() {
       this.search();
-    },
-    components:{pagination}
+    }
   }
 </script>

@@ -12,7 +12,7 @@
 			</button>
 		</div>
 		<div class='searchbar'>
-			<form class='myform form-inline form-group-w250 form-label-w80'>
+			<form class='myform form-inline form-group-w280 form-label-w80'>
 				<div class="form-group">
 					<label class="form-label">名称：</label>
 					<div class="form-content">
@@ -33,17 +33,12 @@
 						</div>
 					</div>
 				</div>
-        <div class="form-group">
-          <label class="form-label">名称：</label>
-          <div class="form-content">
-            <datetimepicker v-model='mydate'></datetimepicker>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">{{mydate}}</label>
-          
-        </div>
-				
+				<div class="form-group">
+					<label class="form-label">名称：</label>
+					<div class="form-content">
+					<date-time-picker v-model='mydate' :option='dateOpt'></date-time-picker>
+					</div>
+				</div>
 				<div class="form-group">
 					<button type="button" class="btn btn-purple ml20" @click='search()'>
 						<i class='fa fa-search mr5'></i>搜索
@@ -96,14 +91,13 @@
 
 <script>
 	import commonSrv from '../../common/commonService'
-	import pagination from '../common/pagination'
-import datetimepicker from '../common/datetimepicker';
 
 	export default {
 		name: 'userList',
 		data () {
 			return {
 				mydate:new Date(),
+				dateOpt: {format:'yyyy-mm-dd hh:ii:ss', minView:0},
 				searchKey:null,
 				list: [],
 				pager: {pageNum:1,pageSize:5,loading:true}
@@ -166,7 +160,6 @@ import datetimepicker from '../common/datetimepicker';
 		},
 		mounted: function() {
 			this.search();
-		},
-		components:{pagination,datetimepicker}
+		}
 	}
 </script>

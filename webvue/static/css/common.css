@@ -261,6 +261,7 @@ ul.sub-menu > li > a > b {position:absolute;top:0px;right:0;width:0px;height:0px
 /* 表单 */
 .myform.block-form-group .form-group{width:100%;}
 .myform.form-group-w250 .form-group{width:250px;}
+.myform.form-group-w280 .form-group{width:280px;}
 .myform.form-group-w300 .form-group{width:300px;}
 .myform .form-group .form-content > .form-control{width:100%;}
 .myform .form-group{display:inline-block;position:relative;}
@@ -275,6 +276,7 @@ ul.sub-menu > li > a > b {position:absolute;top:0px;right:0;width:0px;height:0px
 .myform .form-group.info-success .form-info i:before{color:#28a745;content: "\f05d";}
 .myform .form-group.info-error .form-info i:before{color:#dc3545;content: "\f29c";}
 .myform.form-inline .form-group{margin-bottom:10px;}
+.myform .input-group-append{margin-left:-2px;}
 
 .btn.focus, .btn:focus,.form-control:focus{box-shadow:0 0 0 1px rgba(0,123,255,.25);}
 

@@ -59,8 +59,7 @@
         <div class="form-group">
           <label class="form-label">生日：</label>
           <div class="form-content">
-            <input type="text" class="form-control" placeholder="生日"
-            v-model='user.birthday'>
+            <date-time-picker v-model='user.birthday'></date-time-picker>
           </div>
           <div class='form-info'>
             <i class='fa fa-question-circle-o'></i>

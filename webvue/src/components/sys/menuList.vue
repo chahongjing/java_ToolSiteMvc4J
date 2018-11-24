@@ -58,7 +58,6 @@
 
 <script>
   import commonSrv from '../../common/commonService'
-  import pagination from '../common/pagination'
   export default {
     name: 'menuList',
     data () {
@@ -104,7 +103,6 @@
     },
     mounted: function() {
       this.search();
-    },
-    components:{pagination}
+    }
   }
 </script>
