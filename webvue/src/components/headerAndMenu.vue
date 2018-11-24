@@ -29,8 +29,8 @@
 </template>
 
 <script>
-  import appHeader from './appHeader'
-  import appMenu from './appMenu'
+  import appHeader from '@/components/appHeader'
+  import appMenu from '@/components/appMenu'
   export default {
     name: 'headerAndMenu',
     data () {

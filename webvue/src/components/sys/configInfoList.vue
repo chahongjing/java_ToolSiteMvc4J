@@ -61,7 +61,7 @@
 </template>
 
 <script>
-  import commonSrv from '../../common/commonService'
+  import commonSrv from '@/common/commonService'
   export default {
     name: 'configInfoList',
     data () {

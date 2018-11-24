@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import message from '../components/common/confirm'
+import message from '@/components/common/confirm'
 const VueComponent = Vue.extend(message);
 const vm = new VueComponent().$mount();
 

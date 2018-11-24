@@ -20,7 +20,7 @@
 </template>
 
 <script>
-  import commonModal from './commonModal'
+  import commonModal from '@/components/common/commonModal'
 
   export default {
     name: 'confirm',
@@ -36,7 +36,6 @@
     },
     methods: {
       show:function() {
-        $(this.$el).show();
         this.showDialog = true;
       },
       defaultClose: function() {
@@ -57,42 +56,33 @@
     computed: {
       getCancelCls: function() {
         var obj = {};
-        if(this.closeBtn.cls) {
+        if(this.closeBtn && this.closeBtn.cls) {
           obj[this.closeBtn.cls] = true;
         }
         return obj;
       },
       getCancelIconCls: function() {
         var obj = {};
-        if(this.closeBtn.iconCls) {
+        if(this.closeBtn && this.closeBtn.iconCls) {
           obj[this.closeBtn.iconCls] = true;
         }
         return obj;
       },
       getConfirmCls: function() {
         var obj = {};
-        if(this.confirmBtn.cls) {
+        if(this.confirmBtn && this.confirmBtn.cls) {
           obj[this.confirmBtn.cls] = true;
         }
         return obj;
       },
       getConfirmIconCls: function() {
         var obj = {};
-        if(this.confirmBtn.iconCls) {
+        if(this.confirmBtn && this.confirmBtn.iconCls) {
           obj[this.confirmBtn.iconCls] = true;
         }
         return obj;
-      },
+      }
     },
     components:{commonModal}
   }
 </script>
-
-<style scoped>
-  .closeicon{font-size:26px;}
-  .modal-header{padding:10px 10px 10px 15px;background-color: #85c;color:#fff;}
-  .modal-header .close{padding:10px;margin:-10px -10px -10px auto;opacity:0.8;color:#fff;}
-  .modal-header .close:hover{opacity:1;}
-  .modal-body{font-size:16px;}
-  .modal-footer{padding:10px;border-top-color:#d0d2d5;}
-</style>

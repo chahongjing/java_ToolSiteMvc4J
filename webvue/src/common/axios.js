@@ -2,7 +2,7 @@
  * Created by jyzeng on 2018/11/2.
  */
 import axios from 'axios';
-import toaster from './toaster';
+import toaster from '@/common/toaster';
 
 axios.defaults.baseURL = 'http://' + process.env.baseHost + (process.env.basePort ? (':' + process.env.basePort) : '');
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';

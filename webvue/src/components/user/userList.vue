@@ -10,6 +10,9 @@
 			<button type="button inline-block" class="btn btn-outline-purple" @click="confirm2()">
 				<i class='fa fa-plus mr5'></i>弹框2
 			</button>
+			<button type="button inline-block" class="btn btn-outline-purple" @click="confirm3()">
+				<i class='fa fa-plus mr5'></i>弹Modal
+			</button>
 		</div>
 		<div class='searchbar'>
 			<form class='myform form-inline form-group-w280 form-label-w80'>
@@ -98,11 +101,15 @@
 		<div class='footer-pager'>
 			<pagination :pager-info='pager'></pagination>
 		</div>
+		<my-modal :title='myDialog.title' :show-dialog.sync='myDialog.showDialog' :btn-list='myDialog.btnList'
+		:width='myDialog.width'></my-modal>
 	</div>
 </template>
 
 <script>
-	import commonSrv from '../../common/commonService'
+	import commonSrv from '@/common/commonService'
+    import commonModal from '@/components/common/commonModal'
+	import myModal from '@/components/sys/myModal'
 
 	export default {
 		name: 'userList',
@@ -114,7 +121,15 @@
 				list: [],
 				sexValue:null,
 				sexList: [],
-				pager: {pageNum:1,pageSize:5,loading:true}
+				pager: {pageNum:1,pageSize:5,loading:true},
+				myDialog: {
+				  showDialog: false,
+			      width:800,
+			      title: '选择用户',
+			      btnList:[{show: true, cls:'', showIcon: true, iconCls:'fa fa-times',text: '关闭', fn: null},
+			        {show: true, cls:'btn-purple', showIcon: true, iconCls:'fa fa-check',text: '确定', fn: null}
+			      ]
+				}
 			}
 		},
 		methods: {
@@ -171,6 +186,17 @@
 				}
 				this.$confirm.confirmCore(option);
 			},
+			confirm3() {
+				var me = this;
+				this.myDialog.btnList[0].fn = function() {
+					me.myDialog.showDialog = false;
+				}
+				this.myDialog.btnList[1].fn = function() {
+					console.log('确定');
+					me.myDialog.showDialog = false;
+				}
+				this.myDialog.showDialog = true;
+			},
 		      getEnumList() {
 		        var list = [];
 		        for(var item in Sex) {
@@ -182,6 +208,7 @@
 		mounted: function() {
 			this.search();
             this.getEnumList();
-		}
+		},
+		components:{commonModal,myModal}
 	}
 </script>

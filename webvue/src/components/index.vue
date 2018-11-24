@@ -39,8 +39,8 @@
 </template>
 
 <script>
-	import appHeader from './appHeader'
-	import appMenu from './appMenu'
+	import appHeader from '@/components/appHeader'
+	import appMenu from '@/components/appMenu'
 
 	var list = [];
     // region java

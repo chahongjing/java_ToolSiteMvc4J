@@ -175,6 +175,13 @@ td.operate{padding-top: 7px;padding-bottom:0;font-size: 18px;}
 .nodata{width:100%;height:calc(100% - 42px);line-height: 100%;position:relative;}
 .nodata > div{position:absolute;top:50%;left:50%;transform: translate(-50%,-50%);font-weight:bold;font-size: 16px;}
 
+.closeicon{font-size:26px;}
+.modal-header{padding:10px 10px 10px 15px;background-color: #85c;color:#fff;}
+.modal-header .close{padding:10px;margin:-10px -10px -10px auto;opacity:0.8;color:#fff;}
+.modal-header .close:hover{opacity:1;}
+.modal-body{font-size:16px;}
+.modal-footer{padding:10px;border-top-color:#d0d2d5;}
+
 /* 公共 */
 .pointer{cursor: pointer;}
 .fabutton{padding:3px 5px;}

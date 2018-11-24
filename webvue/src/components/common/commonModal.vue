@@ -1,5 +1,5 @@
 <template>
-  <div class="modal fade" tabindex="-1" :class='{show:showModal}'>
+  <div class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered" :style='getStyle()'>
       <div class='blankheader'></div>
       <div class="modal-content">
@@ -20,14 +20,18 @@
       showModal(curVal, oldVal) {
         var thisEl = $(this.$el);
         if(curVal) {
-          thisEl.show();
           $('#backdrop').removeClass('hide').addClass('show');
+          thisEl.show();
+          setTimeout(function(){
+            thisEl.addClass('show')
+          }, 40);
         } else {
           var me = this;
+          thisEl.removeClass('show');
           setTimeout(function(){
-            thisEl.hide();
+            thisEl.hide()
             $('#backdrop').removeClass('show').addClass('hide');
-          }, 300);
+          }, 200);
         }
       }
     },
