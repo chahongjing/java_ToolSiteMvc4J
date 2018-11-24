@@ -1,9 +1,9 @@
 <template>
-  <div class="input-group date form_datetime">
+  <div class="input-group date">
     <input class="form-control" size="16" type="text" readonly v-model='dataText' />
     <div class="input-group-addon input-group-append">
       <span class="input-group-text">
-        <i class='fa mr0' :class='{"fa-calendar":type == 1,"fa-clock-o":type == 2}'></i>
+        <i class='fa mr0' :class='{"fa-calendar": type == 1,"fa-clock-o": type == 2}'></i>
       </span>
     </div>
   </div>
@@ -88,5 +88,5 @@
 </script>
 
 <style scoped>
-  .input-append.date .add-on i, .input-prepend.date .add-on i, .input-group.date .input-group-addon span{width:auto;height:auto;}
+  .input-group.date .input-group-addon span{width:auto;height:auto;}
 </style>

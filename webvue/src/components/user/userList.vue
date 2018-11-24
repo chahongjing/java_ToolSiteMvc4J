@@ -36,7 +36,7 @@
 				<div class="form-group">
 					<label class="form-label">名称：</label>
 					<div class="form-content">
-					<date-time-picker v-model='mydate' :option='dateOpt'></date-time-picker>
+						<date-time-picker v-model='mydate' :option='dateOpt'></date-time-picker>
 					</div>
 				</div>
 				<div class="form-group">
