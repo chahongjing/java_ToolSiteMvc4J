@@ -35,7 +35,7 @@
         </thead>
         <tbody>
           <tr v-for="(item, index) in list">
-            <td class="text-center" v-text='index + 1'></td>
+            <td class="text-center" v-text='((pager.pageNum - 1) * pager.pageSize) + index + 1'></td>
             <td>
               <a class='block w100p h100p' href='javascript:void(0)' v-text='item.name' @click='edit(item)'></a>
             </td>

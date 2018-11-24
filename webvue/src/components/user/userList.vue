@@ -20,7 +20,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="form-label">名称：</label>
+					<label class="form-label">邮箱：</label>
 					<div class="form-content">
 						<div class="input-group">
 							<div class="input-group-prepend">
@@ -31,6 +31,15 @@
 								<span class="input-group-text">@qq.com</span>
 							</div>
 						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="form-label">性别：</label>
+					<div class="form-content">
+						<select class='form-control' v-model="sexValue">
+							<option value="">--全部--</option>
+							<option v-for="item in sexList" :value="item.value" v-text="item.name"></option>
+						</select>
 					</div>
 				</div>
 				<div class="form-group">
@@ -62,7 +71,7 @@
 				</thead>
 				<tbody>
 					<tr v-for="(item, index) in list">
-						<td class="text-center" v-text='index + 1'></td>
+						<td class="text-center" v-text='((pager.pageNum - 1) * pager.pageSize) + index + 1'></td>
 						<td>
 							<a class='block w100p h100p' href='javascript:void(0)' v-text='item.userName' @click='edit(item)'></a>
 						</td>
@@ -71,11 +80,11 @@
 						<td class='text-center' v-text='item.sexName'></td>
 						<td class='text-center' v-text='item.isSystemName'></td>
 						<td class='text-center' v-text='item.isDisabledName'></td>
-						<td>
-							<a class='inline-block' href='javascript:void(0)' @click='grant(item)'>
+						<td class='operate'>
+							<a class='inline-block' href='javascript:void(0)' @click='grant(item)' title='授权'>
 								<i class='fa fa-id-badge'></i>
 							</a>
-							<a class='inline-block' href='javascript:void(0)' @click='deleteItem(item)'>
+							<a class='inline-block' href='javascript:void(0)' @click='deleteItem(item)' title='删除'>
 								<i class='fa fa-trash'></i>
 							</a>
 						</td>
@@ -103,6 +112,8 @@
 				dateOpt: {format:'yyyy-mm-dd hh:ii:ss', minView:0},
 				searchKey:null,
 				list: [],
+				sexValue:null,
+				sexList: [],
 				pager: {pageNum:1,pageSize:5,loading:true}
 			}
 		},
@@ -159,10 +170,18 @@
 					confirmBtn: {fn: null}
 				}
 				this.$confirm.confirmCore(option);
-			}
+			},
+		      getEnumList() {
+		        var list = [];
+		        for(var item in Sex) {
+		          list.push(Sex[item]);
+		        }
+		        this.sexList = list;
+		      }
 		},
 		mounted: function() {
 			this.search();
+            this.getEnumList();
 		}
 	}
 </script>

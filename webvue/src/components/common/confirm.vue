@@ -90,7 +90,7 @@
 
 <style scoped>
   .closeicon{font-size:26px;}
-  .modal-header{padding:10px 10px 10px 15px;background-color: #7266ba;color:#fff;}
+  .modal-header{padding:10px 10px 10px 15px;background-color: #85c;color:#fff;}
   .modal-header .close{padding:10px;margin:-10px -10px -10px auto;opacity:0.8;color:#fff;}
   .modal-header .close:hover{opacity:1;}
   .modal-body{font-size:16px;}

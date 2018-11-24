@@ -51,7 +51,7 @@ axios.interceptors.response.use(function (response) {
     if(error.response.data instanceof Blob) {
       Utility.readBlobAsText(error.response.data, function(data) {
         var res = JSON.parse(data);
-        alert(res.message);
+        toaster.error(res.message);
       });
     } 
   } else {
@@ -74,14 +74,14 @@ var axiosIns = {
   get: function (path, param) {
     return axios.get(this.getAjaxUrl(path), {params: param}).catch(function (resp) {
       if(resp.status == ResultStatus.UNAUTHORIZED.key) {
-        alert(resp.message);
+        toaster.error(resp.message);
       }
     });
   },
   post: function (path, param) {
     return axios.post(this.getAjaxUrl(path), param).catch(function (resp) {
       if(resp.status == ResultStatus.UNAUTHORIZED.key) {
-        alert(resp.message);
+        toaster.error(resp.message);
       }
     });
   },
@@ -104,7 +104,7 @@ var axiosIns = {
   postDownload: function (path, param) {
     return axios.post(this.getAjaxUrl(path), param, {responseType: 'blob'}).catch(function (resp) {
       if(resp.status == ResultStatus.UNAUTHORIZED.key) {
-        alert(resp.message);
+        toaster.error(resp.message);
       }
     });
   },

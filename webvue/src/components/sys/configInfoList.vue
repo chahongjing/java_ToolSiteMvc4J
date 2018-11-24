@@ -14,20 +14,6 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">名称：</label>
-          <div class="form-content">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">&yen;</span>
-              </div>
-              <input type="text" class="form-control">
-              <div class="input-group-append">
-                <span class="input-group-text">@qq.com</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
           <button type="button" class="btn btn-purple ml20" @click='search()'>
             <i class='fa fa-search mr5'></i>搜索
           </button>

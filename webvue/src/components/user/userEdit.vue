@@ -93,7 +93,7 @@
         </div>
 
         <div class="form-group text-right mb0">
-          <button type="button" class="btn btn-primary mr5" @click="save">保存</button>
+          <button type="button" class="btn btn-primary mr5" @click="save"><i class='fa fa-save'></i>保存</button>
         </div>
       </form>
     </div>

@@ -74,4 +74,5 @@
 </script>
 
 <style scoped>
+.fa-home{color:#93c;}
 </style>
