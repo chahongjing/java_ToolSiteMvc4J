@@ -40,6 +40,14 @@
         where UserId = #{userId, jdbcType=VARCHAR}
     </update>
 
+
+    <!-- 更新 -->
+    <update id="updateUserPassword">
+        update UserInfo
+        set password = #{password, jdbcType=VARCHAR}
+        where UserId = #{userId, jdbcType=VARCHAR}
+    </update>
+
     <!-- 删除 -->
     <delete id="delete">
 		DELETE FROM UserInfo WHERE UserId = #{id, jdbcType=VARCHAR}

@@ -32,4 +32,6 @@ public interface UserInfoService {
     List<UserInfo> query(UserInfo user);
 
     UserInfo getByUserCode(String userCode);
+
+    void changePassword(String oldPassword, String newPassword);
 }

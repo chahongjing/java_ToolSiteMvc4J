@@ -18,4 +18,6 @@ public interface UserInfoDao extends BaseDao<UserInfo> {//BaseMapper<UserInfo>
     UserInfo getByCode(String userCode);
 
     Map<String, BigDecimal> queryRepeatCount(@Param("userId") String userId, @Param("userCode") String userCode);
+
+    int updateUserPassword(@Param("userId") String userId, @Param("password") String password);
 }

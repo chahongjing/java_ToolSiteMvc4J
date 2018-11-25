@@ -130,6 +130,13 @@ public class UserInfoController extends BaseController implements ServletConfigA
         return BaseResult.OK("");
     }
 
+    @RequestMapping("/changePassword")
+    @ResponseBody
+    public BaseResult<String> changePassword(String oldPassword, String newPassword) {
+        userInfoSrv.changePassword(oldPassword, newPassword);
+        return BaseResult.OK("");
+    }
+
     @RequestMapping("/queryPageList")
     @ResponseBody
     public BaseResult<PageInfo> queryPageList(UserInfoRequest request) {

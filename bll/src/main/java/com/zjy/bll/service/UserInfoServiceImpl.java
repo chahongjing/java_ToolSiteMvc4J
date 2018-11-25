@@ -194,4 +194,25 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
             throw new ServiceException("编号重复！");
         }
     }
+    @Override
+    public void changePassword(String oldPassword, String newPassword){
+        String userCode = shiroRealm.getCurrentUser().getUserCode();
+        UserInfo user = this.getByUserCode(userCode);
+        if(user == null) {
+            throw new ServiceException("用户不存在！");
+        }
+        if(StringUtils.isBlank(oldPassword)) {
+            throw new ServiceException("请输入原密码！");
+        }
+        if(StringUtils.isBlank(newPassword)) {
+            throw new ServiceException("请输入新密码！");
+        }
+        String oldPasswordEnc = shiroRealm.getMd5Hash(oldPassword, userCode);
+        String newPasswordEnc = shiroRealm.getMd5Hash(newPassword, userCode);
+        if(!oldPasswordEnc.equals(user.getPassword())) {
+            throw new ServiceException("原密码错误！");
+        }
+        user.setPassword(newPasswordEnc);
+        dao.updateUserPassword(user.getUserId(), user.getPassword());
+    }
 }
