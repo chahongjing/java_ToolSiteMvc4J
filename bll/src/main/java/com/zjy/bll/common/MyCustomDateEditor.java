@@ -14,14 +14,10 @@ public class MyCustomDateEditor extends PropertyEditorSupport {
     private final static DateFormat dateTimeSdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private final static DateFormat utcSfd = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     private final static DateFormat gmtSdf = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss 'GMT'Z", Locale.US);
-    private final List<DateFormat> sdf;
+    private final static List<DateFormat> sdf;
 
     static {
         utcSfd.setTimeZone(TimeZone.getTimeZone("UTC"));
-    }
-
-    public MyCustomDateEditor() {
-        super();
         sdf = new ArrayList<>();
         sdf.add(dateSdf);
         sdf.add(dateTimeSdf);
@@ -29,8 +25,20 @@ public class MyCustomDateEditor extends PropertyEditorSupport {
         sdf.add(gmtSdf);
     }
 
+    public MyCustomDateEditor() {
+        super();
+    }
+
     @Override
     public void setAsText(String text) throws IllegalArgumentException {
+        Date date = parse(text);
+        if (date == null) {
+            logger.error("解析Date失败！", text);
+        }
+        setValue(date);
+    }
+
+    public static Date parse(String text) {
         Date date = null;
         for (DateFormat dateFormat : sdf) {
             try {
@@ -39,10 +47,7 @@ public class MyCustomDateEditor extends PropertyEditorSupport {
             } catch (Exception e) {
             }
         }
-        if (date == null) {
-            logger.error("解析Date失败！", text);
-        }
-        setValue(date);
+        return date;
     }
 
     public static DateFormat getDateSdf() {

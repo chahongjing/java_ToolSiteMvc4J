@@ -5,6 +5,7 @@ import com.zjy.baseframework.enums.ResultStatus;
 import com.zjy.bll.common.LoggingProxy;
 import com.zjy.bll.service.TestService;
 import com.zjy.bll.service.TestServiceImpl;
+import com.zjy.bll.service.UserInfoService;
 import com.zjy.entities.UserInfo;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -39,6 +40,8 @@ import java.util.Map;
 public class LearnController extends BaseController {
     @Autowired
     private TestService testSrv;
+    @Autowired
+    private UserInfoService userInfoSrv;
 
     // region java
     @RequestMapping("/reflectLearn")

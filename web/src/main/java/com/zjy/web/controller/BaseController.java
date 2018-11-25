@@ -2,6 +2,7 @@ package com.zjy.web.controller;
 
 import com.zjy.baseframework.LogHelper;
 import com.zjy.bll.common.MyCustomDateEditor;
+import com.zjy.bll.common.MyCustomZonedDateEditor;
 import com.zjy.bll.common.ShiroRealm;
 import com.zjy.entities.UserInfo;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 /**
@@ -31,5 +33,6 @@ public class BaseController {
     @InitBinder
     public void bindingPreparation(WebDataBinder binder) {
         binder.registerCustomEditor(Date.class, new MyCustomDateEditor());
+        binder.registerCustomEditor(ZonedDateTime.class, new MyCustomZonedDateEditor());
     }
 }

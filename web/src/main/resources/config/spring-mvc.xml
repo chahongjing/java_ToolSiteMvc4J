@@ -64,6 +64,7 @@
                 <property name="serializeFilters">
                     <list>
                         <bean class="com.zjy.bll.common.DateFormaterFilter" />
+                        <bean class="com.zjy.bll.common.ZonedDateFormaterFilter" />
                     </list>
                 </property>
                 <property name="serializerFeatures">
