@@ -9,7 +9,7 @@
     <div class="info">
       <ul class='rightmenu' @mouseenter='enterMenu' @mouseleave='leaveMenu'>
         <li>
-          <span class="licontent relative pr5 pointer">
+          <span class="licontent relative submenu pointer">
             <i class='fa fa-caret-down more text-center' @click='showMenu = !showMenu'>
             </i>
             <ul class="dropdown-menu dropdown-menu-right" :class='{"slidedown": showMenu}'>
@@ -169,6 +169,7 @@
     height: 50px;
     display: inline-block;
   }
-  .head .info .licontent.pr5{padding-right:5px;}
+  .head .info .licontent.submenu{padding-right:0px;}
+  .head .info .licontent.submenu > i{padding-right:10px;}
   .form-group:last-child{margin-bottom:0;}
 </style>
