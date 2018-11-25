@@ -7,7 +7,6 @@
         <p class="mt10">数据处理中，请等待...</p>
       </div>
     </div>
-    <div id='backdrop' class="modal-backdrop fade hide"></div>
   </div>
 </template>
 
@@ -26,5 +25,4 @@
     width: 100%;
     height: 100%;
   }
-  #backdrop.hide{display:none;}
 </style>

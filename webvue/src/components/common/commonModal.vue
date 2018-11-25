@@ -1,13 +1,17 @@
 <template>
-  <div class="modal fade" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered" :style='getStyle()'>
-      <div class='blankheader'></div>
-      <div class="modal-content">
+  <div>
+    <div class="modal-backdrop fade hide">
+    </div>
+    <div class="modal fade" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered" :style='getStyle()'>
+        <div class='blankheader'></div>
+        <div class="modal-content">
           <slot name='headerSlot' />
           <slot name='bodySlot' />
           <slot name='footerSlot' />
+        </div>
+        <div class='blankfooter'></div>
       </div>
-      <div class='blankfooter'></div>
     </div>
   </div>
 </template>
@@ -18,19 +22,22 @@
     props:{showModal:false,width:null,height:null},
     watch:{
       showModal(curVal, oldVal) {
-        var thisEl = $(this.$el);
+        var cur = $(this.$el);
+        var back = cur.find('.modal-backdrop');
+        var modal = cur.find('.modal');
+
         if(curVal) {
-          $('#backdrop').removeClass('hide').addClass('show');
-          thisEl.show();
+          back.removeClass('hide').addClass('show');
+          modal.show();
           setTimeout(function(){
-            thisEl.addClass('show')
+            modal.addClass('show')
           }, 40);
         } else {
           var me = this;
-          thisEl.removeClass('show');
+          modal.removeClass('show');
           setTimeout(function(){
-            thisEl.hide()
-            $('#backdrop').removeClass('show').addClass('hide');
+            modal.hide()
+            back.removeClass('show').addClass('hide');
           }, 200);
         }
       }
@@ -53,6 +60,7 @@
 </script>
 
 <style scoped>
+  .modal-backdrop.hide{display:none;}
   .modal-dialog-centered{flex-flow:column;margin-left:auto;margin-right:auto;}
   .blankheader{display:flex;flex:1;}
   .blankfooter{display:flex;flex:1.6;}

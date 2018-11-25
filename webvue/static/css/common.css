@@ -6,16 +6,24 @@ ul,li{margin:0;padding:0;list-style:none;}
 /* head */
 .head{
     width:100%;margin:auto;height:50px;
-    background-color: #71a;color:#fff;
+    background-color: #71a;
 }
 .head .logo{width:calc(100% - 405px);height:100%;display:inline-block;margin:0;padding:0;float:left;}
 .head .logo i:before{display:block;margin-top:10px;margin-left:11px;}
 .head .logo .title{line-height: 50px;font-size:22px;color:#fff;}
 .head .info{width:400px;height:100%;display:inline-block;margin:0;padding:0;float:right;}
-.head .info ul,.head .info ul li{list-style: none;margin:0;padding:0;line-height:50px;cursor:default;}
-.head .info ul li{display:inline-block;float:right;transition: 0.4s;}
-.head .info ul li:nth-child(1){border-right:none;}
-.head .info .licontent{color:#ddd;width:100%;height:100%;padding:0 10px;}
+.head .info ul.rightmenu,.head .info ul.rightmenu > li{list-style: none;margin:0;padding:0;line-height:50px;cursor:default;}
+.head .info ul.rightmenu > li{display:inline-block;float:right;transition: 0.4s;}
+.head .info ul.rightmenu > li:nth-child(1){border-right:none;}
+.head .info .licontent{color:#fff;width:100%;height:100%;padding:0 0;display:block;padding-right:10px;}
+.head .info ul.rightmenu > li:nth-child(2) .licontent{padding-right:5px;}
+.head .info .licontent .more{line-height: 50px;height:100%;width:20px;margin-right:0;position:relative;}
+.head .info .licontent .dropdown-menu{height:0;margin:0;left:auto;top:49px;right:0;display:block;transition:0.2s;padding:0;overflow: hidden;}
+.head .info .licontent .dropdown-menu.slidedown{height:70px;}
+.licontent .dropdown-menu li.dropdown-item:focus, .licontent .dropdown-menu li.dropdown-item:hover{color: #fff;background-color: #07f;border-bottom-color:#07f;}
+.licontent .dropdown-menu li.dropdown-item:hover i{color:#fff !important;}
+.licontent .dropdown-menu li{height:35px;line-height: 35px;display:block;padding:0 15px;border-bottom: 1px solid #ddd;cursor:pointer;}
+.licontent .dropdown-menu li:last-child{border-bottom:0;}
 .head .info .logout{display:block;cursor:pointer;}
 .head .info .logout:hover {color:#fff}
 
@@ -193,6 +201,8 @@ td.operate{padding-top: 7px;padding-bottom:0;font-size: 18px;}
 
 .fl{float:left;}
 .fr{float:right;}
+.relative{position:relative;}
+.absolute{position:absolute;}
 
 .fa-2{font-size:2em}
 .fa-3{font-size:4em}
@@ -231,10 +241,10 @@ a:hover{color:#06f;}
 .mt0{margin-top:0px;}
 .mb0{margin-bottom:0px;}
 
-.pl0{margin-left:0px;}
-.pr0{margin-right:0px;}
-.pt0{margin-top:0px;}
-.pb0{margin-bottom:0px;}
+.pl0{padding-left:0px;}
+.pr0{padding-right:0px;}
+.pt0{padding-top:0px;}
+.pb0{padding-bottom:0px;}
 .pl5{padding-left:5px;}
 .pl8{padding-left:8px;}
 .pr5{padding-right:5px;}
