@@ -2,25 +2,25 @@
   <div class="mypanel" style="width:500px;margin:auto;margin-top:20px;">
     <div class="panel-heading font-bold">用户信息</div>
     <div class="panel-body">
-      <form class='myform form-label-w120 block-form-group'>
-        <div class="form-group">
+      <form class='myform infotip form-label-w120 block-form-group'>
+        <div class="form-group info-success">
           <label class="form-label">编号：</label>
           <div class="form-content">
             <input type="text" class="form-control" placeholder="编号" autofocus 
             v-model='user.userCode' v-focus />
           </div>
           <div class='form-info'>
-            <i class='fa'></i>
+            <i class='fa' title='编号重复！'></i>
           </div>
         </div>
-        <div class="form-group">
-          <label class="form-label">姓名：</label>
+        <div class="form-group info-error">
+          <label class="form-label">姓名的：</label>
           <div class="form-content">
             <input type="text" class="form-control" placeholder="姓名"
             v-model='user.userName'>
           </div>
           <div class='form-info'>
-            <i class='fa fa-question-circle-o'></i>
+            <i class='fa' title='姓名不能为空！'></i>
           </div>
         </div>
         <div class="form-group" v-if='!user.isSave'>

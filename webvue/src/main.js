@@ -12,10 +12,10 @@ import toaster from '@/common/toaster';
 import pagination from '@/components/common/pagination'
 import dateTimePicker from '@/components/common/dateTimePicker';
 
-Vue.prototype.serverHost = process.env.baseUrl;
-Vue.prototype.axios = axios;
 Object.keys(filters).forEach(k => Vue.filter(k, filters[k]));
 Object.keys(directives).forEach(k => Vue.directive(k, directives[k]));
+Vue.prototype.serverHost = process.env.baseUrl;
+Vue.prototype.axios = axios;
 Vue.prototype.$confirm = confirm;
 Vue.prototype.$toaster = toaster;
 Vue.component('pagination', pagination);

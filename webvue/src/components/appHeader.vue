@@ -41,7 +41,7 @@
           <span class='closeicon' title="关闭">&times;</span>
         </button>
       </div>
-      <div class="modal-body" slot="bodySlot">
+      <div class="modal-body pr20" slot="bodySlot">
         <form class='myform form-label-w100 block-form-group'>
           <div class="form-group">
             <label class="form-label">原密码：</label>
