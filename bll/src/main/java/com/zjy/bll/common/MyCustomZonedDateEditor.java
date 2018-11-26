@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import java.beans.PropertyEditorSupport;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -25,11 +26,12 @@ public class MyCustomZonedDateEditor extends PropertyEditorSupport {
     static{
         SimpleDateFormat sdf = (SimpleDateFormat)MyCustomDateEditor.getUtcSfd();
         String pattern = sdf.toPattern();
-        utcDtf = DateTimeFormatter.ofPattern(pattern);
+        utcDtf = DateTimeFormatter.ofPattern(pattern).withZone(ZoneOffset.UTC);
+
         sdf = (SimpleDateFormat)MyCustomDateEditor.getGmtSdf();
         pattern = sdf.toPattern();
         //gmtDtf = DateTimeFormatter.ofPattern(pattern.replace("'GMT'", ""), Locale.US);
-        gmtDtf = DateTimeFormatter.ofPattern(pattern, Locale.US);
+        gmtDtf = DateTimeFormatter.ofPattern(pattern, Locale.US).withZone(ZoneId.of("GMT"));
         dtf = new ArrayList<>();
         dtf.add(utcDtf);
         dtf.add(gmtDtf);

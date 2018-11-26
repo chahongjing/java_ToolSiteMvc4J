@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -16,7 +17,7 @@ public class ZonedDateFormaterFilter implements ValueFilter {
     protected static DateTimeFormatter dtf;
 
     static {
-        dtf = DateTimeFormatter.ofPattern(((SimpleDateFormat) MyCustomDateEditor.getUtcSfd()).toPattern());
+        dtf = DateTimeFormatter.ofPattern(((SimpleDateFormat) MyCustomDateEditor.getUtcSfd()).toPattern()).withZone(ZoneOffset.UTC);
     }
     @Override
     public Object process(Object object, String name, Object value) {
