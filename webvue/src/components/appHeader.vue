@@ -9,28 +9,29 @@
     <div class="info">
       <ul class='rightmenu' @mouseenter='enterMenu' @mouseleave='leaveMenu'>
         <li>
-          <span class="licontent relative submenu pointer">
-            <i class='fa fa-caret-down more text-center' @click='showMenu = !showMenu'>
+          <a class="licontent relative submenu pointer">
+            <i class='fa fa-caret-down more text-center' title='更多操作' @click='showMenu = !showMenu'>
             </i>
             <ul class="dropdown-menu dropdown-menu-right" :class='{"slidedown": showMenu}'>
-              <li class='dropdown-item' @click='openChangePasswordDialog()'><i class="fa fa-key text-danger"></i>修改密码</li>
-              <li class='dropdown-item bg-danger text-white' @click="logout()"><i class="fa fa-power-off"></i>注销</li>
+              <li class='dropdown-item' @click='editInfo()'><i class="fa fa-id-card-o fa-fw"></i>修改个人信息</li>
+              <li class='dropdown-item' @click='openChangePasswordDialog()'><i class="fa fa-key fa-fw text-danger"></i>修改密码</li>
+              <li class='dropdown-item bg-danger text-white' @click="logout()"><i class="fa fa-power-off fa-fw"></i>注销</li>
             </ul>
-          </span>
+          </a>
         </li>
         <li>
-          <span class="licontent pointer">
-            <i class='fa fa-commenting text-success'></i>
-          </span>
+          <a class="licontent pointer" title='消息'>
+            <i class='fa fa-commenting text-success mr0'></i>
+          </a>
         </li>
         <li>
-          <span class="licontent pointer">
-            <i class='fa fa-bell-o text-warning'></i>
-          </span>
+          <a class="licontent pointer" title='提醒'>
+            <i class='fa fa-bell-o text-warning mr0'></i>
+          </a>
         </li>
         <li>
-          <span class="licontent" v-text='"姓名：" + user.userName'>
-          </span>
+          <a class="licontent" :title='user.userName' v-text='"姓名：" + user.userName'>
+          </a>
         </li>
       </ul>
     </div>
@@ -154,6 +155,11 @@
             me.showMenu = false;
           }
         }, 400);
+      },
+      editInfo() {
+        var user = this.$store.state.user;
+        this.$router.push({path: '/user/userEdit', query: {id: user.userId,type:'editSelf'}});
+        this.showMenu = false;
       }
     },
     mounted: function() {
@@ -170,6 +176,6 @@
     display: inline-block;
   }
   .head .info .licontent.submenu{padding-right:0px;}
-  .head .info .licontent.submenu > i{padding-right:10px;}
+  .head .info .licontent.submenu > i{padding-right:7px;transition: 0.3s;}
   .form-group:last-child{margin-bottom:0;}
 </style>

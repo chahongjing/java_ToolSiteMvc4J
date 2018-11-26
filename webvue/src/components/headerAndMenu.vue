@@ -63,7 +63,11 @@
         }
         bread.pop();
         var item = bread[bread.length - 1];
-        this.$router.push({path:item.path, query:item.query,params:item.params});
+        if(item != null) {
+          this.$router.push({path:item.path, query:item.query,params:item.params});
+        } else {
+          this.$router.push({path:'/'});
+        }
       },
       setBread: function() {
         this.menuList = this.$store.state.bread;

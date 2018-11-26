@@ -8,12 +8,9 @@ module.exports = merge(prodEnv, {
   basePort: '"8099"',
   context:'"/ToolSiteMvc4J"',
 
-  targetHost:'"http://localhost"',
-  // targetHost:'"http://10.4.132.60"',
-  // targetPort:'"8088"',
-  //targetPort:'"8080"',
-  targetPort:'"21000"',
-  //targetPort:'"9999"',
-  // targetPort:'"20000"',
+  // targetHost:'"http://localhost"',
+  targetHost:'"http://10.4.132.60"',
+  // targetPort:'"21000"',
+  targetPort:'"20000"',
   proxyPrefix: '"/api"'
 })

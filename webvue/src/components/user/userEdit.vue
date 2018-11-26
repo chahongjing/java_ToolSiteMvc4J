@@ -7,14 +7,15 @@
           <label class="form-label">编号：</label>
           <div class="form-content">
             <input type="text" class="form-control" placeholder="编号" autofocus 
-            v-model='user.userCode' v-focus />
+            v-model='user.userCode' v-focus :disabled='editSelf' />
           </div>
           <div class='form-info'>
             <i class='fa' title='编号重复！'></i>
           </div>
+          <p class='error-msg'></p>
         </div>
         <div class="form-group info-error">
-          <label class="form-label">姓名的：</label>
+          <label class="form-label">姓名：</label>
           <div class="form-content">
             <input type="text" class="form-control" placeholder="姓名"
             v-model='user.userName'>
@@ -22,6 +23,7 @@
           <div class='form-info'>
             <i class='fa' title='姓名不能为空！'></i>
           </div>
+          <p class='error-msg'>名称不能为空！</p>
         </div>
         <div class="form-group" v-if='!user.isSave'>
           <label class="form-label">密码：</label>
@@ -46,7 +48,7 @@
         <div class="form-group">
           <label class="form-label">性别：</label>
           <div class="form-content">
-            <label class="radio_checkbox" v-for="item in sexList">
+            <label class="radio_checkbox mt2" v-for="item in sexList">
               <input type='radio' name="sex" :value="item.key" v-model="user.sex"/>
               <i></i>
               <span v-text="item.name"></span>
@@ -68,7 +70,7 @@
         <div class="form-group">
           <label class="form-label">是否禁用：</label>
           <div class="form-content">
-            <label class="radio_checkbox" v-for="item in YesNoList">
+            <label class="radio_checkbox mt2" v-for="item in YesNoList">
               <input type='radio' name="isDisabled" :value="item.key" v-model="user.isDisabled"/>
               <i></i>
               <span v-text="item.name"></span>
@@ -81,7 +83,7 @@
         <div class="form-group">
           <label class="form-label">是否系统用户：</label>
           <div class="form-content">
-            <label class="radio_checkbox" v-for="item in YesNoList">
+            <label class="radio_checkbox mt2" v-for="item in YesNoList">
               <input type='radio' name="isSystem" :value="item.key" v-model="user.isSystem"/>
               <i></i>
               <span v-text="item.name"></span>
@@ -106,6 +108,7 @@
     data () {
       return {
         user:{userId:null,userName:null,password:null,passwordAgain:null,sex:null,birthday:null,isDisabled:null,isSystem:null,isSave:true},
+        editSelf:false,
         sexList:[],
         YesNoList:[]
       }
@@ -149,6 +152,9 @@
       }
     },
     mounted: function() {
+      if(this.$route.query.type == 'editSelf') {
+        this.editSelf = true;
+      }
       this.getDetail(this.$route.query.id);
       this.getEnumList();
     }
