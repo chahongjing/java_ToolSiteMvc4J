@@ -6,39 +6,39 @@
         <div class="form-group">
           <label class="form-label">名称：</label>
           <div class="form-content">
-            <input type="text" class="form-control" placeholder="名称" autofocus 
-            v-model='role.name'>
+            <input type="text" class="form-control" placeholder="名称" autofocus
+                   v-model='role.name'>
           </div>
           <div class='form-info'>
             <i class='fa'></i>
           </div>
         </div>
-      <div class="form-group">
-        <label class="form-label">编码：</label>
-        <div class="form-content">
-          <input type="text" class="form-control" placeholder="编码"
-          v-model='role.code'>
+        <div class="form-group">
+          <label class="form-label">编码：</label>
+          <div class="form-content">
+            <input type="text" class="form-control" placeholder="编码"
+                   v-model='role.code'>
+          </div>
+          <div class='form-info'>
+            <i class='fa fa-question-circle-o'></i>
+          </div>
         </div>
-        <div class='form-info'>
-          <i class='fa fa-question-circle-o'></i>
+        <div class="form-group">
+          <label class="form-label">序号：</label>
+          <div class="form-content">
+            <input type="num" class="form-control" step='1' placeholder="序号"
+                   v-model='role.seq'>
+          </div>
+          <div class='form-info'>
+            <i class='fa fa-question-circle-o'></i>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">序号：</label>
-        <div class="form-content">
-          <input type="num" class="form-control" step='1' placeholder="序号"
-          v-model='role.seq'>
+        <div class="form-group text-right mb0">
+          <button type="button" class="btn btn-primary mr5" @click="save">保存</button>
         </div>
-        <div class='form-info'>
-          <i class='fa fa-question-circle-o'></i>
-        </div>
-      </div>
-      <div class="form-group text-right mb0">
-        <button type="button" class="btn btn-primary mr5" @click="save">保存</button>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -46,40 +46,40 @@
     name: 'permissionEdit',
     data () {
       return {
-        role:{roleId:null,name:null,code:null,seq:null}
-        }
-      },
-      methods: {
-        goBack() {
-          this.$router.back(-1);
-        },
-        getDetail: function(id) {
-          var me = this;
-          this.axios.get('/role/getDetail', {id:id}).then(function(resp) {
-            if(resp.data.status == Constant.AjaxStatus.OK) {
-              me.role = resp.data.value;
-            } else {
-              alert(resp.data.message);
-            }
-          });
-        },
-        save: function() {
-          var me = this;
-          this.axios.post('/role/save', me.role).then(function(resp) {
-            if(resp.data.status == Constant.AjaxStatus.OK) {
-              me.$toaster.success('保存成功！');
-              me.goBack();
-            } else {
-              alert(resp.data.message);
-            }
-          });
-        }
-      },
-      mounted: function() {
-        this.getDetail(this.$route.query.id);
+        role: {roleId: null, name: null, code: null, seq: null}
       }
+    },
+    methods: {
+      goBack() {
+        this.$router.back(-1);
+      },
+      getDetail: function (id) {
+        var me = this;
+        this.axios.get('/role/getDetail', {id: id}).then(function (resp) {
+          if (resp.data.status == Constant.AjaxStatus.OK) {
+            me.role = resp.data.value;
+          } else {
+            alert(resp.data.message);
+          }
+        });
+      },
+      save: function () {
+        var me = this;
+        this.axios.post('/role/save', me.role).then(function (resp) {
+          if (resp.data.status == Constant.AjaxStatus.OK) {
+            me.$toaster.success('保存成功！');
+            me.goBack();
+          } else {
+            alert(resp.data.message);
+          }
+        });
+      }
+    },
+    mounted: function () {
+      this.getDetail(this.$route.query.id);
     }
-  </script>
+  }
+</script>
 
-  <style scoped>
-  </style>
+<style scoped>
+</style>

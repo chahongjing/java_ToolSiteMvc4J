@@ -11,7 +11,7 @@
     </div>
     <div class="modal-footer" slot="footerSlot">
       <button type="button" class="btn btn-secondary" v-for='btn in btnList'
-       :class='getCls(btn)' v-if='btn.show' @click='btnFn(btn)'>
+              :class='getCls(btn)' v-if='btn.show' @click='btnFn(btn)'>
         <i class='fa' :class='getIconCls(btn)'></i><span v-text='btn.text'></span>
       </button>
     </div>
@@ -25,41 +25,39 @@
     name: 'confirm',
     props: {
       showDialog: null,
-      width:null,
+      width: null,
       title: null,
       btnList: null
     },
     data () {
-      return {
-
-      }
+      return {}
     },
     methods: {
-      defaultClose: function() {
+      defaultClose: function () {
         var me = this;
-        if(me.closeBtn && me.closeBtn.fn) {
+        if (me.closeBtn && me.closeBtn.fn) {
           me.closeBtn && me.closeBtn.fn();
         }
         me.showDialog = false;
       },
-      btnFn: function(btn) {
+      btnFn: function (btn) {
         btn.fn && btn.fn();
       },
-      getCls: function(btn) {
+      getCls: function (btn) {
         var obj = {};
-        if(btn.cls) {
+        if (btn.cls) {
           obj[btn.cls] = true;
         }
         return obj;
       },
-      getIconCls: function(btn) {
+      getIconCls: function (btn) {
         var obj = {};
-        if(btn.iconCls) {
+        if (btn.iconCls) {
           obj[btn.iconCls] = true;
         }
         return obj;
       }
     },
-    components:{commonModal}
+    components: {commonModal}
   }
 </script>

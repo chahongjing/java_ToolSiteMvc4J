@@ -9,10 +9,12 @@
     <div class="modal-body" slot="bodySlot" v-text='message'>
     </div>
     <div class="modal-footer" slot="footerSlot">
-      <button type="button" class="btn btn-secondary" :class='getCancelCls' v-if='closeBtn.show' @click='defaultClose()'>
+      <button type="button" class="btn btn-secondary" :class='getCancelCls' v-if='closeBtn.show'
+              @click='defaultClose()'>
         <i class='fa fa-times' :class='getCancelIconCls'></i><span v-text='closeBtn.text'></span>
       </button>
-      <button type="button" class="btn btn-purple" :class='getConfirmCls' v-if='confirmBtn.show' @click='defaultConfirm()'>
+      <button type="button" class="btn btn-purple" :class='getConfirmCls' v-if='confirmBtn.show'
+              @click='defaultConfirm()'>
         <i class='fa fa-check' :class='getCancelIconCls'></i><span v-text='confirmBtn.text'></span>
       </button>
     </div>
@@ -27,62 +29,62 @@
     data () {
       return {
         showDialog: false,
-        width:350,
+        width: 350,
         title: '确认信息',
         message: '确定要退出吗？',
-        closeBtn: {show: true, cls:'', showIcon: true, iconCls:'',text: '关闭', fn: null},
-        confirmBtn: {show: true, cls:'', showIcon: true, iconCls:'',text: '确定', fn: null}
+        closeBtn: {show: true, cls: '', showIcon: true, iconCls: '', text: '关闭', fn: null},
+        confirmBtn: {show: true, cls: '', showIcon: true, iconCls: '', text: '确定', fn: null}
       }
     },
     methods: {
-      show:function() {
+      show: function () {
         this.showDialog = true;
       },
-      defaultClose: function() {
+      defaultClose: function () {
         var me = this;
-        if(me.closeBtn && me.closeBtn.fn) {
+        if (me.closeBtn && me.closeBtn.fn) {
           me.closeBtn && me.closeBtn.fn();
         }
         me.showDialog = false;
       },
-      defaultConfirm: function() {
+      defaultConfirm: function () {
         var me = this;
-        if(me.confirmBtn && me.confirmBtn.fn) {
+        if (me.confirmBtn && me.confirmBtn.fn) {
           me.confirmBtn && me.confirmBtn.fn();
         }
         me.showDialog = false;
       }
     },
     computed: {
-      getCancelCls: function() {
+      getCancelCls: function () {
         var obj = {};
-        if(this.closeBtn && this.closeBtn.cls) {
+        if (this.closeBtn && this.closeBtn.cls) {
           obj[this.closeBtn.cls] = true;
         }
         return obj;
       },
-      getCancelIconCls: function() {
+      getCancelIconCls: function () {
         var obj = {};
-        if(this.closeBtn && this.closeBtn.iconCls) {
+        if (this.closeBtn && this.closeBtn.iconCls) {
           obj[this.closeBtn.iconCls] = true;
         }
         return obj;
       },
-      getConfirmCls: function() {
+      getConfirmCls: function () {
         var obj = {};
-        if(this.confirmBtn && this.confirmBtn.cls) {
+        if (this.confirmBtn && this.confirmBtn.cls) {
           obj[this.confirmBtn.cls] = true;
         }
         return obj;
       },
-      getConfirmIconCls: function() {
+      getConfirmIconCls: function () {
         var obj = {};
-        if(this.confirmBtn && this.confirmBtn.iconCls) {
+        if (this.confirmBtn && this.confirmBtn.iconCls) {
           obj[this.confirmBtn.iconCls] = true;
         }
         return obj;
       }
     },
-    components:{commonModal}
+    components: {commonModal}
   }
 </script>

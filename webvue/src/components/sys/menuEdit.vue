@@ -6,8 +6,8 @@
         <div class="form-group">
           <label class="form-label">名称：</label>
           <div class="form-content">
-            <input type="text" class="form-control" placeholder="名称" autofocus 
-            v-model='menu.name'>
+            <input type="text" class="form-control" placeholder="名称" autofocus
+                   v-model='menu.name'>
           </div>
           <div class='form-info'>
             <i class='fa'></i>
@@ -17,61 +17,61 @@
           <label class="form-label">父级：</label>
           <div class="form-content">
             <select class="form-control" v-model='menu.pId'
-            placeholder='请选择类型'>
-            <option>--请选择类型--</option>
-            <option v-for='item in menuList':value="item.menuId" v-text="item.name"></option>
-          </select>
+                    placeholder='请选择类型'>
+              <option>--请选择类型--</option>
+              <option v-for='item in menuList' :value="item.menuId" v-text="item.name"></option>
+            </select>
+          </div>
+          <div class='form-info'>
+            <i class='fa fa-question-circle-o'></i>
+          </div>
         </div>
-        <div class='form-info'>
-          <i class='fa fa-question-circle-o'></i>
+        <div class="form-group">
+          <label class="form-label">编码：</label>
+          <div class="form-content">
+            <input type="text" class="form-control" placeholder="编码"
+                   v-model='menu.code'>
+          </div>
+          <div class='form-info'>
+            <i class='fa fa-question-circle-o'></i>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">编码：</label>
-        <div class="form-content">
-          <input type="text" class="form-control" placeholder="编码"
-          v-model='menu.code'>
+        <div class="form-group">
+          <label class="form-label">路径：</label>
+          <div class="form-content">
+            <input type="text" class="form-control" placeholder="路径"
+                   v-model='menu.url'>
+          </div>
+          <div class='form-info'>
+            <i class='fa fa-question-circle-o'></i>
+          </div>
         </div>
-        <div class='form-info'>
-          <i class='fa fa-question-circle-o'></i>
+        <div class="form-group">
+          <label class="form-label">序号：</label>
+          <div class="form-content">
+            <input type="num" class="form-control" step='1' placeholder="序号"
+                   v-model='menu.seq'>
+          </div>
+          <div class='form-info'>
+            <i class='fa fa-question-circle-o'></i>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">路径：</label>
-        <div class="form-content">
-          <input type="text" class="form-control" placeholder="路径"
-          v-model='menu.url'>
+        <div class="form-group">
+          <label class="form-label">图标：</label>
+          <div class="form-content">
+            <input type="text" class="form-control" placeholder="图标"
+                   v-model='menu.icon'>
+          </div>
+          <div class='form-info'>
+            <i class='fa fa-question-circle-o'></i>
+          </div>
         </div>
-        <div class='form-info'>
-          <i class='fa fa-question-circle-o'></i>
+        <div class="form-group text-right mb0">
+          <button type="button" class="btn btn-primary mr5" @click="save">保存</button>
         </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">序号：</label>
-        <div class="form-content">
-          <input type="num" class="form-control" step='1' placeholder="序号"
-          v-model='menu.seq'>
-        </div>
-        <div class='form-info'>
-          <i class='fa fa-question-circle-o'></i>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">图标：</label>
-        <div class="form-content">
-          <input type="text" class="form-control" placeholder="图标"
-          v-model='menu.icon'>
-        </div>
-        <div class='form-info'>
-          <i class='fa fa-question-circle-o'></i>
-        </div>
-      </div>
-      <div class="form-group text-right mb0">
-        <button type="button" class="btn btn-primary mr5" @click="save">保存</button>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -79,44 +79,44 @@
     name: 'menuEdit',
     data () {
       return {
-        menu:{menuId:null,name:null,code:null,url:null,seq:null,icon:null},
-        menuList:[]
-        }
-      },
-      methods: {
-        goBack() {
-          this.$router.back(-1);
-        },
-        getDetail: function(id) {
-          var me = this;
-          this.axios.get('/menu/getDetail', {id:id}).then(function(resp) {
-            me.menu = resp.data.value;
-          });
-        },
-        save: function() {
-          var me = this;
-          this.axios.post('/menu/save', me.menu).then(function(resp) {
-              me.$toaster.success('保存成功！');
-            me.goBack();
-          });
-        },
-        getMenuList() {
-          var me = this;
-          this.axios.post('/menu/queryParentList', me.menu).then(function(resp) {
-            if(resp.data.status == Constant.AjaxStatus.OK) {
-              me.menuList = resp.data.value;
-            } else {
-              alert(resp.data.message);
-            }
-          });
-        }
-      },
-      mounted: function() {
-        this.getDetail(this.$route.query.id);
-        this.getMenuList();
+        menu: {menuId: null, name: null, code: null, url: null, seq: null, icon: null},
+        menuList: []
       }
+    },
+    methods: {
+      goBack() {
+        this.$router.back(-1);
+      },
+      getDetail: function (id) {
+        var me = this;
+        this.axios.get('/menu/getDetail', {id: id}).then(function (resp) {
+          me.menu = resp.data.value;
+        });
+      },
+      save: function () {
+        var me = this;
+        this.axios.post('/menu/save', me.menu).then(function (resp) {
+          me.$toaster.success('保存成功！');
+          me.goBack();
+        });
+      },
+      getMenuList() {
+        var me = this;
+        this.axios.post('/menu/queryParentList', me.menu).then(function (resp) {
+          if (resp.data.status == Constant.AjaxStatus.OK) {
+            me.menuList = resp.data.value;
+          } else {
+            alert(resp.data.message);
+          }
+        });
+      }
+    },
+    mounted: function () {
+      this.getDetail(this.$route.query.id);
+      this.getMenuList();
     }
-  </script>
+  }
+</script>
 
-  <style scoped>
-  </style>
+<style scoped>
+</style>

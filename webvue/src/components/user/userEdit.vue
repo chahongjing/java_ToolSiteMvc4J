@@ -6,8 +6,8 @@
         <div class="form-group info-success">
           <label class="form-label">编号：</label>
           <div class="form-content">
-            <input type="text" class="form-control" placeholder="编号" autofocus 
-            v-model='user.userCode' v-focus :disabled='editSelf' />
+            <input type="text" class="form-control" placeholder="编号" autofocus
+                   v-model='user.userCode' v-focus :disabled='editSelf'/>
           </div>
           <div class='form-info'>
             <i class='fa' title='编号重复！'></i>
@@ -18,7 +18,7 @@
           <label class="form-label">姓名：</label>
           <div class="form-content">
             <input type="text" class="form-control" placeholder="姓名"
-            v-model='user.userName'>
+                   v-model='user.userName'>
           </div>
           <div class='form-info'>
             <i class='fa' title='姓名不能为空！'></i>
@@ -29,7 +29,7 @@
           <label class="form-label">密码：</label>
           <div class="form-content">
             <input type="password" class="form-control" placeholder="密码"
-            v-model='user.password'>
+                   v-model='user.password'>
           </div>
           <div class='form-info'>
             <i class='fa fa-question-circle-o'></i>
@@ -39,7 +39,7 @@
           <label class="form-label">确认密码：</label>
           <div class="form-content">
             <input type="password" class="form-control" placeholder="确认密码"
-            v-model='user.passwordAgain'>
+                   v-model='user.passwordAgain'>
           </div>
           <div class='form-info'>
             <i class='fa fa-question-circle-o'></i>
@@ -120,66 +120,73 @@
     name: 'userEdit',
     data () {
       return {
-        user:{userId:null,userName:null,password:null,passwordAgain:null,sex:null,birthday:null,isDisabled:null,isSystem:null,isSave:true},
-        editSelf:false,
-        sexList:[],
-        YesNoList:[],
-        interstList:[],
-        intertCheck:[]
+        user: {
+          userId: null,
+          userName: null,
+          password: null,
+          passwordAgain: null,
+          sex: null,
+          birthday: null,
+          isDisabled: null,
+          isSystem: null,
+          isSave: true
+        },
+        editSelf: false,
+        sexList: [],
+        YesNoList: [],
+        interstList: [],
+        intertCheck: []
       }
     },
     methods: {
       goBack() {
         this.$router.back(-1);
       },
-      getDetail: function(id) {
+      getDetail: function (id) {
         var me = this;
-        this.axios.get('/userinfo/getDetail', {id:id}).then(function(resp) {
-          if(resp.data.status == ResultStatus.OK.key) {
+        this.axios.get('/userinfo/getDetail', {id: id}).then(function (resp) {
+          if (resp.data.status == ResultStatus.OK.key) {
             me.user = resp.data.value;
-          } else if(resp.data.status == ResultStatus.NO.key) {
+          } else if (resp.data.status == ResultStatus.NO.key) {
 
           }
         });
       },
-      save: function() {
+      save: function () {
         var me = this;
-        this.axios.post('/userinfo/save', me.user).then(function(resp) {
-          if(resp.data.status == ResultStatus.OK.key) {
+        this.axios.post('/userinfo/save', me.user).then(function (resp) {
+          if (resp.data.status == ResultStatus.OK.key) {
             me.$toaster.success('保存成功！');
             me.goBack();
-          } else if(resp.data.status == ResultStatus.NO.key) {
+          } else if (resp.data.status == ResultStatus.NO.key) {
 
           }
         });
       },
       getEnumList() {
         var list = [];
-        for(var item in Sex) {
+        for (var item in Sex) {
           list.push(Sex[item]);
         }
         this.sexList = list;
         list = [];
-        for(var item in YesNo) {
+        for (var item in YesNo) {
           list.push(YesNo[item]);
         }
         this.YesNoList = list;
       }
     },
-    mounted: function() {
-      if(this.$route.query.type == 'editSelf') {
+    mounted: function () {
+      if (this.$route.query.type == 'editSelf') {
         this.editSelf = true;
       }
       this.getDetail(this.$route.query.id);
       this.getEnumList();
       var list = [];
-      list.push({key:1,name:'看书'});
-      list.push({key:2,name:'看电影'});
-      list.push({key:3,name:'运动'});
+      list.push({key: 1, name: '看书'});
+      list.push({key: 2, name: '看电影'});
+      list.push({key: 3, name: '运动'});
       this.interstList = list;
     }
   }
 </script>
-
-<style scoped>
-</style>

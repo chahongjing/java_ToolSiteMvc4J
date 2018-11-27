@@ -12,16 +12,16 @@ axios.defaults.withCredentials = true;
 axios.defaults.paramsSerializer = function (params) {
   return $.param(params);
 };
-axios.defaults.transformRequest  = [function (data) {
+axios.defaults.transformRequest = [function (data) {
   if (data && !(data instanceof FormData)) {
     data = $.param(data);
   }
   return data;
 }]
 axios.defaults.transformResponse = [function (data) {
-  if(data && !(data instanceof Blob)){
+  if (data && !(data instanceof Blob)) {
     var data = $.parseJSON(data);
-    if(data.status == window.Constant.AjaxStatus.UNAUTHENTICATION){
+    if (data.status == window.Constant.AjaxStatus.UNAUTHENTICATION) {
       window.location.hash = "/login";
     }
   }
@@ -32,8 +32,8 @@ axios.interceptors.request.use(function (config) {
   // 在发送请求之前做些什么
   return config;
 }, function (error) {
-    // 对请求错误做些什么
-    return Promise.reject(error);
+  // 对请求错误做些什么
+  return Promise.reject(error);
 });
 
 // 添加响应拦截器
@@ -43,17 +43,17 @@ axios.interceptors.response.use(function (response) {
 }, function (error) {
   var result = {};
   // 对响应错误做点什么
-  if(error.response.status == 401) {
+  if (error.response.status == 401) {
     // 用户未授权
     result.status = ResultStatus.UNAUTHORIZED.key;
     result.message = ResultStatus.UNAUTHORIZED.name;
-  } else if(error.response.status == 500) {
-    if(error.response.data instanceof Blob) {
-      Utility.readBlobAsText(error.response.data, function(data) {
+  } else if (error.response.status == 500) {
+    if (error.response.data instanceof Blob) {
+      Utility.readBlobAsText(error.response.data, function (data) {
         var res = JSON.parse(data);
         toaster.error(res.message);
       });
-    } 
+    }
   } else {
     result.status = ResultStatus.ERROR.key;
     result.message = ResultStatus.ERROR.name;
@@ -65,7 +65,7 @@ axios.interceptors.response.use(function (response) {
 
 var axiosIns = {
   getAjaxUrl: function (path) {
-    if(path.indexOf('http') == 0) return path;
+    if (path.indexOf('http') == 0) return path;
     return this.getContext() + process.env.proxyPrefix + path;
   },
   getContext: function () {
@@ -73,14 +73,14 @@ var axiosIns = {
   },
   get: function (path, param) {
     return axios.get(this.getAjaxUrl(path), {params: param}).catch(function (resp) {
-      if(resp.status == ResultStatus.UNAUTHORIZED.key) {
+      if (resp.status == ResultStatus.UNAUTHORIZED.key) {
         toaster.error(resp.message);
       }
     });
   },
   post: function (path, param) {
     return axios.post(this.getAjaxUrl(path), param).catch(function (resp) {
-      if(resp.status == ResultStatus.UNAUTHORIZED.key) {
+      if (resp.status == ResultStatus.UNAUTHORIZED.key) {
         toaster.error(resp.message);
       }
     });
@@ -96,14 +96,14 @@ var axiosIns = {
       url: this.getAjaxUrl(path),
       method: 'post',
       data: formData,
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
     });
   },
   postDownload: function (path, param) {
     return axios.post(this.getAjaxUrl(path), param, {responseType: 'blob'}).catch(function (resp) {
-      if(resp.status == ResultStatus.UNAUTHORIZED.key) {
+      if (resp.status == ResultStatus.UNAUTHORIZED.key) {
         toaster.error(resp.message);
       }
     });

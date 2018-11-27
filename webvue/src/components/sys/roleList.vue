@@ -23,31 +23,31 @@
     <div class='table-list'>
       <table class="table table-hover">
         <thead>
-          <tr>
+        <tr>
           <th class='w50'>#</th>
-            <th class=''>名称</th>
-            <th class='w150'>编码</th>
-            <th class='w50'>序号</th>
-            <th class='w100'>操作</th>
-          </tr>
+          <th class=''>名称</th>
+          <th class='w150'>编码</th>
+          <th class='w50'>序号</th>
+          <th class='w100'>操作</th>
+        </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in list">
-            <td class="text-center" v-text='index + 1'></td>
-            <td>
-              <a class='block w100p h100p' href='javascript:void(0)' v-text='item.name' @click='edit(item)'></a>
-            </td>
-            <td v-text='item.code'></td>
-            <td class="text-center" v-text='item.seq'></td>
-            <td>
-              <a class='inline-block' href='javascript:void(0)' @click='grant(item)'>
-                <i class='fa fa-id-badge'></i>
-              </a>
-              <a class='inline-block' href='javascript:void(0)' @click='deleteItem(item)'>
-                <i class='fa fa-trash'></i>
-              </a>
-            </td>
-          </tr>
+        <tr v-for="(item, index) in list">
+          <td class="text-center" v-text='index + 1'></td>
+          <td>
+            <a class='block w100p h100p' href='javascript:void(0)' v-text='item.name' @click='edit(item)'></a>
+          </td>
+          <td v-text='item.code'></td>
+          <td class="text-center" v-text='item.seq'></td>
+          <td>
+            <a class='inline-block' href='javascript:void(0)' @click='grant(item)'>
+              <i class='fa fa-id-badge'></i>
+            </a>
+            <a class='inline-block' href='javascript:void(0)' @click='deleteItem(item)'>
+              <i class='fa fa-trash'></i>
+            </a>
+          </td>
+        </tr>
         </tbody>
       </table>
     </div>
@@ -63,18 +63,18 @@
     name: 'roleList',
     data () {
       return {
-        searchKey:null,
+        searchKey: null,
         list: [],
-        pager: {pageNum:1, pageSize:10,loading:true}
+        pager: {pageNum: 1, pageSize: 10, loading: true}
       }
     },
     methods: {
       add() {
         var me = this;
-        this.axios.get('/comm/getId').then(function(resp) {
+        this.axios.get('/comm/getId').then(function (resp) {
           me.$router.push({path: '/sys/roleEdit', query: {id: resp.data.value}});
         });
-        
+
       },
       edit(entity) {
         this.$router.push({path: '/sys/roleEdit', query: {id: entity.roleId}});
@@ -82,8 +82,12 @@
       search() {
         var me = this;
         me.pager.loading = true;
-        this.axios.get('/role/queryPageList', {name: this.searchKey,pageNum:this.pager.pageNum,pageSize:this.pager.pageSize}).then(function(resp) {
-          if(resp.data.status == Constant.AjaxStatus.OK) {
+        this.axios.get('/role/queryPageList', {
+          name: this.searchKey,
+          pageNum: this.pager.pageNum,
+          pageSize: this.pager.pageSize
+        }).then(function (resp) {
+          if (resp.data.status == Constant.AjaxStatus.OK) {
             me.list = resp.data.value.list;
             me.pager = commonSrv.getPagerInfo(resp.data.value, me.goPage);
           } else {
@@ -95,11 +99,11 @@
         this.pager.pageNum = page;
         this.search();
       },
-      deleteItem:function(entity) {
+      deleteItem: function (entity) {
         var me = this;
-        this.$confirm.confirm('确定要删除角色吗？', function() {
-          me.axios.get('/role/delete', {id: entity.roleId}).then(function(resp) {
-            if(resp.data.status == Constant.AjaxStatus.OK) {
+        this.$confirm.confirm('确定要删除角色吗？', function () {
+          me.axios.get('/role/delete', {id: entity.roleId}).then(function (resp) {
+            if (resp.data.status == Constant.AjaxStatus.OK) {
               me.$toaster.success('删除成功！');
               me.search();
             } else {
@@ -112,7 +116,7 @@
         this.$router.push({path: '/sys/roleGrantPermission', query: {id: entity.roleId}});
       }
     },
-    mounted: function() {
+    mounted: function () {
       this.search();
     }
   }

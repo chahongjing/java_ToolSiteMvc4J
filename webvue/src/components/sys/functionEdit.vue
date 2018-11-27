@@ -6,62 +6,62 @@
         <div class="form-group">
           <label class="form-label">名称：</label>
           <div class="form-content">
-            <input type="text" class="form-control" placeholder="名称" autofocus 
-            v-model='functionInfo.name'>
+            <input type="text" class="form-control" placeholder="名称" autofocus
+                   v-model='functionInfo.name'>
           </div>
           <div class='form-info'>
             <i class='fa'></i>
           </div>
         </div>
-      <div class="form-group">
-        <label class="form-label">编码：</label>
-        <div class="form-content">
-          <input type="text" class="form-control" placeholder="编码"
-          v-model='functionInfo.code'>
+        <div class="form-group">
+          <label class="form-label">编码：</label>
+          <div class="form-content">
+            <input type="text" class="form-control" placeholder="编码"
+                   v-model='functionInfo.code'>
+          </div>
+          <div class='form-info'>
+            <i class='fa fa-question-circle-o'></i>
+          </div>
         </div>
-        <div class='form-info'>
-          <i class='fa fa-question-circle-o'></i>
+        <div class="form-group">
+          <label class="form-label">菜单：</label>
+          <div class="form-content">
+            <select class="form-control" v-model='functionInfo.menuId'
+                    placeholder='请选择类型'>
+              <option>--请选择类型--</option>
+              <option v-for='item in menuList' :value="item.menuId" v-text="item.name"></option>
+            </select>
+          </div>
+          <div class='form-info'>
+            <i class='fa fa-question-circle-o'></i>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">菜单：</label>
-        <div class="form-content">
-          <select class="form-control" v-model='functionInfo.menuId'
-          placeholder='请选择类型'>
-            <option>--请选择类型--</option>
-            <option v-for='item in menuList':value="item.menuId" v-text="item.name"></option>
-          </select>
+        <div class="form-group">
+          <label class="form-label">路径：</label>
+          <div class="form-content">
+            <input type="text" class="form-control" placeholder="路径"
+                   v-model='functionInfo.path'>
+          </div>
+          <div class='form-info'>
+            <i class='fa fa-question-circle-o'></i>
+          </div>
         </div>
-        <div class='form-info'>
-          <i class='fa fa-question-circle-o'></i>
+        <div class="form-group">
+          <label class="form-label">序号：</label>
+          <div class="form-content">
+            <input type="num" class="form-control" step='1' placeholder="序号"
+                   v-model='functionInfo.seq'>
+          </div>
+          <div class='form-info'>
+            <i class='fa fa-question-circle-o'></i>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">路径：</label>
-        <div class="form-content">
-          <input type="text" class="form-control" placeholder="路径"
-          v-model='functionInfo.path'>
+        <div class="form-group text-right mb0">
+          <button type="button" class="btn btn-primary mr5" @click="save">保存</button>
         </div>
-        <div class='form-info'>
-          <i class='fa fa-question-circle-o'></i>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">序号：</label>
-        <div class="form-content">
-          <input type="num" class="form-control" step='1' placeholder="序号"
-          v-model='functionInfo.seq'>
-        </div>
-        <div class='form-info'>
-          <i class='fa fa-question-circle-o'></i>
-        </div>
-      </div>
-      <div class="form-group text-right mb0">
-        <button type="button" class="btn btn-primary mr5" @click="save">保存</button>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -69,52 +69,52 @@
     name: 'functionEdit',
     data () {
       return {
-        functionInfo:{functionId:null,menuId:null,name:null,code:null,path:null,seq:null},
-        menuList:[]
-        }
-      },
-      methods: {
-        goBack() {
-          this.$router.back(-1);
-        },
-        getDetail: function(id) {
-          var me = this;
-          this.axios.get('/function/getDetail', {id:id}).then(function(resp) {
-            if(resp.data.status == Constant.AjaxStatus.OK) {
-              me.functionInfo = resp.data.value;
-            } else {
-              alert(resp.data.message);
-            }
-          });
-        },
-        save: function() {
-          var me = this;
-          this.axios.post('/function/save', me.functionInfo).then(function(resp) {
-            if(resp.data.status == Constant.AjaxStatus.OK) {
-              me.$toaster.success('保存成功！');
-              me.goBack();
-            } else {
-              alert(resp.data.message);
-            }
-          });
-        },
-        getMenuList() {
-          var me = this;
-          this.axios.post('/menu/queryPageMenuList', me.menu).then(function(resp) {
-            if(resp.data.status == Constant.AjaxStatus.OK) {
-              me.menuList = resp.data.value;
-            } else {
-              alert(resp.data.message);
-            }
-          });
-        }
-      },
-      mounted: function() {
-        this.getDetail(this.$route.query.id);
-        this.getMenuList();
+        functionInfo: {functionId: null, menuId: null, name: null, code: null, path: null, seq: null},
+        menuList: []
       }
+    },
+    methods: {
+      goBack() {
+        this.$router.back(-1);
+      },
+      getDetail: function (id) {
+        var me = this;
+        this.axios.get('/function/getDetail', {id: id}).then(function (resp) {
+          if (resp.data.status == Constant.AjaxStatus.OK) {
+            me.functionInfo = resp.data.value;
+          } else {
+            alert(resp.data.message);
+          }
+        });
+      },
+      save: function () {
+        var me = this;
+        this.axios.post('/function/save', me.functionInfo).then(function (resp) {
+          if (resp.data.status == Constant.AjaxStatus.OK) {
+            me.$toaster.success('保存成功！');
+            me.goBack();
+          } else {
+            alert(resp.data.message);
+          }
+        });
+      },
+      getMenuList() {
+        var me = this;
+        this.axios.post('/menu/queryPageMenuList', me.menu).then(function (resp) {
+          if (resp.data.status == Constant.AjaxStatus.OK) {
+            me.menuList = resp.data.value;
+          } else {
+            alert(resp.data.message);
+          }
+        });
+      }
+    },
+    mounted: function () {
+      this.getDetail(this.$route.query.id);
+      this.getMenuList();
     }
-  </script>
+  }
+</script>
 
-  <style scoped>
-  </style>
+<style scoped>
+</style>

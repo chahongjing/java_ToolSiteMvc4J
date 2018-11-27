@@ -23,26 +23,27 @@
     <div class='table-list'>
       <table class="table table-hover">
         <thead>
-          <tr>
+        <tr>
           <th class='w50'>#</th>
-            <th class=''>名称</th>
-            <th class=''>功能</th>
-            <th class='w150'>编码</th>
-            <th class='w50'>序号</th>
-            <th class='w100'>操作</th>
-          </tr>
+          <th class=''>名称</th>
+          <th class=''>功能</th>
+          <th class='w150'>编码</th>
+          <th class='w50'>序号</th>
+          <th class='w100'>操作</th>
+        </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in list">
-            <td class="text-center" v-text='index + 1'></td>
-            <td>
-              <a class='block w100p h100p' href='javascript:void(0)' v-text='item.name' @click='edit(item)'></a>
-            </td>
-            <td v-text='item.functionName'></td>
-            <td v-text='item.code'></td>
-            <td class="text-center" v-text='item.seq'></td>
-            <td><a class='inline-block' href='javascript:void(0)' @click='deleteItem(item)'><i class='fa fa-trash'></i></a></td>
-          </tr>
+        <tr v-for="(item, index) in list">
+          <td class="text-center" v-text='index + 1'></td>
+          <td>
+            <a class='block w100p h100p' href='javascript:void(0)' v-text='item.name' @click='edit(item)'></a>
+          </td>
+          <td v-text='item.functionName'></td>
+          <td v-text='item.code'></td>
+          <td class="text-center" v-text='item.seq'></td>
+          <td><a class='inline-block' href='javascript:void(0)' @click='deleteItem(item)'><i
+            class='fa fa-trash'></i></a></td>
+        </tr>
         </tbody>
       </table>
     </div>
@@ -58,29 +59,34 @@
     name: 'permissionList',
     data () {
       return {
-        searchKey:null,
-        functionId:null,
+        searchKey: null,
+        functionId: null,
         list: [],
-        pager: {pageNum:1, pageSize:10,loading:true}
+        pager: {pageNum: 1, pageSize: 10, loading: true}
       }
     },
     methods: {
       add() {
         var me = this;
-        this.axios.get('/comm/getId').then(function(resp) {
+        this.axios.get('/comm/getId').then(function (resp) {
           me.$router.push({path: '/sys/permissionEdit', query: {id: resp.data.value, functionId: me.functionId}});
         });
-        
+
       },
       edit(entity) {
         this.$router.push({path: '/sys/permissionEdit', query: {id: entity.permissionId}});
-        
+
       },
       search() {
         var me = this;
         me.pager.loading = true;
-        this.axios.get('/permission/queryPageList', {name: this.searchKey,functionId: this.functionId,pageNum:this.pager.pageNum,pageSize:this.pager.pageSize}).then(function(resp) {
-          if(resp.data.status == Constant.AjaxStatus.OK) {
+        this.axios.get('/permission/queryPageList', {
+          name: this.searchKey,
+          functionId: this.functionId,
+          pageNum: this.pager.pageNum,
+          pageSize: this.pager.pageSize
+        }).then(function (resp) {
+          if (resp.data.status == Constant.AjaxStatus.OK) {
             me.list = resp.data.value.list;
             me.pager = commonSrv.getPagerInfo(resp.data.value, me.goPage);
           } else {
@@ -92,17 +98,17 @@
         this.pager.pageNum = page;
         this.search();
       },
-      deleteItem:function(entity) {
+      deleteItem: function (entity) {
         var me = this;
-        this.$confirm.confirm('确定要删除权限吗？', function() {
-          me.axios.get('/permission/delete', {id: entity.permissionId}).then(function(resp) {
-              me.$toaster.success('删除成功！');
+        this.$confirm.confirm('确定要删除权限吗？', function () {
+          me.axios.get('/permission/delete', {id: entity.permissionId}).then(function (resp) {
+            me.$toaster.success('删除成功！');
             me.search();
           });
         });
       }
     },
-    mounted: function() {
+    mounted: function () {
       this.functionId = this.$route.query.functionId;
       this.search();
     }

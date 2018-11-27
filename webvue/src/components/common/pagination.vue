@@ -2,7 +2,8 @@
   <div class='list-pager'>
     <div class='footer-left inline-block pl5' :style="{'width':'calc(100% - ' + width + 'px)'}">
       共&nbsp;<span v-text='pagerInfo && pagerInfo.total || 0'></span>&nbsp;条记录,
-      当前&nbsp;<span v-text='pagerInfo && pagerInfo.pageNum || 0'></span>/<span v-text='(pagerInfo && pagerInfo.pages || 0)'></span>&nbsp;页
+      当前&nbsp;<span v-text='pagerInfo && pagerInfo.pageNum || 0'></span>/<span
+      v-text='(pagerInfo && pagerInfo.pages || 0)'></span>&nbsp;页
       <i class='fa fa-refresh fa-spin text-success' v-if='pagerInfo && pagerInfo.loading'></i>
     </div>
     <div class='footer-right inline-block text-right pr5' :style="{'width':width + 'px'}">
@@ -19,50 +20,54 @@
 <script>
   export default {
     name: 'pagination',
-    props: {pagerInfo:{pageNum:null, pages:null, total: null, callback:null,loading:false}},
+    props: {pagerInfo: {pageNum: null, pages: null, total: null, callback: null, loading: false}},
     data () {
       return {
-        width:0
+        width: 0
       }
     },
     methods: {
       jumpPage(page) {
-        if(!this.pagerInfo || page < 1 || page == this.pagerInfo.pageNum || page > this.pagerInfo.pages) {
+        if (!this.pagerInfo || page < 1 || page == this.pagerInfo.pageNum || page > this.pagerInfo.pages) {
           return;
         }
         this.pagerInfo.callback && this.pagerInfo.callback(page);
       }
     },
-    computed:{
-      getList: function() {
+    computed: {
+      getList: function () {
         var me = this;
         var list = [];
-        if(me.pagerInfo == null || !me.pagerInfo.pageNum) {
+        if (me.pagerInfo == null || !me.pagerInfo.pageNum) {
           return list;
         }
-        list.push({page: me.pagerInfo.pageNum, text: me.pagerInfo.pageNum,active:true});
+        list.push({page: me.pagerInfo.pageNum, text: me.pagerInfo.pageNum, active: true});
         var temp;
-        for(var i = 1; i < 5; i++) {
+        for (var i = 1; i < 5; i++) {
           temp = me.pagerInfo.pageNum - i;
-          if(temp > 0 && temp <= me.pagerInfo.pages){
+          if (temp > 0 && temp <= me.pagerInfo.pages) {
             list.unshift({page: temp, text: temp});
-            if(list.length == 5) break;
+            if (list.length == 5) break;
           }
           temp = me.pagerInfo.pageNum + i;
-          if(temp > 0 && temp <= me.pagerInfo.pages){
+          if (temp > 0 && temp <= me.pagerInfo.pages) {
             list.push({page: temp, text: temp});
-            if(list.length == 5) break;
+            if (list.length == 5) break;
           }
         }
         me.width = list.length * 45 + 130;
         // 上一页
-        list.unshift({page: me.pagerInfo.pageNum - 1, disabled:me.pagerInfo.pageNum <= 1,text: '&lsaquo;'});
+        list.unshift({page: me.pagerInfo.pageNum - 1, disabled: me.pagerInfo.pageNum <= 1, text: '&lsaquo;'});
         // 首页
-        list.unshift({page: 1, disabled:me.pagerInfo.pageNum <= 1, text: '&laquo;'});
+        list.unshift({page: 1, disabled: me.pagerInfo.pageNum <= 1, text: '&laquo;'});
         // 下一页
-        list.push({page: me.pagerInfo.pageNum + 1, disabled:me.pagerInfo.pageNum >= me.pagerInfo.pages, text: '&rsaquo;'});
+        list.push({
+          page: me.pagerInfo.pageNum + 1,
+          disabled: me.pagerInfo.pageNum >= me.pagerInfo.pages,
+          text: '&rsaquo;'
+        });
         // 末页
-        list.push({page: me.pagerInfo.pages, disabled:me.pagerInfo.pageNum >= me.pagerInfo.pages, text: '&raquo;'});
+        list.push({page: me.pagerInfo.pages, disabled: me.pagerInfo.pageNum >= me.pagerInfo.pages, text: '&raquo;'});
         return list;
       }
     }
@@ -70,7 +75,18 @@
 </script>
 
 <style scoped>
-  .list-pager{margin-top:10px;overflow: hidden;}
-  .pagination .page-item{float:left;}
-  .footer-left, .footer-right{line-height: 40px;height:40px;float:left;}
+  .list-pager {
+    margin-top: 10px;
+    overflow: hidden;
+  }
+
+  .pagination .page-item {
+    float: left;
+  }
+
+  .footer-left, .footer-right {
+    line-height: 40px;
+    height: 40px;
+    float: left;
+  }
 </style>
