@@ -115,17 +115,17 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
         user.setUserName(request.getUserName());
         user.setUserCode(request.getUserName());
         PageInfo<UserInfoVo> pageInfo = (PageInfo<UserInfoVo>) super.queryPageList(request, user);
-        for (UserInfoVo userInfo : pageInfo.getList()) {
-            if (userInfo.getSex() != null) {
-                userInfo.setSexName(userInfo.getSex().getName());
-            }
-            if (userInfo.getIsDisabled() != null) {
-                userInfo.setIsDisabledName(userInfo.getIsDisabled().getName());
-            }
-            if (userInfo.getIsSystem() != null) {
-                userInfo.setIsSystemName(userInfo.getIsSystem().getName());
-            }
-        }
+//        for (UserInfoVo userInfo : pageInfo.getList()) {
+//            if (userInfo.getSex() != null) {
+//                userInfo.setSexName(userInfo.getSex().getName());
+//            }
+//            if (userInfo.getIsDisabled() != null) {
+//                userInfo.setIsDisabledName(userInfo.getIsDisabled().getName());
+//            }
+//            if (userInfo.getIsSystem() != null) {
+//                userInfo.setIsSystemName(userInfo.getIsSystem().getName());
+//            }
+//        }
         return pageInfo;
     }
 

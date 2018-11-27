@@ -3,6 +3,7 @@ package com.zjy.web.controller;
 import com.zjy.baseframework.*;
 import com.zjy.baseframework.enums.ResultStatus;
 import com.zjy.bll.common.LoggingProxy;
+import com.zjy.bll.common.WebUtils;
 import com.zjy.bll.service.TestService;
 import com.zjy.bll.service.TestServiceImpl;
 import com.zjy.bll.service.UserInfoService;
@@ -486,10 +487,9 @@ public class LearnController extends BaseController {
         // path是指欲下载的文件的路径。
         BaseResult result = BaseResult.OK();
         try{
-            String path = "d:\\a.txt";
-            File f = new File(path);
-            if (!f.exists()) throw new Exception("未找到文件：" + path);
-            DownloadHelper.download(path, response);
+            File file = Paths.get(Utils.getRootPath(), "favicon.ico").toFile();
+            if (!file.exists()) throw new Exception("未找到文件：" + file);
+            DownloadHelper.download(file.getAbsolutePath(), response);
             return null;
         } catch (Exception e) {
             response.reset();

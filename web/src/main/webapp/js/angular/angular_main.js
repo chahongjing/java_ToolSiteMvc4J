@@ -5,7 +5,7 @@
 var app = angular.module('myApp', [])
     .config(['$httpProvider', function ($httpProvider) {
             // 默认post处理为form表单提交
-            $httpProvider.defaults.headers.common["x-requested-with"] = "XMLHttpRequest";
+            $httpProvider.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
             $httpProvider.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
             $httpProvider.defaults.transformRequest = [function (data) {
                 return angular.isObject(data) && String(data) !== '[object File]' ? $.param(data) : data;

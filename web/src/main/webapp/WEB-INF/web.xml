@@ -140,7 +140,7 @@
         <!--&lt;!&ndash;</init-param>&ndash;&gt;-->
         <!--<init-param>-->
             <!--<param-name>allowHeaders</param-name>-->
-            <!--<param-value>x-requested-with,JSESSIONID</param-value>-->
+            <!--<param-value>X-Requested-With,JSESSIONID</param-value>-->
         <!--</init-param>-->
     <!--</filter>-->
     <!--<filter-mapping>-->
