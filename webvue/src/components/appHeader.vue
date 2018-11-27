@@ -188,11 +188,11 @@
   }
 
   .head .info .licontent.submenu {
-    padding-right: 0px;
+    padding-left: 0px;
   }
 
   .head .info .licontent.submenu > i {
-    padding-right: 7px;
+    padding-left: 7px;
     transition: 0.3s;
   }
 
