@@ -27,7 +27,7 @@
         var modal = cur.find('.modal');
 
         if(curVal) {
-          back.removeClass('hide').addClass('show');
+          back.removeClass('hide').show().addClass('show');
           modal.show();
           setTimeout(function(){
             modal.addClass('show')
@@ -37,7 +37,7 @@
           modal.removeClass('show');
           setTimeout(function(){
             modal.hide()
-            back.removeClass('show').addClass('hide');
+            back.hide().removeClass('show').addClass('hide');
           }, 200);
         }
       }

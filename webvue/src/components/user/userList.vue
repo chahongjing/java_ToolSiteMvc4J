@@ -17,7 +17,7 @@
 		<div class='searchbar'>
 			<form class='myform form-inline form-group-w280 form-label-w80'>
 				<div class="form-group">
-					<label class="form-label">名称：</label>
+					<label class="form-label" v-tooltip='searchKey'>名称：</label>
 					<div class="form-content">
 						<input type="text" class="form-control" placeholder="名称" autofocus v-model='searchKey'>
 					</div>

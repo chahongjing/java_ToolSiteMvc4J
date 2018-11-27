@@ -103,7 +103,7 @@ label.switch input:disabled + div span:nth-child(3){color:#aaa;}
 background-color: #2068ed;border-radius: 50%;}
 /* checkbox */
 .radio_checkbox input[type='checkbox'] + i{width:16px;height:16px;left:5px;top:6px;}
-.radio_checkbox input[type='checkbox'] + i:after{content:'√';top:2px;left:0px;width:12px;height:12px;transform:scale(0);-webkit-transform:scale(0);}
+.radio_checkbox input[type='checkbox'] + i:after{font:normal normal normal 14px/1 FontAwesome;content:'\f00c';top:0px;left:0px;width:12px;height:12px;transform:scale(0);-webkit-transform:scale(0);}
 /* togglecheckbox */
 .togglecheckbox i{
     position:absolute;width:40px;height:22px;border-radius:18px;transition:0.2s ease-in;top:3px;
@@ -283,7 +283,7 @@ td.operate{padding-top: 7px;padding-bottom:0;font-size: 18px;}
 .nodata > div{position:absolute;top:50%;left:50%;transform: translate(-50%,-50%);font-weight:bold;font-size: 16px;}
 
 /* 列表 */
-.list-header-but-group{height:45px;line-height: 38px;padding:0 10px;border-bottom:1px solid #ccc;}
+.list-header-but-group{line-height: 40px;padding:4px 10px 10px 0;border-bottom:1px solid #ccc;}
 .searchbar{padding:15px 10px 5px;}
 .maincontent{width:100%;height:100%;display:flex;flex-flow:column;padding:5px 10px;}
 .table-list{flex:1;overflow: auto;}

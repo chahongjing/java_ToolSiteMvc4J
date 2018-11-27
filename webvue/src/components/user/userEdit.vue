@@ -93,6 +93,19 @@
             <i class='fa fa-question-circle-o'></i>
           </div>
         </div>
+        <div class="form-group">
+          <label class="form-label">兴趣爱好：</label>
+          <div class="form-content">
+            <label class="radio_checkbox mt2" v-for="item in interstList">
+              <input type='checkbox' name="interst" :value="item.key" v-model="intertCheck"/>
+              <i></i>
+              <span v-text="item.name"></span>
+            </label>
+          </div>
+          <div class='form-info'>
+            <i class='fa fa-question-circle-o'></i>
+          </div>
+        </div>
 
         <div class="form-group text-right mb0">
           <button type="button" class="btn btn-primary mr5" @click="save"><i class='fa fa-save'></i>保存</button>
@@ -110,7 +123,9 @@
         user:{userId:null,userName:null,password:null,passwordAgain:null,sex:null,birthday:null,isDisabled:null,isSystem:null,isSave:true},
         editSelf:false,
         sexList:[],
-        YesNoList:[]
+        YesNoList:[],
+        interstList:[],
+        intertCheck:[]
       }
     },
     methods: {
@@ -157,6 +172,11 @@
       }
       this.getDetail(this.$route.query.id);
       this.getEnumList();
+      var list = [];
+      list.push({key:1,name:'看书'});
+      list.push({key:2,name:'看电影'});
+      list.push({key:3,name:'运动'});
+      this.interstList = list;
     }
   }
 </script>

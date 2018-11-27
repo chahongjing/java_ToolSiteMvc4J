@@ -5,6 +5,7 @@ const vm = new VueComponent().$mount();
 
 let init = false;
 let defaultBtnOption = {
+	title: '提示',
 	closeBtn: {show: true, cls:'', showIcon: true, iconCls:'',text: '关闭', fn: null},
 	confirmBtn: {show: true, cls:'', showIcon: true, iconCls:'',text: '确定', fn: null}
 }
