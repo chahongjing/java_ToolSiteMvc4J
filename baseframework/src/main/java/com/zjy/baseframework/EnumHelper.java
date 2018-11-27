@@ -4,13 +4,12 @@ package com.zjy.baseframework;
 import com.zjy.baseframework.annotations.SerializeEnum;
 import com.zjy.baseframework.beans.EnumBean;
 import com.zjy.baseframework.mybatis.IBaseEnum;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Description;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class EnumHelper {
     private static List<Class<IBaseEnum>> serializeEnumList = new ArrayList<>();
@@ -34,19 +33,29 @@ public class EnumHelper {
         }
     }
 
-    public static Map<Class<IBaseEnum>, Map<String, EnumBean>> getEnumBeanList() {
-        Map<Class<IBaseEnum>, Map<String, EnumBean>> result = new LinkedHashMap<>();
+    public static Map<String, Map<String, EnumBean>> getEnumBeanList() {
+        Map<String, Map<String, EnumBean>> result = new LinkedHashMap<>();
+        String keyName;
         for (Class<IBaseEnum> iBaseEnumClass : serializeEnumList) {
+            SerializeEnum serializeEnum = iBaseEnumClass.getAnnotation(SerializeEnum.class);
+            if(serializeEnum != null && StringUtils.isNotBlank(serializeEnum.value())) {
+                keyName = serializeEnum.value();
+            } else {
+                keyName = iBaseEnumClass.getSimpleName();
+            }
             Map<String, EnumBean> map = new LinkedHashMap<>();
-            for (IBaseEnum item : iBaseEnumClass.getEnumConstants()) {
+            List<IBaseEnum> list = Arrays.stream(iBaseEnumClass.getEnumConstants()).sorted(Comparator.comparing(IBaseEnum::getOrder))
+                    .collect(Collectors.toList());
+            for (IBaseEnum item : list) {
                 EnumBean bean = new EnumBean();
                 bean.setKey(item.toString());
                 bean.setValue(item.getValue());
                 bean.setCode(item.getCode());
                 bean.setName(item.getName());
+                bean.setOrder(item.getOrder());
                 map.put(item.toString(), bean);
             }
-            result.put(iBaseEnumClass, map);
+            result.put(keyName, map);
         }
         return result;
     }

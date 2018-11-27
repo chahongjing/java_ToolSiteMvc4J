@@ -8,4 +8,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
 public @interface SerializeEnum {
+    /**
+     * 序列化别名
+     * @return
+     */
+    String value() default "";
 }

@@ -18,6 +18,10 @@ public interface IBaseEnum {
         return StringUtils.EMPTY;
     }
 
+    default int getOrder() {
+        return 0;
+    }
+
     static <E extends Enum<E> & IBaseEnum> E getByValue(Class<E> enumClass, Integer value) {
         if (value == null) return null;
         E[] enumConstants = enumClass.getEnumConstants();

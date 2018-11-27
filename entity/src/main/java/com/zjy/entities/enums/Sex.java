@@ -10,16 +10,19 @@ import com.zjy.baseframework.mybatis.IBaseEnum;
 @SerializeEnum
 @MybatisFieldEnum
 public enum Sex implements IBaseEnum {
-    Male(0, "男"),         //开启
-    Female(1, "女");
+    Male(0, "男", 1),         //开启
+    Female(1, "女", 2);
 
     private int value;
 
     private String name;
 
-    Sex(int value, String name) {
+    private int order;
+
+    Sex(int value, String name, int order) {
         this.value = value;
         this.name = name;
+        this.order = order;
     }
 
     @Override
@@ -29,6 +32,10 @@ public enum Sex implements IBaseEnum {
 
     public String getName() {
         return name;
+    }
+
+    public int getOrder() {
+        return order;
     }
 
     public static Sex getByValue(int value) {

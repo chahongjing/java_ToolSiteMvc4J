@@ -11,6 +11,8 @@ public class EnumBean {
     private String code;
     @JSONField(ordinal = 4)
     private String name;
+    @JSONField(ordinal = 5)
+    private int order;
 
     public String getKey() {
         return key;
@@ -42,5 +44,13 @@ public class EnumBean {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
     }
 }
