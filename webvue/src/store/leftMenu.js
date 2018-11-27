@@ -4,7 +4,7 @@ export const SET_MENU = 'SET_MENU'; //登录成功
 export const CLEAR_MENU = 'CLEAR_MENU'; //退出登录
 
 export default {
-    state: JSON.parse(sessionStorage.getItem('leftMenu')) || {},
+    state: JSON.parse(sessionStorage.getItem('leftMenu')) || [],
     mutations: {
         [SET_MENU](state, leftMenu) {
             sessionStorage.setItem('leftMenu', JSON.stringify(leftMenu))

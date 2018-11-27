@@ -27,12 +27,14 @@
         </li>
         <li>
           <a class="licontent pointer" title='消息'>
-            <i class='fa fa-commenting text-success mr0'></i>
+            <i class='fa fa-commenting icon-animated-vertical text-success mr0'></i>
+            <span class="badge badge-success">5</span>
           </a>
         </li>
         <li>
           <a class="licontent pointer" title='提醒'>
-            <i class='fa fa-bell-o text-warning mr0'></i>
+            <i class='fa fa-bell-o icon-animated-bell text-warning mr0'></i>
+            <span class="badge badge-warning">5</span>
           </a>
         </li>
         <li>
@@ -197,4 +199,8 @@
   .form-group:last-child {
     margin-bottom: 0;
   }
+  .icon-animated-vertical{display:inline-block;animation:vertical 2s infinite ease 2s;}
+  @keyframes vertical{0%{transform:translate(0,-3px)}4%{transform:translate(0,3px)}8%{transform:translate(0,-3px)}12%{transform:translate(0,3px)}16%{transform:translate(0,-3px)}20%{transform:translate(0,3px)}22%{transform:translate(0,0)}}
+  .icon-animated-bell{display:inline-block;animation:ringing 2s infinite ease 1s;transform-origin:50% 0}
+  @keyframes ringing{0%{transform:rotate(-15deg)}2%{transform:rotate(15deg)}4%{transform:rotate(-18deg)}6%{transform:rotate(18deg)}8%{transform:rotate(-22deg)}10%{transform:rotate(22deg)}12%{transform:rotate(-18deg)}14%{transform:rotate(18deg)}16%{transform:rotate(-12deg)}18%{transform:rotate(12deg)}20%{transform:rotate(0deg)}}
 </style>

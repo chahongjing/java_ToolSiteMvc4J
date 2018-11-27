@@ -8,7 +8,6 @@ var router = new Router({
   routes: [
   {
     path: '/',
-    name: '首页',
     component: resolve => require(['../components/headerAndMenu'], resolve),
     children:[{
       path: '/',
@@ -115,7 +114,6 @@ var router = new Router({
   },
   {
     path:'/test',
-    name:'测试',
     component: resolve => require(['../components/headerAndMenu'], resolve),
     children: [
     {

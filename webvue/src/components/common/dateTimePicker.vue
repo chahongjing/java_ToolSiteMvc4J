@@ -1,8 +1,8 @@
 <template>
   <div class="input-group date">
-    <input class="form-control" size="16" type="text" readonly v-model='dataText'/>
+    <input class="form-control border-right-0" size="16" type="text" readonly v-model='dataText'/>
     <div class="input-group-addon input-group-append">
-      <span class="input-group-text">
+      <span class="input-group-text" :class='{"btn-outline-primary":!option || !option.disabled}'>
         <i class='fa mr0' :class='{"fa-calendar": type == 1,"fa-clock-o": type == 2}'></i>
       </span>
     </div>
@@ -21,13 +21,14 @@
     //format: 'yyyy-mm-dd hh:ii:ss',
     minView: 2, //如果是到时分秒，则去掉这一项，或值改成0
     format: 'yyyy-mm-dd',
+    disabled: false
   };
   var mergeDefaultOpt = {};
   $.extend(true, mergeDefaultOpt, defaultOption);
 
   export default {
     name: 'dateTimePicker',
-    props: {option: null, mydate: null},
+    props: {option: {disabled:null}, mydate: null},
     model: {
       prop: 'mydate',
       event: 'returnBack'
@@ -57,12 +58,15 @@
         if (opt.format && (opt.format.indexOf('hh') > -1 || opt.format.indexOf('HH') > -1)) {
           this.type = 2;
         }
-
-        $(this.$el).datetimepicker(this.mergeOption)
+        var $el = $(this.$el);
+        $el.datetimepicker('remove');
+        if(!this.option || !this.option.disabled) {
+          $el.datetimepicker(this.mergeOption)
           .on('changeDate', function (e) {
             me.dataValue = e.date;
             me.returnBackFn();
           });
+        }
       },
       formatDate: function (date, format) {
         if (!date || !format) return date;

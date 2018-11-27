@@ -12,7 +12,7 @@
           <div class='form-info'>
             <i class='fa' title='编号重复！'></i>
           </div>
-          <p class='error-msg'></p>
+          <span class='error-msg'></span>
         </div>
         <div class="form-group info-error">
           <label class="form-label">姓名：</label>
@@ -23,7 +23,7 @@
           <div class='form-info'>
             <i class='fa' title='姓名不能为空！'></i>
           </div>
-          <p class='error-msg'>名称不能为空！</p>
+          <span class='error-msg'>名称不能为空！</span>
         </div>
         <div class="form-group" v-if='!user.isSave'>
           <label class="form-label">密码：</label>
@@ -32,7 +32,7 @@
                    v-model='user.password'>
           </div>
           <div class='form-info'>
-            <i class='fa fa-question-circle-o'></i>
+            <i class='fa'></i>
           </div>
         </div>
         <div class="form-group" v-if='!user.isSave'>
@@ -42,7 +42,36 @@
                    v-model='user.passwordAgain'>
           </div>
           <div class='form-info'>
-            <i class='fa fa-question-circle-o'></i>
+            <i class='fa'></i>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">邮箱：</label>
+          <div class="form-content">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">&yen;</span>
+              </div>
+              <input type="text" class="form-control border-right-0">
+              <div class="input-group-append">
+                <span class="input-group-text">@qq.com</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">创建时间：</label>
+          <div class="form-content">
+            <date-time-picker v-model='user.createdOn' :option='dateOpt'></date-time-picker>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">生日：</label>
+          <div class="form-content">
+            <date-time-picker v-model='user.birthday'></date-time-picker>
+          </div>
+          <div class='form-info'>
+            <i class='fa'></i>
           </div>
         </div>
         <div class="form-group">
@@ -55,16 +84,7 @@
             </label>
           </div>
           <div class='form-info'>
-            <i class='fa fa-question-circle-o'></i>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">生日：</label>
-          <div class="form-content">
-            <date-time-picker v-model='user.birthday'></date-time-picker>
-          </div>
-          <div class='form-info'>
-            <i class='fa fa-question-circle-o'></i>
+            <i class='fa'></i>
           </div>
         </div>
         <div class="form-group">
@@ -77,7 +97,7 @@
             </label>
           </div>
           <div class='form-info'>
-            <i class='fa fa-question-circle-o'></i>
+            <i class='fa'></i>
           </div>
         </div>
         <div class="form-group">
@@ -90,7 +110,7 @@
             </label>
           </div>
           <div class='form-info'>
-            <i class='fa fa-question-circle-o'></i>
+            <i class='fa'></i>
           </div>
         </div>
         <div class="form-group">
@@ -103,12 +123,14 @@
             </label>
           </div>
           <div class='form-info'>
-            <i class='fa fa-question-circle-o'></i>
+            <i class='fa'></i>
           </div>
         </div>
 
         <div class="form-group text-right mb0">
-          <button type="button" class="btn btn-primary mr5" @click="save"><i class='fa fa-save'></i>保存</button>
+          <button type="button" class="btn btn-primary mr5" @click="save">
+            <i class='fa fa-save'></i>保存
+          </button>
         </div>
       </form>
     </div>
@@ -131,6 +153,8 @@
           isSystem: null,
           isSave: true
         },
+        mydate: new Date(),
+        dateOpt:{format: 'yyyy-mm-dd hh:ii:ss', minView: 0,disabled:true},
         editSelf: false,
         sexList: [],
         YesNoList: [],

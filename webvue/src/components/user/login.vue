@@ -66,6 +66,7 @@
           if (resp.data.status == Constant.AjaxStatus.OK) {
             me.user = resp.data.value;
             me.$store.commit("USER_SIGNIN", me.user);
+            me.$store.commit("CLEAR_MENU");
             window.Utility.initialQuery();
             if (window.Query.redirect) {
               window.Query.redirect = decodeURIComponent(window.Query.redirect);

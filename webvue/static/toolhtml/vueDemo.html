@@ -27,8 +27,14 @@
 		<span v-text="radioChecked"></span>
 		<br/><br/>
 		<p><b>checkbox</b></p>
+		<label class="radio_checkbox">
+			<input type='checkbox' name="checkbox" v-model="checkAll" :disabled="checkboxDisabled" @change='checkAllBox()' />
+			<i></i>
+			<span>全选</span>
+		</label>
 		<label class="radio_checkbox" v-for="item in repeatList">
-			<input type='checkbox' name="checkbox" :value="item.value" v-model="checkboxChecked" :disabled="checkboxDisabled" />
+			<input type='checkbox' name="checkbox" :value="item.value" v-model="checkboxChecked" :disabled="checkboxDisabled"
+			@change='checkSingle(item)' />
 			<i></i>
 			<span v-text="item.name"></span>
 		</label>
@@ -82,7 +88,8 @@
 			checkboxDisabled: false,
 			selectedValue: 3,
 			htmlValue: '<span class="red">v-bind:id绑定属性，可简写为 :id；v-on:click绑定事件，可简写为 @click</span>',
-			showSpan:true
+			showSpan:true,
+			checkAll: false
 		};
 
 		vueMethods = {
@@ -104,6 +111,30 @@
 				this.showSpan = !this.showSpan;
 				this.hasClass = !this.hasClass;
 				console.log('myapp');
+			},
+			checkAllBox:function() {
+				var list = [];
+				if(this.checkAll) {
+					for(var i = 0; i < this.repeatList.length; i++) {
+						list.push(this.repeatList[i].value);
+					}
+				}
+				this.checkboxChecked = list;
+			},
+			checkSingle:function() {
+				if(!this.repeatList || this.repeatList.length == 0) {
+				    this.checkAll = false;
+					return;
+				}
+				var isAllCheck = true;
+				this.checkboxChecked = this.checkboxChecked ? this.checkboxChecked : [];
+			    for(var i = 0; i < this.repeatList.length; i++) {
+				    if(!this.checkboxChecked.includes(this.repeatList[i].value)) {
+					    isAllCheck = false;
+						break;
+					}
+				}
+				this.checkAll = isAllCheck;
 			}
 		};
 

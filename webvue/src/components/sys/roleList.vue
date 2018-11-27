@@ -39,7 +39,7 @@
           </td>
           <td v-text='item.code'></td>
           <td class="text-center" v-text='item.seq'></td>
-          <td>
+          <td class="operate">
             <a class='inline-block' href='javascript:void(0)' @click='grant(item)'>
               <i class='fa fa-id-badge'></i>
             </a>

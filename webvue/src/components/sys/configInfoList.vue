@@ -49,7 +49,7 @@
           <td v-text='item.contacts'></td>
           <td v-text='item.relateWebsite'></td>
           <td v-text='item.memo'></td>
-          <td><a class='inline-block' href='javascript:void(0)' @click='deleteItem(item)'><i
+          <td class="operate"><a class='inline-block' href='javascript:void(0)' @click='deleteItem(item)'><i
             class='fa fa-trash'></i></a></td>
         </tr>
         </tbody>

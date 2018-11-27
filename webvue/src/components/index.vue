@@ -24,6 +24,19 @@
             <router-link to="/test/test" class="list-group-item list-group-item-action">
               <i class='fa fa-comment fa-fw'></i><span>测试</span>
             </router-link>
+            <div>
+              
+          <button type="button inline-block" class="btn btn-outline-purple" @click="confirm1()">
+            <i class='fa fa-plus mr5'></i>弹框1
+          </button>
+          <button type="button inline-block" class="btn btn-outline-purple" @click="confirm2()">
+            <i class='fa fa-plus mr5'></i>弹框2
+          </button>
+          <button type="button inline-block" class="btn btn-outline-purple" @click="confirm3()">
+            <i class='fa fa-plus mr5'></i>弹Modal
+          </button>
+              
+            </div>
           </div>
         </div>
         <div class="card-footer text-muted">
@@ -31,16 +44,15 @@
         </div>
       </div>
     </div>
-    <div style='display:none;'>
-      <input type='file' id='myfile'/>
-      <button @click='test'>测试</button>
-    </div>
+    <my-modal :title='myDialog.title' :show-dialog.sync='myDialog.showDialog' :btn-list='myDialog.btnList'
+              :width='myDialog.width'></my-modal>
   </div>
 </template>
 
 <script>
   import appHeader from '@/components/appHeader'
   import appMenu from '@/components/appMenu'
+  import myModal from '@/components/sys/myModal'
 
   var list = [];
   // region java
@@ -137,10 +149,18 @@
     data () {
       return {
         list: list,
-        showMenu: 'true'
+        showMenu: 'true',
+        myDialog: {
+          showDialog: false,
+          width: 800,
+          title: '选择用户',
+          btnList: [{show: true, cls: '', showIcon: true, iconCls: 'fa fa-times', text: '关闭', fn: null},
+            {show: true, cls: 'btn-purple', showIcon: true, iconCls: 'fa fa-check', text: '确定', fn: null}
+          ]
+        }
       }
     },
-    components: {appHeader, appMenu},
+    components: {appHeader, appMenu, myModal},
     methods: {
       goPage: function () {
         //this.$router.push({path: '/myPage', params:{ id:'1'}});
@@ -157,7 +177,40 @@
         this.axios.postFormData('/userinfo/testPostWithFile', formData).then(function (resp) {
           console.log(resp);
         });
-      }
+      },
+      confirm1() {
+        var option = {
+          title: '提示1',
+          message: '确定要退出吗1确定要退出吗1确定要退出吗1确定要退出吗1确定要退出吗1？',
+          closeBtn: {fn: null},
+          confirmBtn: {
+            fn: function () {
+              console.log('adsf');
+            }
+          }
+        }
+        this.$confirm.confirmCore(option);
+      },
+      confirm2() {
+        var option = {
+          title: '提示2',
+          message: '确定要退出吗2？',
+          closeBtn: {fn: null},
+          confirmBtn: {fn: null}
+        }
+        this.$confirm.confirmCore(option);
+      },
+      confirm3() {
+        var me = this;
+        this.myDialog.btnList[0].fn = function () {
+          me.myDialog.showDialog = false;
+        }
+        this.myDialog.btnList[1].fn = function () {
+          console.log('确定');
+          me.myDialog.showDialog = false;
+        }
+        this.myDialog.showDialog = true;
+      },
     }
   }
 </script>
