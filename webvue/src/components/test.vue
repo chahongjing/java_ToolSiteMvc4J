@@ -15,6 +15,27 @@
         <button type="button" class="btn btn-primary mr5" @click="ajaxDownload">下载</button>
       </div>
     </form>
+    <div>
+      <table id='mainRongQi'>
+        <thead>
+          <tr>
+            <th>
+              内容
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for='rongQi in list'>
+            <td :data-id='rongQi.id' class='sortable'>
+              <span v-for='item in rongQi.dataList' v-text='item.name + "" + item.xuhao' :data-id='item.id' :data-pid='rongQi.id'>
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <label v-tooltip='html'>提示</label>
   </div>
 </template>
 
@@ -22,7 +43,10 @@
   export default {
     name: 'test',
     data () {
-      return {}
+      return {
+        list: [],
+        html: "这是<b style=\"color:red\">html</b>提示"
+      }
     },
     methods: {
       ajaxUploadFile() {
@@ -50,9 +74,115 @@
             Utility.blobDownload(resp.data, resp.headers);
           }
         });
+      },
+      initDrag() {
+        var me = this;
+        var sortable = $(".sortable");
+        sortable.sortable({
+          connectWith: ".sortable",
+          revert: true,
+          scrollSensitivity: 20,
+          containment: '#mainRongQi',
+          appendTo: sortable,
+          start: me.dragStart,
+          stop: me.dragStop
+        }).disableSelection();
+      },
+      dragStart(event, curEle) {
+        // 设置高度
+        curEle.helper.css({backgroundColor:'rgba(255,255,255,0.5)'});
+        // curEle.placeholder.css({visibility:'visible !important'});
+      },
+      dragStop(event, curEle) {
+        // 获取信息
+        var map = this.findParentsAndCurrent(curEle);
+        var newParent = map.get('newParent'), oldParent = map.get('oldParent'),
+        newIndex = map.get('newIndex'), oldIndex = map.get('oldIndex'),
+        current = map.get('current');
+
+        // 不符合条件，不能再拖动
+        if (current.lcseq > 0) {
+          alert('不能拖动！');
+          return false;
+        }
+        
+        // 去掉原父级下的当前结点
+        oldParent.dataList.splice(oldIndex, 1);
+        // 添加到新结点
+        newParent.dataList.splice(newIndex, 0, current);
+        // 改父级id
+        current.pId = newParent.id;
+        // 处理序号
+        for (var i = 0; i < newParent.dataList.length; i++) {
+          newParent.dataList[i].xuhao = i;
+        }
+        for (var i = 0; i < oldParent.dataList.length; i++) {
+          oldParent.dataList[i].xuhao = i;
+        }
+        // 撤销jquery的dom操作，因为数据列表已发生变化,vue会自动更新列表
+        return false;
+      },
+      findParentsAndCurrent(curEle) {
+        var map = new Map(), rongQi, td = curEle.item.closest('td'),
+        oldParentRongQiId = curEle.item.attr('data-pid') + '', newParentRongQiId = td.data('id') + '',
+        elId = curEle.item.attr('data-id') + '', newIdList = [];
+        // 查找父级
+        for (var i = 0; i < this.list.length; i++) {
+          rongQi = this.list[i];
+            // 找到新父级
+            if (rongQi.id == newParentRongQiId) {
+              map.set('newParent', rongQi);
+            }
+            // 找到原父级
+            if (rongQi.id == oldParentRongQiId) {
+              map.set('oldParent', rongQi);
+            }
+          }
+        // 新父级子节点顺序
+        var children = td.children();
+        for (var i = 0; i < children.length; i++) {
+          newIdList.push($(children[i]).attr('data-id'));
+        }
+        // 当前元素在旧父级中的位置
+        var oldParent = map.get('oldParent');
+        for (var i = 0; i < oldParent.dataList.length; i++) {
+          if (oldParent.dataList[i].id == elId) {
+            map.set('current', oldParent.dataList[i]);
+            map.set('oldIndex', i);
+            break;
+          }
+        }
+        // 当前元素在新父级中的位置
+        for (var i = 0; i < newIdList.length; i++) {
+          if (newIdList[i] == elId) {
+            map.set('newIndex', i);
+          }
+        }
+        return map;
       }
     },
     mounted: function () {
+      var me = this;
+      var list1 = [];
+      var list2 = [];
+      list1.push({id:1,pId:'A', xuhao:0,name:'第一个'});
+      list1.push({id:2,pId:'A', xuhao:1,name:'第二个'});
+      list1.push({id:3,pId:'A', xuhao:2,name:'第三个'});
+      list2.push({id:4,pId:'B', xuhao:0,name:'第四个'});
+      list2.push({id:5,pId:'B', xuhao:1,name:'第五个'});
+      list2.push({id:6,pId:'B', xuhao:2,name:'第六个'});
+
+      this.list.push({id:'A', dataList:list1});
+      this.list.push({id:'B', dataList:list2});
+
+      this.$nextTick(function() {
+        me.initDrag();
+      });
     }
   }
 </script>
+<style scoped>
+  @import './static/js/jquery-ui.css'
+  #mainRongQi{width:100%;border:1px solid #aaa;}
+  #mainRongQi td{border:1px solid #aaa;height:30px;}
+</style>

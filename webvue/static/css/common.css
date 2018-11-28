@@ -279,7 +279,13 @@ a:hover{color:#06f;}
 .table thead td,.table thead th,.table th{background-color:#f1f3f6;text-align: center;padding-left:5px;padding-right:5px;border-bottom-width:1px;}
 .table tbody tr:hover td{background-color: #fffad4;}
 .table tbody tr td{border-left-width:0;border-right-width: 0;padding-left:7px;padding-right:7px;}
-td.operate{padding-top: 7px;padding-bottom:0;font-size: 18px;}
+.table td.operate{padding-top: 7px;padding-bottom:0;font-size: 16px;}
+.table th.sortheader{position:relative;cursor:pointer;padding-right:12px;}
+th.sortheader:before,th.sortheader:after{position:absolute;top:12px;right:2px;opacity:0.7;transition:0.2s;font:normal normal normal 16px/1 FontAwesome;color:#ccc;}
+th.sortheader:hover:before,th.sortheader:hover:after{opacity:1;}
+th.sortheader:before{content:'\f0de';}
+th.sortheader:after{content:'\f0dd';}
+th.sortheader.desc:before,th.sortheader.asc:after{color:green;}
 .nodata{width:100%;height:calc(100% - 42px);line-height: 100%;position:relative;}
 .nodata > div{position:absolute;top:50%;left:50%;transform: translate(-50%,-50%);font-weight:bold;font-size: 16px;}
 
@@ -372,3 +378,8 @@ td.operate{padding-top: 7px;padding-bottom:0;font-size: 18px;}
 .elearn .list > li{padding:5px 0;list-style-type:circle;}
 .elearn .list > li > .list > li{padding:5px 0;list-style-type:square;}
 .elearn .list > li > .list > li > .list > li{padding:5px 0;list-style-type:disc;}
+
+.sortable{font-size:0;}
+.sortable span{font-size:14px;display:inline-block; padding:3px 5px;border:1px solid #aaa;}
+.sortable .ui-sortable-placeholder{visibility: visible !important;display:inline-block;
+    vertical-align: top;border:1px solid #bbb;outline: 1px dashed #27c24c;border-radius:2px;}

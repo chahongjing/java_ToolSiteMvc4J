@@ -8,7 +8,7 @@
     <div class='searchbar'>
       <form class='myform form-inline form-group-w280 form-label-w80'>
         <div class="form-group">
-          <label class="form-label" v-tooltip='searchKey'>名称：</label>
+          <label class="form-label">名称：</label>
           <div class="form-content">
             <input type="text" class="form-control" placeholder="名称" autofocus v-model='searchKey'>
           </div>
@@ -34,7 +34,7 @@
         <thead>
         <tr>
           <th class='w50'>#</th>
-          <th>名称</th>
+          <th class='sortheader asc'>名称</th>
           <th class='w100'>编码</th>
           <th class='w155'>创建时间</th>
           <th class='w70'>性别</th>

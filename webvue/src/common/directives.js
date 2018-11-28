@@ -14,12 +14,16 @@ export default {
   },
   tooltip: {
     update: function (el, binding, vnode) {
-      if (binding.oldValue === binding.value) return;
+      // if (binding.oldValue === binding.value) return;
       var msg = binding.value;
       if (msg === null || msg === undefined) {
         msg = '';
       }
-      $(el).tooltip('dispose').tooltip({html: true, title: msg});
+      var $el = $(el);
+      try{
+        $el.tooltip('dispose');
+      } catch(e){}
+      $el.tooltip({html: true, title: msg});
     }
   }
 }
