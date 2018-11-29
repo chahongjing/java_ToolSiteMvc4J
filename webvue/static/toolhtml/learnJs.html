@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset='utf-8'> 
+	<meta charset='utf-8'>
 	<title>学习js</title>
 	<link rel='stylesheet' type='text/css' href='../bootstrap/css/bootstrap.min.css'>
 	<link rel='stylesheet' type='text/css' href='../css/common.css'>
-</head> 
+</head>
 <body class='elearn'>
+	<h2>
+	</h2>
+	<p>
+		<button onclick='blobDownload()'>下载</button>
+		<button id='lnkTestPromise'>测试promise</button>
+		<input type='file' name='myfile' multiple />
+		<button id='lnkTestUpload'>测试上传</button>
+	</p>
 	<h2>Array</h2>
 	<p>
 		<ul class="list">
@@ -54,35 +62,19 @@
 	</li>
 </ul>
 </p>
-
+<script src='./../js/jquery-3.3.1.min.js'></script>
+<script src='./../js/Utility.js'></script>
 <script>
 // blob下载
 function blobDownload() {
-	var url = ctx + "/learn/download";
-	var xhr;
-	if (window.XMLHttpRequest) {
-		xhr = new XMLHttpRequest();
-	} else if (window.ActiveXObject) {
-		xhr = new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xhr.open('GET', url, true);
-	xhr.responseType = "blob";
-	xhr.onload = function () {
-		if (this.status == 200) {
-			Utility.blobDownload([this.response], this.getResponseHeader('Content-Disposition'), this.getResponseHeader('Content-Type'));
-		} else {
-			Utility.readBlobAsText(this.response, function(data) {
-				alert(data);
-			});
-		}
-	}
-	xhr.send();
+	var url = Utility.getServerUrl() + "/learn/download";
+	Utility.jsBlobDownload(url);
 }
 
 $('#lnkTestPromise').one('click', function () {
 	console.log('click');
 	var p1 = $.ajax({
-		url: ctx + '/test/testP1'
+		url: Utility.getServerUrl() + '/learn/testP1'
 	}).then(function (data) {
 		console.log('testP1');
 
@@ -90,7 +82,7 @@ $('#lnkTestPromise').one('click', function () {
 	});
 
 	var p2 = $.ajax({
-		url: ctx + '/test/testP2'
+		url: Utility.getServerUrl() + '/learn/testP2'
 	}).then(function (data) {
 		console.log('testP2');
 
@@ -101,6 +93,35 @@ $('#lnkTestPromise').one('click', function () {
 		console.log(result);
 	});
 });
+
+$('#lnkTestUpload').click(function() {
+    // var $form = $('#formId');
+    // var formData = new FormData($form[0]);
+	var formData = new FormData();
+    var files = $('input[name=myfile]')[0].files;
+    formData.append('userCode', 'zjy');
+    formData.append('userName', '曾军毅');
+    formData.append('birthday', new Date());
+    if(files && files.length > 0) {
+        for (var i = 0; i < files.length; i++) {
+            formData.append("myfile", files[i]);
+        }
+    }
+
+    $.ajax({
+        url: Utility.getServerUrl() + '/learn/testPostWithFile',
+        type: 'post',
+        processData: false,
+        contentType: false,
+        data: formData,
+        success: function (resp) {
+        	console.log(resp);
+        },
+        error:function(xhr, a, b) {
+            console.log(xhr);
+        }
+    });
+});
 </script>
-</body> 
+</body>
 </html>

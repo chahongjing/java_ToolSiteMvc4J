@@ -12,11 +12,13 @@
 <script>
   var defaultOption = {
     todayBtn: true,
+    clearBtn: true,
     autoclose: true,
     todayHighlight: true,
     // showMeridian: 1,
     fontAwesome: true,
     language: 'zh-CN',
+    pickerPosition: "bottom-left",
     weekStart: 1,
     //format: 'yyyy-mm-dd hh:ii:ss',
     minView: 2, //如果是到时分秒，则去掉这一项，或值改成0
@@ -59,7 +61,7 @@
           this.type = 2;
         }
         var $el = $(this.$el);
-        $el.datetimepicker('remove');
+        this.destoryDatetimePicker();
         if(!this.option || !this.option.disabled) {
           $el.datetimepicker(this.mergeOption)
           .on('changeDate', function (e) {
@@ -67,6 +69,10 @@
             me.returnBackFn();
           });
         }
+      },
+      destoryDatetimePicker() {
+        var $el = $(this.$el);
+        $el.datetimepicker('remove');
       },
       formatDate: function (date, format) {
         if (!date || !format) return date;
@@ -87,6 +93,9 @@
     mounted: function () {
       this.dataValue = this.mydate;
       this.initDate();
+    },
+    beforeDestroy:function() {
+        this.destoryDatetimePicker();
     }
   }
 </script>

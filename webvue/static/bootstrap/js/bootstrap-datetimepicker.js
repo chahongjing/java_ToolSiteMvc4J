@@ -1858,8 +1858,8 @@
       '</thead>',
     contTemplate: '<tbody><tr><td colspan="7"></td></tr></tbody>',
     footTemplate: '<tfoot>' + 
-                    '<tr><th colspan="7" class="today"></th></tr>' +
-                    '<tr><th colspan="7" class="clear"></th></tr>' +
+                    '<tr><th colspan="3" class="clear"></th>' +
+                    '<th colspan="4" class="today"></th></tr>' +
                   '</tfoot>'
   };
   DPGlobal.template = '<div class="datetimepicker">' +

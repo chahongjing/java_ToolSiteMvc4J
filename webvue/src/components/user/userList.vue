@@ -34,7 +34,7 @@
         <thead>
         <tr>
           <th class='w50'>#</th>
-          <th class='sortheader asc'>名称</th>
+          <th class='sortheader' :class='getOrderByClass' @click='setOrderByClass()'>名称</th>
           <th class='w100'>编码</th>
           <th class='w155'>创建时间</th>
           <th class='w70'>性别</th>
@@ -84,8 +84,9 @@
       return {
         searchKey: null,
         list: [],
-        sexValue: null,
+        sexValue: '',
         sexList: [],
+        orderBy: 'asc',
         pager: {pageNum: 1, pageSize: 5, loading: true}
       }
     },
@@ -135,6 +136,20 @@
           list.push(Sex[item]);
         }
         this.sexList = list;
+      },
+      setOrderByClass() {
+        if(this.orderBy == 'asc') {
+          this.orderBy = 'desc'; 
+        } else {
+          this.orderBy = 'asc';
+        }
+      }
+    },
+    computed: {
+      getOrderByClass: function() {
+        var res = {};
+        res[this.orderBy] = true
+        return res;
       }
     },
     mounted: function () {

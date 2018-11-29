@@ -144,11 +144,11 @@
     position: absolute;
     top: 50%;
     right: -15px;
-    margin-top: -25px;
+    margin-top: -15px;
     width: 15px;
     border-radius: 0px 15px 15px 0px;
-    height: 40px;
-    line-height: 40px;
+    height: 30px;
+    line-height: 30px;
     cursor: pointer;
     background-color: transparent;
     transition: 0.3s;

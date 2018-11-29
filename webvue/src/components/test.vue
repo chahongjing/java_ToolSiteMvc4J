@@ -36,59 +36,87 @@
     </div>
 
     <label v-tooltip='html'>提示</label>
+
+    <div class='mt20'>
+      <ultree :plainList="treeData" :option='treeoption'></ultree>
+    </div>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'test',
-    data () {
-      return {
-        list: [],
-        html: "这是<b style=\"color:red\">html</b>提示"
-      }
-    },
-    methods: {
-      ajaxUploadFile() {
-        var me = this;
-        var formData = new FormData();
-        formData.append('userCode', 'zjy');
-        formData.append('userName', '曾军毅');
-        formData.append('birthday', new Date());
-        var files = $('#testFile')[0].files;
-        if (files && files.length > 0) {
-          for (var i = 0; i < files.length; i++) {
-            formData.append('myfile', files[i]);
-          }
+// demo data
+var treeDataList = [
+{id:1, name: 'My Tree', pId: null, selected:false,checked:false},
+{id:2, name: 'hello', pId: null, selected:false,checked:false},
+{id:3, name: 'wat', pId: null, selected:true,checked:true},
+{id:4, name: 'child folder', pId:2, selected:false,checked:false},
+{id:5, name: 'My Tree', pId:2,selected:false,checked:false},
+{id:6, name: 'My Tree', pId:2,selected:false,checked:false},
+{id:7, name: 'My Tree', pId:null,selected:false,checked:false},
+{id:8, name: 'My Tree', pId:5,selected:false,checked:false},
+{id:9, name: 'My Tree', pId:5,selected:true,checked:false},
+{id:10, name: 'My Tree', pId:5,selected:false,checked:true}
+];
+var treeoption = {
+  id:'abc',
+  beforeOpenClose:function(item){console.log('beforeOpenClose');console.log(item);},
+  afterOpenClose:function(item){console.log('afterOpenClose');console.log(item);},
+  beforeClick:function(item){console.log('beforeClick');console.log(item);},
+  afterClick:function(item){console.log('afterClick');console.log(item);},
+  afterCheck: function(item){console.log('afterCheck');console.log(item);}
+}
+
+export default {
+  name: 'test',
+  data () {
+    return {
+      list: [],
+      html: "这是<b style=\"color:red\">html</b>提示",
+      treeData: treeDataList,
+      treeoption:treeoption
+    }
+  },
+  methods: {
+    ajaxUploadFile() {
+      var me = this;
+      var formData = new FormData();
+      formData.append('userCode', 'zjy');
+      formData.append('userName', '曾军毅');
+      formData.append('birthday', new Date());
+      var files = $('#testFile')[0].files;
+      if (files && files.length > 0) {
+        for (var i = 0; i < files.length; i++) {
+          formData.append('myfile', files[i]);
         }
-        this.axios.postFormData('/learn/testPostWithFile', formData).then(function (resp) {
-          if (resp.data.status == ResultStatus.OK.key) {
-            me.$toaster.success('上传成功！');
-          } else if (resp.data.status == ResultStatus.NO.key) {
-          }
-        });
-      },
-      ajaxDownload() {
-        this.axios.postDownload('/learn/download').then(function (resp) {
-          if (resp) {
-            Utility.blobDownload(resp.data, resp.headers);
-          }
-        });
-      },
-      initDrag() {
-        var me = this;
-        var sortable = $(".sortable");
-        sortable.sortable({
-          connectWith: ".sortable",
-          revert: true,
-          scrollSensitivity: 20,
-          containment: '#mainRongQi',
-          appendTo: sortable,
-          start: me.dragStart,
-          stop: me.dragStop
-        }).disableSelection();
-      },
-      dragStart(event, curEle) {
+      }
+      this.axios.postFormData('/learn/testPostWithFile', formData).then(function (resp) {
+        if (resp.data.status == ResultStatus.OK.key) {
+          me.$toaster.success('上传成功！');
+        } else if (resp.data.status == ResultStatus.NO.key) {
+        }
+      });
+    },
+    ajaxDownload() {
+      this.axios.postDownload('/learn/download').then(function (resp) {
+        if (resp) {
+          Utility.blobDownload(resp.data, resp.headers);
+        }
+      });
+    },
+    initDrag() {
+      var me = this;
+      var sortable = $(".sortable");
+      sortable.sortable({
+        connectWith: ".sortable",
+        revert: true,
+        scrollSensitivity: 20,
+        containment: '#mainRongQi',
+        appendTo: sortable,
+        start: me.dragStart,
+        stop: me.dragStop
+      }).disableSelection();
+    },
+    dragStart(event, curEle) {
         // 设置高度
         curEle.helper.css({backgroundColor:'rgba(255,255,255,0.5)'});
         // curEle.placeholder.css({visibility:'visible !important'});
@@ -160,6 +188,7 @@
         }
         return map;
       }
+
     },
     mounted: function () {
       var me = this;

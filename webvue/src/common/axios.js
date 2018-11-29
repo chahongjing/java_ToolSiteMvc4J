@@ -110,3 +110,12 @@ var axiosIns = {
   },
 };
 export default axiosIns;
+
+// axios.all([
+//   axios.get('https://api.github.com/xxx/1'),
+//   axios.get('https://api.github.com/xxx/2')
+// ]) .then(axios.spread(function (userResp, reposResp) {
+//   // 上面两个请求都完成后，才执行这个回调方法
+//   console.log('User', userResp.data);
+//   console.log('Repositories', reposResp.data);
+// }));

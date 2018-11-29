@@ -7,7 +7,6 @@ const vm = new VueComponent().$mount();
 vm.defaultProgressBar = false;
 let init = false;
 
-
 if (!init) {
   document.body.appendChild(vm.$el);
   init = true;

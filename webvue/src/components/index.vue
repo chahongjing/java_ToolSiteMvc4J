@@ -25,7 +25,7 @@
               <i class='fa fa-comment fa-fw'></i><span>测试</span>
             </router-link>
             <div>
-              
+
           <button type="button inline-block" class="btn btn-outline-purple" @click="confirm1()">
             <i class='fa fa-plus mr5'></i>弹框1
           </button>
@@ -35,7 +35,7 @@
           <button type="button inline-block" class="btn btn-outline-purple" @click="confirm3()">
             <i class='fa fa-plus mr5'></i>弹Modal
           </button>
-              
+
             </div>
           </div>
         </div>
@@ -174,6 +174,7 @@
         var formData = new FormData();
         formData.append('userCode', 'zjy');
         formData.append('userName', '曾军毅');
+        formData.append('birthday', new Date());
         this.axios.postFormData('/userinfo/testPostWithFile', formData).then(function (resp) {
           console.log(resp);
         });

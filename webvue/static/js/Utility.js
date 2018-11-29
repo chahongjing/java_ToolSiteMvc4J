@@ -492,8 +492,7 @@ window.Utility.Controls = window.Utility.Controls || {};
       a.click();
       document.body.removeChild(a);
     },
-    ns.jsBlobDownload = function () {
-      var url = ctx + "/learn/download";
+    ns.jsBlobDownload = function (url, param) {
       var xhr;
       if (window.XMLHttpRequest) {
         xhr = new XMLHttpRequest();
@@ -504,7 +503,7 @@ window.Utility.Controls = window.Utility.Controls || {};
       xhr.responseType = "blob";
       xhr.onload = function () {
         if (this.status == 200) {
-          Utility.blobDownload([this.response], this.getResponseHeader('Content-Disposition'), this.getResponseHeader('Content-Type'));
+          Utility.blobDownload(this.response, Utility.getXhrHeaders(this));
         } else {
           Utility.readBlobAsText(this.response, function (data) {
             alert(data);
@@ -541,6 +540,20 @@ window.Utility.Controls = window.Utility.Controls || {};
     reader.onload = function (e) {
       callback && callback(reader.result);
     }
+  },
+  ns.getXhrHeaders = function(xhr) {
+    var arr = xhr.getAllResponseHeaders().split('\r\n');
+    var res = {};
+    for(var ind in arr) {
+      var temp = arr[ind];
+      var arrTemp = temp.split(':');
+      if(arrTemp.length > 1) {
+        var key = arrTemp[0].trim();
+        arrTemp.splice(0, 1);
+        res[key] = arrTemp.join(':').trim();
+      }
+    }
+    return res;
   },
     ns.initialQuery = function (url) {
       var reg, regKeyValue;
