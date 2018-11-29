@@ -144,9 +144,9 @@
 
                 $scope.testUpload = function () {
                     var formData = new FormData();
-                    formData.append("userName", '曾军毅');
-                    formData.append("userCode", 'zjy');
-                    formData.append("birthday", new Date());
+                    formData.append('userName', '曾军毅');
+                    formData.append('userCode', 'zjy');
+                    formData.append('birthday', new Date());
                     var files = $('#myfile')[0].files;
                     if(files && files.length > 0) {
                         for(var i = 0; i < files.length; i++) {

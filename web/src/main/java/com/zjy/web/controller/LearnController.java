@@ -473,10 +473,14 @@ public class LearnController extends BaseController {
                                                                  UserInfo users) {
         BaseResult<UserInfo> re = BaseResult.OK();
         UserInfo user = new UserInfo();
-        user.setUserName("曾军毅postWithFile");
+        user.setUserName(users.getUserName());
+        user.setUserCode(users.getUserCode());
+        user.setBirthday(users.getBirthday());
+        String fileName = "";
         for (MultipartFile file : request.getFiles("myfile")) {
-
+            fileName += file.getOriginalFilename() + ";";
         }
+        user.setPhoto(fileName);
         re.setValue(user);
         return new ResponseEntity<>(re, HttpStatus.OK);
     }
@@ -522,6 +526,31 @@ public class LearnController extends BaseController {
         user.setUserName(userForm.getUserName());
         user.setDepartmentName("testPostEntity");
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+
+    @RequestMapping("/testP1")
+    @ResponseBody
+    public BaseResult testP1() throws Exception {
+        // path是指欲下载的文件的路径。
+        BaseResult result = BaseResult.OK();
+        try{
+            Thread.sleep(3000);
+        } catch (Exception e) {
+        }
+        return result;
+    }
+
+    @RequestMapping("/testP2")
+    @ResponseBody
+    public BaseResult testP2() throws Exception {
+        // path是指欲下载的文件的路径。
+        BaseResult result = BaseResult.OK();
+        try{
+            Thread.sleep(1000);
+        } catch (Exception e) {
+        }
+        return result;
     }
     // endregion
 }
