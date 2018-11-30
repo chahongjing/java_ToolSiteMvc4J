@@ -7,6 +7,7 @@ import com.zjy.baseframework.mybatis.IBaseEnum;
 /**
  * Created by Administrator on 2018/11/1.
  */
+@SerializeEnum
 public enum ConfigType implements IBaseEnum {
     OTHER(1, "其它");
 
