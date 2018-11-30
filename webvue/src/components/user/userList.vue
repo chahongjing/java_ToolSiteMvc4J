@@ -112,7 +112,7 @@
           orderBy: this.orderBy
         }).then(function (resp) {
           if(!resp.data.value) {
-            consolo.log(resp);
+            console.log(resp);
           } else {
             me.list = resp.data.value.list;
             me.pager = commonSrv.getPagerInfo(resp.data.value, me.goPage);
