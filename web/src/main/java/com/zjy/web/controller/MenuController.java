@@ -5,7 +5,7 @@ import com.zjy.baseframework.BaseResult;
 import com.zjy.bll.request.MenuRequest;
 import com.zjy.bll.service.MenuService;
 import com.zjy.bll.vo.MenuVo;
-import com.zjy.bll.vo.ZTreeNode;
+import com.zjy.bll.vo.TreeNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -68,10 +68,10 @@ public class MenuController extends BaseController {
     public BaseResult queryMenu() {
         List<MenuVo> list = menuSrv.queryPermissionMenu();
         // List<MenuVo> list = menuSrv.queryAllMenu();
-        List<ZTreeNode> nodeList = new ArrayList<>();
-        ZTreeNode node;
+        List<TreeNode> nodeList = new ArrayList<>();
+        TreeNode node;
         for (MenuVo menu : list) {
-            node = new ZTreeNode();
+            node = new TreeNode();
             node.setId(menu.getMenuId());
             node.setPId(menu.getPId());
             node.setName(menu.getName());

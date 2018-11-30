@@ -8,6 +8,7 @@ import com.zjy.bll.common.PageInfomation;
  */
 public class UserInfoRequest extends PageInfomation {
     private String userName;
+    private String orderBy;
 
     public String getUserName() {
         return userName;
@@ -15,5 +16,15 @@ public class UserInfoRequest extends PageInfomation {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    @Override
+    public String getOrderBy() {
+        return orderBy;
+    }
+
+    @Override
+    public void setOrderBy(String orderBy) {
+        this.orderBy = orderBy;
     }
 }

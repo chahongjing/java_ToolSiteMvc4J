@@ -2,11 +2,14 @@ package com.zjy.bll.vo;
 
 import com.zjy.baseframework.interfaces.IHierarchyBase;
 
-public class ZTreeNode implements IHierarchyBase {
+public class TreeNode implements IHierarchyBase {
     private String id;
     private String pId;
     private String name;
     private int seq;
+    private boolean isLeaf;
+    private boolean isOpen;
+    private boolean selected;
     private Object data;
 
     @Override
@@ -18,6 +21,7 @@ public class ZTreeNode implements IHierarchyBase {
         this.id = id;
     }
 
+    @Override
     public String getPId() {
         return pId;
     }
@@ -49,5 +53,29 @@ public class ZTreeNode implements IHierarchyBase {
 
     public void setData(Object data) {
         this.data = data;
+    }
+
+    public boolean getIsLeaf() {
+        return isLeaf;
+    }
+
+    public void setIsLeaf(boolean isLeaf) {
+        this.isLeaf = isLeaf;
+    }
+
+    public boolean getIsOpen() {
+        return isOpen;
+    }
+
+    public void setIsOpen(boolean isOpen) {
+        this.isOpen = isOpen;
+    }
+
+    public boolean getSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }

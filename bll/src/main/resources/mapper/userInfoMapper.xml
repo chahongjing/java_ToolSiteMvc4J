@@ -67,12 +67,12 @@
     <select id="query" resultType="com.zjy.bll.vo.UserInfoVo">
         SELECT
         <include refid="fieldWithPrefix">
-            <property name="tableName" value="UserInfo"/>
+            <property name="tableName" value="user"/>
         </include>
-        FROM UserInfo
+        FROM UserInfo user
         <where>
             <if test='userName != null and userName != ""'>
-                and (userName like '%' || #{userName, jdbcType=VARCHAR} || '%' or userCode like '%' ||
+                and (user.userName like '%' || #{userName, jdbcType=VARCHAR} || '%' or user.userCode like '%' ||
                 #{userName, jdbcType=VARCHAR} || '%')
             </if>
         </where>

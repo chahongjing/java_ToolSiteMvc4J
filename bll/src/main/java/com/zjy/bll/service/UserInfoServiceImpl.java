@@ -111,9 +111,16 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
 
     @Override
     public PageInfo<? extends UserInfo> queryPageList(UserInfoRequest request) {
-        UserInfo user = new UserInfo();
+        UserInfoVo user = new UserInfoVo();
         user.setUserName(request.getUserName());
         user.setUserCode(request.getUserName());
+        if(StringUtils.isNotBlank(request.getOrderBy())) {
+            if("ASC".equalsIgnoreCase(request.getOrderBy())) {
+                request.setOrderBy("user.userName asc");
+            } else {
+                request.setOrderBy("user.userName desc");
+            }
+        }
         PageInfo<UserInfoVo> pageInfo = (PageInfo<UserInfoVo>) super.queryPageList(request, user);
 //        for (UserInfoVo userInfo : pageInfo.getList()) {
 //            if (userInfo.getSex() != null) {

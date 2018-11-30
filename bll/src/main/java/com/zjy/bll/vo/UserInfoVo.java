@@ -8,6 +8,7 @@ public class UserInfoVo extends UserInfo {
     private String isDisabledName;
     private String isSystemName;
     private boolean isSave;
+    private String orderBy;
 
     public String getMingcheng() {
         return mingcheng;
@@ -47,5 +48,13 @@ public class UserInfoVo extends UserInfo {
 
     public void setIsSystemName(String isSystemName) {
         this.isSystemName = isSystemName;
+    }
+
+    public String getOrderBy() {
+        return orderBy;
+    }
+
+    public void setOrderBy(String orderBy) {
+        this.orderBy = orderBy;
     }
 }
