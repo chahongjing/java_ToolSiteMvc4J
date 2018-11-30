@@ -108,10 +108,15 @@
         this.axios.get('/userinfo/queryPageList', {
           userName: this.searchKey,
           pageNum: this.pager.pageNum,
-          pageSize: this.pager.pageSize
+          pageSize: this.pager.pageSize,
+          orderBy: this.orderBy
         }).then(function (resp) {
-          me.list = resp.data.value.list;
-          me.pager = commonSrv.getPagerInfo(resp.data.value, me.goPage);
+          if(!resp.data.value) {
+            consolo.log(resp);
+          } else {
+            me.list = resp.data.value.list;
+            me.pager = commonSrv.getPagerInfo(resp.data.value, me.goPage);
+          }
         });
       },
       goPage(page) {
@@ -143,12 +148,13 @@
         } else {
           this.orderBy = 'asc';
         }
+        this.search();
       }
     },
     computed: {
       getOrderByClass: function() {
         var res = {};
-        res[this.orderBy] = true
+        res[this.orderBy] = true;
         return res;
       }
     },

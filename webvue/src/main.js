@@ -3,10 +3,10 @@
 import Vue from 'vue'
 import App from '@/App'
 import router from '@/router'
-import axios from './common/axios'
-import filters from '@/common/filters';
 import store from '@/store/store';
+import filters from '@/common/filters';
 import directives from '@/common/directives';
+import axios from './common/axios'
 import confirm from '@/common/confirm';
 import toaster from '@/common/toaster';
 import pagination from '@/components/common/pagination'
@@ -20,8 +20,7 @@ Vue.prototype.axios = axios;
 Vue.prototype.$confirm = confirm;
 Vue.prototype.$toaster = toaster;
 Vue.component('pagination', pagination);
-Vue.component('pagination', pagination);
-Vue.component('pagination', pagination);
+Vue.component('dateTimePicker', dateTimePicker);
 Vue.component('ultree', ulTree);
 /* eslint-disable no-new */
 new Vue({

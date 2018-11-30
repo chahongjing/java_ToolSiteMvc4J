@@ -16,7 +16,7 @@
       </div>
     </form>
     <div>
-      <table id='mainRongQi'>
+      <table id='mainRongQi' class='w100p'>
         <thead>
           <tr>
             <th>
@@ -38,33 +38,46 @@
     <label v-tooltip='html'>提示</label>
 
     <div class='mt20'>
-      <ultree :plainList="treeData" :option='treeoption'></ultree>
+      <ultree class='w300 mytree' :plainList="treeData" :option='treeoption'></ultree>
     </div>
+    <hr>
+    {{this.treeoption && this.treeoption.checkedResult && this.treeoption.checkedResult.name|| this.treeoption.checkedResult.map(item => item.name)}}
   </div>
 </template>
 
 <script>
 // demo data
 var treeDataList = [
-{id:1, name: 'My Tree', pId: null, selected:false,checked:false},
-{id:2, name: 'hello', pId: null, selected:false,checked:false},
-{id:3, name: 'wat', pId: null, selected:true,checked:true},
-{id:4, name: 'child folder', pId:2, selected:false,checked:false},
-{id:5, name: 'My Tree', pId:2,selected:false,checked:false},
-{id:6, name: 'My Tree', pId:2,selected:false,checked:false},
-{id:7, name: 'My Tree', pId:null,selected:false,checked:false},
-{id:8, name: 'My Tree', pId:5,selected:false,checked:false},
-{id:9, name: 'My Tree', pId:5,selected:true,checked:false},
-{id:10, name: 'My Tree', pId:5,selected:false,checked:true}
+{id:1, name: '语文', pId: null, selected:false,isOpen:false,isLeaf:false},
+{id:2, name: '数学', pId: null, selected:false,isOpen:false,isLeaf:false},
+{id:3, name: '英语<b style="color:red;">我的html</b>', pId: null, selected:true,isOpen:false,isLeaf:false},
+{id:4, name: '注音', pId:1, selected:false,isOpen:false,isLeaf:false},
+{id:5, name: '成语错字识别', pId:1,selected:false,isOpen:false,isLeaf:false},
+{id:6, name: '正确的词', pId:1,selected:false,isOpen:false,isLeaf:false},
+{id:7, name: '四字成语', pId:5,selected:false,isOpen:false,isLeaf:false},
+{id:8, name: '七言绝句', pId:5,selected:false,isOpen:false,isLeaf:false},
+{id:9, name: '三角函数', pId:2,selected:true,isOpen:false,isLeaf:false},
+{id:10, name: '立体几何', pId:2,selected:false,isOpen:false,isLeaf:false},
+{id:11, name: '诗词', pId:8,selected:false,isOpen:false,isLeaf:false}
 ];
 var treeoption = {
   id:'abc',
+  openLevel: 2,
+  checktype: 'checkbox',
+  checkedResult: [treeDataList[0], treeDataList[6]],
+  // checktype: 'radio',
+  // checkedResult: treeDataList[0],
   beforeOpenClose:function(item){console.log('beforeOpenClose');console.log(item);},
   afterOpenClose:function(item){console.log('afterOpenClose');console.log(item);},
   beforeClick:function(item){console.log('beforeClick');console.log(item);},
-  afterClick:function(item){console.log('afterClick');console.log(item);},
   afterCheck: function(item){console.log('afterCheck');console.log(item);}
 }
+treeoption.afterClick = function(item){
+  console.log('afterClick');console.log(item);
+  if(treeoption.checktype == 'radio') {
+  treeoption.checkedResult = item;
+  }
+};
 
 export default {
   name: 'test',
@@ -214,4 +227,5 @@ export default {
   @import './static/js/jquery-ui.css'
   #mainRongQi{width:100%;border:1px solid #aaa;}
   #mainRongQi td{border:1px solid #aaa;height:30px;}
+  .mytree{border: 1px solid #ddd;padding: 10px;}
 </style>

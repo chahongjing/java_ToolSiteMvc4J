@@ -6,19 +6,18 @@
       </span>
       <span class='tree-item-text' :class='{"selected":model.selected}' @click.stop='option.clickItem(model)'>
        <label class="radio_checkbox" @click.stop='stopEvent()'>
-          <input type='radio' :name='"treeitem_" + option.id' v-if='option.checktype == "radio"' v-model="option.checkedId" :value='model.id' @change.stop='option.checkedItem(model)' />
-          <input type='checkbox' :name='"treeitem_" + option.id' v-if='option.checktype == "checkbox"' v-model="model.checked" @change.stop='option.checkedItem(model)' />
+          <input :type='option.checktype' :name='"treeitem_" + option.id' v-model="option.checkedResult" :value='model' @click.stop='stopEvent()' @change.stop='option.checkedItem(model)' />
           <i></i>
           <span>&nbsp;</span>
         </label>
        <span class='tree-item-text-icon'>
          <i class="fa fw mr0" :class='getItemIcon'></i>
        </span>
-       <span v-text='model.name + model.id + option.checkedId'></span>
+       <span v-html='model.name'></span>
      </span>
    </div>
-   <ul v-show="open" v-if="isFolder">
-    <tree-item v-for="(model, index) in model.children" :key="index" :model="model" :option='option'>
+   <ul v-show="model.isOpen" v-if="isFolder">
+    <tree-item v-for="model in model.children" :model="model" :option='option' :key="model.id">
     </tree-item>
   </ul>
 </li>
@@ -42,7 +41,7 @@
       },
       getFolderIcon: function() {
         var obj = {};
-        if(this.open && this.option.openIcon) {
+        if(this.model.isOpen && this.option.openIcon) {
           obj[this.option.openIcon] = true;
         } else if(this.option.closeIcon) {
           obj[this.option.closeIcon] = true;
@@ -67,23 +66,11 @@
           if(this.option.beforeOpenClose && this.option.beforeOpenClose(item) === false) {
             return;
           }
-          this.open = !this.open
+          this.model.isOpen = !this.model.isOpen
           this.option.afterOpenClose && this.option.afterOpenClose(item);
         }
       },
-      stopEvent:function() {},
-      changeType: function () {
-        if (!this.isFolder) {
-          Vue.set(this.model, 'children', [])
-          this.addChild()
-          this.open = true
-        }
-      },
-      addChild: function () {
-        this.model.children.push({
-          name: 'new stuff'
-        })
-      }
+      stopEvent:function() {}
     }
   };
 </script>
@@ -103,7 +90,7 @@
     padding-bottom:1px;
   }
   span.tree-item-text{font-size:0;padding:0 3px;}
-  span.tree-item-text.selected{background-color: #ddd;}
+  span.tree-item-text.selected{background-color: #83b5f3;border-radius:2px;}
   .tree-item-icon{
     width:20px;
     text-align: center;
@@ -121,7 +108,7 @@
   /** 垂直方向连线 */
   ul > li:before{content:' ';position:absolute;top:0;left:-5px;height:100%;border-left-width:1px;}
   ul > li:last-child:before{content:' ';position:absolute;top:0;left:-5px;height:13px;border-left-width:1px;}
-  .radio_checkbox span{padding:0;margin-left:0;}
-  .radio_checkbox input + i{left:0;}
+  .radio_checkbox span{padding:0;margin-left:0;height:0;line-height:inherit;}
+  .radio_checkbox input + i{left:0;top:3px;}
   .radio_checkbox input + i:after{left:2;}
 </style>

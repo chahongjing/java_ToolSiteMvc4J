@@ -607,6 +607,6 @@ window.Constant = {
     UNAUTHENTICATION: "UNAUTHENTICATION"
   },
   EmptyGuid: "00000000-0000-0000-0000-000000000000", Context: '/ToolSiteMvc4J',
-  // Host: 'localhost', Port: '21000'
-  Host:'10.4.132.60',Port:'20000'
+  Host: 'localhost', Port: '21000'
+  // Host:'10.4.132.60',Port:'20000'
 }

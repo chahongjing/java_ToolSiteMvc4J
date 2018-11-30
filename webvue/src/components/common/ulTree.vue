@@ -9,10 +9,12 @@ import treeItem from '@/components/common/treeItem';
   var defaultOption = {
     id: 'defaulttree',
     checktype: 'radio',
-    openIcon: 'fa-minus-circle',
-    closeIcon: 'fa-plus-circle',
-    leafIcon: 'fa-lightbulb-o',
-    folderIcon: 'fa-heart'
+    openLevel: 0,
+    openIcon: 'fa-minus-circle text-primary',
+    closeIcon: 'fa-plus-circle text-primary',
+    leafIcon: 'fa-lightbulb-o text-success',
+    folderIcon: 'fa-heart text-danger',
+    checkedResult: null
   };
   var mergeDefaultOpt = {};
   $.extend(true, mergeDefaultOpt, defaultOption);
@@ -25,7 +27,7 @@ import treeItem from '@/components/common/treeItem';
     },
     data: function(){
       return {
-        mergeOpt: mergeDefaultOpt,
+        mergeOpt: null,
         recursionList: []
       }
     },
@@ -46,13 +48,29 @@ import treeItem from '@/components/common/treeItem';
         this.option.afterCheck && this.option.afterCheck(item);
       },
       handlerData: function() {
+        // 变成递归数据
         this.recursionList = [];
         this.plainToRecursionList(this.plainList || []);
         var opt = {};
         $.extend(true, opt, mergeDefaultOpt, this.option);
+        opt.checkedResult = this.option.checkedResult;
         opt.clickItem = this.clickItem;
         opt.checkedItem = this.checkedItem;
         this.mergeOpt = opt;
+        // 处理level等
+        for(var i = 0; i < this.recursionList.length; i++) {
+          var item = this.recursionList[i];
+          item.level = 0;
+          if(item.level < this.mergeOpt.openLevel - 1) {
+            item.isOpen = true;
+          }
+          if(item.children && item.children.length > 0) {
+            item.isLeaf = false;
+            this.handlerChildren(item);
+          } else {
+            item.isLeaf = true;
+          }
+        }
       },
       plainToRecursionList: function(plainList) {
         for (var i = 0; i < plainList.length; i++) {
@@ -64,6 +82,22 @@ import treeItem from '@/components/common/treeItem';
             this.recursionList.push(plainList[i]);
           }
         }
+      },
+      handlerChildren:function(parent) {
+        if(!parent || !parent.children || parent.children.length == 0) return;
+        for(var i = 0; i < parent.children.length; i++) {
+          var child = parent.children[i];
+          child.level = parent.level + 1;
+          if(child.level < this.mergeOpt.openLevel - 1) {
+            child.isOpen = true;
+          }
+          if(child.children && child.children.length > 0) {
+            child.isLeaf = false;
+            this.handlerChildren(child);
+          } else {
+            child.isLeaf = true;
+          }
+        }
       }
     },
     mounted: function() {
@@ -72,6 +106,12 @@ import treeItem from '@/components/common/treeItem';
     watch: {
       list: function(curVal, oldVal){
         this.handlerData();
+      },
+      'mergeOpt.checkedResult':function() {
+        this.option.checkedResult = this.mergeOpt.checkedResult;
+      },
+      'option.checkedResult':function() {
+         this.mergeOpt.checkedResult = this.option.checkedResult;
       }
     },
     components: {treeItem}

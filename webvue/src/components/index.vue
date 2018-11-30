@@ -131,6 +131,8 @@
   first.children.push(second);
   second = {name: 'echarts', href: 'echarts.html', iconClass: ''};
   first.children.push(second);
+  second = {name: 'jsplumb', href: 'jsplumb.html', iconClass: ''};
+  first.children.push(second);
   // endregion
 
   // region 其它
