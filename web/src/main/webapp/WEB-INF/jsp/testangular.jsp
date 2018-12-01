@@ -73,7 +73,6 @@
     <button data-ng-click="showLoading()">显示loading</button>
 </div>
 <jsSection>
-    <script src="/ToolSiteMvc4J/js/angular/directives/ng_repeat_finish.js"></script>
     <script src="/ToolSiteMvc4J/js/angular/directives/test_templateurl.js"></script>
     <script src="/ToolSiteMvc4J/js/angular/directives/testDir.js"></script>
     <script src="/ToolSiteMvc4J/js/angular/templates/includePageCtrl.js"></script>

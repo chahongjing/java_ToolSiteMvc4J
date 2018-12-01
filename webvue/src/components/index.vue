@@ -92,6 +92,8 @@
   first.children.push(second);
   second = {name: '反射学习', href: 'learnReflect.html', iconClass: ''};
   first.children.push(second);
+  second = {name: 'mybatis学习', href: 'learnMybatis.html', iconClass: ''};
+  first.children.push(second);
   // endregion
 
   // region 服务器
