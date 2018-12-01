@@ -80,7 +80,7 @@
       getDetail: function (id) {
         var me = this;
         this.axios.get('/function/getDetail', {id: id}).then(function (resp) {
-          if (resp.data.status == Constant.AjaxStatus.OK) {
+          if (resp.data.status == ResultStatus.OK.key) {
             me.functionInfo = resp.data.value;
           } else {
             alert(resp.data.message);
@@ -90,7 +90,7 @@
       save: function () {
         var me = this;
         this.axios.post('/function/save', me.functionInfo).then(function (resp) {
-          if (resp.data.status == Constant.AjaxStatus.OK) {
+          if (resp.data.status == ResultStatus.OK.key) {
             me.$toaster.success('保存成功！');
             me.goBack();
           } else {
@@ -101,7 +101,7 @@
       getMenuList() {
         var me = this;
         this.axios.post('/menu/queryPageMenuList', me.menu).then(function (resp) {
-          if (resp.data.status == Constant.AjaxStatus.OK) {
+          if (resp.data.status == ResultStatus.OK.key) {
             me.menuList = resp.data.value;
           } else {
             alert(resp.data.message);

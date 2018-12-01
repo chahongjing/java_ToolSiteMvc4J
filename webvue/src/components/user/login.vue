@@ -63,7 +63,7 @@
           userCode: $.trim(userCode.val()),
           password: $.trim(password.val())
         }).then(function (resp) {
-          if (resp.data.status == Constant.AjaxStatus.OK) {
+          if (resp.data.status == ResultStatus.OK.key) {
             me.user = resp.data.value;
             me.$store.commit("USER_SIGNIN", me.user);
             me.$store.commit("CLEAR_MENU");
@@ -74,7 +74,7 @@
             } else {
               window.location.hash = "/";
             }
-          } else if (resp.data.status == Constant.AjaxStatus.NO) {
+          } else if (resp.data.status == ResultStatus.NO.key) {
             alert(resp.data.message);
           }
         });

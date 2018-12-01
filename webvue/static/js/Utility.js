@@ -1,5 +1,4 @@
 ﻿window.Utility = window.Utility || {};
-window.Utility.Controls = window.Utility.Controls || {};
 (function (ns) {
   // 函数名称： registerNameSpace
   // 函数功能： 注册命名空间
@@ -26,6 +25,131 @@ window.Utility.Controls = window.Utility.Controls || {};
     }
     return ns;
   }
+
+  // region Ajax
+  ns.getAjaxUrl = function (path) {
+    return this.getContext() + path;
+  }
+  ns.getContext = function () {
+    return ctx;
+  }
+
+  ns.get = function (path, param) {
+    return $.ajax({
+      type: 'get',
+      url: this.getAjaxUrl(path),
+      data: param
+    });
+  }
+  ns.post = function (path, param) {
+    return $.ajax({
+      type: 'post',
+      url: this.getAjaxUrl(path),
+      data: param
+    });
+  }
+  ns.getFormData = function (path, formData) {
+    return $.ajax({
+      type: 'get',
+      url: this.getAjaxUrl(path),
+      data: formData,
+      processData: false,
+      contentType: false
+    });
+  }
+  ns.postFormData = function (path, formData) {
+    return $.ajax({
+      type: 'post',
+      url: this.getAjaxUrl(path),
+      data: formData,
+      processData: false,
+      contentType: false
+    });
+  }
+
+  ns.blobDownload = function (data, headers) {
+    var fileName = headers['content-disposition'];
+    var contentType = headers['content-type'];
+    ns.blobDownloadWithFileName(data, fileName, contentType);
+  }
+  ns.blobDownloadWithFileName = function (data, fileName, contentType) {
+    if (fileName) {
+      fileName = decodeURIComponent(fileName).replace(/attachment;\s*filename=/ig, '');
+    }
+    var file = new Blob([data], {type: contentType});
+    var a = document.createElement("a");
+    a.style.display = 'none';
+    a.download = fileName;
+    a.href = URL.createObjectURL(file);
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+  ns.jsBlobDownload = function (url, param) {
+    var xhr;
+    if (window.XMLHttpRequest) {
+      xhr = new XMLHttpRequest();
+    } else if (window.ActiveXObject) {
+      xhr = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xhr.open('GET', url, true);
+    xhr.responseType = "blob";
+    xhr.onload = function () {
+      if (this.status == 200) {
+        Utility.blobDownload(this.response, Utility.getXhrHeaders(this));
+      } else {
+        Utility.readBlobAsText(this.response, function (data) {
+          alert(data);
+        });
+      }
+    }
+    xhr.send();
+  }
+  ns.jsUpload = function () {
+    var $form = $('#formId');
+    $.ajax({
+      type: 'POST',
+      url: $form.attr('action'),
+      data: new FormData($form[0]),
+      processData: false,
+      contentType: false, // 如果form没有指定enctype，则可以在此处指定
+      success: function (data) {
+        if (data.status == ResultStatus.OK.key) {
+          alert('上传成功！' + data.value);
+        } else {
+          alert(data.message);
+        }
+      },
+      error: function (xhr, type, message) {
+        if (xhr.status == 511) {
+          window.location.reload();
+        }
+      }
+    });
+  }
+  ns.readBlobAsText = function (data, callback) {
+    var reader = new FileReader();
+    reader.readAsText(data, 'utf-8');
+    reader.onload = function (e) {
+      callback && callback(reader.result);
+    }
+  }
+
+  ns.getXhrHeaders = function (xhr) {
+    var arr = xhr.getAllResponseHeaders().split('\r\n');
+    var res = {};
+    for (var ind in arr) {
+      var temp = arr[ind];
+      var arrTemp = temp.split(':');
+      if (arrTemp.length > 1) {
+        var key = arrTemp[0].trim();
+        arrTemp.splice(0, 1);
+        res[key] = arrTemp.join(':').trim();
+      }
+    }
+    return res;
+  }
+
   // 函数名称： processAjax
   // 函数功能： JQuery Ajax操作
   // 函数参数： optionData.url: ajax请求地址; optionData.getData: 用户数据(Json); optionData.postData: 用户数据(Json)
@@ -69,7 +193,6 @@ window.Utility.Controls = window.Utility.Controls || {};
 
     return ret;
   }
-
   function handlerAjaxResult(data, optionData) {
     var ret = {};
     try {
@@ -92,7 +215,9 @@ window.Utility.Controls = window.Utility.Controls || {};
     }
     return ret;
   }
+  // endregion
 
+  // region Date 扩展
   // 函数名称： format
   // 函数功能： 用日期格式化(yyyy-MM-dd HH:mm:ss)
   // 函数参数： 无
@@ -122,44 +247,6 @@ window.Utility.Controls = window.Utility.Controls || {};
     }
     return format;
   }
-
-  // 函数名称： toDate
-  // 函数功能： 字符串转日期对象
-  // 函数参数： format: 格式化参数
-  // 返 回 值： 无
-  // 创 建 人： zengjy01
-  // 创建日期： 2014-05-11 11:57:24
-  String.prototype.toDate = function (format) {
-    var t = ['y+', 'M+', 'd+', 'H+', 'h+', 'm+', 's+', 'S'];
-    var v = [];
-    var iso = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/;
-    var js = /\/Date\((\d+)\)\//gi;
-    var re = RegExp;
-
-    if (js.test(this)) {
-      return new Date(+re.$1);
-    }
-    else if (iso.test(this)) {
-      return new Date(Date.UTC(+re.$1, +re.$2 - 1, +re.$3, +re.$4, +re.$5, +re.$6));
-    }
-
-    for (var k in t) {
-      var temp = new RegExp("(" + t[k] + ")", 'g');
-      temp.test(format);
-      var index = temp.lastIndex;
-      if (index == 0) {
-        v[k] = 0;
-        continue;
-      }
-      var length = format.match(temp)[0].length;
-      index -= length;
-      v[k] = parseInt(this.substr(index, length));
-    }
-    v[1]--;
-    v[4] += 12;
-    return new Date(v[0], v[1], v[2], v[3] || v[4], v[5], v[6]);
-  }
-
   // 函数名称： addYear
   // 函数功能： 年份加减(负值表示减)
   // 函数参数： 无
@@ -256,36 +343,66 @@ window.Utility.Controls = window.Utility.Controls || {};
   Date.prototype.lt = function (value) {
     return this.minus(value) < 0;
   }
+  // endregion
 
-  /// 添加转json对象时对日期的处理
-  if ($) {
-    $.parseJSON = function (data) {
-      if (!data || typeof data !== "string") {
-        return null;
-      }
-      data = $.trim(data);
+  // region String 扩展
+  // 函数名称： toDate
+  // 函数功能： 字符串转日期对象
+  // 函数参数： format: 格式化参数
+  // 返 回 值： 无
+  // 创 建 人： zengjy01
+  // 创建日期： 2014-05-11 11:57:24
+  String.prototype.toDate = function (format) {
+    var t = ['y+', 'M+', 'd+', 'H+', 'h+', 'm+', 's+', 'S'];
+    var v = [];
+    var iso = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/;
+    var js = /\/Date\((\d+)\)\//gi;
+    var re = RegExp;
 
-      if (window.JSON && window.JSON.parse) {
-        return window.JSON.parse(data, function (key, value) {
-          var iso, js, re;
-          iso = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/;
-          js = /\/Date\((\d+)\)\//gi;
-          re = RegExp;
-          if (typeof value === 'string') {
-            if (js.test(value)) {
-              return new Date(+re.$1);
-            }
-            else if (iso.test(value)) {
-              return new Date(Date.UTC(+re.$1, +re.$2 - 1, +re.$3, +re.$4, +re.$5, +re.$6));
-            }
-          }
-          return value;
-        });
-      }
-      return null;
+    if (js.test(this)) {
+      return new Date(+re.$1);
     }
-  }
+    else if (iso.test(this)) {
+      return new Date(Date.UTC(+re.$1, +re.$2 - 1, +re.$3, +re.$4, +re.$5, +re.$6));
+    }
 
+    for (var k in t) {
+      var temp = new RegExp("(" + t[k] + ")", 'g');
+      temp.test(format);
+      var index = temp.lastIndex;
+      if (index == 0) {
+        v[k] = 0;
+        continue;
+      }
+      var length = format.match(temp)[0].length;
+      index -= length;
+      v[k] = parseInt(this.substr(index, length));
+    }
+    v[1]--;
+    v[4] += 12;
+    return new Date(v[0], v[1], v[2], v[3] || v[4], v[5], v[6]);
+  }
+  // 用正则表达式去掉字符串前后空格
+  String.prototype.trim = String.prototype.trim || function () {
+    return this.replace(/(^\s*)|(\s*$)/g, "");
+  }
+  // 用正则表达式去掉字符串前面的空格
+  String.prototype.trimLeft = String.prototype.trimLeft || function () {
+    return this.replace(/^\s*/g, "");
+  }
+  // 用正则表达式去掉字符串后面的空格
+  String.prototype.trimRight = String.prototype.trimRight || function () {
+    return this.replace(/\s*$/g, "");
+  }
+  // 判断以某个字符串结尾
+  String.prototype.endWith = function (endStr) {
+    if (endStr === null || endStr === undefined) return false;
+    var lastL = this.length - endStr.length;
+    return (lastL >= 0 && this.lastIndexOf(endStr) == lastL);
+  }
+  // endregion
+
+  // region Number扩展
   // 函数名称： plus
   // 函数功能： 数字相加
   // 函数参数： num: 操作数, prec: 保留精度
@@ -358,24 +475,35 @@ window.Utility.Controls = window.Utility.Controls || {};
       j = (j = i.length) > 3 ? j % 3 : 0;
     return prefixSymbol + negative + (j ? i.substr(0, j) + thousand : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand) + (precision ? decimal + Math.abs(number - i).toFixed(precision).slice(2) : "");
   };
+  // endregion
 
-  // 用正则表达式去掉字符串前后空格
-  String.prototype.trim = String.prototype.trim || function () {
-    return this.replace(/(^\s*)|(\s*$)/g, "");
-  }
-  // 用正则表达式去掉字符串前面的空格
-  String.prototype.trimLeft = String.prototype.trimLeft || function () {
-    return this.replace(/^\s*/g, "");
-  }
-  // 用正则表达式去掉字符串后面的空格
-  String.prototype.trimRight = String.prototype.trimRight || function () {
-    return this.replace(/\s*$/g, "");
-  }
-  // 判断以某个字符串结尾
-  String.prototype.endWith = function (endStr) {
-    if (endStr === null || endStr === undefined) return false;
-    var lastL = this.length - endStr.length;
-    return (lastL >= 0 && this.lastIndexOf(endStr) == lastL);
+  /// 添加转json对象时对日期的处理
+  if ($) {
+    $.parseJSON = function (data) {
+      if (!data || typeof data !== "string") {
+        return null;
+      }
+      data = $.trim(data);
+
+      if (window.JSON && window.JSON.parse) {
+        return window.JSON.parse(data, function (key, value) {
+          var iso, js, re;
+          iso = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/;
+          js = /\/Date\((\d+)\)\//gi;
+          re = RegExp;
+          if (typeof value === 'string') {
+            if (js.test(value)) {
+              return new Date(+re.$1);
+            }
+            else if (iso.test(value)) {
+              return new Date(Date.UTC(+re.$1, +re.$2 - 1, +re.$3, +re.$4, +re.$5, +re.$6));
+            }
+          }
+          return value;
+        });
+      }
+      return null;
+    }
   }
 
   ns.isNumber = function (value, min, max, prec) {
@@ -436,152 +564,55 @@ window.Utility.Controls = window.Utility.Controls || {};
   ns.htmlDecode = function htmlDecode(value) {
     return $('<div/>').html(value).text();
   }
-  ns.getAjaxUrl = function (path) {
-    return this.getContext() + path;
-  },
-    ns.getContext = function () {
-      return ctx;
-    },
-    ns.get = function (path, param) {
-      return $.ajax({
-        type: 'get',
-        url: this.getAjaxUrl(path),
-        data: param
-      });
-    },
-    ns.post = function (path, param) {
-      return $.ajax({
-        type: 'post',
-        url: this.getAjaxUrl(path),
-        data: param
-      });
-    },
-    ns.getFormData = function (path, formData) {
-      return $.ajax({
-        type: 'get',
-        url: this.getAjaxUrl(path),
-        data: formData,
-        processData: false,
-        contentType: false
-      });
-    },
-    ns.postFormData = function (path, formData) {
-      return $.ajax({
-        type: 'post',
-        url: this.getAjaxUrl(path),
-        data: formData,
-        processData: false,
-        contentType: false
-      });
-    },
-    ns.blobDownload = function (data, headers) {
-      var fileName = headers['content-disposition'];
-      var contentType = headers['content-type'];
-      ns.blobDownloadWithFileName(data, fileName, contentType);
-    },
-    ns.blobDownloadWithFileName = function (data, fileName, contentType) {
-      if (fileName) {
-        fileName = decodeURIComponent(fileName).replace(/attachment;\s*filename=/ig, '');
-      }
-      var file = new Blob([data], {type: contentType});
-      var a = document.createElement("a");
-      a.style.display = 'none';
-      a.download = fileName;
-      a.href = URL.createObjectURL(file);
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    },
-    ns.jsBlobDownload = function (url, param) {
-      var xhr;
-      if (window.XMLHttpRequest) {
-        xhr = new XMLHttpRequest();
-      } else if (window.ActiveXObject) {
-        xhr = new ActiveXObject("Microsoft.XMLHTTP");
-      }
-      xhr.open('GET', url, true);
-      xhr.responseType = "blob";
-      xhr.onload = function () {
-        if (this.status == 200) {
-          Utility.blobDownload(this.response, Utility.getXhrHeaders(this));
-        } else {
-          Utility.readBlobAsText(this.response, function (data) {
-            alert(data);
-          });
-        }
-      }
-      xhr.send();
-    },
-    ns.jsUpload = function () {
-      var $form = $('#formId');
-      $.ajax({
-        type: 'POST',
-        url: $form.attr('action'),
-        data: new FormData($form[0]),
-        processData: false,
-        contentType: false, // 如果form没有指定enctype，则可以在此处指定
-        success: function (data) {
-          if (data.status == Constant.AjaxStatus.OK) {
-            alert('上传成功！' + data.value);
-          } else {
-            alert(data.message);
-          }
-        },
-        error: function (xhr, type, message) {
-          if (xhr.status == 511) {
-            window.location.reload();
-          }
-        }
-      });
-    }
-  ns.readBlobAsText = function (data, callback) {
-    var reader = new FileReader();
-    reader.readAsText(data, 'utf-8');
-    reader.onload = function (e) {
-      callback && callback(reader.result);
-    }
-  },
-  ns.getXhrHeaders = function(xhr) {
-    var arr = xhr.getAllResponseHeaders().split('\r\n');
-    var res = {};
-    for(var ind in arr) {
-      var temp = arr[ind];
-      var arrTemp = temp.split(':');
-      if(arrTemp.length > 1) {
-        var key = arrTemp[0].trim();
-        arrTemp.splice(0, 1);
-        res[key] = arrTemp.join(':').trim();
-      }
-    }
-    return res;
-  },
-    ns.initialQuery = function (url) {
-      var reg, regKeyValue;
-      var arrQuery, arrKeyValue;
 
-      reg = new RegExp("\\?(.*)$", "i");
-      regKeyValue = new RegExp("(.+)=(.*)", "i");
+  ns.initialQuery = function (url) {
+    var reg, regKeyValue;
+    var arrQuery, arrKeyValue;
 
-      if (!url) {
-        url = window.location.href;
-      }
+    reg = new RegExp("\\?(.*)$", "i");
+    regKeyValue = new RegExp("(.+)=(.*)", "i");
 
-      // 将查询信息放在window.Query集合里
-      window.Query = [];
-      arrQuery = url.match(reg);
-      if (!arrQuery || !arrQuery[1]) {
-        return;
-      }
-      arrQuery = arrQuery[1].split("&");
-
-      for (i = 0; i < arrQuery.length; i++) {
-        arrKeyValue = arrQuery[i].match(regKeyValue);
-        if (!arrKeyValue) {
-          continue;
-        }
-        window.Query[arrKeyValue[1]] = arrKeyValue[2];
-      }
+    if (!url) {
+      url = window.location.href;
     }
+
+    // 将查询信息放在window.Query集合里
+    window.Query = [];
+    arrQuery = url.match(reg);
+    if (!arrQuery || !arrQuery[1]) {
+      return;
+    }
+    arrQuery = arrQuery[1].split("&");
+
+    for (i = 0; i < arrQuery.length; i++) {
+      arrKeyValue = arrQuery[i].match(regKeyValue);
+      if (!arrKeyValue) {
+        continue;
+      }
+      window.Query[arrKeyValue[1]] = arrKeyValue[2];
+    }
+  }
+  /**
+   * 获取文件名称
+   * @param path
+   * @returns {*}
+   */
+  ns.getFileName = function (path) {
+    if (path.lastIndexOf("\\") == -1) return "";
+    var pos = path.lastIndexOf("\\");
+    return path.substring(pos + 1);
+  }
+  /**
+   * 获取文件后缀
+   * @param fileName
+   * @returns {*}
+   */
+  ns.getFileExtension = function (fileName) {
+    if (!fileName || fileName.indexOf(".") == -1) return '';
+    var start = fileName.lastIndexOf(".");
+    var end = fileName.length;
+    return fileName.substring(start, end);
+  }
   ns.getServerUrl = function () {
     var str = 'http://' + Constant.Host;
     if (Constant.Port || Constant.Port != 80) {
@@ -598,14 +629,6 @@ window.Utility.Controls = window.Utility.Controls || {};
 
 /// 系统常量
 window.Constant = {
-  AjaxStatus: {
-    OK: "OK",
-    NO: "NO",
-    ERROR: "ERROR",
-    UNLOGIN: "UNLOGIN",
-    UNAUTHORIZED: "UNAUTHORIZED",
-    UNAUTHENTICATION: "UNAUTHENTICATION"
-  },
   EmptyGuid: "00000000-0000-0000-0000-000000000000", Context: '/ToolSiteMvc4J',
   Host: 'localhost', Port: '21000'
   // Host:'localhost',Port:'20000'

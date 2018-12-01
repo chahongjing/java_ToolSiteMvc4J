@@ -117,7 +117,7 @@
       getRolePermission: function (id) {
         var me = this;
         this.axios.get('/rolePermission/getRolePermission', {id: id}).then(function (resp) {
-          if (resp.data.status == Constant.AjaxStatus.OK) {
+          if (resp.data.status == ResultStatus.OK.key) {
             me.list = resp.data.value;
             me.refreshCheckbox();
           } else {
@@ -130,7 +130,7 @@
         var changed = [entity];
         // 处理联动
         this.axios.post('/rolePermission/savePermission', {listStr: JSON.stringify(changed)}).then(function (resp) {
-          if (resp.data.status == Constant.AjaxStatus.OK) {
+          if (resp.data.status == ResultStatus.OK.key) {
           } else {
             alert(resp.data.message);
           }
@@ -142,7 +142,7 @@
         this.refreshCheckbox();
         // 处理联动
         this.axios.post('/rolePermission/savePermission', {listStr: JSON.stringify(changed)}).then(function (resp) {
-          if (resp.data.status == Constant.AjaxStatus.OK) {
+          if (resp.data.status == ResultStatus.OK.key) {
 
           } else {
             alert(resp.data.message);

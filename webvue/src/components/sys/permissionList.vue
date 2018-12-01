@@ -86,7 +86,7 @@
           pageNum: this.pager.pageNum,
           pageSize: this.pager.pageSize
         }).then(function (resp) {
-          if (resp.data.status == Constant.AjaxStatus.OK) {
+          if (resp.data.status == ResultStatus.OK.key) {
             me.list = resp.data.value.list;
             me.pager = commonSrv.getPagerInfo(resp.data.value, me.goPage);
           } else {

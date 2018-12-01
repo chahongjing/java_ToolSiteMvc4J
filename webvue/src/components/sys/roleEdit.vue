@@ -56,7 +56,7 @@
       getDetail: function (id) {
         var me = this;
         this.axios.get('/role/getDetail', {id: id}).then(function (resp) {
-          if (resp.data.status == Constant.AjaxStatus.OK) {
+          if (resp.data.status == ResultStatus.OK.key) {
             me.role = resp.data.value;
           } else {
             alert(resp.data.message);
@@ -66,7 +66,7 @@
       save: function () {
         var me = this;
         this.axios.post('/role/save', me.role).then(function (resp) {
-          if (resp.data.status == Constant.AjaxStatus.OK) {
+          if (resp.data.status == ResultStatus.OK.key) {
             me.$toaster.success('保存成功！');
             me.goBack();
           } else {

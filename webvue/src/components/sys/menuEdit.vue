@@ -103,7 +103,7 @@
       getMenuList() {
         var me = this;
         this.axios.post('/menu/queryParentList', me.menu).then(function (resp) {
-          if (resp.data.status == Constant.AjaxStatus.OK) {
+          if (resp.data.status == ResultStatus.OK.key) {
             me.menuList = resp.data.value;
           } else {
             alert(resp.data.message);

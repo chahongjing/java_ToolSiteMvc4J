@@ -21,7 +21,7 @@ axios.defaults.transformRequest = [function (data) {
 axios.defaults.transformResponse = [function (data) {
   if (data && !(data instanceof Blob)) {
     var data = $.parseJSON(data);
-    if (data.status == window.Constant.AjaxStatus.UNAUTHENTICATION) {
+    if (data.status == ResultStatus.UNAUTHENTICATION.key) {
       window.location.hash = "/login";
     }
   }

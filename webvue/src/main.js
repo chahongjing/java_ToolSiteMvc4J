@@ -6,7 +6,7 @@ import router from '@/router'
 import store from '@/store/store';
 import filters from '@/common/filters';
 import directives from '@/common/directives';
-import axios from './common/axios'
+import axios from '@/common/axios'
 import confirm from '@/common/confirm';
 import toaster from '@/common/toaster';
 import pagination from '@/components/common/pagination'
