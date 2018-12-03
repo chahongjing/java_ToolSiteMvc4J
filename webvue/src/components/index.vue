@@ -24,17 +24,17 @@
             <router-link to="/test/test" class="list-group-item list-group-item-action">
               <i class='fa fa-comment fa-fw'></i><span>测试</span>
             </router-link>
-            <div>
+            <div class='mytest'>
 
-          <button type="button inline-block" class="btn btn-outline-purple" @click="confirm1()">
-            <i class='fa fa-plus mr5'></i>弹框1
-          </button>
-          <button type="button inline-block" class="btn btn-outline-purple" @click="confirm2()">
-            <i class='fa fa-plus mr5'></i>弹框2
-          </button>
-          <button type="button inline-block" class="btn btn-outline-purple" @click="confirm3()">
-            <i class='fa fa-plus mr5'></i>弹Modal
-          </button>
+              <button type="button inline-block" class="btn btn-outline-purple" @click="confirm1()">
+                <i class='fa fa-plus mr5'></i>弹框1
+              </button>
+              <button type="button inline-block" class="btn btn-outline-purple" @click="confirm2()">
+                <i class='fa fa-plus mr5'></i>弹框2
+              </button>
+              <button type="button inline-block" class="btn btn-outline-purple" @click="confirm3()">
+                <i class='fa fa-plus mr5'></i>弹Modal
+              </button>
 
             </div>
           </div>
@@ -253,4 +253,5 @@
   .card-body .list-group .list-group-item:last-child {
     border-bottom: 0;
   }
+  .mytest{padding:20px;}
 </style>

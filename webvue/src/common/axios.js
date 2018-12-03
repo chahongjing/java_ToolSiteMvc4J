@@ -2,6 +2,7 @@
  * Created by jyzeng on 2018/11/2.
  */
 import axios from 'axios';
+import Qs from 'Qs';
 import toaster from '@/common/toaster';
 
 axios.defaults.baseURL = 'http://' + process.env.baseHost + (process.env.basePort ? (':' + process.env.basePort) : '');
@@ -10,17 +11,20 @@ axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 axios.defaults.withCredentials = true;
 
 axios.defaults.paramsSerializer = function (params) {
+  // return Qs.stringify(params);
   return $.param(params);
 };
 axios.defaults.transformRequest = [function (data) {
   if (data && !(data instanceof FormData)) {
     data = $.param(data);
+    // data = Qs.stringify(data);
   }
   return data;
 }]
 axios.defaults.transformResponse = [function (data) {
   if (data && !(data instanceof Blob)) {
     var data = $.parseJSON(data);
+    // var data = Qs.parse(data);
     if (data.status == ResultStatus.UNAUTHENTICATION.key) {
       window.location.hash = "/login";
     }

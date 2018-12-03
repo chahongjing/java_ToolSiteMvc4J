@@ -70,6 +70,10 @@
 		</ul>
 
 		<hello hello></hello>
+
+		<div>
+		  <span>测试：</span><span id='compileSpan'></span>
+		</div>
 	</div>
 	<script src='../js/vue.js'></script>
 	<script>
@@ -141,7 +145,12 @@
 		var vm = new Vue({
 			el: '#myApp',
 			data: vueData,
-			methods: vueMethods
+			methods: vueMethods,
+			mounted: function() {
+				var el = document.getElementById('compileSpan');
+				var html = '<span v-html="inputValue"></span>';
+				el.innerHTML = html;
+			}
 		});
 	</script>
 </body>

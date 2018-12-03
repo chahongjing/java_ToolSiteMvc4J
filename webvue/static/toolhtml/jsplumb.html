@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset='utf-8'> 
     <title>jsPlumb</title>
     <style>
         .demo {
@@ -118,6 +119,10 @@
             instance.draggable('item3', {containment: 'parent'})
         });
         jsPlumb.fire('jsPlumbdemoLoaded', instance);
+
+        // $(window).resize(function () {
+        //     jsPlumb.repaintEverything();
+        // });
     })
 
     var DragFlowoverlay = function (title) {
