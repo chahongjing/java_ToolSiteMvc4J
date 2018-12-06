@@ -105,7 +105,7 @@
       clickSecondMenu: function (item, sub, $event) {
         $event.stopPropagation();
         if (!sub.isSelected) {
-          this.$store.commit("CLEAR_BREAD");
+          this.$store.commit("CLEAR_BREADCRUMB");
         }
         for (var i = 0; i < this.list.length; i++) {
           var obj = this.list[i];

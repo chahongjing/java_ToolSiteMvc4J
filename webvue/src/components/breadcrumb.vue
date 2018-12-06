@@ -12,7 +12,8 @@
         </span>
       </li>
     </ul>
-    <button type="button" class="btn btn-outline-purple btn-sm fr mr5 mt4" @click='goBack()'>
+    <button type="button" class="btn btn-outline-purple btn-sm fr mr5 mt4" @click='goBack()'
+       v-if='showBreadcrumb'>
       <i class='fa fa-reply mr5'></i>返回
     </button>
   </div>
@@ -27,7 +28,7 @@
       }
     },
     mounted: function () {
-      this.setBread();
+      this.setBreadcrumb();
     },
     methods: {
       goPage(item) {
@@ -38,26 +39,33 @@
         }
       },
       goHomePage() {
-        this.$store.commit("CLEAR_BREAD");
+        this.$store.commit("CLEAR_BREADCRUMB");
         this.$router.push({path: '/'});
       },
       goBack: function () {
-        var bread = this.$store.state.bread;
-        if (bread.length == 1) {
-          this.$store.commit("CLEAR_BREAD");
+        var breadcrumb = this.$store.state.breadcrumb;
+        if (breadcrumb.length == 1) {
+          this.$store.commit("CLEAR_BREADCRUMB");
           this.$router.push({path: '/'});
           return;
         }
-        bread.pop();
-        var item = bread[bread.length - 1];
+        // breadcrumb.pop();
+        var item = breadcrumb[breadcrumb.length - 2];
         if (item != null) {
           this.$router.push({path: item.path, query: item.query, params: item.params});
         } else {
           this.$router.push({path: '/'});
         }
       },
-      setBread: function () {
-        this.menuList = this.$store.state.bread;
+      setBreadcrumb: function () {
+        this.menuList = this.$store.state.breadcrumb;
+      }
+    },
+    computed: {
+      showBreadcrumb: function() {
+        var breadcrumb = this.$store && this.$store.state && this.$store.state.breadcrumb;
+        if(breadcrumb && breadcrumb.length > 0) return true;
+        return false;
       }
     }
   }

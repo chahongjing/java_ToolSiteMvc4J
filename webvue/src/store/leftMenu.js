@@ -12,7 +12,8 @@ export default {
         },
         [CLEAR_MENU](state) {
             sessionStorage.removeItem('leftMenu')
-            Object.keys(state).forEach(k => Vue.delete(state, k))
+            state.splice(0, state.length);
+            // Object.keys(state).forEach(k => Vue.delete(state, k))
         }
     },
     actions: {

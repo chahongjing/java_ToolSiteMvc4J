@@ -156,17 +156,17 @@ router.beforeEach(function (to, from, next) {
     // next(false);
     // 处理面包屑
     if(to.path != from.path) {
-      var bread = router.app.$store.state.bread;
+      var breadcrumb = router.app.$store.state.breadcrumb;
       var i = 0;
-      for(; i < bread.length; i++) {
-        if(bread[i].path == to.path) {
-          var current = bread[i];
-          bread.splice(i, bread.length - i);
+      for(; i < breadcrumb.length; i++) {
+        if(breadcrumb[i].path == to.path) {
+          var current = breadcrumb[i];
+          breadcrumb.splice(i, breadcrumb.length - i);
           break;
         }
       }
-      if(to.path != '/') {
-        bread.push(to);
+      if(to.path != '/' && to.path != '/login') {
+        breadcrumb.push(to);
       }
     }
 
