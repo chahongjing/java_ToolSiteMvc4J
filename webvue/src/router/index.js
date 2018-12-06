@@ -165,7 +165,9 @@ router.beforeEach(function (to, from, next) {
           break;
         }
       }
-      bread.push(to);
+      if(to.path != '/') {
+        bread.push(to);
+      }
     }
 
     next();
