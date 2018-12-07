@@ -45,12 +45,13 @@
         this.axios.get('/userRole/queryUserRole', {id: id}).then(function (resp) {
           if (resp.data.status == ResultStatus.OK.key) {
             me.list = resp.data.value;
-          } else {
-            alert(resp.data.message);
+          } else if (resp.data.status == ResultStatus.NO.key){
+            me.$toaster.warning(resp.data.message);
           }
         });
       },
       save: function (parent, entity) {
+          var me = this;
         if (!entity.isCheck) {
           parent.isCheck = false;
         } else {
@@ -67,12 +68,13 @@
         // 处理联动
         this.axios.post('/userRole/saveUserRole', {listStr: JSON.stringify(changed)}).then(function (resp) {
           if (resp.data.status == ResultStatus.OK.key) {
-          } else {
-            alert(resp.data.message);
+          } else if (resp.data.status == ResultStatus.NO.key){
+            me.$toaster.warning(resp.data.message);
           }
         });
       },
       saveGroup: function (parent) {
+          var me = this;
         if (!parent.subList || parent.subList.length == 0) return;
         var changed = [];
         for (var i = 0; i < parent.subList.length; i++) {
@@ -85,8 +87,8 @@
         // 处理联动
         this.axios.post('/userRole/saveUserRole', {listStr: JSON.stringify(changed)}).then(function (resp) {
           if (resp.data.status == ResultStatus.OK.key) {
-          } else {
-            alert(resp.data.message);
+          } else if (resp.data.status == ResultStatus.NO.key){
+            me.$toaster.warning(resp.data.message);
           }
         });
       }

@@ -24,9 +24,52 @@ Vue.component('dateTimePicker', dateTimePicker);
 Vue.component('ultree', ulTree);
 /* eslint-disable no-new */
 new Vue({
-	el: '#app',
-	store,
-	router,
-	components: { App},
-	template: '<App/>'
+  el: '#app',
+  store,
+  router,
+  components: {App},
+  template: '<App/>',
+  methods: {
+    getUser() {
+      return this.$store.state.user;
+    },
+    setUser(user) {
+      this.$store.commit("USER_SIGNIN", user);
+    },
+    clearUser() {
+      this.$store.commit("USER_SIGNOUT");
+    },
+    getLefeMenu() {
+      return this.$store.state.lefeMenu;
+    },
+    setLeftMenu(menuList) {
+      this.$store.commit("SET_MENU", menuList);
+    },
+    clearMenu() {
+      this.$store.commit("CLEAR_MENU");
+    },
+    getBreadcrumb() {
+      return this.$store.state.breadcrumb;
+    },
+    setBreadcrumb(breadcurmbList) {
+      this.$store.commit("SET_BREADCRUMB", breadcurmbList);
+    },
+    clearBreadrumb() {
+      this.$store.commit("CLEAR_BREADCRUMB");
+    },
+    goBack: function () {
+      var breadcrumb = this.getBreadcrumb();
+      if (breadcrumb.length == 1) {
+        this.clearBreadrumb();
+        this.$router.push({path: '/'});
+        return;
+      }
+      var item = breadcrumb[breadcrumb.length - 2];
+      if (item != null) {
+        this.$router.push({path: item.path, query: item.query, params: item.params});
+      } else {
+        this.$router.push({path: '/'});
+      }
+    },
+  }
 })

@@ -120,23 +120,25 @@
           if (resp.data.status == ResultStatus.OK.key) {
             me.list = resp.data.value;
             me.refreshCheckbox();
-          } else {
-            alert(resp.data.message);
+          } else if (resp.data.status == ResultStatus.NO.key){
+            me.$toaster.warning(resp.data.message);
           }
         });
       },
       save: function (entity) {
+          var me = this;
         this.refreshCheckbox();
         var changed = [entity];
         // 处理联动
         this.axios.post('/rolePermission/savePermission', {listStr: JSON.stringify(changed)}).then(function (resp) {
           if (resp.data.status == ResultStatus.OK.key) {
-          } else {
-            alert(resp.data.message);
+          } else if (resp.data.status == ResultStatus.NO.key){
+            me.$toaster.warning(resp.data.message);
           }
         });
       },
       saveGroup: function (entity) {
+          var me = this;
         var changed = [entity];
         this.checkChildren(entity, entity.subList, changed);
         this.refreshCheckbox();
@@ -144,8 +146,8 @@
         this.axios.post('/rolePermission/savePermission', {listStr: JSON.stringify(changed)}).then(function (resp) {
           if (resp.data.status == ResultStatus.OK.key) {
 
-          } else {
-            alert(resp.data.message);
+          } else if (resp.data.status == ResultStatus.NO.key){
+            me.$toaster.warning(resp.data.message);
           }
         });
       },
@@ -219,7 +221,7 @@
   .panel-body {
     overflow: hidden;
     transition: 0.3s;
-    padding: 8px;
+    padding: 4px 8px;
   }
 
   .subpanel {
@@ -245,7 +247,7 @@
   }
 
   .panel-heading {
-    padding: 8px;
+    padding: 4px 8px;
   }
 
   .showdetailarray {

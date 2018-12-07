@@ -4,7 +4,7 @@
     <div class="panel-body">
       <form class='myform infotip form-label-w120 block-form-group'>
         <div class="form-group info-success">
-          <label class="form-label">编号：</label>
+          <label class="form-label req">编号：</label>
           <div class="form-content">
             <input type="text" class="form-control" placeholder="编号" autofocus
                    v-model='user.userCode' v-focus :disabled='editSelf'/>

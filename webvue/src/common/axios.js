@@ -45,22 +45,26 @@ axios.interceptors.response.use(function (response) {
   // 对响应数据做点什么
   return response;
 }, function (error) {
-  var result = {};
+  var result = {data:{}};
   // 对响应错误做点什么
-  if (error.response.status == 401) {
+  if(!error.response) {
+    result.data.status = ResultStatus.ERROR.key;
+    result.data.message = '访问服务器失败！';
+  } else if (error.response.status == 401) {
     // 用户未授权
-    result.status = ResultStatus.UNAUTHORIZED.key;
-    result.message = ResultStatus.UNAUTHORIZED.name;
+    result.data.status = ResultStatus.UNAUTHORIZED.key;
+    result.data.message = ResultStatus.UNAUTHORIZED.name;
   } else if (error.response.status == 500) {
     if (error.response.data instanceof Blob) {
       Utility.readBlobAsText(error.response.data, function (data) {
-        var res = JSON.parse(data);
+        var res = {};
+        res.data = JSON.parse(data);
         toaster.error(res.message);
       });
     }
   } else {
-    result.status = ResultStatus.ERROR.key;
-    result.message = ResultStatus.ERROR.name;
+    result.data.status = ResultStatus.ERROR.key;
+    result.data.message = ResultStatus.ERROR.name;
     console.error(error);
   }
   // return Promise.resolve(result);
@@ -77,16 +81,22 @@ var axiosIns = {
   },
   get: function (path, param) {
     return axios.get(this.getAjaxUrl(path), {params: param}).catch(function (resp) {
-      if (resp.status == ResultStatus.UNAUTHORIZED.key) {
-        toaster.error(resp.message);
+      if (resp.data.status == ResultStatus.UNAUTHORIZED.key) {
+        toaster.error(resp.data.message);
+      } else if(resp.data.status == ResultStatus.ERROR.key) {
+        toaster.error(resp.data.message);
       }
+      return resp;
     });
   },
   post: function (path, param) {
     return axios.post(this.getAjaxUrl(path), param).catch(function (resp) {
-      if (resp.status == ResultStatus.UNAUTHORIZED.key) {
-        toaster.error(resp.message);
+      if (resp.data.status == ResultStatus.UNAUTHORIZED.key) {
+        toaster.error(resp.data.message);
+      } else if(resp.data.status == ResultStatus.ERROR.key) {
+        toaster.error(resp.data.message);
       }
+      return resp;
     });
   },
   /**
@@ -110,6 +120,7 @@ var axiosIns = {
       if (resp.status == ResultStatus.UNAUTHORIZED.key) {
         toaster.error(resp.message);
       }
+      return resp;
     });
   },
 };

@@ -42,7 +42,7 @@
           <td v-text='item.code'></td>
           <td class="text-center" v-text='item.seq'></td>
           <td class="operate"><a class='inline-block' href='javascript:void(0)' @click='deleteItem(item)'><i
-            class='fa fa-trash'></i></a></td>
+            class='fa fa-trash cf05'></i></a></td>
         </tr>
         </tbody>
       </table>
@@ -89,8 +89,8 @@
           if (resp.data.status == ResultStatus.OK.key) {
             me.list = resp.data.value.list;
             me.pager = commonSrv.getPagerInfo(resp.data.value, me.goPage);
-          } else {
-            alert(resp.data.message);
+          } else if (resp.data.status == ResultStatus.NO.key){
+            me.$toaster.warning(resp.data.message);
           }
         });
       },

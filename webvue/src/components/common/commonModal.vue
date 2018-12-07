@@ -53,8 +53,6 @@
         }
         return obj;
       }
-    },
-    mounted: function () {
     }
   }
 </script>

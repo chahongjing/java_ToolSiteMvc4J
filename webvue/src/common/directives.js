@@ -13,17 +13,24 @@ export default {
     //}
   },
   tooltip: {
+    inserted: function (el, binding, vnode) {
+      setTooltip(el, binding, vnode);
+    },
     update: function (el, binding, vnode) {
-      // if (binding.oldValue === binding.value) return;
-      var msg = binding.value;
-      if (msg === null || msg === undefined) {
-        msg = '';
-      }
-      var $el = $(el);
-      try{
-        $el.tooltip('dispose');
-      } catch(e){}
-      $el.tooltip({html: true, title: msg});
+      setTooltip(el, binding, vnode);
     }
   }
+}
+
+function setTooltip(el, binding, vnode) {
+  // if (binding.oldValue === binding.value) return;
+  var msg = binding.value;
+  if (msg === null || msg === undefined) {
+    msg = '';
+  }
+  var $el = $(el);
+  try{
+    $el.tooltip('dispose');
+  } catch(e){}
+  $el.tooltip({html: true, title: msg});
 }

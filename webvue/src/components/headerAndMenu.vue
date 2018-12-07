@@ -25,16 +25,6 @@
         showMenu: true
       }
     },
-    mounted: function () {
-    },
-    methods: {
-    },
     components:{appHeader, appMenu, breadcrumb}
   }
 </script>
-
-<style scoped>
-  .fa-home {
-    color: #93c;
-  }
-</style>

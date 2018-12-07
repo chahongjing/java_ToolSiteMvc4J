@@ -24,4 +24,3 @@ export default {
         }
     }
 }
-//store.commit("USER_SIGNIN",res.body.data);

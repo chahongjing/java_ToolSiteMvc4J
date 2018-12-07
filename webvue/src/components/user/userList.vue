@@ -56,10 +56,10 @@
           <td class='text-center' v-text='$options.filters.enumNameFilter(item.isDisabled, "YesNo")'></td>
           <td class='operate'>
             <a class='inline-block' href='javascript:void(0)' @click='grant(item)' title='授权'>
-              <i class='fa fa-id-badge'></i>
+              <i class='fa fa-id-badge c66c'></i>
             </a>
             <a class='inline-block' href='javascript:void(0)' @click='deleteItem(item)' title='删除'>
-              <i class='fa fa-trash'></i>
+              <i class='fa fa-trash cf05'></i>
             </a>
           </td>
         </tr>
@@ -144,7 +144,7 @@
       },
       setOrderByClass() {
         if(this.orderBy == 'asc') {
-          this.orderBy = 'desc'; 
+          this.orderBy = 'desc';
         } else {
           this.orderBy = 'asc';
         }

@@ -32,9 +32,6 @@
   import Vue from 'vue'
   export default {
     name: 'login',
-    data () {
-      return {}
-    },
     mounted: function () {
       $('.form-control i').click(function () {
         $(this).siblings('input').focus();
@@ -51,11 +48,11 @@
         var password = $("input[name=Password]");
 
         if ($.trim(userCode.val()) == "") {
-          alert('请输入用户名!');
+          this.$toaster.warning('请输入用户名!');
           return false;
         }
         if ($.trim(password.val()) == "") {
-          alert('请输入密码!');
+          this.$toaster.warning('请输入密码!');
           return false;
         }
         var me = this;
@@ -65,9 +62,9 @@
         }).then(function (resp) {
           if (resp.data.status == ResultStatus.OK.key) {
             me.user = resp.data.value;
-            me.$store.commit("USER_SIGNIN", me.user);
-            me.$store.commit("CLEAR_MENU");
-            me.$store.commit("CLEAR_BREADCRUMB");
+            me.$root.setUser(me.user);
+            me.$root.clearMenu();
+            me.$root.clearBreadrumb();
             window.Utility.initialQuery();
             if (window.Query.redirect) {
               window.Query.redirect = decodeURIComponent(window.Query.redirect);
@@ -76,7 +73,7 @@
               window.location.hash = "/";
             }
           } else if (resp.data.status == ResultStatus.NO.key) {
-            alert(resp.data.message);
+            me.$toaster.warning(resp.data.message);
           }
         });
       }

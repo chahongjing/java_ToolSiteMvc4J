@@ -119,7 +119,7 @@ var router = new Router({
     {
         path: 'test',
         name: '测试',
-        component: resolve => require(['../components/test'], resolve)
+        component: resolve => require(['../components/other/test'], resolve)
       }
     ]
   }
@@ -128,48 +128,31 @@ var router = new Router({
 
 router.beforeEach(function (to, from, next) {
   var user = router.app.$store.state.user;
-  // me.$store.commit("USER_SIGNIN", me.user);
   if(!user.userId && to && to.path != '/login') {
     next({
      path: '/login',
      query: {redirect: to.fullPath}  // 将跳转的路由path作为参数，登录成功后跳转到该路由
     });
   }
-    //跳转至上述3个页面
-    // if (nextRoute.indexOf(to.name) >= 0) {
-
-    // }
-    //已登录的情况再去登录页，跳转至首页
-    //if (to.name === 'login') {
-        //if (auth.IsLogin) {
-            //vueRouter.push({name: 'home'});
-        //}
-    //}
-    // 如果没有权限，则返回到没权限页面
-    if(false) {
-    	next({
-       path: '/login',
-	        query: {redirect: to.fullPath}  // 将跳转的路由path作为参数，登录成功后跳转到该路由
-       });
-    }
-    // 不跳转传false
-    // next(false);
-    // 处理面包屑
-    if(to.path != from.path) {
-      var breadcrumb = router.app.$store.state.breadcrumb;
-      var i = 0;
-      for(; i < breadcrumb.length; i++) {
-        if(breadcrumb[i].path == to.path) {
-          var current = breadcrumb[i];
-          breadcrumb.splice(i, breadcrumb.length - i);
-          break;
-        }
-      }
-      if(to.path != '/' && to.path != '/login') {
-        breadcrumb.push(to);
+  // 不跳转传false
+  // next(false);
+  // 处理面包屑
+  if(to.path != from.path) {
+    var breadcrumb = router.app.$store.state.breadcrumb;
+    var breadcrumbIgnoreUrl = ['/', '/login'];
+    var i = 0;
+    for(; i < breadcrumb.length; i++) {
+      if(breadcrumb[i].path == to.path) {
+        var current = breadcrumb[i];
+        breadcrumb.splice(i, breadcrumb.length - i);
+        break;
       }
     }
+    if(!breadcrumbIgnoreUrl.includes(to.path)) {
+      breadcrumb.push(to);
+    }
+  }
 
-    next();
-  });
+  next();
+});
 export default router;

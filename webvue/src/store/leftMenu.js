@@ -13,7 +13,6 @@ export default {
         [CLEAR_MENU](state) {
             sessionStorage.removeItem('leftMenu')
             state.splice(0, state.length);
-            // Object.keys(state).forEach(k => Vue.delete(state, k))
         }
     },
     actions: {
@@ -25,4 +24,3 @@ export default {
         }
     }
 }
-//store.commit("USER_SIGNIN",res.body.data);

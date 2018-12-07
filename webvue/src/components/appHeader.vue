@@ -38,7 +38,9 @@
           </a>
         </li>
         <li>
-          <a class="licontent" :title='user.userName' v-text='"姓名：" + user.userName'>
+          <a class="licontent" :title='user.userName'>
+            <i class="fa fa-user-o mr0 caf0"></i>
+            <span v-text='user.userName'></span>
           </a>
         </li>
       </ul>
@@ -115,7 +117,7 @@
         this.$confirm.confirm('确定要退出系统吗？', function () {
           me.axios.get('/userinfo/logout').then(function (resp) {
             if (resp.data.status == ResultStatus.OK.key) {
-              me.$store.commit("USER_SIGNOUT");
+              me.$root.clearUser();
               me.$router.push({path: '/login'});
             }
           });
@@ -168,13 +170,13 @@
         }, 400);
       },
       editInfo() {
-        var user = this.$store.state.user;
+        var user = this.$root.getUser();
         this.$router.push({path: '/user/userEdit', query: {id: user.userId, type: 'editSelf'}});
         this.showMenu = false;
       }
     },
     mounted: function () {
-      this.user = this.$store.state.user;
+      this.user = this.$root.getUser();
     },
     components: {commonModal}
   }

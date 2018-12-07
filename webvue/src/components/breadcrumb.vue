@@ -39,23 +39,11 @@
         }
       },
       goHomePage() {
-        this.$store.commit("CLEAR_BREADCRUMB");
+        this.$root.clearBreadrumb();
         this.$router.push({path: '/'});
       },
       goBack: function () {
-        var breadcrumb = this.$store.state.breadcrumb;
-        if (breadcrumb.length == 1) {
-          this.$store.commit("CLEAR_BREADCRUMB");
-          this.$router.push({path: '/'});
-          return;
-        }
-        // breadcrumb.pop();
-        var item = breadcrumb[breadcrumb.length - 2];
-        if (item != null) {
-          this.$router.push({path: item.path, query: item.query, params: item.params});
-        } else {
-          this.$router.push({path: '/'});
-        }
+        this.$root.goBack();
       },
       setBreadcrumb: function () {
         this.menuList = this.$store.state.breadcrumb;

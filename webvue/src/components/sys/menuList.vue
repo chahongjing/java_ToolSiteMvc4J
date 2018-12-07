@@ -46,7 +46,7 @@
           <td v-text='item.icon'></td>
           <td class="text-center" v-text='item.seq'></td>
           <td class="operate"><a class='inline-block' href='javascript:void(0)' @click='deleteItem(item)'><i
-            class='fa fa-trash'></i></a></td>
+            class='fa fa-trash cf05'></i></a></td>
         </tr>
         </tbody>
       </table>

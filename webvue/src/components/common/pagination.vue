@@ -81,7 +81,7 @@
   }
 
   .pagination .page-item {
-    float: left;
+    float: left;height:33px;
   }
 
   .footer-left, .footer-right {
@@ -89,4 +89,6 @@
     height: 40px;
     float: left;
   }
+  .pagination li:nth-child(-n + 2) a,.pagination li:nth-last-child(-n + 2) a{font-size:20px;padding-top: .1rem;padding-bottom: .3rem;transition:0.3s;}
+  .pagination li:nth-child(-n + 2):hover a,.pagination li:nth-last-child(-n + 2):hover a{color:#222;}
 </style>

@@ -48,9 +48,9 @@
           <td v-text='item.contactPerson'></td>
           <td v-text='item.contacts'></td>
           <td v-text='item.relateWebsite'></td>
-          <td v-text='item.memo'></td>
+          <td v-text='item.memo' v-tooltip='item.memo'></td>
           <td class="operate"><a class='inline-block' href='javascript:void(0)' @click='deleteItem(item)'><i
-            class='fa fa-trash'></i></a></td>
+            class='fa fa-trash cf05'></i></a></td>
         </tr>
         </tbody>
       </table>

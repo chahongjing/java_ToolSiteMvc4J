@@ -9,7 +9,7 @@
             <span v-text="item.name"></span>
             <b :class="{'fa fa-angle-down':item.isSelected,'fa fa-angle-right':!item.isSelected}"></b>
           </div>
-          <ul class="sub-menu show" :class="{'sub-menu show':item.isSelected}" :style="{'height':getMenuHeight(item)}">
+          <ul :class="{'sub-menu show':item.isSelected}" :style="{'height':getMenuHeight(item)}">
             <li v-for="sub in item.children" :class="{'selected': sub.isSelected}"
                 @click="clickSecondMenu(item, sub, $event)">
               <a href="javascript:void(0)"><i :class="'fa ' + sub.data.icon + ' fw'"></i>
@@ -73,7 +73,7 @@
                 menuInfo.second.selected.isSelected = true;
               }
               me.list = parents;
-              me.$store.commit("SET_MENU", me.list);
+              me.$root.setLeftMenu(me.list);
             }
           });
           this.$nextTick(function () {
@@ -89,7 +89,7 @@
       clickFirstMenu: function (item) {
         if (item.isSelected) {
           item.isSelected = false;
-          this.$store.commit("SET_MENU", this.list);
+          this.$root.setLeftMenu(this.list);
           return;
         }
         for (var i = 0; i < this.list.length; i++) {
@@ -100,12 +100,12 @@
             obj.isSelected = false;
           }
         }
-        this.$store.commit("SET_MENU", this.list);
+        this.$root.setLeftMenu(this.list);
       },
       clickSecondMenu: function (item, sub, $event) {
         $event.stopPropagation();
         if (!sub.isSelected) {
-          this.$store.commit("CLEAR_BREADCRUMB");
+          this.$root.clearBreadrumb();
         }
         for (var i = 0; i < this.list.length; i++) {
           var obj = this.list[i];
@@ -116,7 +116,7 @@
           }
         }
         sub.isSelected = true;
-        this.$store.commit("SET_MENU", this.list);
+        this.$root.setLeftMenu(this.list);
         this.$router.push({path: sub.data.url});
       },
       toggleMenu() {

@@ -68,8 +68,8 @@
         this.axios.get('/permission/getDetail', {id: id, functionId: functionId}).then(function (resp) {
           if (resp.data.status == ResultStatus.OK.key) {
             me.permission = resp.data.value;
-          } else {
-            alert(resp.data.message);
+          } else if (resp.data.status == ResultStatus.NO.key){
+            me.$toaster.warning(resp.data.message);
           }
         });
       },
@@ -79,8 +79,8 @@
           if (resp.data.status == ResultStatus.OK.key) {
             me.$toaster.success('保存成功！');
             me.goBack();
-          } else {
-            alert(resp.data.message);
+          } else if (resp.data.status == ResultStatus.NO.key){
+            me.$toaster.warning(resp.data.message);
           }
         });
       }
@@ -90,6 +90,3 @@
     }
   }
 </script>
-
-<style scoped>
-</style>
