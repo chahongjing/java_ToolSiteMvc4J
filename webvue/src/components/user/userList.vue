@@ -8,13 +8,13 @@
     <div class='searchbar'>
       <form class='myform form-inline form-group-w280 form-label-w80'>
         <div class="form-group">
-          <label class="form-label">名称：</label>
+          <label class="form-label colon">名称</label>
           <div class="form-content">
             <input type="text" class="form-control" placeholder="名称" autofocus v-model='searchKey'>
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">性别：</label>
+          <label class="form-label colon">性别</label>
           <div class="form-content">
             <select class='form-control' v-model="sexValue">
               <option value="">--全部--</option>
@@ -55,10 +55,10 @@
           <td class='text-center' v-text='$options.filters.enumNameFilter(item.isSystem, "YesNo")'></td>
           <td class='text-center' v-text='$options.filters.enumNameFilter(item.isDisabled, "YesNo")'></td>
           <td class='operate'>
-            <a class='inline-block' href='javascript:void(0)' @click='grant(item)' title='授权'>
+            <a class='inline-block mybtn' href='javascript:void(0)' @click='grant(item)' title='授权'>
               <i class='fa fa-id-badge c66c'></i>
             </a>
-            <a class='inline-block' href='javascript:void(0)' @click='deleteItem(item)' title='删除'>
+            <a class='inline-block mybtn' href='javascript:void(0)' @click='deleteItem(item)' title='删除'>
               <i class='fa fa-trash cf05'></i>
             </a>
           </td>

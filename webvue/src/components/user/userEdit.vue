@@ -2,9 +2,9 @@
   <div class="mypanel" style="width:500px;margin:auto;margin-top:20px;">
     <div class="panel-heading font-bold">用户信息</div>
     <div class="panel-body">
-      <form class='myform infotip form-label-w120 block-form-group'>
+      <form class='myform infotip form-label-w110 block-form-group'>
         <div class="form-group info-success">
-          <label class="form-label req">编号：</label>
+          <label class="form-label req colon">编号</label>
           <div class="form-content">
             <input type="text" class="form-control" placeholder="编号" autofocus
                    v-model='user.userCode' v-focus :disabled='editSelf'/>
@@ -15,7 +15,7 @@
           <span class='error-msg'></span>
         </div>
         <div class="form-group info-error">
-          <label class="form-label">姓名：</label>
+          <label class="form-label colon">姓名</label>
           <div class="form-content">
             <input type="text" class="form-control" placeholder="姓名"
                    v-model='user.userName'>
@@ -26,7 +26,7 @@
           <span class='error-msg'>名称不能为空！</span>
         </div>
         <div class="form-group" v-if='!user.isSave'>
-          <label class="form-label">密码：</label>
+          <label class="form-label colon">密码</label>
           <div class="form-content">
             <input type="password" class="form-control" placeholder="密码"
                    v-model='user.password'>
@@ -36,7 +36,7 @@
           </div>
         </div>
         <div class="form-group" v-if='!user.isSave'>
-          <label class="form-label">确认密码：</label>
+          <label class="form-label colon">确认密码</label>
           <div class="form-content">
             <input type="password" class="form-control" placeholder="确认密码"
                    v-model='user.passwordAgain'>
@@ -46,7 +46,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">邮箱：</label>
+          <label class="form-label colon">邮箱</label>
           <div class="form-content">
             <div class="input-group">
               <div class="input-group-prepend">
@@ -60,13 +60,13 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">创建时间：</label>
+          <label class="form-label colon">创建时间</label>
           <div class="form-content">
             <date-time-picker v-model='user.createdOn' :option='dateOpt'></date-time-picker>
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">生日：</label>
+          <label class="form-label colon">生日</label>
           <div class="form-content">
             <date-time-picker v-model='user.birthday'></date-time-picker>
           </div>
@@ -75,7 +75,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">性别：</label>
+          <label class="form-label colon">性别</label>
           <div class="form-content">
             <label class="radio_checkbox mt2" v-for="item in sexList">
               <input type='radio' name="sex" :value="item.key" v-model="user.sex"/>
@@ -88,7 +88,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">是否禁用：</label>
+          <label class="form-label colon">是否禁用</label>
           <div class="form-content">
             <label class="radio_checkbox mt2" v-for="item in YesNoList">
               <input type='radio' name="isDisabled" :value="item.key" v-model="user.isDisabled"/>
@@ -101,7 +101,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">是否系统用户：</label>
+          <label class="form-label colon">是否系统用户</label>
           <div class="form-content">
             <label class="radio_checkbox mt2" v-for="item in YesNoList">
               <input type='radio' name="isSystem" :value="item.key" v-model="user.isSystem"/>
@@ -114,7 +114,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">兴趣爱好：</label>
+          <label class="form-label colon">兴趣爱好</label>
           <div class="form-content">
             <label class="radio_checkbox mt2" v-for="item in interstList">
               <input type='checkbox' name="interst" :value="item.key" v-model="intertCheck"/>
