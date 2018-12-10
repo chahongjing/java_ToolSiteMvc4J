@@ -14,7 +14,7 @@
             </i>
             <ul class="dropdown-menu dropdown-menu-right" :class='{"slidedown": showMenu}'>
               <li class='dropdown-item' @click='editInfo()'>
-                <i class="fa fa-id-card-o fa-fw"></i>修改个人信息
+                <i class="fa fa-id-card-o fa-fw c06f"></i>修改个人信息
               </li>
               <li class='dropdown-item' @click='openChangePasswordDialog()'>
                 <i class="fa fa-key fa-fw text-danger"></i>修改密码
@@ -27,8 +27,8 @@
         </li>
         <li>
           <a class="licontent pointer" title='消息'>
-            <i class='fa fa-commenting icon-animated-vertical text-success mr0'></i>
-            <span class="badge badge-success">5</span>
+            <i class='fa fa-commenting-o icon-animated-vertical ccff mr0'></i>
+            <span class="badge badge-success">2</span>
           </a>
         </li>
         <li>
@@ -55,7 +55,7 @@
       <div class="modal-body pr20" slot="bodySlot">
         <form class='myform form-label-w100 block-form-group'>
           <div class="form-group">
-            <label class="form-label">原密码：</label>
+            <label class="form-label req colon">原密码</label>
             <div class="form-content">
               <input type="password" class="form-control" placeholder="原密码" autofocus
                      v-model='user.oldPassword' v-focus/>
@@ -65,7 +65,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label">新密码：</label>
+            <label class="form-label req colon">新密码</label>
             <div class="form-content">
               <input type="password" class="form-control" placeholder="新密码" autofocus
                      v-model='user.newPassword' v-focus/>
@@ -75,7 +75,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label">确认密码：</label>
+            <label class="form-label req colon">确认密码</label>
             <div class="form-content">
               <input type="password" class="form-control" placeholder="确认密码" autofocus
                      v-model='user.passwordAgain' v-focus/>
@@ -143,6 +143,7 @@
           return;
         }
         me.axios.get('/userinfo/changePassword', {
+          userCode: this.user.userCode,
           oldPassword: this.user.oldPassword,
           newPassword: this.user.newPassword
         }).then(function (resp) {

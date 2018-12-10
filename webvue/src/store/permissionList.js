@@ -1,0 +1,26 @@
+import Vue from 'vue';
+
+export const SET_PERMISSIONLIST = 'SET_PERMISSIONLIST';
+export const CLEAR_PERMISSIONLIST = 'CLEAR_PERMISSIONLIST';
+
+export default {
+    state: JSON.parse(sessionStorage.getItem('permissionList')) || [],
+    mutations: {
+        [SET_PERMISSIONLIST](state, permissionList) {
+            sessionStorage.setItem('permissionList', JSON.stringify(permissionList))
+            Object.assign(state, permissionList)
+        },
+        [CLEAR_PERMISSIONLIST](state) {
+            sessionStorage.removeItem('permissionList')
+            state.splice(0, state.length);
+        }
+    },
+    actions: {
+        [SET_PERMISSIONLIST]({commit}, permissionList) {
+            commit(SET_PERMISSIONLIST, permissionList)
+        },
+        [CLEAR_PERMISSIONLIST]({commit}) {
+            commit(CLEAR_PERMISSIONLIST)
+        }
+    }
+}

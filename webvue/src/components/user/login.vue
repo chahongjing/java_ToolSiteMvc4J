@@ -63,6 +63,7 @@
           if (resp.data.status == ResultStatus.OK.key) {
             me.user = resp.data.value;
             me.$root.setUser(me.user);
+            me.$root.setPermissionList(me.user.permissionList);
             me.$root.clearMenu();
             me.$root.clearBreadrumb();
             window.Utility.initialQuery();

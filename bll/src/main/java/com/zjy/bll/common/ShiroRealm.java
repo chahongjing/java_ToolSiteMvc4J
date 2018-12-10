@@ -72,14 +72,9 @@ public class ShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         UserInfo user = (UserInfo) principals.getPrimaryPrincipal();
-        List<String> permissions;
+        List<String> roles = getRoles(user.getUserId());
+        List<String> permissions = getPermissions(user.getUserId());
 
-        List<UserRoleVo> userRoleList = userRoleSrv.queryListByUserId(user.getUserId());
-        List<String> roleIdList = userRoleList.stream().map(item -> item.getRoleId()).collect(Collectors.toList());
-        List<String> roles = userRoleList.stream().map(item -> item.getRoleCode()).collect(Collectors.toList());
-        List<RolePermissionVo> permissionList = rolePermissionSrv.queryRolePermission(roleIdList);
-        permissions = permissionList.stream().filter(item -> StringUtils.isNotBlank(item.getPermissionCode()))
-                .map(item -> item.getPermissionCode()).collect(Collectors.toList());
 //        roles.add("admin");
 //        permissions.add("admin:testPermission");
 //        @RequiresRoles("admin")
@@ -151,5 +146,18 @@ public class ShiroRealm extends AuthorizingRealm {
         Object simpleHash = new SimpleHash(credentialsMatcher.getHashAlgorithmName(), password, ByteSource.Util.bytes(salt),
                 credentialsMatcher.getHashIterations());
         return simpleHash.toString();
+    }
+
+    public List<String> getRoles(String userId) {
+        List<UserRoleVo> userRoleList = userRoleSrv.queryListByUserId(userId);
+        return userRoleList.stream().map(item -> item.getRoleCode()).collect(Collectors.toList());
+    }
+
+    public List<String> getPermissions(String userId) {
+        List<UserRoleVo> userRoleList = userRoleSrv.queryListByUserId(userId);
+        List<String> roleIdList = userRoleList.stream().map(item -> item.getRoleId()).collect(Collectors.toList());
+        List<RolePermissionVo> permissionList = rolePermissionSrv.queryRolePermission(roleIdList);
+        return permissionList.stream().filter(item -> StringUtils.isNotBlank(item.getPermissionCode()))
+                .map(item -> item.getPermissionCode()).collect(Collectors.toList());
     }
 }

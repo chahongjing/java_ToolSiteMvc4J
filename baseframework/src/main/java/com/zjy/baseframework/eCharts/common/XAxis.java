@@ -62,10 +62,10 @@ public class XAxis
 
     private SplitLine splitLine;
 
-    private float min;
+    private Float min;
 
-    private float max;
-    private float interval;
+    private Float max;
+    private Float interval;
 
     /// <summary>
     /// 构造函数
@@ -197,27 +197,27 @@ public class XAxis
         this.splitLine = splitLine;
     }
 
-    public float getMin() {
+    public Float getMin() {
         return min;
     }
 
-    public void setMin(float min) {
+    public void setMin(Float min) {
         this.min = min;
     }
 
-    public float getMax() {
+    public Float getMax() {
         return max;
     }
 
-    public void setMax(float max) {
+    public void setMax(Float max) {
         this.max = max;
     }
 
-    public float getInterval() {
+    public Float getInterval() {
         return interval;
     }
 
-    public void setInterval(float interval) {
+    public void setInterval(Float interval) {
         this.interval = interval;
     }
 }

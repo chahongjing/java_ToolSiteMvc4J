@@ -39,7 +39,7 @@ new Vue({
     clearUser() {
       this.$store.commit("USER_SIGNOUT");
     },
-    getLefeMenu() {
+    getLeftMenu() {
       return this.$store.state.lefeMenu;
     },
     setLeftMenu(menuList) {
@@ -56,6 +56,15 @@ new Vue({
     },
     clearBreadrumb() {
       this.$store.commit("CLEAR_BREADCRUMB");
+    },
+    getPermissionList() {
+      return this.$store.state.permissionList;
+    },
+    setPermissionList(permissionList) {
+      this.$store.commit("SET_PERMISSIONLIST", permissionList);
+    },
+    clearPermissionList() {
+      this.$store.commit("CLEAR_PERMISSIONLIST");
     },
     goBack: function () {
       var breadcrumb = this.getBreadcrumb();

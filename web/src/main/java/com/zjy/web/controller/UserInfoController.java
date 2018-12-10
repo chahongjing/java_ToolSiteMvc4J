@@ -2,6 +2,7 @@ package com.zjy.web.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.zjy.baseframework.BaseResult;
+import com.zjy.baseframework.ServiceException;
 import com.zjy.bll.request.UserInfoRequest;
 import com.zjy.bll.service.UserInfoService;
 import com.zjy.bll.vo.UserInfoVo;
@@ -85,7 +86,7 @@ public class UserInfoController extends BaseController implements ServletConfigA
 
     @RequestMapping("/login")
     @ResponseBody
-    public BaseResult<UserInfo> login(UserInfo user) {
+    public BaseResult<UserInfoVo> login(UserInfo user) {
         return userInfoSrv.login(user);
     }
 
@@ -117,14 +118,18 @@ public class UserInfoController extends BaseController implements ServletConfigA
 
     @RequestMapping("/save")
     @ResponseBody
-    @RequiresPermissions(value = {"userEdit_enter"}, logical = Logical.OR)
     public BaseResult<String> save(UserInfoVo vo) {
+        UserInfo currentUser = shiroRealm.getCurrentUser();
+        if(!shiroRealm.isPermitted("userEdit_save") && (currentUser != null && !currentUser.getUserCode().equals(vo.getUserCode()))) {
+            throw new ServiceException("未授权！");
+        }
         userInfoSrv.save(vo);
         return BaseResult.OK("");
     }
 
     @RequestMapping("/delete")
     @ResponseBody
+    @RequiresPermissions(value = {"userList_delete"}, logical = Logical.OR)
     public BaseResult<String> delete(String id) {
         userInfoSrv.delete(id);
         return BaseResult.OK("");
@@ -132,8 +137,16 @@ public class UserInfoController extends BaseController implements ServletConfigA
 
     @RequestMapping("/changePassword")
     @ResponseBody
-    public BaseResult<String> changePassword(String oldPassword, String newPassword) {
-        userInfoSrv.changePassword(oldPassword, newPassword);
+    public BaseResult<String> changePassword(String userCode, String oldPassword, String newPassword) {
+        userInfoSrv.changePassword(userCode, oldPassword, newPassword);
+        return BaseResult.OK("");
+    }
+
+    @RequestMapping("/resetPassword")
+    @ResponseBody
+    @RequiresPermissions(value = {"userList_resetPassword"})
+    public BaseResult<String> resetPassword(String userCode, String password) {
+        userInfoSrv.resetPassword(userCode, password);
         return BaseResult.OK("");
     }
 

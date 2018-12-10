@@ -143,8 +143,8 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
      * @return
      */
     @Override
-    public BaseResult<UserInfo> login(UserInfo user) {
-        BaseResult<UserInfo> result = new BaseResult<>();
+    public BaseResult<UserInfoVo> login(UserInfo user) {
+        BaseResult<UserInfoVo> result = new BaseResult<>();
         Subject subject = SecurityUtils.getSubject();
 //        if (subject.isAuthenticated()) {
 //            return null;
@@ -164,7 +164,8 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
             return result;
         }
         // 登录成功
-        UserInfo userInfo = getByUserCode(user.getUserCode());
+        UserInfoVo userInfo = getByUserCode(user.getUserCode());
+        userInfo.setPermissionList(shiroRealm.getPermissions(userInfo.getUserId()));
         userInfo.setPassword(null);
         result.setStatus(ResultStatus.OK);
         result.setValue(userInfo);
@@ -188,7 +189,7 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
     }
 
     @Override
-    public UserInfo getByUserCode(String userCode) {
+    public UserInfoVo getByUserCode(String userCode) {
         return dao.getByCode(userCode);
     }
 
@@ -202,9 +203,16 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
         }
     }
     @Override
-    public void changePassword(String oldPassword, String newPassword){
-        String userCode = shiroRealm.getCurrentUser().getUserCode();
-        UserInfo user = this.getByUserCode(userCode);
+    public void changePassword(String userCode, String oldPassword, String newPassword){
+        UserInfo currentUser = shiroRealm.getCurrentUser();
+        if(currentUser == null) {
+            throw new ServiceException("用户未登录！");
+        }
+        String userCodeCur = currentUser.getUserCode();
+        if(!userCodeCur.equals(userCode)) {
+            throw new ServiceException("参数错误！");
+        }
+        UserInfo user = this.getByUserCode(userCodeCur);
         if(user == null) {
             throw new ServiceException("用户不存在！");
         }
@@ -214,11 +222,24 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
         if(StringUtils.isBlank(newPassword)) {
             throw new ServiceException("请输入新密码！");
         }
-        String oldPasswordEnc = shiroRealm.getMd5Hash(oldPassword, userCode);
-        String newPasswordEnc = shiroRealm.getMd5Hash(newPassword, userCode);
+        String oldPasswordEnc = shiroRealm.getMd5Hash(oldPassword, userCodeCur);
+        String newPasswordEnc = shiroRealm.getMd5Hash(newPassword, userCodeCur);
         if(!oldPasswordEnc.equals(user.getPassword())) {
             throw new ServiceException("原密码错误！");
         }
+        user.setPassword(newPasswordEnc);
+        dao.updateUserPassword(user.getUserId(), user.getPassword());
+    }
+    @Override
+    public void resetPassword(String userCode, String password){
+        UserInfo user = this.getByUserCode(userCode);
+        if(user == null) {
+            throw new ServiceException("用户不存在！");
+        }
+        if(StringUtils.isBlank(password)) {
+            throw new ServiceException("密码不能为空！");
+        }
+        String newPasswordEnc = shiroRealm.getMd5Hash(password, userCode);
         user.setPassword(newPasswordEnc);
         dao.updateUserPassword(user.getUserId(), user.getPassword());
     }

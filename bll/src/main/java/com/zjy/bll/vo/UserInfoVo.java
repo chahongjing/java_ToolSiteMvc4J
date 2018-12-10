@@ -2,6 +2,8 @@ package com.zjy.bll.vo;
 
 import com.zjy.entities.UserInfo;
 
+import java.util.List;
+
 public class UserInfoVo extends UserInfo {
     private String mingcheng;
     private String sexName;
@@ -9,6 +11,7 @@ public class UserInfoVo extends UserInfo {
     private String isSystemName;
     private boolean isSave;
     private String orderBy;
+    private List<String> permissionList;
 
     public String getMingcheng() {
         return mingcheng;
@@ -56,5 +59,13 @@ public class UserInfoVo extends UserInfo {
 
     public void setOrderBy(String orderBy) {
         this.orderBy = orderBy;
+    }
+
+    public List<String> getPermissionList() {
+        return permissionList;
+    }
+
+    public void setPermissionList(List<String> permissionList) {
+        this.permissionList = permissionList;
     }
 }

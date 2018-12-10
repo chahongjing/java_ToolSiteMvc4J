@@ -109,7 +109,7 @@
     </select>
 
     <!-- 通过编码获取 -->
-    <select id="getByCode" resultType="com.zjy.entities.UserInfo">
+    <select id="getByCode" resultType="com.zjy.bll.vo.UserInfoVo">
         SELECT
         <include refid="fieldWithPrefix">
             <property name="tableName" value="UserInfo"/>

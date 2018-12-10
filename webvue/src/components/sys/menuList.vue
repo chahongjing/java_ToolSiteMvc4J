@@ -29,7 +29,7 @@
           <th class=''>父级</th>
           <th class='w150'>编码</th>
           <th class='w150'>路径</th>
-          <th class='w120'>图标</th>
+          <th class='w150'>图标</th>
           <th class='w50'>序号</th>
           <th class='w100'>操作</th>
         </tr>
@@ -43,7 +43,7 @@
           <td v-text='item.pName'></td>
           <td v-text='item.code'></td>
           <td v-text='item.url'></td>
-          <td v-text='item.icon'></td>
+          <td><i class='fa' :class='item.icon'></i><span v-text='item.icon'></span></td>
           <td class="text-center" v-text='item.seq'></td>
           <td class="operate">
             <a class='inline-block mybtn' href='javascript:void(0)' @click='deleteItem(item)'><i

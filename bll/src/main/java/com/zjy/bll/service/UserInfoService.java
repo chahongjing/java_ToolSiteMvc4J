@@ -25,13 +25,15 @@ public interface UserInfoService {
 
     PageInfo<? extends UserInfo> queryPageList(UserInfoRequest request);
 
-    BaseResult<UserInfo> login(UserInfo user);
+    BaseResult<UserInfoVo> login(UserInfo user);
 
     BaseResult<String> logout();
 
     List<UserInfo> query(UserInfo user);
 
-    UserInfo getByUserCode(String userCode);
+    UserInfoVo getByUserCode(String userCode);
 
-    void changePassword(String oldPassword, String newPassword);
+    void changePassword(String userCode, String oldPassword, String newPassword);
+
+    void resetPassword(String userCode, String password);
 }

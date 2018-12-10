@@ -1,7 +1,7 @@
 <template>
   <div class='maincontent w100p h100p'>
-    <div class='list-header-but-group'>
-      <button type="button inline-block" class="btn btn-outline-purple" @click="add()">
+    <div class='list-header-but-group'>&nbsp;
+      <button type="button inline-block" class="btn btn-outline-purple" @click="add()" v-authcode='"userList_add"'>
         <i class='fa fa-plus mr5'></i>添加
       </button>
     </div>
@@ -55,10 +55,13 @@
           <td class='text-center' v-text='$options.filters.enumNameFilter(item.isSystem, "YesNo")'></td>
           <td class='text-center' v-text='$options.filters.enumNameFilter(item.isDisabled, "YesNo")'></td>
           <td class='operate'>
-            <a class='inline-block mybtn' href='javascript:void(0)' @click='grant(item)' title='授权'>
+            <a class='inline-block mybtn' v-authcode='"userList_grant"' href='javascript:void(0)' @click='grant(item)' title='授权'>
               <i class='fa fa-id-badge c66c'></i>
             </a>
-            <a class='inline-block mybtn' href='javascript:void(0)' @click='deleteItem(item)' title='删除'>
+            <a class='inline-block mybtn' v-authcode='"userList_resetPassword"' href='javascript:void(0)' @click='setPassword(item)' title='修改密码'>
+              <i class='fa fa-key c393'></i>
+            </a>
+            <a class='inline-block mybtn' v-authcode='"userList_delete"' href='javascript:void(0)' @click='deleteItem(item)' title='删除'>
               <i class='fa fa-trash cf05'></i>
             </a>
           </td>
@@ -68,6 +71,36 @@
       <div class='nodata' v-if='!list || list.length == 0'>
         <div>没有数据！</div>
       </div>
+      <common-modal :show-modal='showchangePasswordDialog' :width='width'>
+      <div class="modal-header" slot='headerSlot'>
+        <h5 class="modal-title">修改密码</h5>
+        <button type="button" class="close" @click='showchangePasswordDialog = false'>
+          <span class='closeicon' title="关闭">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body pr20" slot="bodySlot">
+        <form class='myform form-label-w100 block-form-group'>
+          <div class="form-group">
+            <label class="form-label req colon">新密码</label>
+            <div class="form-content">
+              <input type="password" class="form-control" placeholder="新密码" autofocus
+                     v-model='password' v-focus/>
+            </div>
+            <div class='form-info'>
+              <i class='fa'></i>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer" slot="footerSlot">
+        <button type="button" class="btn btn-secondary" @click='showchangePasswordDialog = false'>
+          <i class='fa fa-times'></i><span>取消</span>
+        </button>
+        <button type="button" class="btn btn-purple" @click='changePassword()'>
+          <i class='fa fa-check'></i><span>确定</span>
+        </button>
+      </div>
+    </common-modal>
     </div>
     <div class='footer-pager'>
       <pagination :pager-info='pager'></pagination>
@@ -77,6 +110,7 @@
 
 <script>
   import commonSrv from '@/common/commonService'
+  import commonModal from '@/components/common/commonModal'
 
   export default {
     name: 'userList',
@@ -87,7 +121,11 @@
         sexValue: '',
         sexList: [],
         orderBy: 'asc',
-        pager: {pageNum: 1, pageSize: 5, loading: true}
+        pager: {pageNum: 1, pageSize: 5, loading: true},
+        width: 350,
+        showchangePasswordDialog: false,
+        userCode: null,
+        password: null
       }
     },
     methods: {
@@ -149,6 +187,35 @@
           this.orderBy = 'asc';
         }
         this.search();
+      },
+      setPassword(entity) {
+        this.userCode = entity.userCode;
+        this.password = '';
+        this.showchangePasswordDialog = true;
+      },
+      changePassword() {
+        var me = this;
+        if (this.userCode === null || this.userCode === undefined
+          || this.userCode === '' || this.userCode.trim() === '') {
+          me.$toaster.warning('原密码不能为空！');
+          return;
+        }
+        if (this.password === null || this.password === undefined
+          || this.password === '' || this.password.trim() === '') {
+          me.$toaster.warning('原密码不能为空！');
+          return;
+        }
+        me.axios.get('/userinfo/resetPassword', {
+          userCode: this.userCode,
+          password: this.password
+        }).then(function (resp) {
+          if (resp.data.status == ResultStatus.OK.key) {
+            me.$toaster.success('修改密码成功！');
+            me.showchangePasswordDialog = false;
+          } else if (resp.data.status == ResultStatus.NO.key){
+            me.$toaster.warning(resp.data.message);
+          }
+        });
       }
     },
     computed: {
@@ -161,6 +228,7 @@
     mounted: function () {
       this.search();
       this.getEnumList();
-    }
+    },
+    components: {commonModal}
   }
 </script>

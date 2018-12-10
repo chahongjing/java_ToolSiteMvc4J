@@ -19,6 +19,14 @@ export default {
     update: function (el, binding, vnode) {
       setTooltip(el, binding, vnode);
     }
+  },
+  authcode: {
+    inserted: function (el, binding, vnode) {
+      handlePermission(el, binding, vnode);
+    },
+    update: function (el, binding, vnode) {
+      handlePermission(el, binding, vnode);
+    }
   }
 }
 
@@ -33,4 +41,11 @@ function setTooltip(el, binding, vnode) {
     $el.tooltip('dispose');
   } catch(e){}
   $el.tooltip({html: true, title: msg});
+}
+
+function handlePermission(el, binding, vnode) {
+  var permissionList = vnode.context.$root.getPermissionList();
+  if(!permissionList || !permissionList.some(item => item == binding.value) && el.parentElement) {
+   el.parentElement.removeChild(el)
+  }
 }

@@ -40,9 +40,12 @@
     },
     methods: {
       getMenuData: function () {
-        var list = this.$store.state.leftMenu;
+        var list = this.$root.getLeftMenu();
         if(list && list.length > 0) {
           this.list = list;
+          if(!this.list || this.list.length == 0) {
+            this.setMenuShowOrHide(false);
+          }
         } else {
           var me = this;
           me.axios.get('/menu/queryMenu').then(function (resp) {
@@ -73,6 +76,9 @@
                 menuInfo.second.selected.isSelected = true;
               }
               me.list = parents;
+              if(!me.list || me.list.length == 0) {
+                me.setMenuShowOrHide(false);
+              }
               me.$root.setLeftMenu(me.list);
             }
           });
@@ -120,9 +126,11 @@
         this.$router.push({path: sub.data.url});
       },
       toggleMenu() {
-        var temp = !this.showMenu;
-        this.$parent.showMenu = temp;
-        this.showMenu = temp;
+        this.setMenuShowOrHide(!this.showMenu)
+      },
+      setMenuShowOrHide(isShow) {
+        this.$parent.showMenu = isShow;
+        this.showMenu = isShow;
       }
     }
   }
