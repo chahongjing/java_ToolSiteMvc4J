@@ -282,9 +282,9 @@ public class EchartsController {
         ls.setType("dashed");
         sl.setLineStyle(ls);
         xAxis.setSplitLine(sl);
-        xAxis.setMin(0);
-        xAxis.setMax(100);
-        xAxis.setInterval(10);
+        xAxis.setMin(0f);
+        xAxis.setMax(100f);
+        xAxis.setInterval(10f);
         nd.getXAxis().add(xAxis);
 
         // y轴相关信息
