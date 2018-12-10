@@ -28,7 +28,10 @@ var router = new Router({
       {
         path: 'userList',
         name: '用户列表',
-        component: resolve => require(['../components/user/userList'], resolve)
+        component: resolve => require(['../components/user/userList'], resolve),
+        meta:{
+          'pageCode': 'userList_enter'
+        }
       },
       {
         path: 'userEdit',
@@ -128,11 +131,20 @@ var router = new Router({
 
 router.beforeEach(function (to, from, next) {
   var user = router.app.$store.state.user;
+  var permissionList = router.app.$store.state.permissionList;
   if(!user.userId && to && to.path != '/login') {
     next({
      path: '/login',
      query: {redirect: to.fullPath}  // 将跳转的路由path作为参数，登录成功后跳转到该路由
     });
+  }
+  // 判断有没有页面权限
+  if(to.meta.pageCode) {
+    if(!(permissionList && permissionList.some(item => item == to.meta.pageCode))) {
+      alert('没有权限！');
+      next(false);
+      return;
+    }
   }
   // 不跳转传false
   // next(false);

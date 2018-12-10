@@ -8,7 +8,8 @@ export default {
     mutations: {
         [SET_MENU](state, leftMenu) {
             sessionStorage.setItem('leftMenu', JSON.stringify(leftMenu))
-            Object.assign(state, leftMenu)
+          state.length = 0;
+          Array.prototype.push.apply(state, leftMenu);
         },
         [CLEAR_MENU](state) {
             sessionStorage.removeItem('leftMenu')
