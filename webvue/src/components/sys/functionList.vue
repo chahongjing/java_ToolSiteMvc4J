@@ -33,7 +33,7 @@
           <th class='w100'>操作</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody v-if='!pager.loading'>
         <tr v-for="(item, index) in list">
           <td class="text-center" v-text='((pager.pageNum - 1) * pager.pageSize) + index + 1'></td>
           <td>
@@ -54,6 +54,9 @@
         </tr>
         </tbody>
       </table>
+      <div class='nodata' v-if='!list || list.length == 0 || pager.loading'>
+        <div v-text='pager.loading ? "加载中..." : "没有数据！"'></div>
+      </div>
     </div>
     <div class='footer-pager'>
       <pagination :pager-info='pager'></pagination>

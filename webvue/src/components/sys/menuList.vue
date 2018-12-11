@@ -34,7 +34,7 @@
           <th class='w100'>操作</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody v-if='!pager.loading'>
         <tr v-for="(item, index) in list">
           <td class="text-center" v-text='index + 1'></td>
           <td>

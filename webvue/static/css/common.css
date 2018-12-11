@@ -315,7 +315,7 @@ th.sortheader:hover:before,th.sortheader:hover:after{opacity:1;}
 th.sortheader:before{content:'\f0de';}
 th.sortheader:after{content:'\f0dd';}
 th.sortheader.desc:before,th.sortheader.asc:after{color:green;}
-.nodata{width:100%;height:calc(100% - 44px);line-height: 100%;position:relative;}
+.nodata{width:100%;height:calc(100% - 44px);line-height: 100%;position:relative;background-color:rgba(0,0,0,0.1);}
 .nodata > div{position:absolute;top:50%;left:50%;transform: translate(-50%,-50%);font-weight:bold;font-size: 16px;}
 
 /* 列表 */

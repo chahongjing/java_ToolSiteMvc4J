@@ -1,7 +1,7 @@
 var commonService = {
   getPagerInfo: function (pager, callback) {
     pager.callback = callback;
-    pager.loading = false;
+    //pager.loading = false;
     return pager;
   }
 };
