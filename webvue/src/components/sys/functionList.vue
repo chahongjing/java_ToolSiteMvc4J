@@ -41,7 +41,7 @@
           </td>
           <td v-text='item.code'></td>
           <td v-text='item.menuName'></td>
-          <td v-text='item.path'></td>
+          <td v-text='item.path' v-tooltip='item.path'></td>
           <td class="text-center" v-text='item.seq'></td>
           <td class="operate">
             <a class='inline-block mybtn' href='javascript:void(0)' @click='permissionList(item)'>
@@ -75,7 +75,7 @@
     methods: {
       add() {
         var me = this;
-        this.axios.get('/comm/getId').then(function (resp) {
+        this.axios.get('/comm/getNewId').then(function (resp) {
           me.$router.push({path: '/sys/functionEdit', query: {id: resp.data.value}});
         });
 

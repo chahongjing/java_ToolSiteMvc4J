@@ -1,6 +1,6 @@
 package com.zjy.bll.service;
 
-import com.github.pagehelper.PageInfo;
+import com.zjy.bll.baseBean.PageBean;
 import com.zjy.bll.request.FunctionInfoRequest;
 import com.zjy.bll.vo.FunctionInfoVo;
 import com.zjy.entities.FunctionInfo;
@@ -18,7 +18,7 @@ public interface FunctionInfoService {
 
     FunctionInfoVo getVo(String id);
 
-    PageInfo<? extends FunctionInfo> queryPageList(FunctionInfoRequest request);
+    PageBean<? extends FunctionInfo> queryPageList(FunctionInfoRequest request);
 
     List<FunctionInfoVo> queryFunctionList();
 

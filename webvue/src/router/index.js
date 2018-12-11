@@ -36,12 +36,18 @@ var router = new Router({
       {
         path: 'userEdit',
         name: '用户详情',
-        component: resolve => require(['../components/user/userEdit'], resolve)
+        component: resolve => require(['../components/user/userEdit'], resolve),
+        meta:{
+          'pageCode': 'userEdit_enter'
+        }
       },
       {
         path: 'userRole',
         name: '用户角色',
-        component: resolve => require(['../components/user/userRole'], resolve)
+        component: resolve => require(['../components/user/userRole'], resolve),
+        meta:{
+          'pageCode': 'userRole_enter'
+        }
       }
     ]
   },
@@ -53,57 +59,90 @@ var router = new Router({
     {
       path: 'menuList',
       name: '菜单列表',
-      component: resolve => require(['../components/sys/menuList'], resolve)
+      component: resolve => require(['../components/sys/menuList'], resolve),
+        meta:{
+          'pageCode': 'menuList_enter'
+        }
     },
     {
       path: 'menuEdit',
       name: '菜单详情',
-      component: resolve => require(['../components/sys/menuEdit'], resolve)
+      component: resolve => require(['../components/sys/menuEdit'], resolve),
+        meta:{
+          'pageCode': 'menuEdit_enter'
+        }
     },
     {
       path: 'functionList',
       name: '功能列表',
-      component: resolve => require(['../components/sys/functionList'], resolve)
+      component: resolve => require(['../components/sys/functionList'], resolve),
+        meta:{
+          'pageCode': 'functionList_enter'
+        }
     },
     {
       path: 'functionEdit',
       name: '功能详情',
-      component: resolve => require(['../components/sys/functionEdit'], resolve)
+      component: resolve => require(['../components/sys/functionEdit'], resolve),
+        meta:{
+          'pageCode': 'functionEdit_enter'
+        }
     },
     {
       path: 'permissionList',
       name: '权限列表',
-      component: resolve => require(['../components/sys/permissionList'], resolve)
+      component: resolve => require(['../components/sys/permissionList'], resolve),
+        meta:{
+          'pageCode': 'permissionList_enter'
+        }
     },
     {
       path: 'permissionEdit',
       name: '权限详情',
-      component: resolve => require(['../components/sys/permissionEdit'], resolve)
+      component: resolve => require(['../components/sys/permissionEdit'], resolve),
+        meta:{
+          'pageCode': 'permissionEdit_enter'
+        }
     },
     {
       path: 'roleList',
       name: '角色列表',
-      component: resolve => require(['../components/sys/roleList'], resolve)
+      component: resolve => require(['../components/sys/roleList'], resolve),
+        meta:{
+          'pageCode': 'roleList_enter'
+        }
     },
     {
       path: 'roleEdit',
       name: '角色详情',
-      component: resolve => require(['../components/sys/roleEdit'], resolve)
+      component: resolve => require(['../components/sys/roleEdit'], resolve),
+        meta:{
+          'pageCode': 'roleEdit_enter'
+        }
     },
     {
       path: 'configInfoList',
       name: '配置列表',
-      component: resolve => require(['../components/sys/configInfoList'], resolve)
+      component: resolve => require(['../components/sys/configInfoList'], resolve),
+        meta:{
+          'pageCode': 'configInfoList_enter'
+        }
     },
     {
       path: 'configInfoEdit',
       name: '配置详情',
-      component: resolve => require(['../components/sys/configInfoEdit'], resolve)
+      component: resolve => require(['../components/sys/configInfoEdit'], resolve),
+        meta:{
+          'pageCode': 'configInfoEdit_enter'
+        }
     },
     {
       path: 'roleGrantPermission',
       name: '角色授权',
-      component: resolve => require(['../components/sys/roleGrantPermission'], resolve)
+      component: resolve => require(['../components/sys/roleGrantPermission'], resolve),
+        meta:{
+          'pageCode': 'roleGrantPermission_enter'
+        }
     },
     {
       path: '*',  //*号表示匹配任意内容
@@ -141,7 +180,7 @@ router.beforeEach(function (to, from, next) {
   // 判断有没有页面权限
   if(to.meta.pageCode) {
     if(!(permissionList && permissionList.some(item => item == to.meta.pageCode))) {
-      alert('没有权限！');
+      router.app.$toaster.error('没有权限！');
       next(false);
       return;
     }
@@ -161,8 +200,9 @@ router.beforeEach(function (to, from, next) {
       }
     }
     if(!breadcrumbIgnoreUrl.includes(to.path)) {
-      breadcrumb.push(to);
+      breadcrumb.push({name: to.name, path:to.path,query:to.query,params:to.params});
     }
+    router.app.$store.commit("SET_BREADCRUMB", breadcrumb);
   }
 
   next();

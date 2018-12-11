@@ -18,5 +18,9 @@ public interface CommonService {
      */
     <T extends IHierarchyBase> List<T> getHierarchyList(List<T> list);
 
+    String getNewId();
+
+    List<String> getNewIdList(int num);
+
     String getEnums();
 }

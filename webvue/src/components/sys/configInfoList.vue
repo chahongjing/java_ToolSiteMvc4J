@@ -77,7 +77,7 @@
     methods: {
       add() {
         var me = this;
-        this.axios.get('/comm/getId').then(function (resp) {
+        this.axios.get('/comm/getNewId').then(function (resp) {
           me.$router.push({path: '/sys/configInfoEdit', query: {id: resp.data.value}});
         });
 

@@ -1,7 +1,7 @@
 package com.zjy.web.controller;
 
-import com.github.pagehelper.PageInfo;
 import com.zjy.baseframework.BaseResult;
+import com.zjy.bll.baseBean.PageBean;
 import com.zjy.bll.request.RoleInfoRequest;
 import com.zjy.bll.service.RoleInfoService;
 import com.zjy.bll.vo.RoleInfoVo;
@@ -23,9 +23,9 @@ public class RoleController extends BaseController {
 
     @RequestMapping("/queryPageList")
     @ResponseBody
-    public BaseResult<PageInfo> queryPageList(RoleInfoRequest request) {
-        PageInfo<RoleInfoVo> pageInfo = (PageInfo<RoleInfoVo>) roleInfoSrv.queryPageList(request);
-        return BaseResult.OK(pageInfo);
+    public BaseResult<PageBean> queryPageList(RoleInfoRequest request) {
+        PageBean<RoleInfoVo> pageBean = (PageBean<RoleInfoVo>) roleInfoSrv.queryPageList(request);
+        return BaseResult.OK(pageBean);
     }
 
     @RequestMapping("/getDetail")

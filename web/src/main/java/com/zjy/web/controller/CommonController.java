@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -16,19 +17,26 @@ public class CommonController extends BaseController {
     @Autowired
     private CommonService commonSrv;
 
-    @RequestMapping("/getId")
+    @RequestMapping("/getNewId")
     @ResponseBody
-    public BaseResult<String> userList() {
-        return BaseResult.OK(UUID.randomUUID().toString());
+    public BaseResult<String> getNewId() {
+        return BaseResult.OK(commonSrv.getNewId());
     }
 
-    /**
-     * 返回所有枚举对象
-     * @return
-     */
-    @RequestMapping(value = "/getEnums", produces="application/javascript;charset=UTF-8")
+    @RequestMapping("/getNewIdList")
     @ResponseBody
-    public String getEnums() {
-        return commonSrv.getEnums();
+    public BaseResult<List<String>> getNewIdList(int num) {
+        return BaseResult.OK(commonSrv.getNewIdList(num));
     }
-}
+
+/**
+ * 返回所有枚举对象
+ *
+ * @return
+ */
+@RequestMapping(value = "/getEnums", produces = "application/javascript;charset=UTF-8")
+@ResponseBody
+public String getEnums() {
+        return commonSrv.getEnums();
+        }
+        }

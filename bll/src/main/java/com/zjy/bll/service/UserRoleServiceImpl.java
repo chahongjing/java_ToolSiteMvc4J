@@ -34,7 +34,7 @@ public class UserRoleServiceImpl extends BaseService<UserRoleDao, UserRole> impl
         RelateCheckVo root, role;
         root = new RelateCheckVo();
         root.setName("角色列表");
-        if(list.size() == 0) root.setShowDetail(true);
+        if (list.size() == 0) root.setShowDetail(true);
         list.add(root);
         List<RoleInfoVo> roleInfoVos = roleInfoSrv.queryAllRole();
         List<UserRoleVo> userRoleList = this.queryListByUserId(userId);
@@ -43,7 +43,7 @@ public class UserRoleServiceImpl extends BaseService<UserRoleDao, UserRole> impl
             role.setId(userId);
             role.setRelativeId(roleInfoVo.getRoleId());
             role.setName(roleInfoVo.getName());
-            if(userRoleList.stream().anyMatch(item -> item.getRoleId().equals(roleInfoVo.getRoleId()))) {
+            if (userRoleList.stream().anyMatch(item -> item.getRoleId().equals(roleInfoVo.getRoleId()))) {
                 role.setIsCheck(true);
             }
             root.getSubList().add(role);
@@ -53,12 +53,12 @@ public class UserRoleServiceImpl extends BaseService<UserRoleDao, UserRole> impl
 
     @Override
     public void saveUserRole(List<RelateCheckVo> list) {
-        if(CollectionUtils.isEmpty(list)) return;
+        if (CollectionUtils.isEmpty(list)) return;
         UserRole ur = new UserRole();
         for (RelateCheckVo item : list) {
             ur.setUserId(item.getId());
             ur.setRoleId(item.getRelativeId());
-            if(item.getIsCheck()) {
+            if (item.getIsCheck()) {
                 dao.add(ur);
             } else {
                 dao.deleteEntity(ur);
@@ -70,6 +70,6 @@ public class UserRoleServiceImpl extends BaseService<UserRoleDao, UserRole> impl
     public List<UserRoleVo> queryListByUserId(String userId) {
         UserRoleVo urv = new UserRoleVo();
         urv.setUserId(userId);
-        return (List<UserRoleVo>)dao.query(urv);
+        return (List<UserRoleVo>) dao.query(urv);
     }
 }

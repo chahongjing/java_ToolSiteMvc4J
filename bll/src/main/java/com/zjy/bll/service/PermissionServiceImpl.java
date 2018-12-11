@@ -1,7 +1,7 @@
 package com.zjy.bll.service;
 
-import com.github.pagehelper.PageInfo;
 import com.zjy.baseframework.ServiceException;
+import com.zjy.bll.baseBean.PageBean;
 import com.zjy.bll.common.BaseService;
 import com.zjy.bll.dao.PermissionDao;
 import com.zjy.bll.request.PermissionRequest;
@@ -71,12 +71,12 @@ public class PermissionServiceImpl extends BaseService<PermissionDao, Permission
     }
 
     @Override
-    public PageInfo<? extends Permission> queryPageList(PermissionRequest request) {
+    public PageBean<? extends Permission> queryPageList(PermissionRequest request) {
         Permission po = new Permission();
         po.setName(request.getName());
         po.setFunctionId(request.getFunctionId());
-        PageInfo<PermissionVo> pageInfo = (PageInfo<PermissionVo>) super.queryPageList(request, po);
-        return pageInfo;
+        PageBean<PermissionVo> pageBean = (PageBean<PermissionVo>) super.queryPageList(request, po);
+        return pageBean;
     }
 
     public PermissionVo get(String id) {
@@ -97,7 +97,7 @@ public class PermissionServiceImpl extends BaseService<PermissionDao, Permission
     }
 
     @Override
-    public List<PermissionVo> queryAllPermissionList(){
+    public List<PermissionVo> queryAllPermissionList() {
         return dao.queryAllPermissionList();
     }
 

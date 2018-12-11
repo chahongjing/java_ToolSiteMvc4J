@@ -1,6 +1,6 @@
 package com.zjy.bll.service;
 
-import com.github.pagehelper.PageInfo;
+import com.zjy.bll.baseBean.PageBean;
 import com.zjy.bll.request.PermissionRequest;
 import com.zjy.bll.vo.PermissionVo;
 import com.zjy.entities.Permission;
@@ -18,7 +18,7 @@ public interface PermissionService {
 
     PermissionVo getVo(String id);
 
-    PageInfo<? extends Permission> queryPageList(PermissionRequest request);
+    PageBean<? extends Permission> queryPageList(PermissionRequest request);
 
     List<PermissionVo> queryAllPermissionList();
 }

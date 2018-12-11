@@ -40,7 +40,7 @@ new Vue({
       this.$store.commit("USER_SIGNOUT");
     },
     getLeftMenu() {
-      return this.$store.state.lefeMenu;
+      return this.$store.state.leftMenu;
     },
     setLeftMenu(menuList) {
       this.$store.commit("SET_MENU", menuList);

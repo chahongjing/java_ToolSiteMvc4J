@@ -1,7 +1,7 @@
 package com.zjy.bll.service;
 
-import com.github.pagehelper.PageInfo;
 import com.zjy.baseframework.ServiceException;
+import com.zjy.bll.baseBean.PageBean;
 import com.zjy.bll.common.BaseService;
 import com.zjy.bll.dao.ConfigInfoDao;
 import com.zjy.bll.request.ConfigInfoRequest;
@@ -34,15 +34,15 @@ public class ConfigInfoServiceImpl extends BaseService<ConfigInfoDao, ConfigInfo
     }
 
     @Override
-    public PageInfo<? extends ConfigInfo> queryPageList(ConfigInfoRequest request) {
+    public PageBean<? extends ConfigInfo> queryPageList(ConfigInfoRequest request) {
         ConfigInfo configInfo = new ConfigInfo();
         configInfo.setName(request.getName());
-        PageInfo<ConfigInfoVo> pageInfo = (PageInfo<ConfigInfoVo>) super.queryPageList(request, configInfo);
-        for (ConfigInfoVo vo : pageInfo.getList()) {
+        PageBean<ConfigInfoVo> pageBean = (PageBean<ConfigInfoVo>) super.queryPageList(request, configInfo);
+        for (ConfigInfoVo vo : pageBean.getList()) {
             if (vo.getType() == null) continue;
             vo.setTypeName(vo.getType().getName());
         }
-        return pageInfo;
+        return pageBean;
     }
 
     @Override

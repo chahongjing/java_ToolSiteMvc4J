@@ -39,7 +39,7 @@
             <a class='block w100p h100p' href='javascript:void(0)' v-text='item.name' @click='edit(item)'></a>
           </td>
           <td v-text='item.functionName'></td>
-          <td v-text='item.code'></td>
+          <td v-text='item.code' v-tooltip='item.code'></td>
           <td class="text-center" v-text='item.seq'></td>
           <td class="operate">
             <a class='inline-block mybtn' href='javascript:void(0)' @click='deleteItem(item)'><i
@@ -70,7 +70,7 @@
     methods: {
       add() {
         var me = this;
-        this.axios.get('/comm/getId').then(function (resp) {
+        this.axios.get('/comm/getNewId').then(function (resp) {
           me.$router.push({path: '/sys/permissionEdit', query: {id: resp.data.value, functionId: me.functionId}});
         });
 

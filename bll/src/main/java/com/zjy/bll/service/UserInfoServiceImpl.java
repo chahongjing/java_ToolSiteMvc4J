@@ -1,9 +1,9 @@
 package com.zjy.bll.service;
 
-import com.github.pagehelper.PageInfo;
 import com.zjy.baseframework.BaseResult;
 import com.zjy.baseframework.ServiceException;
 import com.zjy.baseframework.enums.ResultStatus;
+import com.zjy.bll.baseBean.PageBean;
 import com.zjy.bll.common.BaseService;
 import com.zjy.bll.dao.UserInfoDao;
 import com.zjy.bll.request.UserInfoRequest;
@@ -110,18 +110,18 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
     }
 
     @Override
-    public PageInfo<? extends UserInfo> queryPageList(UserInfoRequest request) {
+    public PageBean<? extends UserInfo> queryPageList(UserInfoRequest request) {
         UserInfoVo user = new UserInfoVo();
         user.setUserName(request.getUserName());
         user.setUserCode(request.getUserName());
-        if(StringUtils.isNotBlank(request.getOrderBy())) {
-            if("ASC".equalsIgnoreCase(request.getOrderBy())) {
+        if (StringUtils.isNotBlank(request.getOrderBy())) {
+            if ("ASC".equalsIgnoreCase(request.getOrderBy())) {
                 request.setOrderBy("user.userName asc");
             } else {
                 request.setOrderBy("user.userName desc");
             }
         }
-        PageInfo<UserInfoVo> pageInfo = (PageInfo<UserInfoVo>) super.queryPageList(request, user);
+        PageBean<UserInfoVo> pageBean = (PageBean<UserInfoVo>) super.queryPageList(request, user);
 //        for (UserInfoVo userInfo : pageInfo.getList()) {
 //            if (userInfo.getSex() != null) {
 //                userInfo.setSexName(userInfo.getSex().getName());
@@ -133,7 +133,7 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
 //                userInfo.setIsSystemName(userInfo.getIsSystem().getName());
 //            }
 //        }
-        return pageInfo;
+        return pageBean;
     }
 
     /**
@@ -202,41 +202,43 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
             throw new ServiceException("编号重复！");
         }
     }
+
     @Override
-    public void changePassword(String userCode, String oldPassword, String newPassword){
+    public void changePassword(String userCode, String oldPassword, String newPassword) {
         UserInfo currentUser = shiroRealm.getCurrentUser();
-        if(currentUser == null) {
+        if (currentUser == null) {
             throw new ServiceException("用户未登录！");
         }
         String userCodeCur = currentUser.getUserCode();
-        if(!userCodeCur.equals(userCode)) {
+        if (!userCodeCur.equals(userCode)) {
             throw new ServiceException("参数错误！");
         }
         UserInfo user = this.getByUserCode(userCodeCur);
-        if(user == null) {
+        if (user == null) {
             throw new ServiceException("用户不存在！");
         }
-        if(StringUtils.isBlank(oldPassword)) {
+        if (StringUtils.isBlank(oldPassword)) {
             throw new ServiceException("请输入原密码！");
         }
-        if(StringUtils.isBlank(newPassword)) {
+        if (StringUtils.isBlank(newPassword)) {
             throw new ServiceException("请输入新密码！");
         }
         String oldPasswordEnc = shiroRealm.getMd5Hash(oldPassword, userCodeCur);
         String newPasswordEnc = shiroRealm.getMd5Hash(newPassword, userCodeCur);
-        if(!oldPasswordEnc.equals(user.getPassword())) {
+        if (!oldPasswordEnc.equals(user.getPassword())) {
             throw new ServiceException("原密码错误！");
         }
         user.setPassword(newPasswordEnc);
         dao.updateUserPassword(user.getUserId(), user.getPassword());
     }
+
     @Override
-    public void resetPassword(String userCode, String password){
+    public void resetPassword(String userCode, String password) {
         UserInfo user = this.getByUserCode(userCode);
-        if(user == null) {
+        if (user == null) {
             throw new ServiceException("用户不存在！");
         }
-        if(StringUtils.isBlank(password)) {
+        if (StringUtils.isBlank(password)) {
             throw new ServiceException("密码不能为空！");
         }
         String newPasswordEnc = shiroRealm.getMd5Hash(password, userCode);

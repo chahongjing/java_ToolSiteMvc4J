@@ -1,8 +1,8 @@
 package com.zjy.web.controller;
 
-import com.github.pagehelper.PageInfo;
 import com.zjy.baseframework.BaseResult;
 import com.zjy.baseframework.ServiceException;
+import com.zjy.bll.baseBean.PageBean;
 import com.zjy.bll.request.UserInfoRequest;
 import com.zjy.bll.service.UserInfoService;
 import com.zjy.bll.vo.UserInfoVo;
@@ -120,7 +120,7 @@ public class UserInfoController extends BaseController implements ServletConfigA
     @ResponseBody
     public BaseResult<String> save(UserInfoVo vo) {
         UserInfo currentUser = shiroRealm.getCurrentUser();
-        if(!shiroRealm.isPermitted("userEdit_save") && (currentUser != null && !currentUser.getUserCode().equals(vo.getUserCode()))) {
+        if (!shiroRealm.isPermitted("userEdit_save") && (currentUser != null && !currentUser.getUserCode().equals(vo.getUserCode()))) {
             throw new ServiceException("未授权！");
         }
         userInfoSrv.save(vo);
@@ -152,9 +152,9 @@ public class UserInfoController extends BaseController implements ServletConfigA
 
     @RequestMapping("/queryPageList")
     @ResponseBody
-    public BaseResult<PageInfo> queryPageList(UserInfoRequest request) {
-        PageInfo<UserInfoVo> pageInfo = (PageInfo<UserInfoVo>) userInfoSrv.queryPageList(request);
-        return BaseResult.OK(pageInfo);
+    public BaseResult<PageBean> queryPageList(UserInfoRequest request) {
+        PageBean<UserInfoVo> pageBean = (PageBean<UserInfoVo>) userInfoSrv.queryPageList(request);
+        return BaseResult.OK(pageBean);
     }
     // endregion
 }

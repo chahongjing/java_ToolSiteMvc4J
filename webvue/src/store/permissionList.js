@@ -8,7 +8,7 @@ export default {
     mutations: {
         [SET_PERMISSIONLIST](state, permissionList) {
             sessionStorage.setItem('permissionList', JSON.stringify(permissionList))
-          state.length = 0;
+          state = [];
           Array.prototype.push.apply(state, permissionList);
         },
         [CLEAR_PERMISSIONLIST](state) {

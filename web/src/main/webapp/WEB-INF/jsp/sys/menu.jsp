@@ -68,7 +68,7 @@
         };
 
         function addMenu(){
-            this.commonSrv.get("/comm/getId").then(function(resp) {
+            this.commonSrv.get("/comm/getNewId").then(function(resp) {
                 if (resp.data.status == Constant.AjaxStatus.OK) {
                     window.location = ctx + '/menu/menuEdit?menuId=' + resp.data.value;
                 } else {

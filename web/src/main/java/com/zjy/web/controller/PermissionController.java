@@ -1,7 +1,7 @@
 package com.zjy.web.controller;
 
-import com.github.pagehelper.PageInfo;
 import com.zjy.baseframework.BaseResult;
+import com.zjy.bll.baseBean.PageBean;
 import com.zjy.bll.request.PermissionRequest;
 import com.zjy.bll.service.FunctionInfoService;
 import com.zjy.bll.service.PermissionService;
@@ -23,44 +23,44 @@ public class PermissionController extends BaseController {
     @Autowired
     private FunctionInfoService functionInfoSrv;
 
-        @RequestMapping("/list")
-        public String list(String menuId, Model model) {
-            model.addAttribute("menuId", menuId);
-            return "sys/permission";
-        }
+    @RequestMapping("/list")
+    public String list(String menuId, Model model) {
+        model.addAttribute("menuId", menuId);
+        return "sys/permission";
+    }
 
-        @RequestMapping("/permissionEdit")
-        public String editPermission(String permissionId, String menuId, Model model) {
-            model.addAttribute("permissionId", permissionId);
-            model.addAttribute("menuId", menuId);
-            return "sys/permissionEdit";
-        }
+    @RequestMapping("/permissionEdit")
+    public String editPermission(String permissionId, String menuId, Model model) {
+        model.addAttribute("permissionId", permissionId);
+        model.addAttribute("menuId", menuId);
+        return "sys/permissionEdit";
+    }
 
-        @RequestMapping("/queryPageList")
-        @ResponseBody
-        public BaseResult<PageInfo<PermissionVo>> queryPageList(PermissionRequest request) {
-            PageInfo<PermissionVo> pageInfo = (PageInfo<PermissionVo>)permissionSrv.queryPageList(request);
-            return BaseResult.OK(pageInfo);
-        }
+    @RequestMapping("/queryPageList")
+    @ResponseBody
+    public BaseResult<PageBean<PermissionVo>> queryPageList(PermissionRequest request) {
+        PageBean<PermissionVo> pageBean = (PageBean<PermissionVo>) permissionSrv.queryPageList(request);
+        return BaseResult.OK(pageBean);
+    }
 
-        @RequestMapping("/getDetail")
-        @ResponseBody
-        public BaseResult<PermissionVo> getDetail(String id, String functionId) {
-            PermissionVo permissionVo = permissionSrv.getVo(id);
-            if(!permissionVo.getIsSave()) {
-                permissionVo.setFunctionId(functionId);
-                FunctionInfoVo functionInfo = functionInfoSrv.getVo(functionId);
-                permissionVo.setFunctionName(functionInfo.getName());
-            }
-            return BaseResult.OK(permissionVo);
+    @RequestMapping("/getDetail")
+    @ResponseBody
+    public BaseResult<PermissionVo> getDetail(String id, String functionId) {
+        PermissionVo permissionVo = permissionSrv.getVo(id);
+        if (!permissionVo.getIsSave()) {
+            permissionVo.setFunctionId(functionId);
+            FunctionInfoVo functionInfo = functionInfoSrv.getVo(functionId);
+            permissionVo.setFunctionName(functionInfo.getName());
         }
+        return BaseResult.OK(permissionVo);
+    }
 
-        @RequestMapping("/save")
-        @ResponseBody
-        public BaseResult<String> save(PermissionVo vo) {
-            permissionSrv.save(vo);
-            return BaseResult.OK("");
-        }
+    @RequestMapping("/save")
+    @ResponseBody
+    public BaseResult<String> save(PermissionVo vo) {
+        permissionSrv.save(vo);
+        return BaseResult.OK("");
+    }
 
     @RequestMapping("/delete")
     @ResponseBody

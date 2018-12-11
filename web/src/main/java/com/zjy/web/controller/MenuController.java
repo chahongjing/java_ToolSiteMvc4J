@@ -1,7 +1,7 @@
 package com.zjy.web.controller;
 
-import com.github.pagehelper.PageInfo;
 import com.zjy.baseframework.BaseResult;
+import com.zjy.bll.baseBean.PageBean;
 import com.zjy.bll.request.MenuRequest;
 import com.zjy.bll.service.MenuService;
 import com.zjy.bll.vo.MenuVo;
@@ -27,9 +27,9 @@ public class MenuController extends BaseController {
 
     @RequestMapping("/queryPageList")
     @ResponseBody
-    public BaseResult<PageInfo> queryPageList(MenuRequest request) {
-        PageInfo<MenuVo> pageInfo = (PageInfo<MenuVo>)menuSrv.queryPageList(request);
-        return BaseResult.OK(pageInfo);
+    public BaseResult<PageBean> queryPageList(MenuRequest request) {
+        PageBean<MenuVo> pageBean = (PageBean<MenuVo>) menuSrv.queryPageList(request);
+        return BaseResult.OK(pageBean);
     }
 
     @RequestMapping("/getDetail")
@@ -63,6 +63,7 @@ public class MenuController extends BaseController {
         model.addAttribute("menuId", menuId);
         return "sys/menuEdit";
     }
+
     @RequestMapping("/queryMenu")
     @ResponseBody
     public BaseResult queryMenu() {

@@ -7,10 +7,7 @@ import com.zjy.baseframework.interfaces.IHierarchyBase;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -62,6 +59,22 @@ public class CommonServiceImpl implements CommonService {
         return result;
     }
 
+    @Override
+    public String getNewId() {
+        return getNewIdList(1).get(0);
+    }
+
+    @Override
+    public List<String> getNewIdList(int num) {
+        num = num < 1 ? 1 : num;
+        List<String> idList = new ArrayList<>();
+        for (int i = 0; i < num; i++) {
+            idList.add(UUID.randomUUID().toString());
+        }
+        return idList;
+    }
+
+    @Override
     public String getEnums() {
         Map<String, Map<String, EnumBean>> enumBeanList = EnumHelper.getEnumBeanList();
         StringBuilder sb = new StringBuilder();

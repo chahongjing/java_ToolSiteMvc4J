@@ -114,14 +114,14 @@
     methods: {
       logout: function () {
         var me = this;
-        this.$confirm.confirm('确定要退出系统吗？', function () {
+        //this.$confirm.confirm('确定要退出系统吗？', function () {
           me.axios.get('/userinfo/logout').then(function (resp) {
             if (resp.data.status == ResultStatus.OK.key) {
               me.$root.clearUser();
               me.$router.push({path: '/login'});
             }
           });
-        });
+        //});
       },
       openChangePasswordDialog: function () {
         this.showchangePasswordDialog = true;

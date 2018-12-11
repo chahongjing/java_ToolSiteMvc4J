@@ -1,6 +1,6 @@
 package com.zjy.bll.service;
 
-import com.github.pagehelper.PageInfo;
+import com.zjy.bll.baseBean.PageBean;
 import com.zjy.bll.request.ConfigInfoRequest;
 import com.zjy.bll.vo.ConfigInfoVo;
 import com.zjy.entities.ConfigInfo;
@@ -19,5 +19,5 @@ public interface ConfigInfoService {
 
     ConfigInfoVo getVo(String id);
 
-    PageInfo<? extends ConfigInfo> queryPageList(ConfigInfoRequest request);
+    PageBean<? extends ConfigInfo> queryPageList(ConfigInfoRequest request);
 }

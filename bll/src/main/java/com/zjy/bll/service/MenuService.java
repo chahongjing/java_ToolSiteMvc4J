@@ -1,6 +1,6 @@
 package com.zjy.bll.service;
 
-import com.github.pagehelper.PageInfo;
+import com.zjy.bll.baseBean.PageBean;
 import com.zjy.bll.request.MenuRequest;
 import com.zjy.bll.vo.MenuVo;
 import com.zjy.entities.Menu;
@@ -18,7 +18,7 @@ public interface MenuService {
 
     MenuVo getVo(String id);
 
-    PageInfo<? extends Menu> queryPageList(MenuRequest request);
+    PageBean<? extends Menu> queryPageList(MenuRequest request);
 
     List<MenuVo> queryParentList();
 

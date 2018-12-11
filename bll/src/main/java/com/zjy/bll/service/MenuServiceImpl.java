@@ -1,7 +1,7 @@
 package com.zjy.bll.service;
 
-import com.github.pagehelper.PageInfo;
 import com.zjy.baseframework.ServiceException;
+import com.zjy.bll.baseBean.PageBean;
 import com.zjy.bll.common.BaseService;
 import com.zjy.bll.dao.MenuDao;
 import com.zjy.bll.request.MenuRequest;
@@ -87,11 +87,11 @@ public class MenuServiceImpl extends BaseService<MenuDao, Menu> implements MenuS
     }
 
     @Override
-    public PageInfo<? extends Menu> queryPageList(MenuRequest request) {
+    public PageBean<? extends Menu> queryPageList(MenuRequest request) {
         Menu po = new Menu();
         po.setName(request.getName());
-        PageInfo<MenuVo> pageInfo = (PageInfo<MenuVo>) super.queryPageList(request, po);
-        return pageInfo;
+        PageBean<MenuVo> pageBean = (PageBean<MenuVo>) super.queryPageList(request, po);
+        return pageBean;
     }
 
     public MenuVo get(String id) {
@@ -126,7 +126,7 @@ public class MenuServiceImpl extends BaseService<MenuDao, Menu> implements MenuS
     }
 
     @Override
-    public List<MenuVo> queryPageMenuList(){
+    public List<MenuVo> queryPageMenuList() {
         return dao.queryPageMenuList();
     }
 
@@ -143,12 +143,12 @@ public class MenuServiceImpl extends BaseService<MenuDao, Menu> implements MenuS
         List<MenuVo> children = list.stream().filter(item -> StringUtils.isNotBlank(item.getPId())).collect(Collectors.toList());
         List<RolePermissionVo> rolePermissionVos = rolePermissionSrv.queryRolePermission(roleIdList);
         for (MenuVo parent : parentList) {
-            if(!rolePermissionVos.stream().anyMatch(item -> roleIdList.contains(item.getRoleId()) && parent.getMenuId().equals(item.getPermissionId()))) {
+            if (!rolePermissionVos.stream().anyMatch(item -> roleIdList.contains(item.getRoleId()) && parent.getMenuId().equals(item.getPermissionId()))) {
                 continue;
             }
             result.add(parent);
             List<MenuVo> temp = children.stream().filter(item -> item.getPId().equals(parent.getMenuId())
-            && rolePermissionVos.stream().anyMatch(innerItem -> roleIdList.contains(innerItem.getRoleId()) && item.getMenuId().equals(innerItem.getPermissionId()))
+                    && rolePermissionVos.stream().anyMatch(innerItem -> roleIdList.contains(innerItem.getRoleId()) && item.getMenuId().equals(innerItem.getPermissionId()))
             ).collect(Collectors.toList());
             result.addAll(temp);
         }

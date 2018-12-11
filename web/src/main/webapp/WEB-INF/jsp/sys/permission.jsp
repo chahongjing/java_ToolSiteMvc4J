@@ -67,7 +67,7 @@
         };
 
         function addPermission(){
-            this.commonSrv.get("/comm/getId").then(function(resp) {
+            this.commonSrv.get("/comm/getNewId").then(function(resp) {
                 if (resp.data.status == Constant.AjaxStatus.OK) {
                     window.location = ctx + '/permission/permissionEdit?permissionId=' + resp.data.value + '&menuId=' + menuId;
                 } else {

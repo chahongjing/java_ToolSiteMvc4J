@@ -2,8 +2,8 @@ package com.zjy.bll.common;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.zjy.baseframework.ServiceException;
+import com.zjy.bll.baseBean.PageBean;
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.slf4j.Logger;
@@ -15,6 +15,7 @@ import java.util.Map;
 
 /**
  * 公共service
+ *
  * @author chahongjing
  * @create 2016-12-10 13:38
  */
@@ -40,6 +41,7 @@ public class BaseService<Dao extends BaseDao<T>, T> {
 
     /**
      * 添加
+     *
      * @param entity
      * @return
      */
@@ -50,6 +52,7 @@ public class BaseService<Dao extends BaseDao<T>, T> {
 
     /**
      * 修改
+     *
      * @param entity
      * @return
      */
@@ -60,6 +63,7 @@ public class BaseService<Dao extends BaseDao<T>, T> {
 
     /**
      * 删除
+     *
      * @param id
      * @return
      */
@@ -70,6 +74,7 @@ public class BaseService<Dao extends BaseDao<T>, T> {
 
     /**
      * 获取详情
+     *
      * @param id
      * @return
      */
@@ -80,6 +85,7 @@ public class BaseService<Dao extends BaseDao<T>, T> {
 
     /**
      * 查询简单列表
+     *
      * @param entity
      * @return
      */
@@ -90,17 +96,19 @@ public class BaseService<Dao extends BaseDao<T>, T> {
 
     /**
      * 查询简单列表（分页）
+     *
      * @param entity
      * @return
      */
-    public PageInfo<? extends T> queryPageList(PageInfomation pi, T entity) {
+    public PageBean<? extends T> queryPageList(PageInfomation pi, T entity) {
         logger.info("调用queryPageList方法:{}: {}", entity.getClass().getName(), JSON.toJSONString(entity));
         PageHelper.startPage(pi.getPageNum(), pi.getPageSize()).setOrderBy(pi.getOrderBy());
-        return new PageInfo<>(this.queryList(entity));
+        return new PageBean<>(this.queryList(entity));
     }
 
     /**
      * 查询复杂列表
+     *
      * @param query
      * @return
      */
@@ -111,14 +119,15 @@ public class BaseService<Dao extends BaseDao<T>, T> {
 
     /**
      * 查询复杂列表（分页）
+     *
      * @param pi
      * @param query
      * @return
      */
-    public PageInfo<? extends T> queryPageListByMapFilter(PageInfomation pi, Map<String, Object> query) {
+    public PageBean<? extends T> queryPageListByMapFilter(PageInfomation pi, Map<String, Object> query) {
         logger.info("调用queryPageListByMapFilter方法:PageInfomation: {}\tquery: {}", JSON.toJSONString(pi), JSON.toJSONString(query));
         PageHelper.startPage(pi.getPageNum(), pi.getPageSize()).setOrderBy(pi.getOrderBy());
-        return new PageInfo<>(this.queryListByMapFilter(query));
+        return new PageBean<>(this.queryListByMapFilter(query));
     }
 
     private void getSession() {

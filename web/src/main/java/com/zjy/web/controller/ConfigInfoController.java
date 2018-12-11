@@ -1,7 +1,7 @@
 package com.zjy.web.controller;
 
-import com.github.pagehelper.PageInfo;
 import com.zjy.baseframework.BaseResult;
+import com.zjy.bll.baseBean.PageBean;
 import com.zjy.bll.request.ConfigInfoRequest;
 import com.zjy.bll.service.ConfigInfoService;
 import com.zjy.bll.vo.ConfigInfoVo;
@@ -21,9 +21,9 @@ public class ConfigInfoController extends BaseController {
 
     @RequestMapping("/queryPageList")
     @ResponseBody
-    public BaseResult<PageInfo> queryPageList(ConfigInfoRequest request) {
-        PageInfo<ConfigInfoVo> pageInfo = (PageInfo<ConfigInfoVo>) configInfoSrv.queryPageList(request);
-        return BaseResult.OK(pageInfo);
+    public BaseResult<PageBean> queryPageList(ConfigInfoRequest request) {
+        PageBean<ConfigInfoVo> pageBean = (PageBean<ConfigInfoVo>) configInfoSrv.queryPageList(request);
+        return BaseResult.OK(pageBean);
     }
 
     @RequestMapping("/getDetail")

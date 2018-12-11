@@ -1,7 +1,7 @@
 package com.zjy.bll.service;
 
-import com.github.pagehelper.PageInfo;
 import com.zjy.baseframework.ServiceException;
+import com.zjy.bll.baseBean.PageBean;
 import com.zjy.bll.common.BaseService;
 import com.zjy.bll.dao.FunctionInfoDao;
 import com.zjy.bll.request.FunctionInfoRequest;
@@ -20,6 +20,9 @@ import java.util.Map;
 public class FunctionInfoServiceImpl extends BaseService<FunctionInfoDao, FunctionInfo> implements FunctionInfoService {
 
     @Autowired
+    protected CommonService commonSrv;
+
+    @Autowired
     protected PermissionService permissionSrv;
 
     /**
@@ -32,10 +35,10 @@ public class FunctionInfoServiceImpl extends BaseService<FunctionInfoDao, Functi
     @Transactional
     public int add(FunctionInfo entity) {
         Permission permission = new Permission();
-        permission.setPermissionId(entity.getFunctionId());
+        permission.setPermissionId(commonSrv.getNewId());
         permission.setFunctionId(entity.getFunctionId());
         permission.setName("进入页面");
-        permission.setCode("enter");
+        permission.setCode(String.format("%s_enter", entity.getCode()));
         permission.setSeq(0);
         permissionSrv.add(permission);
         return super.add(entity);
@@ -85,11 +88,11 @@ public class FunctionInfoServiceImpl extends BaseService<FunctionInfoDao, Functi
     }
 
     @Override
-    public PageInfo<? extends FunctionInfo> queryPageList(FunctionInfoRequest request) {
+    public PageBean<? extends FunctionInfo> queryPageList(FunctionInfoRequest request) {
         FunctionInfo po = new FunctionInfo();
         po.setName(request.getName());
-        PageInfo<FunctionInfoVo> pageInfo = (PageInfo<FunctionInfoVo>) super.queryPageList(request, po);
-        return pageInfo;
+        PageBean<FunctionInfoVo> pageBean = (PageBean<FunctionInfoVo>) super.queryPageList(request, po);
+        return pageBean;
     }
 
     public FunctionInfoVo get(String id) {
@@ -120,12 +123,12 @@ public class FunctionInfoServiceImpl extends BaseService<FunctionInfoDao, Functi
     }
 
     @Override
-    public List<FunctionInfoVo> queryFunctionList(){
+    public List<FunctionInfoVo> queryFunctionList() {
         return dao.queryFunctionList();
     }
 
     @Override
-    public List<FunctionInfoVo> queryAllFunctionList(){
+    public List<FunctionInfoVo> queryAllFunctionList() {
         return dao.queryAllFunctionList();
     }
 }

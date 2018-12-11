@@ -1,7 +1,7 @@
 package com.zjy.web.controller;
 
-import com.github.pagehelper.PageInfo;
 import com.zjy.baseframework.BaseResult;
+import com.zjy.bll.baseBean.PageBean;
 import com.zjy.bll.request.FunctionInfoRequest;
 import com.zjy.bll.service.FunctionInfoService;
 import com.zjy.bll.service.MenuService;
@@ -26,9 +26,9 @@ public class FunctionInfoController extends BaseController {
 
     @RequestMapping("/queryPageList")
     @ResponseBody
-    public BaseResult<PageInfo<FunctionInfoVo>> queryPageList(FunctionInfoRequest request) {
-        PageInfo<FunctionInfoVo> pageInfo = (PageInfo<FunctionInfoVo>) functionInfoSrv.queryPageList(request);
-        return BaseResult.OK(pageInfo);
+    public BaseResult<PageBean<FunctionInfoVo>> queryPageList(FunctionInfoRequest request) {
+        PageBean<FunctionInfoVo> pageBean = (PageBean<FunctionInfoVo>) functionInfoSrv.queryPageList(request);
+        return BaseResult.OK(pageBean);
     }
 
     @RequestMapping("/getDetail")

@@ -1,6 +1,6 @@
 package com.zjy.bll.service;
 
-import com.github.pagehelper.PageInfo;
+import com.zjy.bll.baseBean.PageBean;
 import com.zjy.bll.request.RoleInfoRequest;
 import com.zjy.bll.vo.RoleInfoVo;
 import com.zjy.entities.RoleInfo;
@@ -18,7 +18,7 @@ public interface RoleInfoService {
 
     RoleInfoVo getVo(String id);
 
-    PageInfo<? extends RoleInfo> queryPageList(RoleInfoRequest request);
+    PageBean<? extends RoleInfo> queryPageList(RoleInfoRequest request);
 
     List<RoleInfoVo> queryAllRole();
 }

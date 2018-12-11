@@ -1,7 +1,7 @@
 package com.zjy.bll.service;
 
-import com.github.pagehelper.PageInfo;
 import com.zjy.baseframework.ServiceException;
+import com.zjy.bll.baseBean.PageBean;
 import com.zjy.bll.common.BaseService;
 import com.zjy.bll.dao.RoleInfoDao;
 import com.zjy.bll.request.RoleInfoRequest;
@@ -83,11 +83,11 @@ public class RoleInfoServiceImpl extends BaseService<RoleInfoDao, RoleInfo> impl
     }
 
     @Override
-    public PageInfo<? extends RoleInfo> queryPageList(RoleInfoRequest request) {
+    public PageBean<? extends RoleInfo> queryPageList(RoleInfoRequest request) {
         RoleInfo po = new RoleInfo();
         po.setName(request.getName());
-        PageInfo<RoleInfoVo> pageInfo = (PageInfo<RoleInfoVo>) super.queryPageList(request, po);
-        return pageInfo;
+        PageBean<RoleInfoVo> pageBean = (PageBean<RoleInfoVo>) super.queryPageList(request, po);
+        return pageBean;
     }
 
     @Override

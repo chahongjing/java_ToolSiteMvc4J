@@ -1,7 +1,7 @@
 package com.zjy.bll.service;
 
-import com.github.pagehelper.PageInfo;
 import com.zjy.baseframework.BaseResult;
+import com.zjy.bll.baseBean.PageBean;
 import com.zjy.bll.request.UserInfoRequest;
 import com.zjy.bll.vo.UserInfoVo;
 import com.zjy.entities.UserInfo;
@@ -23,7 +23,7 @@ public interface UserInfoService {
 
     UserInfoVo getVo(String id);
 
-    PageInfo<? extends UserInfo> queryPageList(UserInfoRequest request);
+    PageBean<? extends UserInfo> queryPageList(UserInfoRequest request);
 
     BaseResult<UserInfoVo> login(UserInfo user);
 
