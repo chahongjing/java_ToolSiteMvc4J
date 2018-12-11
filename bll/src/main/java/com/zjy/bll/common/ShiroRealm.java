@@ -150,14 +150,14 @@ public class ShiroRealm extends AuthorizingRealm {
 
     public List<String> getRoles(String userId) {
         List<UserRoleVo> userRoleList = userRoleSrv.queryListByUserId(userId);
-        return userRoleList.stream().map(item -> item.getRoleCode()).collect(Collectors.toList());
+        return userRoleList.stream().map(item -> item.getRoleCode()).distinct().collect(Collectors.toList());
     }
 
     public List<String> getPermissions(String userId) {
         List<UserRoleVo> userRoleList = userRoleSrv.queryListByUserId(userId);
-        List<String> roleIdList = userRoleList.stream().map(item -> item.getRoleId()).collect(Collectors.toList());
+        List<String> roleIdList = userRoleList.stream().map(item -> item.getRoleId()).distinct().collect(Collectors.toList());
         List<RolePermissionVo> permissionList = rolePermissionSrv.queryRolePermission(roleIdList);
         return permissionList.stream().filter(item -> StringUtils.isNotBlank(item.getPermissionCode()))
-                .map(item -> item.getPermissionCode()).collect(Collectors.toList());
+                .map(item -> item.getPermissionCode()).distinct().collect(Collectors.toList());
     }
 }
