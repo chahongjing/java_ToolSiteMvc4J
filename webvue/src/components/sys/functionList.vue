@@ -23,40 +23,38 @@
     <div class='table-list'>
       <table class="table table-hover">
         <thead>
-        <tr>
-          <th class='w50'>#</th>
-          <th class=''>名称</th>
-          <th class='w150'>编码</th>
-          <th class='w120'>菜单</th>
-          <th class='w150'>路径</th>
-          <th class='w50'>序号</th>
-          <th class='w100'>操作</th>
-        </tr>
+          <tr>
+            <th class='w50'>#</th>
+            <th class=''>名称</th>
+            <th class='w150'>编码</th>
+            <th class='w120'>菜单</th>
+            <th class='w150'>路径</th>
+            <th class='w50'>序号</th>
+            <th class='w100'>操作</th>
+          </tr>
         </thead>
         <tbody v-if='!pager.loading'>
-        <tr v-for="(item, index) in list">
-          <td class="text-center" v-text='((pager.pageNum - 1) * pager.pageSize) + index + 1'></td>
-          <td>
-            <a class='block w100p h100p' href='javascript:void(0)' v-text='item.name' @click='edit(item)'></a>
-          </td>
-          <td v-text='item.code'></td>
-          <td v-text='item.menuName'></td>
-          <td v-text='item.path' v-tooltip='item.path'></td>
-          <td class="text-center" v-text='item.seq'></td>
-          <td class="operate">
-            <a class='inline-block mybtn' href='javascript:void(0)' @click='permissionList(item)'>
-              <i class='fa fa-id-badge'></i>
-            </a>
-            <a class='inline-block mybtn' href='javascript:void(0)' @click='deleteItem(item)'>
-              <i class='fa fa-trash cf05'></i>
-            </a>
-          </td>
-        </tr>
+          <tr v-for="(item, index) in list">
+            <td class="text-center" v-text='((pager.pageNum - 1) * pager.pageSize) + index + 1'></td>
+            <td>
+              <a class='block w100p h100p' href='javascript:void(0)' v-text='item.name' @click='edit(item)'></a>
+            </td>
+            <td v-text='item.code'></td>
+            <td v-text='item.menuName'></td>
+            <td v-text='item.path' v-tooltip='item.path'></td>
+            <td class="text-center" v-text='item.seq'></td>
+            <td class="operate">
+              <a class='inline-block mybtn' href='javascript:void(0)' @click='permissionList(item)'>
+                <i class='fa fa-id-badge'></i>
+              </a>
+              <a class='inline-block mybtn' href='javascript:void(0)' @click='deleteItem(item)'>
+                <i class='fa fa-trash cf05'></i>
+              </a>
+            </td>
+          </tr>
         </tbody>
       </table>
-      <div class='nodata' v-if='!list || list.length == 0 || pager.loading'>
-        <div v-text='pager.loading ? "加载中..." : "没有数据！"'></div>
-      </div>
+      <table-list-loading :list='list' :loading='pager.loading'></table-list-loading>
     </div>
     <div class='footer-pager'>
       <pagination :pager-info='pager'></pagination>
@@ -88,6 +86,9 @@
 
       },
       search() {
+        this.goPage(1);
+      },
+      queryList() {
         var me = this;
         me.pager.loading = true;
         this.axios.get('/function/queryPageList', {
@@ -105,7 +106,7 @@
       },
       goPage(page) {
         this.pager.pageNum = page;
-        this.search();
+        this.queryList();
       },
       deleteItem: function (entity) {
         var me = this;
@@ -113,7 +114,7 @@
           me.axios.get('/function/delete', {id: entity.functionId}).then(function (resp) {
             if (resp.data.status == ResultStatus.OK.key) {
               me.$toaster.success('删除成功！');
-              me.search();
+              me.queryList();
             } else if (resp.data.status == ResultStatus.NO.key){
               me.$toaster.warning(resp.data.message);
             }

@@ -128,7 +128,10 @@
         </div>
 
         <div class="form-group text-right mb0">
-          <button type="button" class="btn btn-primary mr5" @click="save">
+          <button type="button" class="btn btn-secondary" @click='goBack()'>
+            <i class='fa fa-times'></i><span>取消</span>
+          </button>
+          <button type="button" class="btn btn-primary mr5" @click="save" :disabled='allDisabled'>
             <i class='fa fa-save'></i>保存
           </button>
         </div>
@@ -142,6 +145,7 @@
     name: 'userEdit',
     data () {
       return {
+        allDisabled: true,
         user: {
           userId: null,
           userName: null,
@@ -168,16 +172,19 @@
       },
       getDetail: function (id) {
         var me = this;
+        this.allDisabled = true;
         this.axios.get('/userinfo/getDetail', {id: id}).then(function (resp) {
           if (resp.data.status == ResultStatus.OK.key) {
             me.user = resp.data.value;
           } else if (resp.data.status == ResultStatus.NO.key) {
 
           }
+          me.allDisabled = false;
         });
       },
       save: function () {
         var me = this;
+        this.allDisabled = true;
         this.axios.post('/userinfo/save', me.user).then(function (resp) {
           if (resp.data.status == ResultStatus.OK.key) {
             me.$toaster.success('保存成功！');
@@ -185,6 +192,7 @@
           } else if (resp.data.status == ResultStatus.NO.key) {
 
           }
+          me.allDisabled = false;
         });
       },
       getEnumList() {
@@ -198,6 +206,9 @@
           list.push(YesNo[item]);
         }
         this.YesNoList = list;
+      },
+      goBack() {
+        this.$root.goBack();
       }
     },
     mounted: function () {

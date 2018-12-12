@@ -113,3 +113,6 @@
     }
   }
 </script>
+<style scoped>
+  .table{min-width:850px;}
+</style>

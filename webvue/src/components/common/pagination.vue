@@ -76,7 +76,7 @@
 
 <style scoped>
   .list-pager {
-    margin-top: 10px;
+    margin-top: 5px;
     overflow: hidden;
   }
 

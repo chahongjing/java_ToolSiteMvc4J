@@ -215,7 +215,7 @@
     margin: auto;
     width: calc(100% - 30px);
     margin-top: 15px;
-    border-color: #5ba66c;
+    border-color: #393;
   }
 
   .panel-body {
@@ -235,11 +235,11 @@
   }
 
   .mypanel.subpanel {
-    border-color: #a0ccfb;
+    border-color: #39c;
   }
 
   .subpanel .mypanel.subpanel {
-    border-color: #ac80f3;
+    border-color: #96c;
   }
 
   .radio_checkbox {

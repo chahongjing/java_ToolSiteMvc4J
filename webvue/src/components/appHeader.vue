@@ -2,7 +2,7 @@
   <div class="head">
     <div class="logo">
       <a class='fl' href="#/" title="首页">
-        <i class="fa fa-android fa-2 white"></i>
+        <i class="fa fa-android fa-2x white"></i>
       </a>
       <span class="fl title pl10">首页</span>
     </div>

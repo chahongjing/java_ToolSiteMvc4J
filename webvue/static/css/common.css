@@ -157,7 +157,7 @@ background-color: #2068ed;border-radius: 50%;}
 }
 .slide-menu ul.sub-menu li:last-child {border-bottom:1px solid transparent;
 }
-.slide-menu ul.sub-menu > li i {position:absolute;top:12px;left:-40px;z-index:2;transition:0.3s;
+.slide-menu ul.sub-menu > li i {position:absolute;top:12px;left:-35px;z-index:2;transition:0.3s;
 }
 .slide-menu ul.sub-menu > li.selected i,.slide-menu ul.sub-menu > li:hover i{left:-3px;
 }
@@ -190,24 +190,15 @@ ul.sub-menu > li > a > b {position:absolute;top:0px;right:0;width:0px;height:0px
 .pointer{cursor: pointer;}
 .fabutton{padding:3px 5px;}
 .fa{margin-right:5px;}
-/*a{color:#523bdf;}*/
-.text-left{text-align:left;}
-.text-center{text-align:center;}
-.text-right{text-align:right;}
-
-.mybtn i.fa{transition:0.2s;}
-.mybtn:hover i.fa{transform:scale(1.2);}
+.mybtn i.fa{transition:0.1s;}
+.mybtn:hover i.fa{transform:scale(1.3);}
 
 .fl{float:left;}
 .fr{float:right;}
 .relative{position:relative;}
 .absolute{position:absolute;}
-
-.fa-2{font-size:2em}
-.fa-3{font-size:4em}
-.fa-4{font-size:7em}
-.fa-5{font-size:12em}
-.fa-6{font-size:20em}
+.block{display:block;}
+.inline-block{display:inline-block;}
 
 /* 颜色 */
 .white{color:#fff;}
@@ -228,14 +219,21 @@ ul.sub-menu > li > a > b {position:absolute;top:0px;right:0;width:0px;height:0px
 .cf3c{color:#f3c;}
 .cc39{color:#c39;}
 .c96c{color:#96c;}
+.c85c{color:#85c;}
+.c82a{color:#82a;}
 .c939{color:#939;}
 .c606{color:#606;}
 .c099{color:#099;}
 .c09c{color:#09c;}
 .c39c{color:#39c;}
+.c3c3{color:#3c3;}
 .ccff{color:#cff;}
 .c06f{color:#06f;}
 .c71a{color:#71a;}
+.cf90{color:#f90;}
+
+.bac099{background-color: #099;}
+.brc099{border-color: #099;}
 
 a{color:#08f;}
 a:hover{color:#06f;}
@@ -275,8 +273,6 @@ a:hover{color:#06f;}
 .pr20{padding-right:20px;}
 .pr5{padding-right:5px;}
 
-.block{display:block;}
-.inline-block{display:inline-block;}
 .oxh{overflow-x:hidden;}
 .oyh{overflow-y:hidden;}
 .oya{overflow-y:auto;}
@@ -298,31 +294,31 @@ a:hover{color:#06f;}
     background-color: transparent;
     background-image: none;
     border-color: #85c;}
-.btn-outline-purple:hover{color: #fff;
+.btn-outline-purple:hover:not(:disabled){color: #fff;
     background-color: #82a;
     border-color: #82a;}
 
 /*表格*/
-.table{margin:0;table-layout: fixed}
+.table{margin:0;table-layout: fixed;min-width:750px;}
 .table td,.table th{height:40px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;cursor:default;border:1px solid #d5dade;}
 .table thead td,.table thead th,.table th{background-color:#f1f3f6;text-align: center;padding-left:5px;padding-right:5px;border-bottom-width:1px;}
 .table tbody tr:hover td{background-color: #fffad4;}
-.table tbody tr td{border-left-width:0;border-right-width: 0;padding-left:7px;padding-right:7px;}
+.table tbody tr td{border-width:0;border-bottom-width: 1px;padding-left:7px;padding-right:7px;}
 .table td.operate{padding-top: 7px;padding-bottom:0;font-size: 16px;}
 .table th.sortheader{position:relative;cursor:pointer;padding-right:12px;}
+.table-list{flex:1;overflow: auto;}
 th.sortheader:before,th.sortheader:after{position:absolute;top:12px;right:2px;opacity:0.7;transition:0.2s;font:normal normal normal 16px/1 FontAwesome;color:#ccc;}
 th.sortheader:hover:before,th.sortheader:hover:after{opacity:1;}
 th.sortheader:before{content:'\f0de';}
 th.sortheader:after{content:'\f0dd';}
 th.sortheader.desc:before,th.sortheader.asc:after{color:green;}
-.nodata{width:100%;height:calc(100% - 44px);line-height: 100%;position:relative;background-color:rgba(0,0,0,0.1);}
+.nodata{width:100%;min-width:750px;height:calc(100% - 44px);line-height: 100%;position:relative;background-color:rgba(0,0,0,0.1);}
 .nodata > div{position:absolute;top:50%;left:50%;transform: translate(-50%,-50%);font-weight:bold;font-size: 16px;}
 
 /* 列表 */
 .list-header-but-group{line-height: 40px;min-height:50px;padding:0px 10px 9px 0;border-bottom:1px solid #ccc;}
 .searchbar{padding:15px 10px 5px;}
 .maincontent{width:100%;height:100%;display:flex;flex-flow:column;padding:5px 10px;}
-.table-list{flex:1;overflow: auto;}
 
 /* 表单 */
 .myform{font-size:0px;}

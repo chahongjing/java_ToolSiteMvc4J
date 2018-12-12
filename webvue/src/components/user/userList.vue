@@ -23,7 +23,7 @@
           </div>
         </div>
         <div class="form-group btn100">
-          <button type="button" class="btn btn-purple ml20" @click='search()'>
+          <button type="button" class="btn btn-purple ml20" @click='search()' :disabled='allDisabled'>
             <i class='fa fa-search mr5'></i>搜索
           </button>
         </div>
@@ -68,10 +68,12 @@
         </tr>
         </tbody>
       </table>
-      <div class='nodata' v-if='!list || list.length == 0 || pager.loading'>
-        <div v-text='pager.loading ? "加载中..." : "没有数据！"'></div>
-      </div>
-      <common-modal :show-modal='showchangePasswordDialog' :width='width'>
+      <table-list-loading :list='list' :loading='pager.loading'></table-list-loading>
+    </div>
+    <div class='footer-pager'>
+      <pagination :pager-info='pager'></pagination>
+    </div>
+    <common-modal :show-modal='showchangePasswordDialog' :width='width'>
       <div class="modal-header" slot='headerSlot'>
         <h5 class="modal-title">修改密码</h5>
         <button type="button" class="close" @click='showchangePasswordDialog = false'>
@@ -101,10 +103,6 @@
         </button>
       </div>
     </common-modal>
-    </div>
-    <div class='footer-pager'>
-      <pagination :pager-info='pager'></pagination>
-    </div>
   </div>
 </template>
 
@@ -116,6 +114,7 @@
     name: 'userList',
     data () {
       return {
+        allDisabled: true,
         searchKey: null,
         list: [],
         sexValue: '',
@@ -141,7 +140,11 @@
 
       },
       search() {
+        this.goPage(1);
+      },
+      queryList() {
         var me = this;
+        me.allDisabled = true;
         me.pager.loading = true;
         this.axios.get('/userinfo/queryPageList', {
           userName: this.searchKey,
@@ -155,18 +158,19 @@
             me.list = resp.data.value.list;
             me.pager = commonSrv.getPagerInfo(resp.data.value, me.goPage);
           }
+          me.allDisabled = false;
         });
       },
       goPage(page) {
         this.pager.pageNum = page;
-        this.search();
+        this.queryList();
       },
       deleteItem: function (entity) {
         var me = this;
         this.$confirm.confirm('确定要删除用户吗？', function () {
           me.axios.get('/userinfo/delete', {id: entity.userId}).then(function (resp) {
             me.$toaster.success('删除成功！');
-            me.search();
+            me.queryList();
           });
         });
       },
@@ -186,7 +190,7 @@
         } else {
           this.orderBy = 'asc';
         }
-        this.search();
+        this.queryList();
       },
       setPassword(entity) {
         this.userCode = entity.userCode;

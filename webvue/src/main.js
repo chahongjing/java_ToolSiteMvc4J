@@ -10,6 +10,7 @@ import axios from '@/common/axios'
 import confirm from '@/common/confirm';
 import toaster from '@/common/toaster';
 import pagination from '@/components/common/pagination'
+import tableListLoading from '@/components/common/tableListLoading'
 import dateTimePicker from '@/components/common/dateTimePicker';
 import ulTree from '@/components/common/ulTree';
 
@@ -20,6 +21,7 @@ Vue.prototype.axios = axios;
 Vue.prototype.$confirm = confirm;
 Vue.prototype.$toaster = toaster;
 Vue.component('pagination', pagination);
+Vue.component('tableListLoading', tableListLoading);
 Vue.component('dateTimePicker', dateTimePicker);
 Vue.component('ultree', ulTree);
 /* eslint-disable no-new */
