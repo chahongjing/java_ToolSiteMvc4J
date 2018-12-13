@@ -11,6 +11,3 @@
     props: {list: Array, loading: Boolean}
   }
 </script>
-
-<style scoped>
-</style>

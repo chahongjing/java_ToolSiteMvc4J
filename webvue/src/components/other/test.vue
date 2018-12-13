@@ -42,6 +42,10 @@
     </div>
     <hr>
     {{this.treeoption && this.treeoption.checkedResult && this.treeoption.checkedResult.name|| this.treeoption.checkedResult.map(item => item.name)}}
+
+    <div class='a'>
+      
+    </div>
   </div>
 </template>
 
@@ -227,5 +231,6 @@ export default {
   @import './static/js/jquery-ui.css'
   #mainRongQi{width:100%;border:1px solid #aaa;}
   #mainRongQi td{border:1px solid #aaa;height:30px;}
-  .mytree{border: 1px solid #ddd;padding: 10px;}
+  .mytree{border: 1px solid #ddd;padding: 10px 10px 10px 5px;}
+  .a{width:200px;height:200px;background-color:#fff;border:3px solid;border-image:linear-gradient(to bottom, red 0%, gold 100%);border-image-slice:1;}
 </style>

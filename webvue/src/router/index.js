@@ -11,41 +11,50 @@ var router = new Router({
     component: resolve => require(['../components/headerAndMenu'], resolve),
     children:[{
       path: '/',
-      name: '首页',
-      component: resolve => require(['../components/index'], resolve)
+      name: 'home',
+      component: resolve => require(['../components/index'], resolve),
+      meta: {
+          breadcurmbName: '首页',
+      }
     }]
   },
   {
     path: '/login',
-    name: '用户登录',
-    component: resolve => require(['../components/user/login'], resolve)
+    name: 'login',
+    component: resolve => require(['../components/user/login'], resolve),
+      meta: {
+          breadcurmbName: '用户登录',
+      }
   },
   {
     path: '/user',
-    name: '用户',
+    name: 'user',
     component: resolve => require(['../components/headerAndMenu'], resolve),
     children: [
       {
         path: 'userList',
-        name: '用户列表',
+        name: 'userList',
         component: resolve => require(['../components/user/userList'], resolve),
         meta:{
+          breadcurmbName: '用户列表',
           'pageCode': 'userList_enter'
         }
       },
       {
         path: 'userEdit',
-        name: '用户详情',
+        name: 'userEdit',
         component: resolve => require(['../components/user/userEdit'], resolve),
         meta:{
+          breadcurmbName: '用户详情',
           'pageCode': 'userEdit_enter'
         }
       },
       {
         path: 'userRole',
-        name: '用户角色',
+        name: 'userRole',
         component: resolve => require(['../components/user/userRole'], resolve),
         meta:{
+          breadcurmbName: '用户角色',
           'pageCode': 'userRole_enter'
         }
       }
@@ -53,94 +62,105 @@ var router = new Router({
   },
   {
     path: '/sys',
-    name: '系统模块',
+    name: 'sys',
     component: resolve => require(['../components/headerAndMenu'], resolve),
     children: [
     {
       path: 'menuList',
-      name: '菜单列表',
+      name: 'menuList',
       component: resolve => require(['../components/sys/menuList'], resolve),
         meta:{
+          breadcurmbName: '菜单列表',
           'pageCode': 'menuList_enter'
         }
     },
     {
       path: 'menuEdit',
-      name: '菜单详情',
+      name: 'menuEdit',
       component: resolve => require(['../components/sys/menuEdit'], resolve),
         meta:{
+          breadcurmbName: '菜单详情',
           'pageCode': 'menuEdit_enter'
         }
     },
     {
       path: 'functionList',
-      name: '功能列表',
+      name: 'functionList',
       component: resolve => require(['../components/sys/functionList'], resolve),
         meta:{
+          breadcurmbName: '功能列表',
           'pageCode': 'functionList_enter'
         }
     },
     {
       path: 'functionEdit',
-      name: '功能详情',
+      name: 'functionEdit',
       component: resolve => require(['../components/sys/functionEdit'], resolve),
         meta:{
+          breadcurmbName: '功能详情',
           'pageCode': 'functionEdit_enter'
         }
     },
     {
       path: 'permissionList',
-      name: '权限列表',
+      name: 'permissionList',
       component: resolve => require(['../components/sys/permissionList'], resolve),
         meta:{
+          breadcurmbName: '权限列表',
           'pageCode': 'permissionList_enter'
         }
     },
     {
       path: 'permissionEdit',
-      name: '权限详情',
+      name: 'permissionEdit',
       component: resolve => require(['../components/sys/permissionEdit'], resolve),
         meta:{
+          breadcurmbName: '权限详情',
           'pageCode': 'permissionEdit_enter'
         }
     },
     {
       path: 'roleList',
-      name: '角色列表',
+      name: 'roleList',
       component: resolve => require(['../components/sys/roleList'], resolve),
         meta:{
+          breadcurmbName: '角色列表',
           'pageCode': 'roleList_enter'
         }
     },
     {
       path: 'roleEdit',
-      name: '角色详情',
+      name: 'roleEdit',
       component: resolve => require(['../components/sys/roleEdit'], resolve),
         meta:{
+          breadcurmbName: '角色详情',
           'pageCode': 'roleEdit_enter'
         }
     },
     {
       path: 'configInfoList',
-      name: '配置列表',
+      name: 'configInfoList',
       component: resolve => require(['../components/sys/configInfoList'], resolve),
         meta:{
+          breadcurmbName: '配置列表',
           'pageCode': 'configInfoList_enter'
         }
     },
     {
       path: 'configInfoEdit',
-      name: '配置详情',
+      name: 'configInfoEdit',
       component: resolve => require(['../components/sys/configInfoEdit'], resolve),
         meta:{
+          breadcurmbName: '配置详情',
           'pageCode': 'configInfoEdit_enter'
         }
     },
     {
       path: 'roleGrantPermission',
-      name: '角色授权',
+      name: 'roleGrantPermission',
       component: resolve => require(['../components/sys/roleGrantPermission'], resolve),
         meta:{
+          breadcurmbName: '角色授权',
           'pageCode': 'roleGrantPermission_enter'
         }
     },
@@ -149,6 +169,7 @@ var router = new Router({
       title: '首页',
       redirect: '/',
       meta: {
+          breadcurmbName: '首页',
         inMenu: false
       }
     }
@@ -160,7 +181,7 @@ var router = new Router({
     children: [
     {
         path: 'test',
-        name: '测试',
+        name: 'test',
         component: resolve => require(['../components/other/test'], resolve)
       }
     ]
@@ -200,7 +221,7 @@ router.beforeEach(function (to, from, next) {
       }
     }
     if(!breadcrumbIgnoreUrl.includes(to.path)) {
-      breadcrumb.push({name: to.name, path:to.path,query:to.query,params:to.params});
+      breadcrumb.push({name: to.meta.breadcurmbName, path:to.path,query:to.query,params:to.params});
     }
     router.app.$store.commit("SET_BREADCRUMB", breadcrumb);
   }

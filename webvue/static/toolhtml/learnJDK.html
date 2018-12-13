@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'> 
+	<title>学习jdk</title>
+	<link rel='stylesheet' type='text/css' href='../bootstrap/css/bootstrap.min.css'>
+	<link rel='stylesheet' type='text/css' href='../css/common.css'>
+</head> 
+<body class='elearn'>
+	<h2>Java5</h2>
+	<h4>开发代号为Tiger(老虎),于2004-09-30发行</h4>
+	<p>
+		<ul class="list">
+			<li>泛型</li>
+			<li>枚举</li>
+			<li>自动装箱拆箱</li>
+			<li>可变参数</li>
+			<li>注解</li>
+			<li>foreach循环（增强for、for/in）</li>
+			<li>静态导入</li>
+			<li>格式化（System.out.println 支持%s %d等格式化输出）</li>
+			<li>线程框架/数据结构 JUC</li>
+			<li>Arrays工具类/StringBuilder/instrument</li>
+		</ul>
+	</p>
+	<hr>
+	<h2>Java6</h2>
+	<h4>开发代号为Mustang(野马),于2006-12-11发行</h4>
+	<p>
+		<ul class="list">
+			<li>Web Services</li>
+			<li>Scripting（开启JS的支持，算是比较有用的）</li>
+			<li>Database, Mustang 将联合绑定 Java DB (Apache Derby). JDBC 4.0 增加了许多特性例如支持XML作为SQL数据类型，更好的集成Binary Large OBjects (BLOBs) 和 Character Large OBjects (CLOBs) .</li>
+			<li>More Desktop APIs</li>
+			<li>Monitoring and Management.</li>
+			<li>Compiler Access（这个很厉害）compiler API提供编程访问javac，可以实现进程内编译，动态产生Java代码。</li>
+			<li>Pluggable Annotation</li>
+			<li>Desktop Deployment.</li>
+			<li>XML-数字签名(XML-DSIG) APIs 用于创建和操纵数字签名); 新的方法来访问本地平台的安全服务</li>
+			<li>Arrays工具类/StringBuilder/instrument</li>
+		</ul>
+	</p>
+	<hr>
+	<h2>Java 7</h2>
+	<p>
+		<ul class="list">
+			<li>switch中添加对String类型的支持</li>
+			<li>数字字面量的改进 / 数值可加下划</li>
+			<li>异常处理（捕获多个异常） try-with-resources</li>
+			<li>增强泛型推断</li>
+			<li>JSR203 NIO2.0（AIO）新IO的支持</li>
+			<li>JSR292与InvokeDynamic指令</li>
+			<li>Path接口、DirectoryStream、Files、WatchService（重要接口更新）</li>
+			<li>fork/join framework</li>
+		</ul>
+	</p>
+	<hr>
+	<h2>Java 8 </h2>
+	<h4>Java 8可谓是自Java 5以来最具革命性的版本了，她在语言、编译器、类库、开发工具以及Java虚拟机等方面都带来了不少新特性。</h4>
+	<p>
+		<ul class="list">
+			<li>Lambda表达式</li>
+			<li>接口的默认方法与静态方法</li>
+			<li>方法引用（含构造方法引用）</li>
+			<li>重复注解</li>
+			<li>扩展注解的支持（类型注解）</li>
+			<li>Optional</li>
+			<li>Stream</li>
+			<li>Date/Time API (JSR 310)</li>
+			<li>JavaScript引擎Nashorn</li>
+			<li>Base64</li>
+		</ul>
+	</p>
+	<hr>
+	<h2>Java 9</h2>
+	<h4> 经过4次跳票，历经曲折的java 9 终于终于在2017年9月21日发布（距离上个版本足足3年半时间）java 9 提供了超过 150 项新功能特性，包括备受期待的模块化系统、可交互的 REPL 工具：jshell，JDK 编译工具，Java 公共 API 和私有代码，以及安全增强、扩展提升、性能管理改善等。可以说 Java 9 是一个庞大的系统工程，完全做了一个整体改变。但本博文只介绍最重要的十大新特性</h4>
+	<p>
+		<ul class="list">
+			<li>平台级modularity（原名：Jigsaw） 模块化系统</li>
+			<li>Java 的 REPL 工具： jShell 命令</li>
+			<li>多版本兼容 jar 包（这个在处理向下兼容方面，非常好用）</li>
+			<li>语法改进：接口的私有方法</li>
+			<li>语法改进：UnderScore(下划线)使用的限制</li>
+			<li>底层结构：String 存储结构变更（这个很重要）</li>
+			<li>集合工厂方法：快速创建只读集合</li>
+			<li>增强的 Stream API</li>
+			<li>全新的 HTTP 客户端 API</li>
+		</ul>
+	</p>
+	<hr>
+	<h2>Java 10</h2>
+	<h4> 2018年3月20日，Java 10 正式发布，这一次没有跳票。它号称有109项新特性，包含12个JEP。需要注意的是，本次Java10并不是Oracle的官方LTS版本，还是坐等java11的发布再考虑在生产中使用</h4>
+	<p>
+		<ul class="list">
+			<li>局部变量的类型推断 var关键字</li>
+			<li>GC改进和内存管理 并行全垃圾回收器 G1</li>
+			<li>垃圾回收器接口</li>
+			<li>线程-局部变量管控</li>
+			<li>合并 JDK 多个代码仓库到一个单独的储存库中</li>
+			<li>新增API：ByteArrayOutputStream</li>
+			<li>新增API：List、Map、Set</li>
+			<li>新增API：java.util.Properties</li>
+			<li>新增API： Collectors收集器</li>
+		</ul>
+	</p>
+	<hr>
+	<h2>Java 11</h2>
+	<h4> 2018年9月26日，Oracle 官方宣布 Java 11 正式发布。这是 Java 大版本周期变化后的第一个长期支持版本（LTS版本，Long-Term-Support，持续支持到2026年9月），非常值得关注。Java11 带来了 ZGC、Http Client 等重要特性，一共包含 17 个 JEP（JDK Enhancement Proposals，JDK 增强提案）。</h4>
+	<p>
+		<ul class="list">
+			<li>本地变量类型推断</li>
+			<li>字符串加强</li>
+			<li>集合加强</li>
+			<li>Stream 加强</li>
+			<li>Optional 加强</li>
+			<li>InputStream 加强</li>
+			<li>HTTP Client API</li>
+			<li>化繁为简，一个命令编译运行源代码</li>
+		</ul>
+	</p>
+	<hr>
+</body> 
+</html>

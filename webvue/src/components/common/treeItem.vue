@@ -107,7 +107,9 @@
   ul ul > li.folder:after{width:5px;}
   /** 垂直方向连线 */
   ul > li:before{content:' ';position:absolute;top:0;left:-5px;height:100%;border-left-width:1px;}
+  .mytree > li:before{border-left-width:0;}
   ul > li:last-child:before{content:' ';position:absolute;top:0;left:-5px;height:13px;border-left-width:1px;}
+  .mytree > li:last-child:before{border-left-width:0;}
   .radio_checkbox span{padding:0;margin-left:0;height:0;line-height:inherit;}
   .radio_checkbox input + i{left:0;top:3px;}
   .radio_checkbox input + i:after{left:2;}

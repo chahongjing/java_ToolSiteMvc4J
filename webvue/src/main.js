@@ -56,6 +56,11 @@ new Vue({
     setBreadcrumb(breadcurmbList) {
       this.$store.commit("SET_BREADCRUMB", breadcurmbList);
     },
+    setBreadcrumbName(name) {
+      var list = this.$store.state.breadcrumb;
+      if(!list || list.length == 0) return;
+      list[list.length - 1].name = name;
+    },
     clearBreadrumb() {
       this.$store.commit("CLEAR_BREADCRUMB");
     },
@@ -70,7 +75,7 @@ new Vue({
     },
     goBack: function () {
       var breadcrumb = this.getBreadcrumb();
-      if (breadcrumb.length == 1) {
+      if (breadcrumb.length <= 1) {
         this.clearBreadrumb();
         this.$router.push({path: '/'});
         return;
