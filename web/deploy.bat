@@ -1,5 +1,5 @@
-rem ÏÈÔÚtomcat-users.xmlÎÄ¼şÖĞÌí¼Ó <role rolename="manager-gui"/><role rolename="manager-script" /><user username="admin" password="admin" roles="manager-script,admin-gui" />
-rem ÔÙµ½mvn settings.xmlÎÄ¼şÖĞÅäÖÃ<server><id>tomcat7</id><username>admin</username><password>admin</password></server>
+rem å…ˆåœ¨tomcat-users.xmlæ–‡ä»¶ä¸­æ·»åŠ  <role rolename="manager-gui"/><role rolename="manager-script" /><user username="admin" password="admin" roles="manager-script,admin-gui" />
+rem å†åˆ°mvn settings.xmlæ–‡ä»¶ä¸­é…ç½®<server><id>tomcat7</id><username>admin</username><password>admin</password></server>
 @echo off
 title deploy project
 echo.
