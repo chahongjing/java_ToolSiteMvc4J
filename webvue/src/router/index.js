@@ -182,7 +182,11 @@ var router = new Router({
     {
         path: 'test',
         name: 'test',
-        component: resolve => require(['../components/other/test'], resolve)
+        component: resolve => require(['../components/other/test'], resolve),
+      meta: {
+          breadcurmbName: '测试',
+        inMenu: false
+      }
       }
     ]
   }
@@ -221,7 +225,8 @@ router.beforeEach(function (to, from, next) {
       }
     }
     if(!breadcrumbIgnoreUrl.includes(to.path)) {
-      breadcrumb.push({name: to.meta.breadcurmbName, path:to.path,query:to.query,params:to.params});
+      breadcrumb.push({name: to.meta.breadcurmbName || to.name, path:to.path,
+        query:to.query,params:to.params});
     }
     router.app.$store.commit("SET_BREADCRUMB", breadcrumb);
   }

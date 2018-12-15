@@ -58,7 +58,6 @@ axios.interceptors.response.use(function (response) {
     if(error.response.data instanceof ArrayBuffer) {
        var enc = new TextDecoder('utf-8');
        var res = JSON.parse(enc.decode(new Uint8Array(error.response.data)));
-       toaster.error(res.message);
        result.data = res;
     } else if (error.response.data instanceof Blob) {
       Utility.readBlobAsText(error.response.data, function (data) {

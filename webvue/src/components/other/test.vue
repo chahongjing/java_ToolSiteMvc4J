@@ -134,10 +134,14 @@ export default {
       });
     },
     ajaxDownload() {
+      var me = this;
       this.axios.postDownload('/learn/download').then(function (resp) {
-        if (resp.data.status == ResultStatus.OK.key) {
+        if(resp.data instanceof ArrayBuffer || resp.data instanceof Blob) {
           Utility.blobDownload(resp.data, resp.headers);
         } else if (resp.data.status == ResultStatus.NO.key) {
+          me.$toaster.error(resp.data.message);
+        } else if (resp.data.status == ResultStatus.ERROR.key) {
+          me.$toaster.error(resp.data.message);
         }
       });
     },
