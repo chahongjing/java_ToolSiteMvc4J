@@ -38,7 +38,7 @@ ul,li{margin:0;padding:0;list-style:none;}
 .body .bread{width:100%;height:35px;border-bottom:0px solid #aaa;background-color: #f5f5f5;}
 .body .bread ul,.body .bread ul li{height:100%;line-height: 35px;display:inline-block;}
 .body .bread ul{font-size:0;}
-.body .bread ul li{font-size:14px;position:relative;}
+.body .bread ul li{font-size:14px;position:relative;vertical-align: top;}
 .body .bread .bread-item{margin-left:17px;}
 .body .bread .bread-item:before{font:normal normal normal 14px/1 FontAwesome;content:'\f054';display:inline-block;position: absolute;
 font-size:12px;top: 12px;left: -12px;color:#666;}

@@ -382,6 +382,34 @@
     v[4] += 12;
     return new Date(v[0], v[1], v[2], v[3] || v[4], v[5], v[6]);
   }
+  // 函数名称： format
+  // 函数功能： 字符串格式化
+  // 函数参数： args: 格式化参数
+  // 返 回 值： 无
+  // 创 建 人： zengjy01
+  // 创建日期： 2014-05-11 11:57:24
+  String.prototype.format = function (args) {
+    var result = this;
+    if (arguments.length > 0) {
+      if (arguments.length == 1 && typeof (args) == "object") {
+        for (var key in args) {
+          if (args[key] !== undefined) {
+            var reg = new RegExp("({" + key + "})", "g");
+            result = result.replace(reg, args[key]);
+          }
+        }
+      } else {
+        for (var i = 0; i < arguments.length; i++) {
+          if (arguments[i] !== undefined) {
+            //var reg = new RegExp("({[" + i + "]})", "g");//这个在索引大于9时会有问题
+            var reg2 = new RegExp("({)" + i + "(})", "g");
+            result = result.replace(reg2, arguments[i]);
+          }
+        }
+      }
+    }
+    return result;
+  };
   // 用正则表达式去掉字符串前后空格
   String.prototype.trim = String.prototype.trim || function () {
     return this.replace(/(^\s*)|(\s*$)/g, "");

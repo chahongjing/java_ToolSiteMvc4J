@@ -26,7 +26,26 @@
         </thead>
         <tbody>
           <tr v-for='rongQi in list'>
-            <td :data-id='rongQi.id' class='sortable'>
+            <td :data-id='rongQi.id' class='sortable a'>
+              <span v-for='item in rongQi.dataList' v-text='item.name + "" + item.xuhao' :data-id='item.id' :data-pid='rongQi.id'>
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <table id='mainRongQi2' class='w100p'>
+        <thead>
+          <tr>
+            <th>
+              内容
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for='rongQi in list2'>
+            <td :data-id='rongQi.id' class='sortable b'>
               <span v-for='item in rongQi.dataList' v-text='item.name + "" + item.xuhao' :data-id='item.id' :data-pid='rongQi.id'>
               </span>
             </td>
@@ -88,6 +107,7 @@ export default {
   data () {
     return {
       list: [],
+      list2: [],
       html: "这是<b style=\"color:red\">html</b>提示",
       treeData: treeDataList,
       treeoption:treeoption
@@ -115,22 +135,35 @@ export default {
     },
     ajaxDownload() {
       this.axios.postDownload('/learn/download').then(function (resp) {
-        if (resp) {
+        if (resp.data.status == ResultStatus.OK.key) {
           Utility.blobDownload(resp.data, resp.headers);
+        } else if (resp.data.status == ResultStatus.NO.key) {
         }
       });
     },
     initDrag() {
       var me = this;
-      var sortable = $(".sortable");
+      var sortable = $(".a");
       sortable.sortable({
-        connectWith: ".sortable",
+        containment: sortable.closest('table'),
+        connectWith: sortable,
+        appendTo: sortable,
         revert: true,
         scrollSensitivity: 20,
-        containment: '#mainRongQi',
-        appendTo: sortable,
         start: me.dragStart,
-        stop: me.dragStop
+        stop: function(event, curEle) {return me.dragStop(event, curEle, me.list);}
+      }).disableSelection();
+
+
+      var sortable = $(".b");
+      sortable.sortable({
+        containment: sortable.closest('table'),
+        connectWith: sortable,
+        appendTo: sortable,
+        revert: true,
+        scrollSensitivity: 20,
+        start: me.dragStart,
+        stop: function(event, curEle) {return me.dragStop(event, curEle, me.list2);}
       }).disableSelection();
     },
     dragStart(event, curEle) {
@@ -138,9 +171,9 @@ export default {
         curEle.helper.css({backgroundColor:'rgba(255,255,255,0.5)'});
         // curEle.placeholder.css({visibility:'visible !important'});
       },
-      dragStop(event, curEle) {
+      dragStop(event, curEle, list) {
         // 获取信息
-        var map = this.findParentsAndCurrent(curEle);
+        var map = this.findParentsAndCurrent(list, curEle);
         var newParent = map.get('newParent'), oldParent = map.get('oldParent'),
         newIndex = map.get('newIndex'), oldIndex = map.get('oldIndex'),
         current = map.get('current');
@@ -167,13 +200,13 @@ export default {
         // 撤销jquery的dom操作，因为数据列表已发生变化,vue会自动更新列表
         return false;
       },
-      findParentsAndCurrent(curEle) {
-        var map = new Map(), rongQi, td = curEle.item.closest('td'),
-        oldParentRongQiId = curEle.item.attr('data-pid') + '', newParentRongQiId = td.data('id') + '',
+      findParentsAndCurrent(list, curEle) {
+        var map = new Map(), rongQi, newParent = curEle.item.closest('td'),
+        oldParentRongQiId = curEle.item.attr('data-pid') + '', newParentRongQiId = newParent.attr('data-id') + '',
         elId = curEle.item.attr('data-id') + '', newIdList = [];
         // 查找父级
-        for (var i = 0; i < this.list.length; i++) {
-          rongQi = this.list[i];
+        for (var i = 0; i < list.length; i++) {
+          rongQi = list[i];
             // 找到新父级
             if (rongQi.id == newParentRongQiId) {
               map.set('newParent', rongQi);
@@ -184,7 +217,7 @@ export default {
             }
           }
         // 新父级子节点顺序
-        var children = td.children();
+        var children = newParent.children();
         for (var i = 0; i < children.length; i++) {
           newIdList.push($(children[i]).attr('data-id'));
         }
@@ -221,6 +254,18 @@ export default {
       this.list.push({id:'A', dataList:list1});
       this.list.push({id:'B', dataList:list2});
 
+      list1 = [];
+      list2 = [];
+      list1.push({id:1,pId:'A', xuhao:0,name:'第七个'});
+      list1.push({id:2,pId:'A', xuhao:1,name:'第八个'});
+      list1.push({id:3,pId:'A', xuhao:2,name:'第九个'});
+      list2.push({id:4,pId:'B', xuhao:0,name:'第十个'});
+      list2.push({id:5,pId:'B', xuhao:1,name:'第十一个'});
+      list2.push({id:6,pId:'B', xuhao:2,name:'第十二个'});
+
+      this.list2.push({id:'A', dataList:list1});
+      this.list2.push({id:'B', dataList:list2});
+
       this.$nextTick(function() {
         me.initDrag();
       });
@@ -229,8 +274,8 @@ export default {
 </script>
 <style scoped>
   @import './static/js/jquery-ui.css'
-  #mainRongQi{width:100%;border:1px solid #aaa;}
-  #mainRongQi td{border:1px solid #aaa;height:30px;}
+  #mainRongQi,#mainRongQi2{width:100%;border:1px solid #aaa;}
+  #mainRongQi td,#mainRongQi2 td{border:1px solid #aaa;height:30px;}
   .mytree{border: 1px solid #ddd;padding: 10px 10px 10px 5px;}
   .a{width:200px;height:200px;background-color:#fff;border:3px solid;border-image:linear-gradient(to bottom, red 0%, gold 100%);border-image-slice:1;}
 </style>

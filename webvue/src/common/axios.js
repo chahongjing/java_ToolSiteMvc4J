@@ -15,14 +15,14 @@ axios.defaults.paramsSerializer = function (params) {
   return $.param(params);
 };
 axios.defaults.transformRequest = [function (data) {
-  if (data && !(data instanceof FormData)) {
+  if (data && !(data instanceof FormData || data instanceof ArrayBuffer)) {
     data = $.param(data);
     // data = Qs.stringify(data);
   }
   return data;
 }]
 axios.defaults.transformResponse = [function (data) {
-  if (data && !(data instanceof Blob)) {
+  if (data && !(data instanceof Blob || data instanceof ArrayBuffer)) {
     var data = $.parseJSON(data);
     // var data = Qs.parse(data);
     if (data.status == ResultStatus.UNAUTHENTICATION.key) {
@@ -55,7 +55,12 @@ axios.interceptors.response.use(function (response) {
     result.data.status = ResultStatus.UNAUTHORIZED.key;
     result.data.message = ResultStatus.UNAUTHORIZED.name;
   } else if (error.response.status == 500) {
-    if (error.response.data instanceof Blob) {
+    if(error.response.data instanceof ArrayBuffer) {
+       var enc = new TextDecoder('utf-8');
+       var res = JSON.parse(enc.decode(new Uint8Array(error.response.data)));
+       toaster.error(res.message);
+       result.data = res;
+    } else if (error.response.data instanceof Blob) {
       Utility.readBlobAsText(error.response.data, function (data) {
         var res = {};
         res.data = JSON.parse(data);
@@ -116,7 +121,7 @@ var axiosIns = {
     });
   },
   postDownload: function (path, param) {
-    return axios.post(this.getAjaxUrl(path), param, {responseType: 'blob'}).catch(function (resp) {
+    return axios.post(this.getAjaxUrl(path), param, {responseType: 'arraybuffer'}).catch(function (resp) {
       if (resp.status == ResultStatus.UNAUTHORIZED.key) {
         toaster.error(resp.message);
       }
