@@ -8,7 +8,8 @@ export default {
     mutations: {
         [SET_BREADCRUMB](state, breadcrumb) {
             sessionStorage.setItem('breadcrumb', JSON.stringify(breadcrumb))
-          state = [];
+            if(state == breadcrumb) return;
+          state.length = 0;
           Array.prototype.push.apply(state, breadcrumb);
         },
         [CLEAR_BREADCRUMB](state) {
