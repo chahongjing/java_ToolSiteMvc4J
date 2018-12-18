@@ -13,7 +13,7 @@
       </li>
     </ul>
     <button type="button" class="btn btn-outline-purple btn-sm fr mr5 mt4" @click='goBack()'
-       v-if='showBreadcrumb'>
+       v-if='showGoBack'>
       <i class='fa fa-reply mr5'></i>返回
     </button>
   </div>
@@ -50,10 +50,9 @@
       }
     },
     computed: {
-      showBreadcrumb: function() {
+      showGoBack: function() {
         var breadcrumb = this.$store && this.$store.state && this.$store.state.breadcrumb;
-        if(breadcrumb && breadcrumb.length > 0) return true;
-        return false;
+        return breadcrumb && breadcrumb.length > 0;
       }
     }
   }
@@ -62,5 +61,7 @@
 <style scoped>
   .fa-home {
     color: #93c;
+    transition:0.1s;
   }
+  .fa-home:hover{transform:scale(1.2);}
 </style>
