@@ -42,9 +42,6 @@
         var list = this.$root.getMenuList();
         if(list && list.length > 0) {
           this.list = list;
-          if(!this.list || this.list.length == 0) {
-            this.setMenuShowOrHide(false);
-          }
         } else {
           var me = this;
           me.axios.get('/menu/queryMenu').then(function (resp) {
