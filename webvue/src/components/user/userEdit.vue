@@ -128,7 +128,7 @@
         </div>
 
         <div class="form-group text-right mb0">
-          <button type="button" class="btn btn-outline-info" @click='goBack()'>
+          <button type="button" class="btn btn-outline-primary" @click='goBack()'>
             <i class='fa fa-arrow-circle-o-left'></i><span>返回</span>
           </button>
           <button type="button" class="btn btn-primary mr5" @click="save" :disabled='allDisabled'>
