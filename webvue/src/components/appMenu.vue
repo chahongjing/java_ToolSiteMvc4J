@@ -1,5 +1,5 @@
 <template>
-  <div class="menu" :class='{"hidemenu":!showMenu}'>
+  <div class="menu" :class='{"hidemenu":!showMenuNew}'>
     <div class="slide-menu">
       <ul class="first-menu">
         <li v-for="item in list" :class="{'selected': item.isSelected}" :title="item.name"
@@ -31,7 +31,6 @@
     name: 'appMenu',
     data () {
       return {
-        showMenu: true,
         list: []
       }
     },
@@ -40,7 +39,7 @@
     },
     methods: {
       getMenuData: function () {
-        var list = this.$root.getLeftMenu();
+        var list = this.$root.getMenuList();
         if(list && list.length > 0) {
           this.list = list;
           if(!this.list || this.list.length == 0) {
@@ -79,7 +78,7 @@
               if(!me.list || me.list.length == 0) {
                 me.setMenuShowOrHide(false);
               }
-              me.$root.setLeftMenu(me.list);
+              me.$root.setMenuList(me.list);
             }
           });
           this.$nextTick(function () {
@@ -95,7 +94,7 @@
       clickFirstMenu: function (item) {
         if (item.isSelected) {
           item.isSelected = false;
-          this.$root.setLeftMenu(this.list);
+          this.$root.setMenuList(this.list);
           return;
         }
         for (var i = 0; i < this.list.length; i++) {
@@ -106,7 +105,7 @@
             obj.isSelected = false;
           }
         }
-        this.$root.setLeftMenu(this.list);
+        this.$root.setMenuList(this.list);
       },
       clickSecondMenu: function (item, sub, $event) {
         $event.stopPropagation();
@@ -122,15 +121,19 @@
           }
         }
         sub.isSelected = true;
-        this.$root.setLeftMenu(this.list);
+        this.$root.setMenuList(this.list);
         this.$router.push({path: sub.data.url});
       },
       toggleMenu() {
-        this.setMenuShowOrHide(!this.showMenu)
+        this.setMenuShowOrHide(!this.$root.getShowMenu());
       },
       setMenuShowOrHide(isShow) {
-        this.$parent.showMenu = isShow;
-        this.showMenu = isShow;
+        this.$root.setShowMenu(isShow);
+      }
+    },
+    computed: {
+      showMenuNew() {
+        return this.$root.getShowMenu();
       }
     }
   }

@@ -64,7 +64,7 @@
             me.user = resp.data.value;
             me.$root.setUser(me.user);
             me.$root.setPermissionList(me.user.permissionList);
-            me.$root.clearMenu();
+            me.$root.clearMenuList();
             me.$root.clearBreadrumb();
             window.Utility.initialQuery();
             if (window.Query.redirect) {

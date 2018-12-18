@@ -3,7 +3,7 @@
     <app-header></app-header>
     <div class="body">
       <app-menu></app-menu>
-      <div class="right-main" :class='{"fullwin":!showMenu}'>
+      <div class="right-main" :class='{"fullwin":!showMenuNew}'>
         <breadcrumb></breadcrumb>
         <div class="right-content">
           <router-view/>
@@ -20,9 +20,9 @@
   import breadcrumb from '@/components/breadcrumb'
   export default {
     name: 'headerAndMenu',
-    data () {
-      return {
-        showMenu: true
+    computed: {
+      showMenuNew() {
+        return this.$root.getShowMenu();
       }
     },
     components:{appHeader, appMenu, breadcrumb}

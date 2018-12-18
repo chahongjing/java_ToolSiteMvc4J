@@ -41,17 +41,20 @@ new Vue({
     clearUser() {
       this.$store.commit("USER_SIGNOUT");
     },
-    getLeftMenu() {
-      return this.$store.state.leftMenu.leftMenu;
+    getMenuList() {
+      return this.$store.state.leftMenu.menuList;
     },
-    getShowLeftMenu() {
-      return this.$store.state.leftMenu.showLeftMenu;
+    setMenuList(menuList) {
+      this.$store.commit("SET_MENULIST", menuList);
     },
-    setLeftMenu(menuList) {
-      this.$store.commit("SET_MENU", menuList);
+    clearMenuList() {
+      this.$store.commit("CLEAR_MENULIST");
     },
-    clearMenu() {
-      this.$store.commit("CLEAR_MENU");
+    getShowMenu() {
+      return this.$store.state.leftMenu.showMenu;
+    },
+    setShowMenu(showMenu) {
+      this.$store.commit("SET_SHOWMENU", showMenu);
     },
     getBreadcrumb() {
       return this.$store.state.breadcrumb;
