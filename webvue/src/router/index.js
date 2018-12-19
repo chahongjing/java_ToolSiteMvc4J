@@ -173,6 +173,14 @@ var router = new Router({
         }
     },
     {
+      path: '404',
+      name: '404',
+      component: resolve => require(['../components/common/404'], resolve),
+        meta:{
+          breadcurmbName: '无法访问'
+        }
+    },
+    {
       path: '*',
       name: '*',
       component: resolve => require(['../components/common/404'], resolve),
@@ -201,6 +209,10 @@ var router = new Router({
 });
 
 router.beforeEach(function (to, from, next) {
+  if (to.matched.length === 0) {
+    next({name: '404'});
+    return;
+  }
   var user = router.app.$store.state.user;
   var permissionList = router.app.$store.state.permissionList;
   if(Vue.config.devtools) {
