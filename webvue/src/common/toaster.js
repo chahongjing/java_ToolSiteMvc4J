@@ -5,6 +5,7 @@ import 'vue-toastr/dist/vue-toastr.css'
 const VueComponent = Vue.extend(Toastr);
 const vm = new VueComponent().$mount();
 vm.defaultProgressBar = false;
+vm.defaultPosition = "toast-bottom-right";
 let init = false;
 
 if (!init) {

@@ -160,6 +160,7 @@
     cursor: pointer;
     background-color: transparent;
     transition: 0.3s;
+    z-index: 1;
   }
 
   .tog i {

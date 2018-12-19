@@ -217,10 +217,7 @@ router.beforeEach(function (to, from, next) {
     if(!(permissionList && permissionList.some(item => item == to.meta.pageCode))) {
       // router.app.$toaster.error('没有权限！');
       // next(false);
-      next({
-       path: '/sys/401',
-       query: {redirect: to.fullPath}
-      });
+      next({name: '401'});
       return;
     }
   }
