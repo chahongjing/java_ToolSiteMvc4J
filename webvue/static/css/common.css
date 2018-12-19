@@ -314,7 +314,7 @@ a:hover{color:#06f;}
 .table td.operate{padding-top: 7px;padding-bottom:0;font-size: 16px;}
 .table th.sortheader{position:relative;cursor:pointer;padding-right:12px;}
 .table-list{flex:1;overflow: auto;}
-th.sortheader:before,th.sortheader:after{position:absolute;top:12px;right:2px;opacity:0.7;transition:0.2s;font:normal normal normal 16px/1 FontAwesome;color:#ccc;}
+th.sortheader:before,th.sortheader:after{position:absolute;top:12px;right:2px;opacity:0.7;transition:0.2s;font:normal normal normal 16px/1 FontAwesome;color:#999;}
 th.sortheader:hover:before,th.sortheader:hover:after{opacity:1;}
 th.sortheader:before{content:'\f0de';}
 th.sortheader:after{content:'\f0dd';}
