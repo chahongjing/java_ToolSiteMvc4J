@@ -84,7 +84,7 @@
             }
           } else if (resp.data.status == ResultStatus.NO.key) {
             me.$toaster.warning(resp.data.message);
-            this.allDisabled = false;
+            me.allDisabled = false;
           }
         });
       }

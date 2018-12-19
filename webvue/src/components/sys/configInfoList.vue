@@ -1,7 +1,7 @@
 <template>
   <div class='maincontent w100p h100p'>
     <div class='list-header-but-group'>
-      <button type="button inline-block" class="btn btn-outline-purple" @click="add()">
+      <button type="button inline-block" class="btn btn-outline-purple" @click="add()" v-authcode='"configInfoList_add"'>
         <i class='fa fa-plus mr5'></i>添加
       </button>
     </div>
@@ -50,7 +50,7 @@
           <td v-text='item.relateWebsite'></td>
           <td v-text='item.memo' v-tooltip='item.memo'></td>
           <td class="operate">
-            <a class='inline-block mybtn' href='javascript:void(0)' @click='deleteItem(item)'><i
+            <a class='inline-block mybtn' href='javascript:void(0)' @click='deleteItem(item)' v-authcode='"configInfoList_delete"'><i
             class='fa fa-trash cf05'></i></a>
           </td>
         </tr>

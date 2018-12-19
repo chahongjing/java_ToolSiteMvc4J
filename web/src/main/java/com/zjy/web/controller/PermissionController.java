@@ -7,6 +7,7 @@ import com.zjy.bll.service.FunctionInfoService;
 import com.zjy.bll.service.PermissionService;
 import com.zjy.bll.vo.FunctionInfoVo;
 import com.zjy.bll.vo.PermissionVo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,6 +39,7 @@ public class PermissionController extends BaseController {
 
     @RequestMapping("/queryPageList")
     @ResponseBody
+    @RequiresPermissions("permissionList_enter")
     public BaseResult<PageBean<PermissionVo>> queryPageList(PermissionRequest request) {
         PageBean<PermissionVo> pageBean = (PageBean<PermissionVo>) permissionSrv.queryPageList(request);
         return BaseResult.OK(pageBean);
@@ -45,6 +47,7 @@ public class PermissionController extends BaseController {
 
     @RequestMapping("/getDetail")
     @ResponseBody
+    @RequiresPermissions("permissionEdit_enter")
     public BaseResult<PermissionVo> getDetail(String id, String functionId) {
         PermissionVo permissionVo = permissionSrv.getVo(id);
         if (!permissionVo.getIsSave()) {
@@ -57,6 +60,7 @@ public class PermissionController extends BaseController {
 
     @RequestMapping("/save")
     @ResponseBody
+    @RequiresPermissions("permissionEdit_save")
     public BaseResult<String> save(PermissionVo vo) {
         permissionSrv.save(vo);
         return BaseResult.OK("");
@@ -64,6 +68,7 @@ public class PermissionController extends BaseController {
 
     @RequestMapping("/delete")
     @ResponseBody
+    @RequiresPermissions("permissionList_delete")
     public BaseResult<String> delete(String id) {
         permissionSrv.delete(id);
         return BaseResult.OK("");

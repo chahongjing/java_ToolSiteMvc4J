@@ -1,7 +1,7 @@
 <template>
   <div class='maincontent w100p h100p'>
     <div class='list-header-but-group'>
-      <button type="button inline-block" class="btn btn-outline-purple" @click="add()">
+      <button type="button inline-block" class="btn btn-outline-purple" @click="add()" v-authcode='"permissionList_add"'>
         <i class='fa fa-plus mr5'></i>添加
       </button>
     </div>
@@ -42,7 +42,7 @@
           <td v-text='item.code' v-tooltip='item.code'></td>
           <td class="text-center" v-text='item.seq'></td>
           <td class="operate">
-            <a class='inline-block mybtn' href='javascript:void(0)' @click='deleteItem(item)'><i
+            <a class='inline-block mybtn' href='javascript:void(0)' @click='deleteItem(item)' v-authcode='"permissionList_delete"'><i
             class='fa fa-trash cf05'></i></a>
           </td>
         </tr>

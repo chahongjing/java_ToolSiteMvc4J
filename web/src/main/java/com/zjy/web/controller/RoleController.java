@@ -5,6 +5,7 @@ import com.zjy.bll.baseBean.PageBean;
 import com.zjy.bll.request.RoleInfoRequest;
 import com.zjy.bll.service.RoleInfoService;
 import com.zjy.bll.vo.RoleInfoVo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,7 @@ public class RoleController extends BaseController {
 
     @RequestMapping("/queryPageList")
     @ResponseBody
+    @RequiresPermissions("roleList_enter")
     public BaseResult<PageBean> queryPageList(RoleInfoRequest request) {
         PageBean<RoleInfoVo> pageBean = (PageBean<RoleInfoVo>) roleInfoSrv.queryPageList(request);
         return BaseResult.OK(pageBean);
@@ -30,6 +32,7 @@ public class RoleController extends BaseController {
 
     @RequestMapping("/getDetail")
     @ResponseBody
+    @RequiresPermissions("roleEdit_enter")
     public BaseResult<RoleInfoVo> getDetail(String id) {
         RoleInfoVo userInfo = roleInfoSrv.getVo(id);
         return BaseResult.OK(userInfo);
@@ -37,6 +40,7 @@ public class RoleController extends BaseController {
 
     @RequestMapping("/save")
     @ResponseBody
+    @RequiresPermissions("roleEdit_save")
     public BaseResult<String> save(RoleInfoVo vo) {
         roleInfoSrv.save(vo);
         return BaseResult.OK("");
@@ -44,6 +48,7 @@ public class RoleController extends BaseController {
 
     @RequestMapping("/delete")
     @ResponseBody
+    @RequiresPermissions("roleList_delete")
     public BaseResult<String> delete(String id) {
         roleInfoSrv.delete(id);
         return BaseResult.OK("");

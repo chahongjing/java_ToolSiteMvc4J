@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.zjy.baseframework.BaseResult;
 import com.zjy.bll.service.RolePermissionService;
 import com.zjy.bll.vo.RelateCheckVo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,12 +21,14 @@ public class RolePermissionController extends BaseController {
     private RolePermissionService rolePermissionSrv;
 
     @RequestMapping("/getRolePermission")
+    @RequiresPermissions("roleGrantPermission_enter")
     public BaseResult<List<RelateCheckVo>> getRolePermission(String id) {
         List<RelateCheckVo> list = rolePermissionSrv.getRolePermission(id);
         return BaseResult.OK(list);
     }
 
     @RequestMapping("/savePermission")
+    @RequiresPermissions("roleGrantPermission_enter")
     public BaseResult savePermission(String listStr) {
         List<RelateCheckVo> list = JSON.parseArray(listStr, RelateCheckVo.class);
         rolePermissionSrv.savePermission(list);

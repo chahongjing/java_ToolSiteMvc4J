@@ -104,6 +104,7 @@ public class UserInfoController extends BaseController implements ServletConfigA
     }
 
     @RequestMapping("/userEdit")
+    @RequiresPermissions("userEdit_enter")
     public String editUser(String userId, Model model) {
         model.addAttribute("userId", userId);
         return "sys/userEdit";
@@ -111,6 +112,7 @@ public class UserInfoController extends BaseController implements ServletConfigA
 
     @RequestMapping("/getDetail")
     @ResponseBody
+    @RequiresPermissions("userEdit_enter")
     public BaseResult<UserInfoVo> getDetail(String id) {
         UserInfoVo userInfo = userInfoSrv.getVo(id);
         return BaseResult.OK(userInfo);
@@ -118,6 +120,7 @@ public class UserInfoController extends BaseController implements ServletConfigA
 
     @RequestMapping("/save")
     @ResponseBody
+    @RequiresPermissions("userEdit_save")
     public BaseResult<String> save(UserInfoVo vo) {
         UserInfo currentUser = shiroRealm.getCurrentUser();
         if (!shiroRealm.isPermitted("userEdit_save") && (currentUser != null && !currentUser.getUserCode().equals(vo.getUserCode()))) {
@@ -152,6 +155,7 @@ public class UserInfoController extends BaseController implements ServletConfigA
 
     @RequestMapping("/queryPageList")
     @ResponseBody
+    @RequiresPermissions("userList_enter")
     public BaseResult<PageBean> queryPageList(UserInfoRequest request) {
         PageBean<UserInfoVo> pageBean = (PageBean<UserInfoVo>) userInfoSrv.queryPageList(request);
         return BaseResult.OK(pageBean);

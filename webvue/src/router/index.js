@@ -165,13 +165,20 @@ var router = new Router({
         }
     },
     {
-      path: '*',  //*号表示匹配任意内容
-      title: '首页',
-      redirect: '/',
-      meta: {
-          breadcurmbName: '首页',
-        inMenu: false
-      }
+      path: '401',
+      name: '401',
+      component: resolve => require(['../components/common/401'], resolve),
+        meta:{
+          breadcurmbName: '未授权'
+        }
+    },
+    {
+      path: '*',
+      name: '*',
+      component: resolve => require(['../components/common/404'], resolve),
+        meta:{
+          breadcurmbName: '无法访问'
+        }
     }
     ]
   },
@@ -208,8 +215,12 @@ router.beforeEach(function (to, from, next) {
   // 判断有没有页面权限
   if(to.meta.pageCode) {
     if(!(permissionList && permissionList.some(item => item == to.meta.pageCode))) {
-      router.app.$toaster.error('没有权限！');
-      next(false);
+      // router.app.$toaster.error('没有权限！');
+      // next(false);
+      next({
+       path: '/sys/401',
+       query: {redirect: to.fullPath}
+      });
       return;
     }
   }

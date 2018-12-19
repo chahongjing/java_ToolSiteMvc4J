@@ -1,7 +1,7 @@
 <template>
   <div class='maincontent w100p h100p'>
     <div class='list-header-but-group'>
-      <button type="button inline-block" class="btn btn-outline-purple" @click="add()">
+      <button type="button inline-block" class="btn btn-outline-purple" @click="add()" v-authcode='"roleList_add"'>
         <i class='fa fa-plus mr5'></i>添加
       </button>
     </div>
@@ -40,10 +40,10 @@
           <td v-text='item.code'></td>
           <td class="text-center" v-text='item.seq'></td>
           <td class="operate">
-            <a class='inline-block mybtn' href='javascript:void(0)' @click='grant(item)'>
+            <a class='inline-block mybtn' href='javascript:void(0)' @click='grant(item)' v-authcode='"roleList_grant"'>
               <i class='fa fa-id-badge'></i>
             </a>
-            <a class='inline-block mybtn' href='javascript:void(0)' @click='deleteItem(item)'>
+            <a class='inline-block mybtn' href='javascript:void(0)' @click='deleteItem(item)' v-authcode='"roleList_delete"'>
               <i class='fa fa-trash cf05'></i>
             </a>
           </td>

@@ -7,6 +7,7 @@ import com.zjy.bll.service.FunctionInfoService;
 import com.zjy.bll.service.MenuService;
 import com.zjy.bll.vo.FunctionInfoVo;
 import com.zjy.bll.vo.MenuVo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,7 @@ public class FunctionInfoController extends BaseController {
 
     @RequestMapping("/queryPageList")
     @ResponseBody
+    @RequiresPermissions("functionList_enter")
     public BaseResult<PageBean<FunctionInfoVo>> queryPageList(FunctionInfoRequest request) {
         PageBean<FunctionInfoVo> pageBean = (PageBean<FunctionInfoVo>) functionInfoSrv.queryPageList(request);
         return BaseResult.OK(pageBean);
@@ -33,6 +35,7 @@ public class FunctionInfoController extends BaseController {
 
     @RequestMapping("/getDetail")
     @ResponseBody
+    @RequiresPermissions("functionEdit_enter")
     public BaseResult<FunctionInfoVo> getDetail(String id, String menuId) {
         FunctionInfoVo functionInfoVo = functionInfoSrv.getVo(id);
         if (!functionInfoVo.getIsSave()) {
@@ -45,6 +48,7 @@ public class FunctionInfoController extends BaseController {
 
     @RequestMapping("/save")
     @ResponseBody
+    @RequiresPermissions("functionEdit_save")
     public BaseResult<String> save(FunctionInfoVo vo) {
         functionInfoSrv.save(vo);
         return BaseResult.OK("");
@@ -52,6 +56,7 @@ public class FunctionInfoController extends BaseController {
 
     @RequestMapping("/delete")
     @ResponseBody
+    @RequiresPermissions("functionList_delete")
     public BaseResult<String> delete(String id) {
         functionInfoSrv.delete(id);
         return BaseResult.OK("");
@@ -59,6 +64,7 @@ public class FunctionInfoController extends BaseController {
 
     @RequestMapping("/queryFunctionList")
     @ResponseBody
+    @RequiresPermissions("functionEdit_enter")
     public BaseResult<List<FunctionInfoVo>> queryFunctionList() {
         List<FunctionInfoVo> list = functionInfoSrv.queryFunctionList();
         return BaseResult.OK(list);
