@@ -196,6 +196,9 @@ var router = new Router({
 router.beforeEach(function (to, from, next) {
   var user = router.app.$store.state.user;
   var permissionList = router.app.$store.state.permissionList;
+  if(Vue.config.devtools) {
+    console.log(to);
+  }
   if(!user.userId && to && to.path != '/login') {
     next({
      path: '/login',

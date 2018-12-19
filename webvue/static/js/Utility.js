@@ -662,4 +662,8 @@ window.Constant = {
   // Host:'localhost',Port:'20000'
   Host:'10.4.132.60',Port:'20000'
 }
-window.ResultStatus={"OK":{"key":"OK","value":1,"code":"","name":"成功","order":0},"NO":{"key":"NO","value":2,"code":"","name":"失败","order":0},"UNAUTHENTICATION":{"key":"UNAUTHENTICATION","value":3,"code":"","name":"未登录","order":0},"UNAUTHORIZED":{"key":"UNAUTHORIZED","value":4,"code":"","name":"未授权","order":0},"ERROR":{"key":"ERROR","value":5,"code":"","name":"错误","order":0}};
+window.ResultStatus={"OK":{"key":"OK","value":1,"code":"","name":"成功","order":0},
+"NO":{"key":"NO","value":2,"code":"","name":"失败","order":0},
+"UNAUTHENTICATION":{"key":"UNAUTHENTICATION","value":3,"code":"","name":"未登录","order":0},
+"UNAUTHORIZED":{"key":"UNAUTHORIZED","value":4,"code":"","name":"未授权","order":0},
+"ERROR":{"key":"ERROR","value":5,"code":"","name":"错误","order":0}};

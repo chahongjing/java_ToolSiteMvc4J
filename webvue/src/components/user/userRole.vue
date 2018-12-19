@@ -38,7 +38,7 @@
     },
     methods: {
       goBack() {
-        this.$router.back(-1);
+        this.$root.goBack();
       },
       getUserRole: function (id) {
         var me = this;

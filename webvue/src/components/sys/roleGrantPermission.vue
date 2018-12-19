@@ -112,7 +112,7 @@
     },
     methods: {
       goBack() {
-        this.$router.back(-1);
+        this.$root.goBack();
       },
       getRolePermission: function (id) {
         var me = this;

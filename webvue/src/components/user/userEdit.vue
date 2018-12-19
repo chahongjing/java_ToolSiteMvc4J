@@ -168,7 +168,7 @@
     },
     methods: {
       goBack() {
-        this.$router.back(-1);
+        this.$root.goBack();
       },
       getDetail: function (id) {
         var me = this;
@@ -212,10 +212,10 @@
       }
     },
     mounted: function () {
-      if (this.$route.query.type == 'editSelf') {
+      if (this.$route.params.type == 'editSelf') {
         this.editSelf = true;
       }
-      this.getDetail(this.$route.query.id);
+      this.getDetail(this.$route.params.id);
       this.getEnumList();
       var list = [];
       list.push({key: 1, name: '看书'});

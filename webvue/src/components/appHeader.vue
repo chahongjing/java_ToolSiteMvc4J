@@ -172,7 +172,7 @@
       },
       editInfo() {
         var user = this.$root.getUser();
-        this.$router.push({path: '/user/userEdit', query: {id: user.userId, type: 'editSelf'}});
+        this.$router.push({name: 'userEdit', params: {id: user.userId, type: 'editSelf'}});
         this.showMenu = false;
       }
     },

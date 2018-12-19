@@ -18,7 +18,7 @@
             <i class="fa fa-lock"></i>
           </div>
           <div class="form-button">
-            <button type="button" class="pull-right btn btn-sm btn-purple" id="btnLogin" @click="login">
+            <button type="button" class="pull-right btn btn-sm btn-purple" id="btnLogin" @click="login" :disabled='allDisabled'>
               <i class="fa fa-key"></i><span class="bigger-110">登 录</span>
             </button>
           </div>
@@ -32,6 +32,11 @@
   import Vue from 'vue'
   export default {
     name: 'login',
+    data: function() {
+      return {
+        allDisabled: true
+      };
+    },
     mounted: function () {
       $('.form-control i').click(function () {
         $(this).siblings('input').focus();
@@ -41,18 +46,22 @@
           $("#btnLogin").click();
         }
       });
+      this.allDisabled = false;
     },
     methods: {
       login: function () {
+        this.allDisabled = true;
         var userCode = $("input[name=UserCode]");
         var password = $("input[name=Password]");
 
         if ($.trim(userCode.val()) == "") {
           this.$toaster.warning('请输入用户名!');
+          this.allDisabled = false;
           return false;
         }
         if ($.trim(password.val()) == "") {
           this.$toaster.warning('请输入密码!');
+          this.allDisabled = false;
           return false;
         }
         var me = this;
@@ -75,6 +84,7 @@
             }
           } else if (resp.data.status == ResultStatus.NO.key) {
             me.$toaster.warning(resp.data.message);
+            this.allDisabled = false;
           }
         });
       }

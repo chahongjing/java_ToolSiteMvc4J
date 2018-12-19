@@ -56,7 +56,7 @@
     },
     methods: {
       goBack() {
-        this.$router.back(-1);
+        this.$root.goBack();
       },
       getDetail: function (id) {
         var me = this;

@@ -1,2 +1,2 @@
-﻿rem dev
+rem dev
 npm run dev

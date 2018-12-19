@@ -131,12 +131,12 @@
       add() {
         var me = this;
         this.axios.get('/comm/getNewId').then(function (resp) {
-          me.$router.push({path: '/user/userEdit', query: {id: resp.data.value}});
+          me.$router.push({name: 'userEdit', params: {id: resp.data.value}});
         });
 
       },
       edit(entity) {
-        this.$router.push({path: '/user/userEdit', query: {id: entity.userId}});
+        this.$router.push({name: 'userEdit', params: {id: entity.userId}});
 
       },
       search() {
