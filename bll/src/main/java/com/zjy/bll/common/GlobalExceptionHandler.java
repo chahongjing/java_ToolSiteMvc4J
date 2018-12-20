@@ -2,6 +2,8 @@ package com.zjy.bll.common;
 
 import com.alibaba.fastjson.JSON;
 import com.zjy.baseframework.BaseResult;
+import com.zjy.baseframework.ServiceException;
+import com.zjy.baseframework.enums.ResultStatus;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.shiro.authz.UnauthenticatedException;
@@ -56,7 +58,10 @@ public class GlobalExceptionHandler {
                 } else {
                     message = ex.getMessage();
                 }
-                BaseResult<String> result = BaseResult.ERROR(Objects.toString(message, StringUtils.EMPTY));
+                BaseResult<String> result = BaseResult.NO(Objects.toString(message, StringUtils.EMPTY));
+                if(ex instanceof ServiceException) {
+                    result.setStatus(ResultStatus.ERROR);
+                }
                 response.getWriter().write(JSON.toJSONString(result));
             } catch (IOException e) {
             }

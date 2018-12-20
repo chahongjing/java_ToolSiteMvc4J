@@ -190,7 +190,7 @@
             me.$toaster.success('保存成功！');
             me.goBack();
           } else if (resp.data.status == ResultStatus.NO.key) {
-
+            me.$toaster.warning(resp.data.message);
           }
           me.allDisabled = false;
         });

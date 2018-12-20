@@ -201,6 +201,15 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
         if (map != null && map.containsKey("CODECOUNT") && map.get("CODECOUNT").intValue() > 0) {
             throw new ServiceException("编号重复！");
         }
+        if (StringUtils.isBlank(vo.getUserName())) {
+            throw new ServiceException("请输入用户名称！");
+        }
+        if (StringUtils.isBlank(vo.getPassword())) {
+            throw new ServiceException("请输入密码！");
+        }
+        if (!vo.getPassword().equals(vo.getPasswordAgain())) {
+            throw new ServiceException("两次密码不一致！");
+        }
     }
 
     @Override

@@ -1,7 +1,7 @@
 <template>
   <div class="head">
     <div class="logo">
-      <a class='fl' href="#/" title="首页">
+      <a class='fl' title="首页" @click='goHome()'>
         <i class="fa fa-android fa-2x white"></i>
       </a>
       <span class="fl title pl10">首页</span>
@@ -40,7 +40,7 @@
         <li class='userInfo'>
           <a class="licontent" :title='user.userName'>
             <i class="fa fa-user-o mr0 caf0"></i>
-            <span class='blank' v-text='user.userName'></span>
+            <span class='blank' v-html='user.userName + "<br>" + user.userCode'></span>
             <span class='userName' v-text='user.userName'></span>
             <span class='userCode' v-text='user.userCode'></span>
           </a>
@@ -177,6 +177,10 @@
         this.$router.push({name: 'userEdit', params: {id: user.userId, type: 'editSelf'}});
         this.showMenu = false;
       }
+      goHome() {
+        this.$root.clearBreadrumb();
+        this.$router.push({path: '/'});
+      }
     },
     mounted: function () {
       this.user = this.$root.getUser();
@@ -210,10 +214,10 @@
   .icon-animated-bell{display:inline-block;animation:ringing 2s infinite ease 1s;transform-origin:50% 0}
   @keyframes ringing{0%{transform:rotate(-15deg)}2%{transform:rotate(15deg)}4%{transform:rotate(-18deg)}6%{transform:rotate(18deg)}8%{transform:rotate(-22deg)}10%{transform:rotate(22deg)}12%{transform:rotate(-18deg)}14%{transform:rotate(18deg)}16%{transform:rotate(-12deg)}18%{transform:rotate(12deg)}20%{transform:rotate(0deg)}}
 
-  .blank{opacity:0;}
+  .blank{opacity:0;display:inline-block;line-height:1;}
   .userInfo{position:relative;overflow: hidden;}
   .userName,.userCode{position:absolute;left:25px;top:0;transition:0.2s;}
   .userCode{top:50px;}
-  .userInfo:hover .userName{top:-31px;}
+  .userInfo:hover .userName{top:-34px;}
   .userInfo:hover .userCode{top:0;}
 </style>

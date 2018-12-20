@@ -2,7 +2,7 @@
   <div class="bread">
     <ul>
       <li>
-        <a class='w100p h100p inline-block pl8' href='javascript:void(0)' title='首页'>
+        <a class='w100p h100p inline-block pl8 homebread' href='javascript:void(0)' title='首页'>
           <i class='fa fa-home mr0' @click='goHomePage()'></i></a>
       </li>
       <li class='bread-item' v-for='item in menuList' :title='item.text'>
@@ -63,5 +63,5 @@
     color: #93c;
     transition:0.1s;
   }
-  .fa-home:hover{transform:scale(1.2);}
+  .homebread:hover .fa-home{transform:scale(1.2);}
 </style>

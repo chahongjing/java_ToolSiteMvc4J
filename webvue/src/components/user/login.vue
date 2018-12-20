@@ -74,6 +74,7 @@
             me.$root.setUser(me.user);
             me.$root.setPermissionList(me.user.permissionList);
             me.$root.clearMenuList();
+            me.$root.setShowMenu(true);
             me.$root.clearBreadrumb();
             window.Utility.initialQuery();
             if (window.Query.redirect) {
