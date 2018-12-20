@@ -127,6 +127,10 @@
       }
     });
   }
+  ns.readArrayBufferAsText = function (data) {
+    var enc = new TextDecoder('utf-8');
+    return enc.decode(new Uint8Array(data));
+  }
   ns.readBlobAsText = function (data, callback) {
     var reader = new FileReader();
     reader.readAsText(data, 'utf-8');

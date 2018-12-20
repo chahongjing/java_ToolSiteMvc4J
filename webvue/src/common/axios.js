@@ -56,8 +56,7 @@ axios.interceptors.response.use(function (response) {
     result.data.message = ResultStatus.UNAUTHORIZED.name;
   } else if (error.response.status == 500) {
     if(error.response.data instanceof ArrayBuffer) {
-       var enc = new TextDecoder('utf-8');
-       var res = JSON.parse(enc.decode(new Uint8Array(error.response.data)));
+       var res = JSON.parse(Utility.readArrayBufferAsText(error.response.data));
        result.data = res;
     } else if (error.response.data instanceof Blob) {
       Utility.readBlobAsText(error.response.data, function (data) {

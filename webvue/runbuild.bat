@@ -1,4 +1,4 @@
 @echo off
-title deploy myvue
+title deploy webvue
 rem build
 npm run build
