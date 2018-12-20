@@ -37,10 +37,12 @@
             <span class="badge badge-warning">5</span>
           </a>
         </li>
-        <li>
+        <li class='userInfo'>
           <a class="licontent" :title='user.userName'>
             <i class="fa fa-user-o mr0 caf0"></i>
-            <span v-text='user.userName'></span>
+            <span class='blank' v-text='user.userName'></span>
+            <span class='userName' v-text='user.userName'></span>
+            <span class='userCode' v-text='user.userCode'></span>
           </a>
         </li>
       </ul>
@@ -207,4 +209,11 @@
   @keyframes vertical{0%{transform:translate(0,-3px)}4%{transform:translate(0,3px)}8%{transform:translate(0,-3px)}12%{transform:translate(0,3px)}16%{transform:translate(0,-3px)}20%{transform:translate(0,3px)}22%{transform:translate(0,0)}}
   .icon-animated-bell{display:inline-block;animation:ringing 2s infinite ease 1s;transform-origin:50% 0}
   @keyframes ringing{0%{transform:rotate(-15deg)}2%{transform:rotate(15deg)}4%{transform:rotate(-18deg)}6%{transform:rotate(18deg)}8%{transform:rotate(-22deg)}10%{transform:rotate(22deg)}12%{transform:rotate(-18deg)}14%{transform:rotate(18deg)}16%{transform:rotate(-12deg)}18%{transform:rotate(12deg)}20%{transform:rotate(0deg)}}
+
+  .blank{opacity:0;}
+  .userInfo{position:relative;overflow: hidden;}
+  .userName,.userCode{position:absolute;left:25px;top:0;transition:0.2s;}
+  .userCode{top:50px;}
+  .userInfo:hover .userName{top:-31px;}
+  .userInfo:hover .userCode{top:0;}
 </style>
