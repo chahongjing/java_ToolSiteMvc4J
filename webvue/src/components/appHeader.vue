@@ -38,11 +38,11 @@
           </a>
         </li>
         <li class='userInfo'>
-          <a class="licontent" :title='user.userName'>
+          <a class="licontent" :title='user.userName + "\r\n" + user.userCode'>
             <i class="fa fa-user-o mr0 caf0"></i>
             <span class='blank' v-html='user.userName + "<br>" + user.userCode'></span>
-            <span class='userName' v-text='user.userName'></span>
-            <span class='userCode' v-text='user.userCode'></span>
+            <span class='userName ellipsis' v-text='user.userName'></span>
+            <span class='userCode ellipsis' v-text='user.userCode'></span>
           </a>
         </li>
       </ul>
@@ -176,7 +176,7 @@
         var user = this.$root.getUser();
         this.$router.push({name: 'userEdit', params: {id: user.userId, type: 'editSelf'}});
         this.showMenu = false;
-      }
+      },
       goHome() {
         this.$root.clearBreadrumb();
         this.$router.push({path: '/'});
@@ -216,7 +216,7 @@
 
   .blank{opacity:0;display:inline-block;line-height:1;}
   .userInfo{position:relative;overflow: hidden;}
-  .userName,.userCode{position:absolute;left:25px;top:0;transition:0.2s;}
+  .userName,.userCode{position:absolute;left:25px;top:0;transition:0.2s;width:70px;}
   .userCode{top:50px;}
   .userInfo:hover .userName{top:-34px;}
   .userInfo:hover .userCode{top:0;}

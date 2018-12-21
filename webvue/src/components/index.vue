@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div class='main'>
     <div class='box' v-for='group in list'>
       <div class="card border-info">
         <div class="card-header text-center" v-text='group.name'></div>
         <div class="card-body text-info">
-          <div class="list-group">
+          <div class="list-group oya mygroup">
             <a :href="'static/toolhtml/' + item.href" class="list-group-item list-group-item-action"
                v-for='item in group.children' target='_blank'>
               <i class='fa fa-comment fa-fw'></i><span v-text='item.name'></span>
@@ -12,7 +12,7 @@
           </div>
         </div>
         <div class="card-footer text-muted">
-          2 days ago
+          more <i class="fa fa-angle-double-right" aria-hidden="true"></i>
         </div>
       </div>
     </div>
@@ -20,7 +20,7 @@
       <div class="card border-info">
         <div class="card-header text-center">其它</div>
         <div class="card-body text-info">
-          <div class="list-group">
+          <div class="list-group mygroup oya">
             <router-link to="/test/test" class="list-group-item list-group-item-action">
               <i class='fa fa-comment fa-fw'></i><span>测试</span>
             </router-link>
@@ -40,7 +40,7 @@
           </div>
         </div>
         <div class="card-footer text-muted">
-          2 days ago
+          more <i class="fa fa-angle-double-right" aria-hidden="true"></i>
         </div>
       </div>
     </div>
@@ -223,6 +223,7 @@
 </script>
 
 <style scoped>
+  .main{padding-top:15px;}
   .box {
     width: 33%;
     float: left;
@@ -256,4 +257,5 @@
     border-bottom: 0;
   }
   .mytest{padding:20px;}
+  .mygroup{height:200px;}
 </style>

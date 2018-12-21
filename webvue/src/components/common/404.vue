@@ -33,8 +33,8 @@
 	}
 	.title{
 		font-size: 170px;
-		color: #fff;
-		text-shadow:0 1px 0 #2196f3, 0 2px 0 #2196f3, 0 5px 10px #ffffff, 0 10px 20px #2196f3;
+		color: #fa0;
+		text-shadow:0 1px 0 #fc0, 0 2px 0 #fc0, 0 5px 10px #ffffff, 0 10px 20px #fc0;
 	}
 	.tip{font-size:30px;}
 </style>
