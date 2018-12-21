@@ -61,6 +61,7 @@
     name: 'permissionEdit',
     data () {
       return {
+        allDisabled:true,
         permission: {permissionId: null, name: null, code: null, seq: null}
       }
     },
@@ -70,22 +71,26 @@
       },
       getDetail: function (id, functionId) {
         var me = this;
+        me.allDisabled = true;
         this.axios.get('/permission/getDetail', {id: id, functionId: functionId}).then(function (resp) {
           if (resp.data.status == ResultStatus.OK.key) {
             me.permission = resp.data.value;
           } else if (resp.data.status == ResultStatus.NO.key){
             me.$toaster.warning(resp.data.message);
           }
+        me.allDisabled = false;
         });
       },
       save: function () {
         var me = this;
+        me.allDisabled = true;
         this.axios.post('/permission/save', me.permission).then(function (resp) {
           if (resp.data.status == ResultStatus.OK.key) {
             me.$toaster.success('保存成功！');
             me.goBack();
           } else if (resp.data.status == ResultStatus.NO.key){
             me.$toaster.warning(resp.data.message);
+            me.allDisabled = false;
           }
         });
       },

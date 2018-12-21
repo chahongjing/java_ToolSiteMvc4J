@@ -1,7 +1,7 @@
 <template>
   <div class="head">
     <div class="logo">
-      <a class='fl' title="首页" @click='goHome()'>
+      <a class='fl' title="首页" href='javascript:void(0)' @click='goHome()'>
         <i class="fa fa-android fa-2x white"></i>
       </a>
       <span class="fl title pl10">首页</span>
@@ -178,8 +178,7 @@
         this.showMenu = false;
       },
       goHome() {
-        this.$root.clearBreadrumb();
-        this.$router.push({path: '/'});
+        this.$root.goHome();
       }
     },
     mounted: function () {
@@ -194,7 +193,9 @@
     width: 45px;
     height: 50px;
     display: inline-block;
+    transition:0.3s;
   }
+  .logo a i:hover{color:#ffc107;}
 
   .head .info .licontent.submenu {
     padding: 0px;

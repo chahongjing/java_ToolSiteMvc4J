@@ -307,6 +307,10 @@ a:hover{color:#06f;}
     background-color: #82a;
     border-color: #82a;}
 
+.btn-saving:after{content:'中...';margin-left: -4px;}
+.btn-saving i{animation: fa-spin 2s infinite linear;}
+.btn-saving i:before{content:'\f110';}
+
 /*表格*/
 .table{margin:0;table-layout: fixed;min-width:750px;}
 .table td,.table th{height:40px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;cursor:default;border:1px solid #d5dade;}

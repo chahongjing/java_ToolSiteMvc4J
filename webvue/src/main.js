@@ -79,18 +79,29 @@ new Vue({
     clearPermissionList() {
       this.$store.commit("CLEAR_PERMISSIONLIST");
     },
+    goHome() {
+      this.clearBreadrumb();
+      var menuList = this.getMenuList() || [];
+      for(var i = 0; i < menuList.length; i++) {
+        for(var j = 0; j < menuList[i].children.length; j++) {
+          menuList[i].children[j].isSelected = false;
+          menuList[i].children[j].checked = false;
+        }
+      }
+      this.setMenuList(menuList);
+      this.$router.push({path: '/'});
+    },
     goBack: function () {
       var breadcrumb = this.getBreadcrumb();
       if (breadcrumb.length <= 1) {
-        this.clearBreadrumb();
-        this.$router.push({path: '/'});
+        this.goHome();
         return;
       }
       var item = breadcrumb[breadcrumb.length - 2];
       if (item != null) {
         this.$router.push({path: item.path, query: item.query, params: item.params});
       } else {
-        this.$router.push({path: '/'});
+        this.goHome();
       }
     },
   }

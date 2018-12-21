@@ -84,6 +84,7 @@
     name: 'menuEdit',
     data () {
       return {
+        allDisabled:true,
         menu: {menuId: null, name: null, code: null, url: null, seq: null, icon: null},
         menuList: []
       }
@@ -94,12 +95,15 @@
       },
       getDetail: function (id) {
         var me = this;
+        me.allDisabled = true;
         this.axios.get('/menu/getDetail', {id: id}).then(function (resp) {
           me.menu = resp.data.value;
+        me.allDisabled = false;
         });
       },
       save: function () {
         var me = this;
+        me.allDisabled = true;
         this.axios.post('/menu/save', me.menu).then(function (resp) {
           me.$toaster.success('保存成功！');
           me.goBack();

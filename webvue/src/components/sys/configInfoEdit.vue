@@ -104,6 +104,7 @@
     name: 'configInfoEdit',
     data () {
       return {
+        allDisabled:true,
         configInfo: {
           id: null, name: null, type: null, account: null, password: null, contactPersion: null,
           contacts: null, relateWebsite: null, memo: null
@@ -117,12 +118,15 @@
       },
       getDetail: function (id) {
         var me = this;
+        me.allDisabled = true;
         this.axios.get('/configInfo/getDetail', {id: id}).then(function (resp) {
           me.configInfo = resp.data.value;
+          me.allDisabled = false;
         });
       },
       save: function () {
         var me = this;
+        me.allDisabled = true;
         this.axios.post('/configInfo/save', me.configInfo).then(function (resp) {
           me.$toaster.success('保存成功！');
           me.goBack();

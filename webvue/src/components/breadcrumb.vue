@@ -3,7 +3,7 @@
     <ul>
       <li>
         <a class='w100p h100p inline-block pl8 homebread' href='javascript:void(0)' title='首页'>
-          <i class='fa fa-home mr0' @click='goHomePage()'></i></a>
+          <i class='fa fa-home mr0' @click='goHome()'></i></a>
       </li>
       <li class='bread-item' v-for='item in menuList' :title='item.text'>
         <span class='w100p h100p inline-block'>
@@ -38,9 +38,8 @@
           this.$router.push({path: item.path, query: item.query, params: item.params});
         }
       },
-      goHomePage() {
-        this.$root.clearBreadrumb();
-        this.$router.push({path: '/'});
+      goHome() {
+        this.$root.goHome();
       },
       goBack: function () {
         this.$root.goBack();
