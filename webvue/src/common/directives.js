@@ -40,7 +40,7 @@ function setTooltip(el, binding, vnode) {
   try{
     $el.tooltip('dispose');
   } catch(e){}
-  $el.tooltip({html: true, title: msg});
+  $el.tooltip({html: true, title: msg, delay: {'show': 500, 'hide': 0}});
 }
 
 function handlePermission(el, binding, vnode) {

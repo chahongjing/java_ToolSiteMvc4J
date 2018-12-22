@@ -295,6 +295,8 @@ a[disabled]{pointer-events:none;color:#333;}
 .btn-purple:hover:not(:disabled),.btn-purple:active:not(:disabled){background-color: #6254b2;border-color: #5a4daa;}
 .btn-outline-purple{color: #6254b2;background-color: transparent;background-image: none;border-color: #6254b2;}
 .btn-outline-purple:hover:not(:disabled){color: #fff;background-color: #6254b2;border-color: #5a4daa;}
+.text-purple{color: #6254b2;}
+.bg-purple{background-color: #6254b2;color:#fff;}
 
 .btn-saving:after{content:'中...';margin-left: -4px;}
 .btn-saving i{animation: fa-spin 2s infinite linear;}

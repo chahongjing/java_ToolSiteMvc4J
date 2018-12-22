@@ -63,7 +63,6 @@
     {{this.treeoption && this.treeoption.checkedResult && this.treeoption.checkedResult.name|| this.treeoption.checkedResult.map(item => item.name)}}
 
     <div class='a'>
-
     </div>
   </div>
 </template>
