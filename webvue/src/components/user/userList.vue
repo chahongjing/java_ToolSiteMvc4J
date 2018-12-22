@@ -51,7 +51,10 @@
           </td>
           <td v-text='item.userCode'></td>
           <td class='text-center' v-text='$options.filters.formatDate(item.createdOn)'></td>
-          <td class='text-center' v-text='$options.filters.enumNameFilter(item.sex, "Sex")'></td>
+          <td class='text-center'>
+            <i class='fa mr0' :class='{"fa-female": item.sex == Sex.Female.key,"fa-male": item.sex == Sex.Male.key}'></i>
+            <span v-text='$options.filters.enumNameFilter(item.sex, "Sex")'></span>
+          </td>
           <td class='text-center' v-text='$options.filters.enumNameFilter(item.isSystem, "YesNo")'></td>
           <td class='text-center' v-text='$options.filters.enumNameFilter(item.isDisabled, "YesNo")'></td>
           <td class='operate'>
@@ -61,7 +64,7 @@
             <a class='inline-block mybtn' v-authcode='"userList_resetPassword"' href='javascript:void(0)' @click='setPassword(item)' title='修改密码'>
               <i class='fa fa-key c393'></i>
             </a>
-            <a class='inline-block mybtn' v-authcode='"userList_delete"' href='javascript:void(0)' @click='deleteItem(item)' title='删除'>
+            <a class='inline-block mybtn' v-authcode='"userList_delete"' href='javascript:void(0)' @click='deleteItem(item)' title='删除' v-if='item.isSystem != YesNo.YES.key'>
               <i class='fa fa-trash cf05'></i>
             </a>
           </td>
@@ -124,7 +127,9 @@
         width: 350,
         showchangePasswordDialog: false,
         userCode: null,
-        password: null
+        password: null,
+        YesNo: YesNo,
+        Sex: Sex
       }
     },
     methods: {
@@ -236,3 +241,7 @@
     components: {commonModal}
   }
 </script>
+<style scoped>
+  .fa-female{color:#f3c;}
+  .fa-male{color:#09c;}
+</style>

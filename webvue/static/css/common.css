@@ -383,11 +383,9 @@ th.sortheader.desc:before,th.sortheader.asc:after{color:green;}
 
 .mypanel{margin-bottom: 20px;
     background-color: #fff;
-    border: 1px solid transparent;
+    border: 1px solid #ddd;
     border-radius: 4px;
-    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
     box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
-        border-color: #ddd;
 }
 .mypanel .panel-heading{color: #333;
     background-color: #f5f5f5;
@@ -397,7 +395,7 @@ th.sortheader.desc:before,th.sortheader.asc:after{color:green;}
 }
 .mypanel .panel-body{padding:15px;}
 
-.tooltip .tooltip-inner{background-color: #fff;border:1px solid rgba(0,0,0,0.2);color:#000;font-size:0.95rem;}
+.tooltip .tooltip-inner{background-color: #fff;border:1px solid rgba(0,0,0,0.4);color:#000;font-size:0.95rem;}
 .tooltip.bs-tooltip-top .arrow:before{border-top-color:#555;}
 .tooltip.bs-tooltip-right .arrow:before{border-right-color:#555;}
 .tooltip.bs-tooltip-bottom .arrow:before{border-bottom-color:#555;}
