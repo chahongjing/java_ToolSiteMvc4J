@@ -40,10 +40,10 @@
           <td v-text='item.code'></td>
           <td class="text-center" v-text='item.seq'></td>
           <td class="operate">
-            <a class='inline-block mybtn' href='javascript:void(0)' @click='grant(item)' v-authcode='"roleList_grant"'>
+            <a class='inline-block mybtn' href='javascript:void(0)' @click='grant(item)' v-authcode='"roleList_grant"' title='授权'>
               <i class='fa fa-id-badge'></i>
             </a>
-            <a class='inline-block mybtn' href='javascript:void(0)' @click='deleteItem(item)' v-authcode='"roleList_delete"'>
+            <a class='inline-block mybtn' href='javascript:void(0)' @click='deleteItem(item)' v-authcode='"roleList_delete"' title='删除'>
               <i class='fa fa-trash cf05'></i>
             </a>
           </td>

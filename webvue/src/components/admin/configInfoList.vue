@@ -50,7 +50,7 @@
           <td v-text='item.relateWebsite'></td>
           <td v-text='item.memo' v-tooltip='item.memo'></td>
           <td class="operate">
-            <a class='inline-block mybtn' href='javascript:void(0)' @click='deleteItem(item)' v-authcode='"configInfoList_delete"'><i
+            <a class='inline-block mybtn' href='javascript:void(0)' @click='deleteItem(item)' v-authcode='"configInfoList_delete"' title='删除'><i
             class='fa fa-trash cf05'></i></a>
           </td>
         </tr>

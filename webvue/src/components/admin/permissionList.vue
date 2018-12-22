@@ -42,7 +42,7 @@
           <td v-text='item.code' v-tooltip='item.code'></td>
           <td class="text-center" v-text='item.seq'></td>
           <td class="operate">
-            <a class='inline-block mybtn' href='javascript:void(0)' @click='deleteItem(item)' v-authcode='"permissionList_delete"'><i
+            <a class='inline-block mybtn' href='javascript:void(0)' @click='deleteItem(item)' v-authcode='"permissionList_delete"' title='删除'><i
             class='fa fa-trash cf05'></i></a>
           </td>
         </tr>

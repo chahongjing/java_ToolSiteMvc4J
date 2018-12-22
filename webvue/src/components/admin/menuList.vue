@@ -46,7 +46,7 @@
           <td v-tooltip='item.icon'><i class='fa' :class='item.icon'></i><span v-text='item.icon'></span></td>
           <td class="text-center" v-text='item.seq'></td>
           <td class="operate">
-            <a class='inline-block mybtn' href='javascript:void(0)' @click='deleteItem(item)' v-authcode='"menuList_delete"'><i
+            <a class='inline-block mybtn' href='javascript:void(0)' @click='deleteItem(item)' v-authcode='"menuList_delete"' title='删除'><i
             class='fa fa-trash cf05'></i></a>
           </td>
         </tr>
