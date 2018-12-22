@@ -65,7 +65,7 @@
           return false;
         }
         var me = this;
-        this.axios.post('/userinfo/login', {
+        this.axios.post('/user/login', {
           userCode: $.trim(userCode.val()),
           password: $.trim(password.val())
         }).then(function (resp) {

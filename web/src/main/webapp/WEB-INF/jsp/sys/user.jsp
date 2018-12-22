@@ -78,7 +78,7 @@
         function addUser(){
             this.commonSrv.get("/comm/getNewId").then(function(resp) {
                 if (resp.data.status == Constant.AjaxStatus.OK) {
-                    window.location = ctx + '/userinfo/userEdit?userId=' + resp.data.value;
+                    window.location = ctx + '/user/userEdit?userId=' + resp.data.value;
                 } else {
                     alert(resp.data.message);
                 }
@@ -86,13 +86,13 @@
         }
 
         function editUser(user){
-            window.location = ctx + '/userinfo/userEdit?userId=' + user.userId;
+            window.location = ctx + '/user/userEdit?userId=' + user.userId;
         }
 
         function deleteUser(user) {
             var me = this;
             if(confirm("是否要删除用户！")) {
-                me.commonSrv.get('/userinfo/delete', {userId: user.userId}).then(function(resp) {
+                me.commonSrv.get('/user/delete', {userId: user.userId}).then(function(resp) {
                     if (resp.data.status == Constant.AjaxStatus.OK) {
                         search(me);
                     } else {
@@ -105,7 +105,7 @@
         function search(that){
             var me = that || this;
             me.isButtonDisabled = true;
-            me.commonSrv.get('/userinfo/queryPageList', {userName: me.searchKey}).then(function(resp) {
+            me.commonSrv.get('/user/queryPageList', {userName: me.searchKey}).then(function(resp) {
                 if (resp.data.status == Constant.AjaxStatus.OK) {
                     me.userList = resp.data.value.list;
                     me.pagerInfo = resp.data.value;

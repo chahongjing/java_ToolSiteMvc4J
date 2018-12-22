@@ -104,7 +104,7 @@
         vueMounted = function (){
             var me = this;
             me.isButtonDisabled = true;
-            this.commonSrv.get('/userinfo/getUserInfo', {userId:this.userId}).then(function(resp) {
+            this.commonSrv.get('/user/getUserInfo', {userId:this.userId}).then(function(resp) {
                 if (resp.data.status == Constant.AjaxStatus.OK) {
                     me.userInfo = resp.data.value;
                 } else {
@@ -115,7 +115,7 @@
         };
 
         function saveUser(){
-            this.commonSrv.post("/userinfo/saveUser", this.userInfo).then(function(resp) {
+            this.commonSrv.post("/user/saveUser", this.userInfo).then(function(resp) {
                 if (resp.data.status == Constant.AjaxStatus.OK) {
                     window.location.reload();
                 } else {

@@ -8,7 +8,7 @@ var router = new Router({
   routes: [
   {
     path: '/',
-    component: resolve => require(['../components/headerAndMenu'], resolve),
+    component: resolve => require(['../components/layout/headerAndMenu'], resolve),
     children:[{
       path: '/',
       name: 'home',
@@ -29,7 +29,7 @@ var router = new Router({
   {
     path: '/user',
     name: 'user',
-    component: resolve => require(['../components/headerAndMenu'], resolve),
+    component: resolve => require(['../components/layout/headerAndMenu'], resolve),
     children: [
       {
         path: 'userList',
@@ -61,14 +61,14 @@ var router = new Router({
     ]
   },
   {
-    path: '/sys',
-    name: 'sys',
-    component: resolve => require(['../components/headerAndMenu'], resolve),
+    path: '/admin',
+    name: 'admin',
+    component: resolve => require(['../components/layout/headerAndMenu'], resolve),
     children: [
     {
       path: 'menuList',
       name: 'menuList',
-      component: resolve => require(['../components/sys/menuList'], resolve),
+      component: resolve => require(['../components/admin/menuList'], resolve),
         meta:{
           breadcurmbName: '菜单列表',
           'pageCode': 'menuList_enter'
@@ -77,7 +77,7 @@ var router = new Router({
     {
       path: 'menuEdit',
       name: 'menuEdit',
-      component: resolve => require(['../components/sys/menuEdit'], resolve),
+      component: resolve => require(['../components/admin/menuEdit'], resolve),
         meta:{
           breadcurmbName: '菜单详情',
           'pageCode': 'menuEdit_enter'
@@ -86,7 +86,7 @@ var router = new Router({
     {
       path: 'functionList',
       name: 'functionList',
-      component: resolve => require(['../components/sys/functionList'], resolve),
+      component: resolve => require(['../components/admin/functionList'], resolve),
         meta:{
           breadcurmbName: '功能列表',
           'pageCode': 'functionList_enter'
@@ -95,7 +95,7 @@ var router = new Router({
     {
       path: 'functionEdit',
       name: 'functionEdit',
-      component: resolve => require(['../components/sys/functionEdit'], resolve),
+      component: resolve => require(['../components/admin/functionEdit'], resolve),
         meta:{
           breadcurmbName: '功能详情',
           'pageCode': 'functionEdit_enter'
@@ -104,7 +104,7 @@ var router = new Router({
     {
       path: 'permissionList',
       name: 'permissionList',
-      component: resolve => require(['../components/sys/permissionList'], resolve),
+      component: resolve => require(['../components/admin/permissionList'], resolve),
         meta:{
           breadcurmbName: '权限列表',
           'pageCode': 'permissionList_enter'
@@ -113,7 +113,7 @@ var router = new Router({
     {
       path: 'permissionEdit',
       name: 'permissionEdit',
-      component: resolve => require(['../components/sys/permissionEdit'], resolve),
+      component: resolve => require(['../components/admin/permissionEdit'], resolve),
         meta:{
           breadcurmbName: '权限详情',
           'pageCode': 'permissionEdit_enter'
@@ -122,7 +122,7 @@ var router = new Router({
     {
       path: 'roleList',
       name: 'roleList',
-      component: resolve => require(['../components/sys/roleList'], resolve),
+      component: resolve => require(['../components/admin/roleList'], resolve),
         meta:{
           breadcurmbName: '角色列表',
           'pageCode': 'roleList_enter'
@@ -131,7 +131,7 @@ var router = new Router({
     {
       path: 'roleEdit',
       name: 'roleEdit',
-      component: resolve => require(['../components/sys/roleEdit'], resolve),
+      component: resolve => require(['../components/admin/roleEdit'], resolve),
         meta:{
           breadcurmbName: '角色详情',
           'pageCode': 'roleEdit_enter'
@@ -140,7 +140,7 @@ var router = new Router({
     {
       path: 'configInfoList',
       name: 'configInfoList',
-      component: resolve => require(['../components/sys/configInfoList'], resolve),
+      component: resolve => require(['../components/admin/configInfoList'], resolve),
         meta:{
           breadcurmbName: '配置列表',
           'pageCode': 'configInfoList_enter'
@@ -149,7 +149,7 @@ var router = new Router({
     {
       path: 'configInfoEdit',
       name: 'configInfoEdit',
-      component: resolve => require(['../components/sys/configInfoEdit'], resolve),
+      component: resolve => require(['../components/admin/configInfoEdit'], resolve),
         meta:{
           breadcurmbName: '配置详情',
           'pageCode': 'configInfoEdit_enter'
@@ -158,7 +158,7 @@ var router = new Router({
     {
       path: 'roleGrantPermission',
       name: 'roleGrantPermission',
-      component: resolve => require(['../components/sys/roleGrantPermission'], resolve),
+      component: resolve => require(['../components/admin/roleGrantPermission'], resolve),
         meta:{
           breadcurmbName: '角色授权',
           'pageCode': 'roleGrantPermission_enter'
@@ -167,7 +167,7 @@ var router = new Router({
     {
       path: '401',
       name: '401',
-      component: resolve => require(['../components/common/401'], resolve),
+      component: resolve => require(['../components/sys/401'], resolve),
         meta:{
           breadcurmbName: '未授权'
         }
@@ -175,7 +175,7 @@ var router = new Router({
     {
       path: '404',
       name: '404',
-      component: resolve => require(['../components/common/404'], resolve),
+      component: resolve => require(['../components/sys/404'], resolve),
         meta:{
           breadcurmbName: '无法访问'
         }
@@ -183,7 +183,7 @@ var router = new Router({
     {
       path: '*',
       name: '*',
-      component: resolve => require(['../components/common/404'], resolve),
+      component: resolve => require(['../components/sys/404'], resolve),
         meta:{
           breadcurmbName: '无法访问'
         }
@@ -192,7 +192,7 @@ var router = new Router({
   },
   {
     path:'/test',
-    component: resolve => require(['../components/headerAndMenu'], resolve),
+    component: resolve => require(['../components/layout/headerAndMenu'], resolve),
     children: [
     {
         path: 'test',

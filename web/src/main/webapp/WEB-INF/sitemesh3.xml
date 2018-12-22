@@ -2,7 +2,7 @@
 <sitemesh>
 
     <!-- 指明排除页面，将被排除，不被装饰 -->
-    <mapping path="/userinfo/loginpage*" exclue="true" />
+    <mapping path="/user/loginpage*" exclue="true" />
     <mapping path="/**.html" exclue="true" />
     <mapping path="/index.html" exclue="true" />
     <mapping path="/static/**" exclue="true" />

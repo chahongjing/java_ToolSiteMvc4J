@@ -8,6 +8,6 @@ delete from Menu;
 INSERT INTO Menu(icon, url, seq, code, name, pId, menuId)
 VALUES('fa fa-cog', NULL, 1, 'admin', '后台管理', NULL, '9730a5dc-b084-4b03-83b3-e6da247b3165');
 INSERT INTO Menu(icon, url, seq, code, name, pId, menuId)
-VALUES('fa fa-user', '/userinfo/user', 1, 'user', '用户管理', '9730a5dc-b084-4b03-83b3-e6da247b3165', 'c552baec-0c44-40de-b150-e1399d67b34d');
+VALUES('fa fa-user', '/user/user', 1, 'user', '用户管理', '9730a5dc-b084-4b03-83b3-e6da247b3165', 'c552baec-0c44-40de-b150-e1399d67b34d');
 INSERT INTO Menu(icon, url, seq, code, name, pId, menuId)
 VALUES('fa fa-cog', '/menu/list', 2, 'menu', '功能管理', '9730a5dc-b084-4b03-83b3-e6da247b3165', '0a0cde01-a512-4c17-a6d1-117ffe086e58');

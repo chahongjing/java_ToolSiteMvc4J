@@ -50,9 +50,9 @@
 </template>
 
 <script>
-  import appHeader from '@/components/appHeader'
-  import appMenu from '@/components/appMenu'
-  import myModal from '@/components/sys/myModal'
+  import appHeader from '@/components/layout/appHeader'
+  import appMenu from '@/components/layout/appMenu'
+  import myModal from '@/components/other/myModal'
 
   var list = [];
   // region java
@@ -181,7 +181,7 @@
         formData.append('userCode', 'zjy');
         formData.append('userName', '曾军毅');
         formData.append('birthday', new Date());
-        this.axios.postFormData('/userinfo/testPostWithFile', formData).then(function (resp) {
+        this.axios.postFormData('/user/testPostWithFile', formData).then(function (resp) {
           console.log(resp);
         });
       },

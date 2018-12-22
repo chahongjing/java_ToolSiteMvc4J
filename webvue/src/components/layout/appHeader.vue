@@ -119,7 +119,7 @@
       logout: function () {
         var me = this;
         //this.$confirm.confirm('确定要退出系统吗？', function () {
-          me.axios.get('/userinfo/logout').then(function (resp) {
+          me.axios.get('/user/logout').then(function (resp) {
             if (resp.data.status == ResultStatus.OK.key) {
               me.$root.clearUser();
               me.$router.push({path: '/login'});
@@ -146,7 +146,7 @@
           me.$toaster.warning('两次密码不一致！');
           return;
         }
-        me.axios.get('/userinfo/changePassword', {
+        me.axios.get('/user/changePassword', {
           userCode: this.user.userCode,
           oldPassword: this.user.oldPassword,
           newPassword: this.user.newPassword

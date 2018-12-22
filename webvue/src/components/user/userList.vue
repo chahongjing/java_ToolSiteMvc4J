@@ -1,6 +1,6 @@
 <template>
   <div class='maincontent w100p h100p'>
-    <div class='list-header-but-group'>&nbsp;
+    <div class='list-header-but-group'>
       <button type="button inline-block" class="btn btn-outline-purple" @click="add()" v-authcode='"userList_add"'>
         <i class='fa fa-plus mr5'></i>添加
       </button>
@@ -146,7 +146,7 @@
         var me = this;
         me.allDisabled = true;
         me.pager.loading = true;
-        this.axios.get('/userinfo/queryPageList', {
+        this.axios.get('/user/queryPageList', {
           userName: this.searchKey,
           pageNum: this.pager.pageNum,
           pageSize: this.pager.pageSize,
@@ -168,7 +168,7 @@
       deleteItem: function (entity) {
         var me = this;
         this.$confirm.confirm('确定要删除用户吗？', function () {
-          me.axios.get('/userinfo/delete', {id: entity.userId}).then(function (resp) {
+          me.axios.get('/user/delete', {id: entity.userId}).then(function (resp) {
             me.$toaster.success('删除成功！');
             me.queryList();
           });
@@ -209,7 +209,7 @@
           me.$toaster.warning('原密码不能为空！');
           return;
         }
-        me.axios.get('/userinfo/resetPassword', {
+        me.axios.get('/user/resetPassword', {
           userCode: this.userCode,
           password: this.password
         }).then(function (resp) {

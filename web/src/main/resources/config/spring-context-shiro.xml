@@ -58,9 +58,9 @@
         <property name="filterChainDefinitions">
             <value>
                 /favicon.ico=anon
-                /userinfo/loginpage**=anon
-                /userinfo/login**=anon
-                /userinfo/logout**=anon
+                /user/loginpage**=anon
+                /user/login**=anon
+                /user/logout**=anon
                 /druid/**=anon
                 /js/**=anon
                 /bootstrap/**=anon

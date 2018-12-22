@@ -173,7 +173,7 @@
       getDetail: function (id) {
         var me = this;
         this.allDisabled = true;
-        this.axios.get('/userinfo/getDetail', {id: id}).then(function (resp) {
+        this.axios.get('/user/getDetail', {id: id}).then(function (resp) {
           if (resp.data.status == ResultStatus.OK.key) {
             me.user = resp.data.value;
           } else if (resp.data.status == ResultStatus.NO.key) {
@@ -185,7 +185,7 @@
       save: function () {
         var me = this;
         this.allDisabled = true;
-        this.axios.post('/userinfo/save', me.user).then(function (resp) {
+        this.axios.post('/user/save', me.user).then(function (resp) {
           if (resp.data.status == ResultStatus.OK.key) {
             me.$toaster.success('保存成功！');
             me.goBack();

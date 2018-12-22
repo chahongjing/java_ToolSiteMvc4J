@@ -34,7 +34,7 @@ Vue.component('apphead', {
         // 退出登录
         logout: function() {
             var me = this;
-            me.commonSrv.get('/userinfo/logout').then(function (resp) {
+            me.commonSrv.get('/user/logout').then(function (resp) {
                 if (resp.data.status == Constant.AjaxStatus.OK) {
                     sessionStorage.clear();
                     window.location = me.commonSrv.getContext();

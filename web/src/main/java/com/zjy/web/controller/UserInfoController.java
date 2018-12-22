@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletRequest;
  * @create 2016-12-10 15:27
  */
 @Controller
-@RequestMapping("/userinfo")
+@RequestMapping("/user")
 public class UserInfoController extends BaseController implements ServletConfigAware, EnvironmentAware, ApplicationContextAware {
 
     //region 属性

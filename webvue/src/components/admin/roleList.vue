@@ -1,7 +1,7 @@
 <template>
   <div class='maincontent w100p h100p'>
     <div class='list-header-but-group'>
-      <button type="button inline-block" class="btn btn-outline-purple" @click="add()" v-authcode='"menuList_add"'>
+      <button type="button inline-block" class="btn btn-outline-purple" @click="add()" v-authcode='"roleList_add"'>
         <i class='fa fa-plus mr5'></i>添加
       </button>
     </div>
@@ -26,10 +26,7 @@
         <tr>
           <th class='w50'>#</th>
           <th class=''>名称</th>
-          <th class=''>父级</th>
           <th class='w150'>编码</th>
-          <th class='w150'>路径</th>
-          <th class='w150'>图标</th>
           <th class='w50'>序号</th>
           <th class='w100'>操作</th>
         </tr>
@@ -40,14 +37,15 @@
           <td>
             <a class='block w100p h100p' href='javascript:void(0)' v-text='item.name' @click='edit(item)'></a>
           </td>
-          <td v-text='item.pName'></td>
           <td v-text='item.code'></td>
-          <td v-text='item.url'></td>
-          <td><i class='fa' :class='item.icon'></i><span v-text='item.icon' v-tooltip='item.icon'></span></td>
           <td class="text-center" v-text='item.seq'></td>
           <td class="operate">
-            <a class='inline-block mybtn' href='javascript:void(0)' @click='deleteItem(item)' v-authcode='"menuList_delete"'><i
-            class='fa fa-trash cf05'></i></a>
+            <a class='inline-block mybtn' href='javascript:void(0)' @click='grant(item)' v-authcode='"roleList_grant"'>
+              <i class='fa fa-id-badge'></i>
+            </a>
+            <a class='inline-block mybtn' href='javascript:void(0)' @click='deleteItem(item)' v-authcode='"roleList_delete"'>
+              <i class='fa fa-trash cf05'></i>
+            </a>
           </td>
         </tr>
         </tbody>
@@ -62,7 +60,7 @@
 <script>
   import commonSrv from '@/common/commonService'
   export default {
-    name: 'menuList',
+    name: 'roleList',
     data () {
       return {
         searchKey: null,
@@ -74,24 +72,27 @@
       add() {
         var me = this;
         this.axios.get('/comm/getNewId').then(function (resp) {
-          me.$router.push({path: '/sys/menuEdit', query: {id: resp.data.value}});
+          me.$router.push({path: '/admin/roleEdit', query: {id: resp.data.value}});
         });
 
       },
       edit(entity) {
-        this.$router.push({path: '/sys/menuEdit', query: {id: entity.menuId}});
-
+        this.$router.push({path: '/admin/roleEdit', query: {id: entity.roleId}});
       },
       search() {
         var me = this;
         me.pager.loading = true;
-        this.axios.get('/menu/queryPageList', {
+        this.axios.get('/role/queryPageList', {
           name: this.searchKey,
           pageNum: this.pager.pageNum,
           pageSize: this.pager.pageSize
         }).then(function (resp) {
-          me.list = resp.data.value.list;
-          me.pager = commonSrv.getPagerInfo(resp.data.value, me.goPage);
+          if (resp.data.status == ResultStatus.OK.key) {
+            me.list = resp.data.value.list;
+            me.pager = commonSrv.getPagerInfo(resp.data.value, me.goPage);
+          } else if (resp.data.status == ResultStatus.NO.key){
+            me.$toaster.warning(resp.data.message);
+          }
         });
       },
       goPage(page) {
@@ -100,12 +101,19 @@
       },
       deleteItem: function (entity) {
         var me = this;
-        this.$confirm.confirm('确定要删除菜单吗？', function () {
-          me.axios.get('/menu/delete', {id: entity.menuId}).then(function (resp) {
-            me.$toaster.success('删除成功！');
-            me.search();
+        this.$confirm.confirm('确定要删除角色吗？', function () {
+          me.axios.get('/role/delete', {id: entity.roleId}).then(function (resp) {
+            if (resp.data.status == ResultStatus.OK.key) {
+              me.$toaster.success('删除成功！');
+              me.search();
+            } else if (resp.data.status == ResultStatus.NO.key){
+              me.$toaster.warning(resp.data.message);
+            }
           });
         });
+      },
+      grant(entity) {
+        this.$router.push({path: '/admin/roleGrantPermission', query: {id: entity.roleId}});
       }
     },
     mounted: function () {
@@ -113,6 +121,3 @@
     }
   }
 </script>
-<style scoped>
-  .table{min-width:850px;}
-</style>

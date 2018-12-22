@@ -1,7 +1,7 @@
 <template>
   <div class='maincontent w100p h100p'>
     <div class='list-header-but-group'>
-      <button type="button inline-block" class="btn btn-outline-purple" @click="add()" v-authcode='"permissionList_add"'>
+      <button type="button inline-block" class="btn btn-outline-purple" @click="add()" v-authcode='"configInfoList_add"'>
         <i class='fa fa-plus mr5'></i>添加
       </button>
     </div>
@@ -25,10 +25,14 @@
         <thead>
         <tr>
           <th class='w50'>#</th>
-          <th class=''>名称</th>
-          <th class=''>功能</th>
-          <th class='w150'>编码</th>
-          <th class='w50'>序号</th>
+          <th class='w150'>名称</th>
+          <th class='w100'>类型</th>
+          <th class='w100'>账户</th>
+          <th class='w100'>密码</th>
+          <th class='w100'>联系人</th>
+          <th class='w100'>联系方式</th>
+          <th class='w100'>相关站点</th>
+          <th class='w100'>备注</th>
           <th class='w100'>操作</th>
         </tr>
         </thead>
@@ -38,11 +42,15 @@
           <td>
             <a class='block w100p h100p' href='javascript:void(0)' v-text='item.name' @click='edit(item)'></a>
           </td>
-          <td v-text='item.functionName'></td>
-          <td v-text='item.code' v-tooltip='item.code'></td>
-          <td class="text-center" v-text='item.seq'></td>
+          <td v-text='item.typeName'></td>
+          <td v-text='item.account'></td>
+          <td v-text='item.password'></td>
+          <td v-text='item.contactPerson'></td>
+          <td v-text='item.contacts'></td>
+          <td v-text='item.relateWebsite'></td>
+          <td v-text='item.memo' v-tooltip='item.memo'></td>
           <td class="operate">
-            <a class='inline-block mybtn' href='javascript:void(0)' @click='deleteItem(item)' v-authcode='"permissionList_delete"'><i
+            <a class='inline-block mybtn' href='javascript:void(0)' @click='deleteItem(item)' v-authcode='"configInfoList_delete"'><i
             class='fa fa-trash cf05'></i></a>
           </td>
         </tr>
@@ -58,11 +66,10 @@
 <script>
   import commonSrv from '@/common/commonService'
   export default {
-    name: 'permissionList',
+    name: 'configInfoList',
     data () {
       return {
         searchKey: null,
-        functionId: null,
         list: [],
         pager: {pageNum: 1, pageSize: 10, loading: true}
       }
@@ -71,29 +78,24 @@
       add() {
         var me = this;
         this.axios.get('/comm/getNewId').then(function (resp) {
-          me.$router.push({path: '/sys/permissionEdit', query: {id: resp.data.value, functionId: me.functionId}});
+          me.$router.push({path: '/admin/configInfoEdit', query: {id: resp.data.value}});
         });
 
       },
       edit(entity) {
-        this.$router.push({path: '/sys/permissionEdit', query: {id: entity.permissionId}});
+        this.$router.push({path: '/admin/configInfoEdit', query: {id: entity.id}});
 
       },
       search() {
         var me = this;
         me.pager.loading = true;
-        this.axios.get('/permission/queryPageList', {
+        this.axios.get('/configInfo/queryPageList', {
           name: this.searchKey,
-          functionId: this.functionId,
           pageNum: this.pager.pageNum,
           pageSize: this.pager.pageSize
         }).then(function (resp) {
-          if (resp.data.status == ResultStatus.OK.key) {
-            me.list = resp.data.value.list;
-            me.pager = commonSrv.getPagerInfo(resp.data.value, me.goPage);
-          } else if (resp.data.status == ResultStatus.NO.key){
-            me.$toaster.warning(resp.data.message);
-          }
+          me.list = resp.data.value.list;
+          me.pager = commonSrv.getPagerInfo(resp.data.value, me.goPage);
         });
       },
       goPage(page) {
@@ -102,8 +104,8 @@
       },
       deleteItem: function (entity) {
         var me = this;
-        this.$confirm.confirm('确定要删除权限吗？', function () {
-          me.axios.get('/permission/delete', {id: entity.permissionId}).then(function (resp) {
+        this.$confirm.confirm('确定要删除配置吗？', function () {
+          me.axios.get('/configInfo/delete', {id: entity.id}).then(function (resp) {
             me.$toaster.success('删除成功！');
             me.search();
           });
@@ -111,7 +113,6 @@
       }
     },
     mounted: function () {
-      this.functionId = this.$route.query.functionId;
       this.search();
     }
   }

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset='utf-8'> 
+	<meta charset='utf-8'>
 	<title>学习servlet</title>
 	<link rel='stylesheet' type='text/css' href='../bootstrap/css/bootstrap.min.css'>
 	<link rel='stylesheet' type='text/css' href='../css/common.css'>
-</head> 
+</head>
 <body class='elearn'>
 	<h2></h2>
 	<p>
@@ -71,10 +71,10 @@
 	<hr>
 	<p>7. HttpServletRequest,继承ServletRequest
 		<ul class='list'>
-			<li>request.getRequestURL()获取请求地址，不包括querystring, 如http://localhost:8080/ToolSiteMvc4J/userinfo/login</li>
-			<li>request.getRequestURI()来获取请求uri,包括context，不包括参数, 如/ToolSiteMvc4J/userinfo/login</li>
+			<li>request.getRequestURL()获取请求地址，不包括querystring, 如http://localhost:8080/ToolSiteMvc4J/user/login</li>
+			<li>request.getRequestURI()来获取请求uri,包括context，不包括参数, 如/ToolSiteMvc4J/user/login</li>
 			<li>request.getQueryString()来获取查询参数，如username=zjy&password=1</li>
-			<li>request.getServletPath(),获取servlet请求方路径，不包括context, 参数之前, 如/userinfo/login</li>
+			<li>request.getServletPath(),获取servlet请求方路径，不包括context, 参数之前, 如/user/login</li>
 			<li>request.getMethod(),获取请求方式，如POST</li>
 			<li>request.getSession(),获取session,可以传参，当传true时表示，若存在，则直接返回，不存在，则创建，为false时，当存在则返回，不存在返回null</li>
 			<li>RequestDispatcher requestDispatcher = request.getRequestDispatcher("/" + servletName);
@@ -114,5 +114,5 @@
 			<li>有doGet, doPost, doDelete等一系列方法</li>
 		</ul>
 	</p>
-</body> 
+</body>
 </html>
