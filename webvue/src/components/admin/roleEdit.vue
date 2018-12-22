@@ -2,7 +2,7 @@
   <div class="mypanel" style="width:500px;margin:auto;margin-top:20px;">
     <div class="panel-heading font-bold">角色信息</div>
     <div class="panel-body">
-      <form class='myform form-label-w120 block-form-group'>
+      <form class='myform block-form-group'>
         <div class="form-group">
           <label class="form-label">名称：</label>
           <div class="form-content">
@@ -62,11 +62,9 @@
       getDetail: function (id) {
         var me = this;
         me.allDisabled = true;
-        this.axios.get('/role/getDetail', {id: id}).then(function (resp) {
+        this.$axios.get('/role/getDetail', {id: id}).then(function (resp) {
           if (resp.data.status == ResultStatus.OK.key) {
             me.role = resp.data.value;
-          } else if (resp.data.status == ResultStatus.NO.key){
-            me.$toaster.warning(resp.data.message);
           }
           me.allDisabled = false;
         });
@@ -74,12 +72,11 @@
       save: function () {
         var me = this;
         me.allDisabled = true;
-        this.axios.post('/role/save', me.role).then(function (resp) {
+        this.$axios.post('/role/save', me.role).then(function (resp) {
           if (resp.data.status == ResultStatus.OK.key) {
             me.$toaster.success('保存成功！');
             me.goBack();
-          } else if (resp.data.status == ResultStatus.NO.key){
-            me.$toaster.warning(resp.data.message);
+          } else {
             me.allDisabled = false;
           }
         });

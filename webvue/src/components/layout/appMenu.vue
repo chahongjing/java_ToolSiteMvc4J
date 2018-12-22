@@ -44,7 +44,7 @@
           this.list = list;
         } else {
           var me = this;
-          me.axios.get('/menu/queryMenu').then(function (resp) {
+          me.$axios.get('/menu/queryMenu').then(function (resp) {
             if (resp.data.status == ResultStatus.OK.key) {
               var menuInfo = {first: {}, second: {}};
               for (var i = 0; i < resp.data.value.length; i++) {

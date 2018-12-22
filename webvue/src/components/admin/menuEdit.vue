@@ -96,26 +96,30 @@
       getDetail: function (id) {
         var me = this;
         me.allDisabled = true;
-        this.axios.get('/menu/getDetail', {id: id}).then(function (resp) {
-          me.menu = resp.data.value;
-        me.allDisabled = false;
+        this.$axios.get('/menu/getDetail', {id: id}).then(function (resp) {
+          if(resp.data.status == ResultStatus.OK.key) {
+            me.menu = resp.data.value;
+          }
+          me.allDisabled = false;
         });
       },
       save: function () {
         var me = this;
         me.allDisabled = true;
-        this.axios.post('/menu/save', me.menu).then(function (resp) {
-          me.$toaster.success('保存成功！');
-          me.goBack();
+        this.$axios.post('/menu/save', me.menu).then(function (resp) {
+          if(resp.data.status == ResultStatus.OK.key) {
+            me.$toaster.success('保存成功！');
+            me.goBack();
+          } else {
+            me.allDisabled = false;
+          }
         });
       },
       getMenuList() {
         var me = this;
-        this.axios.post('/menu/queryParentList', me.menu).then(function (resp) {
+        this.$axios.post('/menu/queryParentList', me.menu).then(function (resp) {
           if (resp.data.status == ResultStatus.OK.key) {
             me.menuList = resp.data.value;
-          } else if (resp.data.status == ResultStatus.NO.key){
-            me.$toaster.warning(resp.data.message);
           }
         });
       },

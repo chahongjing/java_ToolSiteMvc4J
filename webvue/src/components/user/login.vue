@@ -65,7 +65,7 @@
           return false;
         }
         var me = this;
-        this.axios.post('/user/login', {
+        this.$axios.post('/user/login', {
           userCode: $.trim(userCode.val()),
           password: $.trim(password.val())
         }).then(function (resp) {
@@ -83,8 +83,7 @@
             } else {
               window.location.hash = "/";
             }
-          } else if (resp.data.status == ResultStatus.NO.key) {
-            me.$toaster.warning(resp.data.message);
+          } else {
             me.allDisabled = false;
           }
         });

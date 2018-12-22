@@ -17,7 +17,7 @@ import ulTree from '@/components/common/ulTree';
 Object.keys(filters).forEach(k => Vue.filter(k, filters[k]));
 Object.keys(directives).forEach(k => Vue.directive(k, directives[k]));
 Vue.prototype.serverHost = process.env.baseUrl;
-Vue.prototype.axios = axios;
+Vue.prototype.$axios = axios;
 Vue.prototype.$confirm = confirm;
 Vue.prototype.$toaster = toaster;
 Vue.component('pagination', pagination);

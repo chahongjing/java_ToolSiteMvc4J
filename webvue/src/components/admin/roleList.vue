@@ -71,8 +71,10 @@
     methods: {
       add() {
         var me = this;
-        this.axios.get('/comm/getNewId').then(function (resp) {
-          me.$router.push({path: '/admin/roleEdit', query: {id: resp.data.value}});
+        this.$axios.get('/comm/getNewId').then(function (resp) {
+          if(resp.data.status == ResultStatus.OK.key) {
+            me.$router.push({path: '/admin/roleEdit', query: {id: resp.data.value}});
+          }
         });
 
       },
@@ -82,7 +84,7 @@
       search() {
         var me = this;
         me.pager.loading = true;
-        this.axios.get('/role/queryPageList', {
+        this.$axios.get('/role/queryPageList', {
           name: this.searchKey,
           pageNum: this.pager.pageNum,
           pageSize: this.pager.pageSize
@@ -90,8 +92,6 @@
           if (resp.data.status == ResultStatus.OK.key) {
             me.list = resp.data.value.list;
             me.pager = commonSrv.getPagerInfo(resp.data.value, me.goPage);
-          } else if (resp.data.status == ResultStatus.NO.key){
-            me.$toaster.warning(resp.data.message);
           }
         });
       },
@@ -102,12 +102,10 @@
       deleteItem: function (entity) {
         var me = this;
         this.$confirm.confirm('确定要删除角色吗？', function () {
-          me.axios.get('/role/delete', {id: entity.roleId}).then(function (resp) {
+          me.$axios.get('/role/delete', {id: entity.roleId}).then(function (resp) {
             if (resp.data.status == ResultStatus.OK.key) {
               me.$toaster.success('删除成功！');
               me.search();
-            } else if (resp.data.status == ResultStatus.NO.key){
-              me.$toaster.warning(resp.data.message);
             }
           });
         });

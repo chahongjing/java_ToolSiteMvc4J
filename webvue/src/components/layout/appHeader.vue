@@ -56,46 +56,49 @@
           <span class='closeicon' title="关闭">&times;</span>
         </button>
       </div>
-      <div class="modal-body pr20" slot="bodySlot">
+      <div class="modal-body pr30" slot="bodySlot">
         <form class='myform form-label-w100 block-form-group'>
-          <div class="form-group">
+          <div class="form-group" :class='getErrorClass("oldPasswordStatus")'>
             <label class="form-label req colon">原密码</label>
             <div class="form-content">
               <input type="password" class="form-control" placeholder="原密码" autofocus
                      v-model='user.oldPassword' v-focus/>
             </div>
             <div class='form-info'>
-              <i class='fa'></i>
+              <i class='fa' :title='oldPasswordStatus.t'></i>
             </div>
+          <span class='error-msg' v-text='oldPasswordStatus.t'></span>
           </div>
-          <div class="form-group">
+          <div class="form-group" :class='getErrorClass("newPasswordStatus")'>
             <label class="form-label req colon">新密码</label>
             <div class="form-content">
               <input type="password" class="form-control" placeholder="新密码" autofocus
                      v-model='user.newPassword' v-focus/>
             </div>
             <div class='form-info'>
-              <i class='fa'></i>
+              <i class='fa' :title='newPasswordStatus.t'></i>
             </div>
+          <span class='error-msg' v-text='newPasswordStatus.t'></span>
           </div>
-          <div class="form-group">
+          <div class="form-group" :class='getErrorClass("passwordAgainStatus")'>
             <label class="form-label req colon">确认密码</label>
             <div class="form-content">
               <input type="password" class="form-control" placeholder="确认密码" autofocus
                      v-model='user.passwordAgain' v-focus/>
             </div>
             <div class='form-info'>
-              <i class='fa'></i>
+              <i class='fa' :title='passwordAgainStatus.t'></i>
             </div>
+          <span class='error-msg' v-text='passwordAgainStatus.t'></span>
           </div>
         </form>
       </div>
       <div class="modal-footer" slot="footerSlot">
-        <button type="button" class="btn btn-secondary" @click='showchangePasswordDialog = false'>
+        <button type="button" class="btn btn-outline-purple" @click='showchangePasswordDialog = false'>
           <i class='fa fa-times'></i><span>取消</span>
         </button>
-        <button type="button" class="btn btn-purple" @click='changePassword()'>
-          <i class='fa fa-check'></i><span>确定</span>
+        <button type="button" class="btn btn-purple mr5" @click="changePassword()">
+          <i class='fa fa-check'></i>确定
         </button>
       </div>
     </common-modal>
@@ -112,14 +115,17 @@
         showMenu: false,
         width: 350,
         showchangePasswordDialog: false,
-        hoverMenu: false
+        hoverMenu: false,
+        oldPasswordStatus: {v:null,t:''},
+        newPasswordStatus: {v:null,t:''},
+        passwordAgainStatus:{v:null,t:''}
       }
     },
     methods: {
       logout: function () {
         var me = this;
         //this.$confirm.confirm('确定要退出系统吗？', function () {
-          me.axios.get('/user/logout').then(function (resp) {
+          me.$axios.get('/user/logout').then(function (resp) {
             if (resp.data.status == ResultStatus.OK.key) {
               me.$root.clearUser();
               me.$router.push({path: '/login'});
@@ -128,25 +134,43 @@
         //});
       },
       openChangePasswordDialog: function () {
+        this.user.oldPassword = null;
+        this.user.newPassword = null;
+        this.user.passwordAgain = null;
+        this.oldPasswordStatus.v = null;
+        this.newPasswordStatus.v = null;
+        this.passwordAgainStatus.v = null;
         this.showchangePasswordDialog = true;
       },
       changePassword: function () {
         var me = this;
         if (this.user.oldPassword === null || this.user.oldPassword === undefined
           || this.user.oldPassword === '' || this.user.oldPassword.trim() === '') {
-          me.$toaster.warning('原密码不能为空！');
+          me.oldPasswordStatus.v = 2;
+          me.oldPasswordStatus.t = '原密码不能为空！';
           return;
         }
+        me.oldPasswordStatus.v = 1;
         if (this.user.newPassword === null || this.user.newPassword === undefined
           || this.user.newPassword === '' || this.user.newPassword.trim() === '') {
-          me.$toaster.warning('新密码不能为空！');
+          me.newPasswordStatus.v = 2;
+          me.newPasswordStatus.t = '新密码不能为空！';
+          return;
+        }
+        me.newPasswordStatus.v = 1;
+        if (this.user.passwordAgain === null || this.user.passwordAgain === undefined
+          || this.user.passwordAgain === '' || this.user.passwordAgain.trim() === '') {
+          me.passwordAgainStatus.v = 2;
+          me.passwordAgainStatus.t = '确认密码不能为空！';
           return;
         }
         if (this.user.newPassword !== this.user.passwordAgain) {
-          me.$toaster.warning('两次密码不一致！');
+          me.passwordAgainStatus.v = 2;
+          me.passwordAgainStatus.t = '两次密码不一致！';
           return;
         }
-        me.axios.get('/user/changePassword', {
+        me.passwordAgainStatus.v = 1;
+        me.$axios.get('/user/changePassword', {
           userCode: this.user.userCode,
           oldPassword: this.user.oldPassword,
           newPassword: this.user.newPassword
@@ -157,10 +181,17 @@
             me.user.oldPassword = '';
             me.user.newPassword = '';
             me.user.passwordAgain = '';
-          } else {
-            me.$toaster.warning(resp.data.message);
           }
         });
+      },
+      getErrorClass(type) {
+        var obj = {};
+        if(this[type].v == 1) {
+          obj["info-success"] = true;
+        } else if(this[type].v == 2) {
+          obj["info-error"] = true;
+        }
+        return obj;
       },
       enterMenu: function () {
         this.hoverMenu = true;
@@ -176,7 +207,7 @@
       },
       editInfo() {
         var user = this.$root.getUser();
-        this.$router.push({name: 'userEdit', params: {id: user.userId, type: 'editSelf'}});
+        this.$router.push({path: '/user/userEdit', query: {id: user.userId, type: 'editSelf'}});
         this.showMenu = false;
       },
       goHome() {

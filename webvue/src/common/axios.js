@@ -15,19 +15,16 @@ axios.defaults.paramsSerializer = function (params) {
   return $.param(params);
 };
 axios.defaults.transformRequest = [function (data) {
-  if (data && !(data instanceof FormData || data instanceof ArrayBuffer)) {
+  if (data && !(data instanceof FormData)) {
     data = $.param(data);
     // data = Qs.stringify(data);
   }
   return data;
 }]
 axios.defaults.transformResponse = [function (data) {
-  if (data && !(data instanceof Blob || data instanceof ArrayBuffer)) {
+  if (data && typeof(data) == 'string') {
     var data = $.parseJSON(data);
     // var data = Qs.parse(data);
-    if (data.status == ResultStatus.UNAUTHENTICATION.key) {
-      window.location.hash = "/login";
-    }
   }
   return data;
 }]
@@ -41,38 +38,53 @@ axios.interceptors.request.use(function (config) {
 });
 
 // 添加响应拦截器
-axios.interceptors.response.use(function (response) {
+axios.interceptors.response.use(function (resp) {
   // 对响应数据做点什么
-  return response;
+  filterResp(resp);
+  return resp;
 }, function (error) {
-  var result = {data:{}};
+  error.data = {};
   // 对响应错误做点什么
   if(!error.response) {
-    result.data.status = ResultStatus.ERROR.key;
-    result.data.message = '访问服务器失败！';
+    error.data.status = ResultStatus.ERROR.key;
+    error.data.message = '访问服务器失败！';
   } else if (error.response.status == 401) {
     // 用户未授权
-    result.data.status = ResultStatus.UNAUTHORIZED.key;
-    result.data.message = ResultStatus.UNAUTHORIZED.name;
+    error.data.status = ResultStatus.UNAUTHORIZED.key;
+    error.data.message = '未授权！';
   } else if (error.response.status == 500) {
     if(error.response.data instanceof ArrayBuffer) {
        var res = JSON.parse(Utility.readArrayBufferAsText(error.response.data));
-       result.data = res;
+       error.data = res;
     } else if (error.response.data instanceof Blob) {
       Utility.readBlobAsText(error.response.data, function (data) {
         var res = {};
         res.data = JSON.parse(data);
         toaster.error(res.message);
       });
+      error.status = ResultStatus.ERROR.key;
+      error.data.message = '下载出错！';
     }
   } else {
-    result.data.status = ResultStatus.ERROR.key;
-    result.data.message = ResultStatus.ERROR.name;
-    console.error(error);
+    error.data.status = ResultStatus.ERROR.key;
+    error.data.message = '未知错误！';
   }
   // return Promise.resolve(result);
-  return Promise.reject(result);
+  filterResp(error);
+  return Promise.reject(error);
 });
+
+function filterResp(resp) {
+  if (resp.data.status == ResultStatus.NO.key) {
+    toaster.warning(resp.data.message);
+  } else if (resp.data.status == ResultStatus.ERROR.key) {
+    toaster.error(resp.data.message);
+  } else if(resp.data.status == ResultStatus.UNAUTHENTICATION.key) {
+    window.location.hash = "/login";
+  } else if(resp.data.status == ResultStatus.UNAUTHORIZED.key) {
+    toaster.error(resp.data.message);
+  }
+}
 
 var axiosIns = {
   getAjaxUrl: function (path) {
@@ -84,45 +96,22 @@ var axiosIns = {
   },
   get: function (path, param) {
     return axios.get(this.getAjaxUrl(path), {params: param}).catch(function (resp) {
-      if (resp.data.status == ResultStatus.UNAUTHORIZED.key) {
-        toaster.error(resp.data.message);
-      } else if(resp.data.status == ResultStatus.ERROR.key) {
-        toaster.error(resp.data.message);
-      }
-      return resp;
-    });
-  },
-  post: function (path, param) {
-    return axios.post(this.getAjaxUrl(path), param).catch(function (resp) {
-      if (resp.data.status == ResultStatus.UNAUTHORIZED.key) {
-        toaster.error(resp.data.message);
-      } else if(resp.data.status == ResultStatus.ERROR.key) {
-        toaster.error(resp.data.message);
-      }
       return resp;
     });
   },
   /**
-   * 以formdata的形式发起post ajax请求
-   * @param path 路径
-   * @param param 参数，object类型
-   * @returns {*}
+   * post请求
+   * @param  path  路径
+   * @param  param 参数，可以是object，也可以是FormData，FormData中也可以包含文件
+   * @return
    */
-  postFormData: function (path, formData) {
-    return axios({
-      url: this.getAjaxUrl(path),
-      method: 'post',
-      data: formData,
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
+  post: function (path, param) {
+    return axios.post(this.getAjaxUrl(path), param).catch(function (resp) {
+      return resp;
     });
   },
   postDownload: function (path, param) {
     return axios.post(this.getAjaxUrl(path), param, {responseType: 'arraybuffer'}).catch(function (resp) {
-      if (resp.status == ResultStatus.UNAUTHORIZED.key) {
-        toaster.error(resp.message);
-      }
       return resp;
     });
   },

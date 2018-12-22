@@ -204,10 +204,10 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
         if (StringUtils.isBlank(vo.getUserName())) {
             throw new ServiceException("请输入用户名称！");
         }
-        if (StringUtils.isBlank(vo.getPassword())) {
+        if (!vo.getIsSave() && StringUtils.isBlank(vo.getPassword())) {
             throw new ServiceException("请输入密码！");
         }
-        if (!vo.getPassword().equals(vo.getPasswordAgain())) {
+        if (!vo.getIsSave() && !vo.getPassword().equals(vo.getPasswordAgain())) {
             throw new ServiceException("两次密码不一致！");
         }
     }

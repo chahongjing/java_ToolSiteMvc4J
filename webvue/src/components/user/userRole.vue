@@ -42,11 +42,9 @@
       },
       getUserRole: function (id) {
         var me = this;
-        this.axios.get('/userRole/queryUserRole', {id: id}).then(function (resp) {
+        this.$axios.get('/userRole/queryUserRole', {id: id}).then(function (resp) {
           if (resp.data.status == ResultStatus.OK.key) {
             me.list = resp.data.value;
-          } else if (resp.data.status == ResultStatus.NO.key){
-            me.$toaster.warning(resp.data.message);
           }
         });
       },
@@ -66,10 +64,8 @@
         }
         var changed = [entity];
         // 处理联动
-        this.axios.post('/userRole/saveUserRole', {listStr: JSON.stringify(changed)}).then(function (resp) {
+        this.$axios.post('/userRole/saveUserRole', {listStr: JSON.stringify(changed)}).then(function (resp) {
           if (resp.data.status == ResultStatus.OK.key) {
-          } else if (resp.data.status == ResultStatus.NO.key){
-            me.$toaster.warning(resp.data.message);
           }
         });
       },
@@ -85,10 +81,8 @@
         }
         if (changed.length == 0) return;
         // 处理联动
-        this.axios.post('/userRole/saveUserRole', {listStr: JSON.stringify(changed)}).then(function (resp) {
+        this.$axios.post('/userRole/saveUserRole', {listStr: JSON.stringify(changed)}).then(function (resp) {
           if (resp.data.status == ResultStatus.OK.key) {
-          } else if (resp.data.status == ResultStatus.NO.key){
-            me.$toaster.warning(resp.data.message);
           }
         });
       }

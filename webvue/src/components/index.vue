@@ -174,17 +174,6 @@
         this.$router.push({path: '/myPage', query: {id: '1'}});
         //this.$router.push({name: 'myPage', query:{ id:'1'}});
       },
-      goHomePage() {
-      },
-      test() {
-        var formData = new FormData();
-        formData.append('userCode', 'zjy');
-        formData.append('userName', '曾军毅');
-        formData.append('birthday', new Date());
-        this.axios.postFormData('/user/testPostWithFile', formData).then(function (resp) {
-          console.log(resp);
-        });
-      },
       confirm1() {
         var option = {
           title: '提示1',

@@ -70,8 +70,10 @@
     methods: {
       add() {
         var me = this;
-        this.axios.get('/comm/getNewId').then(function (resp) {
-          me.$router.push({path: '/admin/permissionEdit', query: {id: resp.data.value, functionId: me.functionId}});
+        this.$axios.get('/comm/getNewId').then(function (resp) {
+          if(resp.data.status == ResultStatus.OK.key) {
+            me.$router.push({path: '/admin/permissionEdit', query: {id: resp.data.value, functionId: me.functionId}});
+          }
         });
 
       },
@@ -82,7 +84,7 @@
       search() {
         var me = this;
         me.pager.loading = true;
-        this.axios.get('/permission/queryPageList', {
+        this.$axios.get('/permission/queryPageList', {
           name: this.searchKey,
           functionId: this.functionId,
           pageNum: this.pager.pageNum,
@@ -91,8 +93,6 @@
           if (resp.data.status == ResultStatus.OK.key) {
             me.list = resp.data.value.list;
             me.pager = commonSrv.getPagerInfo(resp.data.value, me.goPage);
-          } else if (resp.data.status == ResultStatus.NO.key){
-            me.$toaster.warning(resp.data.message);
           }
         });
       },
@@ -103,9 +103,11 @@
       deleteItem: function (entity) {
         var me = this;
         this.$confirm.confirm('确定要删除权限吗？', function () {
-          me.axios.get('/permission/delete', {id: entity.permissionId}).then(function (resp) {
-            me.$toaster.success('删除成功！');
-            me.search();
+          me.$axios.get('/permission/delete', {id: entity.permissionId}).then(function (resp) {
+            if(resp.data.status == ResultStatus.OK.key) {
+              me.$toaster.success('删除成功！');
+              me.search();
+            }
           });
         });
       }

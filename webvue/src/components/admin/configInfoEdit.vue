@@ -119,17 +119,23 @@
       getDetail: function (id) {
         var me = this;
         me.allDisabled = true;
-        this.axios.get('/configInfo/getDetail', {id: id}).then(function (resp) {
-          me.configInfo = resp.data.value;
+        this.$axios.get('/configInfo/getDetail', {id: id}).then(function (resp) {
+          if(resp.data.status == ResultStatus.OK.key) {
+            me.configInfo = resp.data.value;
+          }
           me.allDisabled = false;
         });
       },
       save: function () {
         var me = this;
         me.allDisabled = true;
-        this.axios.post('/configInfo/save', me.configInfo).then(function (resp) {
-          me.$toaster.success('保存成功！');
-          me.goBack();
+        this.$axios.post('/configInfo/save', me.configInfo).then(function (resp) {
+          if (resp.data.status == ResultStatus.OK.key) {
+            me.$toaster.success('保存成功！');
+            me.goBack();
+          } else {
+            me.allDisabled = false;
+          }
         });
       },
       getConfigTypeList() {

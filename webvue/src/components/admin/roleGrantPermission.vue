@@ -116,12 +116,10 @@
       },
       getRolePermission: function (id) {
         var me = this;
-        this.axios.get('/rolePermission/getRolePermission', {id: id}).then(function (resp) {
+        this.$axios.get('/rolePermission/getRolePermission', {id: id}).then(function (resp) {
           if (resp.data.status == ResultStatus.OK.key) {
             me.list = resp.data.value;
             me.refreshCheckbox();
-          } else if (resp.data.status == ResultStatus.NO.key){
-            me.$toaster.warning(resp.data.message);
           }
         });
       },
@@ -130,10 +128,8 @@
         this.refreshCheckbox();
         var changed = [entity];
         // 处理联动
-        this.axios.post('/rolePermission/savePermission', {listStr: JSON.stringify(changed)}).then(function (resp) {
+        this.$axios.post('/rolePermission/savePermission', {listStr: JSON.stringify(changed)}).then(function (resp) {
           if (resp.data.status == ResultStatus.OK.key) {
-          } else if (resp.data.status == ResultStatus.NO.key){
-            me.$toaster.warning(resp.data.message);
           }
         });
       },
@@ -143,11 +139,9 @@
         this.checkChildren(entity, entity.subList, changed);
         this.refreshCheckbox();
         // 处理联动
-        this.axios.post('/rolePermission/savePermission', {listStr: JSON.stringify(changed)}).then(function (resp) {
+        this.$axios.post('/rolePermission/savePermission', {listStr: JSON.stringify(changed)}).then(function (resp) {
           if (resp.data.status == ResultStatus.OK.key) {
 
-          } else if (resp.data.status == ResultStatus.NO.key){
-            me.$toaster.warning(resp.data.message);
           }
         });
       },

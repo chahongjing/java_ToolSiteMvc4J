@@ -126,23 +126,17 @@ export default {
           formData.append('myfile', files[i]);
         }
       }
-      this.axios.postFormData('/learn/testPostWithFile', formData).then(function (resp) {
+      this.$axios.post('/learn/testPostWithFile', formData).then(function (resp) {
         if (resp.data.status == ResultStatus.OK.key) {
+          console.log(resp.data.value);
           me.$toaster.success('上传成功！');
-        } else if (resp.data.status == ResultStatus.NO.key) {
         }
       });
     },
     ajaxDownload() {
       var me = this;
-      this.axios.postDownload('/learn/download').then(function (resp) {
-        if(resp.data instanceof ArrayBuffer || resp.data instanceof Blob) {
-          Utility.blobDownload(resp.data, resp.headers);
-        } else if (resp.data.status == ResultStatus.NO.key) {
-          me.$toaster.error(resp.data.message);
-        } else if (resp.data.status == ResultStatus.ERROR.key) {
-          me.$toaster.error(resp.data.message);
-        }
+      this.$axios.postDownload('/learn/download').then(function (resp) {
+        Utility.blobDownload(resp.data, resp.headers);
       });
     },
     initDrag() {

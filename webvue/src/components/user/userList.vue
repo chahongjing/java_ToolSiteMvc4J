@@ -130,13 +130,15 @@
     methods: {
       add() {
         var me = this;
-        this.axios.get('/comm/getNewId').then(function (resp) {
-          me.$router.push({name: 'userEdit', params: {id: resp.data.value}});
+        this.$axios.get('/comm/getNewId').then(function (resp) {
+          if(resp.data.status == ResultStatus.OK.key) {
+            me.$router.push({path: '/user/userEdit', query: {id: resp.data.value}});
+          }
         });
 
       },
       edit(entity) {
-        this.$router.push({name: 'userEdit', params: {id: entity.userId}});
+        this.$router.push({path: '/user/userEdit', query: {id: entity.userId}});
 
       },
       search() {
@@ -146,15 +148,13 @@
         var me = this;
         me.allDisabled = true;
         me.pager.loading = true;
-        this.axios.get('/user/queryPageList', {
+        this.$axios.get('/user/queryPageList', {
           userName: this.searchKey,
           pageNum: this.pager.pageNum,
           pageSize: this.pager.pageSize,
           orderBy: this.orderBy
         }).then(function (resp) {
-          if(!resp.data.value) {
-            console.log(resp);
-          } else {
+          if(resp.data.status == ResultStatus.OK.key) {
             me.list = resp.data.value.list;
             me.pager = commonSrv.getPagerInfo(resp.data.value, me.goPage);
           }
@@ -168,9 +168,11 @@
       deleteItem: function (entity) {
         var me = this;
         this.$confirm.confirm('确定要删除用户吗？', function () {
-          me.axios.get('/user/delete', {id: entity.userId}).then(function (resp) {
-            me.$toaster.success('删除成功！');
-            me.queryList();
+          me.$axios.get('/user/delete', {id: entity.userId}).then(function (resp) {
+            if(resp.data.status == ResultStatus.OK.key) {
+              me.$toaster.success('删除成功！');
+              me.queryList();
+            }
           });
         });
       },
@@ -209,15 +211,13 @@
           me.$toaster.warning('原密码不能为空！');
           return;
         }
-        me.axios.get('/user/resetPassword', {
+        me.$axios.get('/user/resetPassword', {
           userCode: this.userCode,
           password: this.password
         }).then(function (resp) {
           if (resp.data.status == ResultStatus.OK.key) {
             me.$toaster.success('修改密码成功！');
             me.showchangePasswordDialog = false;
-          } else if (resp.data.status == ResultStatus.NO.key){
-            me.$toaster.warning(resp.data.message);
           }
         });
       }

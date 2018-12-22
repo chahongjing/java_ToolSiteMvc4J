@@ -3,7 +3,7 @@
     <div class="panel-heading font-bold">用户信息</div>
     <div class="panel-body">
       <form class='myform infotip form-label-w110 block-form-group'>
-        <div class="form-group info-success">
+        <div class="form-group">
           <label class="form-label req colon">编号</label>
           <div class="form-content">
             <input type="text" class="form-control" placeholder="编号" autofocus
@@ -14,7 +14,7 @@
           </div>
           <span class='error-msg'></span>
         </div>
-        <div class="form-group info-error">
+        <div class="form-group">
           <label class="form-label colon">姓名</label>
           <div class="form-content">
             <input type="text" class="form-control" placeholder="姓名"
@@ -173,11 +173,9 @@
       getDetail: function (id) {
         var me = this;
         this.allDisabled = true;
-        this.axios.get('/user/getDetail', {id: id}).then(function (resp) {
+        this.$axios.get('/user/getDetail', {id: id}).then(function (resp) {
           if (resp.data.status == ResultStatus.OK.key) {
             me.user = resp.data.value;
-          } else if (resp.data.status == ResultStatus.NO.key) {
-
           }
           me.allDisabled = false;
         });
@@ -185,14 +183,13 @@
       save: function () {
         var me = this;
         this.allDisabled = true;
-        this.axios.post('/user/save', me.user).then(function (resp) {
+        this.$axios.post('/user/save', me.user).then(function (resp) {
           if (resp.data.status == ResultStatus.OK.key) {
             me.$toaster.success('保存成功！');
             me.goBack();
-          } else if (resp.data.status == ResultStatus.NO.key) {
-            me.$toaster.warning(resp.data.message);
+          } else {
+            me.allDisabled = false;
           }
-          me.allDisabled = false;
         });
       },
       getEnumList() {
@@ -212,10 +209,10 @@
       }
     },
     mounted: function () {
-      if (this.$route.params.type == 'editSelf') {
+      if (this.$route.query.type == 'editSelf') {
         this.editSelf = true;
       }
-      this.getDetail(this.$route.params.id);
+      this.getDetail(this.$route.query.id);
       this.getEnumList();
       var list = [];
       list.push({key: 1, name: '看书'});
