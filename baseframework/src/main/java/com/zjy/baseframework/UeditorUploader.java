@@ -7,7 +7,6 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
-import sun.misc.BASE64Decoder;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
@@ -129,11 +128,10 @@ public class UeditorUploader {
         String base64Data = this.request.getParameter(fieldName);
         this.fileName = this.getName("test.png");
         this.url = savePath + "/" + this.fileName;
-        BASE64Decoder decoder = new BASE64Decoder();
         try {
             File outFile = new File(this.getPhysicalPath(this.url));
             OutputStream ro = new FileOutputStream(outFile);
-            byte[] b = decoder.decodeBuffer(base64Data);
+            byte[] b = Base64.getDecoder().decode(base64Data);
             for (int i = 0; i < b.length; ++i) {
                 if (b[i] < 0) {
                     b[i] += 256;

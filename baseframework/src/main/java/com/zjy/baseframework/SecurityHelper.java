@@ -1,11 +1,10 @@
 package com.zjy.baseframework;
 
-import org.apache.commons.codec.binary.Base64;
-
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 
 /**
  * Created by chahongjing on 2017/3/14.
@@ -32,11 +31,13 @@ public class SecurityHelper {
     }
 
     public static String base64Decode(String value) throws Exception {
-        return new String(Base64.decodeBase64(value.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
+        return new String(Base64.getDecoder().decode(value), StandardCharsets.UTF_8.name());
+        // return new String(Base64.decodeBase64(value.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
     }
 
     public static String base64Encode(String value) throws Exception {
+        return Base64.getEncoder().encodeToString(value.getBytes(StandardCharsets.UTF_8.name()));
         // new String(Base64.encodeBase64(value.getBytes()))
-        return Base64.encodeBase64String(value.getBytes(StandardCharsets.UTF_8));
+        //return Base64.encodeBase64String(value.getBytes(StandardCharsets.UTF_8));
     }
 }

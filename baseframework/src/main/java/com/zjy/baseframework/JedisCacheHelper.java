@@ -7,7 +7,13 @@ import java.io.*;
 
 public class JedisCacheHelper implements ICache {
     @Override
-    public <T> T get(String key) {
+    public Object get(String key) {
+        String val = JedisHelper.get(key);
+        Object deserialize = deserialize(val);
+        return deserialize;
+    }
+    @Override
+    public <T> T get(String key, Class<T> clazz) {
         String val = JedisHelper.get(key);
         Object deserialize = deserialize(val);
         return (T) deserialize;

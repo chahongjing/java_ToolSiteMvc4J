@@ -1,5 +1,7 @@
 package com.zjy.bll.service;
 
+import com.zjy.baseframework.CacheHelper;
+import com.zjy.baseframework.KeyHelper;
 import com.zjy.bll.common.BaseService;
 import com.zjy.bll.dao.UserRoleDao;
 import com.zjy.bll.vo.RelateCheckVo;
@@ -20,13 +22,7 @@ public class UserRoleServiceImpl extends BaseService<UserRoleDao, UserRole> impl
     protected RoleInfoService roleInfoSrv;
 
     @Autowired
-    protected MenuService menuSrv;
-
-    @Autowired
-    protected FunctionInfoService functionInfoSrv;
-
-    @Autowired
-    protected PermissionService permissionSrv;
+    private CacheHelper cacheHelper;
 
     @Override
     public List<RelateCheckVo> queryAllRoleWithUserRole(String userId) {
@@ -68,8 +64,16 @@ public class UserRoleServiceImpl extends BaseService<UserRoleDao, UserRole> impl
 
     @Override
     public List<UserRoleVo> queryListByUserId(String userId) {
+        String key = KeyHelper.getTsmKey(KeyHelper.UserRoleListKey, userId);
+        List<UserRoleVo> roleList = cacheHelper.get(key, List.class);
+        if(CollectionUtils.isNotEmpty(roleList)) {
+            return roleList;
+        }
+
         UserRoleVo urv = new UserRoleVo();
         urv.setUserId(userId);
-        return (List<UserRoleVo>) dao.query(urv);
+        roleList = (List<UserRoleVo>) dao.query(urv);
+        cacheHelper.set(key, roleList);
+        return roleList;
     }
 }

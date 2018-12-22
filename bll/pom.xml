@@ -46,6 +46,11 @@
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper</artifactId>
         </dependency>
+        <!-- logback -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
         <!-- log4j -->
         <!--<dependency>-->
             <!--<groupId>org.apache.logging.log4j</groupId>-->

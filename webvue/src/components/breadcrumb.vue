@@ -61,6 +61,7 @@
   .fa-home {
     color: #93c;
     transition:0.1s;
+    font-size:1.2rem;
   }
   .homebread:hover .fa-home{transform:scale(1.2);}
 </style>

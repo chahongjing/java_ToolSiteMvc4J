@@ -13,8 +13,12 @@ public class CacheHelper implements ICache {
     private ConcurrentHashMap<String, Object> map = new ConcurrentHashMap();
 
     @Override
-    public <T> T get(String key) {
+    public <T> T get(String key, Class<T> T) {
         return (T)map.get(key);
+    }
+    @Override
+    public Object get(String key) {
+        return map.get(key);
     }
 
     @Override

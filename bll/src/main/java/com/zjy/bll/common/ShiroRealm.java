@@ -1,5 +1,7 @@
 package com.zjy.bll.common;
 
+import com.zjy.baseframework.CacheHelper;
+import com.zjy.baseframework.KeyHelper;
 import com.zjy.bll.service.RolePermissionService;
 import com.zjy.bll.service.UserInfoService;
 import com.zjy.bll.service.UserRoleService;
@@ -18,8 +20,10 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ByteSource;
+import org.apache.shiro.util.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.security.Key;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,6 +43,8 @@ public class ShiroRealm extends AuthorizingRealm {
 
     @Autowired
     private RolePermissionService rolePermissionSrv;
+    @Autowired
+    private CacheHelper cacheHelper;
 
     /**
      * 获取当前登录用户数据库信息
@@ -110,6 +116,18 @@ public class ShiroRealm extends AuthorizingRealm {
         return (UserInfo) getSubject().getPrincipal();
     }
 
+    public static String getUserId() {
+        try {
+            Subject subject = SecurityUtils.getSubject();
+            UserInfo principal = (UserInfo) subject.getPrincipal();
+            if (principal != null) {
+                return principal.getUserId();
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
     /**
      * 判断是否有角色
      *
@@ -154,9 +172,14 @@ public class ShiroRealm extends AuthorizingRealm {
     }
 
     public List<String> getPermissions(String userId) {
-        List<UserRoleVo> userRoleList = userRoleSrv.queryListByUserId(userId);
-        List<String> roleIdList = userRoleList.stream().map(item -> item.getRoleId()).distinct().collect(Collectors.toList());
-        List<RolePermissionVo> permissionList = rolePermissionSrv.queryRolePermission(roleIdList);
+        String key = KeyHelper.getTsmKey(KeyHelper.UserPermissionListKey, userId);
+        List<RolePermissionVo> permissionList = cacheHelper.get(key, List.class);
+        if(org.apache.commons.collections.CollectionUtils.isEmpty(permissionList)) {
+            List<UserRoleVo> userRoleList = userRoleSrv.queryListByUserId(userId);
+            List<String> roleIdList = userRoleList.stream().map(item -> item.getRoleId()).distinct().collect(Collectors.toList());
+            permissionList = rolePermissionSrv.queryRolePermission(roleIdList);
+            cacheHelper.set(key, permissionList);
+        }
         return permissionList.stream().filter(item -> StringUtils.isNotBlank(item.getPermissionCode()))
                 .map(item -> item.getPermissionCode()).distinct().collect(Collectors.toList());
     }

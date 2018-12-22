@@ -67,10 +67,10 @@
           </div>
         </div>
         <div class="form-group text-right mb0">
-          <button type="button" class="btn btn-outline-primary" @click='goBack()'>
+          <button type="button" class="btn btn-outline-purple" @click='goBack()'>
             <i class='fa fa-arrow-circle-o-left'></i><span>返回</span>
           </button>
-          <button type="button" class="btn btn-primary mr5" @click="save" :disabled='allDisabled'>
+          <button type="button" class="btn btn-purple mr5" @click="save" :disabled='allDisabled'>
             <i class='fa fa-save'></i>保存
           </button>
         </div>

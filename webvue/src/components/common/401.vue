@@ -5,7 +5,7 @@
       <p class='tip'>
         未授权
       </p>
-      <button type="button" class="btn btn-outline-primary" @click='goBack()'>
+      <button type="button" class="btn btn-outline-purple" @click='goBack()'>
         <i class='fa fa-arrow-circle-o-left'></i><span>返回</span>
       </button>
     </div>

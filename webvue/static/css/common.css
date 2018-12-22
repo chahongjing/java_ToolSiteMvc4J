@@ -11,7 +11,7 @@ ul,li{margin:0;padding:0;list-style:none;}
 }
 .head .logo{width:calc(100% - 405px);height:100%;display:inline-block;margin:0;padding:0;float:left;}
 .head .logo i:before{display:block;margin-top:10px;margin-left:11px;}
-.head .logo .title{line-height: 50px;font-size:22px;color:#fff;}
+.head .logo .title{line-height: 50px;font-size:22px;color:#fff;text-decoration: none;}
 .head .info{width:400px;height:100%;display:inline-block;margin:0;padding:0;float:right;}
 .head .info ul.rightmenu,.head .info ul.rightmenu > li{list-style: none;margin:0;padding:0;line-height:50px;cursor:default;}
 .head .info ul.rightmenu > li{display:inline-block;float:right;transition: 0.4s;color:#fff;}
@@ -80,14 +80,14 @@ label.switch input:disabled + div span:nth-child(3){color:#aaa;}
     transition:0.2s;
 }
 .radio_checkbox i:after,.togglecheckbox i:after{
-    position:absolute;font-size:14px;line-height: 10px;color:#06c;
+    position:absolute;font-size:14px;line-height: 10px;color:#3f51b5;
     transition:transform 0.2s ease-out;-webkit-transition:-webkit-transform 0.2s ease-out;
 }
 .radio_checkbox input:checked + i,.togglecheckbox input:checked + i {
     background-color:#f0f0f0;transition:background-color 0.2s ease-in;-webkit-transition:background-color 0.2s ease-in;
-    border-color:#06c;
+    border-color:#3f51b5;
 }
-.radio_checkbox:hover input + i{box-shadow: 0 0 5px #2068ed;border-color:#06c;}
+.radio_checkbox:hover input + i{box-shadow: 0 0 5px #2068ed;border-color:#3f51b5;}
 .radio_checkbox input[type=radio]:checked + i{box-shadow: 0 0 5px #2068ed;}
 .radio_checkbox input:checked + i:after,.togglecheckbox input:checked + i:after{
     transform:scale(1) !important;-webkit-transform:scale(1);transition:transform 0.2s ease-in;
@@ -104,7 +104,7 @@ label.switch input:disabled + div span:nth-child(3){color:#aaa;}
 /* radio \26AB */
 .radio_checkbox input[type='radio'] + i{border-radius:100%;width:15px;height:15px;left:1px;top:7px;}
 .radio_checkbox input[type='radio'] + i:after{content:' ';top:2px;left:2px;width:9px;height:9px;transform:scale(0);-webkit-transform:scale(0);
-background-color: #06c;border-radius: 50%;}
+background-color: #3f51b5;border-radius: 50%;}
 /* checkbox \2713 */
 .radio_checkbox input[type='checkbox'] + i{width:16px;height:16px;left:1px;top:6px;}
 .radio_checkbox input[type='checkbox'] + i:after{font:normal normal normal 12px/1 FontAwesome;content:'\f00c';top:1px;left:1px;width:12px;height:12px;transform:scale(0);-webkit-transform:scale(0);}
@@ -288,24 +288,10 @@ a:hover{color:#06f;}
 
 .form-inline .form-label{display:inline-block;}
 
-.btn-purple{
-    color: #fff;
-    background-color: #85c;
-    border-color: #85c;
-}
-.btn-purple:hover{
-        color: #fff;
-    background-color: #82a;
-    border-color: #82a;
-}
-.btn-outline-purple{
-    color: #85c;
-    background-color: transparent;
-    background-image: none;
-    border-color: #85c;}
-.btn-outline-purple:hover:not(:disabled){color: #fff;
-    background-color: #82a;
-    border-color: #82a;}
+.btn-purple{color: #fff;background-color: #7266ba;border-color: #7266ba;}
+.btn-purple:hover:not(:disabled),.btn-purple:active:not(:disabled){background-color: #6254b2;border-color: #5a4daa;}
+.btn-outline-purple{color: #6254b2;background-color: transparent;background-image: none;border-color: #6254b2;}
+.btn-outline-purple:hover:not(:disabled){color: #fff;background-color: #6254b2;border-color: #5a4daa;}
 
 .btn-saving:after{content:'中...';margin-left: -4px;}
 .btn-saving i{animation: fa-spin 2s infinite linear;}

@@ -1,10 +1,12 @@
 <template>
   <div class="head">
-    <div class="logo">
-      <a class='fl' title="首页" href='javascript:void(0)' @click='goHome()'>
+    <div class="logo" title="首页">
+      <a class='fl' href='javascript:void(0)' @click='goHome()'>
         <i class="fa fa-android fa-2x white"></i>
       </a>
-      <span class="fl title pl10">首页</span>
+      <a class='fl title pl10' href='javascript:void(0)' @click='goHome()'>
+        首页
+      </a>
     </div>
     <div class="info">
       <ul class='rightmenu' @mouseenter='enterMenu' @mouseleave='leaveMenu'>
@@ -195,7 +197,7 @@
     display: inline-block;
     transition:0.3s;
   }
-  .logo a i:hover{color:#ffc107;}
+  .logo a:hover i{color:#ffc107;}
 
   .head .info .licontent.submenu {
     padding: 0px;

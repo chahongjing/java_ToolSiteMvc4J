@@ -157,6 +157,7 @@ public class UserInfoController extends BaseController implements ServletConfigA
     @ResponseBody
     @RequiresPermissions("userList_enter")
     public BaseResult<PageBean> queryPageList(UserInfoRequest request) {
+        logger.error("这是错误{}信息{}!", 1, "第二个参数");
         PageBean<UserInfoVo> pageBean = (PageBean<UserInfoVo>) userInfoSrv.queryPageList(request);
         return BaseResult.OK(pageBean);
     }

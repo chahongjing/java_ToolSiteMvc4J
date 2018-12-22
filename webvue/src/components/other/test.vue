@@ -11,8 +11,8 @@
         </div>
       </div>
       <div class="form-group text-right mb0">
-        <button type="button" class="btn btn-primary mr5" @click="ajaxUploadFile">上传</button>
-        <button type="button" class="btn btn-primary mr5" @click="ajaxDownload">下载</button>
+        <button type="button" class="btn btn-purple mr5" @click="ajaxUploadFile">上传</button>
+        <button type="button" class="btn btn-purple mr5" @click="ajaxDownload">下载</button>
       </div>
     </form>
     <div>
@@ -63,7 +63,7 @@
     {{this.treeoption && this.treeoption.checkedResult && this.treeoption.checkedResult.name|| this.treeoption.checkedResult.map(item => item.name)}}
 
     <div class='a'>
-      
+
     </div>
   </div>
 </template>
@@ -187,7 +187,7 @@ export default {
           alert('不能拖动！');
           return false;
         }
-        
+
         // 去掉原父级下的当前结点
         oldParent.dataList.splice(oldIndex, 1);
         // 添加到新结点
