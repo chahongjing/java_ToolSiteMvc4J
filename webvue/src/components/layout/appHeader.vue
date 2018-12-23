@@ -29,8 +29,14 @@
         </li>
         <li>
           <a class="licontent pointer" title='消息'>
-            <i class='fa fa-commenting-o icon-animated-vertical ccff mr0'></i>
+            <i class='fa fa-commenting-o icon-animated-vertical e1ee400 mr0'></i>
             <span class="badge badge-success">2</span>
+          </a>
+        </li>
+        <li>
+          <a class="licontent pointer" title='公告'>
+            <i class='fa fa-bullhorn icon-animated-horn cf93939 mr0'></i>
+            <span class="badge badge-danger">4</span>
           </a>
         </li>
         <li>
@@ -243,10 +249,14 @@
   .form-group:last-child {
     margin-bottom: 0;
   }
-  .icon-animated-vertical{display:inline-block;animation:vertical 2s infinite ease 2s;}
-  @keyframes vertical{0%{transform:translate(0,-3px)}4%{transform:translate(0,3px)}8%{transform:translate(0,-3px)}12%{transform:translate(0,3px)}16%{transform:translate(0,-3px)}20%{transform:translate(0,3px)}22%{transform:translate(0,0)}}
-  .icon-animated-bell{display:inline-block;animation:ringing 2s infinite ease 1s;transform-origin:50% 0}
+  .icon-animated-bell{display:inline-block;animation:ringing 3s infinite ease 1s;transform-origin:50% 0}
   @keyframes ringing{0%{transform:rotate(-15deg)}2%{transform:rotate(15deg)}4%{transform:rotate(-18deg)}6%{transform:rotate(18deg)}8%{transform:rotate(-22deg)}10%{transform:rotate(22deg)}12%{transform:rotate(-18deg)}14%{transform:rotate(18deg)}16%{transform:rotate(-12deg)}18%{transform:rotate(12deg)}20%{transform:rotate(0deg)}}
+
+  .icon-animated-horn{display:inline-block;animation:horning 3s infinite ease 2s;transform-origin:0 50%}
+  @keyframes horning{0%{transform:rotate(-15deg)}2%{transform:rotate(15deg)}4%{transform:rotate(-18deg)}6%{transform:rotate(18deg)}8%{transform:rotate(-22deg)}10%{transform:rotate(22deg)}12%{transform:rotate(-18deg)}14%{transform:rotate(18deg)}16%{transform:rotate(-12deg)}18%{transform:rotate(12deg)}20%{transform:rotate(0deg)}}
+
+  .icon-animated-vertical{display:inline-block;animation:vertical 3s infinite ease 3s;}
+  @keyframes vertical{0%{transform:translate(0,-3px)}3%{transform:translate(0,3px)}6%{transform:translate(0,-3px)}9%{transform:translate(0,3px)}12%{transform:translate(0,-3px)}15%{transform:translate(0,3px)}18%{transform:translate(0,0)}}
 
   .blank{opacity:0;display:inline-block;line-height:1;}
   .userInfo{position:relative;overflow: hidden;}
@@ -254,4 +264,9 @@
   .userCode{top:50px;}
   .userInfo:hover .userName{top:-34px;}
   .userInfo:hover .userCode{top:0;}
+
+  .badge-info{color: #212529;background-color: #0df;}
+  .badge-danger{color:#212529;background-color: #f93939;}
+  .badge-success{background-color:#1ee400;}
+  
 </style>
