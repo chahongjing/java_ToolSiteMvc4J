@@ -3,13 +3,13 @@
     <div class="slide-menu">
       <ul class="first-menu">
         <li v-for="item in list" :class="{'selected': item.isSelected}" :title="item.name"
-            @click="clickFirstMenu(item)">
+            @click="clickFirstMenu(item)" :style='{"height": item.height + "px"}'>
           <div>
             <i :class="'fa ' + item.data.icon + ' fw'"></i>
             <span v-text="item.name"></span>
             <i class='fa fa-angle-down subMenuTog mr10' :class="{'open':item.isSelected}"></i>
           </div>
-          <ul :class="{'sub-menu show':item.isSelected}" :style='{"height":getMenuHeight(item)}'>
+          <ul class='sub-menu' :class="{'show':item.isSelected}">
             <li v-for="sub in item.children" :class="{'selected': sub.isSelected}"
                 @click="clickSecondMenu(item, sub, $event)">
               <a href="javascript:void(0)"><i :class="'fa ' + sub.data.icon + ' fw'"></i>
@@ -36,9 +36,6 @@
     },
     mounted: function () {
       this.getMenuData();
-      this.$nextTick(function () {
-        //this.refreshHeight();
-      })
     },
     methods: {
       getMenuData: function () {
@@ -83,26 +80,21 @@
           });
         }
       },
-      getMenuHeight: function (item) {
-        return (item.isSelected ? item.children.length * 35 : 0) + 'px';
-      },
-      refreshHeight() {
-        var height = (item.isSelected ? item.children.length * 35 : 0);
-        // $('.sub-menu').css('transition', 'height ease 0.2s');
-        $('.sub-menu').css('height', height + 'px');
-      },
       clickFirstMenu: function (item) {
         if (item.isSelected) {
           item.isSelected = false;
+          item.height = 35;
           this.$root.setMenuList(this.list);
           return;
         }
         for (var i = 0; i < this.list.length; i++) {
           var obj = this.list[i];
           if (item == obj) {
-            item.isSelected = !item.isSelected;
+            obj.isSelected = !obj.isSelected;
+            obj.height = (obj.children.length + 1) * 35;
           } else {
             obj.isSelected = false;
+            obj.height = 35;
           }
         }
         this.$root.setMenuList(this.list);
