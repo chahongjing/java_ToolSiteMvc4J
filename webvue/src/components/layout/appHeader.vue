@@ -29,7 +29,7 @@
         </li>
         <li>
           <a class="licontent pointer" title='消息'>
-            <i class='fa fa-commenting-o icon-animated-vertical e1ee400 mr0'></i>
+            <i class='fa fa-commenting-o icon-animated-vertical c5dd255 mr0'></i>
             <span class="badge badge-success">2</span>
           </a>
         </li>
@@ -266,7 +266,6 @@
   .userInfo:hover .userCode{top:0;}
 
   .badge-info{color: #212529;background-color: #0df;}
-  .badge-danger{color:#212529;background-color: #f93939;}
-  .badge-success{background-color:#1ee400;}
-  
+  .badge-danger{background-color: #f93939;}
+  /*.badge-success{background-color:#5dd255;}*/
 </style>

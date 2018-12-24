@@ -75,6 +75,9 @@
                 and (user.userName like '%' || #{userName, jdbcType=VARCHAR} || '%' or user.userCode like '%' ||
                 #{userName, jdbcType=VARCHAR} || '%')
             </if>
+            <if test='sex != null'>
+                and user.sex = #{sex, jdbcType=INTEGER}
+            </if>
         </where>
 
         <!-- where 标签和trim 标签 -->

@@ -114,6 +114,7 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
         UserInfoVo user = new UserInfoVo();
         user.setUserName(request.getUserName());
         user.setUserCode(request.getUserName());
+        user.setSex(request.getSex());
         if (StringUtils.isNotBlank(request.getOrderBy())) {
             if ("ASC".equalsIgnoreCase(request.getOrderBy())) {
                 request.setOrderBy("user.userName asc");

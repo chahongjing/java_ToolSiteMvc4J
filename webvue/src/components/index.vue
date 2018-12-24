@@ -218,6 +218,7 @@
     float: left;
     padding: 0 15px;
     margin-bottom: 15px;
+    min-width:300px;
   }
 
   .card {

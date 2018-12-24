@@ -1,6 +1,7 @@
 package com.zjy.bll.request;
 
 import com.zjy.bll.common.PageInfomation;
+import com.zjy.entities.enums.Sex;
 
 /**
  * @author chahongjing
@@ -8,6 +9,7 @@ import com.zjy.bll.common.PageInfomation;
  */
 public class UserInfoRequest extends PageInfomation {
     private String userName;
+    private Sex sex;
     private String orderBy;
 
     public String getUserName() {
@@ -26,5 +28,13 @@ public class UserInfoRequest extends PageInfomation {
     @Override
     public void setOrderBy(String orderBy) {
         this.orderBy = orderBy;
+    }
+
+    public Sex getSex() {
+        return sex;
+    }
+
+    public void setSex(Sex sex) {
+        this.sex = sex;
     }
 }

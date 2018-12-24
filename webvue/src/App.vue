@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div class='w100p h100p' id='app'>
     <router-view/>
     <div class="loadingmask">
       <div class="info">
@@ -15,10 +15,3 @@
     name: 'App'
   }
 </script>
-
-<style>
-  #app {
-    width: 100%;
-    height: 100%;
-  }
-</style>

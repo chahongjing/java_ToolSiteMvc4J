@@ -18,7 +18,7 @@
           <div class="form-content">
             <select class='form-control' v-model="sexValue">
               <option value="">--全部--</option>
-              <option v-for="item in sexList" :value="item.value" v-text="item.name"></option>
+              <option v-for="item in sexList" :value="item.key" v-text="item.name"></option>
             </select>
           </div>
         </div>
@@ -155,6 +155,7 @@
         me.pager.loading = true;
         this.$axios.get('/user/queryPageList', {
           userName: this.searchKey,
+          sex: this.sexValue,
           pageNum: this.pager.pageNum,
           pageSize: this.pager.pageSize,
           orderBy: this.orderBy
