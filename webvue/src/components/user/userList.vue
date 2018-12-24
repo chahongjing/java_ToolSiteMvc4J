@@ -144,7 +144,6 @@
       },
       edit(entity) {
         this.$router.push({path: '/user/userEdit', query: {id: entity.userId}});
-
       },
       search() {
         this.goPage(1);
@@ -209,12 +208,12 @@
         var me = this;
         if (this.userCode === null || this.userCode === undefined
           || this.userCode === '' || this.userCode.trim() === '') {
-          me.$toaster.warning('原密码不能为空！');
+          me.$toaster.warning('当前用户编码不能为空！');
           return;
         }
         if (this.password === null || this.password === undefined
           || this.password === '' || this.password.trim() === '') {
-          me.$toaster.warning('原密码不能为空！');
+          me.$toaster.warning('新密码不能为空！');
           return;
         }
         me.$axios.get('/user/resetPassword', {
