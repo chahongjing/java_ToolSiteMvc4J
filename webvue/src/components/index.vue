@@ -242,10 +242,7 @@
   .card-body .list-group .list-group-item:first-child {
     border-top: 0;
   }
-
-  .card-body .list-group .list-group-item:last-child {
-    border-bottom: 0;
-  }
+  .card-footer{margin-top:-1px;}
   .mytest{padding:20px;}
   .mygroup{height:200px;}
 </style>

@@ -7,9 +7,9 @@
           <div>
             <i :class="'fa ' + item.data.icon + ' fw'"></i>
             <span v-text="item.name"></span>
-            <b :class="{'fa fa-angle-down':item.isSelected,'fa fa-angle-right':!item.isSelected}"></b>
+            <i class='fa fa-angle-down subMenuTog mr10' :class="{'open':item.isSelected}"></i>
           </div>
-          <ul :class="{'sub-menu show':item.isSelected}" :style="{'height':getMenuHeight(item)}">
+          <ul :class="{'sub-menu show':item.isSelected}" :style='{"height":getMenuHeight(item)}'>
             <li v-for="sub in item.children" :class="{'selected': sub.isSelected}"
                 @click="clickSecondMenu(item, sub, $event)">
               <a href="javascript:void(0)"><i :class="'fa ' + sub.data.icon + ' fw'"></i>
@@ -36,6 +36,9 @@
     },
     mounted: function () {
       this.getMenuData();
+      this.$nextTick(function () {
+        //this.refreshHeight();
+      })
     },
     methods: {
       getMenuData: function () {
@@ -78,15 +81,15 @@
               me.$root.setMenuList(me.list);
             }
           });
-          this.$nextTick(function () {
-            setTimeout(function () {
-              $('.sub-menu').css('transition', 'height ease 0.2s');
-            }, 200);
-          })
         }
       },
       getMenuHeight: function (item) {
-        return (item.isSelected ? item.children.length * 36 : 0) + 'px';
+        return (item.isSelected ? item.children.length * 35 : 0) + 'px';
+      },
+      refreshHeight() {
+        var height = (item.isSelected ? item.children.length * 35 : 0);
+        // $('.sub-menu').css('transition', 'height ease 0.2s');
+        $('.sub-menu').css('height', height + 'px');
       },
       clickFirstMenu: function (item) {
         if (item.isSelected) {
@@ -141,13 +144,6 @@
     position: relative;
   }
 
-  .slide-menu {
-    width: 100%;
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
-  }
-
   .tog {
     position: absolute;
     top: 50%;
@@ -170,20 +166,9 @@
     transition: 0.3s;
   }
 
-  .menu:hover .tog,.menu.hidemenu .tog {
-    background-color: #71a;
-  }
+  .menu:hover .tog,.menu.hidemenu .tog {background-color: #71a;}
+  .menu:hover .tog i,.menu.hidemenu .tog i {color: #fff;}
 
-  .menu:hover .tog i,.menu.hidemenu .tog i {
-    color: #fff;
-  }
-
-  .hidemenu {
-    width: 0px;
-    border: 0;
-  }
-
-  .hidemenu i.fa-angle-left:before {
-    content: "\f105";
-  }
+  .hidemenu {width: 0px;border: 0;}
+  .hidemenu i.fa-angle-left:before {content: "\f105";}
 </style>
