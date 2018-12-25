@@ -27,6 +27,8 @@
 </template>
 
 <script>
+  import commonSrv from '@/common/commonService';
+
   export default {
     name: 'appMenu',
     data () {
@@ -114,6 +116,7 @@
         }
         sub.isSelected = true;
         this.$root.setMenuList(this.list);
+        commonSrv.clearPagerModel();
         this.$router.push({path: sub.data.url});
       },
       toggleMenu() {

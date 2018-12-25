@@ -21,7 +21,7 @@
         <div class="card-header text-center">其它</div>
         <div class="card-body text-info">
           <div class="list-group mygroup oya">
-            <router-link to="/test/test" class="list-group-item list-group-item-action">
+            <router-link to="/test" class="list-group-item list-group-item-action">
               <i class='fa fa-comment fa-fw'></i><span>测试</span>
             </router-link>
             <div class='mytest'>
@@ -245,4 +245,7 @@
   .card-footer{margin-top:-1px;}
   .mytest{padding:20px;}
   .mygroup{height:200px;}
+  .list-group-item-action i{transition:0.2s;color:#3DBB66;}
+  .list-group-item-action:hover i{color:green;}
+  .list-group-item-action:hover i:before{content: "\f27a";}
 </style>

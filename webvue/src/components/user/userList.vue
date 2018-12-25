@@ -17,7 +17,7 @@
           <label class="form-label colon">性别</label>
           <div class="form-content">
             <select class='form-control' v-model="sexValue">
-              <option value="">--全部--</option>
+              <option value="">-- 全部 --</option>
               <option v-for="item in sexList" :value="item.key" v-text="item.name"></option>
             </select>
           </div>
@@ -115,6 +115,7 @@
 
   export default {
     name: 'userList',
+    inject: ['reload'],
     data () {
       return {
         allDisabled: true,
@@ -133,6 +134,9 @@
       }
     },
     methods: {
+      reloadPage() {
+        this.reload();
+      },
       add() {
         var me = this;
         this.$axios.get('/comm/getNewId').then(function (resp) {

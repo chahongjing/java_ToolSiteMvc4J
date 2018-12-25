@@ -94,13 +94,20 @@
         var me = this;
         me.pager.loading = true;
         this.$axios.get('/function/queryPageList', {
-          name: this.searchKey,
-          pageNum: this.pager.pageNum,
-          pageSize: this.pager.pageSize
+          name: me.searchKey,
+          pageNum: me.pager.pageNum,
+          pageSize: me.pager.pageSize
         }).then(function (resp) {
           if (resp.data.status == ResultStatus.OK.key) {
             me.list = resp.data.value.list;
             me.pager = commonSrv.getPagerInfo(resp.data.value, me.goPage);
+
+            var model = {
+              pageNum: me.pager.pageNum,
+              pageSize: me.pager.pageSize,
+              filter: {searchKey: me.searchKey}
+            }
+            commonSrv.setPagerModel('functionList', model);
           }
         });
       },
@@ -124,7 +131,12 @@
       }
     },
     mounted: function () {
-      this.search();
+      var model = commonSrv.getPagerModel('functionList');
+      this.pager.pageNum = model.pageNum;
+      this.pager.pageSize = model.pageSize;
+      this.searchKey = model.filter.searchKey;
+
+      this.queryList();
     }
   }
 </script>

@@ -11,7 +11,7 @@
     <div class="info">
       <ul class='rightmenu' @mouseenter='enterMenu' @mouseleave='leaveMenu'>
         <li>
-          <a class="licontent relative submenu pointer">
+          <a class="licontent relative submenu pointer" href='javascript:void(0)'>
             <i class='fa fa-caret-down more text-center' title='更多操作' @click='showMenu = !showMenu'>
             </i>
             <ul class="dropdown-menu dropdown-menu-right" :class='{"slidedown": showMenu}'>
@@ -28,19 +28,19 @@
           </a>
         </li>
         <li>
-          <a class="licontent pointer" title='消息'>
+          <a class="licontent pointer" title='消息' href='javascript:void(0)' @click='building()'>
             <i class='fa fa-commenting-o icon-animated-vertical c5dd255 mr0'></i>
             <span class="badge badge-success">2</span>
           </a>
         </li>
         <li>
-          <a class="licontent pointer" title='公告'>
+          <a class="licontent pointer" title='公告' href='javascript:void(0)' @click='building()'>
             <i class='fa fa-bullhorn icon-animated-horn cf93939 mr0'></i>
             <span class="badge badge-danger">4</span>
           </a>
         </li>
         <li>
-          <a class="licontent pointer" title='提醒'>
+          <a class="licontent pointer" title='提醒' href='javascript:void(0)' @click='building()'>
             <i class='fa fa-bell-o icon-animated-bell text-warning mr0'></i>
             <span class="badge badge-warning">5</span>
           </a>
@@ -128,6 +128,9 @@
       }
     },
     methods: {
+      building() {
+        me.$toaster.warning('功能建设中...');
+      },
       logout: function () {
         var me = this;
         //this.$confirm.confirm('确定要退出系统吗？', function () {

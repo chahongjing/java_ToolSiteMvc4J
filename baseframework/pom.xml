@@ -114,11 +114,6 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpmime</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>RELEASE</version>
-        </dependency>
         <!--&lt;!&ndash; log4j &ndash;&gt;-->
         <!--<dependency>-->
             <!--<groupId>org.apache.logging.log4j</groupId>-->

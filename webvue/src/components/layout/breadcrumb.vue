@@ -12,7 +12,7 @@
         </span>
       </li>
     </ul>
-    <button type="button" class="btn btn-outline-purple btn-sm fr mr5 mt4" @click='goBack()'
+    <button type="button" class="btn btn-outline-purple btn-sm fr mr5 mt4 pt3" @click='goBack()'
        v-if='showGoBack'>
       <i class='fa fa-reply mr5'></i>返回
     </button>
