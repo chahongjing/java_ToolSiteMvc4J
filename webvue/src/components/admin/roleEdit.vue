@@ -34,7 +34,7 @@
           </div>
         </div>
         <div class="form-group text-right mb0">
-          <button type="button" class="btn btn-outline-purple" @click='goBack()'>
+          <button type="button" class="btn btn-outline-purple" @click='$root.goBack()'>
             <i class='fa fa-arrow-circle-o-left'></i><span>返回</span>
           </button>
           <button type="button" class="btn btn-purple mr5" @click="save" :disabled='allDisabled'>
@@ -56,9 +56,6 @@
       }
     },
     methods: {
-      goBack() {
-        this.$root.goBack();
-      },
       getDetail: function (id) {
         var me = this;
         me.allDisabled = true;
@@ -80,9 +77,6 @@
             me.allDisabled = false;
           }
         });
-      },
-      goBack() {
-        this.$root.goBack();
       }
     },
     mounted: function () {

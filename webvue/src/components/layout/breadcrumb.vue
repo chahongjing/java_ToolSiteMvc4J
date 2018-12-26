@@ -3,7 +3,7 @@
     <ul>
       <li>
         <a class='w100p h100p inline-block pl8 homebread' href='javascript:void(0)' title='首页'>
-          <i class='fa fa-home mr0' @click='goHome()'></i></a>
+          <i class='fa fa-home mr0' @click='$root.goHome()'></i></a>
       </li>
       <li class='bread-item' v-for='item in menuList' :title='item.text'>
         <span class='w100p h100p inline-block'>
@@ -12,7 +12,7 @@
         </span>
       </li>
     </ul>
-    <button type="button" class="btn btn-outline-purple btn-sm fr mr5 mt4 pt3" @click='goBack()'
+    <button type="button" class="btn btn-outline-purple btn-sm fr mr5 mt4 pt3" @click='$root.goBack()'
        v-if='showGoBack'>
       <i class='fa fa-reply mr5'></i>返回
     </button>
@@ -37,12 +37,6 @@
         } else {
           this.$router.push({path: item.path, query: item.query, params: item.params});
         }
-      },
-      goHome() {
-        this.$root.goHome();
-      },
-      goBack: function () {
-        this.$root.goBack();
       },
       setBreadcrumb: function () {
         this.menuList = this.$store.state.breadcrumb;

@@ -1,10 +1,10 @@
 <template>
   <div class="head">
     <div class="logo" title="首页">
-      <a class='fl' href='javascript:void(0)' @click='goHome()'>
+      <a class='fl' href='javascript:void(0)' @click='$root.goHome()'>
         <i class="fa fa-android fa-2x white"></i>
       </a>
-      <a class='fl title pl10' href='javascript:void(0)' @click='goHome()'>
+      <a class='fl title pl10' href='javascript:void(0)' @click='$root.goHome()'>
         首页
       </a>
     </div>
@@ -129,7 +129,7 @@
     },
     methods: {
       building() {
-        me.$toaster.warning('功能建设中...');
+        this.$toaster.warning('功能建设中...');
       },
       logout: function () {
         var me = this;
@@ -218,9 +218,6 @@
         var user = this.$root.getUser();
         this.$router.push({path: '/user/userEdit', query: {id: user.userId, type: 'editSelf'}});
         this.showMenu = false;
-      },
-      goHome() {
-        this.$root.goHome();
       }
     },
     mounted: function () {
@@ -231,6 +228,7 @@
 </script>
 
 <style scoped>
+  .rightmenu a:hover{text-decoration: none;}
   .logo a i {
     width: 45px;
     height: 50px;

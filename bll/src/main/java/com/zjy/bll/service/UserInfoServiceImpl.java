@@ -6,6 +6,7 @@ import com.zjy.baseframework.enums.ResultStatus;
 import com.zjy.bll.baseBean.PageBean;
 import com.zjy.bll.common.BaseService;
 import com.zjy.bll.dao.UserInfoDao;
+import com.zjy.bll.enums.OrderByType;
 import com.zjy.bll.request.UserInfoRequest;
 import com.zjy.bll.vo.UserInfoVo;
 import com.zjy.entities.UserInfo;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -115,13 +117,17 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
         user.setUserName(request.getUserName());
         user.setUserCode(request.getUserName());
         user.setSex(request.getSex());
-        if (StringUtils.isNotBlank(request.getOrderBy())) {
-            if ("ASC".equalsIgnoreCase(request.getOrderBy())) {
-                request.setOrderBy("user.userName asc");
-            } else {
-                request.setOrderBy("user.userName desc");
-            }
+        List<String> orderBy = new ArrayList<>();
+        if(request.getNameOrderBy() != null) {
+            orderBy.add("user.userName " + request.getNameOrderBy().toString());
         }
+        if(request.getCodeOrderBy() != null) {
+            orderBy.add("user.userCode " + request.getCodeOrderBy().toString());
+        }
+        if(request.getCreatedOnOrderBy() != null) {
+            orderBy.add("user.createdOn " + request.getCreatedOnOrderBy().toString());
+        }
+        request.setOrderBy(String.join(", ", orderBy));
         PageBean<UserInfoVo> pageBean = (PageBean<UserInfoVo>) super.queryPageList(request, user);
 //        for (UserInfoVo userInfo : pageInfo.getList()) {
 //            if (userInfo.getSex() != null) {

@@ -34,9 +34,9 @@
         <thead>
         <tr>
           <th class='w50'>#</th>
-          <th class='sortheader' :class='getOrderByClass' @click='setOrderByClass()'>名称</th>
-          <th class='w100'>编码</th>
-          <th class='w155'>创建时间</th>
+          <th class='sortheader' :class='getOrderByClass(nameOrderBy)' @click='setOrderBy(nameOrderBy)'>名称</th>
+          <th class='w100 sortheader' :class='getOrderByClass(codeOrderBy)' @click='setOrderBy(codeOrderBy)'>编码</th>
+          <th class='w155 sortheader' :class='getOrderByClass(createdOnOrderBy)' @click='setOrderBy(createdOnOrderBy)'>创建时间</th>
           <th class='w70'>性别</th>
           <th class='w70'>系统用户</th>
           <th class='w70 text-center'>是否禁用</th>
@@ -76,10 +76,10 @@
     <div class='footer-pager'>
       <pagination :pager-info='pager'></pagination>
     </div>
-    <common-modal :show-modal='showchangePasswordDialog' :width='width'>
+    <common-modal :show-modal='showChangePasswordDialog' :width='width'>
       <div class="modal-header" slot='headerSlot'>
         <h5 class="modal-title">修改密码</h5>
-        <button type="button" class="close" @click='showchangePasswordDialog = false'>
+        <button type="button" class="close" @click='showChangePasswordDialog = false'>
           <span class='closeicon' title="关闭">&times;</span>
         </button>
       </div>
@@ -98,7 +98,7 @@
         </form>
       </div>
       <div class="modal-footer" slot="footerSlot">
-        <button type="button" class="btn btn-secondary" @click='showchangePasswordDialog = false'>
+        <button type="button" class="btn btn-secondary" @click='showChangePasswordDialog = false'>
           <i class='fa fa-times'></i><span>取消</span>
         </button>
         <button type="button" class="btn btn-purple" @click='changePassword()'>
@@ -123,10 +123,12 @@
         list: [],
         sexValue: '',
         sexList: [],
-        orderBy: 'asc',
+        nameOrderBy: {value: OrderByType.ASC.key},
+        codeOrderBy: {value: null},
+        createdOnOrderBy: {value: null},
         pager: {pageNum: 1, pageSize: 5, loading: true},
         width: 350,
-        showchangePasswordDialog: false,
+        showChangePasswordDialog: false,
         userCode: null,
         password: null,
         YesNo: YesNo,
@@ -161,7 +163,9 @@
           sex: this.sexValue,
           pageNum: this.pager.pageNum,
           pageSize: this.pager.pageSize,
-          orderBy: this.orderBy
+          nameOrderBy: this.nameOrderBy.value,
+          codeOrderBy: this.codeOrderBy.value,
+          createdOnOrderBy: this.createdOnOrderBy.value
         }).then(function (resp) {
           if(resp.data.status == ResultStatus.OK.key) {
             me.list = resp.data.value.list;
@@ -195,18 +199,23 @@
         }
         this.sexList = list;
       },
-      setOrderByClass() {
-        if(this.orderBy == 'asc') {
-          this.orderBy = 'desc';
-        } else {
-          this.orderBy = 'asc';
+      setOrderBy(field) {
+        if(this.nameOrderBy != field) {
+          this.nameOrderBy.value = null;
         }
+        if(this.codeOrderBy != field) {
+          this.codeOrderBy.value = null;
+        }
+        if(this.createdOnOrderBy != field) {
+          this.createdOnOrderBy.value = null;
+        }
+        field.value = (field.value == OrderByType.ASC.key ? OrderByType.DESC.key : OrderByType.ASC.key);
         this.queryList();
       },
       setPassword(entity) {
         this.userCode = entity.userCode;
         this.password = '';
-        this.showchangePasswordDialog = true;
+        this.showChangePasswordDialog = true;
       },
       changePassword() {
         var me = this;
@@ -226,17 +235,21 @@
         }).then(function (resp) {
           if (resp.data.status == ResultStatus.OK.key) {
             me.$toaster.success('修改密码成功！');
-            me.showchangePasswordDialog = false;
+            me.showChangePasswordDialog = false;
           }
         });
       }
     },
     computed: {
-      getOrderByClass: function() {
-        var res = {};
-        res[this.orderBy] = true;
-        return res;
-      }
+      getOrderByClass() {
+        return function(field) {
+          var res = {};
+          if(field.value) {
+            res[field.value.toLowerCase()] = true;
+          }
+          return res;
+        }
+      } 
     },
     mounted: function () {
       this.search();
