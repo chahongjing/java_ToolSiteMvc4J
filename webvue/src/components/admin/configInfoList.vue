@@ -162,3 +162,6 @@
     }
   }
 </script>
+<style scoped>
+  .fixtable-header-top,.fixtable-con{min-width:990px;}
+</style>

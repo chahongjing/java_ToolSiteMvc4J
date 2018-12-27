@@ -28,7 +28,7 @@
     },
     methods: {
       jumpPage(page) {
-        if (!this.pagerInfo || page < 1 || page == this.pagerInfo.pageNum || page > this.pagerInfo.pages) {
+        if (!this.pagerInfo || page < 1 || page == this.pagerInfo.pageNum || page > this.pagerInfo.pages || this.pagerInfo.loading) {
           return;
         }
         this.pagerInfo.callback && this.pagerInfo.callback(page);
