@@ -62,6 +62,25 @@
 	</li>
 </ul>
 </p>
+	<hr>
+	<h2>滚动条</h2>
+	<p>
+	    <h3>js</h3>
+		<ul class="list">
+			<li>offsetTop（offsetLeft）：获取相对于父级的左边距(往上找position:relative的元素，如果没有则为浏览器窗口)。</li>
+			<li>offsetHeight（offsetWidth）：元素可视窗口大小，offsetheight = height + padding + 横向滚动轴高度 + <b>border</b></li>
+			<li>clientHeight（clientWidth）：元素可视窗口大小，offsetheight = height + padding + 横向滚动轴高度</li>
+            <li>scrollHeight（scrollWidth）：元素总高度，包括超出隐藏部分</li>
+            <li>scrollTop：获取滚动条滚动的高度</li>
+			<li>用于获取鼠标坐标（相对于页面的坐标） clientX 、clientY</li>
+		</ul>
+	    <h3>jquery</h3>
+		<ul class="list">
+			<li>$el.height(),元素的可视高度</li>
+			<li>$el.scrollTop(), 元素滚动的高度</li>
+		</ul>
+	</p>
+	<hr>
 <script src='./../js/jquery-3.3.1.min.js'></script>
 <script src='./../js/Utility.js'></script>
 <script>
