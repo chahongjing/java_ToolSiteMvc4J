@@ -129,7 +129,7 @@
         this.$axios.post('/configInfo/save', me.configInfo).then(function (resp) {
           if (resp.data.status == ResultStatus.OK.key) {
             me.$toaster.success('保存成功！');
-            me.goBack();
+            me.$root.goBack();
           } else {
             me.allDisabled = false;
           }

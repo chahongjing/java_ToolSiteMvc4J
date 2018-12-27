@@ -6,8 +6,34 @@
 </template>
 
 <script>
+  var containerScroll = function($this) {
+	  var top = $this.scrollTop();
+	  var left = $this.scrollLeft();
+	  if(top) top += 'px';
+	  if(left) left += 'px';
+	  if($this.hasClass('fixtable-container')) {
+	    $this.find('.fixtable-header-top').css('top', top);
+	    $this.find('.fixtable-header-left').css('left', left);
+	    $this.find('.fixtable-header-left-top').css({top: top, left: left});
+	  }
+	  $this.find('.nodata').css({top: top, left: left});
+  }
   export default {
     name: 'tableListLoading',
-    props: {list: Array, loading: Boolean}
+    props: {list: Array, loading: Boolean},
+    mounted() {
+	    var parent = $(this.$el).parent();
+	    parent.scroll(function() {
+	      containerScroll(parent);
+	    });
+    },
+    watch: {
+      loading(curVal, oldVal){
+        var parent = $(this.$el).parent();
+        this.$nextTick(function() {
+          containerScroll(parent);
+        });
+      }
+    }
   }
 </script>

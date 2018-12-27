@@ -120,10 +120,9 @@ public class UserInfoController extends BaseController implements ServletConfigA
 
     @RequestMapping("/save")
     @ResponseBody
-    @RequiresPermissions("userEdit_save")
     public BaseResult<String> save(UserInfoVo vo) {
         UserInfo currentUser = shiroRealm.getCurrentUser();
-        if (!shiroRealm.isPermitted("userEdit_save") && (currentUser != null && !currentUser.getUserCode().equals(vo.getUserCode()))) {
+        if (!shiroRealm.isPermitted("userEdit_save") || (currentUser != null && !currentUser.getUserCode().equals(vo.getUserCode()))) {
             throw new ServiceException("未授权！");
         }
         userInfoSrv.save(vo);

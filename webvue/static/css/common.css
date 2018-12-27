@@ -249,14 +249,20 @@ a[disabled]{pointer-events:none;color:#333;}
 .table tbody tr td{border-width:0;border-bottom-width: 1px;padding-left:7px;padding-right:7px;}
 .table td.operate{padding-top: 7px;padding-bottom:0;font-size: 16px;}
 .table th.sortheader{position:relative;cursor:pointer;padding-right:12px;}
-.table-list{flex:1;overflow: auto;}
+.table-list,.fixtable-container{position:relative;flex:1;overflow: auto;}
 th.sortheader:before,th.sortheader:after{position:absolute;top:12px;right:2px;opacity:0.7;transition:0.2s;font:normal normal normal 16px/1 FontAwesome;color:#999;}
 th.sortheader:hover:before,th.sortheader:hover:after{opacity:1;}
 th.sortheader:before{content:'\f0de';}
 th.sortheader:after{content:'\f0dd';}
 th.sortheader.desc:before,th.sortheader.asc:after{color:green;}
-.nodata{width:100%;min-width:750px;height:calc(100% - 44px);line-height: 100%;position:relative;background-color:rgba(0,0,0,0.1);}
+.nodata{width:100%;height:calc(100% - 42px);line-height: 100%;position:absolute;margin-top:42px;background-color:rgba(0,0,0,0.1);left:0;top:0;}
 .nodata > div{position:absolute;top:50%;left:50%;transform: translate(-50%,-50%);font-weight:bold;font-size: 16px;}
+
+.fixtable-header-top{position:absolute;top:0;width:100%;}
+.fixtable-header-left{position:absolute;left:0;width:auto;min-width:auto;}
+.fixtable-header-left td{background-color: #f6f8fb;}
+.fixtable-header-left-top{position:absolute;left:0;width:auto;min-width:auto;}
+.fixtable-con{width:100%;}
 
 /* 列表 */
 .list-header-but-group{line-height: 40px;min-height:50px;padding:0px 10px 9px 0;border-bottom:1px solid #ccc;}

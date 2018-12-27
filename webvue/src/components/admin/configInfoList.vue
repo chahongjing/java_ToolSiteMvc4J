@@ -14,18 +14,53 @@
           </div>
         </div>
         <div class="form-group">
-          <button type="button" class="btn btn-purple ml20" @click='search()'>
+          <button type="button" class="btn btn-purple ml20" @click='search()' :disabled='allDisabled'>
             <i class='fa fa-search mr5'></i>搜索
           </button>
         </div>
       </form>
     </div>
-    <div class='table-list'>
-      <table class="table table-hover">
+    <div class='fixtable-container'>
+      <table class='table fixtable-header-top'>
+        <thead>
+          <tr>
+            <th class='w50'>#</th>
+            <th>名称</th>
+            <th class='w100'>类型</th>
+            <th class='w100'>账户</th>
+            <th class='w100'>密码</th>
+            <th class='w100'>联系人</th>
+            <th class='w100'>联系方式</th>
+            <th class='w100'>相关站点</th>
+            <th class='w100'>备注</th>
+            <th class='w100'>操作</th>
+          </tr>
+        </thead>
+      </table>
+      <table class='table fixtable-header-left' v-if='!pager.loading'>
+        <thead>
+          <tr>
+            <th class='w50'>#</th>
+          </tr>
+        </thead>
+         <tbody>
+          <tr v-for="(item, index) in list">
+            <td class="text-center" v-text='index + 1'></td>
+          </tr>
+        </tbody>
+      </table>
+      <table class='table fixtable-header-left-top' v-if='!pager.loading'>
+        <thead>
+          <tr>
+            <th class='w50'>#</th>
+          </tr>
+        </thead>
+      </table>
+      <table class="table table-hover fixtable-con">
         <thead>
         <tr>
           <th class='w50'>#</th>
-          <th class='w150'>名称</th>
+          <th>名称</th>
           <th class='w100'>类型</th>
           <th class='w100'>账户</th>
           <th class='w100'>密码</th>
@@ -56,6 +91,7 @@
         </tr>
         </tbody>
       </table>
+      <table-list-loading :list='list' :loading='pager.loading'></table-list-loading>
     </div>
     <div class='footer-pager'>
       <pagination :pager-info='pager'></pagination>
@@ -69,6 +105,7 @@
     name: 'configInfoList',
     data () {
       return {
+        allDisabled: true,
         searchKey: null,
         list: [],
         pager: {pageNum: 1, pageSize: 10, loading: true}
@@ -90,6 +127,7 @@
       },
       search() {
         var me = this;
+        me.allDisabled = true;
         me.pager.loading = true;
         this.$axios.get('/configInfo/queryPageList', {
           name: this.searchKey,
@@ -100,6 +138,7 @@
             me.list = resp.data.value.list;
             me.pager = commonSrv.getPagerInfo(resp.data.value, me.goPage);
           }
+          me.allDisabled = false;
         });
       },
       goPage(page) {
