@@ -28,7 +28,7 @@ public class SpringContextHolder implements ApplicationContextAware, ServletCont
      * @throws: BeansException
      * @CreateDate: 2016年6月26日
      */
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(ApplicationContext applicationContext) {
         SpringContextHolder.applicationContext = applicationContext;
     }
 
@@ -51,7 +51,7 @@ public class SpringContextHolder implements ApplicationContextAware, ServletCont
      * @CreateDate: 2016年6月26日
      */
     @SuppressWarnings("unchecked")
-    public static <T> T getBean(String name) throws BeansException {
+    public static <T> T getBean(String name) {
         T bean = null;
         try {
             bean = (T) applicationContext.getBean(name);
@@ -69,7 +69,7 @@ public class SpringContextHolder implements ApplicationContextAware, ServletCont
      * @Author: <a href="mailto:unitysl@hotmail.com"/>沈浩</a>
      * @CreateDate: 2016年6月26日
      */
-    public static <T> T getBean(Class<T> requiredType) throws BeansException {
+    public static <T> T getBean(Class<T> requiredType) {
         return applicationContext.getBean(requiredType);
     }
 
@@ -92,7 +92,7 @@ public class SpringContextHolder implements ApplicationContextAware, ServletCont
      * @Author: <a href="mailto:unitysl@hotmail.com"/>沈浩</a>
      * @CreateDate: 2016年6月26日
      */
-    public static boolean isSingleton(String name) throws NoSuchBeanDefinitionException {
+    public static boolean isSingleton(String name) {
         return applicationContext.isSingleton(name);
     }
 

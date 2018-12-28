@@ -1,5 +1,6 @@
 package com.zjy.bll.common;
 
+import com.zjy.baseframework.ServiceException;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.*;
@@ -50,5 +51,6 @@ public class CorsFilter implements Filter {
 
     @Override
     public void destroy() {
+        throw new ServiceException("");
     }
 }

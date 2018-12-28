@@ -159,8 +159,8 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
         return type;
     }
 
-    private Map<String, Class<?>> getOracleTypeMap() {
-        if (this.oracleTypeMap == null) {
+    private static Map<String, Class<?>> getOracleTypeMap() {
+        if (oracleTypeMap == null) {
             Map<String, Class<?>> map = new HashMap<>();
             map.put("CHAR", String.class);
             map.put("VARCHAR2", String.class);
@@ -173,9 +173,9 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
             map.put("NUMBER19_38_0", BigDecimal.class);
             map.put("DATE", Date.class);
             map.put("TIMESTAMP", Date.class);
-            this.oracleTypeMap = map;
+            oracleTypeMap = map;
         }
-        return this.oracleTypeMap;
+        return oracleTypeMap;
     }
 
 

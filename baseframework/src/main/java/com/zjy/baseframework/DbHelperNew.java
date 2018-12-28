@@ -16,6 +16,8 @@ import java.util.List;
  * Created by chahongjing on 2017/10/8.
  */
 public class DbHelperNew {
+
+    private DbHelperNew() {}
     private static DataSource dataSource;
 
     static {

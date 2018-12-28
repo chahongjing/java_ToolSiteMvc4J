@@ -67,7 +67,6 @@ public class GlobalExceptionHandler {
             }
         } else {
             logger.error("系统错误", ex);
-            ex.printStackTrace();
             mv.setViewName("common/error");
             response.setStatus(HttpStatus.NOT_FOUND.value()); //设置状态码
         }

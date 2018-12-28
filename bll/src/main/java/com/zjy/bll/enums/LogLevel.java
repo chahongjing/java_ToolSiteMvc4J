@@ -1,7 +1,6 @@
 package com.zjy.bll.enums;
 
 import com.zjy.baseframework.annotations.MybatisFieldEnum;
-import com.zjy.baseframework.annotations.SerializeEnum;
 import com.zjy.baseframework.mybatis.IBaseEnum;
 
 /**

@@ -12,7 +12,10 @@ import java.util.Base64;
 public class SecurityHelper {
     public static final String MD5 = "MD5";
 
-    public static String md5(String str) {
+    private SecurityHelper() {
+    }
+
+    public static String md5Str(String str) {
         if (str == null) throw new IllegalArgumentException("加密的参数不能为null!");
         // 生成一个MD5加密计算摘要
         MessageDigest md = null;
@@ -24,7 +27,6 @@ public class SecurityHelper {
             // BigInteger函数则将8位的字符串转换成16位hex值，用字符串来表示；得到字符串形式的hash值
             return new BigInteger(1, md.digest()).toString(16);
         } catch (NoSuchAlgorithmException e) {
-
             e.printStackTrace();
         }
         return "";

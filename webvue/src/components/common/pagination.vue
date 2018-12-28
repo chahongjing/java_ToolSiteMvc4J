@@ -8,7 +8,7 @@
     </div>
     <div class='footer-right inline-block text-right pr5' :style="{'width':width + 'px'}">
       <ul class="pagination inline-block">
-        <li class="page-item" v-for='item in getList' :class='{"active":item.active,"disabled":item.disabled}'>
+        <li class="page-item" v-for='item in getList' :class='{"active":item.active,"disabled":item.disabled}' :title='item.title'>
           <a class="page-link" href="javascript:void(0)" @click='jumpPage(item.page)' v-html='item.text'>
           </a>
         </li>
@@ -41,33 +41,34 @@
         if (me.pagerInfo == null || !me.pagerInfo.pageNum) {
           return list;
         }
-        list.push({page: me.pagerInfo.pageNum, text: me.pagerInfo.pageNum, active: true});
+        list.push({page: me.pagerInfo.pageNum, text: me.pagerInfo.pageNum, active: true, title:'当前第' + me.pagerInfo.pageNum + '页'});
         var temp;
         for (var i = 1; i < 5; i++) {
           temp = me.pagerInfo.pageNum - i;
           if (temp > 0 && temp <= me.pagerInfo.pages) {
-            list.unshift({page: temp, text: temp});
+            list.unshift({page: temp, text: temp,title:'第' + temp + '页'});
             if (list.length == 5) break;
           }
           temp = me.pagerInfo.pageNum + i;
           if (temp > 0 && temp <= me.pagerInfo.pages) {
-            list.push({page: temp, text: temp});
+            list.push({page: temp, text: temp,title:'第' + temp + '页'});
             if (list.length == 5) break;
           }
         }
         me.width = list.length * 45 + 130;
         // 上一页
-        list.unshift({page: me.pagerInfo.pageNum - 1, disabled: me.pagerInfo.pageNum <= 1, text: '&lsaquo;'});
+        list.unshift({page: me.pagerInfo.pageNum - 1, disabled: me.pagerInfo.pageNum <= 1, text: '&lsaquo;',title:'上一页'});
         // 首页
-        list.unshift({page: 1, disabled: me.pagerInfo.pageNum <= 1, text: '&laquo;'});
+        list.unshift({page: 1, disabled: me.pagerInfo.pageNum <= 1, text: '&laquo;',title:'第一页'});
         // 下一页
         list.push({
           page: me.pagerInfo.pageNum + 1,
           disabled: me.pagerInfo.pageNum >= me.pagerInfo.pages,
-          text: '&rsaquo;'
+          text: '&rsaquo;',
+          title:'下一页'
         });
         // 末页
-        list.push({page: me.pagerInfo.pages, disabled: me.pagerInfo.pageNum >= me.pagerInfo.pages, text: '&raquo;'});
+        list.push({page: me.pagerInfo.pages, disabled: me.pagerInfo.pageNum >= me.pagerInfo.pages, text: '&raquo;',title:'最后一页'});
         return list;
       }
     }

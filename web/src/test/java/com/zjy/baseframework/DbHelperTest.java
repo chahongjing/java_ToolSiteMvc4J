@@ -7,7 +7,7 @@ import org.junit.Test;
  * Created by chahongjing on 2017/1/3.
  */
 public class DbHelperTest extends BaseTestCase {
-    DbHelper dbHelper = new DbHelper();
+
     @Test
     public void testSelect() {
         // rs已关闭，异常

@@ -7,7 +7,7 @@ import java.nio.charset.StandardCharsets;
  * Created by chahongjing on 2017/3/14.
  */
 public class StreamHelper {
-    final static int BUFFER_SIZE = 4096;
+    static final int BUFFER_SIZE = 4096;
 
     /**
      * 将InputStream转换成String
@@ -83,7 +83,7 @@ public class StreamHelper {
      * @return
      * @throws Exception
      */
-    public static InputStream byteToInputStream(byte[] in) throws Exception {
+    public static InputStream byteToInputStream(byte[] in) {
         return new ByteArrayInputStream(in);
     }
 
@@ -94,9 +94,7 @@ public class StreamHelper {
      * @return
      * @throws Exception
      */
-    public static String byteToString(byte[] in) throws Exception {
-        String s = "";
-        byte[] bytes = s.getBytes();
+    public static String byteToString(byte[] in) {
         return new String(in);
     }
 
@@ -121,14 +119,16 @@ public class StreamHelper {
      * @return
      * @throws IOException
      */
-    public static File byteToFile(byte[] in, String filePath) throws IOException {
+    public static File byteToFile(byte[] in, String filePath) {
         File file = new File(filePath);
-        OutputStream output = new FileOutputStream(file);
-        BufferedOutputStream bufferedOutput = new BufferedOutputStream(output);
-        bufferedOutput.write(in);
-        bufferedOutput.flush();
-        output.flush();
-        output.close();
+
+        try (OutputStream output = new FileOutputStream(file);
+             BufferedOutputStream bufferedOutput = new BufferedOutputStream(output)){
+            bufferedOutput.write(in);
+            bufferedOutput.flush();
+            output.flush();
+        } catch (Exception ex) {
+        }
         return file;
     }
 

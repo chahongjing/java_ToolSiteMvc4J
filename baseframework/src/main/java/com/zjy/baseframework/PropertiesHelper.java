@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Properties;
 
 public class PropertiesHelper {
-    private HashMap<String, String> properties = new HashMap<String, String>();
+    private HashMap<String, String> properties = new HashMap<>();
 
     private PropertiesHelper() {
     }
@@ -31,10 +31,10 @@ public class PropertiesHelper {
 
     private void init() {
         InputStream is = getClass().getClassLoader().getResourceAsStream("application.properties");
-        Properties properties = new Properties();
+        Properties propertiesTemp = new Properties();
         try {
-            properties.load(is);
-            for (Map.Entry<Object, Object> kp : properties.entrySet()) {
+            propertiesTemp.load(is);
+            for (Map.Entry<Object, Object> kp : propertiesTemp.entrySet()) {
                 String key = (String) kp.getKey();
                 String value = (String) kp.getValue();
 

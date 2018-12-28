@@ -27,10 +27,12 @@ public enum YesNo implements IBaseEnum {
         return this.value;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public int getOrder() {
         return order;
     }

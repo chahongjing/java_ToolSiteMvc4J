@@ -25,9 +25,12 @@ public enum DbType implements IBaseEnum {
         this.url = url;
     }
 
+    @Override
     public int getValue() {
         return value;
     }
+
+    @Override
     public String getCode() {
         return code;
     }

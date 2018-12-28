@@ -1,6 +1,5 @@
 package com.zjy.entities.enums;
 
-import com.zjy.baseframework.annotations.MybatisFieldEnum;
 import com.zjy.baseframework.annotations.SerializeEnum;
 import com.zjy.baseframework.mybatis.IBaseEnum;
 
@@ -13,7 +12,8 @@ public enum ConfigType implements IBaseEnum {
 
     private int value;
     private String name;
-    ConfigType(int value, String name){
+
+    ConfigType(int value, String name) {
         this.value = value;
         this.name = name;
     }

@@ -38,6 +38,7 @@ import java.util.Map;
  */
 public class HttpHelper {
 
+    private HttpHelper() {}
     // region get请求
 
     /**
@@ -74,7 +75,7 @@ public class HttpHelper {
                 for (Map.Entry<String, String> entry : params.entrySet()) {
                     list.add(URLEncoder.encode(entry.getKey(), charset.displayName()) + "=" + URLEncoder.encode(entry.getValue(), charset.displayName()));
                 }
-                url += url.indexOf("?") > -1 ? "&" : "?";
+                url += url.indexOf('?') > -1 ? "&" : "?";
                 url += StringUtils.join(list, "&");
             }
             HttpGet httpGet = new HttpGet(url);
@@ -85,7 +86,7 @@ public class HttpHelper {
                 org.apache.http.Header firstHeader = response.getFirstHeader(HttpHeaders.CONTENT_DISPOSITION);
                 // 开始解析文件头信息，这里使用的是HeaderElement对象作为文件头的基础信息
                 org.apache.http.HeaderElement[] elements1 = firstHeader.getElements();
-                String filerName = null;
+                String filerName;
                 for (org.apache.http.HeaderElement headerElement : elements1) {
                     //遍历，获取filename。filename信息对应的就是下载文件的文件名称。
                     org.apache.http.NameValuePair pair = headerElement.getParameterByName("filename");
@@ -136,12 +137,12 @@ public class HttpHelper {
      * @return
      */
     public static String doPostToString(String url, Map<String, String> params, Charset charset) throws IOException {
-        return doPostToString(url, params, Collections.EMPTY_MAP, charset);
+        return doPostToString(url, params, Collections.emptyMap(), charset);
     }
 
 
     public static byte[] doPostToByte(String url, Map<String, String> params, Charset charset) throws IOException {
-        return doPostToByte(url, params, Collections.EMPTY_MAP, charset);
+        return doPostToByte(url, params, Collections.emptyMap(), charset);
     }
 
     // endregion
@@ -231,7 +232,7 @@ public class HttpHelper {
                     e.printStackTrace();
                 }
             }
-            url += url.indexOf("?") > -1 ? "&" : "?";
+            url += url.indexOf('?') > -1 ? "&" : "?";
             url += String.join("&", list);
         }
         WebTarget target = client.target(url);

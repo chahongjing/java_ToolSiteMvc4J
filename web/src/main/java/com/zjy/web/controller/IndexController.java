@@ -1,6 +1,5 @@
 package com.zjy.web.controller;
 
-import com.zjy.baseframework.ExcelHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -21,14 +20,11 @@ public class IndexController extends BaseController {
      */
     @RequestMapping("/")
     public String index() {
-        boolean hasRole = shiroRealm.hasRole("admin");
-        boolean permitted = shiroRealm.isPermitted("admin:testPermission");
         return "index";
     }
 
     @RequestMapping("/ok")
     public String ok(HttpServletRequest request, HttpServletResponse response) {
-        ExcelHelper<String> e = new ExcelHelper<>();
         return "common/ok";
     }
 }

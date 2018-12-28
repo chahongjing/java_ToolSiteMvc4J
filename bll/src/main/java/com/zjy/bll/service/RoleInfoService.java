@@ -18,7 +18,7 @@ public interface RoleInfoService {
 
     RoleInfoVo getVo(String id);
 
-    PageBean<? extends RoleInfo> queryPageList(RoleInfoRequest request);
+    PageBean<RoleInfoVo> queryPageList(RoleInfoRequest request);
 
     List<RoleInfoVo> queryAllRole();
 }

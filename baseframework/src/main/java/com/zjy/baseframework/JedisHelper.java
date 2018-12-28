@@ -8,6 +8,8 @@ import redis.clients.jedis.JedisPool;
  * @create 2016-11-27 15:00
  */
 public class JedisHelper {
+
+    private JedisHelper() {}
     private static JedisPool jedisPool = SpringContextHolder.getBean("jedisPool");
 
     public static String set(String key, String value) {

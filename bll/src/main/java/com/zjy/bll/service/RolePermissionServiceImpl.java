@@ -1,12 +1,11 @@
 package com.zjy.bll.service;
 
-import com.zjy.baseframework.KeyHelper;
 import com.zjy.bll.common.BaseService;
 import com.zjy.bll.dao.RolePermissionDao;
 import com.zjy.bll.vo.*;
 import com.zjy.entities.RolePermission;
 import com.zjy.entities.enums.PermissionType;
-import org.apache.shiro.util.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +36,10 @@ public class RolePermissionServiceImpl extends BaseService<RolePermissionDao, Ro
         // 获取角色下的权限
         List<RolePermissionVo> rolePermissionDbList = this.queryRolePermission(id);
         // 组织数据
-        RelateCheckVo firtMenu, secondMenu, functionItem, permissionItem;
+        RelateCheckVo firtMenu;
+        RelateCheckVo secondMenu;
+        RelateCheckVo functionItem;
+        RelateCheckVo permissionItem;
         // 一级
         for (MenuVo menuVo : menuVos) {
             if (menuVo.getPId() != null) continue;
@@ -51,7 +53,7 @@ public class RolePermissionServiceImpl extends BaseService<RolePermissionDao, Ro
             } else {
                 firtMenu.setSingleCheck(false);
             }
-            if (list.size() == 0 || true) firtMenu.setShowDetail(true);
+            if (CollectionUtils.isEmpty(list) || true) firtMenu.setShowDetail(true);
             list.add(firtMenu);
             // 二级
             List<MenuVo> children = menuVos.stream().filter(item -> menuVo.getMenuId().equalsIgnoreCase(item.getPId())).collect(Collectors.toList());
@@ -67,7 +69,7 @@ public class RolePermissionServiceImpl extends BaseService<RolePermissionDao, Ro
                 } else {
                     secondMenu.setSingleCheck(false);
                 }
-                if (firtMenu.getSubList().size() == 0 || true) secondMenu.setShowDetail(true);
+                if (CollectionUtils.isEmpty(firtMenu.getSubList()) || true) secondMenu.setShowDetail(true);
                 firtMenu.getSubList().add(secondMenu);
                 // 功能
                 List<FunctionInfoVo> functions = functionInfoVos.stream().filter(item -> child.getMenuId().equals(item.getMenuId())).collect(Collectors.toList());
@@ -83,7 +85,7 @@ public class RolePermissionServiceImpl extends BaseService<RolePermissionDao, Ro
                     } else {
                         functionItem.setSingleCheck(false);
                     }
-                    if (secondMenu.getSubList().size() == 0 || true) functionItem.setShowDetail(true);
+                    if (CollectionUtils.isEmpty(secondMenu.getSubList()) || true) functionItem.setShowDetail(true);
                     secondMenu.getSubList().add(functionItem);
                     // 权限
                     List<PermissionVo> permissions = permissionVos.stream().filter(item -> function.getFunctionId().equals(item.getFunctionId())).collect(Collectors.toList());
@@ -99,7 +101,7 @@ public class RolePermissionServiceImpl extends BaseService<RolePermissionDao, Ro
                         } else {
                             permissionItem.setIsCheck(false);
                         }
-                        if (functionItem.getSubList().size() == 0 || true) permissionItem.setShowDetail(true);
+                        if (CollectionUtils.isEmpty(functionItem.getSubList()) || true) permissionItem.setShowDetail(true);
                         functionItem.getSubList().add(permissionItem);
                     }
                 }
@@ -133,7 +135,7 @@ public class RolePermissionServiceImpl extends BaseService<RolePermissionDao, Ro
 
     @Override
     public List<RolePermissionVo> queryRolePermission(List<String> roleIdList) {
-        if (CollectionUtils.isEmpty(roleIdList)) return Collections.EMPTY_LIST;
+        if (CollectionUtils.isEmpty(roleIdList)) return Collections.emptyList();
         return dao.queryByRoleList(roleIdList);
     }
 }

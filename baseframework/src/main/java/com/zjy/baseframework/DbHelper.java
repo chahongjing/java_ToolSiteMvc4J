@@ -8,21 +8,19 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class DbHelper {
+    private DbHelper() {}
     private static boolean isLoadDirve = false;
     private static ConcurrentHashMap<String, List<Field>> map = new ConcurrentHashMap();
     public static ResultSet testSelect() {
         String sql = PropertiesHelper.getInstance().getProperties("db.testSql");
-        try (Connection conn = getConnection()) {
-            PreparedStatement pSta = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
-                    ResultSet.CONCUR_READ_ONLY);
+        try (Connection conn = getConnection();
+             PreparedStatement pSta = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
+                     ResultSet.CONCUR_READ_ONLY);) {
             // pSta.setString(1, "abc");
             ResultSet rSet = pSta.executeQuery();
             // rSet.last();rSet.getRow();
             return rSet;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             return null;
         }
@@ -36,33 +34,26 @@ public class DbHelper {
 
 
     public static List toList(Class clazz, String sql) {
-        try {
-            Connection conn = getConnection();
-            PreparedStatement pSta = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
-                    ResultSet.CONCUR_READ_ONLY);
+        try (Connection conn = getConnection();
+             PreparedStatement pSta = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
+                     ResultSet.CONCUR_READ_ONLY);){
             ResultSet rSet = pSta.executeQuery();
             return populate(rSet, clazz);
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
-            return null;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return null;
+            return new ArrayList();
         }
     }
 
     public static int testInsert() {
         String sql = "insert into userinfo(UserId, UserCode, UserName, [Password], Sex, Birthday, IsSystem)\n" +
                 "values(?, 'testuser', '测试数据', '1', 1, getdate(), 1)";
-        try (Connection conn = getConnection()) {
-            PreparedStatement pSta = conn.prepareStatement(sql);
+        try (Connection conn = getConnection();
+            PreparedStatement pSta = conn.prepareStatement(sql);) {
             pSta.setString(1, "D8E6B877-3645-4063-A25C-495606B95349");
 
             return pSta.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return -1;
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             return -1;
         }
@@ -70,22 +61,18 @@ public class DbHelper {
 
     public static int testUpdate() {
         String sql = "update userinfo set birthday = ? where userId = ?";
-        try (Connection conn = getConnection()) {
+        try (Connection conn = getConnection();
+             PreparedStatement pSta = conn.prepareStatement(sql);) {
             // 获取数据库连接
-            PreparedStatement pSta = conn.prepareStatement(sql);
+
             pSta.setTimestamp(1, new java.sql.Timestamp(new java.util.Date().getTime()));
             pSta.setString(2, "D8E6B877-3645-4063-A25C-495606B95349");
             //pSta.setString(2, UUID.randomUUID().toString());
             conn.setAutoCommit(false);
             int result = pSta.executeUpdate();
             conn.commit();
-            pSta.close();
-            conn.close();
             return result;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return -1;
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             return -1;
         }
@@ -93,16 +80,13 @@ public class DbHelper {
 
     public static int testDelete() {
         String sql = "delete from userinfo where userId = ?";
-        try (Connection conn = getConnection()) {
-            PreparedStatement pSta = conn.prepareStatement(sql);
+        try (Connection conn = getConnection();
+             PreparedStatement pSta = conn.prepareStatement(sql);) {
             pSta.setString(1, "D8E6B877-3645-4063-A25C-495606B95349");
             //pSta.setString(1, UUID.randomUUID().toString());
 
             return pSta.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return -1;
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             return -1;
         }
@@ -191,11 +175,7 @@ public class DbHelper {
                 }
                 list.add(obj);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (SQLException | InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
 

@@ -8,7 +8,7 @@ import com.alibaba.fastjson.serializer.ValueFilter;
 public class Long2StringFilter implements ValueFilter {
     @Override
     public Object process(Object object, String name, Object value) {
-        if (value != null && value instanceof Long) {
+        if (value instanceof Long) {
             return String.valueOf(value);
         } else {
             return value;

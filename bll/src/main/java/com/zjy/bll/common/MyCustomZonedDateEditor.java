@@ -16,10 +16,10 @@ import java.util.List;
 import java.util.Locale;
 
 public class MyCustomZonedDateEditor extends PropertyEditorSupport {
+    private static final List<DateTimeFormatter> dtf;
     protected Logger logger = LogHelper.getLogger(this.getClass());
     protected static DateTimeFormatter utcDtf;
     protected static DateTimeFormatter gmtDtf;
-    private final static List<DateTimeFormatter> dtf;
 
     // LocalDateTime.now(ZoneId.of("UTC"));
 

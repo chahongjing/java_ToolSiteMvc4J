@@ -11,5 +11,5 @@ public interface IBaseResult {
     /// <summary>
     /// 返回信息
     /// </summary>
-    public String message = "";
+    String message = "";
 }

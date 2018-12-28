@@ -1,6 +1,7 @@
 package com.zjy.baseframework;
 
 import com.zjy.baseframework.enums.FileSuffix;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
@@ -19,14 +20,16 @@ import java.util.*;
 
 import static com.zjy.baseframework.enums.FileSuffix.XLSX;
 
-public class ExcelHelper<T> {
+public class ExcelHelper {
+
+    private ExcelHelper() {};
     // region 变量
     private static final int MaxSheetRow = 65535;
     // endregion
 
     // region excle转list
-    public static <T> List<T> excelToList(InputStream in, String sheetName, Class<T> clazz, LinkedHashMap<String, String> headers) {
-        List<T> list = new ArrayList<T>();
+    public static <T> List<T> excelToList(InputStream in, String sheetName, Class<T> clazz, Map<String, String> headers) {
+        List<T> list = new ArrayList<>();
         Workbook workbook;
         try {
             workbook = WorkbookFactory.create(in);
@@ -94,19 +97,18 @@ public class ExcelHelper<T> {
     // endregion
 
     // region list转excel
-    public static <T> void listToExcelNew(List<T> list, LinkedHashMap<String, String> headers, String sheetName, String filePath) {
+    public static <T> void listToExcelNew(List<T> list, Map<String, String> headers, String sheetName, String filePath) {
         LinkedHashMap<String, List<T>> map = new LinkedHashMap<>();
         map.put(sheetName, list);
         listToExcelNew(map, headers, filePath);
     }
 
-    public static <T> void listToExcelNew(LinkedHashMap<String, List<T>> sheetList, LinkedHashMap<String, String> headers, String filePath) {
+    public static <T> void listToExcelNew(Map<String, List<T>> sheetList, Map<String, String> headers, String filePath) {
         if (StringUtils.isBlank(filePath)) {
             throw new IllegalArgumentException("filePath不能为空！");
         }
         Workbook workbook;
-        BufferedOutputStream os = null;
-        try {
+        try (BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(filePath))){
             File file = new File(filePath);
             if (!file.getParentFile().exists()) {
                 file.mkdirs();
@@ -116,7 +118,7 @@ public class ExcelHelper<T> {
             } else {
                 workbook = new HSSFWorkbook();
             }
-            os = new BufferedOutputStream(new FileOutputStream(filePath));
+           ;
             for (Map.Entry<String, List<T>> entry : sheetList.entrySet()) {
                 listToExcelNew(workbook, entry.getValue(), headers, entry.getKey());
             }
@@ -124,17 +126,10 @@ public class ExcelHelper<T> {
             workbook.write(os);
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            if (os != null) {
-                try {
-                    os.close();
-                } catch (Exception ex) {
-                }
-            }
         }
     }
 
-    public static <T> void listToExcelNew(List<T> list, LinkedHashMap<String, String> headers, String sheetName, OutputStream os, FileSuffix suffix) {
+    public static <T> void listToExcelNew(List<T> list, Map<String, String> headers, String sheetName, OutputStream os, FileSuffix suffix) {
         Workbook workbook;
         if (suffix != null && suffix.equals(XLSX)) {
             workbook = new XSSFWorkbook();
@@ -150,22 +145,23 @@ public class ExcelHelper<T> {
         }
     }
 
-    public static <T> void listToExcelNew(Workbook workbook, List<T> list, LinkedHashMap<String, String> headers, String sheetName) {
-        if (list == null || list.size() == 0) {
+    public static <T> void listToExcelNew(Workbook workbook, List<T> list, Map<String, String> headers, String sheetName) {
+        if (CollectionUtils.isEmpty(list)) {
             throw new IllegalArgumentException("数据源中没有任何数据!");
         }
         if (StringUtils.isBlank(sheetName)) {
             throw new IllegalArgumentException("请输入sheet名称");
         }
 
-        CellStyle cellDateStyle, cellDataStyle;
+        CellStyle cellDateStyle;
+        CellStyle cellDataStyle;
         CreationHelper creationHelper = workbook.getCreationHelper();
         cellDateStyle = workbook.createCellStyle();
         cellDateStyle.setDataFormat(creationHelper.createDataFormat().getFormat("yyyy-MM-dd HH:mm:ss"));
         cellDataStyle = workbook.createCellStyle();
         cellDataStyle.setDataFormat(creationHelper.createDataFormat().getFormat("#,##0.00"));
 
-        int sheetNum = (int) Math.ceil(list.size() / new Integer(MaxSheetRow - 1).doubleValue());
+        int sheetNum = (int) Math.ceil(list.size() / (double)(MaxSheetRow - 1));
         Sheet[] sheets = new Sheet[sheetNum];
         // sheet名称
         if (sheetNum == 1) {
@@ -188,7 +184,7 @@ public class ExcelHelper<T> {
     // endregion
 
     // region 辅助函数
-    private static <T> void fillSheet(Sheet sheet, List<T> list, LinkedHashMap<String, String> headers, CellStyle cellDateStyle, CellStyle cellDataStyle) {
+    private static <T> void fillSheet(Sheet sheet, List<T> list, Map<String, String> headers, CellStyle cellDateStyle, CellStyle cellDataStyle) {
         // 设置标题
         setHeader(CellUtil.getRow(0, sheet), headers);
 
@@ -268,6 +264,8 @@ public class ExcelHelper<T> {
             case Cell.CELL_TYPE_ERROR:
                 value = cell.getErrorCellValue();
                 break;
+                default:
+                    break;
         }
         return value;
     }
@@ -328,7 +326,7 @@ public class ExcelHelper<T> {
         } else {
             //根据属性名获取属性对象
             Object fieldObj = getFieldValueByName(attributes[0], o);
-            String subFieldNameSequence = fieldNameSequence.substring(fieldNameSequence.indexOf(".") + 1);
+            String subFieldNameSequence = fieldNameSequence.substring(fieldNameSequence.indexOf('.') + 1);
             value = getFieldValueByNameSequence(subFieldNameSequence, fieldObj);
         }
         return value;
@@ -406,7 +404,7 @@ public class ExcelHelper<T> {
                 field.set(o, fieldValue);
             }
         } else {
-            throw new Exception(o.getClass().getSimpleName() + "类不存在字段名 " + fieldName);
+            throw new ServiceException(o.getClass().getSimpleName() + "类不存在字段名 " + fieldName);
         }
     }
 
@@ -495,7 +493,7 @@ public class ExcelHelper<T> {
         while (it.hasNext()) {
             index++;
             row = sheet.createRow(index);
-            T t = (T) it.next();
+            T t = it.next();
             // 利用反射，根据javabean属性的先后顺序，动态调用getXxx()方法得到属性值
             Field[] fields = t.getClass().getDeclaredFields();
             for (int i = 0; i < fields.length; i++) {
@@ -506,8 +504,8 @@ public class ExcelHelper<T> {
                 String getMethodName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
                 try {
                     Class tCls = t.getClass();
-                    Method getMethod = tCls.getMethod(getMethodName, new Class[0]);
-                    Object value = getMethod.invoke(t, new Object[0]);
+                    Method getMethod = tCls.getMethod(getMethodName);
+                    Object value = getMethod.invoke(t);
                     // 判断值的类型后进行强制类型转换
                     String textValue = null;
                     if (value instanceof String) {
@@ -578,11 +576,11 @@ public class ExcelHelper<T> {
      * @param <T>       list的类型
      * @throws Exception
      */
-    public static <T> void listToExcel(List<T> list, LinkedHashMap<String, String> fieldMap, String sheetName, int sheetSize, HttpServletResponse response
-    ) throws Exception {
+    public static <T> void listToExcel(List<T> list, Map<String, String> fieldMap, String sheetName, int sheetSize, HttpServletResponse response
+    ) {
 
         //设置默认文件名为当前时间：年月日时分秒
-        String fileName = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date()).toString();
+        String fileName = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
 
         //设置response头信息
         response.reset();
@@ -623,7 +621,7 @@ public class ExcelHelper<T> {
                 if (cell == null) {
                     cell = irow.createCell(i);
                 }
-                String content = cell.getStringCellValue().toString();
+                String content = cell.getStringCellValue();
                 int cellWith = content.length();
                 if (colWith < cellWith) {
                     colWith = cellWith;

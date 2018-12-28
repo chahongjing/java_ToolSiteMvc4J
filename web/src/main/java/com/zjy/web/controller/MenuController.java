@@ -73,7 +73,6 @@ public class MenuController extends BaseController {
     @ResponseBody
     public BaseResult queryMenu() {
         List<MenuVo> list = menuSrv.queryPermissionMenu();
-        // List<MenuVo> list = menuSrv.queryAllMenu();
         List<TreeNode> nodeList = new ArrayList<>();
         TreeNode node;
         for (MenuVo menu : list) {

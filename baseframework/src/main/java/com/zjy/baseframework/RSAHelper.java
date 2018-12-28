@@ -1,7 +1,6 @@
 package com.zjy.baseframework;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.collections.bag.HashBag;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -38,14 +37,12 @@ public class RSAHelper {
         // 加密
         PublicKey publicKey = restorePublicKey(keyMap.get(PUBLIC_KEY));
 
-        byte[] encodedText = RSAEncode(publicKey, PLAIN_TEXT.getBytes());
+        byte[] encodedText = rsaEncode(publicKey, PLAIN_TEXT.getBytes());
         System.out.println("RSA encoded: " + Base64.encodeBase64String(encodedText));
 
         // 解密
         PrivateKey privateKey = restorePrivateKey(keyMap.get(PRIVATE_KEY));
-        System.out.println("RSA decoded: " + RSADecode(privateKey, encodedText));
-
-        String[] s = new String[]{"A", "B", "C", "D","E"};
+        System.out.println("RSA decoded: " + rsaDecode(privateKey, encodedText));
     }
 
     /**
@@ -66,7 +63,6 @@ public class RSAHelper {
             keyMap.put(PRIVATE_KEY, privateKey.getEncoded());
             return keyMap;
         } catch (NoSuchAlgorithmException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;
@@ -82,10 +78,8 @@ public class RSAHelper {
         X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(keyBytes);
         try {
             KeyFactory factory = KeyFactory.getInstance(KEY_ALGORITHM);
-            PublicKey publicKey = factory.generatePublic(x509EncodedKeySpec);
-            return publicKey;
+            return factory.generatePublic(x509EncodedKeySpec);
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;
@@ -101,10 +95,8 @@ public class RSAHelper {
         PKCS8EncodedKeySpec pkcs8EncodedKeySpec = new PKCS8EncodedKeySpec(keyBytes);
         try {
             KeyFactory factory = KeyFactory.getInstance(KEY_ALGORITHM);
-            PrivateKey privateKey = factory.generatePrivate(pkcs8EncodedKeySpec);
-            return privateKey;
+            return factory.generatePrivate(pkcs8EncodedKeySpec);
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;
@@ -117,7 +109,7 @@ public class RSAHelper {
      * @param plainText
      * @return
      */
-    public static byte[] RSAEncode(PublicKey key, byte[] plainText) {
+    public static byte[] rsaEncode(PublicKey key, byte[] plainText) {
         try {
             Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
             cipher.init(Cipher.ENCRYPT_MODE, key);
@@ -125,10 +117,9 @@ public class RSAHelper {
         } catch (NoSuchAlgorithmException | NoSuchPaddingException
                 | InvalidKeyException | IllegalBlockSizeException
                 | BadPaddingException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return null;
+        return new byte[0];
 
     }
 
@@ -139,7 +130,7 @@ public class RSAHelper {
      * @param encodedText
      * @return
      */
-    public static String RSADecode(PrivateKey key, byte[] encodedText) {
+    public static String rsaDecode(PrivateKey key, byte[] encodedText) {
         try {
             Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
             cipher.init(Cipher.DECRYPT_MODE, key);
@@ -147,7 +138,6 @@ public class RSAHelper {
         } catch (NoSuchAlgorithmException | NoSuchPaddingException
                 | InvalidKeyException | IllegalBlockSizeException
                 | BadPaddingException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;

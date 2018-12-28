@@ -83,11 +83,10 @@ public class RoleInfoServiceImpl extends BaseService<RoleInfoDao, RoleInfo> impl
     }
 
     @Override
-    public PageBean<? extends RoleInfo> queryPageList(RoleInfoRequest request) {
+    public PageBean<RoleInfoVo> queryPageList(RoleInfoRequest request) {
         RoleInfo po = new RoleInfo();
         po.setName(request.getName());
-        PageBean<RoleInfoVo> pageBean = (PageBean<RoleInfoVo>) super.queryPageList(request, po);
-        return pageBean;
+        return (PageBean<RoleInfoVo>) super.queryPageList(request, po);
     }
 
     @Override

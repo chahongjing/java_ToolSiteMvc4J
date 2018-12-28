@@ -10,11 +10,11 @@ import java.util.*;
 
 public class MyCustomDateEditor extends PropertyEditorSupport {
     protected Logger logger = LogHelper.getLogger(this.getClass());
-    private final static DateFormat dateSdf = new SimpleDateFormat("yyyy-MM-dd");
-    private final static DateFormat dateTimeSdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    private final static DateFormat utcSfd = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-    private final static DateFormat gmtSdf = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss 'GMT'Z", Locale.US);
-    private final static List<DateFormat> sdf;
+    private static final DateFormat dateSdf = new SimpleDateFormat("yyyy-MM-dd");
+    private static final DateFormat dateTimeSdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static final DateFormat utcSfd = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    private static final DateFormat gmtSdf = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss 'GMT'Z", Locale.US);
+    private static final List<DateFormat> sdf;
 
     static {
         utcSfd.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -30,7 +30,7 @@ public class MyCustomDateEditor extends PropertyEditorSupport {
     }
 
     @Override
-    public void setAsText(String text) throws IllegalArgumentException {
+    public void setAsText(String text) {
         Date date = parse(text);
         if (date == null) {
             logger.error("解析Date失败！", text);

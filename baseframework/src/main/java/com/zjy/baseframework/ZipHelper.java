@@ -9,8 +9,6 @@ import net.lingala.zip4j.util.Zip4jConstants;
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -18,18 +16,20 @@ import java.util.List;
  */
 public class ZipHelper {
 
+    private ZipHelper() {}
     /**
      * 压缩文件
+     *
      * @param file 文件路径
      * @return
      */
     public static String zip(String file) throws Exception {
         File f = new File(file);
         String outputPath = file;
-        if(f.isDirectory()) {
-            outputPath = Paths.get(f.getPath().toString(), f.getName() + ".zip").toString();
+        if (f.isDirectory()) {
+            outputPath = Paths.get(f.getPath(), f.getName() + ".zip").toString();
         } else {
-            String prefix = f.getName().substring(f.getName().lastIndexOf("."));
+            String prefix = f.getName().substring(f.getName().lastIndexOf('.'));
             if (prefix != null)
                 outputPath = outputPath.replace(prefix, "") + ".zip";
         }
@@ -39,7 +39,8 @@ public class ZipHelper {
 
     /**
      * 压缩文件
-     * @param file 文件路径
+     *
+     * @param file        文件路径
      * @param zipFilePath 压缩文件存放地址
      * @return
      */
@@ -49,9 +50,10 @@ public class ZipHelper {
 
     /**
      * 压缩文件
-     * @param file 文件路径
+     *
+     * @param file        文件路径
      * @param zipFilePath 压缩文件存放地址
-     * @param password 密码
+     * @param password    密码
      * @return
      */
     public static String zip(String file, String zipFilePath, String password) throws Exception {
@@ -60,7 +62,8 @@ public class ZipHelper {
 
     /**
      * 压缩文件
-     * @param files 文件路径列表
+     *
+     * @param files       文件路径列表
      * @param zipFilePath 压缩文件存放地址
      * @return
      */
@@ -70,15 +73,16 @@ public class ZipHelper {
 
     /**
      * 压缩文件
-     * @param files 文件路径列表
+     *
+     * @param files       文件路径列表
      * @param zipFilePath 压缩文件存放地址
-     * @param password 密码
+     * @param password    密码
      * @return
      */
     public static String zip(String[] files, String zipFilePath, String password) throws Exception {
         File dest = new File(zipFilePath);
-        if(dest.isDirectory()){
-            throw new Exception("目标文件不是有效的压缩文件！");
+        if (dest.isDirectory()) {
+            throw new ServiceException("目标文件不是有效的压缩文件！");
         }
         ZipParameters parameters = new ZipParameters();
         // 压缩方式
@@ -92,7 +96,7 @@ public class ZipHelper {
             parameters.setPassword(password.toCharArray());
         }
         try {
-            if(!dest.getParentFile().exists()) {
+            if (!dest.getParentFile().exists()) {
                 dest.getParentFile().mkdirs();
             }
             ZipFile zipFile = new ZipFile(zipFilePath);
@@ -116,16 +120,18 @@ public class ZipHelper {
 
     /**
      * 解压文件
+     *
      * @param zipPath 压缩文件路径
      */
     public static void unzip(String zipPath) {
         File file = new File(zipPath);
-        unzip(zipPath, file.getParent().toString());
+        unzip(zipPath, file.getParent());
     }
 
     /**
      * 解压文件
-     * @param zipPath 压缩文件路径
+     *
+     * @param zipPath    压缩文件路径
      * @param outputPath 解压目录
      * @return
      */
@@ -135,9 +141,10 @@ public class ZipHelper {
 
     /**
      * 解压文件
-     * @param zipPath 压缩文件路径
+     *
+     * @param zipPath    压缩文件路径
      * @param outputPath 解压目录
-     * @param password 密码
+     * @param password   密码
      * @return
      */
     public static File[] unzip(String zipPath, String outputPath, String password) {
@@ -156,7 +163,7 @@ public class ZipHelper {
             }
             zipFile.extractAll(outputPath);
             List<FileHeader> headerList = zipFile.getFileHeaders();
-            List<File> extractedFileList = new ArrayList<File>();
+            List<File> extractedFileList = new ArrayList<>();
             for (FileHeader fileHeader : headerList) {
                 if (!fileHeader.isDirectory()) {
                     extractedFileList.add(new File(destDir, fileHeader.getFileName()));
@@ -173,7 +180,8 @@ public class ZipHelper {
 
     /**
      * 从压缩文件中删除指定的目录
-     * @param file 压缩文件路径
+     *
+     * @param file      压缩文件路径
      * @param removeDir 要删除的目录，如a/b/
      * @throws ZipException
      */

@@ -12,9 +12,12 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class EnumHelper {
+
+    private EnumHelper() {}
+
     private static List<Class<IBaseEnum>> serializeEnumList = new ArrayList<>();
     @SuppressWarnings("restriction")
-    public static String getDescription(Enum<?> enu) throws NoSuchFieldException, SecurityException {
+    public static String getDescription(Enum<?> enu) throws NoSuchFieldException {
         Class<? extends Enum> sc = enu.getClass();
 
         Field field = sc.getField(enu.toString());

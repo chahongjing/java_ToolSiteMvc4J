@@ -23,10 +23,8 @@ public class ReflectionHelper {
         if (superClass instanceof ParameterizedType) {
             ParameterizedType parameterizedType = (ParameterizedType) superClass;
             Type[] typeArgs = parameterizedType.getActualTypeArguments();
-            if (typeArgs != null && typeArgs.length > 0) {
-                if (typeArgs[0] instanceof Class) {
-                    clazz = (Class) typeArgs[0];
-                }
+            if (typeArgs != null && typeArgs.length > 0 && typeArgs[0] instanceof Class) {
+                clazz = (Class) typeArgs[0];
             }
         }
 
@@ -79,15 +77,13 @@ public class ReflectionHelper {
                 Class<?> aClass = Class.forName(className, false, ReflectionHelper.class.getClassLoader());
                 classList.add(aClass);
             } catch (ClassNotFoundException e) {
-                //e.printStackTrace();
             }
         }
         return classList;
     }
 
     public static String preserveSubpackageName(String a) {
-        String substring = a.substring(a.indexOf("!") + 2);
-        return substring;
+        return a.substring(a.indexOf('!') + 2);
     }
 
     //得到泛型类T

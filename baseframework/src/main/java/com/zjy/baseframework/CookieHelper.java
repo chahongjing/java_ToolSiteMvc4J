@@ -14,6 +14,7 @@ import java.nio.charset.StandardCharsets;
  * Created by chahongjing on 2017/10/12.
  */
 public class CookieHelper {
+    private CookieHelper() {}
     public static boolean addCookie(HttpServletResponse response, String key, String value) {
         return addCookie(response, key, value, null);
     }

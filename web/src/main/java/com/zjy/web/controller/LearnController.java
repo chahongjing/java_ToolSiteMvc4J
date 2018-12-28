@@ -3,7 +3,6 @@ package com.zjy.web.controller;
 import com.zjy.baseframework.*;
 import com.zjy.baseframework.enums.ResultStatus;
 import com.zjy.bll.common.LoggingProxy;
-import com.zjy.bll.common.WebUtils;
 import com.zjy.bll.service.TestService;
 import com.zjy.bll.service.TestServiceImpl;
 import com.zjy.bll.service.UserInfoService;
@@ -24,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
@@ -56,15 +56,6 @@ public class LearnController extends BaseController {
     @ResponseBody
     public ModelAndView fileUpload(MultipartHttpServletRequest request) {
         // @RequestParam("myfile") List<CommonsMultipartFile> myfile
-//        try {
-//            for(Part part : request.getParts()) {
-//                //part.write("要保存的文件路径");
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (ServletException e) {
-//            e.printStackTrace();
-//        }
         ModelAndView mv = new ModelAndView();
         mv.setViewName("common/ok");
         Path path = Paths.get(request.getSession().getServletContext().getRealPath(""), "upload");
@@ -101,7 +92,6 @@ public class LearnController extends BaseController {
         }
         return json;
     }
-
 
 
     /**
@@ -155,8 +145,6 @@ public class LearnController extends BaseController {
 
     @RequestMapping("/cookieLearn")
     public String cookieLearn(HttpServletRequest request, HttpServletResponse response) {
-        String cookie = CookieHelper.getCookie(request, "zjy");
-        CookieHelper.addCookie(response, "zjy", "曾军毅");
         return "cookieLearn";
     }
 
@@ -370,29 +358,11 @@ public class LearnController extends BaseController {
         return "ueditorLearn";
     }
 
-    @RequestMapping("ueditorServer")
-    public void ueditorServer(HttpServletRequest request, HttpServletResponse response, String action) {
-        try {
-            request.setCharacterEncoding("utf-8");
-            response.setHeader("Content-Type", "text/html");
-
-            String rootPath = request.getSession().getServletContext().getRealPath("/");
-
-//            ActionEnter actionEnter = new ActionEnter(request, rootPath);
-//            String exec = actionEnter.exec();
-//
-//            response.getWriter().write(exec);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     @RequestMapping("/ueditorPicUpload")
     public void ueditorPicUpload(HttpServletRequest request, HttpServletResponse response) {
         try {
             request.setCharacterEncoding("utf-8");
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
         }
         response.setCharacterEncoding("utf-8");
         UeditorUploader up = new UeditorUploader(request);
@@ -403,7 +373,6 @@ public class LearnController extends BaseController {
         try {
             up.upload();
         } catch (Exception e) {
-            e.printStackTrace();
         }
 
         String callback = request.getParameter("callback");
@@ -415,14 +384,11 @@ public class LearnController extends BaseController {
         if (callback == null) {
             try {
                 response.getWriter().print(result);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            } catch (IOException e) { }
         } else {
             try {
                 response.getWriter().print("<script>" + callback + "(" + result + ")</script>");
             } catch (IOException e) {
-                e.printStackTrace();
             }
         }
     }
@@ -444,8 +410,6 @@ public class LearnController extends BaseController {
     @RequestMapping("/testajax")
     @ResponseBody
     public BaseResult testajax(String a, String b, String c, Date d) {
-//        int aa = 1, bb = 0;
-//        int cc = aa / bb;
         return BaseResult.OK("后台返回数据");
     }
 
@@ -466,7 +430,7 @@ public class LearnController extends BaseController {
     // endregion
 
     // region 最新
-    @RequestMapping(value = "/testPostWithFile", method = RequestMethod.POST)
+    @PostMapping(value = "/testPostWithFile")
     public ResponseEntity<BaseResult<UserInfo>> testPostWithFile(MultipartHttpServletRequest request,
                                                                  @RequestParam(required = false) Integer age,
                                                                  @RequestParam MultipartFile[] myfile,
@@ -476,23 +440,23 @@ public class LearnController extends BaseController {
         user.setUserName(users.getUserName());
         user.setUserCode(users.getUserCode());
         user.setBirthday(users.getBirthday());
-        String fileName = "";
+        StringBuilder fileName = new StringBuilder();
         for (MultipartFile file : request.getFiles("myfile")) {
-            fileName += file.getOriginalFilename() + ";";
+            fileName.append(file.getOriginalFilename() + ";");
         }
-        user.setPhoto(fileName);
+        user.setPhoto(fileName.toString());
         re.setValue(user);
         return new ResponseEntity<>(re, HttpStatus.OK);
     }
 
     @RequestMapping("/download")
     @ResponseBody
-    public BaseResult download(HttpServletResponse response) throws Exception {
+    public BaseResult download(HttpServletResponse response) {
         // path是指欲下载的文件的路径。
         BaseResult result = BaseResult.OK();
-        try{
+        try {
             File file = Paths.get(Utils.getRootPath(), "favicon.ico").toFile();
-            if (!file.exists()) throw new Exception("未找到文件：" + file);
+            if (!file.exists()) throw new FileNotFoundException("未找到文件：" + file);
             DownloadHelper.download(file.getAbsolutePath(), response);
             return null;
         } catch (Exception e) {
@@ -520,7 +484,7 @@ public class LearnController extends BaseController {
         return mv;
     }
 
-    @RequestMapping(value = "/testPostEntity", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/testPostEntity", produces = "application/json;charset=UTF-8")
     public ResponseEntity<UserInfo> testPostEntity(UserInfo userForm) {
         UserInfo user = new UserInfo();
         user.setUserName(userForm.getUserName());
@@ -531,10 +495,10 @@ public class LearnController extends BaseController {
 
     @RequestMapping("/testP1")
     @ResponseBody
-    public BaseResult testP1() throws Exception {
+    public BaseResult testP1() {
         // path是指欲下载的文件的路径。
         BaseResult result = BaseResult.OK();
-        try{
+        try {
             Thread.sleep(3000);
         } catch (Exception e) {
         }
@@ -543,10 +507,10 @@ public class LearnController extends BaseController {
 
     @RequestMapping("/testP2")
     @ResponseBody
-    public BaseResult testP2() throws Exception {
+    public BaseResult testP2() {
         // path是指欲下载的文件的路径。
         BaseResult result = BaseResult.OK();
-        try{
+        try {
             Thread.sleep(1000);
         } catch (Exception e) {
         }

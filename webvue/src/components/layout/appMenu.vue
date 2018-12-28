@@ -66,6 +66,10 @@
                 parents[i].children = resp.data.value.filter(function (item) {
                   return item.pId == parents[i].id;
                 });
+                if(i == 0) {
+                  parents[i].isSelected = true;
+                  parents[i].height = (parents[i].children.length + 1) * 35;
+                }
               }
               if (menuInfo.first.selected) {
                 menuInfo.first.selected.isSelected = true;

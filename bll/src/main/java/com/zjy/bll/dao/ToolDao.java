@@ -2,7 +2,6 @@ package com.zjy.bll.dao;
 
 import com.zjy.bll.common.BaseDao;
 import com.zjy.entities.TableColumnInfo;
-import com.zjy.entities.UserInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 

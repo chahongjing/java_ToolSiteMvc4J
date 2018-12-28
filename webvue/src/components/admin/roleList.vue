@@ -14,7 +14,7 @@
           </div>
         </div>
         <div class="form-group">
-          <button type="button" class="btn btn-purple ml20" @click='search()'>
+          <button type="button" class="btn btn-purple ml20" @click='search()' :disabled='allDisabled'>
             <i class='fa fa-search mr5'></i>搜索
           </button>
         </div>
@@ -50,6 +50,7 @@
         </tr>
         </tbody>
       </table>
+      <table-list-loading :list='list' :loading='pager.loading'></table-list-loading>
     </div>
     <div class='footer-pager'>
       <pagination :pager-info='pager'></pagination>
@@ -63,6 +64,7 @@
     name: 'roleList',
     data () {
       return {
+        allDisabled:true,
         searchKey: null,
         list: [],
         pager: {pageNum: 1, pageSize: 10, loading: true}
@@ -84,6 +86,7 @@
       search() {
         var me = this;
         me.pager.loading = true;
+        me.allDisabled = true;
         this.$axios.get('/role/queryPageList', {
           name: this.searchKey,
           pageNum: this.pager.pageNum,
@@ -93,6 +96,7 @@
             me.list = resp.data.value.list;
             me.pager = commonSrv.getPagerInfo(resp.data.value, me.goPage);
           }
+          me.allDisabled = false;
         });
       },
       goPage(page) {

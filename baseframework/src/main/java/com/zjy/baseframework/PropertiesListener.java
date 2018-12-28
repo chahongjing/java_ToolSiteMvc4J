@@ -15,21 +15,18 @@ public class PropertiesListener implements ServletContextListener {
      * Default constructor.
      */
     public PropertiesListener() {
-        // TODO Auto-generated constructor stub
     }
 
     /**
      * @see ServletContextListener#contextDestroyed(ServletContextEvent)
      */
     public void contextDestroyed(ServletContextEvent arg0) {
-        // TODO Auto-generated method stub
     }
 
     /**
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
     public void contextInitialized(ServletContextEvent arg0) {
-        // TODO Auto-generated method stub
         InputStream is = getClass().getClassLoader().getResourceAsStream("/application.properties");
         Properties properties = new Properties();
         try {
@@ -41,7 +38,6 @@ public class PropertiesListener implements ServletContextListener {
                 PropertiesHelper.getInstance().setProperties(key, value);
             }
         } catch (Exception e) {
-            // TODO: handle exception
         }
     }
 

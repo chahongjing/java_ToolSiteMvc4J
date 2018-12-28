@@ -20,7 +20,7 @@ public class RedisShiroSessionDao extends AbstractSessionDAO {
     Logger log = LoggerFactory.getLogger(getClass());
 
     @Override
-    public void update(Session session) throws UnknownSessionException {
+    public void update(Session session) {
         try {
             cacheHelper.set(session.getId().toString(), session);
         } catch (Exception e) {

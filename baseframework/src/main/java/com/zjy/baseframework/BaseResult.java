@@ -124,7 +124,7 @@ public class BaseResult<T> implements Serializable {
     /// <param name="value">返回值</param>
     /// <returns></returns>
     public static <T> BaseResult<T> OK(T value, String message) {
-        return new BaseResult<T>(ResultStatus.OK, message, value);
+        return new BaseResult<>(ResultStatus.OK, message, value);
     }
 
     /// <summary>
@@ -151,7 +151,7 @@ public class BaseResult<T> implements Serializable {
     /// <param name="value">返回值</param>
     /// <returns></returns>
     public static <T> BaseResult<T> NO(String message, T value) {
-        return new BaseResult<T>(ResultStatus.NO, message, value);
+        return new BaseResult<>(ResultStatus.NO, message, value);
     }
 
     /// <summary>
@@ -170,6 +170,6 @@ public class BaseResult<T> implements Serializable {
     /// <param name="value">返回值</param>
     /// <returns></returns>
     public static <T> BaseResult<T> ERROR(String message, T value) {
-        return new BaseResult<T>(ResultStatus.ERROR, message, value);
+        return new BaseResult<>(ResultStatus.ERROR, message, value);
     }
 }

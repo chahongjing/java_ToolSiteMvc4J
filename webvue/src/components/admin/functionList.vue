@@ -14,7 +14,7 @@
           </div>
         </div>
         <div class="form-group">
-          <button type="button" class="btn btn-purple ml20" @click='search()'>
+          <button type="button" class="btn btn-purple ml20" @click='search()' :disabled='allDisabled'>
             <i class='fa fa-search mr5'></i>搜索
           </button>
         </div>
@@ -68,6 +68,7 @@
     name: 'functionList',
     data () {
       return {
+        allDisabled:true,
         searchKey: null,
         list: [],
         pager: {pageNum: 1, pageSize: 10, loading: true}
@@ -93,6 +94,7 @@
       queryList() {
         var me = this;
         me.pager.loading = true;
+        me.allDisabled = true;
         this.$axios.get('/function/queryPageList', {
           name: me.searchKey,
           pageNum: me.pager.pageNum,
@@ -109,6 +111,7 @@
             }
             commonSrv.setPagerModel('functionList', model);
           }
+          me.allDisabled = false;
         });
       },
       goPage(page) {

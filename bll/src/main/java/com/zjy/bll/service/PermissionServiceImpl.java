@@ -75,8 +75,7 @@ public class PermissionServiceImpl extends BaseService<PermissionDao, Permission
         Permission po = new Permission();
         po.setName(request.getName());
         po.setFunctionId(request.getFunctionId());
-        PageBean<PermissionVo> pageBean = (PageBean<PermissionVo>) super.queryPageList(request, po);
-        return pageBean;
+        return (PageBean<PermissionVo>) super.queryPageList(request, po);
     }
 
     public PermissionVo get(String id) {

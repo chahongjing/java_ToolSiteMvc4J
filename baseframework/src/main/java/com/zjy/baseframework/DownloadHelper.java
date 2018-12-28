@@ -11,6 +11,7 @@ import java.nio.charset.StandardCharsets;
  * Created by chahongjing on 2017/2/14.
  */
 public class DownloadHelper {
+    private DownloadHelper() {}
     public static void download(String filePath, HttpServletResponse response) throws IOException {
         File file = new File(filePath);
         BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
@@ -28,7 +29,7 @@ public class DownloadHelper {
             String mimeType = new MimetypesFileTypeMap().getContentType(new File(fileName));
             response.setContentType(mimeType);
             //创建缓冲区
-            byte buffer[] = new byte[1024];
+            byte[] buffer = new byte[1024];
             int len;
             //循环将输入流中的内容读取到缓冲区当中
             while ((len = is.read(buffer)) > 0) {

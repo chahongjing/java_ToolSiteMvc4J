@@ -16,7 +16,7 @@ public class WebUtils {
 
     public static String getWebApplicationUrlPath() {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        return (request.getRequestURL().toString().replace(request.getRequestURI().toString(), "") + request.getContextPath());
+        return (request.getRequestURL().toString().replace(request.getRequestURI(), "") + request.getContextPath());
     }
 
     public static boolean isAjax(WebRequest request) {

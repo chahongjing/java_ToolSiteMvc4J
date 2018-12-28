@@ -60,7 +60,7 @@ public class CodeEnumTypeHandler<E extends Enum<E> & IBaseEnum> extends BaseType
 
     private E getTypeValue(int val) {
         try {
-            return IBaseEnum.getByValue(type, new Integer(val));
+            return IBaseEnum.getByValue(type, val);
         } catch (Exception ex) {
             throw new IllegalArgumentException("Cannot convert " + val + " to " + type.getSimpleName() + " by ordinal value.", ex);
         }

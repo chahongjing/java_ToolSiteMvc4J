@@ -79,7 +79,7 @@ public class CommonServiceImpl implements CommonService {
         Map<String, Map<String, EnumBean>> enumBeanList = EnumHelper.getEnumBeanList();
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<String, Map<String, EnumBean>> classMapEntry : enumBeanList.entrySet()) {
-            sb.append(String.format("window.%s=%s;\r\n", classMapEntry.getKey(), JSON.toJSONString(classMapEntry.getValue())));
+            sb.append(String.format("window.%s=%s;%n", classMapEntry.getKey(), JSON.toJSONString(classMapEntry.getValue())));
         }
         return sb.toString();
     }

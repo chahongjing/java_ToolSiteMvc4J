@@ -27,10 +27,11 @@ public class UserRoleServiceImpl extends BaseService<UserRoleDao, UserRole> impl
     @Override
     public List<RelateCheckVo> queryAllRoleWithUserRole(String userId) {
         List<RelateCheckVo> list = new ArrayList<>();
-        RelateCheckVo root, role;
+        RelateCheckVo root;
+        RelateCheckVo role;
         root = new RelateCheckVo();
         root.setName("角色列表");
-        if (list.size() == 0) root.setShowDetail(true);
+        if (CollectionUtils.isEmpty(list)) root.setShowDetail(true);
         list.add(root);
         List<RoleInfoVo> roleInfoVos = roleInfoSrv.queryAllRole();
         List<UserRoleVo> userRoleList = this.queryListByUserId(userId);

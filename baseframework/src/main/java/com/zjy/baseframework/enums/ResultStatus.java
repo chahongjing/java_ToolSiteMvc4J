@@ -25,6 +25,7 @@ public enum ResultStatus implements IBaseEnum {
         return this.value;
     }
 
+    @Override
     public String getName() {
         return name;
     }

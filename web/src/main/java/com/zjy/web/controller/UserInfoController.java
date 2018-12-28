@@ -12,7 +12,6 @@ import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.web.util.SavedRequest;
 import org.apache.shiro.web.util.WebUtils;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -61,7 +60,7 @@ public class UserInfoController extends BaseController implements ServletConfigA
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
     // endregion
@@ -73,14 +72,14 @@ public class UserInfoController extends BaseController implements ServletConfigA
         mv.setViewName("login");
         // 获取上一次的地址
         SavedRequest lastRequest = WebUtils.getSavedRequest(request);
-        String url = null;
+        String lastUrl = null;
         if (lastRequest != null && "GET".equalsIgnoreCase(lastRequest.getMethod())) {
-            url = WebUtils.getSavedRequest(request).getRequestUrl();
+            lastUrl = WebUtils.getSavedRequest(request).getRequestUrl();
         }
-        if (StringUtils.isBlank(url)) {
-            url = request.getRequestURL().toString().replace(request.getRequestURI(), "") + request.getContextPath() + "/";
+        if (StringUtils.isBlank(lastUrl)) {
+            lastUrl = request.getRequestURL().toString().replace(request.getRequestURI(), "") + request.getContextPath() + "/";
         }
-        mv.addObject("redirectUrl", url);
+        mv.addObject("redirectUrl", lastUrl);
         return mv;
     }
 
@@ -122,7 +121,7 @@ public class UserInfoController extends BaseController implements ServletConfigA
     @ResponseBody
     public BaseResult<String> save(UserInfoVo vo) {
         UserInfo currentUser = shiroRealm.getCurrentUser();
-        if (!shiroRealm.isPermitted("userEdit_save") || (currentUser != null && !currentUser.getUserCode().equals(vo.getUserCode()))) {
+        if (!(shiroRealm.isPermitted("userEdit_save") || (currentUser != null && currentUser.getUserCode().equals(vo.getUserCode())))) {
             throw new ServiceException("未授权！");
         }
         userInfoSrv.save(vo);

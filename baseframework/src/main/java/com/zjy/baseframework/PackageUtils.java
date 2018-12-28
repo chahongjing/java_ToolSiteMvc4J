@@ -85,8 +85,8 @@ public class PackageUtils {
                     if(ind == -1) {
                         ind = childFilePath.indexOf("/classes/");
                     }
-                    childFilePath = childFilePath.substring(ind + 9, childFilePath.lastIndexOf("."));
-                    childFilePath = childFilePath.replace("/", ".").replace("\\", ".");
+                    childFilePath = childFilePath.substring(ind + 9, childFilePath.lastIndexOf('.'));
+                    childFilePath = childFilePath.replace('/', '.').replace("\\", ".");
                     myClassName.add(childFilePath);
                 }
             }
@@ -103,13 +103,12 @@ public class PackageUtils {
      * @throws UnsupportedEncodingException
      */
     private static List<String> getClassNameByJar(String jarPath, boolean childPackage) throws UnsupportedEncodingException {
-        List<String> myClassName = new ArrayList<String>();
+        List<String> myClassName = new ArrayList<>();
         String[] jarInfo = jarPath.split("!");
-        String jarFilePath = jarInfo[0].substring(jarInfo[0].indexOf("/"));
+        String jarFilePath = jarInfo[0].substring(jarInfo[0].indexOf('/'));
         jarFilePath = URLDecoder.decode(jarFilePath, StandardCharsets.UTF_8.name());
         String packagePath = jarInfo[1].substring(1);
-        try {
-            JarFile jarFile = new JarFile(jarFilePath);
+        try (JarFile jarFile = new JarFile(jarFilePath)) {
             Enumeration<JarEntry> entrys = jarFile.entries();
             while (entrys.hasMoreElements()) {
                 JarEntry jarEntry = entrys.nextElement();
@@ -117,11 +116,11 @@ public class PackageUtils {
                 if (entryName.endsWith(".class")) {
                     if (childPackage) {
                         if (entryName.startsWith(packagePath)) {
-                            entryName = entryName.replace("/", ".").substring(0, entryName.lastIndexOf("."));
+                            entryName = entryName.replace('/', '.').substring(0, entryName.lastIndexOf('.'));
                             myClassName.add(entryName);
                         }
                     } else {
-                        int index = entryName.lastIndexOf("/");
+                        int index = entryName.lastIndexOf('/');
                         String myPackagePath;
                         if (index != -1) {
                             myPackagePath = entryName.substring(0, index);
@@ -129,14 +128,13 @@ public class PackageUtils {
                             myPackagePath = entryName;
                         }
                         if (myPackagePath.equals(packagePath)) {
-                            entryName = entryName.replace("/", ".").substring(0, entryName.lastIndexOf("."));
+                            entryName = entryName.replace('/', '.').substring(0, entryName.lastIndexOf('.'));
                             myClassName.add(entryName);
                         }
                     }
                 }
             }
         } catch (Exception e) {
-            //SystemLog.Log(LogType.systemInfo, e.getMessage(), e);
         }
         return myClassName;
     }
@@ -151,7 +149,7 @@ public class PackageUtils {
      * @throws UnsupportedEncodingException
      */
     private static List<String> getClassNameByJars(URL[] urls, String packagePath, boolean childPackage) throws UnsupportedEncodingException {
-        List<String> myClassName = new ArrayList<String>();
+        List<String> myClassName = new ArrayList<>();
         if (urls != null) {
             for (int i = 0; i < urls.length; i++) {
                 URL url = urls[i];

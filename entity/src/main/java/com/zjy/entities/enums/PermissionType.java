@@ -7,7 +7,7 @@ import com.zjy.baseframework.mybatis.IBaseEnum;
  * Created by Administrator on 2018/11/13.
  */
 @SerializeEnum
-public enum PermissionType  implements IBaseEnum {
+public enum PermissionType implements IBaseEnum {
     FirstMenu(0, "一级菜单"),
     SecondMenu(1, "二级菜单"),
     FunctionItem(2, "功能"),
@@ -27,6 +27,7 @@ public enum PermissionType  implements IBaseEnum {
         return this.value;
     }
 
+    @Override
     public String getName() {
         return name;
     }

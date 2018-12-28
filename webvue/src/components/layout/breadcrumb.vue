@@ -6,14 +6,14 @@
           <i class='fa fa-home mr0' @click='$root.goHome()'></i></a>
       </li>
       <li class='bread-item' v-for='item in menuList' :title='item.text'>
-        <span class='w100p h100p inline-block'>
+        <span class='w100p h100p inline-block' :title='item.name'>
           <a class='w100p h100p inline-block' href='javascript:void(0)' v-text='item.name'
              @click='goPage(item)'></a>
         </span>
       </li>
     </ul>
     <button type="button" class="btn btn-outline-purple btn-sm fr mr5 mt4 pt3" @click='$root.goBack()'
-       v-if='showGoBack'>
+       v-if='showGoBack' title='返回'>
       <i class='fa fa-reply mr5'></i>返回
     </button>
   </div>

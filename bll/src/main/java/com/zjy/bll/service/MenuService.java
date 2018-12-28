@@ -18,7 +18,7 @@ public interface MenuService {
 
     MenuVo getVo(String id);
 
-    PageBean<? extends Menu> queryPageList(MenuRequest request);
+    PageBean<MenuVo> queryPageList(MenuRequest request);
 
     List<MenuVo> queryParentList();
 

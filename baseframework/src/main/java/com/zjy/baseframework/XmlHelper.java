@@ -11,6 +11,8 @@ import java.io.*;
 
 public class XmlHelper {
 
+    private XmlHelper() {}
+
     public static <T> void toXml(T obj, String path) {
 //        @XmlType(propOrder = {"id", "name", "activities", "transitions"})
 //        @XmlAccessorType(XmlAccessType.FIELD)
@@ -20,29 +22,24 @@ public class XmlHelper {
 //        @XmlAttribute(name = "Name")
 //        @XmlElementWrapper(name = "Activities") // list节点外层包含节点
 //        @XmlValue
-        JAXBContext context = null;
-        try {
+        JAXBContext context;
+        try (FileWriter sw = new FileWriter(path)) {
             context = JAXBContext.newInstance(obj.getClass());
-            FileWriter sw = new FileWriter(path);
             Marshaller marshaller = context.createMarshaller();
 //            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 //            marshaller.marshal(obj, System.out);
             marshaller.marshal(obj, sw);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JAXBException e) {
+        } catch (IOException | JAXBException e) {
             e.printStackTrace();
         }
     }
     public static <T> T toObject(Class<T> clazz, String path) {
         JAXBContext context = null;
-        try {
+        try (FileInputStream fis = new FileInputStream(path)){
             context = JAXBContext.newInstance(clazz);
             Unmarshaller unmarshaller = context.createUnmarshaller();
-            FileInputStream fis = new FileInputStream(path);
             InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
-            T obj = (T)unmarshaller.unmarshal(isr);
-            return obj;
+            return (T)unmarshaller.unmarshal(isr);
         } catch (Exception e) {
             e.printStackTrace();
         }

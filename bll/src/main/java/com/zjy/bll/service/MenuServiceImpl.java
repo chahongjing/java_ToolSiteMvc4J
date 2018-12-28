@@ -87,11 +87,10 @@ public class MenuServiceImpl extends BaseService<MenuDao, Menu> implements MenuS
     }
 
     @Override
-    public PageBean<? extends Menu> queryPageList(MenuRequest request) {
+    public PageBean<MenuVo> queryPageList(MenuRequest request) {
         Menu po = new Menu();
         po.setName(request.getName());
-        PageBean<MenuVo> pageBean = (PageBean<MenuVo>) super.queryPageList(request, po);
-        return pageBean;
+        return (PageBean<MenuVo>) super.queryPageList(request, po);
     }
 
     public MenuVo get(String id) {
@@ -134,16 +133,14 @@ public class MenuServiceImpl extends BaseService<MenuDao, Menu> implements MenuS
     public List<MenuVo> queryPermissionMenu() {
         String userId = shiroRealm.getCurrentUser().getUserId();
         List<UserRoleVo> roleList = userRoleSrv.queryListByUserId(userId);
-        //String roleId = "9ca5cbcc-7f4a-4402-bc2e-90ae2103dbed";
-        List<String> roleIdList = roleList.stream().map(item -> item.getRoleId()).collect(Collectors.toList());
-//        List<String> roleIdList = new ArrayList<>();
-        //roleIdList.add(roleId);
-        List<MenuVo> result = new ArrayList<>(), list = (List<MenuVo>) dao.query(null);
+        List<String> roleIdList = roleList.stream().map(UserRoleVo::getRoleId).collect(Collectors.toList());
+        List<MenuVo> result = new ArrayList<>();
+        List<MenuVo> list = (List<MenuVo>) dao.query(null);
         List<MenuVo> parentList = list.stream().filter(item -> StringUtils.isBlank(item.getPId())).collect(Collectors.toList());
         List<MenuVo> children = list.stream().filter(item -> StringUtils.isNotBlank(item.getPId())).collect(Collectors.toList());
         List<RolePermissionVo> rolePermissionVos = rolePermissionSrv.queryRolePermission(roleIdList);
         for (MenuVo parent : parentList) {
-            if (!rolePermissionVos.stream().anyMatch(item -> roleIdList.contains(item.getRoleId()) && parent.getMenuId().equals(item.getPermissionId()))) {
+            if (rolePermissionVos.stream().noneMatch(item -> roleIdList.contains(item.getRoleId()) && parent.getMenuId().equals(item.getPermissionId()))) {
                 continue;
             }
             result.add(parent);
@@ -157,7 +154,8 @@ public class MenuServiceImpl extends BaseService<MenuDao, Menu> implements MenuS
 
     @Override
     public List<MenuVo> queryAllMenu() {
-        List<MenuVo> result = new ArrayList<>(), list = (List<MenuVo>) dao.query(null);
+        List<MenuVo> result = new ArrayList<>();
+        List<MenuVo> list = (List<MenuVo>) dao.query(null);
         List<MenuVo> parentList = list.stream().filter(item -> StringUtils.isBlank(item.getPId())).collect(Collectors.toList());
         List<MenuVo> children = list.stream().filter(item -> StringUtils.isNotBlank(item.getPId())).collect(Collectors.toList());
         for (MenuVo parent : parentList) {

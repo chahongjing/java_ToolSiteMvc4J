@@ -15,7 +15,7 @@ import java.util.Date;
 public class DateFormaterFilter implements ValueFilter {
     @Override
     public Object process(Object object, String name, Object value) {
-        if (value != null && value instanceof Date) {
+        if (value instanceof Date) {
             Date val = (Date) value;
             try {
                 Field field = null;

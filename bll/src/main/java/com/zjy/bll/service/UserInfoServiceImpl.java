@@ -6,7 +6,6 @@ import com.zjy.baseframework.enums.ResultStatus;
 import com.zjy.bll.baseBean.PageBean;
 import com.zjy.bll.common.BaseService;
 import com.zjy.bll.dao.UserInfoDao;
-import com.zjy.bll.enums.OrderByType;
 import com.zjy.bll.request.UserInfoRequest;
 import com.zjy.bll.vo.UserInfoVo;
 import com.zjy.entities.UserInfo;
@@ -128,19 +127,7 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
             orderBy.add("user.createdOn " + request.getCreatedOnOrderBy().toString());
         }
         request.setOrderBy(String.join(", ", orderBy));
-        PageBean<UserInfoVo> pageBean = (PageBean<UserInfoVo>) super.queryPageList(request, user);
-//        for (UserInfoVo userInfo : pageInfo.getList()) {
-//            if (userInfo.getSex() != null) {
-//                userInfo.setSexName(userInfo.getSex().getName());
-//            }
-//            if (userInfo.getIsDisabled() != null) {
-//                userInfo.setIsDisabledName(userInfo.getIsDisabled().getName());
-//            }
-//            if (userInfo.getIsSystem() != null) {
-//                userInfo.setIsSystemName(userInfo.getIsSystem().getName());
-//            }
-//        }
-        return pageBean;
+        return (PageBean<UserInfoVo>) super.queryPageList(request, user);
     }
 
     /**
@@ -153,9 +140,6 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
     public BaseResult<UserInfoVo> login(UserInfo user) {
         BaseResult<UserInfoVo> result = new BaseResult<>();
         Subject subject = SecurityUtils.getSubject();
-//        if (subject.isAuthenticated()) {
-//            return null;
-//        }
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUserCode(), user.getPassword());
         try {
             // 登录

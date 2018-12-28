@@ -77,6 +77,9 @@
     if (fileName) {
       fileName = decodeURIComponent(fileName).replace(/attachment;\s*filename=/ig, '');
     }
+    if(!contentType) {
+      contentType = 'application/octet-stream';
+    }
     var file = new Blob([data], {type: contentType});
     var a = document.createElement("a");
     a.style.display = 'none';
@@ -163,8 +166,6 @@
   // 创建日期： 2014-02-22 21:01:54
   ns.processAjax = function (optionData) {
     var url, ret;
-    var startIndex, endIndex;
-    var jReturn;
 
     if (!optionData.url) {
       return {"Status": "ERROR", "Message": "optionData.url参数未设置!", Value: null}

@@ -69,7 +69,10 @@ public class EchartsController {
 
         //region 仪表盘
         // 仪表盘, 标题
-        String xueXi = "学习轨迹图", chengZhang = "成长轨迹图", title = "学生的排名情况", title1 = "学习仪表盘";
+        String xueXi = "学习轨迹图";
+        String chengZhang = "成长轨迹图";
+        String title = "学生的排名情况";
+        String title1 = "学习仪表盘";
         DashBoard db = new DashBoard(new ChartTitle(title1, title));
         String formatter = "{value}%";
         // 鼠标hover提示
