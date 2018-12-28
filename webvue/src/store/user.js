@@ -1,7 +1,7 @@
 import Vue from 'vue';
 
-export const USER_SIGNIN = 'USER_SIGNIN'; //登录成功
-export const USER_SIGNOUT = 'USER_SIGNOUT'; //退出登录
+export const USER_SIGNIN = 'USER_SIGNIN';
+export const USER_SIGNOUT = 'USER_SIGNOUT';
 
 export default {
     state: JSON.parse(sessionStorage.getItem('user')) || {},

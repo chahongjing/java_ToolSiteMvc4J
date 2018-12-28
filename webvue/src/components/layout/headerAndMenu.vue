@@ -15,9 +15,9 @@
 </template>
 
 <script>
-  import appHeader from '@/components/layout/appHeader'
-  import appMenu from '@/components/layout/appMenu'
-  import breadcrumb from '@/components/layout/breadcrumb'
+  import appHeader from '@/components/layout/appHeader';
+  import appMenu from '@/components/layout/appMenu';
+  import breadcrumb from '@/components/layout/breadcrumb';
   export default {
     name: 'headerAndMenu',
     computed: {

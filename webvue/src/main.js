@@ -1,16 +1,16 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import Vue from 'vue'
-import App from '@/App'
-import router from '@/router'
+import Vue from 'vue';
+import App from '@/App';
+import router from '@/router';
 import store from '@/store/store';
 import filters from '@/common/filters';
 import directives from '@/common/directives';
-import axios from '@/common/axios'
+import axios from '@/common/axios';
 import confirm from '@/common/confirm';
 import toaster from '@/common/toaster';
-import pagination from '@/components/common/pagination'
-import tableListLoading from '@/components/common/tableListLoading'
+import pagination from '@/components/common/pagination';
+import tableListLoading from '@/components/common/tableListLoading';
 import dateTimePicker from '@/components/common/dateTimePicker';
 import ulTree from '@/components/common/ulTree';
 

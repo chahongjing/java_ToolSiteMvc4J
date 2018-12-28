@@ -1,5 +1,5 @@
-export const SET_BREADCRUMB = 'SET_BREADCRUMB'; //登录成功
-export const CLEAR_BREADCRUMB = 'CLEAR_BREADCRUMB'; //退出登录
+export const SET_BREADCRUMB = 'SET_BREADCRUMB';
+export const CLEAR_BREADCRUMB = 'CLEAR_BREADCRUMB';
 
 export default {
     state: JSON.parse(sessionStorage.getItem('breadcrumb')) || [],

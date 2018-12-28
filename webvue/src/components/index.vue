@@ -50,9 +50,9 @@
 </template>
 
 <script>
-  import appHeader from '@/components/layout/appHeader'
-  import appMenu from '@/components/layout/appMenu'
-  import myModal from '@/components/other/myModal'
+  import appHeader from '@/components/layout/appHeader';
+  import appMenu from '@/components/layout/appMenu';
+  import myModal from '@/components/other/myModal';
 
   var list = [];
   // region java

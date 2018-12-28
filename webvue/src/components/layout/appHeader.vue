@@ -112,7 +112,7 @@
 </template>
 
 <script>
-  import commonModal from '@/components/common/commonModal'
+  import commonModal from '@/components/common/commonModal';
   export default {
     name: 'appHeader',
     data () {

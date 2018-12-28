@@ -1,6 +1,6 @@
-export const SET_MENULIST = 'SET_MENULIST'; //登录成功
-export const CLEAR_MENULIST = 'CLEAR_MENULIST'; //退出登录
-export const SET_SHOWMENU = 'SET_SHOWMENU'; //登录成功
+export const SET_MENULIST = 'SET_MENULIST';
+export const CLEAR_MENULIST = 'CLEAR_MENULIST';
+export const SET_SHOWMENU = 'SET_SHOWMENU';
 
 export default {
     state: JSON.parse(sessionStorage.getItem('leftMenu')) || {menuList:[],showMenu:true},

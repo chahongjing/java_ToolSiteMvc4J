@@ -110,8 +110,8 @@
 </template>
 
 <script>
-  import commonSrv from '@/common/commonService'
-  import commonModal from '@/components/common/commonModal'
+  import commonSrv from '@/common/commonService';
+  import commonModal from '@/components/common/commonModal';
 
   export default {
     name: 'userList',
