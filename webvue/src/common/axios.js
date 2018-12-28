@@ -23,7 +23,7 @@ axios.defaults.transformRequest = [function (data) {
 }]
 axios.defaults.transformResponse = [function (data) {
   if (data && typeof(data) == 'string') {
-    var data = $.parseJSON(data);
+    data = $.parseJSON(data);
     // var data = Qs.parse(data);
   }
   return data;

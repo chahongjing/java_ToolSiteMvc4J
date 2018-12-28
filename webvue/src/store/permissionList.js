@@ -1,5 +1,3 @@
-import Vue from 'vue';
-
 export const SET_PERMISSIONLIST = 'SET_PERMISSIONLIST';
 export const CLEAR_PERMISSIONLIST = 'CLEAR_PERMISSIONLIST';
 

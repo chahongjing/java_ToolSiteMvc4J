@@ -95,6 +95,8 @@
       xhr = new XMLHttpRequest();
     } else if (window.ActiveXObject) {
       xhr = new ActiveXObject("Microsoft.XMLHTTP");
+    } else {
+      return;
     }
     xhr.open('GET', url, true);
     xhr.responseType = "blob";
@@ -200,6 +202,7 @@
     return ret;
   }
   function handlerAjaxResult(data, optionData) {
+    var jReturn, startIndex, endIndex;
     var ret = {};
     try {
       jReturn = eval("(" + data + ")");
@@ -374,7 +377,6 @@
 
     for (var k in t) {
       var temp = new RegExp("(" + t[k] + ")", 'g');
-      temp.test(format);
       var index = temp.lastIndex;
       if (index == 0) {
         v[k] = 0;
@@ -591,7 +593,7 @@
       }
     });
   }
-  ns.htmlEncode = function (value) {
+  ns.htmlEncode2 = function (value) {
     return $('<div/>').text(value).html();
   }
   //Html解码获取Html实体
@@ -618,7 +620,7 @@
     }
     arrQuery = arrQuery[1].split("&");
 
-    for (i = 0; i < arrQuery.length; i++) {
+    for (var i = 0; i < arrQuery.length; i++) {
       arrKeyValue = arrQuery[i].match(regKeyValue);
       if (!arrKeyValue) {
         continue;

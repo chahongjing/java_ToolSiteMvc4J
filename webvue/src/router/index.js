@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import store from '@/store/store';
 
 Vue.use(Router);
 
@@ -245,7 +244,6 @@ router.beforeEach(function (to, from, next) {
     var i = 0;
     for(; i < breadcrumb.length; i++) {
       if(breadcrumb[i].path == to.path) {
-        var current = breadcrumb[i];
         breadcrumb.splice(i, breadcrumb.length - i);
         break;
       }
