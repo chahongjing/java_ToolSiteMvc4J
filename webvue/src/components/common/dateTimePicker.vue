@@ -2,7 +2,7 @@
   <div class="input-group date">
     <input class="form-control border-right-0" size="16" type="text" readonly v-model='dataText'/>
     <div class="input-group-addon input-group-append">
-      <span class="input-group-text" :class='{"btn-outline-primary":!option || !option.disabled}'>
+      <span class="input-group-text" :class='{"btn-outline-purple":!option || !option.disabled}'>
         <i class='fa mr0' :class='{"fa-calendar": type == 1,"fa-clock-o": type == 2}'></i>
       </span>
     </div>
@@ -105,4 +105,7 @@
     width: auto;
     height: auto;
   }
+  .input-group-text{transition:0.3s;}
+  .input-group-text.btn-outline-purple{border-color:#ced4da;}
+  .input-group-text.btn-outline-purple:hover{border-color:#5a4daa;}
 </style>

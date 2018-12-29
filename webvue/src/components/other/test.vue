@@ -15,7 +15,7 @@
         <button type="button" class="btn btn-purple mr5" @click="ajaxDownload">下载</button>
       </div>
     </form>
-    <div>
+    <div class='trcon'>
       <table id='mainRongQi' class='w100p'>
         <thead>
           <tr>
@@ -34,7 +34,7 @@
         </tbody>
       </table>
     </div>
-    <div>
+    <div class='trcon'>
       <table id='mainRongQi2' class='w100p'>
         <thead>
           <tr>
@@ -62,7 +62,7 @@
     <hr>
     {{this.treeoption && this.treeoption.checkedResult && this.treeoption.checkedResult.name|| this.treeoption.checkedResult.map(item => item.name)}}
 
-    <div class='a'>
+    <div class='aa'>
     </div>
   </div>
 </template>
@@ -271,8 +271,8 @@ export default {
 </script>
 <style scoped>
   @import './static/js/jquery-ui.css'
-  #mainRongQi,#mainRongQi2{width:100%;border:1px solid #aaa;}
   #mainRongQi td,#mainRongQi2 td{border:1px solid #aaa;height:30px;}
   .mytree{border: 1px solid #ddd;padding: 10px 10px 10px 5px;}
-  .a{width:200px;height:200px;background-color:#fff;border:3px solid;border-image:linear-gradient(to bottom, red 0%, gold 100%);border-image-slice:1;}
+  .aa{width:200px;height:200px;background-color:#fff;border:3px solid;border-image:linear-gradient(to bottom, red 0%, gold 100%);border-image-slice:1;}
+  .trcon{border:1px solid #999;}
 </style>
