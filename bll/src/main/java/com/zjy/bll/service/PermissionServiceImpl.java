@@ -8,6 +8,7 @@ import com.zjy.bll.request.PermissionRequest;
 import com.zjy.bll.vo.PermissionVo;
 import com.zjy.entities.Permission;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,10 @@ import java.util.Map;
 
 @Service
 public class PermissionServiceImpl extends BaseService<PermissionDao, Permission> implements PermissionService {
+
+    @Autowired
+    protected RolePermissionService rolePermissionSrv;
+
     /**
      * 添加用户
      *
@@ -49,6 +54,8 @@ public class PermissionServiceImpl extends BaseService<PermissionDao, Permission
     @Override
     @Transactional
     public int delete(String id) {
+        // 删除角色权限
+        rolePermissionSrv.deleteByPermissionId(id);
         return super.delete(id);
     }
 

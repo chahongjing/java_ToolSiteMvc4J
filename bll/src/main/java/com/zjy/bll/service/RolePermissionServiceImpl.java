@@ -138,4 +138,14 @@ public class RolePermissionServiceImpl extends BaseService<RolePermissionDao, Ro
         if (CollectionUtils.isEmpty(roleIdList)) return Collections.emptyList();
         return dao.queryByRoleList(roleIdList);
     }
+
+    @Override
+    public int deleteByRoleId(String roleId) {
+        return dao.deleteByRoleId(roleId);
+    }
+
+    @Override
+    public int deleteByPermissionId(String permissionId) {
+        return dao.deleteByPermissionId(permissionId);
+    }
 }

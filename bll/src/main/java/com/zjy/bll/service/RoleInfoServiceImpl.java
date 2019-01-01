@@ -28,6 +28,9 @@ public class RoleInfoServiceImpl extends BaseService<RoleInfoDao, RoleInfo> impl
     @Autowired
     protected PermissionService permissionSrv;
 
+    @Autowired
+    protected RolePermissionService rolePermissionSrv;
+
     /**
      * 添加用户
      *
@@ -61,6 +64,8 @@ public class RoleInfoServiceImpl extends BaseService<RoleInfoDao, RoleInfo> impl
     @Override
     @Transactional
     public int delete(String id) {
+        // 删除角色权限
+        rolePermissionSrv.deleteByRoleId(id);
         return super.delete(id);
     }
 

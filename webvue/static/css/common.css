@@ -127,6 +127,8 @@ label.switch input:disabled + div span:nth-child(3){color:#aaa;}
 .fa{margin-right:5px;}
 .mybtn i.fa{transition:0.1s;}
 .mybtn:hover i.fa{transform:scale(1.3);}
+.fa-plus-myrotate{width: 12px;height: 12px;transition: transform 0.3s;}
+button:hover .fa-plus-myrotate{transform: rotate(360deg);}
 
 .ellipsis{overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
 

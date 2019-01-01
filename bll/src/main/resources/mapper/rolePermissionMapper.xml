@@ -13,6 +13,14 @@
 		delete from RolePermission where roleId = #{roleId, jdbcType=VARCHAR} and permissionId = #{permissionId, jdbcType=VARCHAR}
 	</delete>
 
+	<delete id="deleteByRoleId">
+        delete from RolePermission where roleId = #{roleId, jdbcType=VARCHAR}
+	</delete>
+
+	<delete id="deleteByPermissionId">
+		delete from RolePermission where permissionId = #{permissionId, jdbcType=VARCHAR}
+	</delete>
+
 	<!-- 查询简单列表 -->
 	<select id="query" resultType="com.zjy.bll.vo.RolePermissionVo">
 		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="rp"/></include>

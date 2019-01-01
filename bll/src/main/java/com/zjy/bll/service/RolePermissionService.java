@@ -14,4 +14,8 @@ public interface RolePermissionService {
     List<RolePermissionVo> queryRolePermission(String roleId);
 
     List<RolePermissionVo> queryRolePermission(List<String> roleIdList);
+
+    int deleteByRoleId(String roleId);
+
+    int deleteByPermissionId(String permissionId);
 }
