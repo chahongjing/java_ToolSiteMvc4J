@@ -129,7 +129,7 @@
 
         <div class="form-group text-right mb0">
           <button type="button" class="btn btn-outline-purple" @click='$root.goBack()'>
-            <i class='fa fa-arrow-circle-o-left fa-plus-myrotate'></i><span>返回</span>
+            <i class='fa fa-arrow-circle-o-left fa-plus-myrotate fa-back-myrotate'></i><span>返回</span>
           </button>
           <button type="button" class="btn btn-purple mr5" @click="save" :disabled='allDisabled'>
             <i class='fa fa-save'></i>保存
