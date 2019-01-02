@@ -29,8 +29,8 @@
     },
     watch: {
       loading(curVal, oldVal){
-        var parent = $(this.$el).parent();
         this.$nextTick(function() {
+          var parent = $(this.$el).parent();
           containerScroll(parent);
         });
       }
