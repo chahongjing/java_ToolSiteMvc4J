@@ -5,8 +5,11 @@ import com.zjy.baseframework.EnumHelper;
 import com.zjy.baseframework.beans.EnumBean;
 import com.zjy.baseframework.interfaces.IHierarchyBase;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import javax.xml.ws.soap.Addressing;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -16,6 +19,10 @@ import java.util.stream.Collectors;
  */
 @Service
 public class CommonServiceImpl implements CommonService {
+
+    @Autowired
+    @Qualifier("uuidService")
+    private IdProviderService idProviderSrv;
 
     /**
      * 层级关系排序
@@ -61,17 +68,12 @@ public class CommonServiceImpl implements CommonService {
 
     @Override
     public String getNewId() {
-        return getNewIdList(1).get(0);
+        return idProviderSrv.getString();
     }
 
     @Override
     public List<String> getNewIdList(int num) {
-        num = num < 1 ? 1 : num;
-        List<String> idList = new ArrayList<>();
-        for (int i = 0; i < num; i++) {
-            idList.add(UUID.randomUUID().toString());
-        }
-        return idList;
+        return idProviderSrv.getStringList(num);
     }
 
     @Override
