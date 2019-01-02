@@ -7,6 +7,7 @@ import com.zjy.bll.vo.RelateCheckVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -27,7 +28,7 @@ public class RolePermissionController extends BaseController {
         return BaseResult.OK(list);
     }
 
-    @RequestMapping("/savePermission")
+    @PostMapping("/savePermission")
     @RequiresPermissions("roleGrantPermission_enter")
     public BaseResult savePermission(String listStr) {
         List<RelateCheckVo> list = JSON.parseArray(listStr, RelateCheckVo.class);

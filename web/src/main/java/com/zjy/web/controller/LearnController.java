@@ -452,7 +452,6 @@ public class LearnController extends BaseController {
     @RequestMapping("/download")
     @ResponseBody
     public BaseResult download(HttpServletResponse response) {
-        // path是指欲下载的文件的路径。
         BaseResult result = BaseResult.OK();
         try {
             File file = Paths.get(Utils.getRootPath(), "favicon.ico").toFile();

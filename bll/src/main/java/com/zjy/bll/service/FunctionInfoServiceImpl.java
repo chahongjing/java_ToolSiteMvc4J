@@ -91,9 +91,10 @@ public class FunctionInfoServiceImpl extends BaseService<FunctionInfoDao, Functi
     public PageBean<? extends FunctionInfo> queryPageList(FunctionInfoRequest request) {
         FunctionInfo po = new FunctionInfo();
         po.setName(request.getName());
-        return (PageBean<FunctionInfoVo>) super.queryPageList(request, po);
+        return super.queryPageList(request, po);
     }
 
+    @Override
     public FunctionInfoVo get(String id) {
         return (FunctionInfoVo) super.get(id);
     }

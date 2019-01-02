@@ -101,7 +101,7 @@
       </div>
       <div class="modal-footer" slot="footerSlot">
         <button type="button" class="btn btn-outline-purple" @click='showchangePasswordDialog = false'>
-          <i class='fa fa-times'></i><span>取消</span>
+          <i class='fa fa-times fa-plus-myrotate fa-back-myrotate'></i><span>取消</span>
         </button>
         <button type="button" class="btn btn-purple mr5" @click="changePassword()">
           <i class='fa fa-check'></i>确定

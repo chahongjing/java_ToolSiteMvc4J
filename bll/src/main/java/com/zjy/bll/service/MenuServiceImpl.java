@@ -93,6 +93,7 @@ public class MenuServiceImpl extends BaseService<MenuDao, Menu> implements MenuS
         return (PageBean<MenuVo>) super.queryPageList(request, po);
     }
 
+    @Override
     public MenuVo get(String id) {
         return (MenuVo) super.get(id);
     }

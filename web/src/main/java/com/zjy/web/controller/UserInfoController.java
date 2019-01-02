@@ -20,6 +20,7 @@ import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.ServletConfigAware;
@@ -117,7 +118,7 @@ public class UserInfoController extends BaseController implements ServletConfigA
         return BaseResult.OK(userInfo);
     }
 
-    @RequestMapping("/save")
+    @PostMapping("/save")
     @ResponseBody
     public BaseResult<String> save(UserInfoVo vo) {
         UserInfo currentUser = shiroRealm.getCurrentUser();

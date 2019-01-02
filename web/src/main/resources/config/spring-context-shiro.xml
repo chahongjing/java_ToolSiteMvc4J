@@ -12,12 +12,24 @@
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="shiroRealm"/>
         <property name="sessionManager" ref="sessionManager" />
+        <!--<property name="authenticator" ref="defautModularRealm" />-->
     </bean>
 
     <bean id="shiroRealm" class="com.zjy.bll.common.ShiroRealm">
         <!-- 配置密码匹配器 -->
         <property name="credentialsMatcher" ref="credentialsMatcher"/>
     </bean>
+
+    <!-- 多个shiroRealm验证支持 -->
+    <!--<bean id="defautModularRealm" class="com.zjy.bll.common.DefautModularRealm">-->
+        <!--<property name="definedRealms">-->
+            <!--<map>-->
+                <!--&lt;!&ndash; 不同的shiroRealm &ndash;&gt;-->
+                <!--<entry key="loginRealm" value-ref="shiroRealm" />-->
+                <!--<entry key="userloginRealm" value-ref="otherShiroRealm" />-->
+            <!--</map>-->
+        <!--</property>-->
+    <!--</bean>-->
 
     <!-- 自定义会话管理配置 -->
     <bean id="sessionManager" class="com.zjy.bll.common.SessionManager">
@@ -29,6 +41,7 @@
     </bean>
 
     <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        <!-- 加密方式,MD5, SHA-1 -->
         <property name="hashAlgorithmName" value="MD5"></property>
         <property name="hashIterations" value="1024"></property>
     </bean>

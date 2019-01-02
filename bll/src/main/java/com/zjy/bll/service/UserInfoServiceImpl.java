@@ -127,7 +127,7 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
             orderBy.add("user.createdOn " + request.getCreatedOnOrderBy().toString());
         }
         request.setOrderBy(String.join(", ", orderBy));
-        return (PageBean<UserInfoVo>) super.queryPageList(request, user);
+        return super.queryPageList(request, user);
     }
 
     /**

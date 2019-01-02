@@ -64,6 +64,7 @@ public class GlobalExceptionHandler {
                 }
                 response.getWriter().write(JSON.toJSONString(result));
             } catch (IOException e) {
+                logger.error("处理异常信息失败", e);
             }
         } else {
             logger.error("系统错误", ex);
