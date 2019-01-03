@@ -1,8 +1,10 @@
 <template>
-  <div class='nodata' v-if='!list || list.length == 0 || loading'>
-    <div class='text-success' v-if='loading'><i class="fa fa-spinner fa-spin"></i>加载中...</div>
-    <div v-if='!loading' class='text-info'><i class="fa fa-desktop"></i>没有数据！</div>
-  </div>
+  <transition name="fade-in">
+    <div class='nodata' v-if='!list || list.length == 0 || loading'>
+      <div class='text-success' v-if='loading'><i class="fa fa-spinner fa-spin"></i>加载中...</div>
+      <div v-if='!loading' class='text-info'><i class="fa fa-desktop"></i>没有数据！</div>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -37,3 +39,18 @@
     }
   }
 </script>
+
+<style scoped>
+  .fade-in-enter-active {
+    transition-duration: .2s;
+    transition-delay: 0.15s;
+  }
+  .fade-in-leave-active {
+    transition-duration: 0s;
+    transition-delay: 0s;
+    opacity: 0;
+  }
+  .fade-in-enter, .fade-in-leave-to{
+    opacity: 0;
+  }
+</style>
