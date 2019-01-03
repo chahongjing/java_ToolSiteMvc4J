@@ -666,9 +666,9 @@
 /// 系统常量
 window.Constant = {
   EmptyGuid: "00000000-0000-0000-0000-000000000000", Context: '/ToolSiteMvc4J',
-  // Host: 'localhost', Port: '21000'
+  Host: 'localhost', Port: '21000'
+  // Host:'10.4.132.60',Port:'20000'
   // Host:'localhost',Port:'20000'
-  Host:'10.4.132.60',Port:'20000'
 }
 window.ResultStatus={"OK":{"key":"OK","value":1,"code":"","name":"成功","order":0},
 "NO":{"key":"NO","value":2,"code":"","name":"失败","order":0},
