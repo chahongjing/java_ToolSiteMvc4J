@@ -6,7 +6,9 @@
       <div class="right-main" :class='{"fullwin":!showMenuNew}'>
         <breadcrumb></breadcrumb>
         <div class="right-content">
-          <router-view/>
+          <transition name="slide-fade">
+            <router-view/>
+          </transition>
         </div>
         <div class="footer"></div>
       </div>
@@ -28,3 +30,15 @@
     components:{appHeader, appMenu, breadcrumb}
   }
 </script>
+<style scoped>
+  .slide-fade-enter-active {
+    transition: all .3s ease;
+  }
+  .slide-fade-leave-active {
+    transition: all 0s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
+  .slide-fade-enter, .slide-fade-leave-to{
+    transform: translateY(10px);
+    opacity: 0;
+  }
+</style>
