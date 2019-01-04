@@ -14,7 +14,7 @@
           <a class="licontent relative submenu pointer" href='javascript:void(0)'>
             <i class='fa fa-caret-down more text-center' title='更多操作' @click='showMenu = !showMenu'>
             </i>
-            <ul class="dropdown-menu dropdown-menu-right" :class='{"slidedown": showMenu}'>
+            <ul class="dropdown-menu dropdown-menu-right" :style='{"height": getSubMenuHeight}'>
               <li class='dropdown-item' @click='editInfo()'>
                 <i class="fa fa-id-card-o fa-fw c06f"></i>修改个人信息
               </li>
@@ -160,6 +160,7 @@
           return;
         }
         me.oldPasswordStatus.v = 1;
+        me.oldPasswordStatus.t = '';
         if (this.user.newPassword === null || this.user.newPassword === undefined
           || this.user.newPassword === '' || this.user.newPassword.trim() === '') {
           me.newPasswordStatus.v = 2;
@@ -167,6 +168,7 @@
           return;
         }
         me.newPasswordStatus.v = 1;
+        me.newPasswordStatus.t = '';
         if (this.user.passwordAgain === null || this.user.passwordAgain === undefined
           || this.user.passwordAgain === '' || this.user.passwordAgain.trim() === '') {
           me.passwordAgainStatus.v = 2;
@@ -179,6 +181,7 @@
           return;
         }
         me.passwordAgainStatus.v = 1;
+        me.passwordAgainStatus.t = '';
         me.$axios.get('/user/changePassword', {
           userCode: this.user.userCode,
           oldPassword: this.user.oldPassword,
@@ -218,6 +221,12 @@
         var user = this.$root.getUser();
         this.$router.push({path: '/user/userEdit', query: {id: user.userId, type: 'editSelf'}});
         this.showMenu = false;
+      }
+    },
+    computed: {
+      getSubMenuHeight() {
+        var length = $('.dropdown-menu-right').children().length;
+        return (this.showMenu ? length * 35 : 0) + 'px';
       }
     },
     mounted: function () {

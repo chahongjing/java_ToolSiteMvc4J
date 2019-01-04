@@ -7,7 +7,7 @@
         <breadcrumb></breadcrumb>
         <div class="right-content">
           <transition name="slide-fade">
-            <router-view/>
+            <router-view />
           </transition>
         </div>
         <div class="footer"></div>
@@ -32,10 +32,11 @@
 </script>
 <style scoped>
   .slide-fade-enter-active {
-    transition: all .3s ease;
+    transition-duration: .3s;
   }
   .slide-fade-leave-active {
-    transition: all 0s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    transition-duration: 0s;
+    opacity: 0;
   }
   .slide-fade-enter, .slide-fade-leave-to{
     transform: translateY(20px);
