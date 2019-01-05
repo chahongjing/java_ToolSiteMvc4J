@@ -353,6 +353,14 @@
     return this.minus(value) < 0;
   }
   // endregion
+  
+  // region Array 扩展
+  if (!Array.isArray) {
+    Array.isArray = function(arg) {
+      return Object.prototype.toString.call(arg) === '[object Array]';
+    };
+  }
+  // endregion
 
   // region String 扩展
   // 函数名称： toDate
@@ -559,6 +567,33 @@
     return {status: true, code: 0, msg: ''};
   }
 
+  // 函数名称： handleEvent
+  // 函数功能： 给原生对象添加或移除一个或多个事件
+  // 函数参数： bom: 原生bom对象，如window或document.body, div
+  // 函数参数： eventType: 事件类型，如'resize', 'click'
+  // 函数参数： funcList: 要执行函数，可以是单个函数，也可以是函数数组
+  // 函数参数： type: 操作类型，如'add', 'remove'
+  // 返 回 值： 无
+  // 创 建 人： zengjy01
+  // 创建日期： 2013-12-19 22:46:14
+  ns.handleEvent = function(bom, eventType, funcList, type) {
+    if(!bom || !eventType || !funcList) return;
+    var eventListener;
+    if(type == 'remove') {
+      eventListener = bom.removeEventListener || bom.detachEvent;
+    } else {
+      eventListener = bom.addEventListener || bom.attachEvent;
+    }
+    eventType = (window.addEventListener ? '' : 'on') + eventType;
+    if(typeof(funcList) == 'function') {
+          eventListener(eventType, funcList);
+    } else if(Array.isArray(funcList)) {
+        for(var i = 0; i < funcList.length; i++) {
+          eventListener(eventType, funcList[i]);
+      }
+    }
+  }
+
   // 函数名称： htmlEncode
   // 函数功能： html编码
   // 函数参数： str: 要编码的字符串
@@ -667,8 +702,8 @@
 window.Constant = {
   EmptyGuid: "00000000-0000-0000-0000-000000000000", Context: '/ToolSiteMvc4J',
   // Host: 'localhost', Port: '21000'
-  Host:'10.4.132.60',Port:'20000'
-  // Host:'localhost',Port:'20000'
+  // Host:'10.4.132.60',Port:'20000'
+  Host:'localhost',Port:'20000'
 }
 window.ResultStatus={"OK":{"key":"OK","value":1,"code":"","name":"成功","order":0},
 "NO":{"key":"NO","value":2,"code":"","name":"失败","order":0},
