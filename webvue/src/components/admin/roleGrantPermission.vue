@@ -1,71 +1,73 @@
 <template>
-  <div class='w100p h100p oxh oya'>
-    <div class="mypanel" v-for='firstMenu in list'>
-      <div class="panel-heading font-bold"
-           :class='{"noboderbottom":firstMenu.subList.length == 0 || !firstMenu.showDetail}'>
-        <label class="radio_checkbox">
-          <input type='checkbox' v-model='firstMenu.singleCheck' @change='save(firstMenu)'/>
-          <i></i>
-          <span v-text='firstMenu.name'></span>
-        </label>
-        <div class='inline-block fr'>
-          <label class="radio_checkbox checkall">
-            <input type='checkbox' v-model='firstMenu.isCheck' @change='saveGroup(firstMenu)'/>
+  <div class='maincontent'>
+    <div class='w100p h100p oxh oya'>
+      <div class="mypanel" v-for='firstMenu in list'>
+        <div class="panel-heading font-bold"
+             :class='{"noboderbottom":firstMenu.subList.length == 0 || !firstMenu.showDetail}'>
+          <label class="radio_checkbox">
+            <input type='checkbox' v-model='firstMenu.singleCheck' @change='save(firstMenu)'/>
             <i></i>
-            <span>全选</span>
+            <span v-text='firstMenu.name'></span>
           </label>
-          <i class="fa showdetailarray"
-             :class='{"fa-chevron-up":firstMenu.showDetail,"fa-chevron-down":!firstMenu.showDetail}'
-             @click='firstMenu.showDetail = !firstMenu.showDetail'></i>
-        </div>
-      </div>
-      <div class="panel-body" :class='{"hidedetail":!firstMenu.showDetail}' v-if='firstMenu.subList.length > 0'>
-        <div class="mypanel subpanel" v-for='secondMenu in firstMenu.subList'>
-          <div class="panel-heading font-bold"
-               :class='{"noboderbottom":secondMenu.subList.length == 0 || !secondMenu.showDetail}'>
-            <label class="radio_checkbox">
-              <input type='checkbox' v-model='secondMenu.singleCheck' @change='save(secondMenu)'/>
+          <div class='inline-block fr'>
+            <label class="radio_checkbox checkall">
+              <input type='checkbox' v-model='firstMenu.isCheck' @change='saveGroup(firstMenu)'/>
               <i></i>
-              <span v-text='secondMenu.name'></span>
+              <span>全选</span>
             </label>
-            <div class='inline-block fr'>
-              <label class="radio_checkbox checkall">
-                <input type='checkbox' v-model='secondMenu.isCheck' @change='saveGroup(secondMenu)'/>
-                <i></i>
-                <span>全选</span>
-              </label>
-              <i class="fa showdetailarray"
-                 :class='{"fa-chevron-up":secondMenu.showDetail,"fa-chevron-down":!secondMenu.showDetail}'
-                 @click='secondMenu.showDetail = !secondMenu.showDetail'></i>
-            </div>
+            <i class="fa showdetailarray"
+               :class='{"fa-chevron-up":firstMenu.showDetail,"fa-chevron-down":!firstMenu.showDetail}'
+               @click='firstMenu.showDetail = !firstMenu.showDetail'></i>
           </div>
-          <div class="panel-body" :class='{"hidedetail":!secondMenu.showDetail}' v-if='secondMenu.subList.length > 0'>
-            <div class="mypanel subpanel" v-for='functionItem in secondMenu.subList'>
-              <div class="panel-heading font-bold"
-                   :class='{"noboderbottom":functionItem.subList.length == 0 || !functionItem.showDetail}'>
-                <label class="radio_checkbox">
-                  <input type='checkbox' v-model='functionItem.singleCheck' @change='save(functionItem)'/>
+        </div>
+        <div class="panel-body" :class='{"hidedetail":!firstMenu.showDetail}' v-if='firstMenu.subList.length > 0'>
+          <div class="mypanel subpanel" v-for='secondMenu in firstMenu.subList'>
+            <div class="panel-heading font-bold"
+                 :class='{"noboderbottom":secondMenu.subList.length == 0 || !secondMenu.showDetail}'>
+              <label class="radio_checkbox">
+                <input type='checkbox' v-model='secondMenu.singleCheck' @change='save(secondMenu)'/>
+                <i></i>
+                <span v-text='secondMenu.name'></span>
+              </label>
+              <div class='inline-block fr'>
+                <label class="radio_checkbox checkall">
+                  <input type='checkbox' v-model='secondMenu.isCheck' @change='saveGroup(secondMenu)'/>
                   <i></i>
-                  <span v-text='functionItem.name'></span>
+                  <span>全选</span>
                 </label>
-                <div class='inline-block fr'>
-                  <label class="radio_checkbox checkall">
-                    <input type='checkbox' v-model='functionItem.isCheck' @change='saveGroup(functionItem)'/>
-                    <i></i>
-                    <span>全选</span>
-                  </label>
-                  <i class="fa showdetailarray"
-                     :class='{"fa-chevron-up":functionItem.showDetail,"fa-chevron-down":!functionItem.showDetail}'
-                     @click='functionItem.showDetail = !functionItem.showDetail'></i>
-                </div>
+                <i class="fa showdetailarray"
+                   :class='{"fa-chevron-up":secondMenu.showDetail,"fa-chevron-down":!secondMenu.showDetail}'
+                   @click='secondMenu.showDetail = !secondMenu.showDetail'></i>
               </div>
-              <div class="panel-body" :class='{"hidedetail":!functionItem.showDetail}'
-                   v-if='functionItem.subList.length > 0'>
-                <label class="radio_checkbox" v-for="permission in functionItem.subList">
-                  <input type='checkbox' v-model="permission.isCheck" @change='save(permission)'/>
-                  <i></i>
-                  <span v-text="permission.name"></span>
-                </label>
+            </div>
+            <div class="panel-body" :class='{"hidedetail":!secondMenu.showDetail}' v-if='secondMenu.subList.length > 0'>
+              <div class="mypanel subpanel" v-for='functionItem in secondMenu.subList'>
+                <div class="panel-heading font-bold"
+                     :class='{"noboderbottom":functionItem.subList.length == 0 || !functionItem.showDetail}'>
+                  <label class="radio_checkbox">
+                    <input type='checkbox' v-model='functionItem.singleCheck' @change='save(functionItem)'/>
+                    <i></i>
+                    <span v-text='functionItem.name'></span>
+                  </label>
+                  <div class='inline-block fr'>
+                    <label class="radio_checkbox checkall">
+                      <input type='checkbox' v-model='functionItem.isCheck' @change='saveGroup(functionItem)'/>
+                      <i></i>
+                      <span>全选</span>
+                    </label>
+                    <i class="fa showdetailarray"
+                       :class='{"fa-chevron-up":functionItem.showDetail,"fa-chevron-down":!functionItem.showDetail}'
+                       @click='functionItem.showDetail = !functionItem.showDetail'></i>
+                  </div>
+                </div>
+                <div class="panel-body" :class='{"hidedetail":!functionItem.showDetail}'
+                     v-if='functionItem.subList.length > 0'>
+                  <label class="radio_checkbox" v-for="permission in functionItem.subList">
+                    <input type='checkbox' v-model="permission.isCheck" @change='save(permission)'/>
+                    <i></i>
+                    <span v-text="permission.name"></span>
+                  </label>
+                </div>
               </div>
             </div>
           </div>

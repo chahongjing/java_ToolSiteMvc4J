@@ -1,5 +1,5 @@
 <template>
-  <div class='maincontent w100p h100p'>
+  <div class='maincontent listcontent'>
     <div class='list-header-but-group'>
       <button type="button inline-block" class="btn btn-outline-purple" @click="add()" v-authcode='"userList_add"'>
         <i class='fa fa-plus fa-plus-myrotate mr5'></i>添加

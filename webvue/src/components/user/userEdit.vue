@@ -1,141 +1,143 @@
 <template>
-  <div class="mypanel" style="width:500px;margin:auto;margin-top:20px;">
-    <div class="panel-heading font-bold">用户信息</div>
-    <div class="panel-body">
-      <form class='myform infotip form-label-w110 block-form-group'>
-        <div class="form-group">
-          <label class="form-label req colon">编号</label>
-          <div class="form-content">
-            <input type="text" class="form-control" placeholder="编号" autofocus
-                   v-model='user.userCode' v-focus :disabled='editSelf'/>
+  <div class='maincontent'>
+    <div class="mypanel" style="width:500px;margin:auto;margin-top:20px;">
+      <div class="panel-heading font-bold">用户信息</div>
+      <div class="panel-body">
+        <form class='myform infotip form-label-w110 block-form-group'>
+          <div class="form-group">
+            <label class="form-label req colon">编号</label>
+            <div class="form-content">
+              <input type="text" class="form-control" placeholder="编号" autofocus
+                     v-model='user.userCode' v-focus :disabled='editSelf'/>
+            </div>
+            <div class='form-info'>
+              <i class='fa' title='编号重复！'></i>
+            </div>
+            <span class='error-msg'></span>
           </div>
-          <div class='form-info'>
-            <i class='fa' title='编号重复！'></i>
+          <div class="form-group">
+            <label class="form-label colon">姓名</label>
+            <div class="form-content">
+              <input type="text" class="form-control" placeholder="姓名"
+                     v-model='user.userName'>
+            </div>
+            <div class='form-info'>
+              <i class='fa' title='姓名不能为空！'></i>
+            </div>
+            <span class='error-msg'>名称不能为空！</span>
           </div>
-          <span class='error-msg'></span>
-        </div>
-        <div class="form-group">
-          <label class="form-label colon">姓名</label>
-          <div class="form-content">
-            <input type="text" class="form-control" placeholder="姓名"
-                   v-model='user.userName'>
+          <div class="form-group" v-if='!user.isSave'>
+            <label class="form-label colon">密码</label>
+            <div class="form-content">
+              <input type="password" class="form-control" placeholder="密码"
+                     v-model='user.password'>
+            </div>
+            <div class='form-info'>
+              <i class='fa'></i>
+            </div>
           </div>
-          <div class='form-info'>
-            <i class='fa' title='姓名不能为空！'></i>
+          <div class="form-group" v-if='!user.isSave'>
+            <label class="form-label colon">确认密码</label>
+            <div class="form-content">
+              <input type="password" class="form-control" placeholder="确认密码"
+                     v-model='user.passwordAgain'>
+            </div>
+            <div class='form-info'>
+              <i class='fa'></i>
+            </div>
           </div>
-          <span class='error-msg'>名称不能为空！</span>
-        </div>
-        <div class="form-group" v-if='!user.isSave'>
-          <label class="form-label colon">密码</label>
-          <div class="form-content">
-            <input type="password" class="form-control" placeholder="密码"
-                   v-model='user.password'>
-          </div>
-          <div class='form-info'>
-            <i class='fa'></i>
-          </div>
-        </div>
-        <div class="form-group" v-if='!user.isSave'>
-          <label class="form-label colon">确认密码</label>
-          <div class="form-content">
-            <input type="password" class="form-control" placeholder="确认密码"
-                   v-model='user.passwordAgain'>
-          </div>
-          <div class='form-info'>
-            <i class='fa'></i>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label colon">邮箱</label>
-          <div class="form-content">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">&yen;</span>
-              </div>
-              <input type="text" class="form-control border-right-0">
-              <div class="input-group-append">
-                <span class="input-group-text">@qq.com</span>
+          <div class="form-group">
+            <label class="form-label colon">邮箱</label>
+            <div class="form-content">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">&yen;</span>
+                </div>
+                <input type="text" class="form-control border-right-0">
+                <div class="input-group-append">
+                  <span class="input-group-text">@qq.com</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label colon">创建时间</label>
-          <div class="form-content">
-            <date-time-picker v-model='user.createdOn' :option='dateOpt'></date-time-picker>
+          <div class="form-group">
+            <label class="form-label colon">创建时间</label>
+            <div class="form-content">
+              <date-time-picker v-model='user.createdOn' :option='dateOpt'></date-time-picker>
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label colon">生日</label>
-          <div class="form-content">
-            <date-time-picker v-model='user.birthday'></date-time-picker>
+          <div class="form-group">
+            <label class="form-label colon">生日</label>
+            <div class="form-content">
+              <date-time-picker v-model='user.birthday'></date-time-picker>
+            </div>
+            <div class='form-info'>
+              <i class='fa'></i>
+            </div>
           </div>
-          <div class='form-info'>
-            <i class='fa'></i>
+          <div class="form-group">
+            <label class="form-label colon">性别</label>
+            <div class="form-content">
+              <label class="radio_checkbox mt2" v-for="item in sexList">
+                <input type='radio' name="sex" :value="item.key" v-model="user.sex"/>
+                <i></i>
+                <span v-text="item.name"></span>
+              </label>
+            </div>
+            <div class='form-info'>
+              <i class='fa'></i>
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label colon">性别</label>
-          <div class="form-content">
-            <label class="radio_checkbox mt2" v-for="item in sexList">
-              <input type='radio' name="sex" :value="item.key" v-model="user.sex"/>
-              <i></i>
-              <span v-text="item.name"></span>
-            </label>
+          <div class="form-group">
+            <label class="form-label colon">是否禁用</label>
+            <div class="form-content">
+              <label class="radio_checkbox mt2" v-for="item in YesNoList">
+                <input type='radio' name="isDisabled" :value="item.key" v-model="user.isDisabled"/>
+                <i></i>
+                <span v-text="item.name"></span>
+              </label>
+            </div>
+            <div class='form-info'>
+              <i class='fa'></i>
+            </div>
           </div>
-          <div class='form-info'>
-            <i class='fa'></i>
+          <div class="form-group">
+            <label class="form-label colon">是否系统用户</label>
+            <div class="form-content">
+              <label class="radio_checkbox mt2" v-for="item in YesNoList">
+                <input type='radio' name="isSystem" :value="item.key" v-model="user.isSystem"/>
+                <i></i>
+                <span v-text="item.name"></span>
+              </label>
+            </div>
+            <div class='form-info'>
+              <i class='fa'></i>
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label colon">是否禁用</label>
-          <div class="form-content">
-            <label class="radio_checkbox mt2" v-for="item in YesNoList">
-              <input type='radio' name="isDisabled" :value="item.key" v-model="user.isDisabled"/>
-              <i></i>
-              <span v-text="item.name"></span>
-            </label>
+          <div class="form-group">
+            <label class="form-label colon">兴趣爱好</label>
+            <div class="form-content">
+              <label class="radio_checkbox mt2" v-for="item in interstList">
+                <input type='checkbox' name="interst" :value="item.key" v-model="intertCheck"/>
+                <i></i>
+                <span v-text="item.name"></span>
+              </label>
+            </div>
+            <div class='form-info'>
+              <i class='fa'></i>
+            </div>
           </div>
-          <div class='form-info'>
-            <i class='fa'></i>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label colon">是否系统用户</label>
-          <div class="form-content">
-            <label class="radio_checkbox mt2" v-for="item in YesNoList">
-              <input type='radio' name="isSystem" :value="item.key" v-model="user.isSystem"/>
-              <i></i>
-              <span v-text="item.name"></span>
-            </label>
-          </div>
-          <div class='form-info'>
-            <i class='fa'></i>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label colon">兴趣爱好</label>
-          <div class="form-content">
-            <label class="radio_checkbox mt2" v-for="item in interstList">
-              <input type='checkbox' name="interst" :value="item.key" v-model="intertCheck"/>
-              <i></i>
-              <span v-text="item.name"></span>
-            </label>
-          </div>
-          <div class='form-info'>
-            <i class='fa'></i>
-          </div>
-        </div>
 
-        <div class="form-group text-right mb0">
-          <button type="button" class="btn btn-outline-purple" @click='$root.goBack()'>
-            <i class='fa fa-arrow-circle-o-left fa-plus-myrotate fa-back-myrotate'></i><span>返回</span>
-          </button>
-          <button type="button" class="btn btn-purple mr5" @click="save" :disabled='allDisabled'>
-            <i class='fa fa-save'></i>保存
-          </button>
-        </div>
-      </form>
+          <div class="form-group text-right mb0">
+            <button type="button" class="btn btn-outline-purple" @click='$root.goBack()'>
+              <i class='fa fa-arrow-circle-o-left fa-plus-myrotate fa-back-myrotate'></i><span>返回</span>
+            </button>
+            <button type="button" class="btn btn-purple mr5" @click="save" :disabled='allDisabled'>
+              <i class='fa fa-save'></i>保存
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </template>

@@ -1,13 +1,13 @@
 package com.zjy.web.controller;
 
 import com.zjy.baseframework.BaseResult;
-import com.zjy.baseframework.ServiceException;
 import com.zjy.bll.baseBean.PageBean;
 import com.zjy.bll.request.UserInfoRequest;
 import com.zjy.bll.service.UserInfoService;
 import com.zjy.bll.vo.UserInfoVo;
 import com.zjy.entities.UserInfo;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.web.util.SavedRequest;
@@ -28,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.HttpMethod;
 
 /**
  * @author chahongjing
@@ -74,8 +75,8 @@ public class UserInfoController extends BaseController implements ServletConfigA
         // 获取上一次的地址
         SavedRequest lastRequest = WebUtils.getSavedRequest(request);
         String lastUrl = null;
-        if (lastRequest != null && "GET".equalsIgnoreCase(lastRequest.getMethod())) {
-            lastUrl = WebUtils.getSavedRequest(request).getRequestUrl();
+        if (lastRequest != null && HttpMethod.GET.equalsIgnoreCase(lastRequest.getMethod())) {
+            lastUrl = lastRequest.getRequestUrl();
         }
         if (StringUtils.isBlank(lastUrl)) {
             lastUrl = request.getRequestURL().toString().replace(request.getRequestURI(), "") + request.getContextPath() + "/";
@@ -123,7 +124,7 @@ public class UserInfoController extends BaseController implements ServletConfigA
     public BaseResult<String> save(UserInfoVo vo) {
         UserInfo currentUser = shiroRealm.getCurrentUser();
         if (!(shiroRealm.isPermitted("userEdit_save") || (currentUser != null && currentUser.getUserCode().equals(vo.getUserCode())))) {
-            throw new ServiceException("未授权！");
+            throw new UnauthorizedException();
         }
         userInfoSrv.save(vo);
         return BaseResult.OK("");
@@ -156,7 +157,6 @@ public class UserInfoController extends BaseController implements ServletConfigA
     @ResponseBody
     @RequiresPermissions("userList_enter")
     public BaseResult<PageBean> queryPageList(UserInfoRequest request) {
-        logger.error("这是错误{}信息{}!", 1, "第二个参数");
         PageBean<UserInfoVo> pageBean = (PageBean<UserInfoVo>) userInfoSrv.queryPageList(request);
         return BaseResult.OK(pageBean);
     }

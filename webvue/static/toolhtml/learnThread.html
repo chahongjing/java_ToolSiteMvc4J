@@ -12,7 +12,7 @@
 		<ul class='list'>
 			<li>继承Thread类, 它继承Runnable接口</li>
 			<li>实现Runnable接口，实现run方法，没有返回值不能抛出受检查的异常</li>
-			<li>实现Callable接口，实现call方法，他有返回值，可以抛出受检查的异常</li>
+			<li>实现Callable接口(1.5)，实现call方法，他有返回值，可以抛出受检查的异常</li>
 			<li>线程池
 				<ul class='list'>
 					<li>Executor，Executors，ExecutorService，CompletionService，Future，Callable</li>
@@ -23,15 +23,67 @@
 					<li>https://www.cnblogs.com/fengsehng/p/6048609.html</li>
 				</ul>
 			</li>
+			<li>Future接口；可对于具体的Runnable或者Callable任务的执行结果进行取消、查询是否完成、获取结果</li>
+			<li>FutureTask实现RunnableFuture，RunnableFuture继承Runnable, Future</li>
 		</ul>
 	</p>
 	<hr>
 	<h2>锁类型</h2>
 	<p>
 		<ul class='list'>
-			<li>可重入锁：当前线程如果获取到对象锁，当再次进入到此对象的同步代码时可以直接执行而不用等待。</li>
-			<li>自旋锁：当未获到锁时会进行循环，如无限循环，直到获取到锁后退出。</li>
+			<li>可重入锁：当前线程如果获取到对象锁，当再次进入到此对象的同步代码时（如重复，递归等）可以直接执行而不用等待。</li>
+			<li>自旋锁（spinlock）：是指当一个线程在获取锁的时候，如果锁已经被其它线程获取，那么该线程将循环等待，然后不断的判断锁是否能够被成功获取，直到获取到锁才会退出循环。</li>
+			<li>公平锁/非公平锁；是否按申请顺序来获取锁</li>
+			<li>独享锁/共享锁：是否被多个线程共有</li>
+			<li>互斥锁：对共享资源加锁后，直到解锁后才可以再次访问</li>
+			<li>读写锁：即是互斥锁也是共享锁,read是共享，wirte是互斥；三种状态:读加锁状态、写加锁状态和不加锁状态</li>
+			<li>悲观锁：假设最坏的情况，每次使用都认为别人会修改，所以每次使用时都会上锁</li>
+			<li>乐观锁：假设最好的情况，每次使用都认为别人不会修改，所以每次使用不上锁，但在更新时判断(C)下在此期间别人有没有去更新(S), CAS</li>
+			<li>分段锁：其实不是锁，只是一种设计，如ConcurrentHashMap</li>
 		</ul>
 	</p>
+	<hr>
+	<h2>常见的锁</h2>
+	<p>
+		<ul class='list'>
+			<li>ReentrantLock可重入锁，悲观锁</li>
+			<li>ReadWriteLock读写锁</li>
+			<li>Semaphore：可以控同时访问的线程个数，如一个资源可以同时最多让5个线程访问</li>
+			<li>CountDownLatch:等其它几个操作执行完成后再执行</li>
+			<li>CyclicBarrier：让一组操作等待某个状态后再全部同时执行</li>
+			<li>synchronized悲观锁</li>
+			<li>java.util.concurrent包全完建立在CAS之上,即乐观锁</li>
+			<li>AtomicInteger</li>
+			<li>volatile</li>
+		</ul>
+	</p>
+	<hr>
+	<h2>降低锁的竞争程序有三种方式</h2>
+	<p>
+		<ul class='list'>
+			<li>减少锁的持有时间</li>
+			<li>降低锁的请求频率</li>
+			<li>使用带有协调机制的独占锁，这些机制允许更高的并发性。</li>
+		</ul>
+	</p>
+	<hr>
+	<h2>锁状态</h2>
+	<p>
+		<ul class='list'>
+			<li>无锁状态:偏向锁是指一段同步代码一直被一个线程所访问，那么该线程会自动获取锁。降低获取锁的代价。</li>
+			<li>偏向锁状态:轻量级锁是指当锁是偏向锁的时候，被另一个线程所访问，偏向锁就会升级为轻量级锁，其他线程会通过自旋的形式尝试获取锁，不会阻塞，提高性能。</li>
+			<li>轻量级锁状态:重量级锁是指当锁为轻量级锁的时候，另一个线程虽然是自旋，但自旋不会一直持续下去，当自旋一定次数的时候，还没有获取到锁，就会进入阻塞，该锁膨胀为重量级锁。重量级锁会让其他申请的线程进入阻塞，性能降低。</li>
+			<li>重量级锁状态</li>
+		</ul>
+	</p>
+	<hr>
+	<h2>其它</h2>
+	<p>
+		<ul class='list'>
+			<li>Unsafe: Java无法直接访问底层操作系统，而是通过本地（native）方法来访问。不过尽管如此，JVM还是开了一个后门，JDK中有一个类Unsafe，它提供了硬件级别的原子操作。其是CAS的核心类</li>
+			<li>CAS: Compare and Swap即比较并交换，设计并发算法时常用到的一种技术，java.util.concurrent包全完建立在CAS之上，没有CAS也就没有此包，可见CAS的重要性。当前的处理器基本都支持CAS，只不过不同的厂家的实现不一样罢了。CAS有三个操作数：内存值V、旧的预期值A、要修改的值B，当且仅当预期值A和内存值V相同时，将内存值修改为B并返回true，否则什么都不做并返回false。有ABA漏洞问题</li>
+		</ul>
+	</p>
+
 </body> 
 </html>

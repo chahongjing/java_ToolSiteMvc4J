@@ -1,47 +1,49 @@
 <template>
-  <div class="mypanel" style="width:500px;margin:auto;margin-top:20px;">
-    <div class="panel-heading font-bold">角色信息</div>
-    <div class="panel-body">
-      <form class='myform block-form-group'>
-        <div class="form-group">
-          <label class="form-label">名称：</label>
-          <div class="form-content">
-            <input type="text" class="form-control" placeholder="名称" autofocus
-                   v-model='role.name'>
+  <div class='maincontent'>
+    <div class="mypanel" style="width:500px;margin:auto;margin-top:20px;">
+      <div class="panel-heading font-bold">角色信息</div>
+      <div class="panel-body">
+        <form class='myform block-form-group'>
+          <div class="form-group">
+            <label class="form-label">名称：</label>
+            <div class="form-content">
+              <input type="text" class="form-control" placeholder="名称" autofocus
+                     v-model='role.name'>
+            </div>
+            <div class='form-info'>
+              <i class='fa'></i>
+            </div>
           </div>
-          <div class='form-info'>
-            <i class='fa'></i>
+          <div class="form-group">
+            <label class="form-label">编码：</label>
+            <div class="form-content">
+              <input type="text" class="form-control" placeholder="编码"
+                     v-model='role.code'>
+            </div>
+            <div class='form-info'>
+              <i class='fa fa-question-circle-o'></i>
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">编码：</label>
-          <div class="form-content">
-            <input type="text" class="form-control" placeholder="编码"
-                   v-model='role.code'>
+          <div class="form-group">
+            <label class="form-label">序号：</label>
+            <div class="form-content">
+              <input type="num" class="form-control" step='1' placeholder="序号"
+                     v-model='role.seq'>
+            </div>
+            <div class='form-info'>
+              <i class='fa fa-question-circle-o'></i>
+            </div>
           </div>
-          <div class='form-info'>
-            <i class='fa fa-question-circle-o'></i>
+          <div class="form-group text-right mb0">
+            <button type="button" class="btn btn-outline-purple" @click='$root.goBack()'>
+              <i class='fa fa-arrow-circle-o-left'></i><span>返回</span>
+            </button>
+            <button type="button" class="btn btn-purple mr5" @click="save" :disabled='allDisabled'>
+              <i class='fa fa-save'></i>保存
+            </button>
           </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">序号：</label>
-          <div class="form-content">
-            <input type="num" class="form-control" step='1' placeholder="序号"
-                   v-model='role.seq'>
-          </div>
-          <div class='form-info'>
-            <i class='fa fa-question-circle-o'></i>
-          </div>
-        </div>
-        <div class="form-group text-right mb0">
-          <button type="button" class="btn btn-outline-purple" @click='$root.goBack()'>
-            <i class='fa fa-arrow-circle-o-left'></i><span>返回</span>
-          </button>
-          <button type="button" class="btn btn-purple mr5" @click="save" :disabled='allDisabled'>
-            <i class='fa fa-save'></i>保存
-          </button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
 </template>

@@ -1,7 +1,10 @@
 package com.zjy.baseframework;
 
+import org.apache.commons.lang3.StringUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+
+import java.util.Collections;
 
 /**
  * @author chahongjing
@@ -23,6 +26,32 @@ public class JedisHelper {
     public static String getSet(String key, String value) {
         Jedis jedis = jedisPool.getResource();
         return jedis.getSet(key, value);
+    }
+
+    /**
+     * 分布式加锁
+     * @param key
+     * @param value
+     * @param millisecond
+     * @return
+     */
+    public static boolean setLock(String key, String value, int millisecond) {
+        Jedis jedis = jedisPool.getResource();
+        String result = jedis.set(key, value, "NX", "PX", millisecond);
+        return "OK".equals(result);
+    }
+
+    /**
+     * 分布式解锁
+     * @param key
+     * @param value
+     * @return
+     */
+    public static boolean releaseLock(String key, String value) {
+        Jedis jedis = jedisPool.getResource();
+        String script = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
+        Object result = jedis.eval(script, Collections.singletonList(key), Collections.singletonList(value));
+        return "1".equals(String.valueOf(result));
     }
     public static Long delete(String key) {
         Jedis jedis = jedisPool.getResource();

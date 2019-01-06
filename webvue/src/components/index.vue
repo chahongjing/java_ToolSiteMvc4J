@@ -1,5 +1,5 @@
 <template>
-  <div class='main'>
+  <div class='main h100p'>
     <div class='box' v-for='group in list'>
       <div class="card border-info">
         <div class="card-header text-center" v-text='group.name'></div>
@@ -214,7 +214,7 @@
 </script>
 
 <style scoped>
-  .main{padding-top:15px;}
+  .main{padding-top:15px;overflow: auto;}
   .box {
     width: 33%;
     float: left;
