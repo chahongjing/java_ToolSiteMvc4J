@@ -10,6 +10,7 @@ import org.apache.commons.fileupload.util.Streams;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -69,7 +70,7 @@ public class UeditorUploader {
         try {
             ServletFileUpload sfu = new ServletFileUpload(dff);
             sfu.setSizeMax(this.maxSize * 1024);
-            sfu.setHeaderEncoding("utf-8");
+            sfu.setHeaderEncoding(StandardCharsets.UTF_8.name());
             FileItemIterator fii = sfu.getItemIterator(this.request);
             while (fii.hasNext()) {
                 FileItemStream fis = fii.next();
@@ -103,7 +104,7 @@ public class UeditorUploader {
                     while (reader.ready()) {
                         result.append((char)reader.read());
                     }
-                    this.title = new String(result.toString().getBytes(),"utf-8");
+                    this.title = new String(result.toString().getBytes(), StandardCharsets.UTF_8.name());
                     reader.close();
 
                 }

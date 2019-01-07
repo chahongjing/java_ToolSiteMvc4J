@@ -7,6 +7,7 @@ import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.util.Zip4jConstants;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -150,7 +151,7 @@ public class ZipHelper {
     public static File[] unzip(String zipPath, String outputPath, String password) {
         try {
             ZipFile zipFile = new ZipFile(zipPath);
-            zipFile.setFileNameCharset("UTF-8");
+            zipFile.setFileNameCharset(StandardCharsets.UTF_8.name());
             if (!zipFile.isValidZipFile()) {
                 throw new ZipException("压缩文件不合法,可能被损坏.");
             }
@@ -188,7 +189,7 @@ public class ZipHelper {
     public static void removeZipDir(String file, String removeDir) throws ZipException {
         // 创建ZipFile并设置编码
         ZipFile zipFile = new ZipFile(file);
-        zipFile.setFileNameCharset("UTF-8");
+        zipFile.setFileNameCharset(StandardCharsets.UTF_8.name());
 
         // 给要删除的目录加上路径分隔符
         if (!removeDir.endsWith(File.separator)) removeDir += File.separator;

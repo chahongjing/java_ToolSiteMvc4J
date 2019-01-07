@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class XmlHelper {
 
@@ -38,7 +39,7 @@ public class XmlHelper {
         try (FileInputStream fis = new FileInputStream(path)){
             context = JAXBContext.newInstance(clazz);
             Unmarshaller unmarshaller = context.createUnmarshaller();
-            InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
+            InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8.name());
             return (T)unmarshaller.unmarshal(isr);
         } catch (Exception e) {
             e.printStackTrace();
@@ -71,7 +72,7 @@ public class XmlHelper {
     }
 
     private static void serialize(OutputStream stream, Object o) {
-        XMLEncoder xe = new XMLEncoder(stream, "UTF-8", true, 0);
+        XMLEncoder xe = new XMLEncoder(stream, StandardCharsets.UTF_8.name(), true, 0);
         xe.writeObject(o);
         xe.close();
     }

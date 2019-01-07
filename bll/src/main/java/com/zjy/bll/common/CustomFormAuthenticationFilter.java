@@ -3,7 +3,6 @@ package com.zjy.bll.common;
 import com.alibaba.fastjson.JSON;
 import com.zjy.baseframework.BaseResult;
 import com.zjy.baseframework.enums.ResultStatus;
-import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.springframework.util.MimeTypeUtils;
 
@@ -12,6 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 
 public class CustomFormAuthenticationFilter extends FormAuthenticationFilter {
 
@@ -31,7 +31,7 @@ public class CustomFormAuthenticationFilter extends FormAuthenticationFilter {
                 HttpServletResponse httpServletResponse = (HttpServletResponse) response;
                 httpServletResponse.reset();
 //                httpServletResponse.sendError(HttpStatus.NETWORK_AUTHENTICATION_REQUIRED.value());
-                httpServletResponse.setCharacterEncoding("UTF-8");
+                httpServletResponse.setCharacterEncoding(StandardCharsets.UTF_8.name());
                 PrintWriter out = httpServletResponse.getWriter();
                 out.print(JSON.toJSONString(new BaseResult(ResultStatus.UNAUTHENTICATION)));
 //                httpServletResponse.setStatus(HttpStatus.SC_PROXY_AUTHENTICATION_REQUIRED);
@@ -42,7 +42,7 @@ public class CustomFormAuthenticationFilter extends FormAuthenticationFilter {
                 saveRequestAndRedirectToLogin(request, response);
             }
 //            HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-//            httpServletResponse.setCharacterEncoding("UTF-8");
+//            httpServletResponse.setCharacterEncoding(StandardCharsets.UTF_8.name());
 //            PrintWriter out = httpServletResponse.getWriter();
 //            out.print(JSON.toJSONString(new BaseResult(ResultStatus.UNAUTHENTICATION)));
 //            out.flush();
@@ -51,23 +51,23 @@ public class CustomFormAuthenticationFilter extends FormAuthenticationFilter {
         }
     }
 
-    @Override
-    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-        Subject subject = getSubject(request, response);
-        String url = getPathWithinApplication(request);
-//        return subject.isPermitted(url);
-        return super.isAccessAllowed(request, response, mappedValue);
-    }
-
-    @Override
-    protected boolean onAccessDenied(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
-        HttpServletRequest req =(HttpServletRequest) request;
-        HttpServletResponse resp =(HttpServletResponse) response;
-        //resp.sendRedirect(req.getContextPath());
-
-        // 返回 false 表示已经处理，例如页面跳转啥的，表示不在走以下的拦截器了（如果还有配置的话）
-//        return false;
-
-        return super.onAccessDenied(request, response, mappedValue);
-    }
+//    @Override
+//    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
+//        Subject subject = getSubject(request, response);
+//        String url = getPathWithinApplication(request);
+////        return subject.isPermitted(url);
+//        return super.isAccessAllowed(request, response, mappedValue);
+//    }
+//
+//    @Override
+//    protected boolean onAccessDenied(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
+//        HttpServletRequest req =(HttpServletRequest) request;
+//        HttpServletResponse resp =(HttpServletResponse) response;
+//        //resp.sendRedirect(req.getContextPath());
+//
+//        // 返回 false 表示已经处理，例如页面跳转啥的，表示不在走以下的拦截器了（如果还有配置的话）
+////        return false;
+//
+//        return super.onAccessDenied(request, response, mappedValue);
+//    }
 }

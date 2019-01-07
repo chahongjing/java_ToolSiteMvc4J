@@ -27,6 +27,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
@@ -361,10 +362,10 @@ public class LearnController extends BaseController {
     @RequestMapping("/ueditorPicUpload")
     public void ueditorPicUpload(HttpServletRequest request, HttpServletResponse response) {
         try {
-            request.setCharacterEncoding("utf-8");
+            request.setCharacterEncoding(StandardCharsets.UTF_8.name());
         } catch (UnsupportedEncodingException e) {
         }
-        response.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         UeditorUploader up = new UeditorUploader(request);
         up.setSavePath("upload");
         String[] fileType = {".gif", ".png", ".jpg", ".jpeg", ".bmp"};

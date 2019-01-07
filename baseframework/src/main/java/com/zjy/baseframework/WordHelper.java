@@ -103,7 +103,7 @@ public class WordHelper {
 //            BufferedReader br;
 //            String line;
 //            for (InputStream is : ises) {
-//                br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+//                br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8.name()));
 //                while ((line = br.readLine()) != null) {
 //                    result.append(line);
 //                }
