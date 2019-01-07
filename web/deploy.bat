@@ -3,6 +3,6 @@ rem 再到mvn settings.xml文件中配置<server><id>tomcat7</id><username>admin
 @echo off
 title deploy project
 echo.
-echo %cd%\   mvn tomcat7:deploy -DskipTests -Pdevelopment
+echo %cd%\ mvn tomcat7:deploy -DskipTests -Pdevelopment
 mvn tomcat7:deploy -DskipTests -Pdevelopment
 pause;
