@@ -9,13 +9,13 @@
     <div class="modal-body" slot="bodySlot" v-text='message'>
     </div>
     <div class="modal-footer" slot="footerSlot">
-      <button type="button" class="btn btn-secondary" :class='getCancelCls' v-if='closeBtn.show'
+      <button type="button" :class='getCancelCls' v-if='closeBtn.show'
               @click='defaultClose()'>
-        <i class='fa fa-times' :class='getCancelIconCls'></i><span v-text='closeBtn.text'></span>
+        <i :class='getCancelIconCls'></i><span v-text='closeBtn.text'></span>
       </button>
-      <button type="button" class="btn btn-purple" :class='getConfirmCls' v-if='confirmBtn.show'
+      <button type="button" :class='getConfirmCls' v-if='confirmBtn.show'
               @click='defaultConfirm()'>
-        <i class='fa fa-check' :class='getCancelIconCls'></i><span v-text='confirmBtn.text'></span>
+        <i :class='getCancelIconCls'></i><span v-text='confirmBtn.text'></span>
       </button>
     </div>
   </common-modal>
@@ -57,28 +57,28 @@
     },
     computed: {
       getCancelCls: function () {
-        var obj = {};
+        var obj = {'btn btn-secondary':true};
         if (this.closeBtn && this.closeBtn.cls) {
           obj[this.closeBtn.cls] = true;
         }
         return obj;
       },
       getCancelIconCls: function () {
-        var obj = {};
+        var obj = {'fa fa-times':true};
         if (this.closeBtn && this.closeBtn.iconCls) {
           obj[this.closeBtn.iconCls] = true;
         }
         return obj;
       },
       getConfirmCls: function () {
-        var obj = {};
+        var obj = {'btn btn-purple':true};
         if (this.confirmBtn && this.confirmBtn.cls) {
           obj[this.confirmBtn.cls] = true;
         }
         return obj;
       },
       getConfirmIconCls: function () {
-        var obj = {};
+        var obj = {'fa fa-check':true};
         if (this.confirmBtn && this.confirmBtn.iconCls) {
           obj[this.confirmBtn.iconCls] = true;
         }

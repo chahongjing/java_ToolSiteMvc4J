@@ -1,17 +1,18 @@
 <template>
-  <li class='tree-item' :class='{"folder":isFolder}'>
+  <li :class='{"tree-item":true,"folder":isFolder}'>
     <div class='tree-item-content'>
       <span class='tree-item-icon' @click.stop="toggleItem(model)">
-        <i class="fa fw mr0" v-if="isFolder" :class='getFolderIcon'></i>
+        <i v-if="isFolder" :class='getFolderIcon'></i>
       </span>
-      <span class='tree-item-text' :class='{"selected":model.selected}' @click.stop='option.clickItem(model)'>
+      <span :class='{"tree-item-text":true,"selected":model.selected}' @click.stop='option.clickItem(model)'>
        <label class="radio_checkbox" @click.stop='stopEvent()'>
-          <input :type='option.checktype' :name='"treeitem_" + option.id' v-model="option.checkedResult" :value='model' @click.stop='stopEvent()' @change.stop='option.checkedItem(model)' />
+          <input type='radio' :name='"treeitem_" + option.id' v-model="option.checkedResult" :value='model' @click.stop='stopEvent()' @change.stop='option.checkedItem(model)' v-if='option.checktype == "radio"' />
+          <input type='checkbox' :name='"treeitem_" + option.id' v-model="option.checkedResult" :value='model' @click.stop='stopEvent()' @change.stop='option.checkedItem(model)' v-if='option.checktype == "checkbox"' />
           <i></i>
           <span>&nbsp;</span>
         </label>
        <span class='tree-item-text-icon'>
-         <i class="fa fw mr0" :class='getItemIcon'></i>
+         <i :class='getItemIcon'></i>
        </span>
        <span v-html='model.name'></span>
      </span>
@@ -40,7 +41,7 @@
         return this.model.children && this.model.children.length
       },
       getFolderIcon: function() {
-        var obj = {};
+        var obj = {'fa fw mr0':true,};
         if(this.model.isOpen && this.option.openIcon) {
           obj[this.option.openIcon] = true;
         } else if(this.option.closeIcon) {
@@ -49,7 +50,7 @@
         return obj;
       },
       getItemIcon: function(item) {
-        var obj = {};
+        var obj = {'fa fw mr0':true};
         if(item.model.icon) {
           obj[item.model.icon] = true;
         } else if(this.isFolder && this.option.folderIcon) {

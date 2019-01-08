@@ -8,7 +8,7 @@
     </div>
     <div class='footer-right inline-block text-right pr5' :style="{'width':width + 'px'}">
       <ul class="pagination inline-block">
-        <li class="page-item" v-for='item in getList' :class='{"active":item.active,"disabled":item.disabled}' :title='item.title'>
+        <li v-for='item in getList' :class='{"page-item":true,"active":item.active,"disabled":item.disabled}' :title='item.title'>
           <a class="page-link" href="javascript:void(0)" @click='jumpPage(item.page)' v-html='item.text'>
           </a>
         </li>

@@ -2,8 +2,8 @@
   <div class="input-group date">
     <input class="form-control border-right-0" size="16" type="text" readonly v-model='dataText'/>
     <div class="input-group-addon input-group-append">
-      <span class="input-group-text" :class='{"btn-outline-purple":!option || !option.disabled}'>
-        <i class='fa mr0' :class='{"fa-calendar": type == 1,"fa-clock-o": type == 2}'></i>
+      <span :class='{"input-group-text":true,"btn-outline-purple":!option || !option.disabled}'>
+        <i :class='{"fa mr0":true,"fa-calendar": type == 1,"fa-clock-o": type == 2}'></i>
       </span>
     </div>
   </div>
