@@ -79,9 +79,9 @@
             window.Utility.initialQuery();
             if (window.Query.redirect) {
               window.Query.redirect = decodeURIComponent(window.Query.redirect);
-              window.location.hash = window.Query.redirect;
+              me.$router.push({path: window.Query.redirect});
             } else {
-              window.location.hash = "/";
+              me.$router.push({path: '/'});
             }
           } else {
             me.allDisabled = false;

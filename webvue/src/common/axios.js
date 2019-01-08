@@ -15,7 +15,7 @@ axios.defaults.paramsSerializer = function (params) {
   return $.param(params);
 };
 axios.defaults.transformRequest = [function (data) {
-  if (data && !(data instanceof FormData)) {
+  if (data && Object.prototype.toString.call(data) == '[object Object]') {
     data = $.param(data);
     // data = Qs.stringify(data);
   }
