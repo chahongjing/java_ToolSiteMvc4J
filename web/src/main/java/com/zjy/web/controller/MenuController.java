@@ -50,7 +50,7 @@ public class MenuController extends BaseController {
     @RequiresPermissions("menuList_delete")
     public BaseResult<String> delete(String id) {
         menuSrv.delete(id);
-        return BaseResult.OK("");
+        return BaseResult.OK();
     }
 
     @RequestMapping("/queryMenu")

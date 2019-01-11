@@ -7,6 +7,7 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
@@ -19,20 +20,20 @@ import java.util.*;
  */
 public class UeditorUploader {
     // 输出文件地址
-    private String url = "";
+    private String url = StringUtils.EMPTY;
     // 上传文件名
-    private String fileName = "";
+    private String fileName = StringUtils.EMPTY;
     // 状态
-    private String state = "";
+    private String state = StringUtils.EMPTY;
     // 文件类型
-    private String type = "";
+    private String type = StringUtils.EMPTY;
     // 原始文件名
-    private String originalName = "";
+    private String originalName = StringUtils.EMPTY;
     // 文件大小
     private long size = 0;
 
     private HttpServletRequest request = null;
-    private String title = "";
+    private String title = StringUtils.EMPTY;
 
     // 保存路径
     private String savePath = "upload";
@@ -179,7 +180,7 @@ public class UeditorUploader {
      */
     private String getName(String fileName) {
         Random random = new Random();
-        return this.fileName = "" + random.nextInt(10000)
+        return this.fileName = StringUtils.EMPTY + random.nextInt(10000)
                 + System.currentTimeMillis() + this.getFileExt(fileName);
     }
 
@@ -197,7 +198,7 @@ public class UeditorUploader {
                 dir.mkdirs();
             } catch (Exception e) {
                 this.state = this.errorInfo.get("DIR");
-                return "";
+                return StringUtils.EMPTY;
             }
         }
         return path;
