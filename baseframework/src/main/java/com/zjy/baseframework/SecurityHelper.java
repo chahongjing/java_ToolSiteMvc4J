@@ -1,5 +1,7 @@
 package com.zjy.baseframework;
 
+import org.apache.shiro.crypto.hash.Md5Hash;
+
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -10,7 +12,7 @@ import java.util.Base64;
  * Created by chahongjing on 2017/3/14.
  */
 public class SecurityHelper {
-    public static final String MD5 = "MD5";
+    public static final String MD5 = Md5Hash.ALGORITHM_NAME;
 
     private SecurityHelper() {
     }
