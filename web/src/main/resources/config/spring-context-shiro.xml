@@ -71,22 +71,14 @@
         <property name="filterChainDefinitions">
             <value>
                 /favicon.ico=anon
-                /user/loginpage**=anon
                 /user/login**=anon
                 /user/logout**=anon
                 /druid/**=anon
-                /js/**=anon
-                /bootstrap/**=anon
-                /Controls/**=anon
-                /css/**=anon
                 /static/**=anon
                 /comm/getEnums=anon
                 /tool/getDriverUrlList=anon
                 /tool/getTableInfo=anon
                 /echarts/**=anon
-                /index.html=anon
-                /test/**=anon
-                /admin/listUser**=authc,perms[admin:manage]
                 /**=authc
             </value>
         </property>
