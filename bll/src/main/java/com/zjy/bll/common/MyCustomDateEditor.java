@@ -9,9 +9,12 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class MyCustomDateEditor extends PropertyEditorSupport {
+    public final static String DATEFORMAT = "yyyy-MM-dd";
+    public final static String DATETIMEFORMAT = "yyyy-MM-dd HH:mm:ss";
+
     protected Logger logger = LogHelper.getLogger(this.getClass());
-    private static final DateFormat dateSdf = new SimpleDateFormat("yyyy-MM-dd");
-    private static final DateFormat dateTimeSdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static final DateFormat dateSdf = new SimpleDateFormat(DATEFORMAT);
+    private static final DateFormat dateTimeSdf = new SimpleDateFormat(DATETIMEFORMAT);
     private static final DateFormat utcSfd = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     private static final DateFormat gmtSdf = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss 'GMT'Z", Locale.US);
     private static final List<DateFormat> sdf;

@@ -7,7 +7,8 @@ public enum FileSuffix {
     XLS(".xls", "excel2003"),
     XLSX(".xlsx", "excel2007及以上"),
     DOC(".doc", "word2003"),
-    DOCX(".docx", "word2007及以上");
+    DOCX(".docx", "word2007及以上"),
+    ZIP(".zip", "zip压缩文件");
 
     private String value;
     private String remark;

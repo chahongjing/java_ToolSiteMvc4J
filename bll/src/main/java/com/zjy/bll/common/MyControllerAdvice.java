@@ -19,6 +19,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.HttpHeaders;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -50,7 +51,7 @@ public class MyControllerAdvice {
             }
             response.setStatus(HttpStatus.OK.value()); //设置状态码
             response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE); //设置ContentType
-            response.setHeader("Cache-Control", "no-cache, must-revalidate");
+            response.setHeader(HttpHeaders.CACHE_CONTROL, "no-cache, must-revalidate");
             try {
                 String message;
                 if (ExceptionUtils.getRootCause(ex) != null) {

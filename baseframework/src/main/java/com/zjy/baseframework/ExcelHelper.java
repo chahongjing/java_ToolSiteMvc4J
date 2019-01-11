@@ -585,7 +585,7 @@ public class ExcelHelper {
         //设置response头信息
         response.reset();
         response.setContentType("application/vnd.ms-excel");        //改成输出excel文件
-        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName + ".xls");
+        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName + FileSuffix.XLS.getValue());
 
         //创建工作簿并发送到浏览器
         try {

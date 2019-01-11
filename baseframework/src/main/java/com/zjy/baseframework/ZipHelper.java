@@ -1,5 +1,6 @@
 package com.zjy.baseframework;
 
+import com.zjy.baseframework.enums.FileSuffix;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.FileHeader;
@@ -29,11 +30,11 @@ public class ZipHelper {
         File f = new File(file);
         String outputPath = file;
         if (f.isDirectory()) {
-            outputPath = Paths.get(f.getPath(), f.getName() + ".zip").toString();
+            outputPath = Paths.get(f.getPath(), f.getName() + FileSuffix.ZIP.getValue()).toString();
         } else {
             String prefix = f.getName().substring(f.getName().lastIndexOf('.'));
             if (prefix != null)
-                outputPath = outputPath.replace(prefix, StringUtils.EMPTY) + ".zip";
+                outputPath = outputPath.replace(prefix, StringUtils.EMPTY) + FileSuffix.ZIP.getValue();
         }
 
         return zip(file, outputPath);

@@ -39,7 +39,7 @@ public class ReflectionHelper {
             if (StringUtils.isNoneBlank(enumPackages)) {
                 for (String pack : enumPackages.split(",|;")) {
                     // 枚举所在的包
-                    allClassList.addAll(ReflectionHelper.getClassFromPackage(pack.replace(".", "/")));
+                    allClassList.addAll(ReflectionHelper.getClassFromPackage(pack.replace('.', '/')));
                 }
             }
         }

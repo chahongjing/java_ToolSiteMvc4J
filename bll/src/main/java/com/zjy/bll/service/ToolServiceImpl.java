@@ -3,6 +3,7 @@ package com.zjy.bll.service;
 import com.zjy.baseframework.DbHelperNew;
 import com.zjy.baseframework.enums.DbType;
 import com.zjy.bll.common.BaseService;
+import com.zjy.bll.common.MyCustomDateEditor;
 import com.zjy.bll.dao.ToolDao;
 import com.zjy.entities.TableColumnInfo;
 import org.apache.commons.lang3.StringUtils;
@@ -27,7 +28,7 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
         String newLine = "\r\n";
         String colComments;
         String colName;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat(MyCustomDateEditor.DATETIMEFORMAT);
         StringBuilder sbHeader = new StringBuilder();
         StringBuilder sb = new StringBuilder();
         StringBuilder sbGetterSetter = new StringBuilder();

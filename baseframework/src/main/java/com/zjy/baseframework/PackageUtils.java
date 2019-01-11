@@ -36,7 +36,7 @@ public class PackageUtils {
     public static List<String> getClassName(String packageName, boolean childPackage) throws IOException {
         List<String> fileNames = new ArrayList<>();
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        String packagePath = packageName.replace(".", "/");
+        String packagePath = packageName.replace('.', '/');
         Enumeration<URL> urls = loader.getResources(packagePath);
         while (urls.hasMoreElements()) {
             URL url = urls.nextElement();
