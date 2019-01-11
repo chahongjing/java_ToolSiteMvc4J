@@ -43,7 +43,7 @@
 <style scoped>
   .fade-in-enter-active {
     transition-duration: .2s;
-    transition-delay: 0.15s;
+    transition-delay: 0.2s;
   }
   .fade-in-leave-active {
     transition-duration: 0s;

@@ -8,11 +8,9 @@ import com.zjy.bll.vo.MenuVo;
 import com.zjy.bll.vo.TreeNode;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +18,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2018/2/27.
  */
-@Controller
+@RestController
 @RequestMapping("/menu")
 public class MenuController extends BaseController {
 
@@ -28,7 +26,6 @@ public class MenuController extends BaseController {
     private MenuService menuSrv;
 
     @RequestMapping("/queryPageList")
-    @ResponseBody
     @RequiresPermissions("menuList_enter")
     public BaseResult<PageBean> queryPageList(MenuRequest request) {
         PageBean<MenuVo> pageBean = (PageBean<MenuVo>) menuSrv.queryPageList(request);
@@ -36,7 +33,6 @@ public class MenuController extends BaseController {
     }
 
     @RequestMapping("/getDetail")
-    @ResponseBody
     @RequiresPermissions("menuEdit_enter")
     public BaseResult<MenuVo> getDetail(String id) {
         MenuVo userInfo = menuSrv.getVo(id);
@@ -44,34 +40,20 @@ public class MenuController extends BaseController {
     }
 
     @PostMapping("/save")
-    @ResponseBody
     @RequiresPermissions("menuEdit_save")
     public BaseResult<String> save(MenuVo vo) {
         menuSrv.save(vo);
-        return BaseResult.OK("");
+        return BaseResult.OK();
     }
 
     @RequestMapping("/delete")
-    @ResponseBody
     @RequiresPermissions("menuList_delete")
     public BaseResult<String> delete(String id) {
         menuSrv.delete(id);
         return BaseResult.OK("");
     }
 
-    @RequestMapping("/list")
-    public String tableToObject() {
-        return "sys/menu";
-    }
-
-    @RequestMapping("/menuEdit")
-    public String editMenu(String menuId, Model model) {
-        model.addAttribute("menuId", menuId);
-        return "sys/menuEdit";
-    }
-
     @RequestMapping("/queryMenu")
-    @ResponseBody
     public BaseResult queryMenu() {
         List<MenuVo> list = menuSrv.queryPermissionMenu();
         List<TreeNode> nodeList = new ArrayList<>();
@@ -90,7 +72,6 @@ public class MenuController extends BaseController {
     }
 
     @RequestMapping("/queryParentList")
-    @ResponseBody
     @RequiresPermissions("menuEdit_enter")
     public BaseResult<List<MenuVo>> queryParentList() {
         List<MenuVo> list = menuSrv.queryParentList();
@@ -98,7 +79,6 @@ public class MenuController extends BaseController {
     }
 
     @RequestMapping("/queryPageMenuList")
-    @ResponseBody
     @RequiresPermissions("menuList_enter")
     public BaseResult<List<MenuVo>> queryPageList() {
         List<MenuVo> list = menuSrv.queryPageMenuList();

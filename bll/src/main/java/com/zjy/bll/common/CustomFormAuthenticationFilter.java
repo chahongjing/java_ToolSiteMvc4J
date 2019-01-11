@@ -3,8 +3,9 @@ package com.zjy.bll.common;
 import com.alibaba.fastjson.JSON;
 import com.zjy.baseframework.BaseResult;
 import com.zjy.baseframework.enums.ResultStatus;
+import org.apache.http.HttpStatus;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
-import org.springframework.util.MimeTypeUtils;
+import org.springframework.http.MediaType;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -30,23 +31,17 @@ public class CustomFormAuthenticationFilter extends FormAuthenticationFilter {
             if (com.zjy.bll.common.WebUtils.isAjax(httpRequest)) {
                 HttpServletResponse httpServletResponse = (HttpServletResponse) response;
                 httpServletResponse.reset();
-//                httpServletResponse.sendError(HttpStatus.NETWORK_AUTHENTICATION_REQUIRED.value());
                 httpServletResponse.setCharacterEncoding(StandardCharsets.UTF_8.name());
+                httpServletResponse.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
                 PrintWriter out = httpServletResponse.getWriter();
                 out.print(JSON.toJSONString(new BaseResult(ResultStatus.UNAUTHENTICATION)));
-//                httpServletResponse.setStatus(HttpStatus.SC_PROXY_AUTHENTICATION_REQUIRED);
-                httpServletResponse.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
                 out.flush();
                 out.close();
+//                httpServletResponse.setStatus(HttpStatus.SC_FORBIDDEN);
+//                httpServletResponse.sendError(HttpStatus.SC_FORBIDDEN);
             } else {
                 saveRequestAndRedirectToLogin(request, response);
             }
-//            HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-//            httpServletResponse.setCharacterEncoding(StandardCharsets.UTF_8.name());
-//            PrintWriter out = httpServletResponse.getWriter();
-//            out.print(JSON.toJSONString(new BaseResult(ResultStatus.UNAUTHENTICATION)));
-//            out.flush();
-//            out.close();
             return false;
         }
     }

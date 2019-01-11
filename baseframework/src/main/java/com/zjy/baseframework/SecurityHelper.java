@@ -1,5 +1,6 @@
 package com.zjy.baseframework;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
 
 import java.math.BigInteger;
@@ -31,7 +32,7 @@ public class SecurityHelper {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        return "";
+        return StringUtils.EMPTY;
     }
 
     public static String base64Decode(String value) throws Exception {

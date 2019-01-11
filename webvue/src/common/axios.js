@@ -12,7 +12,10 @@ axios.defaults.withCredentials = true;
 
 axios.defaults.paramsSerializer = function (params) {
   // return Qs.stringify(params);
-  return $.param(params);
+  if (params && Object.prototype.toString.call(params) == '[object Object]') {
+    return $.param(params);
+  }
+  return params;
 };
 axios.defaults.transformRequest = [function (data) {
   if (data && Object.prototype.toString.call(data) == '[object Object]') {
@@ -23,7 +26,9 @@ axios.defaults.transformRequest = [function (data) {
 }]
 axios.defaults.transformResponse = [function (data) {
   if (data && typeof(data) == 'string') {
-    data = $.parseJSON(data);
+    try{
+      data = $.parseJSON(data);
+    }catch(e) {}
     // var data = Qs.parse(data);
   }
   return data;
@@ -52,6 +57,10 @@ axios.interceptors.response.use(function (resp) {
     // 用户未授权
     error.data.status = ResultStatus.UNAUTHORIZED.key;
     error.data.message = '未授权！';
+  } else if (error.response.status == 403) {
+    // 用户未授权
+    error.data.status = ResultStatus.UNAUTHENTICATION.key;
+    error.data.message = '未登录！';
   } else if (error.response.status == 500) {
     if(error.response.data instanceof ArrayBuffer) {
        var res = JSON.parse(Utility.readArrayBufferAsText(error.response.data));

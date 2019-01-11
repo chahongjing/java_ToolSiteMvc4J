@@ -4,6 +4,7 @@ import ch.qos.logback.classic.spi.CallerData;
 import ch.qos.logback.classic.spi.LoggingEvent;
 import com.zjy.baseframework.StackTraceElementHelper;
 import com.zjy.bll.enums.LogLevel;
+import org.apache.commons.lang3.StringUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,7 +30,7 @@ public class DbAppender extends DBAppenderBase<LoggingEvent> {
 
     @Override
     protected void subAppend(LoggingEvent loggingEvent, Connection connection, PreparedStatement insertStatement) throws Throwable {
-        insertStatement.setString(1, null == ShiroRealm.getUserId() ? "" : ShiroRealm.getUserId());
+        insertStatement.setString(1, null == ShiroRealm.getUserId() ? StringUtils.EMPTY : ShiroRealm.getUserId());
         bindLoggingEventWithInsertStatement(insertStatement, loggingEvent);
         int updateCount = insertStatement.executeUpdate();
         if (updateCount != 1) {

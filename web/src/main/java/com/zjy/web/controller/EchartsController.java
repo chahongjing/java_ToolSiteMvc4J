@@ -23,6 +23,7 @@ import com.zjy.baseframework.eCharts.radar.IndicatorData;
 import com.zjy.baseframework.eCharts.radar.Radar;
 import com.zjy.baseframework.eCharts.radar.RadarSeries;
 import com.zjy.baseframework.eCharts.radar.RadarSeriesData;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -273,12 +274,12 @@ public class EchartsController {
         // x轴相关信息, 数据值
         nd.setXAxis(new ArrayList<>());
         List<String> temp = Arrays.asList("[0,10]", "(10,20]", "(20,30]", "(30,40]", "(40,50]", "(50,60]", "(60,70]", "(70,80]", "(80,90]", "(90,100]");
-        nd.getXAxis().add(new XAxis("", AxisValueType.Category, temp));
+        nd.getXAxis().add(new XAxis(StringUtils.EMPTY, AxisValueType.Category, temp));
         nd.getXAxis().get(0).setBoundaryGap(true);
         nd.getXAxis().get(0).setShow(true);
         nd.getXAxis().get(0).setAxisTick(new AxisTick(true));
 
-        XAxis xAxis = new XAxis("", AxisValueType.Value, new ArrayList<>());
+        XAxis xAxis = new XAxis(StringUtils.EMPTY, AxisValueType.Value, new ArrayList<>());
         xAxis.setShow(false);
         SplitLine sl = new SplitLine();
         LineStyle ls = new LineStyle();

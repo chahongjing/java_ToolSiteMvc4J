@@ -2,6 +2,7 @@ package com.zjy.baseframework;
 
 import com.alibaba.fastjson.JSON;
 import com.zjy.baseframework.enums.ResultStatus;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 
@@ -132,7 +133,7 @@ public class BaseResult<T> implements Serializable {
     /// </summary>
     /// <returns></returns>
     public static <T> BaseResult<T> NO() {
-        return NO("");
+        return NO(StringUtils.EMPTY);
     }
 
     /// <summary>

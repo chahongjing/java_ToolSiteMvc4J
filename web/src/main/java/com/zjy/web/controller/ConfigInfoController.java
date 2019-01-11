@@ -7,22 +7,20 @@ import com.zjy.bll.service.ConfigInfoService;
 import com.zjy.bll.vo.ConfigInfoVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created by Administrator on 2018/11/1.
  */
-@Controller
+@RestController
 @RequestMapping("/configInfo")
 public class ConfigInfoController extends BaseController {
     @Autowired
     private ConfigInfoService configInfoSrv;
 
     @RequestMapping("/queryPageList")
-    @ResponseBody
     @RequiresPermissions("configInfoList_enter")
     public BaseResult<PageBean> queryPageList(ConfigInfoRequest request) {
         PageBean<ConfigInfoVo> pageBean = (PageBean<ConfigInfoVo>) configInfoSrv.queryPageList(request);
@@ -30,7 +28,6 @@ public class ConfigInfoController extends BaseController {
     }
 
     @RequestMapping("/getDetail")
-    @ResponseBody
     @RequiresPermissions("configInfoEdit_enter")
     public BaseResult<ConfigInfoVo> getDetail(String id) {
         ConfigInfoVo userInfo = configInfoSrv.getVo(id);
@@ -38,18 +35,16 @@ public class ConfigInfoController extends BaseController {
     }
 
     @PostMapping("/save")
-    @ResponseBody
     @RequiresPermissions("configInfo_save")
     public BaseResult<String> save(ConfigInfoVo vo) {
         configInfoSrv.save(vo);
-        return BaseResult.OK("");
+        return BaseResult.OK();
     }
 
     @RequestMapping("/delete")
-    @ResponseBody
     @RequiresPermissions("configInfoList_delete")
     public BaseResult<String> delete(String id) {
         configInfoSrv.delete(id);
-        return BaseResult.OK("");
+        return BaseResult.OK();
     }
 }

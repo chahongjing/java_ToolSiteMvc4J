@@ -1,6 +1,7 @@
 package com.zjy.baseframework;
 
 import com.zjy.baseframework.enums.ResultStatus;
+import org.apache.commons.lang3.StringUtils;
 
 public interface IBaseResult {
     /// <summary>
@@ -11,5 +12,5 @@ public interface IBaseResult {
     /// <summary>
     /// 返回信息
     /// </summary>
-    String message = "";
+    String message = StringUtils.EMPTY;
 }

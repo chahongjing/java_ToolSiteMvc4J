@@ -7,6 +7,7 @@ import com.zjy.bll.service.TestService;
 import com.zjy.bll.service.TestServiceImpl;
 import com.zjy.bll.service.UserInfoService;
 import com.zjy.entities.UserInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -59,7 +60,7 @@ public class LearnController extends BaseController {
         // @RequestParam("myfile") List<CommonsMultipartFile> myfile
         ModelAndView mv = new ModelAndView();
         mv.setViewName("common/ok");
-        Path path = Paths.get(request.getSession().getServletContext().getRealPath(""), "upload");
+        Path path = Paths.get(request.getSession().getServletContext().getRealPath(StringUtils.EMPTY), "upload");
         File dir = path.toFile();
         if (!dir.exists()) {
             dir.mkdirs();
@@ -79,7 +80,7 @@ public class LearnController extends BaseController {
     @ResponseBody
     public BaseResult<String> fileUpload1(MultipartHttpServletRequest request, Integer a, Date d) {
         BaseResult<String> json = BaseResult.OK("后台返回数据");
-        Path path = Paths.get(request.getSession().getServletContext().getRealPath(""), "upload");
+        Path path = Paths.get(request.getSession().getServletContext().getRealPath(StringUtils.EMPTY), "upload");
         File dir = path.toFile();
         if (!dir.exists()) {
             dir.mkdirs();
@@ -385,7 +386,8 @@ public class LearnController extends BaseController {
         if (callback == null) {
             try {
                 response.getWriter().print(result);
-            } catch (IOException e) { }
+            } catch (IOException e) {
+            }
         } else {
             try {
                 response.getWriter().print("<script>" + callback + "(" + result + ")</script>");
@@ -461,7 +463,7 @@ public class LearnController extends BaseController {
             return null;
         } catch (Exception e) {
             response.reset();
-            response.setStatus(org.apache.http.HttpStatus.SC_INTERNAL_SERVER_ERROR);
+            response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             result.setStatus(ResultStatus.ERROR);
             result.setMessage(e.getMessage());
         }

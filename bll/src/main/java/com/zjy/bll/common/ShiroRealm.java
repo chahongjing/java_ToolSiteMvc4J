@@ -15,7 +15,6 @@ import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.authz.UnauthenticatedException;
-import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
@@ -145,6 +144,7 @@ public class ShiroRealm extends AuthorizingRealm {
 
     public void clearCachedAuthorizationInfo() {
         super.clearCachedAuthorizationInfo(SecurityUtils.getSubject().getPrincipals());
+        // clearCachedAuthenticationInfo, clearAllCachedAuthorizationInfo, clearAllCachedAuthenticationInfo, clearAllCache
     }
 
     /**

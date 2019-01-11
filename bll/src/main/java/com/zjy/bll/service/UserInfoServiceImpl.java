@@ -41,6 +41,8 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
     @Override
     @Transactional
     public int add(UserInfo entity) {
+        entity.setCreatedBy(shiroRealm.getCurrentUser().getUserId());
+        entity.setCreatedOn(new Date());
         return super.add(entity);
     }
 
@@ -53,6 +55,8 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
     @Override
     @Transactional
     public int update(UserInfo entity) {
+        entity.setModifiedBy(shiroRealm.getCurrentUser().getUserId());
+        entity.setModifiedOn(new Date());
         return super.update(entity);
     }
 
@@ -80,11 +84,9 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
         beforeCheck(vo);
         // 处理密码
         if (voDb.getIsSave()) {
-            vo.setModifiedOn(new Date());
             update(vo);
         } else {
             vo.setPassword(shiroRealm.getMd5Hash(vo.getPassword(), vo.getUserCode()));
-            vo.setCreatedOn(new Date());
             add(vo);
         }
     }
@@ -104,6 +106,8 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
             vo.setIsSave(false);
             vo.setIsSystem(YesNo.NO);
             vo.setIsDisabled(YesNo.NO);
+            vo.setCreatedOn(new Date());
+            vo.setCreatedBy(shiroRealm.getCurrentUser().getUserId());
         } else {
             vo.setIsSave(true);
         }

@@ -5,6 +5,7 @@ import com.zjy.baseframework.enums.DbType;
 import com.zjy.bll.common.BaseService;
 import com.zjy.bll.dao.ToolDao;
 import com.zjy.entities.TableColumnInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -24,8 +25,8 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
     public String getTableInfo(DbType dbType, String url, String user, String password, String tableName) {
         Class<?> fieldType;
         String newLine = "\r\n";
-        String colComments = "";
-        String colName = "";
+        String colComments;
+        String colName;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         StringBuilder sbHeader = new StringBuilder();
         StringBuilder sb = new StringBuilder();
@@ -39,7 +40,7 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
         sb.append(" * 创建人：Administrator" + newLine);
         sb.append(" * 创建日期：" + sdf.format(new Date()) + newLine);
         sb.append(" */" + newLine);
-        sb.append("public class " + Objects.toString(tableName, "") + " {" + newLine);
+        sb.append("public class " + Objects.toString(tableName, StringUtils.EMPTY) + " {" + newLine);
         List<TableColumnInfo> list = getTableInfo(dbType.getDriver(), url, user, password, tableName);
         if (list == null) {
             list = new ArrayList<>();
@@ -51,7 +52,7 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
                 packages.add(fieldPackage);
                 sbHeader.append("import " + fieldPackage + ";" + newLine);
             }
-            colComments = Objects.toString(columnInfo.getColComments(), "");
+            colComments = Objects.toString(columnInfo.getColComments(), StringUtils.EMPTY);
             colName = columnInfo.getColumnName().substring(0, 1).toLowerCase() + columnInfo.getColumnName().substring(1);
             sb.append("    /**" + newLine);
             sb.append("     * " + colComments + newLine);
@@ -148,12 +149,12 @@ public class ToolServiceImpl extends BaseService<ToolDao, TableColumnInfo> imple
     }
 
     private String getTypePackage(String typeStr) {
-        String type = "";
+        String type = StringUtils.EMPTY;
         switch (typeStr.toUpperCase()) {
-            case "":
+            case StringUtils.EMPTY:
                 break;
             default:
-                type = "";
+                type = StringUtils.EMPTY;
                 break;
         }
         return type;

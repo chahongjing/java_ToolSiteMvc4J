@@ -33,7 +33,7 @@ public class CookieHelper {
     }
 
     public static String getCookie(HttpServletRequest request, String key) {
-        String value = "";
+        String value = StringUtils.EMPTY;
         try {
             Cookie[] cookies = request.getCookies();
             if (cookies != null) {

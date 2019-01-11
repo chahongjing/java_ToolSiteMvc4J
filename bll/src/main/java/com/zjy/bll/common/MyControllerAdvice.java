@@ -29,8 +29,8 @@ import java.util.Objects;
  * @create 2016-12-10 17:45
  */
 @ControllerAdvice
-public class GlobalExceptionHandler {
-    private Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+public class MyControllerAdvice {
+    private Logger logger = LoggerFactory.getLogger(MyControllerAdvice.class);
 
     /**
      * 全局异常处理机制
@@ -40,7 +40,7 @@ public class GlobalExceptionHandler {
      * @param ex
      * @return
      */
-    @ExceptionHandler()
+    @ExceptionHandler
     public ModelAndView processException(NativeWebRequest request, HttpServletResponse response, Exception ex) {
         ModelAndView mv = new ModelAndView();
         if (WebUtils.isAjax(request)) {

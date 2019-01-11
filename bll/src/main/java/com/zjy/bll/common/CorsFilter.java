@@ -2,6 +2,7 @@ package com.zjy.bll.common;
 
 import com.zjy.baseframework.ServiceException;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpHeaders;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;
@@ -32,25 +33,25 @@ public class CorsFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) res;
         if (StringUtils.isNotEmpty(allowOrigin)) {
-            response.setHeader("Access-Control-Allow-Origin", allowOrigin);
+            response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, allowOrigin);
         }
         if (StringUtils.isNotEmpty(allowMethods)) {
-            response.setHeader("Access-Control-Allow-Methods", allowMethods);
+            response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, allowMethods);
         }
         if (StringUtils.isNotEmpty(allowCredentials)) {
-            response.setHeader("Access-Control-Allow-Credentials", allowCredentials);
+            response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, allowCredentials);
         }
         if (StringUtils.isNotEmpty(allowHeaders)) {
-            response.setHeader("Access-Control-Allow-Headers", allowHeaders);
+            response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, allowHeaders);
         }
         if (StringUtils.isNotEmpty(exposeHeaders)) {
-            response.setHeader("Access-Control-Expose-Headers", exposeHeaders);
+            response.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, exposeHeaders);
         }
         chain.doFilter(req, res);
     }
 
     @Override
     public void destroy() {
-        throw new ServiceException("");
+        throw new ServiceException(StringUtils.EMPTY);
     }
 }

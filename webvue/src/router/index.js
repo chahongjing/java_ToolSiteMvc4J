@@ -221,13 +221,13 @@ router.beforeEach(function (to, from, next) {
   if(Vue.config.devtools) {
     console.log(to);
   }
-  if(!user.userId && to && to.path != '/login') {
-    next({
-     path: 'login',
-     query: {redirect: to.fullPath}  // 将跳转的路由path作为参数，登录成功后跳转到该路由
-    });
-    return;
-  }
+  // if(!user.userId && to && to.path != '/login') {
+  //   next({
+  //    path: 'login',
+  //    query: {redirect: to.fullPath}  // 将跳转的路由path作为参数，登录成功后跳转到该路由
+  //   });
+  //   return;
+  // }
   // 判断有没有页面权限
   if(to.meta.pageCode) {
     if(!(permissionList && permissionList.some(item => item == to.meta.pageCode))) {

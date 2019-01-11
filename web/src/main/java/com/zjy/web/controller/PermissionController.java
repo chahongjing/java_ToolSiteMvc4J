@@ -9,13 +9,11 @@ import com.zjy.bll.vo.FunctionInfoVo;
 import com.zjy.bll.vo.PermissionVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping("/permission")
 public class PermissionController extends BaseController {
 
@@ -25,21 +23,7 @@ public class PermissionController extends BaseController {
     @Autowired
     private FunctionInfoService functionInfoSrv;
 
-    @RequestMapping("/list")
-    public String list(String menuId, Model model) {
-        model.addAttribute("menuId", menuId);
-        return "sys/permission";
-    }
-
-    @RequestMapping("/permissionEdit")
-    public String editPermission(String permissionId, String menuId, Model model) {
-        model.addAttribute("permissionId", permissionId);
-        model.addAttribute("menuId", menuId);
-        return "sys/permissionEdit";
-    }
-
     @RequestMapping("/queryPageList")
-    @ResponseBody
     @RequiresPermissions("permissionList_enter")
     public BaseResult<PageBean<PermissionVo>> queryPageList(PermissionRequest request) {
         PageBean<PermissionVo> pageBean = (PageBean<PermissionVo>) permissionSrv.queryPageList(request);
@@ -47,7 +31,6 @@ public class PermissionController extends BaseController {
     }
 
     @RequestMapping("/getDetail")
-    @ResponseBody
     @RequiresPermissions("permissionEdit_enter")
     public BaseResult<PermissionVo> getDetail(String id, String functionId) {
         PermissionVo permissionVo = permissionSrv.getVo(id);
@@ -60,18 +43,16 @@ public class PermissionController extends BaseController {
     }
 
     @PostMapping("/save")
-    @ResponseBody
     @RequiresPermissions("permissionEdit_save")
     public BaseResult<String> save(PermissionVo vo) {
         permissionSrv.save(vo);
-        return BaseResult.OK("");
+        return BaseResult.OK();
     }
 
     @RequestMapping("/delete")
-    @ResponseBody
     @RequiresPermissions("permissionList_delete")
     public BaseResult<String> delete(String id) {
         permissionSrv.delete(id);
-        return BaseResult.OK("");
+        return BaseResult.OK();
     }
 }

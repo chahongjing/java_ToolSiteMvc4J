@@ -77,7 +77,7 @@
           <td>
             <a class='block w100p h100p' href='javascript:void(0)' v-text='item.name' @click='edit(item)'></a>
           </td>
-          <td v-text='item.typeName'></td>
+          <td v-text='$options.filters.enumNameFilter(item.type, "ConfigType")'></td>
           <td v-text='item.account'></td>
           <td v-text='item.password'></td>
           <td v-text='item.contactPerson'></td>

@@ -52,7 +52,7 @@ public class ExcelHelper {
         row = sheet.getRow(0);
         if (row == null) return list;
         for (Map.Entry<String, String> entry : headers.entrySet()) {
-            fieldName = "";
+            fieldName = StringUtils.EMPTY;
             fieldIndex = 0;
             for (int i = 0; i < row.getLastCellNum(); i++) {
                 cell = row.getCell(i);
@@ -256,7 +256,7 @@ public class ExcelHelper {
                 value = cell.getBooleanCellValue();
                 break;
             case Cell.CELL_TYPE_BLANK:
-                value = "";
+                value = StringUtils.EMPTY;
                 break;
             case Cell.CELL_TYPE_FORMULA:
                 value = cell.getCellFormula();
@@ -397,7 +397,7 @@ public class ExcelHelper {
             Class<?> fieldType = field.getType();
             //根据字段类型给字段赋值
             if (Date.class == fieldType) {
-                if (!StringUtils.isBlank(Objects.toString(fieldValue, ""))) {
+                if (!StringUtils.isBlank(Objects.toString(fieldValue, StringUtils.EMPTY))) {
                     field.set(o, fieldValue);
                 }
             } else {

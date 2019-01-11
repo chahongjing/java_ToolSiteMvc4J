@@ -79,7 +79,7 @@ public class UserInfoController extends BaseController implements ServletConfigA
             lastUrl = lastRequest.getRequestUrl();
         }
         if (StringUtils.isBlank(lastUrl)) {
-            lastUrl = request.getRequestURL().toString().replace(request.getRequestURI(), "") + request.getContextPath() + "/";
+            lastUrl = request.getRequestURL().toString().replace(request.getRequestURI(), StringUtils.EMPTY) + request.getContextPath() + "/";
         }
         mv.addObject("redirectUrl", lastUrl);
         return mv;
@@ -99,11 +99,6 @@ public class UserInfoController extends BaseController implements ServletConfigA
     //endregion
 
     // region 用户管理
-    @RequestMapping("/user")
-    public String userList() {
-        return "sys/user";
-    }
-
     @RequestMapping("/userEdit")
     @RequiresPermissions("userEdit_enter")
     public String editUser(String userId, Model model) {
@@ -127,7 +122,7 @@ public class UserInfoController extends BaseController implements ServletConfigA
             throw new UnauthorizedException();
         }
         userInfoSrv.save(vo);
-        return BaseResult.OK("");
+        return BaseResult.OK();
     }
 
     @RequestMapping("/delete")
@@ -135,14 +130,14 @@ public class UserInfoController extends BaseController implements ServletConfigA
     @RequiresPermissions(value = {"userList_delete"}, logical = Logical.OR)
     public BaseResult<String> delete(String id) {
         userInfoSrv.delete(id);
-        return BaseResult.OK("");
+        return BaseResult.OK();
     }
 
     @RequestMapping("/changePassword")
     @ResponseBody
     public BaseResult<String> changePassword(String userCode, String oldPassword, String newPassword) {
         userInfoSrv.changePassword(userCode, oldPassword, newPassword);
-        return BaseResult.OK("");
+        return BaseResult.OK();
     }
 
     @RequestMapping("/resetPassword")
@@ -150,7 +145,7 @@ public class UserInfoController extends BaseController implements ServletConfigA
     @RequiresPermissions(value = {"userList_resetPassword"})
     public BaseResult<String> resetPassword(String userCode, String password) {
         userInfoSrv.resetPassword(userCode, password);
-        return BaseResult.OK("");
+        return BaseResult.OK();
     }
 
     @RequestMapping("/queryPageList")

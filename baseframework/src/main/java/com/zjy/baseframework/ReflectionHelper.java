@@ -70,7 +70,7 @@ public class ReflectionHelper {
                 e.printStackTrace();
                 continue;
             }
-            className = className.replace('/', '.').replaceAll("\\.class", "");
+            className = className.replace('/', '.').replaceAll("\\.class", StringUtils.EMPTY);
             if (className.indexOf("BaseTestCase") > -1) continue;
             // 取得Class
             try {

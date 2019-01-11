@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.zjy.baseframework.ServiceException;
 import com.zjy.bll.baseBean.PageBean;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.slf4j.Logger;
@@ -134,7 +135,7 @@ public class BaseService<Dao extends BaseDao<T>, T> {
         try {
             SqlSession sqlSession = sqlSessionFactory.getObject().openSession();
         } catch (Exception e) {
-            new ServiceException("");
+            new ServiceException(StringUtils.EMPTY);
         }
     }
 }

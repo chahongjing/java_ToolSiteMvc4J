@@ -1,5 +1,7 @@
 package com.zjy.bll.common;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * 分页信息
  *
@@ -28,7 +30,7 @@ public class PageInfomation {
     }
 
     public PageInfomation(int pageNum, int pageSize) {
-        this(pageNum, pageSize, "");
+        this(pageNum, pageSize, StringUtils.EMPTY);
     }
 
     public PageInfomation(int pageNum, int pageSize, String orderBy) {

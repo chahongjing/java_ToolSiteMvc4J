@@ -5,6 +5,7 @@ import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.FileHeader;
 import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.util.Zip4jConstants;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
@@ -32,7 +33,7 @@ public class ZipHelper {
         } else {
             String prefix = f.getName().substring(f.getName().lastIndexOf('.'));
             if (prefix != null)
-                outputPath = outputPath.replace(prefix, "") + ".zip";
+                outputPath = outputPath.replace(prefix, StringUtils.EMPTY) + ".zip";
         }
 
         return zip(file, outputPath);
@@ -90,7 +91,7 @@ public class ZipHelper {
         parameters.setCompressionMethod(Zip4jConstants.COMP_DEFLATE);
         // 压缩级别
         parameters.setCompressionLevel(Zip4jConstants.DEFLATE_LEVEL_NORMAL);
-        if (!(password == null || password == "")) {
+        if (!(password == null || password == StringUtils.EMPTY)) {
             parameters.setEncryptFiles(true);
             // 加密方式
             parameters.setEncryptionMethod(Zip4jConstants.ENC_METHOD_STANDARD);

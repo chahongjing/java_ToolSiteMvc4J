@@ -9,14 +9,13 @@ import com.zjy.bll.vo.FunctionInfoVo;
 import com.zjy.bll.vo.MenuVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/function")
 public class FunctionInfoController extends BaseController {
 
@@ -27,7 +26,6 @@ public class FunctionInfoController extends BaseController {
     private MenuService menuSrv;
 
     @RequestMapping("/queryPageList")
-    @ResponseBody
     @RequiresPermissions("functionList_enter")
     public BaseResult<PageBean<FunctionInfoVo>> queryPageList(FunctionInfoRequest request) {
         PageBean<FunctionInfoVo> pageBean = (PageBean<FunctionInfoVo>) functionInfoSrv.queryPageList(request);
@@ -35,7 +33,6 @@ public class FunctionInfoController extends BaseController {
     }
 
     @RequestMapping("/getDetail")
-    @ResponseBody
     @RequiresPermissions("functionEdit_enter")
     public BaseResult<FunctionInfoVo> getDetail(String id, String menuId) {
         FunctionInfoVo functionInfoVo = functionInfoSrv.getVo(id);
@@ -48,23 +45,20 @@ public class FunctionInfoController extends BaseController {
     }
 
     @PostMapping("/save")
-    @ResponseBody
     @RequiresPermissions("functionEdit_save")
     public BaseResult<String> save(FunctionInfoVo vo) {
         functionInfoSrv.save(vo);
-        return BaseResult.OK("");
+        return BaseResult.OK();
     }
 
     @RequestMapping("/delete")
-    @ResponseBody
     @RequiresPermissions("functionList_delete")
     public BaseResult<String> delete(String id) {
         functionInfoSrv.delete(id);
-        return BaseResult.OK("");
+        return BaseResult.OK();
     }
 
     @RequestMapping("/queryFunctionList")
-    @ResponseBody
     @RequiresPermissions("functionEdit_enter")
     public BaseResult<List<FunctionInfoVo>> queryFunctionList() {
         List<FunctionInfoVo> list = functionInfoSrv.queryFunctionList();

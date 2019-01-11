@@ -21,14 +21,14 @@ public class ConfigInfoServiceImpl extends BaseService<ConfigInfoDao, ConfigInfo
 
     @Override
     public int add(ConfigInfo vo) {
-        vo.setCreatedBy(null);
+        vo.setCreatedBy(shiroRealm.getCurrentUser().getUserId());
         vo.setCreatedOn(new Date());
         return super.add(vo);
     }
 
     @Override
     public int update(ConfigInfo vo) {
-        vo.setModifiedBy(null);
+        vo.setModifiedBy(shiroRealm.getCurrentUser().getUserId());
         vo.setModifiedOn(new Date());
         return super.update(vo);
     }
@@ -37,12 +37,7 @@ public class ConfigInfoServiceImpl extends BaseService<ConfigInfoDao, ConfigInfo
     public PageBean<? extends ConfigInfo> queryPageList(ConfigInfoRequest request) {
         ConfigInfo configInfo = new ConfigInfo();
         configInfo.setName(request.getName());
-        PageBean<ConfigInfoVo> pageBean = (PageBean<ConfigInfoVo>) super.queryPageList(request, configInfo);
-        for (ConfigInfoVo vo : pageBean.getList()) {
-            if (vo.getType() == null) continue;
-            vo.setTypeName(vo.getType().getName());
-        }
-        return pageBean;
+        return super.queryPageList(request, configInfo);
     }
 
     @Override
@@ -54,9 +49,6 @@ public class ConfigInfoServiceImpl extends BaseService<ConfigInfoDao, ConfigInfo
             vo.setIsSave(false);
         } else {
             vo.setIsSave(true);
-            if (vo.getType() != null) {
-                vo.setTypeName(vo.getType().getName());
-            }
         }
         return vo;
     }
