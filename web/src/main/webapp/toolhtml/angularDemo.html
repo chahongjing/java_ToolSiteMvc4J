@@ -200,7 +200,11 @@
             $scope.testDownload = function () {
                 // $http.post(url, param, {responseType: "arraybuffer"}); // {responseType: "blob"}
                 commonSrv.postDownload('/learn/download').success(function (resp, status, responseHeaders, xhr) {
-                    Utility.blobDownload(resp, responseHeaders());
+                    if(resp instanceof ArrayBuffer) {
+                        Utility.blobDownload(resp, responseHeaders());
+                    } else {
+                        alert(resp.message);
+                    }
                 });
             }
 

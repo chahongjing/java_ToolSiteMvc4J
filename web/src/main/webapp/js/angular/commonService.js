@@ -79,7 +79,7 @@ app.service('commonService', ['$http', function ($http) {
      * @returns {*}
      */
     this.postDownload = function (path, param) {
-        return $http.post(this.getAjaxUrl(path), param, {responseType: 'blob'});
+        return $http.post(this.getAjaxUrl(path), param, {responseType: 'arraybuffer'});
     };
 
     /**

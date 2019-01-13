@@ -5,12 +5,7 @@ import com.zjy.baseframework.enums.ResultStatus;
 import com.zjy.bll.common.LoggingProxy;
 import com.zjy.bll.service.TestService;
 import com.zjy.bll.service.TestServiceImpl;
-import com.zjy.bll.service.UserInfoService;
 import com.zjy.entities.UserInfo;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.authz.annotation.Logical;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,11 +22,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,59 +36,8 @@ import java.util.Map;
 public class LearnController extends BaseController {
     @Autowired
     private TestService testSrv;
-    @Autowired
-    private UserInfoService userInfoSrv;
 
     // region java
-    @RequestMapping("/reflectLearn")
-    public String reflectLearn() {
-        return "reflectLearn";
-    }
-
-    @RequestMapping("/fileupload")
-    @RequiresRoles("admin")
-    @RequiresPermissions(value = {"admin:testPermission"}, logical = Logical.OR)
-    @ResponseBody
-    public ModelAndView fileUpload(MultipartHttpServletRequest request) {
-        // @RequestParam("myfile") List<CommonsMultipartFile> myfile
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("common/ok");
-        Path path = Paths.get(request.getSession().getServletContext().getRealPath(StringUtils.EMPTY), "upload");
-        File dir = path.toFile();
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        for (MultipartFile file : request.getFiles("myfile")) {
-            try {
-                file.transferTo(Paths.get(path.toString(), file.getOriginalFilename()).toFile());
-            } catch (IOException e) {
-                logger.error("上传文件异常！", e);
-            }
-        }
-        return mv;
-    }
-
-
-    @RequestMapping(value = "/fileupload1")
-    @ResponseBody
-    public BaseResult<String> fileUpload1(MultipartHttpServletRequest request, Integer a, Date d) {
-        BaseResult<String> json = BaseResult.OK("后台返回数据");
-        Path path = Paths.get(request.getSession().getServletContext().getRealPath(StringUtils.EMPTY), "upload");
-        File dir = path.toFile();
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        for (MultipartFile file : request.getFiles("myfile")) {
-            try {
-                file.transferTo(Paths.get(path.toString(), file.getOriginalFilename()).toFile());
-            } catch (IOException e) {
-                logger.error("上传文件异常！", e);
-            }
-        }
-        return json;
-    }
-
-
     /**
      * @param userName
      * @return
@@ -108,170 +50,11 @@ public class LearnController extends BaseController {
         return user;
     }
 
-    @RequestMapping("/jspLearn")
-    public String jspLearn(Model model, @ModelAttribute("mUserInfo") UserInfo mUserInfo) {
+    @RequestMapping("/jspLearn/{intVar}")
+    public String jspLearn(Model model, @ModelAttribute("mUserInfo") UserInfo mUserInfo, @PathVariable(required = true) int intVar) {
         model.addAttribute("testAttr", mUserInfo.getUserCode());
         model.addAttribute("modelattributeUser", mUserInfo.getUserName());
         return "jspLearn";
-    }
-
-    @RequestMapping("/servletLearn")
-    public String servletLearn() {
-        return "servletLearn";
-    }
-
-    @RequestMapping("/threadLearn")
-    public String threadLearn() {
-        return "threadLearn";
-    }
-
-    @RequestMapping("/exceptionLearn")
-    public String exceptionLearn() {
-        return "exceptionLearn";
-    }
-
-    @RequestMapping("/javaLearn")
-    public String javaLearn() {
-        return "javaLearn";
-    }
-
-    @RequestMapping("/jvmLearn")
-    public String jvmLearn() {
-        return "jvmLearn";
-    }
-
-    @RequestMapping("/filterLearn")
-    public String filterLearn() {
-        return "filterLearn";
-    }
-
-    @RequestMapping("/cookieLearn")
-    public String cookieLearn(HttpServletRequest request, HttpServletResponse response) {
-        return "cookieLearn";
-    }
-
-    @RequestMapping("/sessionLearn")
-    public String sessionLearn() {
-        return "sessionLearn";
-    }
-
-    @RequestMapping("/springAopLearn/{intVar}")
-    public String springAopLearn(@PathVariable(required = true) int intVar) {
-        System.out.println(intVar);
-        return "springAopLearn";
-    }
-
-    @RequestMapping("/springBeanLearn/{intVar}")
-    public String springBeanLearn(@PathVariable(required = true) int intVar) {
-        System.out.println(intVar);
-        return "springBeanLearn";
-    }
-
-    @RequestMapping("/springMVCLearn/{intVar}")
-    public String springMVCLearn(@PathVariable(required = true) int intVar) {
-        System.out.println(intVar);
-        return "springMVCLearn";
-    }
-
-    @RequestMapping("/springTransactionLearn")
-    public String springTransactionLearn() {
-        return "springTransactionLearn";
-    }
-
-    @RequestMapping("/nioLearn")
-    public String nioLearn() {
-        String str = "abc";
-        // 分配缓冲区
-        ByteBuffer buf = ByteBuffer.allocate(1024);
-        System.out.println("allocate:");
-        System.out.println(buf.position()); // 0
-        System.out.println(buf.limit()); // 1024
-        System.out.println(buf.capacity()); // 1024
-        // 缓冲区存入数据 put()
-        buf.put(str.getBytes());
-        System.out.println("put:");
-        System.out.println(buf.position()); // 3
-        System.out.println(buf.limit()); // 1024
-        System.out.println(buf.capacity()); // 1024
-        // 切换为读模式, position:0, limit:3, capacity:1024
-        buf.flip();
-        System.out.println("flip:");
-        System.out.println(buf.position()); // 0
-        System.out.println(buf.limit()); // 3
-        System.out.println(buf.capacity()); // 1024
-        // 缓冲区读取数据 get()
-        byte[] dest = new byte[buf.limit()];
-        buf.get(dest);
-        System.out.println("allocate:");
-        System.out.println(buf.position()); // 3
-        System.out.println(buf.limit()); // 3
-        System.out.println(buf.capacity()); // 1024
-        // rewind 可重复读
-        buf.rewind();
-        System.out.println("rewind:");
-        System.out.println(buf.position()); // 3
-        System.out.println(buf.limit()); // 3
-        System.out.println(buf.capacity()); // 1024
-        // 清空缓冲区，但数据还在，处于被遗忘状态
-        buf.clear();
-        System.out.println("clear:");
-        System.out.println(buf.position()); // 3
-        System.out.println(buf.limit()); // 3
-        System.out.println(buf.capacity()); // 1024
-
-        //
-        ByteBuffer buf2 = ByteBuffer.allocate(1024);
-        buf2.put(str.getBytes());
-        buf2.flip();
-        byte[] dest2 = new byte[buf2.limit()];
-        buf2.get(dest2, 0, 1);
-        System.out.println("get:");
-        System.out.println(buf2.position()); // 1
-        //
-        buf2.mark();
-
-        buf2.get(dest2, 1, 2);
-        System.out.println("mark--get:");
-        System.out.println(buf2.position()); // 1
-
-        buf2.reset();
-        System.out.println("reset:");
-        System.out.println(buf2.position()); // 1
-
-        if (buf2.hasRemaining()) {
-            System.out.println("hasRemaining:");
-            System.out.println(buf2.remaining());
-        }
-        return "nioLearn";
-    }
-
-    @RequestMapping("/encryptLearn")
-    public String encryptLearn() {
-        return "encryptLearn";
-    }
-
-    @RequestMapping("/base64Encrypt")
-    @ResponseBody
-    public BaseResult base64Encrypt(String source) {
-        try {
-            String result = SecurityHelper.base64Encode(source);
-            return BaseResult.OK(result);
-        } catch (Exception e) {
-            logger.error("解密失败！", e);
-            return BaseResult.NO("解密失败！");
-        }
-    }
-
-    @RequestMapping("/base64Decrypt")
-    @ResponseBody
-    public BaseResult base64Decrypt(String source) {
-        try {
-            String result = SecurityHelper.base64Decode(source);
-            return BaseResult.OK(result);
-        } catch (Exception e) {
-            logger.error("加密失败！", e);
-            return BaseResult.NO("加密失败！");
-        }
     }
 
     @RequestMapping("/testProxy")
@@ -293,65 +76,6 @@ public class LearnController extends BaseController {
         result.setValue(testSrv.sub(3, 1));
         return result;
     }
-
-    @RequestMapping("/elLearn")
-    public String elLearn() {
-        return "elLearn";
-    }
-
-    @RequestMapping("/el")
-    public String elDemo() {
-        return "list";
-    }
-
-    @RequestMapping("/shiroLearn")
-    public String shiroLearn() {
-        return "shiroLearn";
-    }
-    // endregion
-
-    // region 服务器
-    @RequestMapping("/tomcatLearn")
-    public String tomcatLearn() {
-        return "tomcatLearn";
-    }
-    // endregion
-
-    // region maven
-    @RequestMapping("/mavenLearn")
-    public String mavenLearn() {
-        return "mavenLearn";
-    }
-    // endregion
-
-    // region echart
-
-    // endregion
-
-    // region angular
-    @RequestMapping("/testangular")
-    public String testangular() {
-        return "testangular";
-    }
-
-    @RequestMapping("/angulardemo")
-    public String angulardemo() {
-        return "angulardemo";
-    }
-
-    @RequestMapping("/vueDemo")
-    public String vueDemo() {
-        return "vueDemo";
-    }
-
-    @RequestMapping("/vueLearn")
-    public String vueLearn() {
-        return "vueLearn";
-    }
-    // endregion
-
-    // region vue
-
     // endregion
 
     //region ueditor
@@ -397,42 +121,7 @@ public class LearnController extends BaseController {
     }
     //endregion
 
-    // region js
-
-    // endregion
-
-    // region css, html
-
-    @RequestMapping("/cssTest")
-    public String cssTest() {
-        return "cssTest";
-    }
-    // endregion
-
     // region 其它
-    @RequestMapping("/testajax")
-    @ResponseBody
-    public BaseResult testajax(String a, String b, String c, Date d) {
-        return BaseResult.OK("后台返回数据");
-    }
-
-    @RequestMapping("/jsLearn")
-    public String jsLearn() {
-        return "jsLearn";
-    }
-
-    @RequestMapping("/otherLearn")
-    public String otherLearn() {
-        return "otherLearn";
-    }
-
-    @RequestMapping("/gitLearn")
-    public String gitLearn() {
-        return "gitLearn";
-    }
-    // endregion
-
-    // region 最新
     @PostMapping(value = "/testPostWithFile")
     public ResponseEntity<BaseResult<UserInfo>> testPostWithFile(MultipartHttpServletRequest request,
                                                                  @RequestParam(required = false) Integer age,
@@ -444,8 +133,17 @@ public class LearnController extends BaseController {
         user.setUserCode(users.getUserCode());
         user.setBirthday(users.getBirthday());
         StringBuilder fileName = new StringBuilder();
+        Path path = Paths.get(Utils.getRootPath(), "Upload");
+        if(!path.toFile().exists()) {
+            path.toFile().mkdirs();
+        }
         for (MultipartFile file : request.getFiles("myfile")) {
             fileName.append(file.getOriginalFilename() + ";");
+//            try {
+//                file.transferTo(Paths.get(path.toString(), file.getOriginalFilename()).toFile());
+//            } catch (IOException e) {
+//                logger.error("上传文件异常！", e);
+//            }
         }
         user.setPhoto(fileName.toString());
         re.setValue(user);
@@ -493,7 +191,6 @@ public class LearnController extends BaseController {
         user.setDepartmentName("testPostEntity");
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
-
 
     @RequestMapping("/testP1")
     @ResponseBody

@@ -85,6 +85,16 @@ public class UserInfoController extends BaseController implements ServletConfigA
         return mv;
     }
 
+    @RequestMapping("/userListPage")
+    public String userListPage() {
+        return "/sys/user";
+    }
+
+    @RequestMapping("/userEditPage")
+    public String userEditPage(String id) {
+        return "/sys/userEdit";
+    }
+
     @RequestMapping("/login")
     @ResponseBody
     public BaseResult<UserInfoVo> login(UserInfo user) {

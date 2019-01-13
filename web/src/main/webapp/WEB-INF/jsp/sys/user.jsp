@@ -78,7 +78,7 @@
         function addUser(){
             this.commonSrv.get("/comm/getNewId").then(function(resp) {
                 if (resp.data.status == Constant.AjaxStatus.OK) {
-                    window.location = ctx + '/user/userEdit?userId=' + resp.data.value;
+                    window.location = ctx + '/user/userEditPage?id=' + resp.data.value;
                 } else {
                     alert(resp.data.message);
                 }
@@ -86,7 +86,7 @@
         }
 
         function editUser(user){
-            window.location = ctx + '/user/userEdit?userId=' + user.userId;
+            window.location = ctx + '/user/userEditPage?id=' + user.userId;
         }
 
         function deleteUser(user) {

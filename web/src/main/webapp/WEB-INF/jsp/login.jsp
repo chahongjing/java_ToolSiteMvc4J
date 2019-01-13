@@ -7,7 +7,6 @@
     <link rel="shortcut icon" href="${ctx}/favicon.ico" type="image/x-icon" />
     <link href="${ctx}/bootstrap/css/bootstrap.css" rel="stylesheet"/>
     <link href="${ctx}/bootstrap/css/font-awesome.css" rel="stylesheet"/>
-    <link href="${ctx}/Controls/Dialog.css" rel="stylesheet"/>
     <style>
         html,body {background: #dfe0e2 url('${ctx}/bootstrap/images/pattern.jpg') repeat;margin:0;padding:0;width:100%;height:100%;
         }
@@ -106,15 +105,11 @@
                 var password = $("input[name=Password]");
 
                 if ($.trim(userName.val()) == "") {
-                    window.DialogBox.Alert('请输入用户名!', function () {
-                        return false;
-                    });
+                    alert('请输入用户名!');
                     return false;
                 }
                 if ($.trim(password.val()) == "") {
-                    window.DialogBox.Alert('请输入密码!', function () {
-                        return false;
-                    });
+                    aalert('请输入密码!');
                     return false;
                 }
             },
@@ -124,9 +119,7 @@
                     url = url ? url : "/Login1.aspx";
                     window.location = url;
                 } else if (data.status == Constant.AjaxStatus.NO) {
-                    window.DialogBox.Alert(data.message, function () {
-                        return false;
-                    });
+                    alert(data.message);
                 }
             }
         });

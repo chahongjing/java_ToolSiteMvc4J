@@ -11,10 +11,10 @@ var app = angular.module('myApp', [])
                 return angular.isObject(data) && String(data) !== '[object File]' ? $.param(data) : data;
             }];
 			$httpProvider.defaults.transformResponse = [function(data, headers){
-			    if(data && !(data instanceof Blob)) {
+                if (data && typeof(data) == 'string') {
                     try{
-                        return $.parseJSON(data)
-                    } catch(e) {}
+                        data = $.parseJSON(data);
+                    }catch(e) {}
                 }
 				return data;
 			}];
@@ -63,7 +63,11 @@ var app = angular.module('myApp', [])
                             //return $q.resolve({data:jReturn});
                             return $q.reject({data: jReturn});
                         } else if(response.status === 500) {
-                            if(response.data instanceof Blob) {
+                            if(response.data instanceof ArrayBuffer) {
+                                var res = JSON.parse(Utility.readArrayBufferAsText(response.data));
+                                response.data = res;
+                                return $q.resolve(response);
+                            } else if(response.data instanceof Blob) {
                                 Utility.readBlobAsText(response.data, function(data) {
                                     var res = JSON.parse(data);
                                     alert(res.message);

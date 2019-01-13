@@ -5,8 +5,6 @@
 <html>
 <head>
     <title><% out.println("<div>首页</div>"); %></title>
-    <style>
-    </style>
 </head>
 <body>
 <div>
@@ -35,6 +33,10 @@
         </div>
     </div>
 </div>
+<fmt:message key="username">
+    <fmt:param value="第一个值"/>
+    <fmt:param value="第二个值"/>
+</fmt:message>
 <jsSection>
     <script>
         // app.controller('indexCtrl', ['$rootScope', '$scope', '$http', '$timeout', '$q',
@@ -51,11 +53,9 @@
 
         var list = [];
         // region angular
-        first = {name: 'angular', children:[]};
+        first = {name: '其它', children:[]};
         list.push(first);
-        second = {name:  'angular demo', href: '/learn/angulardemo', iconClass:''};
-        first.children.push(second);
-        second = {name:  'angular相关', href: '/learn/testangular', iconClass:''};
+        second = {name:  '其它', href: '/learn/angulardemo', iconClass:''};
         first.children.push(second);
         // endregion
 
