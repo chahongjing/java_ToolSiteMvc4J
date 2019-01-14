@@ -12,7 +12,7 @@ public final class KeyHelper {
 
     public static final String UserPermissionListKey = "UPL_%s";
 
-    public static String getTsmKey(String busKey, String... param) {
+    public static String getTsmKey(String busKey, String param) {
         return String.format("%s_%s", sys, String.format(busKey, param));
     }
 }
