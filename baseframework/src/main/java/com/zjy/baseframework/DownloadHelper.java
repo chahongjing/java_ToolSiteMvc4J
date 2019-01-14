@@ -1,6 +1,7 @@
 package com.zjy.baseframework;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 
 import javax.activation.MimetypesFileTypeMap;
@@ -19,13 +20,27 @@ public class DownloadHelper {
     }
 
     public static void download(String filePath, HttpServletResponse response) throws IOException {
-        File file = new File(filePath);
+        download(filePath, response, StringUtils.EMPTY);
+    }
+
+    public static void download(String filePath, HttpServletResponse response, String fileName) throws IOException {
+        File file = new File(filePath).getAbsoluteFile();
+        download(file, response, fileName);
+    }
+
+    public static void download(File file, HttpServletResponse response) throws IOException {
+        download(file, response, file.getName());
+    }
+
+    public static void download(File file, HttpServletResponse response, String fileName) throws IOException {
+        if (!file.exists()) throw new FileNotFoundException("未找到文件" + file);
         BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
-        download(bis, file.getName(), response);
+        download(bis, StringUtils.isBlank(fileName) ? file.getName() : fileName, response);
         bis.close();
     }
 
     public static void download(InputStream is, String fileName, HttpServletResponse response) throws IOException {
+        if(StringUtils.isBlank(fileName)) throw new IllegalArgumentException("文件名称不能为空！");
         // 创建输出流
         try (OutputStream out = response.getOutputStream()) {
             // 清空response

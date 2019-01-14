@@ -196,8 +196,7 @@ public class LearnController extends BaseController implements ServletConfigAwar
         BaseResult result = BaseResult.ok();
         try {
             File file = Paths.get(Utils.getRootPath(), "favicon.ico").toFile();
-            if (!file.exists()) throw new FileNotFoundException("未找到文件：" + file);
-            DownloadHelper.download(file.getAbsolutePath(), response);
+            DownloadHelper.download(file, response);
             return null;
         } catch (Exception e) {
             response.reset();

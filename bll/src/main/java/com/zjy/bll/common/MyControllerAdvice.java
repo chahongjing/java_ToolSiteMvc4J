@@ -60,12 +60,13 @@ public class MyControllerAdvice {
                     message = ex.getMessage();
                 }
                 BaseResult<String> result = BaseResult.no(Objects.toString(message, StringUtils.EMPTY));
-                if(ex instanceof ServiceException) {
+                if(!(ex instanceof ServiceException)) {
+                    logger.error("系统错误！", ex);
                     result.setStatus(ResultStatus.ERROR);
                 }
                 response.getWriter().write(JSON.toJSONString(result));
             } catch (IOException e) {
-                logger.error("处理异常信息失败", e);
+                logger.error("处理异常信息失败!", e);
             }
         } else {
             logger.error("系统错误", ex);

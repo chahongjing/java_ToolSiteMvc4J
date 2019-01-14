@@ -15,31 +15,26 @@ import java.util.Date;
 public class DateFormaterFilter implements ValueFilter {
     @Override
     public Object process(Object object, String name, Object value) {
-        if (value instanceof Date) {
-            Date val = (Date) value;
-            try {
-                Field field = null;
-                try {
-                    field = object.getClass().getDeclaredField(name);
-                } catch (NoSuchFieldException e) {
-                    field = object.getClass().getSuperclass().getDeclaredField(name);
-                }
-                if (null != field) {
-                    JSONField[] annos = field.getAnnotationsByType(JSONField.class);
-                    if (annos == null || annos.length == 0) {
-                        value = DateFormatUtils.formatUTC(val, ((SimpleDateFormat) MyCustomDateEditor.getUtcSfd()).toPattern());
-                    } else {
-                        for (JSONField anno : annos) {
-                            if (StringUtils.isBlank(anno.format())) continue;
-                            value = DateFormatUtils.format(val, anno.format());
-                        }
-                    }
-                }
-            } catch (NoSuchFieldException e) {
+        if (!(value instanceof Date)) return value;
+        Date val = (Date) value;
+        try {
+            Field field = object.getClass().getDeclaredField(name);
+            if (field == null) {
+                field = object.getClass().getSuperclass().getDeclaredField(name);
             }
-            return value;
-        } else {
+            if (field == null) return value;
+            JSONField[] annos = field.getAnnotationsByType(JSONField.class);
+            if (annos == null || annos.length == 0) {
+                value = DateFormatUtils.formatUTC(val, ((SimpleDateFormat) MyCustomDateEditor.getUtcSfd()).toPattern());
+            } else {
+                for (JSONField anno : annos) {
+                    if (StringUtils.isBlank(anno.format())) continue;
+                    value = DateFormatUtils.format(val, anno.format());
+                }
+            }
+        } catch (NoSuchFieldException e) {
             return value;
         }
+        return value;
     }
 }
