@@ -12,15 +12,12 @@ import java.util.Properties;
 public class PropertiesListener implements ServletContextListener {
 
     /**
-     * Default constructor.
+     * 继承父方法
+     * @param servletContextEvent
      */
-    public PropertiesListener() {
-    }
-
-    /**
-     * @see ServletContextListener#contextDestroyed(ServletContextEvent)
-     */
-    public void contextDestroyed(ServletContextEvent arg0) {
+    @Override
+    public void contextDestroyed(ServletContextEvent servletContextEvent) {
+        // 继承父方法
     }
 
     /**

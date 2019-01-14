@@ -32,10 +32,5 @@ public class DateTimeHelper {
 
         Date date1 = dateTimeToDate(localDate);
         Date date2 = localDateTimeToDate(localDateTime);
-        System.out.println(date);
-        System.out.println(localDate);
-        System.out.println(localDateTime);
-        System.out.println(date1);
-        System.out.println(date2);
     }
 }

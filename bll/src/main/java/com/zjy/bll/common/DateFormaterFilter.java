@@ -22,9 +22,7 @@ public class DateFormaterFilter implements ValueFilter {
                 try {
                     field = object.getClass().getDeclaredField(name);
                 } catch (NoSuchFieldException e) {
-                    if (field == null) {
-                        field = object.getClass().getSuperclass().getDeclaredField(name);
-                    }
+                    field = object.getClass().getSuperclass().getDeclaredField(name);
                 }
                 if (null != field) {
                     JSONField[] annos = field.getAnnotationsByType(JSONField.class);

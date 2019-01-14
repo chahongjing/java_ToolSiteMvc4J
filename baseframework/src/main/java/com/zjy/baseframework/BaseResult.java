@@ -81,15 +81,6 @@ public class BaseResult<T> implements Serializable {
 
 
     /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="result">结果</param>
-    public BaseResult(IBaseResult result) {
-        this(result.status, result.message, null);
-    }
-
-
-    /// <summary>
     /// 有参构造函数
     /// </summary>
     /// <param name="status">返回状态</param>
@@ -105,8 +96,8 @@ public class BaseResult<T> implements Serializable {
     /// OK
     /// </summary>
     /// <returns></returns>
-    public static <T> BaseResult<T> OK() {
-        return OK(null);
+    public static <T> BaseResult<T> ok() {
+        return ok(null);
     }
 
     /// <summary>
@@ -114,8 +105,8 @@ public class BaseResult<T> implements Serializable {
     /// </summary>
     /// <param name="value">返回值</param>
     /// <returns></returns>
-    public static <T> BaseResult<T> OK(T value) {
-        return OK(value, null);
+    public static <T> BaseResult<T> ok(T value) {
+        return ok(value, null);
     }
 
     /// <summary>
@@ -124,7 +115,7 @@ public class BaseResult<T> implements Serializable {
     /// <param name="message">提示信息</param>
     /// <param name="value">返回值</param>
     /// <returns></returns>
-    public static <T> BaseResult<T> OK(T value, String message) {
+    public static <T> BaseResult<T> ok(T value, String message) {
         return new BaseResult<>(ResultStatus.OK, message, value);
     }
 
@@ -132,8 +123,8 @@ public class BaseResult<T> implements Serializable {
     /// NO
     /// </summary>
     /// <returns></returns>
-    public static <T> BaseResult<T> NO() {
-        return NO(StringUtils.EMPTY);
+    public static <T> BaseResult<T> no() {
+        return no(StringUtils.EMPTY);
     }
 
     /// <summary>
@@ -141,8 +132,8 @@ public class BaseResult<T> implements Serializable {
     /// </summary>
     /// <param name="message">提示信息</param>
     /// <returns></returns>
-    public static <T> BaseResult<T> NO(String message) {
-        return NO(message, null);
+    public static <T> BaseResult<T> no(String message) {
+        return no(message, null);
     }
 
     /// <summary>
@@ -151,7 +142,7 @@ public class BaseResult<T> implements Serializable {
     /// <param name="message">提示信息</param>
     /// <param name="value">返回值</param>
     /// <returns></returns>
-    public static <T> BaseResult<T> NO(String message, T value) {
+    public static <T> BaseResult<T> no(String message, T value) {
         return new BaseResult<>(ResultStatus.NO, message, value);
     }
 
@@ -160,8 +151,8 @@ public class BaseResult<T> implements Serializable {
     /// </summary>
     /// <param name="message">提示信息</param>
     /// <returns></returns>
-    public static <T> BaseResult<T> ERROR(String message) {
-        return ERROR(message, null);
+    public static <T> BaseResult<T> error(String message) {
+        return error(message, null);
     }
 
     /// <summary>
@@ -170,7 +161,7 @@ public class BaseResult<T> implements Serializable {
     /// <param name="message">提示信息</param>
     /// <param name="value">返回值</param>
     /// <returns></returns>
-    public static <T> BaseResult<T> ERROR(String message, T value) {
+    public static <T> BaseResult<T> error(String message, T value) {
         return new BaseResult<>(ResultStatus.ERROR, message, value);
     }
 }

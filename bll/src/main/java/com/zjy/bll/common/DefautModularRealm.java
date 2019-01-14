@@ -2,13 +2,11 @@ package com.zjy.bll.common;
 
 import org.apache.commons.collections.MapUtils;
 import org.apache.shiro.ShiroException;
-import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
 import org.apache.shiro.realm.Realm;
 
-import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -17,14 +15,6 @@ import java.util.Map;
 public class DefautModularRealm extends ModularRealmAuthenticator {
 
     private Map<String, Object> definedRealms;
-
-    /**
-     * 多个realm实现
-     */
-    @Override
-    protected AuthenticationInfo doMultiRealmAuthentication(Collection<Realm> realms, AuthenticationToken token) {
-        return super.doMultiRealmAuthentication(realms, token);
-    }
 
     /**
      * 调用单个realm执行操作
@@ -51,7 +41,7 @@ public class DefautModularRealm extends ModularRealmAuthenticator {
      * 判断登录类型执行操作
      */
     @Override
-    protected AuthenticationInfo doAuthenticate(AuthenticationToken authenticationToken) throws AuthenticationException {
+    protected AuthenticationInfo doAuthenticate(AuthenticationToken authenticationToken) {
         this.assertRealmsConfigured();
         Realm realm = null;
 //        UsernamePasswordUsertypeToken token = (UsernamePasswordUsertypeToken) authenticationToken;
@@ -68,7 +58,7 @@ public class DefautModularRealm extends ModularRealmAuthenticator {
      * 判断realm是否为空
      */
     @Override
-    protected void assertRealmsConfigured() throws IllegalStateException {
+    protected void assertRealmsConfigured() {
         if (MapUtils.isEmpty(this.getDefinedRealms())) {
             throw new ShiroException("值传递错误!");
         }

@@ -3,7 +3,7 @@ package com.zjy.bll.service;
 import com.zjy.baseframework.BaseResult;
 import com.zjy.baseframework.ServiceException;
 import com.zjy.baseframework.enums.ResultStatus;
-import com.zjy.bll.baseBean.PageBean;
+import com.zjy.bll.basebean.PageBean;
 import com.zjy.bll.common.BaseService;
 import com.zjy.bll.dao.UserInfoDao;
 import com.zjy.bll.request.UserInfoRequest;
@@ -175,7 +175,7 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
             // session 会销毁，在SessionListener监听session销毁，清理权限缓存
         }
 
-        return BaseResult.OK();
+        return BaseResult.ok();
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.zjy.web.controller;
 
 import com.zjy.baseframework.BaseResult;
-import com.zjy.bll.baseBean.PageBean;
+import com.zjy.bll.basebean.PageBean;
 import com.zjy.bll.request.FunctionInfoRequest;
 import com.zjy.bll.service.FunctionInfoService;
 import com.zjy.bll.service.MenuService;
@@ -29,7 +29,7 @@ public class FunctionInfoController extends BaseController {
     @RequiresPermissions("functionList_enter")
     public BaseResult<PageBean<FunctionInfoVo>> queryPageList(FunctionInfoRequest request) {
         PageBean<FunctionInfoVo> pageBean = (PageBean<FunctionInfoVo>) functionInfoSrv.queryPageList(request);
-        return BaseResult.OK(pageBean);
+        return BaseResult.ok(pageBean);
     }
 
     @RequestMapping("/getDetail")
@@ -41,27 +41,27 @@ public class FunctionInfoController extends BaseController {
             MenuVo menu = menuSrv.getVo(menuId);
             functionInfoVo.setMenuName(menu.getName());
         }
-        return BaseResult.OK(functionInfoVo);
+        return BaseResult.ok(functionInfoVo);
     }
 
     @PostMapping("/save")
     @RequiresPermissions("functionEdit_save")
     public BaseResult<String> save(FunctionInfoVo vo) {
         functionInfoSrv.save(vo);
-        return BaseResult.OK();
+        return BaseResult.ok();
     }
 
     @RequestMapping("/delete")
     @RequiresPermissions("functionList_delete")
     public BaseResult<String> delete(String id) {
         functionInfoSrv.delete(id);
-        return BaseResult.OK();
+        return BaseResult.ok();
     }
 
     @RequestMapping("/queryFunctionList")
     @RequiresPermissions("functionEdit_enter")
     public BaseResult<List<FunctionInfoVo>> queryFunctionList() {
         List<FunctionInfoVo> list = functionInfoSrv.queryFunctionList();
-        return BaseResult.OK(list);
+        return BaseResult.ok(list);
     }
 }

@@ -1,6 +1,7 @@
 package com.zjy.baseframework;
 
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
 
 import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +14,7 @@ import java.nio.charset.StandardCharsets;
  * Created by chahongjing on 2017/2/14.
  */
 public class DownloadHelper {
+    protected static Logger logger = LogHelper.getLogger(DownloadHelper.class);
     private DownloadHelper() {
     }
 
@@ -39,6 +41,7 @@ public class DownloadHelper {
             // 关闭文件输入流
             out.flush();
         } catch (IOException ex) {
+            logger.error("下载失败!", ex);
             throw ex;
         }
     }

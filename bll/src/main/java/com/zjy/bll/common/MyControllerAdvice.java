@@ -59,7 +59,7 @@ public class MyControllerAdvice {
                 } else {
                     message = ex.getMessage();
                 }
-                BaseResult<String> result = BaseResult.NO(Objects.toString(message, StringUtils.EMPTY));
+                BaseResult<String> result = BaseResult.no(Objects.toString(message, StringUtils.EMPTY));
                 if(ex instanceof ServiceException) {
                     result.setStatus(ResultStatus.ERROR);
                 }

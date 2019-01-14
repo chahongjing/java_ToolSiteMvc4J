@@ -8,7 +8,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.HttpHeaders;
 
 public class WebUtils {
 
@@ -22,11 +21,11 @@ public class WebUtils {
     }
 
     public static boolean isAjax(WebRequest request) {
-        return request!= null && isAjax(request.getHeader("X-Requested-With"));
+        return request != null && isAjax(request.getHeader("X-Requested-With"));
     }
 
     public static boolean isAjax(HttpServletRequest request) {
-        return request!= null && isAjax(request.getHeader("X-Requested-With"));
+        return request != null && isAjax(request.getHeader("X-Requested-With"));
     }
 
     public static boolean isAjax(String ajaxHeader) {

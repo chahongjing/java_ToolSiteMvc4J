@@ -1,7 +1,7 @@
 package com.zjy.web.controller;
 
 import com.zjy.baseframework.BaseResult;
-import com.zjy.bll.baseBean.PageBean;
+import com.zjy.bll.basebean.PageBean;
 import com.zjy.bll.request.MenuRequest;
 import com.zjy.bll.service.MenuService;
 import com.zjy.bll.vo.MenuVo;
@@ -28,29 +28,29 @@ public class MenuController extends BaseController {
     @RequestMapping("/queryPageList")
     @RequiresPermissions("menuList_enter")
     public BaseResult<PageBean> queryPageList(MenuRequest request) {
-        PageBean<MenuVo> pageBean = (PageBean<MenuVo>) menuSrv.queryPageList(request);
-        return BaseResult.OK(pageBean);
+        PageBean<MenuVo> pageBean = menuSrv.queryPageList(request);
+        return BaseResult.ok(pageBean);
     }
 
     @RequestMapping("/getDetail")
     @RequiresPermissions("menuEdit_enter")
     public BaseResult<MenuVo> getDetail(String id) {
         MenuVo userInfo = menuSrv.getVo(id);
-        return BaseResult.OK(userInfo);
+        return BaseResult.ok(userInfo);
     }
 
     @PostMapping("/save")
     @RequiresPermissions("menuEdit_save")
     public BaseResult<String> save(MenuVo vo) {
         menuSrv.save(vo);
-        return BaseResult.OK();
+        return BaseResult.ok();
     }
 
     @RequestMapping("/delete")
     @RequiresPermissions("menuList_delete")
     public BaseResult<String> delete(String id) {
         menuSrv.delete(id);
-        return BaseResult.OK();
+        return BaseResult.ok();
     }
 
     @RequestMapping("/queryMenu")
@@ -68,20 +68,20 @@ public class MenuController extends BaseController {
             nodeList.add(node);
         }
 
-        return BaseResult.OK(nodeList);
+        return BaseResult.ok(nodeList);
     }
 
     @RequestMapping("/queryParentList")
     @RequiresPermissions("menuEdit_enter")
     public BaseResult<List<MenuVo>> queryParentList() {
         List<MenuVo> list = menuSrv.queryParentList();
-        return BaseResult.OK(list);
+        return BaseResult.ok(list);
     }
 
     @RequestMapping("/queryPageMenuList")
     @RequiresPermissions("menuList_enter")
     public BaseResult<List<MenuVo>> queryPageList() {
         List<MenuVo> list = menuSrv.queryPageMenuList();
-        return BaseResult.OK(list);
+        return BaseResult.ok(list);
     }
 }

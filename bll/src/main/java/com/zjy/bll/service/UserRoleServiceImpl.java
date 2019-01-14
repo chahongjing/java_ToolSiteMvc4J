@@ -65,7 +65,7 @@ public class UserRoleServiceImpl extends BaseService<UserRoleDao, UserRole> impl
 
     @Override
     public List<UserRoleVo> queryListByUserId(String userId) {
-        String key = KeyHelper.getTsmKey(KeyHelper.UserRoleListKey, userId);
+        String key = KeyHelper.getTsmKey(KeyHelper.USER_ROLE_LIST_KEY, userId);
         List<UserRoleVo> roleList = cacheHelper.get(key, List.class);
         if(CollectionUtils.isNotEmpty(roleList)) {
             return roleList;

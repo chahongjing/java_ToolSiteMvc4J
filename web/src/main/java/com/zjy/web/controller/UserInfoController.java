@@ -1,7 +1,7 @@
 package com.zjy.web.controller;
 
 import com.zjy.baseframework.BaseResult;
-import com.zjy.bll.baseBean.PageBean;
+import com.zjy.bll.basebean.PageBean;
 import com.zjy.bll.request.UserInfoRequest;
 import com.zjy.bll.service.UserInfoService;
 import com.zjy.bll.vo.UserInfoVo;
@@ -13,20 +13,13 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.web.util.SavedRequest;
 import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.EnvironmentAware;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.ServletConfigAware;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.HttpMethod;
 
@@ -36,36 +29,12 @@ import javax.ws.rs.HttpMethod;
  */
 @Controller
 @RequestMapping("/user")
-public class UserInfoController extends BaseController implements ServletConfigAware, EnvironmentAware, ApplicationContextAware {
+public class UserInfoController extends BaseController {
 
     //region 属性
     @Autowired
     private UserInfoService userInfoSrv;
     //endregion
-
-    // region servlet相关
-    private ServletConfig servletConfig;
-    private Environment environment;
-    private ApplicationContext applicationContext;
-
-    @Value("${db.url}")
-    private String url;
-
-    @Override
-    public void setServletConfig(ServletConfig servletConfig) {
-        this.servletConfig = servletConfig;
-    }
-
-    @Override
-    public void setEnvironment(Environment environment) {
-        this.environment = environment;
-    }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
-    }
-    // endregion
 
     //region 登录登出
     @RequestMapping("/loginpage")
@@ -121,7 +90,7 @@ public class UserInfoController extends BaseController implements ServletConfigA
     @RequiresPermissions("userEdit_enter")
     public BaseResult<UserInfoVo> getDetail(String id) {
         UserInfoVo userInfo = userInfoSrv.getVo(id);
-        return BaseResult.OK(userInfo);
+        return BaseResult.ok(userInfo);
     }
 
     @PostMapping("/save")
@@ -132,7 +101,7 @@ public class UserInfoController extends BaseController implements ServletConfigA
             throw new UnauthorizedException();
         }
         userInfoSrv.save(vo);
-        return BaseResult.OK();
+        return BaseResult.ok();
     }
 
     @RequestMapping("/delete")
@@ -140,14 +109,14 @@ public class UserInfoController extends BaseController implements ServletConfigA
     @RequiresPermissions(value = {"userList_delete"}, logical = Logical.OR)
     public BaseResult<String> delete(String id) {
         userInfoSrv.delete(id);
-        return BaseResult.OK();
+        return BaseResult.ok();
     }
 
     @RequestMapping("/changePassword")
     @ResponseBody
     public BaseResult<String> changePassword(String userCode, String oldPassword, String newPassword) {
         userInfoSrv.changePassword(userCode, oldPassword, newPassword);
-        return BaseResult.OK();
+        return BaseResult.ok();
     }
 
     @RequestMapping("/resetPassword")
@@ -155,7 +124,7 @@ public class UserInfoController extends BaseController implements ServletConfigA
     @RequiresPermissions(value = {"userList_resetPassword"})
     public BaseResult<String> resetPassword(String userCode, String password) {
         userInfoSrv.resetPassword(userCode, password);
-        return BaseResult.OK();
+        return BaseResult.ok();
     }
 
     @RequestMapping("/queryPageList")
@@ -163,7 +132,7 @@ public class UserInfoController extends BaseController implements ServletConfigA
     @RequiresPermissions("userList_enter")
     public BaseResult<PageBean> queryPageList(UserInfoRequest request) {
         PageBean<UserInfoVo> pageBean = (PageBean<UserInfoVo>) userInfoSrv.queryPageList(request);
-        return BaseResult.OK(pageBean);
+        return BaseResult.ok(pageBean);
     }
     // endregion
 }

@@ -14,6 +14,8 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public class PackageUtils {
+
+    private PackageUtils() {}
     /**
      * 获取某包下（包括该包的所有子包）所有类
      *
@@ -76,7 +78,6 @@ public class PackageUtils {
                 }
             } else {
                 String childFilePath = childFile.getPath();
-                //childFilePath = FileUtil.clearPath(childFilePath);
                 if (childFilePath.endsWith(".class")) {
                     int ind = -1;
                     if(childFilePath.indexOf("\\classes\\") > -1) {

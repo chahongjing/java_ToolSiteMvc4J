@@ -169,7 +169,7 @@ public class ShiroRealm extends AuthorizingRealm {
     }
 
     public List<String> getPermissions(String userId) {
-        String key = KeyHelper.getTsmKey(KeyHelper.UserPermissionListKey, userId);
+        String key = KeyHelper.getTsmKey(KeyHelper.USER_PERMISSION_LIST_KEY, userId);
         List<RolePermissionVo> permissionList = cacheHelper.get(key, List.class);
         if (org.apache.commons.collections.CollectionUtils.isEmpty(permissionList)) {
             List<UserRoleVo> userRoleList = userRoleSrv.queryListByUserId(userId);

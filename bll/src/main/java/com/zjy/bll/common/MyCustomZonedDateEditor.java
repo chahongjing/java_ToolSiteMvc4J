@@ -38,7 +38,7 @@ public class MyCustomZonedDateEditor extends PropertyEditorSupport {
     }
 
     @Override
-    public void setAsText(String text) throws IllegalArgumentException {
+    public void setAsText(String text) {
         ZonedDateTime date = null;
         Date val = MyCustomDateEditor.parse(text);
         if(val != null) {

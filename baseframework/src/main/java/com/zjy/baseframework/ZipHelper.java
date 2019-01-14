@@ -19,7 +19,9 @@ import java.util.List;
  */
 public class ZipHelper {
 
-    private ZipHelper() {}
+    private ZipHelper() {
+    }
+
     /**
      * 压缩文件
      *
@@ -162,7 +164,11 @@ public class ZipHelper {
                 destDir.mkdir();
             }
             if (zipFile.isEncrypted()) {
-                zipFile.setPassword(password.toCharArray());
+                if(StringUtils.isNotBlank(password)) {
+                    zipFile.setPassword(password.toCharArray());
+                } else {
+                    throw new ZipException("密码参数不能为空！");
+                }
             }
             zipFile.extractAll(outputPath);
             List<FileHeader> headerList = zipFile.getFileHeaders();

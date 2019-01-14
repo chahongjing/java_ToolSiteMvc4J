@@ -1,7 +1,7 @@
 package com.zjy.web.controller;
 
 import com.zjy.baseframework.BaseResult;
-import com.zjy.bll.baseBean.PageBean;
+import com.zjy.bll.basebean.PageBean;
 import com.zjy.bll.request.PermissionRequest;
 import com.zjy.bll.service.FunctionInfoService;
 import com.zjy.bll.service.PermissionService;
@@ -27,7 +27,7 @@ public class PermissionController extends BaseController {
     @RequiresPermissions("permissionList_enter")
     public BaseResult<PageBean<PermissionVo>> queryPageList(PermissionRequest request) {
         PageBean<PermissionVo> pageBean = (PageBean<PermissionVo>) permissionSrv.queryPageList(request);
-        return BaseResult.OK(pageBean);
+        return BaseResult.ok(pageBean);
     }
 
     @RequestMapping("/getDetail")
@@ -39,20 +39,20 @@ public class PermissionController extends BaseController {
             FunctionInfoVo functionInfo = functionInfoSrv.getVo(functionId);
             permissionVo.setFunctionName(functionInfo.getName());
         }
-        return BaseResult.OK(permissionVo);
+        return BaseResult.ok(permissionVo);
     }
 
     @PostMapping("/save")
     @RequiresPermissions("permissionEdit_save")
     public BaseResult<String> save(PermissionVo vo) {
         permissionSrv.save(vo);
-        return BaseResult.OK();
+        return BaseResult.ok();
     }
 
     @RequestMapping("/delete")
     @RequiresPermissions("permissionList_delete")
     public BaseResult<String> delete(String id) {
         permissionSrv.delete(id);
-        return BaseResult.OK();
+        return BaseResult.ok();
     }
 }

@@ -22,7 +22,7 @@ public class UserRoleController extends BaseController {
     @RequiresPermissions("userRole_enter")
     public BaseResult<List<RelateCheckVo>> queryUserRole(String id) {
         List<RelateCheckVo> list = userRoleSrv.queryAllRoleWithUserRole(id);
-        return BaseResult.OK(list);
+        return BaseResult.ok(list);
     }
 
     @RequestMapping("/saveUserRole")
@@ -30,6 +30,6 @@ public class UserRoleController extends BaseController {
     public BaseResult saveUserRole(String listStr) {
         List<RelateCheckVo> list = JSON.parseArray(listStr, RelateCheckVo.class);
         userRoleSrv.saveUserRole(list);
-        return BaseResult.OK();
+        return BaseResult.ok();
     }
 }

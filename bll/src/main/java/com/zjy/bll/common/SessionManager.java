@@ -25,7 +25,7 @@ import java.io.Serializable;
  */
 public class SessionManager extends DefaultWebSessionManager {
 
-    private static String SHIRO_SESSIONID_COOKIE_NAME = "JSESSIONID";
+    private static String shiroSessionIdCookieName = "JSESSIONID";
 
     @Override
     protected Serializable getSessionId(ServletRequest request, ServletResponse response) {
@@ -33,15 +33,15 @@ public class SessionManager extends DefaultWebSessionManager {
         HttpServletRequest rq = WebUtils.toHttp(request);
         HttpServletResponse rs = WebUtils.toHttp(response);
 
-        jsessionId = rq.getHeader(SHIRO_SESSIONID_COOKIE_NAME);
+        jsessionId = rq.getHeader(shiroSessionIdCookieName);
         if(StringUtils.isBlank(jsessionId)) {
-            jsessionId = CookieHelper.getCookie(rq, SHIRO_SESSIONID_COOKIE_NAME);
+            jsessionId = CookieHelper.getCookie(rq, shiroSessionIdCookieName);
         }
         if(StringUtils.isBlank(jsessionId)) {
-            jsessionId = CookieHelper.getCookie(rq, SHIRO_SESSIONID_COOKIE_NAME);
+            jsessionId = CookieHelper.getCookie(rq, shiroSessionIdCookieName);
         }
         if(StringUtils.isBlank(jsessionId)) {
-            jsessionId = rq.getParameter(SHIRO_SESSIONID_COOKIE_NAME);
+            jsessionId = rq.getParameter(shiroSessionIdCookieName);
         }
 
         if (StringUtils.isNotBlank(jsessionId)) {

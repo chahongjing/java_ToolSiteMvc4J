@@ -23,7 +23,7 @@ public class RolePermissionController extends BaseController {
     @RequiresPermissions("roleGrantPermission_enter")
     public BaseResult<List<RelateCheckVo>> getRolePermission(String id) {
         List<RelateCheckVo> list = rolePermissionSrv.getRolePermission(id);
-        return BaseResult.OK(list);
+        return BaseResult.ok(list);
     }
 
     @PostMapping("/savePermission")
@@ -31,6 +31,6 @@ public class RolePermissionController extends BaseController {
     public BaseResult savePermission(String listStr) {
         List<RelateCheckVo> list = JSON.parseArray(listStr, RelateCheckVo.class);
         rolePermissionSrv.savePermission(list);
-        return BaseResult.OK();
+        return BaseResult.ok();
     }
 }

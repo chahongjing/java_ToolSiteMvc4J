@@ -1,7 +1,7 @@
 package com.zjy.web.controller;
 
 import com.zjy.baseframework.BaseResult;
-import com.zjy.bll.baseBean.PageBean;
+import com.zjy.bll.basebean.PageBean;
 import com.zjy.bll.request.RoleInfoRequest;
 import com.zjy.bll.service.RoleInfoService;
 import com.zjy.bll.vo.RoleInfoVo;
@@ -24,28 +24,28 @@ public class RoleController extends BaseController {
     @RequestMapping("/queryPageList")
     @RequiresPermissions("roleList_enter")
     public BaseResult<PageBean> queryPageList(RoleInfoRequest request) {
-        PageBean<RoleInfoVo> pageBean = (PageBean<RoleInfoVo>) roleInfoSrv.queryPageList(request);
-        return BaseResult.OK(pageBean);
+        PageBean<RoleInfoVo> pageBean = roleInfoSrv.queryPageList(request);
+        return BaseResult.ok(pageBean);
     }
 
     @RequestMapping("/getDetail")
     @RequiresPermissions("roleEdit_enter")
     public BaseResult<RoleInfoVo> getDetail(String id) {
         RoleInfoVo userInfo = roleInfoSrv.getVo(id);
-        return BaseResult.OK(userInfo);
+        return BaseResult.ok(userInfo);
     }
 
     @PostMapping("/save")
     @RequiresPermissions("roleEdit_save")
     public BaseResult<String> save(RoleInfoVo vo) {
         roleInfoSrv.save(vo);
-        return BaseResult.OK();
+        return BaseResult.ok();
     }
 
     @RequestMapping("/delete")
     @RequiresPermissions("roleList_delete")
     public BaseResult<String> delete(String id) {
         roleInfoSrv.delete(id);
-        return BaseResult.OK();
+        return BaseResult.ok();
     }
 }

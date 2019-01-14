@@ -1,6 +1,6 @@
 package com.zjy.bll.service;
 
-import com.zjy.bll.baseBean.PageBean;
+import com.zjy.bll.basebean.PageBean;
 import com.zjy.bll.request.FunctionInfoRequest;
 import com.zjy.bll.vo.FunctionInfoVo;
 import com.zjy.entities.FunctionInfo;

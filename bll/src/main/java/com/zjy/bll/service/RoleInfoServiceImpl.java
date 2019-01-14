@@ -1,7 +1,7 @@
 package com.zjy.bll.service;
 
 import com.zjy.baseframework.ServiceException;
-import com.zjy.bll.baseBean.PageBean;
+import com.zjy.bll.basebean.PageBean;
 import com.zjy.bll.common.BaseService;
 import com.zjy.bll.dao.RoleInfoDao;
 import com.zjy.bll.request.RoleInfoRequest;

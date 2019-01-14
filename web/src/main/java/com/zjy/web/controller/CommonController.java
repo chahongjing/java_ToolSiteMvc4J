@@ -17,12 +17,12 @@ public class CommonController extends BaseController {
 
     @RequestMapping("/getNewId")
     public BaseResult<String> getNewId() {
-        return BaseResult.OK(commonSrv.getNewId());
+        return BaseResult.ok(commonSrv.getNewId());
     }
 
     @RequestMapping("/getNewIdList")
     public BaseResult<List<String>> getNewIdList(int num) {
-        return BaseResult.OK(commonSrv.getNewIdList(num));
+        return BaseResult.ok(commonSrv.getNewIdList(num));
     }
 
     /**

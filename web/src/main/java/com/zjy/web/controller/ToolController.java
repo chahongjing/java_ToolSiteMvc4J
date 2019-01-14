@@ -46,7 +46,7 @@ public class ToolController extends BaseController {
     public BaseResult getTableInfo(String type, String url, String user, String password, String tableName) {
         DbType dbType = DbType.getByCode(type);
         String tableInfo = toolSrv.getTableInfo(dbType, url, user, password, tableName);
-        return BaseResult.OK(tableInfo);
+        return BaseResult.ok(tableInfo);
     }
 
     @RequestMapping("/getDriverUrlList")
@@ -65,6 +65,6 @@ public class ToolController extends BaseController {
             list.add(dbType);
         }
         map.put("dbSet", list);
-        return BaseResult.OK(map);
+        return BaseResult.ok(map);
     }
 }

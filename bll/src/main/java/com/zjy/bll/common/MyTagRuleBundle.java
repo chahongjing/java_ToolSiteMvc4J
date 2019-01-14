@@ -18,5 +18,6 @@ public class MyTagRuleBundle implements TagRuleBundle {
 
     @Override
     public void cleanUp(State defaultState, ContentProperty contentProperty, SiteMeshContext siteMeshContext) {
+        // 不作处理
     }
 }

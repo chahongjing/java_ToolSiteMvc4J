@@ -57,7 +57,7 @@ public class EchartsController {
     @ResponseBody
     public BaseResult<Map<String, Object>> getChartsOption() {
         Map<String, Object> chartsOptionData = getChartsOptionData();
-        return BaseResult.OK(chartsOptionData);
+        return BaseResult.ok(chartsOptionData);
     }
 
     private Map<String, Object> getChartsOptionData() {

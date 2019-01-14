@@ -5,6 +5,7 @@ import com.zjy.baseframework.enums.DbType;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.slf4j.Logger;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -16,8 +17,10 @@ import java.util.List;
  * Created by chahongjing on 2017/10/8.
  */
 public class DbHelperNew {
+    protected static Logger logger = LogHelper.getLogger(DbHelperNew.class);
 
     private DbHelperNew() {}
+
     private static DataSource dataSource;
 
     static {
@@ -25,11 +28,11 @@ public class DbHelperNew {
         // 如果要使用c3p0连接池，则要使用QueryRunner qr = new QueryRunner(dataSource);
         String driver = PropertiesHelper.getInstance().getProperties("db.driverClassName");
         if (!DbUtils.loadDriver(driver)) {
-            System.out.println("加载数据库驱动失败！" + driver);
+            logger.error("加载数据库驱动失败！{}",  driver);
         }
         for (DbType dbType : DbType.values()) {
             if (!DbUtils.loadDriver(dbType.getDriver())) {
-                System.out.println("加载数据库驱动失败！" + dbType.getDriver());
+                logger.error("加载数据库驱动失败！{}", dbType.getDriver());
             }
         }
     }
@@ -62,7 +65,7 @@ public class DbHelperNew {
             // insert方法返回插入行的主键,batch可以批量处理
             count = qr.update(conn, sql, params);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("执行更新失败！", e);
         } finally {
             DbUtils.closeQuietly(conn);
         }
@@ -70,11 +73,6 @@ public class DbHelperNew {
     }
 
     public static <T> T get(String sql, Class<T> clazz, Object... params) {
-        Connection conn = getConnection();
-        return get(conn, sql, clazz, params);
-    }
-
-    public static <T> T get(Connection conn, String sql, Class<T> clazz, Object... params) {
         List<T> list = getList(sql, clazz, params);
         if (list != null && !list.isEmpty()) {
             return list.get(0);
@@ -99,7 +97,7 @@ public class DbHelperNew {
 //            QueryRunner qr = new QueryRunner(dataSource);
 //            r = (List<T>)qr.query(sql, new BeanListHandler(clazz));
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("获取列表失败！", e);
         } finally {
             DbUtils.closeQuietly(conn);
         }
@@ -115,13 +113,7 @@ public class DbHelperNew {
         String url = PropertiesHelper.getInstance().getProperties("db.url");
         String user = PropertiesHelper.getInstance().getProperties("db.userName");
         String password = PropertiesHelper.getInstance().getProperties("db.password");
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(url, user, password);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return conn;
+        return getConnection(url, user, password);
     }
 
     /**
@@ -134,7 +126,7 @@ public class DbHelperNew {
         try {
             conn = DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("获取连接失败！", e);
         }
         return conn;
     }

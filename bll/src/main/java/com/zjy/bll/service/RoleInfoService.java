@@ -1,6 +1,6 @@
 package com.zjy.bll.service;
 
-import com.zjy.bll.baseBean.PageBean;
+import com.zjy.bll.basebean.PageBean;
 import com.zjy.bll.request.RoleInfoRequest;
 import com.zjy.bll.vo.RoleInfoVo;
 import com.zjy.entities.RoleInfo;

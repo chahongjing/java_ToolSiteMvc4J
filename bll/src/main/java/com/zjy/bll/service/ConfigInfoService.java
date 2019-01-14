@@ -1,6 +1,6 @@
 package com.zjy.bll.service;
 
-import com.zjy.bll.baseBean.PageBean;
+import com.zjy.bll.basebean.PageBean;
 import com.zjy.bll.request.ConfigInfoRequest;
 import com.zjy.bll.vo.ConfigInfoVo;
 import com.zjy.entities.ConfigInfo;

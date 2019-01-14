@@ -1,7 +1,7 @@
 package com.zjy.bll.service;
 
 import com.zjy.baseframework.BaseResult;
-import com.zjy.bll.baseBean.PageBean;
+import com.zjy.bll.basebean.PageBean;
 import com.zjy.bll.request.UserInfoRequest;
 import com.zjy.bll.vo.UserInfoVo;
 import com.zjy.entities.UserInfo;

@@ -1,6 +1,6 @@
 package com.zjy.bll.service;
 
-import com.zjy.bll.baseBean.PageBean;
+import com.zjy.bll.basebean.PageBean;
 import com.zjy.bll.request.MenuRequest;
 import com.zjy.bll.vo.MenuVo;
 import com.zjy.entities.Menu;
