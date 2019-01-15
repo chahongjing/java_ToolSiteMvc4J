@@ -241,7 +241,7 @@ router.beforeEach(function (to, from, next) {
   // next(false);
   // 处理面包屑
   if(to.path != from.path) {
-    var breadcrumb = router.app.$store.state.breadcrumb;
+    var breadcrumb = router.app.$store.state.breadcrumb.breadcurmbList;
     var breadcrumbIgnoreUrl = ['/', '/login'];
     var i = 0;
     for(; i < breadcrumb.length; i++) {

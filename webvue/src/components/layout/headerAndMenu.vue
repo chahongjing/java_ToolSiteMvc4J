@@ -3,7 +3,7 @@
     <app-header></app-header>
     <div class="body">
       <app-menu></app-menu>
-      <div class="right-main" :class='{"fullwin":!showMenuNew}'>
+      <div class="right-main" :class='{"fullwin":!showMenu, "showBreadcrumb":showBreadcrumb}'>
         <breadcrumb></breadcrumb>
         <div class="right-content">
           <transition name="slide-fade">
@@ -23,8 +23,11 @@
   export default {
     name: 'headerAndMenu',
     computed: {
-      showMenuNew() {
+      showMenu() {
         return this.$root.getShowMenu();
+      },
+      showBreadcrumb() {
+        return this.$root.getShowBreadcrumb();
       }
     },
     components:{appHeader, appMenu, breadcrumb}

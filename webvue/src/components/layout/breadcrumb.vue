@@ -1,5 +1,5 @@
 <template>
-  <div class="bread">
+  <div :class='{"bread":true,"hidebread":!showBread}'>
     <ul>
       <li>
         <a class='w100p h100p inline-block pl8 homebread' href='javascript:void(0)' title='首页'>
@@ -39,13 +39,16 @@
         }
       },
       setBreadcrumb: function () {
-        this.menuList = this.$store.state.breadcrumb;
+        this.menuList = this.$store.state.breadcrumb.breadcurmbList;
       }
     },
     computed: {
       showGoBack: function() {
-        var breadcrumb = this.$store && this.$store.state && this.$store.state.breadcrumb;
+        var breadcrumb = this.$store && this.$store.state && this.$store.state.breadcrumb && this.$store.state.breadcrumb.breadcurmbList;
         return breadcrumb && breadcrumb.length > 0;
+      },
+      showBread() {
+        return this.$root.getShowBreadcrumb();
       }
     }
   }
@@ -58,4 +61,5 @@
     font-size:1.2rem;
   }
   .homebread:hover .fa-home{transform:scale(1.3);}
+  .bread.hidebread{height:0;}
 </style>

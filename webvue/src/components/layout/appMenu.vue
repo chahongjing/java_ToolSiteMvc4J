@@ -1,5 +1,5 @@
 <template>
-  <div class="menu" :class='{"hidemenu":!showMenuNew}'>
+  <div class="menu" :class='{"hidemenu":!showMenu}'>
     <div class="slide-menu">
       <ul class="first-menu">
         <li v-for="item in list" :class="{'selected': item.isSelected}" :title="item.name"
@@ -131,7 +131,7 @@
       }
     },
     computed: {
-      showMenuNew() {
+      showMenu() {
         return this.$root.getShowMenu();
       }
     }

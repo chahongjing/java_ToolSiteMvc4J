@@ -57,18 +57,24 @@ new Vue({
       this.$store.commit("SET_SHOWMENU", showMenu);
     },
     getBreadcrumb() {
-      return this.$store.state.breadcrumb;
+      return this.$store.state.breadcrumb.breadcurmbList;
     },
     setBreadcrumb(breadcurmbList) {
       this.$store.commit("SET_BREADCRUMB", breadcurmbList);
     },
     setBreadcrumbName(name) {
-      var list = this.$store.state.breadcrumb;
+      var list = this.$store.state.breadcrumb.breadcrumb;
       if(!list || list.length == 0) return;
       list[list.length - 1].name = name;
     },
     clearBreadrumb() {
       this.$store.commit("CLEAR_BREADCRUMB");
+    },
+    getShowBreadcrumb() {
+      return this.$store.state.breadcrumb.showBreadcrumb;
+    },
+    setShowBreadcrumb(showBreadcrumb) {
+      this.$store.commit("SET_SHOWBREADCRUMB", showBreadcrumb);
     },
     getPermissionList() {
       return this.$store.state.permissionList;

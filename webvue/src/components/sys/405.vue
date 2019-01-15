@@ -49,6 +49,13 @@
 				// https://codepen.io/igloude/pen/qNNWKr
 				this.$root.goBack();
 			}
+		},
+		mounted:function() {
+          this.$root.setShowMenu(false);
+          this.$root.setShowBreadcrumb(false);
+		},
+		destroyed:function() {
+          this.$root.setShowBreadcrumb(true);
 		}
 	}
 </script>

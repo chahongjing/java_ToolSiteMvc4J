@@ -31,7 +31,7 @@ ul,li{margin:0;padding:0;list-style:none;}
 .body .menu{width:250px;height:100%;display:inline-block;float:left;border-right:1px solid #ccc;background-color:#edf1f2;transition:0.3s;}
 .body .right-main{width:calc(100% - 250px);height:100%;display:inline-block;float:left;overflow: hidden;background-color: #d6dae6;transition:0.3s;}
 .right-main.fullwin{width:calc(100%);}
-.body .bread{width:100%;height:35px;border-bottom:0px solid #aaa;background-color: #f5f5f5;}
+.body .bread{width:100%;height:35px;border-bottom:0px solid #aaa;background-color: #f5f5f5;overflow: hidden;transition:0.3s;}
 .body .bread ul,.body .bread ul li{height:100%;line-height: 35px;display:inline-block;}
 .body .bread ul{font-size:0;}
 .body .bread ul li{font-size:14px;position:relative;vertical-align: top;}
@@ -40,8 +40,9 @@ ul,li{margin:0;padding:0;list-style:none;}
 font-size:12px;top: 12px;left: -12px;color:#666;}
 .body .bread .bread-item .split{cursor: default;}
 .body .bread .bread-item:last-child a{pointer-events:none;text-decoration: none;color:#222;}
-.body .right-content{background-color:#fff;width:calc(100% - 20px);height:calc(100% - 57px);overflow:hidden;margin-left:10px;
-    margin-top:10px;border:1px solid #c8cddc;background-color: #f6f8fb;}
+.body .right-content{background-color:#fff;width:calc(100% - 20px);height:calc(100% - 20px);overflow:hidden;margin-left:10px;
+    margin-top:10px;border:1px solid #c8cddc;background-color: #f6f8fb;transition:0.2s;}
+.body .showBreadcrumb .right-content{height:calc(100% - 57px);}
 .body .right-content .right-header{height:50px;line-height:45px;border-bottom:1px solid #ddd;}
 .body .right-content .maincontent{width:100%;height:100%;overflow: auto;}
 
