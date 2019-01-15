@@ -201,7 +201,7 @@ var router = new Router({
         {
           path: '',
           name: '404',
-          component: resolve => require(['@/components/sys/404'], resolve),
+          component: resolve => require(['@/components/sys/405'], resolve),
           meta: {
               breadcurmbName: '无法访问'
           }
