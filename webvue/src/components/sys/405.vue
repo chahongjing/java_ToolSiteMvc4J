@@ -1,5 +1,5 @@
 <template>
-	<div class="bg-purple">
+	<div class="bg404-back">
 		<div class="stars">
 			<div class="custom-navbar">
 				<div class="navbar-links">
@@ -38,6 +38,11 @@
 <script>
 	export default {
 		name: 'sys405',
+		data: function() {
+			return {
+				showMenu: true
+			}
+		},
 		methods: {
 			goBack() {
 				// https://codepen.io/androhani/pen/deOpMZ
@@ -51,10 +56,12 @@
 			}
 		},
 		mounted:function() {
+		  this.showMenu = this.$root.getShowMenu();
           this.$root.setShowMenu(false);
           this.$root.setShowBreadcrumb(false);
 		},
 		destroyed:function() {
+          this.$root.setShowMenu(this.showMenu);
           this.$root.setShowBreadcrumb(true);
 		}
 	}
@@ -104,10 +111,9 @@
 		transform: rotate(-3600deg) !important;
 	}
 
-	.bg-purple{
+	.bg404-back{
 		position:relative;
 		font-family: 'Dosis', sans-serif;
-		background: url(../../../static/img/sys/bg_purple.png);
 		background-repeat: repeat-x;
 		background-size: cover;
 		background-position: left top;

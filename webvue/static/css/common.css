@@ -353,3 +353,4 @@ th.sortheader.desc:before,th.sortheader.asc:after{color:#080;}
 .sortable span{font-size:14px;display:inline-block; padding:3px 5px;border:1px solid #aaa;}
 .sortable .ui-sortable-placeholder{visibility: visible !important;display:inline-block;
     vertical-align: top;border:1px solid #bbb;outline: 1px dashed #27c24c;border-radius:2px;}
+.bg404-back{background: url('../img/sys/bg_purple.png');}
