@@ -5,6 +5,7 @@ import com.zjy.baseframework.ServiceException;
 import com.zjy.baseframework.enums.ResultStatus;
 import com.zjy.bll.basebean.PageBean;
 import com.zjy.bll.common.BaseService;
+import com.zjy.bll.common.ShiroRealm;
 import com.zjy.bll.dao.UserInfoDao;
 import com.zjy.bll.request.UserInfoRequest;
 import com.zjy.bll.vo.UserInfoVo;
@@ -16,6 +17,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +33,9 @@ import java.util.Map;
  */
 @Service
 public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> implements UserInfoService {
+
+    @Autowired
+    protected ShiroRealm shiroRealm;
 
     /**
      * 添加用户
@@ -160,6 +165,8 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
         }
         // 登录成功
         UserInfoVo userInfo = getByUserCode(user.getUserCode());
+        // 踢除多端同一用户session
+        shiroRealm.kickOutUser(userInfo.getUserCode());
         userInfo.setPermissionList(shiroRealm.getPermissions(userInfo.getUserId()));
         userInfo.setPassword(null);
         result.setStatus(ResultStatus.OK);

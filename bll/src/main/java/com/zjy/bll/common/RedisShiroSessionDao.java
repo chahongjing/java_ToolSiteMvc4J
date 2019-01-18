@@ -3,6 +3,7 @@ package com.zjy.bll.common;
 import com.zjy.baseframework.CacheHelper;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.eis.AbstractSessionDAO;
+import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 
-public class RedisShiroSessionDao extends AbstractSessionDAO {
+public class RedisShiroSessionDao extends EnterpriseCacheSessionDAO {
 
     @Autowired
     private CacheHelper cacheHelper;

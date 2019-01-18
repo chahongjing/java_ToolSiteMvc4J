@@ -20,6 +20,12 @@
         <property name="credentialsMatcher" ref="credentialsMatcher"/>
     </bean>
 
+    <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        <!-- 加密方式,MD5, SHA-1 -->
+        <property name="hashAlgorithmName" value="MD5"></property>
+        <property name="hashIterations" value="1024"></property>
+    </bean>
+
     <!-- 多个shiroRealm验证支持 -->
     <!--<bean id="defautModularRealm" class="com.zjy.bll.common.DefautModularRealm">-->
         <!--<property name="definedRealms">-->
@@ -33,18 +39,29 @@
 
     <!-- 自定义会话管理配置 -->
     <bean id="sessionManager" class="com.zjy.bll.common.SessionManager">
+        <property name="sessionIdCookie" ref="sessionIdCookie"/>
+        <property name="sessionIdCookieEnabled" value="true"/>
         <property name="sessionDAO" ref="sessionDAO" />
-        <property name="sessionIdCookie.path" value="/" />
+    </bean>
+
+    <!-- 指定本系统SESSIONID, 默认为: JSESSIONID -->
+    <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <property name="name" value="JSESSIONID" />
+        <property name="path" value="/" />
     </bean>
 
     <bean id="sessionDAO" class="com.zjy.bll.common.RedisShiroSessionDao">
+        <!--<property name="cacheManager" ref="shiroCacheManager"/>-->
     </bean>
 
-    <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
-        <!-- 加密方式,MD5, SHA-1 -->
-        <property name="hashAlgorithmName" value="MD5"></property>
-        <property name="hashIterations" value="1024"></property>
-    </bean>
+    <!-- 定义授权缓存管理器 -->
+    <!--<bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">-->
+        <!--<property name="cacheManager" ref="cacheManager"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">-->
+        <!--<property name="configLocation" value="classpath:ehcache.xml"/>-->
+    <!--</bean>-->
 
     <!-- Web应用中,Shiro可控制的Web请求必须经过Shiro主过滤器的拦截,Shiro对基于Spring的Web应用提供了完美的支持 -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">

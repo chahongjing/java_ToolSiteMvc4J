@@ -17,11 +17,15 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.subject.support.DefaultSubjectContext;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,6 +45,10 @@ public class ShiroRealm extends AuthorizingRealm {
 
     @Autowired
     private RolePermissionService rolePermissionSrv;
+
+    @Autowired
+    private SessionDAO sessionDAO;
+
     @Autowired
     private CacheHelper cacheHelper;
 
@@ -85,6 +93,17 @@ public class ShiroRealm extends AuthorizingRealm {
         //给当前用户设置权限
         info.addStringPermissions(permissions);
         return info;
+    }
+
+    public void kickOutUser(String userCode){
+        if(StringUtils.isBlank(userCode)) throw new IllegalArgumentException("用户编码不能为空！");
+        String curSessionId = SecurityUtils.getSubject().getSession().getId().toString();
+        Collection<Session> activeSessions = sessionDAO.getActiveSessions();
+        for (Session session : activeSessions) {
+            String sessionUserCode = String.valueOf(session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY));
+            if(!userCode.equals(sessionUserCode) || curSessionId.equals(session.getId())) continue;
+            session.setTimeout(0);
+        }
     }
 
     /**
