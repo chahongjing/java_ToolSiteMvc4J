@@ -15,9 +15,4 @@ public class ShiroRealmFrontAdmin extends ShiroRealmBackAdmin {
         super();
         this.setAuthenticationTokenClass(ShiroTokenFrontAdmin.class);
     }
-
-    @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) {
-        return super.doGetAuthenticationInfo(authcToken);
-    }
 }

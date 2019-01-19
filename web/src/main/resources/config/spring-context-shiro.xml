@@ -11,7 +11,7 @@
     <!-- 这里主要是设置自定义的单Realm应用,若有多个Realm,可使用'realms'属性代替 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="sessionManager" ref="sessionManager" />
-        <!--<property name="realm" ref="shiroRealm"/>-->
+        <!--<property name="realm" ref="shiroRealmBackAdmin"/>-->
         <property name="authenticator" ref="defautModularRealm" />
         <property name="authorizer" ref="defaultModularRealmAuthorizer"/>
     </bean>
@@ -33,8 +33,6 @@
         <property name="hashAlgorithmName" value="MD5"></property>
         <property name="hashIterations" value="1024"></property>
     </bean>
-
-    <bean id="memoryCacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"></bean>
 
     <!-- 多个shiroRealm验证支持 -->
     <bean id="defautModularRealm" class="org.apache.shiro.authc.pam.ModularRealmAuthenticator">
@@ -71,9 +69,11 @@
         <property name="path" value="/" />
     </bean>
 
-    <bean id="sessionDAO" class="com.zjy.bll.common.RedisShiroSessionDao">
+    <bean id="sessionDAO" class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO">
         <property name="cacheManager" ref="memoryCacheManager"/>
     </bean>
+
+    <bean id="memoryCacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"></bean>
 
     <!-- Web应用中,Shiro可控制的Web请求必须经过Shiro主过滤器的拦截,Shiro对基于Spring的Web应用提供了完美的支持 -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">

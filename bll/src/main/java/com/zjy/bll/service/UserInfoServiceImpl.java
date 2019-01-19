@@ -162,9 +162,7 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
         }
         // 登录成功
         UserInfoVo userInfo = getByUserCode(user.getUserCode());
-        // 踢除多端同一用户session
-        ShiroRealmUtils.kickOutUser(userInfo.getUserCode());
-        userInfo.setPermissionList(ShiroRealmUtils.getPermissions(userInfo.getUserId()));
+        userInfo.setPermissionList(ShiroRealmUtils.getPermissions());
         userInfo.setPassword(null);
         result.setStatus(ResultStatus.OK);
         result.setValue(userInfo);

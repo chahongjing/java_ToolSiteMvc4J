@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserRoleServiceImpl extends BaseService<UserRoleDao, UserRole> implements UserRoleService {
@@ -76,5 +77,11 @@ public class UserRoleServiceImpl extends BaseService<UserRoleDao, UserRole> impl
         roleList = (List<UserRoleVo>) dao.query(urv);
         cacheHelper.set(key, roleList);
         return roleList;
+    }
+
+    @Override
+    public List<String> queryUserRoleCodeList(String userId) {
+        List<UserRoleVo> userRoleList = queryListByUserId(userId);
+        return userRoleList.stream().map(UserRoleVo::getRoleCode).distinct().collect(Collectors.toList());
     }
 }

@@ -6,6 +6,7 @@ import com.zjy.bll.vo.*;
 import com.zjy.entities.RolePermission;
 import com.zjy.entities.enums.PermissionType;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,9 @@ public class RolePermissionServiceImpl extends BaseService<RolePermissionDao, Ro
 
     @Autowired
     protected PermissionService permissionSrv;
+
+    @Autowired
+    protected UserRoleService userRoleSrv;
 
     @Override
     public List<RelateCheckVo> getRolePermission(String id) {
@@ -147,5 +151,14 @@ public class RolePermissionServiceImpl extends BaseService<RolePermissionDao, Ro
     @Override
     public int deleteByPermissionId(String permissionId) {
         return dao.deleteByPermissionId(permissionId);
+    }
+
+    @Override
+    public List<String> getPermissions(String userId) {
+        List<UserRoleVo> userRoleList = userRoleSrv.queryListByUserId(userId);
+        List<String> roleIdList = userRoleList.stream().map(UserRoleVo::getRoleId).distinct().collect(Collectors.toList());
+        List<RolePermissionVo> permissionList = queryRolePermission(roleIdList);
+        return permissionList.stream().filter(item -> StringUtils.isNotBlank(item.getPermissionCode()))
+                .map(RolePermissionVo::getPermissionCode).distinct().collect(Collectors.toList());
     }
 }

@@ -2,14 +2,14 @@ package com.zjy.bll.vo;
 
 import com.zjy.entities.UserInfo;
 
-import java.util.List;
+import java.util.Set;
 
 public class UserInfoVo extends UserInfo {
     private String mingcheng;
     private String passwordAgain;
     private boolean isSave;
     private String orderBy;
-    private List<String> permissionList;
+    private Set<String> permissionList;
 
     public String getMingcheng() {
         return mingcheng;
@@ -35,11 +35,11 @@ public class UserInfoVo extends UserInfo {
         this.orderBy = orderBy;
     }
 
-    public List<String> getPermissionList() {
+    public Set<String> getPermissionList() {
         return permissionList;
     }
 
-    public void setPermissionList(List<String> permissionList) {
+    public void setPermissionList(Set<String> permissionList) {
         this.permissionList = permissionList;
     }
 

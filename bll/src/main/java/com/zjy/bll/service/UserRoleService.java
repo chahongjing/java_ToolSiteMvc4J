@@ -11,4 +11,6 @@ public interface UserRoleService {
     void saveUserRole(List<RelateCheckVo> list);
 
     List<UserRoleVo> queryListByUserId(String userId);
+
+    List<String> queryUserRoleCodeList(String userId);
 }
