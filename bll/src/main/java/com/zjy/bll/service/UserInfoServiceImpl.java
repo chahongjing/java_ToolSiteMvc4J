@@ -4,6 +4,7 @@ import com.zjy.baseframework.BaseResult;
 import com.zjy.baseframework.ServiceException;
 import com.zjy.baseframework.enums.ResultStatus;
 import com.zjy.bll.basebean.PageBean;
+import com.zjy.bll.common.BackAdminUsernamePasswordToken;
 import com.zjy.bll.common.BaseService;
 import com.zjy.bll.common.ShiroRealm;
 import com.zjy.bll.dao.UserInfoDao;
@@ -149,7 +150,7 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
     public BaseResult<UserInfoVo> login(UserInfo user) {
         BaseResult<UserInfoVo> result = new BaseResult<>();
         Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken token = new UsernamePasswordToken(user.getUserCode(), user.getPassword());
+        UsernamePasswordToken token = new BackAdminUsernamePasswordToken(user.getUserCode(), user.getPassword());
         try {
             // 登录
             subject.login(token);

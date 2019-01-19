@@ -10,14 +10,22 @@
     <!-- 即<property name="sessionMode" value="native"/>,详细说明见官方文档 -->
     <!-- 这里主要是设置自定义的单Realm应用,若有多个Realm,可使用'realms'属性代替 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <property name="realm" ref="shiroRealm"/>
         <property name="sessionManager" ref="sessionManager" />
-        <!--<property name="authenticator" ref="defautModularRealm" />-->
+        <!--<property name="realm" ref="shiroRealm"/>-->
+        <property name="authenticator" ref="defautModularRealm" />
+        <property name="authorizer" ref="defaultModularRealmAuthorizer"/>
     </bean>
 
     <bean id="shiroRealm" class="com.zjy.bll.common.ShiroRealm">
         <!-- 配置密码匹配器 -->
         <property name="credentialsMatcher" ref="credentialsMatcher"/>
+        <property name="cacheManager" ref="memoryCacheManager"/>
+    </bean>
+
+    <bean id="frontAdminShiroRealm" class="com.zjy.bll.common.FrontAdminShiroRealm">
+        <!-- 配置密码匹配器 -->
+        <property name="credentialsMatcher" ref="credentialsMatcher"/>
+        <property name="cacheManager" ref="memoryCacheManager"/>
     </bean>
 
     <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
@@ -26,16 +34,31 @@
         <property name="hashIterations" value="1024"></property>
     </bean>
 
+    <bean id="memoryCacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"></bean>
+
     <!-- 多个shiroRealm验证支持 -->
-    <!--<bean id="defautModularRealm" class="com.zjy.bll.common.DefautModularRealm">-->
-        <!--<property name="definedRealms">-->
-            <!--<map>-->
-                <!--&lt;!&ndash; 不同的shiroRealm &ndash;&gt;-->
-                <!--<entry key="loginRealm" value-ref="shiroRealm" />-->
-                <!--<entry key="userloginRealm" value-ref="otherShiroRealm" />-->
-            <!--</map>-->
-        <!--</property>-->
-    <!--</bean>-->
+    <bean id="defautModularRealm" class="org.apache.shiro.authc.pam.ModularRealmAuthenticator">
+        <property name="realms">
+            <list>
+                <!-- 不同的shiroRealm -->
+                <ref bean="shiroRealm" />
+                <ref bean="frontAdminShiroRealm" />
+            </list>
+        </property>
+        <property name="authenticationStrategy">
+            <bean class="org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy"></bean>
+        </property>
+    </bean>
+
+    <bean id="defaultModularRealmAuthorizer" class="org.apache.shiro.authz.ModularRealmAuthorizer">
+        <property name="realms">
+            <list>
+                <!-- 不同的shiroRealm -->
+                <ref bean="shiroRealm" />
+                <ref bean="frontAdminShiroRealm" />
+            </list>
+        </property>
+    </bean>
 
     <!-- 自定义会话管理配置 -->
     <bean id="sessionManager" class="com.zjy.bll.common.SessionManager">
@@ -51,17 +74,8 @@
     </bean>
 
     <bean id="sessionDAO" class="com.zjy.bll.common.RedisShiroSessionDao">
-        <!--<property name="cacheManager" ref="shiroCacheManager"/>-->
+        <property name="cacheManager" ref="memoryCacheManager"/>
     </bean>
-
-    <!-- 定义授权缓存管理器 -->
-    <!--<bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">-->
-        <!--<property name="cacheManager" ref="cacheManager"/>-->
-    <!--</bean>-->
-
-    <!--<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">-->
-        <!--<property name="configLocation" value="classpath:ehcache.xml"/>-->
-    <!--</bean>-->
 
     <!-- Web应用中,Shiro可控制的Web请求必须经过Shiro主过滤器的拦截,Shiro对基于Spring的Web应用提供了完美的支持 -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">

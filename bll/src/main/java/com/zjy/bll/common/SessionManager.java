@@ -25,10 +25,9 @@ import java.io.Serializable;
  */
 public class SessionManager extends DefaultWebSessionManager {
 
-    private static String shiroSessionIdCookieName = "JSESSIONID";
-
     @Override
     protected Serializable getSessionId(ServletRequest request, ServletResponse response) {
+        String shiroSessionIdCookieName = this.getSessionIdCookie().getName();
         String jsessionId = null;
         HttpServletRequest rq = WebUtils.toHttp(request);
         HttpServletResponse rs = WebUtils.toHttp(response);

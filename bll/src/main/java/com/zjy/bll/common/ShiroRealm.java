@@ -38,19 +38,24 @@ import java.util.stream.Collectors;
 public class ShiroRealm extends AuthorizingRealm {
 
     @Autowired
-    private UserInfoService userInfoSvc;
+    protected UserInfoService userInfoSvc;
 
     @Autowired
-    private UserRoleService userRoleSrv;
+    protected UserRoleService userRoleSrv;
 
     @Autowired
-    private RolePermissionService rolePermissionSrv;
+    protected RolePermissionService rolePermissionSrv;
 
     @Autowired
-    private SessionDAO sessionDAO;
+    protected SessionDAO sessionDAO;
 
     @Autowired
-    private CacheHelper cacheHelper;
+    protected CacheHelper cacheHelper;
+
+    public ShiroRealm() {
+        super();
+        this.setAuthenticationTokenClass(BackAdminUsernamePasswordToken.class);
+    }
 
     /**
      * 获取当前登录用户数据库信息
