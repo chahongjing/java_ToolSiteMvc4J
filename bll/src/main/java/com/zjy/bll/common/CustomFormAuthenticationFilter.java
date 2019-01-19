@@ -3,7 +3,6 @@ package com.zjy.bll.common;
 import com.alibaba.fastjson.JSON;
 import com.zjy.baseframework.BaseResult;
 import com.zjy.baseframework.enums.ResultStatus;
-import org.apache.http.HttpStatus;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.springframework.http.MediaType;
 

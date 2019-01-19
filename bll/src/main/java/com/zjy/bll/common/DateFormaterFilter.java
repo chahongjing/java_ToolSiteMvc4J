@@ -17,8 +17,14 @@ public class DateFormaterFilter implements ValueFilter {
     public Object process(Object object, String name, Object value) {
         if (!(value instanceof Date)) return value;
         Date val = (Date) value;
+        Field field = null;
         try {
-            Field field = object.getClass().getDeclaredField(name);
+            field = object.getClass().getDeclaredField(name);
+        } catch (Exception ex) {
+           // abc
+        }
+
+        try {
             if (field == null) {
                 field = object.getClass().getSuperclass().getDeclaredField(name);
             }

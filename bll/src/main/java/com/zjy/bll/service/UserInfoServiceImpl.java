@@ -4,9 +4,9 @@ import com.zjy.baseframework.BaseResult;
 import com.zjy.baseframework.ServiceException;
 import com.zjy.baseframework.enums.ResultStatus;
 import com.zjy.bll.basebean.PageBean;
-import com.zjy.bll.common.BackAdminUsernamePasswordToken;
 import com.zjy.bll.common.BaseService;
-import com.zjy.bll.common.ShiroRealm;
+import com.zjy.bll.common.ShiroRealmUtils;
+import com.zjy.bll.common.ShiroTokenBackAdmin;
 import com.zjy.bll.dao.UserInfoDao;
 import com.zjy.bll.request.UserInfoRequest;
 import com.zjy.bll.vo.UserInfoVo;
@@ -18,7 +18,6 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,9 +34,6 @@ import java.util.Map;
 @Service
 public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> implements UserInfoService {
 
-    @Autowired
-    protected ShiroRealm shiroRealm;
-
     /**
      * 添加用户
      *
@@ -47,7 +43,7 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
     @Override
     @Transactional
     public int add(UserInfo entity) {
-        entity.setCreatedBy(shiroRealm.getCurrentUser().getUserId());
+        entity.setCreatedBy(getCurrentUser().getUserId());
         entity.setCreatedOn(new Date());
         return super.add(entity);
     }
@@ -61,7 +57,7 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
     @Override
     @Transactional
     public int update(UserInfo entity) {
-        entity.setModifiedBy(shiroRealm.getCurrentUser().getUserId());
+        entity.setModifiedBy(getCurrentUser().getUserId());
         entity.setModifiedOn(new Date());
         return super.update(entity);
     }
@@ -92,7 +88,7 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
         if (voDb.getIsSave()) {
             update(vo);
         } else {
-            vo.setPassword(shiroRealm.getMd5Hash(vo.getPassword(), vo.getUserCode()));
+            vo.setPassword(ShiroRealmUtils.getMd5Hash(vo.getPassword(), vo.getUserCode()));
             add(vo);
         }
     }
@@ -113,7 +109,7 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
             vo.setIsSystem(YesNo.NO);
             vo.setIsDisabled(YesNo.NO);
             vo.setCreatedOn(new Date());
-            vo.setCreatedBy(shiroRealm.getCurrentUser().getUserId());
+            vo.setCreatedBy(getCurrentUser().getUserId());
         } else {
             vo.setIsSave(true);
         }
@@ -127,13 +123,13 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
         user.setUserCode(request.getUserName());
         user.setSex(request.getSex());
         List<String> orderBy = new ArrayList<>();
-        if(request.getNameOrderBy() != null) {
+        if (request.getNameOrderBy() != null) {
             orderBy.add("user.userName " + request.getNameOrderBy().toString());
         }
-        if(request.getCodeOrderBy() != null) {
+        if (request.getCodeOrderBy() != null) {
             orderBy.add("user.userCode " + request.getCodeOrderBy().toString());
         }
-        if(request.getCreatedOnOrderBy() != null) {
+        if (request.getCreatedOnOrderBy() != null) {
             orderBy.add("user.createdOn " + request.getCreatedOnOrderBy().toString());
         }
         request.setOrderBy(String.join(", ", orderBy));
@@ -150,7 +146,7 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
     public BaseResult<UserInfoVo> login(UserInfo user) {
         BaseResult<UserInfoVo> result = new BaseResult<>();
         Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken token = new BackAdminUsernamePasswordToken(user.getUserCode(), user.getPassword());
+        UsernamePasswordToken token = new ShiroTokenBackAdmin(user.getUserCode(), user.getPassword());
         try {
             // 登录
             subject.login(token);
@@ -167,8 +163,8 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
         // 登录成功
         UserInfoVo userInfo = getByUserCode(user.getUserCode());
         // 踢除多端同一用户session
-        shiroRealm.kickOutUser(userInfo.getUserCode());
-        userInfo.setPermissionList(shiroRealm.getPermissions(userInfo.getUserId()));
+        ShiroRealmUtils.kickOutUser(userInfo.getUserCode());
+        userInfo.setPermissionList(ShiroRealmUtils.getPermissions(userInfo.getUserId()));
         userInfo.setPassword(null);
         result.setStatus(ResultStatus.OK);
         result.setValue(userInfo);
@@ -217,7 +213,7 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
 
     @Override
     public void changePassword(String userCode, String oldPassword, String newPassword) {
-        UserInfo currentUser = shiroRealm.getCurrentUser();
+        UserInfo currentUser = getCurrentUser();
         if (currentUser == null) {
             throw new ServiceException("用户未登录！");
         }
@@ -235,8 +231,8 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
         if (StringUtils.isBlank(newPassword)) {
             throw new ServiceException("请输入新密码！");
         }
-        String oldPasswordEnc = shiroRealm.getMd5Hash(oldPassword, userCodeCur);
-        String newPasswordEnc = shiroRealm.getMd5Hash(newPassword, userCodeCur);
+        String oldPasswordEnc = ShiroRealmUtils.getMd5Hash(oldPassword, userCodeCur);
+        String newPasswordEnc = ShiroRealmUtils.getMd5Hash(newPassword, userCodeCur);
         if (!oldPasswordEnc.equals(user.getPassword())) {
             throw new ServiceException("原密码错误！");
         }
@@ -253,7 +249,7 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
         if (StringUtils.isBlank(password)) {
             throw new ServiceException("密码不能为空！");
         }
-        String newPasswordEnc = shiroRealm.getMd5Hash(password, userCode);
+        String newPasswordEnc = ShiroRealmUtils.getMd5Hash(password, userCode);
         user.setPassword(newPasswordEnc);
         dao.updateUserPassword(user.getUserId(), user.getPassword());
     }

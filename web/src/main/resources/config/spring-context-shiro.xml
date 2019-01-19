@@ -16,13 +16,13 @@
         <property name="authorizer" ref="defaultModularRealmAuthorizer"/>
     </bean>
 
-    <bean id="shiroRealm" class="com.zjy.bll.common.ShiroRealm">
+    <bean id="shiroRealmBackAdmin" class="com.zjy.bll.common.ShiroRealmBackAdmin">
         <!-- 配置密码匹配器 -->
         <property name="credentialsMatcher" ref="credentialsMatcher"/>
         <property name="cacheManager" ref="memoryCacheManager"/>
     </bean>
 
-    <bean id="frontAdminShiroRealm" class="com.zjy.bll.common.FrontAdminShiroRealm">
+    <bean id="shiroRealmFrontAdmin" class="com.zjy.bll.common.ShiroRealmFrontAdmin">
         <!-- 配置密码匹配器 -->
         <property name="credentialsMatcher" ref="credentialsMatcher"/>
         <property name="cacheManager" ref="memoryCacheManager"/>
@@ -40,9 +40,8 @@
     <bean id="defautModularRealm" class="org.apache.shiro.authc.pam.ModularRealmAuthenticator">
         <property name="realms">
             <list>
-                <!-- 不同的shiroRealm -->
-                <ref bean="shiroRealm" />
-                <ref bean="frontAdminShiroRealm" />
+                <ref bean="shiroRealmBackAdmin" />
+                <ref bean="shiroRealmFrontAdmin" />
             </list>
         </property>
         <property name="authenticationStrategy">
@@ -53,9 +52,8 @@
     <bean id="defaultModularRealmAuthorizer" class="org.apache.shiro.authz.ModularRealmAuthorizer">
         <property name="realms">
             <list>
-                <!-- 不同的shiroRealm -->
-                <ref bean="shiroRealm" />
-                <ref bean="frontAdminShiroRealm" />
+                <ref bean="shiroRealmBackAdmin" />
+                <ref bean="shiroRealmFrontAdmin" />
             </list>
         </property>
     </bean>

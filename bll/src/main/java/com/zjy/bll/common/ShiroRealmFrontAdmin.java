@@ -9,11 +9,11 @@ import org.apache.shiro.authc.AuthenticationToken;
  * @author chahongjing
  * @create 2016-10-27 23:04
  */
-public class FrontAdminShiroRealm extends ShiroRealm {
+public class ShiroRealmFrontAdmin extends ShiroRealmBackAdmin {
 
-    public FrontAdminShiroRealm() {
+    public ShiroRealmFrontAdmin() {
         super();
-        this.setAuthenticationTokenClass(FrontAdminUsernamePasswordToken.class);
+        this.setAuthenticationTokenClass(ShiroTokenFrontAdmin.class);
     }
 
     @Override

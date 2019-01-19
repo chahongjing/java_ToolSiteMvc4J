@@ -21,14 +21,14 @@ public class ConfigInfoServiceImpl extends BaseService<ConfigInfoDao, ConfigInfo
 
     @Override
     public int add(ConfigInfo vo) {
-        vo.setCreatedBy(shiroRealm.getCurrentUser().getUserId());
+        vo.setCreatedBy(getCurrentUser().getUserId());
         vo.setCreatedOn(new Date());
         return super.add(vo);
     }
 
     @Override
     public int update(ConfigInfo vo) {
-        vo.setModifiedBy(shiroRealm.getCurrentUser().getUserId());
+        vo.setModifiedBy(getCurrentUser().getUserId());
         vo.setModifiedOn(new Date());
         return super.update(vo);
     }

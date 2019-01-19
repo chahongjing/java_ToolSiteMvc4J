@@ -96,8 +96,8 @@ public class UserInfoController extends BaseController {
     @PostMapping("/save")
     @ResponseBody
     public BaseResult<String> save(UserInfoVo vo) {
-        UserInfo currentUser = shiroRealm.getCurrentUser();
-        if (!(shiroRealm.isPermitted("userEdit_save") || (currentUser != null && currentUser.getUserCode().equals(vo.getUserCode())))) {
+        UserInfo currentUser = getCurrentUser();
+        if (!(isPermitted("userEdit_save") || (currentUser != null && currentUser.getUserCode().equals(vo.getUserCode())))) {
             throw new UnauthorizedException();
         }
         userInfoSrv.save(vo);

@@ -132,7 +132,7 @@ public class MenuServiceImpl extends BaseService<MenuDao, Menu> implements MenuS
 
     @Override
     public List<MenuVo> queryPermissionMenu() {
-        String userId = shiroRealm.getCurrentUser().getUserId();
+        String userId = getCurrentUser().getUserId();
         List<UserRoleVo> roleList = userRoleSrv.queryListByUserId(userId);
         List<String> roleIdList = roleList.stream().map(UserRoleVo::getRoleId).collect(Collectors.toList());
         List<MenuVo> result = new ArrayList<>();

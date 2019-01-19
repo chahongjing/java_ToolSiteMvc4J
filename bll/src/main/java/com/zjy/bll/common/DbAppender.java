@@ -30,7 +30,7 @@ public class DbAppender extends DBAppenderBase<LoggingEvent> {
 
     @Override
     protected void subAppend(LoggingEvent loggingEvent, Connection connection, PreparedStatement insertStatement) throws Throwable {
-        insertStatement.setString(1, null == ShiroRealm.getUserId() ? StringUtils.EMPTY : ShiroRealm.getUserId());
+        insertStatement.setString(1, null == ShiroRealmUtils.getCurrentUserId() ? StringUtils.EMPTY : ShiroRealmUtils.getCurrentUserId());
         bindLoggingEventWithInsertStatement(insertStatement, loggingEvent);
         int updateCount = insertStatement.executeUpdate();
         if (updateCount != 1) {
@@ -40,7 +40,7 @@ public class DbAppender extends DBAppenderBase<LoggingEvent> {
 
     private void bindLoggingEventWithInsertStatement(PreparedStatement stmt, LoggingEvent loggingEvent) throws SQLException {
         StackTraceElement caller = StackTraceElementHelper.extractFirstCaller(loggingEvent.getCallerData());
-        if(caller == null) caller = CallerData.naInstance();
+        if (caller == null) caller = CallerData.naInstance();
         Object[] canshus = loggingEvent.getArgumentArray();
         int length = canshus == null ? 0 : canshus.length;
         stmt.setString(2, caller.getFileName());
