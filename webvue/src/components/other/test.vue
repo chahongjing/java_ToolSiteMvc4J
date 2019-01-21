@@ -149,7 +149,7 @@ export default {
         containment: sortable.closest('table'),
         connectWith: sortable,
         appendTo: sortable,
-        handle:sortable.find('.fa-arrows'),
+        // handle:sortable.find('.fa-arrows'),
         revert: true,
         scrollSensitivity: 20,
         start: me.dragStart,
