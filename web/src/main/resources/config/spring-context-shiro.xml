@@ -11,21 +11,23 @@
     <!-- 这里主要是设置自定义的单Realm应用,若有多个Realm,可使用'realms'属性代替 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="sessionManager" ref="sessionManager" />
-        <!--<property name="realm" ref="shiroRealmBackAdmin"/>-->
-        <property name="authenticator" ref="defautModularRealm" />
-        <property name="authorizer" ref="defaultModularRealmAuthorizer"/>
+        <property name="realm" ref="shiroRealmBackAdmin"/>
+        <!--<property name="authenticator" ref="defautModularRealm" />-->
+        <!--<property name="authorizer" ref="defaultModularRealmAuthorizer"/>-->
     </bean>
 
-    <bean id="shiroRealmBackAdmin" class="com.zjy.bll.common.ShiroRealmBackAdmin">
+    <bean id="shiroRealmBackAdmin" class="com.zjy.bll.common.shiro.ShiroRealmBackAdmin">
         <!-- 配置密码匹配器 -->
         <property name="credentialsMatcher" ref="credentialsMatcher"/>
         <property name="cacheManager" ref="memoryCacheManager"/>
+        <property name="authenticationTokenClass" value="com.zjy.bll.common.shiro.ShiroTokenBackAdmin"/>
     </bean>
 
-    <bean id="shiroRealmFrontAdmin" class="com.zjy.bll.common.ShiroRealmFrontAdmin">
+    <bean id="shiroRealmFrontAdmin" class="com.zjy.bll.common.shiro.ShiroRealmFrontAdmin">
         <!-- 配置密码匹配器 -->
         <property name="credentialsMatcher" ref="credentialsMatcher"/>
         <property name="cacheManager" ref="memoryCacheManager"/>
+        <property name="authenticationTokenClass" value="com.zjy.bll.common.shiro.ShiroTokenFrontAdmin"/>
     </bean>
 
     <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
@@ -57,7 +59,7 @@
     </bean>
 
     <!-- 自定义会话管理配置 -->
-    <bean id="sessionManager" class="com.zjy.bll.common.SessionManager">
+    <bean id="sessionManager" class="com.zjy.bll.common.shiro.SessionManager">
         <property name="sessionIdCookie" ref="sessionIdCookie"/>
         <property name="sessionIdCookieEnabled" value="true"/>
         <property name="sessionDAO" ref="sessionDAO" />
@@ -115,7 +117,7 @@
         </property>
     </bean>
 
-    <bean id="formAuthenticationFilter" class="com.zjy.bll.common.CustomFormAuthenticationFilter"/>
+    <bean id="formAuthenticationFilter" class="com.zjy.bll.common.shiro.CustomFormAuthenticationFilter"/>
 
     <!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>

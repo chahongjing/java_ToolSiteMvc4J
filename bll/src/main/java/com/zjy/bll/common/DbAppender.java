@@ -3,6 +3,7 @@ package com.zjy.bll.common;
 import ch.qos.logback.classic.spi.CallerData;
 import ch.qos.logback.classic.spi.LoggingEvent;
 import com.zjy.baseframework.StackTraceElementHelper;
+import com.zjy.bll.common.shiro.ShiroRealmUtils;
 import com.zjy.bll.enums.LogLevel;
 import org.apache.commons.lang3.StringUtils;
 

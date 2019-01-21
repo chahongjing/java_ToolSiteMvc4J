@@ -3,7 +3,7 @@ package com.zjy.web.controller;
 import com.zjy.baseframework.LogHelper;
 import com.zjy.bll.common.MyCustomDateEditor;
 import com.zjy.bll.common.MyCustomZonedDateEditor;
-import com.zjy.bll.common.ShiroRealmUtils;
+import com.zjy.bll.common.shiro.ShiroRealmUtils;
 import com.zjy.entities.UserInfo;
 import org.slf4j.Logger;
 import org.springframework.ui.Model;
