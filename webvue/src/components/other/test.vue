@@ -27,7 +27,9 @@
         <tbody>
           <tr v-for='rongQi in list'>
             <td :data-id='rongQi.id' class='sortable a'>
-              <span v-for='item in rongQi.dataList' v-text='item.name + "" + item.xuhao' :data-id='item.id' :data-pid='rongQi.id'>
+              <span v-for='item in rongQi.dataList' :data-id='item.id' :data-pid='rongQi.id'>
+                <span v-text='item.name + "" + item.xuhao'></span>
+                <i class='fa fa-arrows pointer'></i>
               </span>
             </td>
           </tr>
@@ -46,7 +48,9 @@
         <tbody>
           <tr v-for='rongQi in list2'>
             <td :data-id='rongQi.id' class='sortable b'>
-              <span v-for='item in rongQi.dataList' v-text='item.name + "" + item.xuhao' :data-id='item.id' :data-pid='rongQi.id'>
+              <span v-for='item in rongQi.dataList' :data-id='item.id' :data-pid='rongQi.id'>
+                <span v-text='item.name + "" + item.xuhao'></span>
+                <i class='fa fa-arrows pointer'></i>
               </span>
             </td>
           </tr>
@@ -145,6 +149,7 @@ export default {
         containment: sortable.closest('table'),
         connectWith: sortable,
         appendTo: sortable,
+        handle:sortable.find('.fa-arrows'),
         revert: true,
         scrollSensitivity: 20,
         start: me.dragStart,
@@ -157,6 +162,7 @@ export default {
         containment: sortable.closest('table'),
         connectWith: sortable,
         appendTo: sortable,
+        handle:sortable.find('.fa-arrows'),
         revert: true,
         scrollSensitivity: 20,
         start: me.dragStart,
@@ -166,7 +172,7 @@ export default {
     dragStart(event, curEle) {
         // 设置高度
         curEle.helper.css({backgroundColor:'rgba(255,255,255,0.5)'});
-        // curEle.placeholder.css({visibility:'visible !important'});
+        curEle.placeholder.css({height:'29px'});
       },
       dragStop(event, curEle, list) {
         // 获取信息
@@ -275,4 +281,5 @@ export default {
   .mytree{border: 1px solid #ddd;padding: 10px 10px 10px 5px;}
   .aa{width:200px;height:200px;background-color:#fff;border:3px solid;border-image:linear-gradient(to bottom, red 0%, gold 100%);border-image-slice:1;}
   .trcon{border:1px solid #999;}
+  .sortable > span{font-size:14px;display:inline-block; padding:3px 5px;border:1px solid #aaa;}
 </style>
