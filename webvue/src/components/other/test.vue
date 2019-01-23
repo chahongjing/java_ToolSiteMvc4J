@@ -153,7 +153,7 @@ export default {
         revert: true,
         scrollSensitivity: 20,
         start: me.dragStart,
-        stop: function(event, curEle) {return me.dragStop(event, curEle, me.list);}
+        stop: function(event, curEle) {return me.dragStop(event, curEle, sortable, me.list);}
       }).disableSelection();
 
 
@@ -166,7 +166,7 @@ export default {
         revert: true,
         scrollSensitivity: 20,
         start: me.dragStart,
-        stop: function(event, curEle) {return me.dragStop(event, curEle, me.list2);}
+        stop: function(event, curEle) {return me.dragStop(event, curEle, sortable, me.list2);}
       }).disableSelection();
     },
     dragStart(event, curEle) {
@@ -174,7 +174,8 @@ export default {
         curEle.helper.css({backgroundColor:'rgba(255,255,255,0.5)'});
         curEle.placeholder.css({height:'29px'});
       },
-      dragStop(event, curEle, list) {
+      dragStop(event, curEle, obj, list) {
+        var me = this;
         // 获取信息
         var map = this.findParentsAndCurrent(list, curEle);
         var newParent = map.get('newParent'), oldParent = map.get('oldParent'),
@@ -201,6 +202,19 @@ export default {
           oldParent.dataList[i].xuhao = i;
         }
         // 撤销jquery的dom操作，因为数据列表已发生变化,vue会自动更新列表
+        me.$nextTick(function() {
+          obj.sortable("destroy");
+          obj.sortable({
+            containment: obj.closest('table'),
+            connectWith: obj,
+            appendTo: obj,
+            handle:obj.find('.fa-arrows'),
+            revert: true,
+            scrollSensitivity: 20,
+            start: me.dragStart,
+            stop: function(event, curEle) {return me.dragStop(event, curEle, obj, me.list2);}
+          }).disableSelection();
+        });
         return false;
       },
       findParentsAndCurrent(list, curEle) {
