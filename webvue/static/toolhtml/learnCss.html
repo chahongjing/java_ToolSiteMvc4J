@@ -7,11 +7,9 @@
   <link href="../font-awesome/css/font-awesome.css" rel="stylesheet"/>
   <link href="../css/common.css" rel="stylesheet"/>
 
-
   <style>
     .next {
       display: inline-block;
-      width: 100px;
       height: 46px;
       background-color: #D0DCED;
       margin: 0;
@@ -19,6 +17,8 @@
       border: 0;
       float: left;
       position: relative;
+      line-height:46px;
+      text-indent: 25px;
     }
 
     .next:before {
@@ -63,7 +63,7 @@
       <p>radio</p>
       <label class="radio_checkbox" v-for="item in radioList">
         <input type='radio' name="radio" :value="item.value" v-model="radioChecked"
-               :disabled="radioDisabled"/>
+               :disabled="radioDisabled" />
         <i></i>
         <span v-text="item.name"></span>
       </label>
@@ -71,7 +71,7 @@
       <p>checkbox</p>
       <label class="radio_checkbox" v-for="item in checkboxList">
         <input type='checkbox' name="checkbox" :value="item.value" v-model="checkboxChecked"
-               :disabled="checkboxDisabled"/>
+               :disabled="checkboxDisabled" />
         <i></i>
         <span v-text="item.name"></span>
       </label>
@@ -84,10 +84,12 @@
       </label>
       <br/><br/>
       <div class="pro">
-        <span class="next"></span>
-        <span class="next"></span>
-        <span class="next"></span>
-        <span class="next"></span>
+        <span class="next">element</span>
+        <span class="next">checked</span>
+        <span class="next">hover</span>
+        <span class="next">disabled</span>
+        <span class="next">disabled:checked</span>
+        <span class="next">disabled:hover</span>
       </div>
     </div>
   </div>

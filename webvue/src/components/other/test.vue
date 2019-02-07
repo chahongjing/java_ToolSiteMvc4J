@@ -291,7 +291,6 @@ export default {
   }
 </script>
 <style scoped>
-  @import './static/js/jquery-ui.css'
   #mainRongQi td,#mainRongQi2 td{border:1px solid #aaa;height:30px;}
   .mytree{border: 1px solid #ddd;padding: 10px 10px 10px 5px;}
   .aa{width:200px;height:200px;background-color:#fff;border:3px solid;border-image:linear-gradient(to bottom, red 0%, gold 100%);border-image-slice:1;}

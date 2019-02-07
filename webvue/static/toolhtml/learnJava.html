@@ -5,6 +5,9 @@
 	<title>学习java</title>
 	<link rel='stylesheet' type='text/css' href='../bootstrap/css/bootstrap.min.css'>
 	<link rel='stylesheet' type='text/css' href='../css/common.css'>
+	<style>
+      table td,table th{border:1px solid #b4b4b4;}
+	</style>
 </head> 
 <body class='elearn'>
 	<h2>bean属性操作</h2>
@@ -65,6 +68,45 @@
 			<li>Predicate&lt;String&gt; pre = (x) ->{System.out.print(x);return false;}; pre.test("abc")</li>
 			<li>Consumer&lt;String&gt; con = (x) -> {System.out.println(x);}; con.accept("abc")</li>
 			<li>Supplier&lt;String&gt; supp = () -> {return "Supplier";}; supp.get()</li>
+		</ul>
+	</p>
+
+	<hr>
+	<h2>Queue</h2>
+	<p>
+		<ul class='list'>
+			<li>BlockingQueue
+			    <table>
+			      <tr>
+			        <th></th>
+			        <th>不可用时抛出异常</th>
+			        <th>不可用时阻塞</th>
+			        <th>特殊值(不可用时返回false，不抛异常)</th>
+			        <th>超时</th>
+			      </tr>
+			      <tr>
+			        <td>插入</td>
+			        <td>add</td>
+			        <td>put</td>
+			        <td>offer</td>
+			        <td>offer(e, time, unit)</td>
+			      </tr>
+			      <tr>
+			        <td>移除</td>
+			        <td>remove</td>
+			        <td>take</td>
+			        <td>poll</td>
+			        <td>poll(time, unit)</td>
+			      </tr>
+			      <tr>
+			        <td>检查</td>
+			        <td>element</td>
+			        <td>peek</td>
+			        <td>-</td>
+			        <td>-</td>
+			      </tr>
+			    </table>
+			</li>
 		</ul>
 	</p>
 </body> 

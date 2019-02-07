@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset='utf-8'> 
-	<title>学习加密</title>
+	<title>学习线程</title>
 	<link rel='stylesheet' type='text/css' href='../bootstrap/css/bootstrap.min.css'>
 	<link rel='stylesheet' type='text/css' href='../css/common.css'>
 </head> 
@@ -16,7 +16,7 @@
 			<li>线程池
 				<ul class='list'>
 					<li>Executor，Executors，ExecutorService，CompletionService，Future，Callable</li>
-					<li>FixedThreadPool:创建固定数目线程的线程池。</li>
+					<li>FixedThreadPool:创建固定数目线程的线程池。不是一次创建指定数量线程，而是逐步创建，直到到达指定数量，如果其中有线程异常而中止，则会补充一个线程，但不会超过指定数量。</li>
 					<li>CachedThreadPool:创建一个可缓存的线程池,如果现有线程没有可用的，则创建一个新线 程并添加到池中。终止并从缓存中移除那些已有 60 秒钟未被使用的线程。</li>
 					<li>SingleThreadExecutor:创建一个单线程化的Executor。</li>
 					<li>ScheduledThreadPool:创建一个支持定时及周期性的任务执行的线程池，多数情况下可用来替代Timer类。</li>
@@ -25,6 +25,7 @@
 			</li>
 			<li>Future接口；可对于具体的Runnable或者Callable任务的执行结果进行取消、查询是否完成、获取结果</li>
 			<li>FutureTask实现RunnableFuture，RunnableFuture继承Runnable, Future</li>
+			<li>jvm只有在所有非守护线程都结束时才会结束，如果无法正确关闭excutor那么jvm将无法结束。ExecutorService中有shutdown用来平滑的关闭过程，正在进行的任务和未进行的任务都可以正常结束，但不能再提交新的任务。如果相立即结束所有任务，包括正在执行的，可以用shutdownNow方法。jvm结束时会调用结束勾子，RunTime.addShutdownHook(Thread)</li>
 		</ul>
 	</p>
 	<hr>
@@ -40,6 +41,8 @@
 			<li>悲观锁：假设最坏的情况，每次使用都认为别人会修改，所以每次使用时都会上锁</li>
 			<li>乐观锁：假设最好的情况，每次使用都认为别人不会修改，所以每次使用不上锁，但在更新时判断(C)下在此期间别人有没有去更新(S), CAS</li>
 			<li>分段锁：其实不是锁，只是一种设计，如ConcurrentHashMap</li>
+			<li>闭锁：当闭锁达到某种状态前没有任何线程可以通过，当达到这种状态后所有线程都可以通过，并且状态不会再改变，他是一次性对象，不能被重置，如CountDownLatch</li>
+			<li>栅栏：</li>
 		</ul>
 	</p>
 	<hr>
@@ -47,14 +50,15 @@
 	<p>
 		<ul class='list'>
 			<li>ReentrantLock可重入锁，悲观锁</li>
-			<li>ReadWriteLock读写锁</li>
+			<li>ReadWriteLock读写锁。对象暴露两个lock对象，一个用于读，一个用于写，允许多读，一个写，但读和写不能同时进行</li>
 			<li>Semaphore：可以控同时访问的线程个数，如一个资源可以同时最多让5个线程访问</li>
-			<li>CountDownLatch:等其它几个操作执行完成后再执行</li>
-			<li>CyclicBarrier：让一组操作等待某个状态后再全部同时执行</li>
-			<li>synchronized悲观锁</li>
+			<li>CountDownLatch:等其它几个操作执行完成后再执行当前操作（多个后执行一个），一般用于等待事件。不能被重置。</li>
+			<li>CyclicBarrier：让一组操作等待某个状态后再全部同时执行（等待一个后执行多个），一般用于等待其它线程。可以被重置供下次使用。</li>
+			<li>synchronized悲观锁，重量级，不仅可以修改变量，还可修饰方法。synchronized不仅保证可见性，而且还保证原子性，因为，只有获得了锁的线程才能进入临界区，从而保证临界区中的所有语句都全部执行。多个线程争抢synchronized锁对象时，会出现阻塞。</li>
 			<li>java.util.concurrent包全完建立在CAS之上,即乐观锁</li>
 			<li>AtomicInteger</li>
-			<li>volatile</li>
+			<li>volatile：他不是锁。线程执行时，先把变量从主内存读取到线程自己的本地内存空间，然后再对该变量进行操作，对该变量操作完后，在某个时间再把变量刷新回主内存。JVM将内存组织为主内存和工作内存两个部分。主内存主要包括本地方法区和堆，每个线程都有一个工作内存，工作内存中主要包括两个部分，一个是属于该线程私有的栈和对主存部分变量拷贝的寄存器(包括程序计数器PC和cup工作的高速缓存区)。它是保证每次读取变量都从主内存中读取。volatile 修饰的变量会禁止指令重排序。volatile轻量级，只能修饰变量。volatile只能保证数据的可见性，不能用来同步，因为多个线程并发访问volatile修饰的变量不会阻塞。</li>
+			<li>线程安全性包括两个方面，①可见性。②原子性。仅仅使用volatile并不能保证线程安全性。而synchronized则可实现线程的安全性。</li>
 		</ul>
 	</p>
 	<hr>
@@ -82,6 +86,12 @@
 		<ul class='list'>
 			<li>Unsafe: Java无法直接访问底层操作系统，而是通过本地（native）方法来访问。不过尽管如此，JVM还是开了一个后门，JDK中有一个类Unsafe，它提供了硬件级别的原子操作。其是CAS的核心类</li>
 			<li>CAS: Compare and Swap即比较并交换，设计并发算法时常用到的一种技术，java.util.concurrent包全完建立在CAS之上，没有CAS也就没有此包，可见CAS的重要性。当前的处理器基本都支持CAS，只不过不同的厂家的实现不一样罢了。CAS有三个操作数：内存值V、旧的预期值A、要修改的值B，当且仅当预期值A和内存值V相同时，将内存值修改为B并返回true，否则什么都不做并返回false。有ABA漏洞问题</li>
+			<li>内置锁：Java语言中，提供了2种锁 
+				<ul class='list'>
+					<li>语言特性提供的内置锁:每一个对象都可以是一个锁,使用方式就是使用 synchronized 关键字，synchronized 方法或者 synchronized 代码块。</li>
+					<li>java.util.concurrent.locks 包中的锁</li>
+				</ul>
+			</li>
 		</ul>
 	</p>
 

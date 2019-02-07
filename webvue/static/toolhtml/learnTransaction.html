@@ -1,60 +1,75 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<meta charset='utf-8'> 
-	<title>学习加密</title>
+	<meta charset='utf-8'>
+	<title>学习事务</title>
 	<link rel='stylesheet' type='text/css' href='../bootstrap/css/bootstrap.min.css'>
 	<link rel='stylesheet' type='text/css' href='../css/common.css'>
-</head> 
+</head>
+
 <body class='elearn'>
-	<h2></h2>
-	<p>
-
-	</p>
+	<h2>事务配置方式一、注解</h2>
+	<ul>
+		<li>添加transactionManager&nbsp;&nbsp;bean</li>
+		<li>添加tx:annotation-driven，指定transaction-manager</li>
+		<li>然后就可以使用Transactional注解标记事务</li>
+	</ul>
 	<hr>
+	<h2>事务配置方式二、xml配置</h2>
+	<ul>
+		<li>添加transactionManager的bean</li>
+		<li>配置事务属性tx:advice</li>
+	</ul>
+	<hr>
+	<h2>@Transactional</h2>
+	<ul class='list'>
+		<li>事务注解方式
+			<ul class='list'>
+				<li>标注在类前：标示类中所有方法都进行事务处理</li>
+				<li>标注在接口、实现类的方法前：标示方法进行事务处理</li>
+			</ul>
+		</li>
+		<li>属性
+			<ul class='list'>
+				<li>value：指定事务容器，一般为transactionManager</li>
+				<li>propagation：enum: Propagation</li>
+				<li>isolation： enum: Isolation</li>
+				<li>readOnly：读写或只读事务，默认读写,若为只读，可以提高性能</li>
+				<li>timeout：int (in seconds granularity)</li>
+				<li>rollbackFor：Class对象数组，必须继承自Throwable </li>
+				<li>rollbackForClassName：类名数组，必须继承自Throwable 导</li>
+				<li>noRollbackFor：Class对象数组，必须继承自Throwable </li>
+				<li>noRollbackForClassName：类名数组，必须继承自Throwable 导</li>
+			</ul>
+		</li>
+		<li>事务传播propagation
+			<ul class='list'>
+				<li>Propagation.REQUIRED：如果有事务， 那么加入事务， 没有的话新建一个(默认情况下)</li>
+				<li>Propagation.NOT_SUPPORTED：容器不为这个方法开启事务，如果有事务，则事务挂起</li>
+				<li>Propagation.REQUIRES_NEW：不管是否存在事务，都创建一个新的事务，原来的挂起，新的执行完毕，继续执行老的事务</li>
+				<li>Propagation.MANDATORY：必须在一个已有的事务中执行，否则抛出异常</li>
+				<li>Propagation.NEVER：必须在一个没有的事务中执行，否则抛出异常(与Propagation.MANDATORY相反)</li>
+				<li>Propagation.SUPPORTS：如果其他bean调用这个方法，在其他bean中声明事务，那就用事务。如果其他bean没有声明事务，那就不用事务</li>
+				<li>Propagation.NESTED，如果有事务，则在这个事务的嵌套事务中运行，否则开启一个新事务</li>
+			</ul>
+		</li>
+		<li>事务隔离级别isolation
+			<ul class='list'>
+				<li>Isolation.READ_UNCOMMITTED：读取未提交数据(会出现脏读， 不可重复读) 基本不使用，有可能事务执行到一半还未提交的数据也读取出来</li>
+				<li>Isolation.READ_COMMITTED：读取已提交数据(会出现不可重复读和幻读)</li>
+				<li>Isolation.REPEATABLE_READ：加行锁，可重复读(会出现幻读)，SQLSERVER默认</li>
+				<li>Isolation.SERIALIZABLE：串行化，读的时候加表锁，并发量最低</li>
+			</ul>
+			<ul class="list">
+				<li>脏读 : 一个事务读取到另一事务未提交的更新数据</li>
+				<li>不可重复读 : 在同一事务中， 多次读取同一数据返回的结果有所不同， 换句话说， 后续读取可以读到另一事务已提交的更新数据。 相反， "可重复读"在同一事务中多次读取数据时， 能够保证所读数据一样，
+					也就是后续读取不能读到另一事务已提交的更新数据</li>
+				<li>幻读 : 一个事务读到另一个事务已提交的insert数据</li>
+			</ul>
+		</li>
+	</ul>
+	<hr>
+</body>
 
-	<div>
-		<p>事务配置方式一、注解</p>
-		<ul>
-			<li>添加transactionManager&nbsp;&nbsp;bean</li>
-			<li>添加tx:annotation-driven，指定transaction-manager</li>
-			<li>然后就可以使用Transactional注解标记事务
-				<ul>
-					<li>propagation，传播行为</li>
-					<li>isolation，隔离级别</li>
-					<li>readonly，指定操作全是读操作，没有写操作，可以提高性能</li>
-					<li>timeout，超时回滚</li>
-				</ul>
-			</li>
-		</ul>
-	</div>
-	<div>
-		<p>事务配置方式二、xml配置</p>
-		<ul>
-			<li>添加transactionManager的bean</li>
-			<li>配置事务属性tx:advice</li>
-		</ul>
-	</div>
-	<div>
-		<p>传播协行为（propagation属性）</p>
-		<ul>
-			<li>required，如果有事务运行就在当前事务下运行，否则开启一个新事务再运行</li>
-			<li>required_new，当前方法必须启动新事务，如果有其它事务在运行，其它事务先挂起</li>
-			<li>supports，如果有事务运行就在当前事务下运行，否则他可以不运行在事务中</li>
-			<li>not_supported，不运行在事务中，如果有事务，则事务挂起</li>
-			<li>mandatoy，必须运行在事务中，否则抛异常</li>
-			<li>never，不运行在事务中，否则抛异常</li>
-			<li>nested，如果有事务，则在这个事务的嵌套事务中运行，否则开启一个新事务</li>
-		</ul>
-	</div>
-	<div>
-		<p>隔离级别（如下级别越来越高）</p>
-		<ul>
-			<li>READ UNCOMMITTED，读未提交，有可能事务执行到一半还未提交的数据也读取出来</li>
-			<li>READ COMMITTED，读已提交的事务的数据，（不可重复读）</li>
-			<li>REPEATABLE READ，加行锁，行读取之后，再次读取，数据必定一样</li>
-			<li>SERIALIZABLE读的时候加表锁，并发量最低</li>
-		</ul>
-	</div>
-</body> 
 </html>

@@ -4,7 +4,11 @@
 	<meta charset='utf-8'> 
 	<title>学习jsp</title>
 	<link rel='stylesheet' type='text/css' href='../bootstrap/css/bootstrap.min.css'>
-	<link rel='stylesheet' type='text/css' href='../css/common.css'>
+    <link rel='stylesheet' type='text/css' href='../css/common.css'>
+    <style>
+      .bold{font-weight:bold;}
+      .red{color:red;}
+    </style>
 </head> 
 <body class='elearn'>
 	<h2>Model &amp; ModelAttribute &amp; RedirectAttributes</h2>
@@ -21,17 +25,16 @@
 	<hr>
 
 	<pre class="inline">out.pringln(myBean.getName());</pre>
-    相当于 &lt;%=
-    <pre class="inline">myBean.getName()</pre>
-    %&gt;
+    相当于 &lt;%=myBean.getName()%&gt;<br>
     在第一次访问jsp页面时，引擎先把jsp预生成为一个servlet（name_jsp.java）文件，在tomcat中work目录下，后续就会像访问正常的servlet一样的方式来访问jsp<br>
     因此也可以在web.xml中配置一个servlet<br>
-    &lt;servlet&gt;<br>&lt;servlet-name&gt;indexjsp&lt;/servlet-name&gt;<br>&lt;jsp-file&gt;/index.jsp&lt;/jsp-file&gt;<br>&lt;/servlet&gt;
-
+    <pre>
+&lt;servlet&gt;<br>  &lt;servlet-name&gt;indexjsp&lt;/servlet-name&gt;<br>  &lt;jsp-file&gt;/index.jsp&lt;/jsp-file&gt;<br>&lt;/servlet&gt;
+    </pre>
 <hr>
 <h2>include指令和标签区别</h2>
     <p>
-    <ul>
+    <ul class='list'>
         <li>
             &lt;%@ include file="list.jsp"%&gt;:静态包含，只会生成一个servlet
         </li>
@@ -42,7 +45,7 @@
     </p>
     <hr>
     <h2>九大内置对象</h2>
-    <ul>
+    <ul class='list'>
         <li>application(ServletContext)</li>
         <li>session(HttpSession)</li>
         <li>request(HttpSevletRequest)</li>
@@ -53,33 +56,29 @@
         <li>config(ServletConfig)</li>
         <li>exception，页面中isErrorPage=true时才可以使用， 如&lt;%@ apge isErrorPage="true" %&gt;</li>
     </ul>
-    <code>
-    <%
-        pageContext.setAttribute("name", "PageContext");
-        request.setAttribute("name", "HttpSevletRequest");
-        session.setAttribute("name", "HttpSession");
-        application.setAttribute("name", "ServletContext");
-    %>
-    其中application(<%= application.getAttribute("name") %>, 当前应用程序) &gt; session(<%= session.getAttribute("name") %>
-    ，当前会话)
-    &gt; request(<%= request.getAttribute("name") %>，当前请求) &gt; pageContext(<%= pageContext.getAttribute("name") %>
-    ，当前页面)
-    </code>
-    <br>他们都有
-    <ul>
+    <pre><code>&lt;%
+    pageContext.setAttribute("name", "PageContext");
+    request.setAttribute("name", "HttpSevletRequest");
+    session.setAttribute("name", "HttpSession");
+    application.setAttribute("name", "ServletContext");
+%&gt;
+其中
+application(&lt;%= application.getAttribute("name") %&gt;, 当前应用程序)
+&gt; session(&lt;%= session.getAttribute("name") %&gt;，当前会话)
+&gt; request(&lt;%= request.getAttribute("name") %&gt;，当前请求)
+&gt; pageContext(&lt;%= pageContext.getAttribute("name") %&gt;，当前页面)</pre></code>
+    他们都有
+    <ul class='list'>
         <li>setAttribute方法</li>
         <li>getAttribute方法</li>
         <li>getAttributeNames方法</li>
         <li>removeAttribute方法</li>
     </ul>
-    在jsp中可以定义页面类的属性，还可以定义方法, 要使用&lt;%<span class="bold red">!</span>
-    <pre class="inline">int a = 1;</pre>
-    %&gt;
+    在jsp中可以定义页面类的属性，还可以定义方法, 要使用&lt;%<span class="bold red">!</span>&nbsp;int a = 1;%&gt;
     <br>
     &lt;%<span class="bold red">!</span>
-    <pre class="inline">public void myFunc() { ... }</pre>
-    %&gt;
-    <br/><br/>
+    public void myFunc() { ... }
+    %&gt;<br/>
 
     <h3>jsp指令</h3>
     <p>
@@ -143,10 +142,10 @@
     <h3>测试代码<a href="http://blog.csdn.net/u010168160/article/details/49182867">学习地址</a></h3>
     <jsp:useBean id="testUser" class="com.zjy.entities.UserInfo" scope="session"></jsp:useBean>
     <jsp:setProperty name="testUser" property="userName" value="123"></jsp:setProperty>
-    age<%
+    age&lt;%
     UserInfo user1 = (UserInfo) session.getAttribute("testUser");
     out.println(user1.getUserName());
-%>
+%&lt;
     age
     <jsp:getProperty name="testUser" property="userName"></jsp:getProperty>
 

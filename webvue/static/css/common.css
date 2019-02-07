@@ -66,24 +66,25 @@ label.switch input:disabled + div span:nth-child(1){background-color:#ddd;color:
 label.switch input:disabled + div span:nth-child(3){color:#aaa;}
 
 /* radio & checkbox */
-.radio_checkbox,.togglecheckbox{cursor:pointer;display:inline-block;position:relative;margin-right:20px;margin-bottom:0;}
+.radio_checkbox,.togglecheckbox{cursor:pointer;display:inline-block;position:relative;margin-right:20px;margin-bottom:0;vertical-align: top;}
 .radio_checkbox input,.togglecheckbox input{display:none;}
-.radio_checkbox span,.togglecheckbox span{display:inline-block;line-height:30px;margin-left:20px;}
-.radio_checkbox i,.togglecheckbox i{display:inline-block;position:absolute;border:1px #777 solid;background-color:#fafafa;overflow:hidden;transition:0.2s;}
-.radio_checkbox i:after,.togglecheckbox i:after{position:absolute;font-size:14px;line-height: 10px;color:#3f51b5;transition:transform 0.2s ease-out;-webkit-transition:-webkit-transform 0.2s ease-out;}
-.radio_checkbox input:checked + i,.togglecheckbox input:checked + i {background-color:#f0f0f0;transition:background-color 0.2s ease-in;-webkit-transition:background-color 0.2s ease-in;border-color:#3f51b5;}
+.radio_checkbox i,.togglecheckbox i{display:inline-block;vertical-align: top;position:absolute;border:1px #777 solid;background-color:#fafafa;overflow:hidden;transition:0.2s;}
+.radio_checkbox i:after,.togglecheckbox i:after{position:absolute;font-size:14px;line-height: 10px;color:#3f51b5;border-color:#3f51b5;transition:transform 0.2s ease-out;}
+.radio_checkbox span,.togglecheckbox span{display:inline-block;line-height:30px;margin-left:20px;vertical-align: top;}
+.radio_checkbox input:checked + i,.togglecheckbox input:checked + i {background-color:#f0f0f0;transition:background-color 0.2s ease-in;border-color:#3f51b5;}
 .radio_checkbox:hover input + i{box-shadow: 0 0 5px #2068ed;border-color:#3f51b5;}
 .radio_checkbox input[type=radio]:checked + i{box-shadow: 0 0 5px #2068ed;}
-.radio_checkbox input:checked + i:after,.togglecheckbox input:checked + i:after{transform:scale(1) !important;-webkit-transform:scale(1);transition:transform 0.2s ease-in;}
-.radio_checkbox input:disabled + i{border-color:#bbb;}
-.radio_checkbox input:disabled:checked + i:after,.togglecheckbox input:checked:disabled + i:after{color:#aaa;}
-.radio_checkbox input:disabled ~ span,.togglecheckbox input:disabled ~ span{color:#aaa;}
-/* radio \26AB */
+.radio_checkbox input:checked + i:after,.togglecheckbox input:checked + i:after{transform:scale(1) !important;transition:transform 0.2s ease-in;}
+.radio_checkbox input:disabled + i,
+.radio_checkbox input:disabled i:after,.togglecheckbox input:checked i:after,
+.radio_checkbox input:disabled ~ span,.togglecheckbox input:disabled ~ span{opacity:0.5;}
+/* radio */
 .radio_checkbox input[type='radio'] + i{border-radius:100%;width:15px;height:15px;left:0px;top:7px;}
-.radio_checkbox input[type='radio'] + i:after{content:' ';top:2px;left:2px;width:9px;height:9px;transform:scale(0);-webkit-transform:scale(0);background-color: #3f51b5;border-radius: 50%;}
-/* checkbox \2713 */
+.radio_checkbox input[type='radio'] + i:after{content:' ';top:2px;left:2px;width:9px;height:9px;transform:scale(0);background-color: #3f51b5;border-radius: 50%;}
+/* checkbox */
 .radio_checkbox input[type='checkbox'] + i{width:16px;height:16px;left:1px;top:6px;}
-.radio_checkbox input[type='checkbox'] + i:after{font:normal normal normal 12px/1 FontAwesome;content:'\f00c';top:1px;left:1px;width:12px;height:12px;transform:scale(0);-webkit-transform:scale(0);}
+.radio_checkbox input[type='checkbox'] + i:after {content: '';display:block;width:10px;height:6px;border:2px solid #3f51b5;border-top-width: 0;border-right-width: 0;top:2.5px;left: 2px;transform: rotate(-45deg) scale(0);}
+.radio_checkbox input[type='checkbox']:checked + i:after{transform:rotate(-45deg) scale(1) !important;transition:transform 0.2s ease-in;}
 /* togglecheckbox */
 .togglecheckbox i{position:absolute;width:40px;height:22px;border-radius:18px;transition:0.2s ease-in;top:3px;}
 .togglecheckbox i:after{content:'';left:1px;top:1px;width:18px;height:18px;border:1px #aaa solid;border-radius:18px;background-color:#eee;transition:0.2s ease-in-out;}
@@ -249,7 +250,7 @@ a[disabled]{pointer-events:none;color:#333;}
 /*表格*/
 .table{margin:0;table-layout: fixed;min-width:750px;}
 .table td,.table th{height:40px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;cursor:default;border:1px solid #d5dade;}
-.table thead td,.table thead th,.table th{background-color:#f1f3f6;text-align: center;padding-left:5px;padding-right:5px;border-bottom-width:1px;}
+table thead td,table th{background-color:#f1f3f6;text-align: center;padding-left:5px;padding-right:5px;border-bottom-width:1px;}
 .table tbody tr:hover td{background-color: #fffad4;}
 .table tbody tr td{border-width:0;border-bottom-width: 1px;padding-left:7px;padding-right:7px;}
 .table td.operate{padding-top: 7px;padding-bottom:0;font-size: 16px;}

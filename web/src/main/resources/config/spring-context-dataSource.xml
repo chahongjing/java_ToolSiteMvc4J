@@ -9,6 +9,7 @@
 
     <!-- 数据源 -->
     <!-- class="org.apache.tomcat.dbcp.dbcp.BasicDataSource" -->
+    <!-- class="org.apache.commons.dbcp.BasicDataSource" -->
     <!-- class="org.springframework.jdbc.datasource.DriverManagerDataSource" -->
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">

@@ -1,28 +1,24 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset='utf-8'>
-	<title>学习加密</title>
+	<title>学习springmvc</title>
 	<link rel='stylesheet' type='text/css' href='../bootstrap/css/bootstrap.min.css'>
 	<link rel='stylesheet' type='text/css' href='../css/common.css'>
 </head>
+
 <body class='elearn'>
-	<h2></h2>
-	<p>
-
-	</p>
-	<hr>
-
-	spring 2.5之前用@controller，之后用注解：
-	<ul>
+	<h2>2.5之前用@controller，之后用注解：</h2>
+	<ul class='list'>
 		<li>@RequestParam</li>
 		<li>@ModelAttribute</li>
 		<li>@SessionAttributes</li>
 		<li>@InitBinder</li>
 	</ul>
-	<br>
-	spring3.0引入restful风格，如:
-	<ul>
+	<hr>
+	<h2>spring3.0引入restful风格，如:</h2>
+	<ul class='list'>
 		<li>@PathVariable(rest @PathParam):请求路径中的参数</li>
 		<li>@CookieValue</li>
 		<li>@RequestHeader</li>
@@ -32,28 +28,28 @@
 		<li>@RequestPart</li>
 		<li>@ExceptionHandler</li>
 	</ul>
-	<br>
-	spring4.3引入:
-	<ul>
+	<hr>
+	<h2>spring4.3引入:</h2>
+	<ul class='list'>
 		<li>@GetMapping;是一个组合相当于@RequestMapping(method = RequestMethod.GET)</li>
 		<li>@PostMapping</li>
 		<li>@PutMapping</li>
 		<li>@DeleteMapping</li>
 		<li>@PatchMapping</li>
 	</ul>
-	<br>
-	还有@NumberFormat 和 @DateTimeFormat支持，还引入mvc XML的命名空间用于支持mvc配置，如&lt;mvc:annotation-driven&gt;
+	<hr />
+	<h2>数组参数接收</h2>
+	var list = [];// 注意参数名也要编码
+	<br>@RequestParam("list[]") int[] list
 
-	<p>
-		<h2>数组参数接收</h2>
-		var list = [];// 注意参数名也要编码
-		<br>@RequestParam("list[]") int[] list
-	</p>
-	<p>
-		<h2>其它注解</h2>
-		<ul>
-			<li>@PostConstruct,bean初始化后调用事件</li>
-		</ul>
-	</p>
+	<hr>
+	<h2>其它注解</h2>
+	<ul class='list'>
+		<li>@PostConstruct,bean初始化后调用事件</li>
+		<li>还有@NumberFormat 和 @DateTimeFormat支持，还引入mvc XML的命名空间用于支持mvc配置，如&lt;mvc:annotation-driven&gt;</li>
+	</ul>
+
+	
 </body>
+
 </html>

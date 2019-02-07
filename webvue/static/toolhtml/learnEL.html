@@ -1,60 +1,68 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<meta charset='utf-8'> 
+	<meta charset='utf-8'>
 	<title>学习EL</title>
 	<link rel='stylesheet' type='text/css' href='../bootstrap/css/bootstrap.min.css'>
 	<link rel='stylesheet' type='text/css' href='../css/common.css'>
-</head> 
+</head>
+
 <body class='elearn'>
-	<h2></h2>
-	<p>
-		<ul>
-			<li>&lt;c:url value="/learn/fileupload1" /&gt;</li>
-			<li>${username}</li>
-		</ul>
-	</p>
+	<h2>jstl标签</h2>
+	<ul class='list'>
+		<li>&lt;c:url value="/learn/fileupload1" /&gt;</li>
+		<li>${username}</li>
+	</ul>
 	<hr>
 
 	<pre>
-		&lt;table&gt;
-		&lt;c:forEach var="item" items="${pageinfo.list}" varStatus="status"&gt;
-		&lt;tr
-		&lt;c:if test="${status.count%2 == 0}"&gt;bgcolor="#CCCCFE"&lt;/c:if&gt; align="left"&gt;
-		&lt;td&gt;
-		&lt;c:out value="${item.userName}"&gt;&lt;/c:out&gt;
-		&lt;/td&gt;
-		&lt;/tr&gt;
-		&lt;/c:forEach&gt;
-		&lt;/table&gt;
+&lt;table&gt;
+  &lt;c:forEach var="item" items="${pageinfo.list}" varStatus="status"&gt;
+    &lt;tr &lt;c:if test="${status.count%2 == 0}"&gt;bgcolor="#CCCCFE"&lt;/c:if&gt; align="left"&gt;
+      &lt;td&gt;
+        &lt;c:out value="${item.userName}"&gt;&lt;/c:out&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/c:forEach&gt;
+&lt;/table&gt;
 
-		&lt;fmt:message key="username"&gt;
-		&lt;fmt:param value="a"/&gt;
-		&lt;fmt:param value="b"/&gt;
-		&lt;/fmt:message&gt;
+&lt;fmt:message key="username"&gt;
+  &lt;fmt:param value="a"/&gt;
+  &lt;fmt:param value="b"/&gt;
+&lt;/fmt:message&gt;
 
-		&lt;h2&gt;el学习&lt;/h2&gt;
-		&lt;jsp:useBean id="userTest2" class="com.zjy.entities.UserInfo" scope="session"&gt;&lt;/jsp:useBean&gt;
-		&lt;jsp:setProperty name="userTest2" property="userName" value="曾军毅jsp获取数据"&gt;&lt;/jsp:setProperty&gt;
+</pre>
+	<h2>el学习</h2>
+	<h4>变量作用域</h4>
+	<ul class="list">
+		<li>page：页面域</li>
+		<li>request：请求域</li>
+		<li>session：会话域</li>
+		<li>application：应用程序域</li>
+		<li>设置示例：&lt;c:set var="name" value="csdn" scope="request" /&gt;；</li>
+		<li>获取示例：${pageScope.user}。requestScope，sessionScope，applicationScope</li>
+		<li>${id}获取参数，依次从page，request，session，application查找，直到找到第一个有值的。${param.id}是从请求参数中获取。相当于 request.getParameter("id")</li>
+	</ul>
+	<pre>
+&lt;jsp:useBean id="userTest2" class="com.zjy.entities.UserInfo" scope="session"&gt;&lt;/jsp:useBean&gt;roperty&gt;
+&lt;jsp:setProperty name="userTest2" property="userName" value="曾军毅jsp获取数据"&gt;&lt;/jsp:setP
+    </pre>
+	jsp获取数据：${sessionScope.userTest2.userName}<br>
+	controller获取数据：${sessionScope.userTest.userName}<br>
+	<h4>param</h4>
+	code:${param.code}<br>
+	name:${paramValues.name[0]},${paramValues.name[1]}<br>
+	<h4>其它方法</h4>
+	empty:${empty " "}<br>
 
-		jsp获取数据：${sessionScope.userTest2.userName}&lt;br&gt;
-		controller获取数据：${sessionScope.userTest.userName}
-		&lt;br&gt;
-		param&lt;br&gt;
-		code:${param.code}
-		&lt;br&gt;
-		name:${paramValues.name[0]},${paramValues.name[1]}
-
-		empty:${empty " "}
-
-		&lt;p&gt;c:url&lt;/p&gt;
-		&lt;c:url value="/test/a.html"&gt;&lt;/c:url&gt;
-
-		&lt;h2&gt;el tag&lt;/h2&gt;
-		&lt;myPre:readFile src="/WEB-INF/myTag.tld"&gt;
-		从页面上传过来的参数：${param.name}
-		&lt;myPre:sonTag/&gt;
-		&lt;/myPre:readFile&gt;
+	<pre>
+	  <h2>el 自定义tag</h2>
+&lt;myPre:readFile src="/WEB-INF/myTag.tld"&gt;
+  从页面上传过来的参数：${param.name}
+  &lt;myPre:sonTag/&gt;
+&lt;/myPre:readFile&gt;
 	</pre>
-</body> 
+</body>
+
 </html>
