@@ -18,11 +18,12 @@
 			</li>
 			<li>.class文件由类加载器加载，然后通过执行引擎把字节码编译成本地可执行代码，一般有三种模式，一次性编译，即时编译（用多少编译多少），自适应监控使用频率，高频率的本地代码被缓存
 			</li>
-			<li>启动类装载器，用户自定义装载器<br>
-				<ul>
-					<li>
-						启动类装载器：是jvm实现的一部分
+			<li>启动类装载器，扩展类加载器，应用程序类加载器，用户自定义装载器<br>
+				<ul class='list'>
+					<li>Bootstrp loader：启动类装载器，是jvm实现的一部分。Bootstrp加载器是用C++语言写的，它是在Java虚拟机启动后初始化的，它主要负责加载%JAVA_HOME%/jre/lib,-Xbootclasspath参数指定的路径以及%JAVA_HOME%/jre/classes中的类。
 					</li>
+					<li>扩展类加载器：ExtClassLoader，Bootstrp loader加载ExtClassLoader,并且将ExtClassLoader的父加载器设置为Bootstrp loader.ExtClassLoader是用Java写的，具体来说就是 sun.misc.Launcher$ExtClassLoader，ExtClassLoader主要加载%JAVA_HOME%/jre/lib/ext，此路径下的所有classes目录以及java.ext.dirs系统变量指定的路径中类库。</li>
+					<li>应用程序类加载器：AppClassLoader，Bootstrp loader加载完ExtClassLoader后，就会加载AppClassLoader,并且将AppClassLoader的父加载器指定为 ExtClassLoader。AppClassLoader也是用Java写成的，它的实现类是 sun.misc.Launcher$AppClassLoader，另外我们知道ClassLoader中有个getSystemClassLoader方法,此方法返回的正是AppclassLoader。AppClassLoader主要负责加载classpath所指定的位置的类或者是jar文档，它也是Java程序默认的类加载器。</li>
 					<li>
 						自定义装载器：是java程序的一部分
 					</li>

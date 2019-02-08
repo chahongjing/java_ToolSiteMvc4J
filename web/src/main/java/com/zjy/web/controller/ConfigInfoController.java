@@ -22,7 +22,7 @@ public class ConfigInfoController extends BaseController {
 
     @RequestMapping("/queryPageList")
     @RequiresPermissions("configInfoList_enter")
-    public BaseResult<PageBean> queryPageList(ConfigInfoRequest request) {
+    public BaseResult<PageBean<ConfigInfoVo>> queryPageList(ConfigInfoRequest request) {
         PageBean<ConfigInfoVo> pageBean = (PageBean<ConfigInfoVo>) configInfoSrv.queryPageList(request);
         return BaseResult.ok(pageBean);
     }

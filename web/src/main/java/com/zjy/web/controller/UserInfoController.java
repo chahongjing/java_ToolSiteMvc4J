@@ -60,7 +60,7 @@ public class UserInfoController extends BaseController {
     }
 
     @RequestMapping("/userEditPage")
-    public String userEditPage(String id) {
+    public String userEditPage() {
         return "/sys/userEdit";
     }
 
