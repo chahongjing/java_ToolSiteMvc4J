@@ -347,8 +347,8 @@ th.sortheader.desc:before,th.sortheader.asc:after{color:#080;}
 .elearn{padding:15px;}
 .elearn .list{padding-left:20px;list-style-type:circle;}
 .elearn .list > li{padding:5px 0;list-style-type:circle;}
-.elearn .list > li > .list > li{padding:5px 0;list-style-type:square;}
-.elearn .list > li > .list > li > .list > li{padding:5px 0;list-style-type:disc;}
+.elearn .list > li > .list > li{padding:5px 0;list-style-type:disc;}
+.elearn .list > li > .list > li > .list > li{padding:5px 0;list-style-type:square;}
 
 .sortable{font-size:0;}
 .sortable .ui-sortable-placeholder{visibility: visible !important;display:inline-block;
