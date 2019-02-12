@@ -12,7 +12,7 @@
 		<li>一级缓存
 			<ul class="list">
 				<li>也叫本地缓存，不能控制，因此很少提到。</li>
-				<li>存储在sqlsession中，默认开启。同一个sqlsession中查询时会把执行的谅才参数通过算法生成缓存键值，将键值和查询结果存入一个Map中。</li>
+				<li>存储在sqlsession中，默认开启（cacheEnabled=true,这是全局总开关，默认开启）。同一个sqlsession中查询时会把执行的谅才参数通过算法生成缓存键值，将键值和查询结果存入一个Map中。</li>
 				<li>如果不想使用缓存，则可以在xml配置中添加flushCache='true'，添加后会在查询前清空当前一级缓存，这个会影响当前sqlsession中所有的缓存查询。因此应尽量避免这么用。</li>
 				<li>insert,update,delete会清空一级缓存</li>
 			</ul>
@@ -20,7 +20,7 @@
 		<li>二级缓存
 			<ul class="list">
 				<li>针对mapper进行缓存，即不同的sqlsession,对于同一mapper共用缓存，默认关闭</li>
-				<li>mybatis配置中有个cacheEnabled，它是二级缓存开关默认是true。</li>
+				<li>要使用二级缓存，则cacheEnabled=true,并且mapper中要添加cache节点，useCache=true(这个可不加，默认为true)</li>
 				<li>它和命名空间是绑定的，每个mapper都有自己的缓存，之间互不影响。</li>
 			</ul>
 		</li>
