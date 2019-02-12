@@ -21,10 +21,10 @@
 	<h2>代理模式<a href="/test/testProxy.do" target="_blank">测试代理</a></h2>
 	<ul class='list'>
 		<li>切面（aspect）</li>
-		<li>通知（advice）</li>
+		<li>通知（advice）：就是你作用到pointcut上的方式，你可以使用befor, after 或者around</li>
 		<li>目标（target）</li>
 		<li>代理（proxy）</li>
-		<li>连接点（joinpoint）</li>
+		<li>连接点（joinpoint）：就是菜单上的选项，Pointcut就是你选的菜。Join point 你只是你切面中可以切的那些方法，一旦你选择了要切哪些方法，那就是Pointcut。也就是说，所有在你程序中可以被调用的方法都是Join point. 使用Pointcut 表达式，那些匹配的方法，才叫Pointcut。所以你根本不用关心Join point。比如你有10个方法，你只想切2个方法，那么那10个方法就是Join point， 2个方法就是Pointcut</li>
 		<li>切点（pointcut）</li>
 	</ul>
 	<hr>

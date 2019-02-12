@@ -98,6 +98,8 @@
   first.children.push(second);
   second = {name: 'mybatis学习', href: 'learnMybatis.html', iconClass: ''};
   first.children.push(second);
+  second = {name: '树学习', href: 'learnTree.html', iconClass: ''};
+  first.children.push(second);
   // endregion
 
   // region 服务器
