@@ -100,6 +100,10 @@
   first.children.push(second);
   second = {name: '树学习', href: 'learnTree.html', iconClass: ''};
   first.children.push(second);
+  second = {name: '算法学习', href: 'learnSuanFa.html', iconClass: ''};
+  first.children.push(second);
+  second = {name: '设计模式学习', href: 'learnDesignMode.html', iconClass: ''};
+  first.children.push(second);
   // endregion
 
   // region 服务器

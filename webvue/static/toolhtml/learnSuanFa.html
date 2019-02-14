@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'> 
+	<title>学习算法</title>
+	<link rel='stylesheet' type='text/css' href='../bootstrap/css/bootstrap.min.css'>
+	<link rel='stylesheet' type='text/css' href='../css/common.css'>
+</head> 
+<body class='elearn'>
+	<h2>快速排序</h2>
+	<pre><code>
+void QuickSort(int arr[], int left, int right)
+{
+    int i = left;
+    int j = right;
+    int tmp = arr[i];//设定中间数
+    if(i &lt; j)//判断是否进入递归
+    {
+        while(i &lt; j)//判断是否完成一次快速排序
+        {
+            while((arr[j] > tmp)&&(i &lt; j))
+            {
+                    j--;
+            }
+            arr[i] = arr[j];
+            while((arr[i] &lt; tmp)&&(i &lt; j))
+            {
+                    i++;
+            }
+            arr[j] = arr[i];
+        }
+        arr[i] = tmp;//赋值中间数
+        QuickSort(arr, left, i-1);//递归中间数左边的元素
+        QuickSort(arr, j+1, right);//递归中间数右边的元素
+    }
+    else
+    {
+        return;
+    }
+}
+    </code></pre>
+    <hr>
+    <h2>冒泡排序</h2>
+    <pre><code>
+void Sort(int arr[], int sz)
+{
+    int i;
+    int j;
+    for(i = 0; i &lt; sz; i++)
+    {
+        for(j = 0; j &lt; sz - i - 1; j++)
+        {
+            if(arr[j] &gt; arr[j + 1])
+            {
+                int tmp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = tmp;
+            }
+        }
+    }
+}
+    </code></pre>
+</body> 
+</html>
