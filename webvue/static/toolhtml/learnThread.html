@@ -54,6 +54,7 @@
 		<ul class='list'>
 			<li>ReentrantLock可重入锁，悲观锁</li>
 			<li>ReadWriteLock读写锁。对象暴露两个lock对象，一个用于读，一个用于写，允许多读，一个写，但读和写不能同时进行</li>
+			<li>StampedLock，是1.8新增的锁，对ReadWriteLock的升级版本，解决读和写悲观锁的并发问题</li>
 			<li>Semaphore：可以控同时访问的线程个数，如一个资源可以同时最多让5个线程访问</li>
 			<li>CountDownLatch:等其它几个操作执行完成后再执行当前操作（多个后执行一个），一般用于等待事件。不能被重置。</li>
 			<li>CyclicBarrier：让一组操作等待某个状态后再全部同时执行（等待一个后执行多个），一般用于等待其它线程。可以被重置供下次使用。</li>
@@ -101,6 +102,7 @@
 					<li>java.util.concurrent.locks 包中的锁</li>
 				</ul>
 			</li>
+			<li>Thread.holdsLock(Object obj)来检查一个对象是否被锁定</li>
 		</ul>
 	</p>
 

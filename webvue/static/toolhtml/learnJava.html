@@ -33,7 +33,9 @@
 	<hr>
 	<h2>hashmap,hashtable</h2>
 	<ul class='list'>
-		<li>hashmap底层由数组和链表组成（当数组达到64，单个链表元素达到8个时会变成数组+红黑树），键值均可为空, 默认容量为16*2,可指定大小，abstractmap</li>
+		<li>hashmap底层由数组和链表组成（当数组达到64，单个链表元素达到8个时会变成数组+红黑树），键值均可为空, 默认容量为16*2,可指定大小，abstractmap
+			以2倍的方式扩容，这样可以尽可以保证绝大部分链表数据不用重新定位，还可以使hashcode比较均匀分布。
+		</li>
 		<li>hashtable键值都不能为空，每个方法都加了Synchronize,容量为11,2n+1，可指定大小，实际大小为2的幂次方,dictionary</li>
 	</ul>
 

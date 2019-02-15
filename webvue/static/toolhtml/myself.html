@@ -9,8 +9,26 @@
 <body class='elearn'>
 	<h2>科大讯飞股份有限公司</h2>
 	<ul class='list'>
-		<li>带新人，应届生可以胜任当前工作，做一些疑难指导，如参数传递方式等。</li>
-		<li>性能优化。10w条数据通过mybatis查询要16秒，改成手工jdbc操作，resultset直接getInt获取数据优化到3s。索引优化，在查询列上添加索引。冗余字段，小表关联大表，做统计时使用parallel()，基本数据类型等减小内存回收压力。多使用工具，如apache commonutils，也可以减小sonarlint提示的bug</li>
+		<li>带新人，应届生可以胜任当前工作，做一些疑难指导，如参数传递方式等，mybatis缓存问题。</li>
+		<li>性能优化。多使用工具，如apache commonutils，也可以减小sonarlint提示的bug
+			<ul class="list">
+				<li>在循环中查询数据库</li>
+				<li>单例</li>
+				<li>基本数据类型等减小内存回收压力</li>
+				<li>10w条数据通过mybatis查询要16秒，改成手工jdbc操作，resultset直接getInt获取数据优化到3s。</li>
+				<li>索引优化，在查询列上添加索引。冗余字段，小表关联大表，</li>
+				<li>做统计时使用parallel()。</li>
+				<li>静态函数，可以内联</li>
+				<li>确定数组初始大小，以免扩容</li>
+				<li>bufferedoutputstream</li>
+				<li>try catch和synchronized放在循环外</li>
+				<li>少使用反射，缓存起来？</li>
+				<li>减少锁的范围</li>
+				<li>使用连接池</li>
+				<li>缓存正则</li>
+				<li>EnumSet</li>
+			</ul>
+		</li>
 		<li>独立项目搭建设计开发部署。方案为java + springmvc + mybatis + webpack + vue，权限方案使用shiro, 另mybatis使用枚举通用方案实现。</li>
 		<li>使用多线程处理word生成预览图片，ScheduledThreadPool，对于生成图片请求先放到一个ConcurrentQueue中线程每隔5秒就从queue获取数据并处理，</li>
 		<li>试题编辑公共指令，试卷组卷公共指令。试题保存逻辑升级，以前是直接上传到ftp，新方案是先上传到web，然后业务数据处理完成后再把文件上传到ftp。业务数据使用模板化，before,after。</li>

@@ -79,6 +79,12 @@
 				<li>不可重复读重点在于update和delete，它只能锁住数据库已有的数据，而幻读的重点在于insert，对于新增的数据却没有锁。因此可重复读是数据库已有的数据，幻读会多数据。</li>
 			</ul>
 		</li>
+		<li>使用
+			<ul class="list">
+				<li>只能添加在public方法上。可以添加在private,protected方法上，但会失效</li>
+				<li>只有抛出RuntimeException才会回滚，如果不是则不会回滚</li>
+			</ul>
+		</li>
 	</ul>
 	<hr>
 </body>
