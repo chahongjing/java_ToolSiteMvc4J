@@ -54,11 +54,11 @@
 		<li>事务传播propagation
 			<ul class='list'>
 				<li>Propagation.REQUIRED：如果有事务， 那么加入事务， 没有的话新建一个(默认情况下)，默认值</li>
-				<li>Propagation.NOT_SUPPORTED：容器不为这个方法开启事务，如果有事务，则事务挂起</li>
-				<li>Propagation.REQUIRES_NEW：不管是否存在事务，都创建一个新的事务，原来的挂起，新的执行完毕，继续执行老的事务</li>
-				<li>Propagation.MANDATORY：必须在一个已有的事务中执行，否则抛出异常</li>
-				<li>Propagation.NEVER：必须在一个没有的事务中执行，否则抛出异常(与Propagation.MANDATORY相反)</li>
 				<li>Propagation.SUPPORTS：如果其他bean调用这个方法，在其他bean中声明事务，那就用事务。如果其他bean没有声明事务，那就不用事务</li>
+				<li>Propagation.MANDATORY：必须在一个已有的事务中执行，否则抛出异常</li>
+				<li>Propagation.REQUIRES_NEW：不管是否存在事务，都创建一个新的事务，原来的挂起，新的执行完毕，继续执行老的事务</li>
+				<li>Propagation.NOT_SUPPORTED：容器不为这个方法开启事务，如果有事务，则事务挂起</li>
+				<li>Propagation.NEVER：必须在一个没有的事务中执行，否则抛出异常(与Propagation.MANDATORY相反)</li>
 				<li>Propagation.NESTED，如果有事务，则在这个事务的嵌套事务中运行，否则开启一个新事务</li>
 			</ul>
 		</li>
@@ -66,8 +66,8 @@
 			<ul class='list'>
 				<li>Isolation.ISOLATION_DEFAULT：这是默认值，表示使用底层数据库的默认隔离级别。对大部分数据库而言，通常这值就是ISOLATION_READ_COMMITTED</li>
 				<li>Isolation.READ_UNCOMMITTED：会产生脏读，不可重复读和幻像读。</li>
-				<li>Isolation.READ_COMMITTED：不会出现脏读，但是可能会出现不可重复读和幻读。保证一个事务修改的数据提交后才能被另外一个事务读取。另外一个事务不能读取该事务未提交的数据。这种事务隔离级别可以避免脏读出现，但是可能会出现不可重复读和幻像读。</li>
-				<li>Isolation.REPEATABLE_READ：不会出现脏读，不可重复读。可能出现幻读。SQLSERVER默认。</li>
+				<li>Isolation.READ_COMMITTED：不会出现脏读，但是可能会出现不可重复读和幻读。保证一个事务修改的数据提交后才能被另外一个事务读取。另外一个事务不能读取该事务未提交的数据。这种事务隔离级别可以避免脏读出现，但是可能会出现不可重复读和幻像读。Oracle默认</li>
+				<li>Isolation.REPEATABLE_READ：不会出现脏读，不可重复读。可能出现幻读。Mysql ，SQLSERVER默认。</li>
 				<li>Isolation.SERIALIZABLE：串行化，读的时候加表锁，并发量最低代价最高，但会避免脏读，不可重复读外，幻读</li>
 			</ul>
 		</li>
