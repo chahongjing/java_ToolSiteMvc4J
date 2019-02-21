@@ -111,6 +111,10 @@
   list.push(first);
   second = {name: 'tomcat学习', href: 'learnTomcat.html', iconClass: ''};
   first.children.push(second);
+  second = {name: '数据库学习', href: 'learnDb.html', iconClass: ''};
+  first.children.push(second);
+  second = {name: 'net学习', href: 'learnHttp.html', iconClass: ''};
+  first.children.push(second);
   // endregion
 
   // region maven

@@ -61,6 +61,7 @@
 			<li>CountDownLatch:等其它几个操作执行完成后再执行当前操作（多个后执行一个），一般用于等待事件。不能被重置。</li>
 			<li>CyclicBarrier：让一组操作等待某个状态后再全部同时执行（等待一个后执行多个），一般用于等待其它线程。可以被重置供下次使用。</li>
 			<li>synchronized悲观锁，重量级，不仅可以修改变量，还可修饰方法。synchronized不仅保证可见性，而且还保证原子性，因为，只有获得了锁的线程才能进入临界区，从而保证临界区中的所有语句都全部执行。多个线程争抢synchronized锁对象时，会出现阻塞。
+				使用monitorenter和monitorout变量，这个变量在对象头上，对方法则是使用标识ACC_SYNCHRONIZED
 			</li>
 			<li>java.util.concurrent包全完建立在CAS之上,即乐观锁</li>
 			<li>AtomicInteger</li>

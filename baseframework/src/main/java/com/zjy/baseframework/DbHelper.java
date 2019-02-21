@@ -122,4 +122,24 @@ public class DbHelper {
 
         return list;
     }
+
+    private void testJdbc() {
+        try {
+            Class.forName("driver");
+            Connection conn = DriverManager.getConnection("", "", "");
+            conn.setAutoCommit(false);
+            PreparedStatement statement = conn.prepareStatement("sql");
+            statement = conn.prepareCall("sql");
+            statement.setObject(1, "param1");
+            statement.setInt(1, 2);
+            int i = statement.executeUpdate();
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                rs.getString("userName");
+            }
+            conn.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
