@@ -118,13 +118,14 @@
 		</li>
 		<li>@Named。指定bean名称</li>
 		<li>@Inject。是J2EE注解。是根据类型进行自动装配的，如果需要按名称进行装配，则需要配合@Named；
-		<ul class='list'>
-		  <li>@Autowired是spring自带的，@Inject是JSR330规范实现的，@Resource是JSR250规范实现的，需要导入不同的包</li>
-		  <li>@Autowired、@Inject用法基本一样，不同的是@Autowired有一个request属性</li>
-		  <li>@Autowired、@Inject是默认按照类型匹配的，@Resource是按照名称匹配的</li>
-		  <li>@Autowired如果需要按照名称匹配需要和@Qualifier一起使用，@Inject和@Name一起使用</li>
-		</ul>
+			<ul class='list'>
+			<li>@Autowired是spring自带的，@Inject是JSR330规范实现的，@Resource是JSR250规范实现的，需要导入不同的包</li>
+			<li>@Autowired、@Inject用法基本一样，不同的是@Autowired有一个request属性</li>
+			<li>@Autowired、@Inject是默认按照类型匹配的，@Resource是按照名称匹配的</li>
+			<li>@Autowired如果需要按照名称匹配需要和@Qualifier一起使用，@Inject和@Name一起使用</li>
+			</ul>
 		</li>
+		<li>@Required注解作用于Beansetter方法上，用于检查一个Bean的属性的值在配置期间是否被赋予或设置(populated)</li>
 	</ul>
 	<hr>
 	<h2>context:component-scan属性</h2>
