@@ -26,7 +26,6 @@ import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
@@ -75,13 +74,13 @@ public class LearnController extends BaseController implements ServletConfigAwar
      */
     @ModelAttribute("mUserInfo")
     public UserInfo getUserInfo(@RequestParam(value = "userName", required = false) String userName, String arr) {
-        if(servletConfig != null) {
+        if (servletConfig != null) {
             logger.debug("servletConfig is not null");
         }
-        if(environment != null) {
+        if (environment != null) {
             logger.debug("environment is not null");
         }
-        if(applicationContext != null) {
+        if (applicationContext != null) {
             logger.debug("applicationContext is not null");
         }
         UserInfo user = new UserInfo();

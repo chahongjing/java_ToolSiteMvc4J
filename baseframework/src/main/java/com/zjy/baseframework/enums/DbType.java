@@ -9,7 +9,7 @@ import com.zjy.baseframework.mybatis.IBaseEnum;
 @SerializeEnum
 public enum DbType implements IBaseEnum {
     Oracle(0, "oracle", "oracle.jdbc.OracleDriver", "jdbc:oracle:thin:@127.0.0.1:1521:orcl"),
-    Mysql(1, "mysql", "com.mysql.jdbc.Driver", "jdbc:mysql://localhost/ToolSiteMvc4J"),
+    Mysql(1, "mysql", "com.mysql.jdbc.Driver", "jdbc:mysql://localhost/ToolSiteMvc4J?useUnicode=true&characterEncoding=utf-8"),
     SqlServer(2, "sqlserver", "com.microsoft.sqlserver.jdbc.SQLServerDriver", "jdbc:sqlserver://PC201404190064\\\\MSSQL; DatabaseName=ToolSiteMvc4J"),
     Sqlite(3, "sqlite", "org.sqlite.JDBC", "jdbc:sqlite::resource:db/app.db");
 
