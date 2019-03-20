@@ -25,8 +25,9 @@
     <!-- <mvc:resources mapping="/resources/**" location="/" cache-period="10000" /> -->
 
 
-    <!-- json格式化器 -->
+    <!-- 这个是SpringMVC必须要配置的，因为它声明了@RequestMapping、@RequestBody、@ResponseBody等。并且，该配置默认加载很多的参数绑定方法，比如json转换解析器等。 -->
     <mvc:annotation-driven>
+        <!-- json格式化器 -->
         <mvc:message-converters>
             <!-- <bean class="org.springframework.http.converter.StringHttpMessageConverter" />
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" /> -->
