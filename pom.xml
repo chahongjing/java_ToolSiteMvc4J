@@ -45,6 +45,7 @@
         <dbutils.version>1.7</dbutils.version>
         <c3p0.version>0.9.1.2</c3p0.version>
         <sqlserver.version>4.0</sqlserver.version>
+        <!-- 8.0.11 -->
         <mysql.version>6.0.5</mysql.version>
         <oracle.version>11.2.0.3.0</oracle.version>
         <sqlite.version>3.21.0.1</sqlite.version>
