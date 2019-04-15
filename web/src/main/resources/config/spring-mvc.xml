@@ -19,7 +19,7 @@
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           p:prefix="${web.view.prefix}" p:suffix="${web.view.suffix}"/>
 
-    <!-- 静态文件映射 -->
+    <!-- 静态文件映射，将无法mapping到Controller的path交给default servlet handler处理 -->
     <mvc:default-servlet-handler/>
     <!-- 对静态资源文件的访问 -->
     <!-- <mvc:resources mapping="/resources/**" location="/" cache-period="10000" /> -->

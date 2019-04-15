@@ -274,7 +274,7 @@
                 } else if (this.selectedDbType == 'sqlserver') {
                     return this.getSqlserverTableSql();
                 } else if (this.selectedDbType == 'mysql') {
-                    throw new Error('unimplement error！');
+                    return this.getMysqlTableSql();
                 }
             },
             getOracleTableSql:function () {
@@ -305,13 +305,27 @@
                 }
                 return result;
             },
+            getMysqlTableSql:function () {
+                var result;
+                if (this.operatorType == 'add') {
+                    result = this.getTemplate('mysqlAddTable.html');
+                    result = result.replace(this.functionNameReg, this.getRemark('创建表'));
+                } else if (this.operatorType == 'alter') {
+                    throw new Error('unimplement error！');
+                } else if (this.operatorType == 'delete') {
+                    throw new Error('unimplement error！');
+                } else {
+                    throw new Error('unimplement error！');
+                }
+                return result;
+            },
             getFieldSql:function () {
                 if (this.selectedDbType == 'oracle') {
                     return this.getOracleFieldSql();
                 } else if (this.selectedDbType == 'sqlserver') {
                     return this.getSqlserverFieldSql();
                 } else if (this.selectedDbType == 'mysql') {
-                    throw new Error('unimplement error！');
+                    return this.getMysqlFieldSql();
                 }
             },
             getOracleFieldSql:function () {
@@ -339,7 +353,24 @@
                     result = this.getTemplate('sqlserverAlterField.html');
                     result = result.replace(this.functionNameReg, this.getRemark('修改字段'));
                 } else if (this.operatorType == 'delete') {
+                    result = this.getTemplate('sqlserverDropField.html');
+                    result = result.replace(this.functionNameReg, this.getRemark('删除字段'));
+                } else {
                     throw new Error('unimplement error！');
+                }
+                return result;
+            },
+            getMysqlFieldSql:function () {
+                var result;
+                if (this.operatorType == 'add') {
+                    result = this.getTemplate('mysqlAddField.html');
+                    result = result.replace(this.functionNameReg, this.getRemark('添加字段'));
+                } else if (this.operatorType == 'alter') {
+                    result = this.getTemplate('mysqlAlterField.html');
+                    result = result.replace(this.functionNameReg, this.getRemark('修改字段'));
+                } else if (this.operatorType == 'delete') {
+                    result = this.getTemplate('mysqlDropField.html');
+                    result = result.replace(this.functionNameReg, this.getRemark('删除字段'));
                 } else {
                     throw new Error('unimplement error！');
                 }
@@ -558,6 +589,13 @@ COMMENT ON COLUMN {firstName}.id is '主键';
     END
     GO
 </script>
+<script type="text/x-template" id="mysqlAddTable.html">
+    -- {author} {datetime} {functionName}
+    CREATE TABLE IF NOT EXISTS {firstName}(
+      id INT,
+      name VARCHAR(100)
+    ) COMMENT='{remark}';
+</script>
 <script type="text/x-template" id="oracleAddProc.html">
     -- {author} {datetime} {functionName}
     CREATE OR REPLACE PROCEDURE {secondName}
@@ -772,6 +810,80 @@ END;
     GO
 </script>
 <script type="text/x-template" id="sqlserverDropField.html">
+</script>
+<script type="text/x-template" id="mysqlAddField.html">
+    -- {author} {datetime} {functionName}
+    DROP PROCEDURE IF EXISTS add_column_if;
+DELIMITER //
+CREATE PROCEDURE add_column_if(IN v_table varchar(50), IN v_column varchar(50), IN v_type varchar(100), IN v_discription varchar(1000))
+begin
+  declare stmt varchar(2000);
+  declare v_flag int;
+  select count(*) into v_flag from information_schema.columns where table_schema = (select DATABASE()) and table_name = v_table and column_name = v_column;
+  if(v_flag = 0)
+  then 
+    set @sqlstr = concat('ALTER TABLE ', v_table, ' ADD COLUMN ', v_column, ' ', v_type);
+    if(v_discription is not null and v_discription <> '')
+    then
+      set @sqlstr = concat(@sqlstr, ' comment ''', v_discription, '''');
+    end if;
+    select @sqlstr;
+    prepare stmt from @sqlstr;
+    execute stmt;
+  end if;
+  commit;
+end ;//
+DELIMITER ;
+
+call add_column_if('myuser', 'test', 'int', '新字段');
+</script>
+<script type="text/x-template" id="mysqlAlterField.html">
+    -- {author} {datetime} {functionName}
+    DROP PROCEDURE IF EXISTS modify_column_if;
+DELIMITER //
+CREATE PROCEDURE modify_column_if(IN v_table varchar(50), IN v_column varchar(50), IN v_type varchar(100), IN v_discription varchar(1000))
+begin
+  declare stmt varchar(2000);
+  declare v_flag int;
+  select count(*) into v_flag from information_schema.columns where table_schema = (select DATABASE()) and table_name = v_table and column_name = v_column;
+  if(v_flag = 1)
+  then 
+    set @sqlstr = concat('ALTER TABLE ', v_table, ' modify COLUMN ', v_column, ' ', v_type);
+    if(v_discription is not null and v_discription <> '')
+    then
+      set @sqlstr = concat(@sqlstr, ' comment ''', v_discription, '''');
+    end if;
+    select @sqlstr;
+    prepare stmt from @sqlstr;
+    execute stmt;
+  end if;
+  commit;
+end ;//
+DELIMITER ;
+
+call modify_column_if('myuser', 'test', 'int', '新字段');
+</script>
+<script type="text/x-template" id="mysqlDropField.html">
+    -- {author} {datetime} {functionName}
+    DROP PROCEDURE IF EXISTS drop_column_if;
+DELIMITER //
+CREATE PROCEDURE drop_column_if(IN v_table varchar(50), IN v_column varchar(50))
+begin
+  declare stmt varchar(2000);
+  declare v_flag int;
+  select count(*) into v_flag from information_schema.columns where table_schema = (select DATABASE()) and table_name = v_table and column_name = v_column;
+  if(v_flag = 1)
+  then 
+    set @sqlstr = concat('ALTER TABLE ', v_table, ' drop COLUMN ', v_column);
+    select @sqlstr;
+    prepare stmt from @sqlstr;
+    execute stmt;
+  end if;
+  commit;
+end ;//
+DELIMITER ;
+
+call drop_column_if('myuser', 'test');
 </script>
 <script type="text/x-template" id="oracleAddSeq.html">
     -- {author} {datetime} {functionName}
