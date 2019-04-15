@@ -1,5 +1,5 @@
 @echo off
-title push
+title toolsitemvc4j push
 echo.
 set /p comment=ÇëÊäÈë±¸×¢:
 git commit -m %comment%

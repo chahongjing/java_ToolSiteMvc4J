@@ -1,5 +1,5 @@
 @echo off
-title add
+title toolsitemvc4j add
 echo.
 git add .
 git status

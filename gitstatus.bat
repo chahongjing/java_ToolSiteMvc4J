@@ -1,5 +1,5 @@
 @echo off
-title status
+title toolsitemvc4j status
 echo.
 git status
 pause;

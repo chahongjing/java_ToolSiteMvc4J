@@ -1,5 +1,5 @@
 @echo off
-title pull
+title toolsitemvc4j pull
 echo.
 git pull toolsitemvc4j master
 git status
