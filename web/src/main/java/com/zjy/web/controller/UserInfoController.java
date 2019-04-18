@@ -1,6 +1,7 @@
-package com.zjy.web.controller;
+﻿package com.zjy.web.controller;
 
 import com.zjy.baseframework.BaseResult;
+import com.zjy.baseframework.ServiceException;
 import com.zjy.bll.basebean.PageBean;
 import com.zjy.bll.request.UserInfoRequest;
 import com.zjy.bll.service.UserInfoService;

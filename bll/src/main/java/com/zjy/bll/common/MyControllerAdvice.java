@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
@@ -42,7 +43,7 @@ public class MyControllerAdvice {
      * @return
      */
     @ExceptionHandler
-    public ModelAndView processException(NativeWebRequest request, HttpServletResponse response, Exception ex) {
+    public ModelAndView processException(NativeWebRequest request, HttpServletResponse response, Exception ex, HandlerMethod handler) {
         ModelAndView mv = new ModelAndView();
         if (WebUtils.isAjax(request)) {
             if (ex instanceof UnauthorizedException) {
