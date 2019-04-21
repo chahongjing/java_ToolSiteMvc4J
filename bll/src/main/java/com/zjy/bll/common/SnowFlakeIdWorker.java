@@ -1,5 +1,7 @@
 package com.zjy.bll.common;
 
+import com.zjy.bll.common.shiro.ShiroRealmUtils;
+
 /**
  * Twitter_Snowflake<br>
  * SnowFlake的结构如下(每部分用-分开):<br>
@@ -173,6 +175,8 @@ public class SnowFlakeIdWorker {
      * 测试
      */
     public static void main(String[] args) {
+        String ssoPassword = ShiroRealmUtils.getSSOPassword("123456", "3");
+
         SnowFlakeIdWorker idWorker = new SnowFlakeIdWorker(0, 0);
         for (int i = 0; i < 1000; i++) {
             long id = idWorker.nextId();

@@ -1,10 +1,14 @@
 package com.zjy.bll.common.shiro;
 
+import com.zjy.baseframework.SecurityHelper;
 import com.zjy.baseframework.SpringContextHolder;
 import com.zjy.entities.UserInfo;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.crypto.hash.ConfigurableHashService;
+import org.apache.shiro.crypto.hash.DefaultHashService;
+import org.apache.shiro.crypto.hash.HashRequest;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.util.ByteSource;
@@ -58,6 +62,23 @@ public class ShiroRealmUtils {
 //        String newCredentials = new Md5Hash(password, salt, credentialsMatcher.getHashIterations()).toBase64();
 //        return simpleHash.toBase64();
         return simpleHash.toString();
+    }
+
+    public static String getSSOPassword(String password, String salt) {
+        ConfigurableHashService hashService = new DefaultHashService();
+        // 静态盐值
+        hashService.setPrivateSalt(ByteSource.Util.bytes("."));
+        // md5hash
+        hashService.setHashAlgorithmName(SecurityHelper.MD5);
+        // 加密2次
+        hashService.setHashIterations(2);
+        HashRequest request = new HashRequest.Builder()
+                .setSalt(salt)
+                .setSource(password)
+                .build();
+        String res =  hashService.computeHash(request).toHex();
+        System.out.println(res);
+        return res;
     }
 
     public static Set<String> getPermissions() {
