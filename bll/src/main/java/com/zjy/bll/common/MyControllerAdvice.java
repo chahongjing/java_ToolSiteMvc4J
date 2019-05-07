@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.zjy.baseframework.BaseResult;
 import com.zjy.baseframework.ServiceException;
 import com.zjy.baseframework.enums.ResultStatus;
+import com.zjy.bll.enums.LogMessage;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.shiro.authz.UnauthenticatedException;
@@ -16,12 +17,16 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.HttpHeaders;
 import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -43,8 +48,18 @@ public class MyControllerAdvice {
      * @return
      */
     @ExceptionHandler
+//    @ResponseBody
     public ModelAndView processException(NativeWebRequest request, HttpServletResponse response, Exception ex, HandlerMethod handler) {
         ModelAndView mv = new ModelAndView();
+
+//        Method method = handler.getMethod();
+//        LogMessage logMessage = method.getAnnotation(LogMessage.class);
+//        Map<String, String> msg = handleMessage(request, method, logMessage, ex.getMessage());
+//        String errorMsg = msg.get("errorMsg");
+//        String errorMsgLog = msg.get("errorMsgLog");
+//        String warningMsg = msg.get("warningMsg");
+//        String warningMsgLog = msg.get("warningMsgLog");
+
         if (WebUtils.isAjax(request)) {
             if (ex instanceof UnauthorizedException) {
                 response.setStatus(HttpStatus.UNAUTHORIZED.value());
@@ -61,7 +76,7 @@ public class MyControllerAdvice {
                     message = ex.getMessage();
                 }
                 BaseResult<String> result = BaseResult.no(Objects.toString(message, StringUtils.EMPTY));
-                if(!(ex instanceof ServiceException)) {
+                if (!(ex instanceof ServiceException)) {
                     logger.error("系统错误！", ex);
                     result.setStatus(ResultStatus.ERROR);
                 }
@@ -104,4 +119,60 @@ public class MyControllerAdvice {
     public ModelAndView processUnauthorizedException(NativeWebRequest request, HttpServletResponse response, UnauthorizedException ex) {
         return null;
     }
+
+    /**
+     * 渲染输出信息模板
+     *
+     * @param request
+     * @param method
+     * @param message
+     * @param expMsg
+     * @return
+     */
+    private Map<String, String> handleMessage(NativeWebRequest request, Method method, LogMessage message, String expMsg) {
+        Map<String, String> map = new HashMap<>();
+//        if (message == null) return map;
+//        String errorMsg = StringUtils.isBlank(message.errorMsgStr()) ? MessageConstants.getMsg(message.errorMsg()) : message.errorMsgStr();
+//        String errorMsgLog = StringUtils.isBlank(message.errorMsgLogStr()) ? MessageConstants.getMsg(message.errorMsgLog()) : message.errorMsgLogStr();
+//        String warningMsg = StringUtils.isBlank(message.warningMsgStr()) ? MessageConstants.getMsg(message.warningMsg()) : message.warningMsgStr();
+//        String warningMsgLog = StringUtils.isBlank(message.warningMsgLogStr()) ? MessageConstants.getMsg(message.warningMsgLog()) : message.warningMsgLogStr();
+//        Dq_YongHu yongHuDto = YongHuUtils.getYongHu();
+//        String dengluming = yongHuDto == null ? "-" : yongHuDto.getDengluming();
+//        String methodInfo = method.getDeclaringClass().toString().replace("class ", StringUtils.EMPTY) + "." + method.getName();
+//
+//        errorMsg = replaceStr(request, errorMsg, dengluming, methodInfo, expMsg);
+//        errorMsgLog = replaceStr(request, errorMsgLog, dengluming, methodInfo, expMsg);
+//        warningMsg = replaceStr(request, warningMsg, dengluming, methodInfo, expMsg);
+//        warningMsgLog = replaceStr(request, warningMsgLog, dengluming, methodInfo, expMsg);
+//        request.removeAttribute(BaseController.LOG_PARAMETER, WebRequest.SCOPE_REQUEST);
+//
+//        map.put("errorMsg", errorMsg);
+//        map.put("errorMsgLog", errorMsgLog);
+//        map.put("warningMsg", warningMsg);
+//        map.put("warningMsgLog", warningMsgLog);
+
+        return map;
+    }
+
+    /**
+     * 替换点位符
+     *
+     * @param request
+     * @param str
+     * @param user
+     * @param method
+     * @param expMsg
+     * @return
+     */
+//    private String replaceStr(NativeWebRequest request, String str, String user, String method, String expMsg) {
+//        if (!StringUtils.isNotBlank(str)) return str;
+//        str = str.replaceAll(USER_EXP, user).replaceAll(METHOD_EXP, method).replaceAll(EXPMSG_EXP, expMsg);
+//        Object t = request.getAttribute(BaseController.LOG_PARAMETER, WebRequest.SCOPE_REQUEST);
+//        if (t != null) {
+//            for (Map.Entry<String, String> entry : ((Map<String, String>) t).entrySet()) {
+//                str = str.replace("{" + entry.getKey() + "}", entry.getValue());
+//            }
+//        }
+//        return str;
+//    }
 }
