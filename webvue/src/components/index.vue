@@ -60,68 +60,11 @@
   list.push(first);
   var second = {name: 'servlet学习', href: 'learnServlet.html', iconClass: ''};
   first.children.push(second);
-  second = {name: 'jsp学习', href: 'learnJsp.html', iconClass: ''};
-  first.children.push(second);
-  second = {name: 'el学习', href: 'learnEL.html', iconClass: ''};
-  first.children.push(second);
-  second = {name: 'spring aop学习', href: 'learnAop.html', iconClass: ''};
-  first.children.push(second);
-  second = {name: 'spring Bean学习', href: 'learnBean.html', iconClass: ''};
-  first.children.push(second);
-  second = {name: 'springMVC学习', href: 'learnSpringMvc.html', iconClass: ''};
-  first.children.push(second);
-  second = {name: 'cookie学习', href: 'learnCookie.html', iconClass: ''};
-  first.children.push(second);
-  second = {name: 'session学习', href: 'learnSession.html', iconClass: ''};
-  first.children.push(second);
-  second = {name: 'java后台学习', href: 'learnJava.html', iconClass: ''};
-  first.children.push(second);
-  second = {name: 'java cache学习', href: 'learnCache.html', iconClass: ''};
-  first.children.push(second);
-  second = {name: 'jdk学习', href: 'learnJDK.html', iconClass: ''};
-  first.children.push(second);
-  second = {name: 'thread后台学习', href: 'learnThread.html', iconClass: ''};
-  first.children.push(second);
-  second = {name: 'exception后台学习', href: 'learnException.html', iconClass: ''};
-  first.children.push(second);
-  second = {name: 'jvm学习', href: 'learnJvm.html', iconClass: ''};
-  first.children.push(second);
-  second = {name: 'filter学习', href: 'learnFilter.html', iconClass: ''};
-  first.children.push(second);
-  second = {name: '事务学习', href: 'learnTransaction.html', iconClass: ''};
-  first.children.push(second);
-  second = {name: 'nio学习', href: 'learnNio.html', iconClass: ''};
-  first.children.push(second);
-  second = {name: 'shiro学习', href: 'learnShiro.html', iconClass: ''};
-  first.children.push(second);
-  second = {name: '反射学习', href: 'learnReflect.html', iconClass: ''};
-  first.children.push(second);
-  second = {name: 'mybatis学习', href: 'learnMybatis.html', iconClass: ''};
-  first.children.push(second);
-  second = {name: '树学习', href: 'learnTree.html', iconClass: ''};
-  first.children.push(second);
-  second = {name: '算法学习', href: 'learnSuanFa.html', iconClass: ''};
-  first.children.push(second);
-  second = {name: '设计模式学习', href: 'learnDesignMode.html', iconClass: ''};
-  first.children.push(second);
   // endregion
 
   // region 服务器
   first = {name: '服务器', children: []};
   list.push(first);
-  second = {name: 'tomcat学习', href: 'learnTomcat.html', iconClass: ''};
-  first.children.push(second);
-  second = {name: '数据库学习', href: 'learnDb.html', iconClass: ''};
-  first.children.push(second);
-  second = {name: 'net学习', href: 'learnHttp.html', iconClass: ''};
-  first.children.push(second);
-  // endregion
-
-  // region maven
-  first = {name: 'maven', children: []};
-  list.push(first);
-  second = {name: 'maven学习', href: 'learnMaven.html', iconClass: ''};
-  first.children.push(second);
   // endregion
 
   // region vue
@@ -154,8 +97,6 @@
   // region 其它
   first = {name: '其它', children: []};
   list.push(first);
-  second = {name: 'git学习', href: 'learnGit.html', iconClass: ''};
-  first.children.push(second);
   second = {name: 'oracle表转类', href: 'tableToObject.html', iconClass: ''};
   first.children.push(second);
   second = {name: 'sql生成器', href: 'generateSql.html', iconClass: ''};
