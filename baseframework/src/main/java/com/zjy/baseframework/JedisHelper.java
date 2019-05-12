@@ -2,6 +2,7 @@ package com.zjy.baseframework;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.params.SetParams;
 
 import java.util.Collections;
 
@@ -41,7 +42,9 @@ public class JedisHelper {
      */
     public static boolean setLock(String key, String value, int millisecond) {
         Jedis jedis = jedisPool.getResource();
-        String result = jedis.set(key, value, "NX", "PX", millisecond);
+        SetParams sp = new SetParams();
+        String result = jedis.set(key, value, sp.nx().px(millisecond));
+        // String result = jedis.set(key, value, "NX", "PX", millisecond);
         return "OK".equals(result);
     }
 

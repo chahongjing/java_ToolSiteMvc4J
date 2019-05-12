@@ -3,8 +3,9 @@ package com.zjy.baseframework;
 import com.zjy.baseframework.enums.FileSuffix;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.hssf.usermodel.HSSFClientAnchor;
+import org.apache.poi.hssf.usermodel.HSSFRichTextString;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellUtil;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -240,28 +241,28 @@ public class ExcelHelper {
     private static Object getCellValue(Cell cell) {
         Object value = null;
         if (cell == null) return value;
-        int cellType = cell.getCellType();
+        CellType cellType = cell.getCellType();
         switch (cellType) {
-            case Cell.CELL_TYPE_STRING:
+            case STRING:
                 value = cell.getStringCellValue();
                 break;
-            case Cell.CELL_TYPE_NUMERIC:
+            case NUMERIC:
                 if (DateUtil.isCellDateFormatted(cell)) {
                     value = cell.getDateCellValue();
                 } else {
                     value = cell.getNumericCellValue();
                 }
                 break;
-            case Cell.CELL_TYPE_BOOLEAN:
+            case BOOLEAN:
                 value = cell.getBooleanCellValue();
                 break;
-            case Cell.CELL_TYPE_BLANK:
+            case BLANK:
                 value = StringUtils.EMPTY;
                 break;
-            case Cell.CELL_TYPE_FORMULA:
+            case FORMULA:
                 value = cell.getCellFormula();
                 break;
-            case Cell.CELL_TYPE_ERROR:
+            case ERROR:
                 value = cell.getErrorCellValue();
                 break;
                 default:
@@ -441,33 +442,33 @@ public class ExcelHelper {
         // 生成一个样式
         CellStyle style = workbook.createCellStyle();
         // 设置这些样式
-        style.setFillForegroundColor(HSSFColor.SKY_BLUE.index);
-        style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-        style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-        style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-        style.setBorderRight(HSSFCellStyle.BORDER_THIN);
-        style.setBorderTop(HSSFCellStyle.BORDER_THIN);
-        style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+//        style.setFillForegroundColor(HSSFColor.SKY_BLUE.index);
+//        style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+//        style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+//        style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+//        style.setBorderRight(HSSFCellStyle.BORDER_THIN);
+//        style.setBorderTop(HSSFCellStyle.BORDER_THIN);
+//        style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
         // 生成一个字体
         Font font = workbook.createFont();
-        font.setColor(HSSFColor.VIOLET.index);
+//        font.setColor(HSSFColor.VIOLET.index);
         font.setFontHeightInPoints((short) 12);
-        font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+//        font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
         // 把字体应用到当前的样式
         style.setFont(font);
         // 生成并设置另一个样式
         CellStyle style2 = workbook.createCellStyle();
-        style2.setFillForegroundColor(HSSFColor.LIGHT_YELLOW.index);
-        style2.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-        style2.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-        style2.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-        style2.setBorderRight(HSSFCellStyle.BORDER_THIN);
-        style2.setBorderTop(HSSFCellStyle.BORDER_THIN);
-        style2.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-        style2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+//        style2.setFillForegroundColor(HSSFColor.LIGHT_YELLOW.index);
+//        style2.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+//        style2.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+//        style2.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+//        style2.setBorderRight(HSSFCellStyle.BORDER_THIN);
+//        style2.setBorderTop(HSSFCellStyle.BORDER_THIN);
+//        style2.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+//        style2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
         // 生成另一个字体
         Font font2 = workbook.createFont();
-        font2.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
+//        font2.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
         // 把字体应用到当前的样式
         style2.setFont(font2);
 
@@ -539,7 +540,7 @@ public class ExcelHelper {
                         byte[] bsValue = (byte[]) value;
                         ClientAnchor anchor = new HSSFClientAnchor(0, 0, 1023, 255, (short) 6, index, (short) 6,
                                 index);
-                        anchor.setAnchorType(2);
+                        anchor.setAnchorType(ClientAnchor.AnchorType.MOVE_DONT_RESIZE);
                         //patriarch.createPicture(anchor, workbook.addPicture(bsValue, HSSFWorkbook.PICTURE_TYPE_JPEG));
                     } else {
                         // 其它数据类型都当作字符串简单处理

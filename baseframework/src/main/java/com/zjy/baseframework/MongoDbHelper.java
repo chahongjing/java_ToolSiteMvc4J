@@ -1,13 +1,11 @@
 package com.zjy.baseframework;
 
-import com.mongodb.*;
+import com.mongodb.MongoClient;
+import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Administrator on 2016/12/16.
@@ -15,7 +13,7 @@ import java.util.List;
 public class MongoDbHelper {
     public void test() {
         SimpleMongoDbFactory mongoDb = SpringContextHolder.getBean("mongoDbFactory");
-        DB test = mongoDb.getDb("test");
+        MongoDatabase test = mongoDb.getDb("test");
 
         //MongoCollection<Document> user = (MongoCollection<Document>)test.getCollection("user");
 //        List<MongoCredential> credentialList = new ArrayList<MongoCredential>();
