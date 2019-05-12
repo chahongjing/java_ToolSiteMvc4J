@@ -1,5 +1,5 @@
 @echo off
-title deploy ToolSiteMvc4J and  webvue
+title deploy ToolSiteMvc4J and webvue
 
 set javaDir=F:\Source\Java\ToolSiteMvc4J\web\target\ToolSiteMvc4J\
 set vueDir=D:\webvue\
