@@ -1,4 +1,4 @@
-package com.zjy.bll.enums;
+package com.zjy.bll.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -56,4 +56,9 @@ public @interface LogMessage {
      */
     String errorMsgLogStr() default "";
 
+    /**
+     * 操作成功的日志
+     * @return
+     */
+    String successMsg() default "";
 }
