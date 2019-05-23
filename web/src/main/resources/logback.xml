@@ -181,4 +181,9 @@
         <appender-ref ref="sql_file"/>
         <!--<appender-ref ref="dBAppender"/>-->
     </logger>
+
+    <!-- 指定特定名称的logger进行记录，LoggerFactory.getLogger("OPRATION"); -->
+    <!--<logger name="OPRATION" level="DEBUG" additivity="false">-->
+        <!--<appender-ref ref="dBAppender"/>-->
+    <!--</logger>-->
 </configuration>
