@@ -170,6 +170,8 @@
           if(resp.data.status == ResultStatus.OK.key) {
             me.list = resp.data.value.list;
             me.pager = commonSrv.getPagerInfo(resp.data.value, me.goPage);
+          } else {
+              me.pager.loading = false;
           }
           me.allDisabled = false;
         });

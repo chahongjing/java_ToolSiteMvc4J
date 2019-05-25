@@ -37,7 +37,7 @@ import java.util.Map;
  * Created by chahongjing on 2018/1/21.
  */
 @Controller
-@RequestMapping("/learn")
+@RequestMapping("learn")
 public class LearnController extends BaseController implements ServletConfigAware, EnvironmentAware, ApplicationContextAware {
     @Autowired
     private TestService testSrv;
@@ -96,7 +96,7 @@ public class LearnController extends BaseController implements ServletConfigAwar
         return "jspLearn";
     }
 
-    @RequestMapping("/testProxy")
+    @RequestMapping("testProxy")
     @ResponseBody
     public BaseResult testProxy() {
         BaseResult<Integer> result = BaseResult.ok();

@@ -82,7 +82,7 @@
         <!-- Shiro的核心安全接口,这个属性是必须的 -->
         <property name="securityManager" ref="securityManager"/>
         <property name="loginUrl" value="/index.html"/>
-        <!--<property name="loginUrl" value="/user/loginpage"/>-->
+<!--        <property name="loginUrl" value="/user/loginpage"/>-->
         <!-- <property name="successUrl" value="/system/main"/> -->
         <property name="unauthorizedUrl" value="/index.html"/>
         <property name="filters">

@@ -1,21 +1,31 @@
 package com.zjy.bll.common;
 
-import com.zjy.bll.annotations.LogLevel;
-import com.zjy.bll.annotations.LogMessage;
+import com.alibaba.fastjson.JSON;
+import com.zjy.baseframework.BaseResult;
+import com.zjy.baseframework.ServiceException;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.shiro.authz.UnauthenticatedException;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.HttpHeaders;
+import java.io.IOException;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
+import java.text.DecimalFormat;
+import java.util.*;
 
 /**
  * 日志拦截，要在spring-mvc.xml中添加<aop:aspectj-autoproxy proxy-target-class="true"/>
@@ -23,60 +33,75 @@ import java.util.Map;
 @Aspect
 @Component
 public class ControllerAspect {
-    public static final String LOG_PARAMETER = "log_parameter";
-
     @Autowired
     private HttpServletRequest request;
 
+    @Autowired
+    private HttpServletResponse response;
+
+    private static Logger logger = LoggerFactory.getLogger(ControllerInterceptor.class);
     protected Logger oprationLogger = LoggerFactory.getLogger("OPRATION");
 
     private static final String USER_EXP = "\\{user\\}";
     private static final String METHOD_EXP = "\\{method\\}";
+    private static final String NEW_LINE = System.getProperty("line.separator", "\r\n");
+    public static final String LOG_PARAMETER = "log_parameter";
+    public static final String START_TIME = "__startTime";
+    public static final String KEY_PARTTERN = "{%s}";
 
-    //Controller层切点
-    @Pointcut("@annotation(com.zjy.bll.annotations.LogMessage)")
+    /**
+     * Controller层切点
+     */
+//    @Pointcut("@annotation(com.zjy.bll.annotations.LogMessage)")
+    @Pointcut("@annotation(org.springframework.web.bind.annotation.RequestMapping)")
     public void controllerAspect() {
     }
 
-    @AfterReturning(pointcut = "controllerAspect()")
-    public void afterReturning(JoinPoint joinPoint) {
-        Method method = getMethod(joinPoint);
-        if (method == null) return;
-        LogMessage annotation = method.getAnnotation(LogMessage.class);
-        if (annotation == null) return;
-        if (StringUtils.isBlank(annotation.successMsg())) return;
-        LogLevel level = method.getAnnotation(LogLevel.class);
-        if (level == null) {
-            level = method.getDeclaringClass().getAnnotation(LogLevel.class);
-        }
-        String moKuai;
-        if (level == null) {
-            moKuai = StringUtils.EMPTY;
-        } else {
-            moKuai = level.value();
-        }
-//        Dq_YongHu yongHuDto = YongHuUtils.getYongHu();
-//        String dengluming = yongHuDto == null ? "-" : yongHuDto.getDengluming();
-        String dengluming = "";
-        String msg = replaceStr(annotation.successMsg(), dengluming, method.getName());
-        oprationLogger.info(msg, method, moKuai);
+    /**
+     * handle执行前置事件
+     *
+     * @param joinPoint
+     */
+    @Before("controllerAspect()")
+    public void before(JoinPoint joinPoint) {
+        request.setAttribute(START_TIME, System.currentTimeMillis());
     }
 
-    public static Method getMethod(JoinPoint joinPoint) {
-        String targetName = joinPoint.getTarget().getClass().getName();
+    /**
+     * handle执行未抛异常后置事件
+     *
+     * @param joinPoint
+     * @param ret
+     */
+    @AfterReturning(pointcut = "controllerAspect()", returning = "ret")
+    public void afterReturning(JoinPoint joinPoint, Object ret) {
+        logRequest(request, response, getMethod(joinPoint), ret);
+    }
+
+    /**
+     * 抛出异常后处理事件
+     *
+     * @param joinPoint
+     * @return
+     */
+//    @AfterThrowing(pointcut = "controllerAspect()", throwing = "ex")
+//    public void AfterThrowing(JoinPoint joinPoint, Exception ex) {
+//        logException(request, response, getMethod(joinPoint), ex);
+//    }
+
+    /**
+     * 获取joinPoint拦截的方法
+     * @param joinPoint
+     * @return
+     */
+    private Method getMethod(JoinPoint joinPoint) {
         String methodName = joinPoint.getSignature().getName();
         Object[] arguments = joinPoint.getArgs();
-        Class targetClass;
-        try {
-            targetClass = Class.forName(targetName);
-        } catch (ClassNotFoundException e) {
-            return null;
-        }
-        Method[] methods = targetClass.getMethods();
+        Method[] methods = joinPoint.getTarget().getClass().getMethods();
         for (Method method : methods) {
             if (method.getName().equals(methodName)) {
-                Class[] clazzs = method.getParameterTypes();
-                if (clazzs.length == arguments.length) {
+                Class[] clazz = method.getParameterTypes();
+                if (clazz.length == arguments.length) {
                     return method;
                 }
             }
@@ -84,18 +109,185 @@ public class ControllerAspect {
         return null;
     }
 
+    /**
+     * 记录异常日志
+     * @param request
+     * @param response
+     * @param method
+     * @param ex
+     */
+    public static void logException(HttpServletRequest request, HttpServletResponse response, Method method, Exception ex) {
+        response.reset();
+        response.setStatus(HttpStatus.OK.value());
+        response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+        response.setHeader(HttpHeaders.CACHE_CONTROL, "no-cache, must-revalidate");
+        try {
+            if (ex instanceof ServiceException) {
+                Map<String, String> warnMsg = getWarnMsg(ex, request, method);
+                response.getWriter().write(JSON.toJSONString(BaseResult.no(warnMsg.get("msg"))));
+                logger.warn(warnMsg.get("msgLog") + "。" + NEW_LINE + "请求信息" + NEW_LINE + getRequestInfoStr(request, method), ex);
+            } else if (ex instanceof UnauthorizedException) {
+                response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            } else if (ex instanceof UnauthenticatedException) {
+                response.setStatus(HttpStatus.NETWORK_AUTHENTICATION_REQUIRED.value());
+            } else {
+                Map<String, String> warnMsg = getErrorMsg(ex, request, method);
+                response.getWriter().write(JSON.toJSONString(BaseResult.error(warnMsg.get("msg"))));
+                logger.error(warnMsg.get("msgLog") + "。" + NEW_LINE + "请求信息" + NEW_LINE + getRequestInfo(request, method), ex);
+            }
+        } catch (IOException e) {
+            logger.error("系统错误", e);
+        }
+    }
+
+    /**
+     * 记录请求日志，不包括异常
+     * @param request
+     * @param response
+     * @param method
+     * @param result
+     */
+    protected void logRequest(HttpServletRequest request, HttpServletResponse response, Method method, Object result) {
+        StringBuilder sb = new StringBuilder(200);
+        sb.append(NEW_LINE + getRequestInfoStr(request, method));
+        if (result != null) {
+            String msg = (result instanceof String) ? (String)result : JSON.toJSONString(result);
+            sb.append("return: ").append(msg);
+        }
+        logger.info(sb.toString());
+    }
+
+    /**
+     * 获取请求相关信息String，如url, 参数
+     * @param request
+     * @param method
+     * @return
+     */
+    private static String getRequestInfoStr(HttpServletRequest request, Method method) {
+        Map<String, Object> requestInfo = getRequestInfo(request, method);
+        StringBuilder sb = new StringBuilder(200);
+        for (Map.Entry<String, Object> entry : requestInfo.entrySet()) {
+            sb.append(entry.getKey()).append(": ").append(Objects.toString(entry.getValue(), StringUtils.EMPTY)).append(NEW_LINE);
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 获取请求相关信息map，如url, 参数
+     * @param request
+     * @param method
+     * @return
+     */
+    private static Map<String, Object> getRequestInfo(HttpServletRequest request, Method method) {
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("URI", request.getRequestURI());
+        map.put("method", method.getDeclaringClass().getName() + "." + method.getName());
+        map.put("params", getParamString(request.getParameterMap()));
+        long duration = 0L;
+        if (request.getAttribute(START_TIME) != null) {
+            duration = System.currentTimeMillis() - ((long) request.getAttribute(START_TIME));
+            DecimalFormat df = new DecimalFormat("###,##0");
+            map.put("duration", duration == 0 ? "-" : df.format(duration) + " ms");
+        }
+        return map;
+    }
+
+    /**
+     * 获取请求参数信息
+     * @param map
+     * @return
+     */
+    public static String getParamString(Map<String, String[]> map) {
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String, String[]> e : map.entrySet()) {
+            sb.append(e.getKey()).append("=");
+            String[] value = e.getValue();
+            if (value != null && value.length == 1) {
+                sb.append(value[0]).append("\t");
+            } else {
+                sb.append(Arrays.toString(value)).append("\t");
+            }
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 获取异常message
+     * @param ex
+     * @return
+     */
+    private static String getExceptionDefaultMsg(Exception ex) {
+        String message;
+        if (ExceptionUtils.getRootCause(ex) != null) {
+            message = ExceptionUtils.getRootCause(ex).getMessage();
+        } else {
+            message = ex.getMessage();
+        }
+        return StringUtils.defaultIfBlank(message, ex.toString());
+    }
+
+    /**
+     * 获取serviceexception信息
+     * @param ex
+     * @param request
+     * @param method
+     * @return
+     */
+    private static Map<String, String> getWarnMsg(Exception ex, HttpServletRequest request, Method method) {
+        Map<String, String> msgMap = new HashMap<>();
+        String defaultMsg = getExceptionDefaultMsg(ex);
+        String msg = StringUtils.EMPTY;
+        String msgLog = StringUtils.EMPTY;
+        if (StringUtils.isBlank(msg)) msg = defaultMsg;
+        if (StringUtils.isBlank(msgLog)) msgLog = defaultMsg;
+        msgMap.put("msg", msg);
+        msgMap.put("msgLog", msgLog);
+        return msgMap;
+    }
+
+    /**
+     * 获取error信息
+     * @param ex
+     * @param request
+     * @param method
+     * @return
+     */
+    private static Map<String, String> getErrorMsg(Exception ex, HttpServletRequest request, Method method) {
+        Map<String, String> msgMap = new HashMap<>();
+        String defaultMsg = getExceptionDefaultMsg(ex);
+        String msg = StringUtils.EMPTY;
+        String msgLog = StringUtils.EMPTY;
+        if (StringUtils.isBlank(msg)) msg = defaultMsg;
+        if (StringUtils.isBlank(msgLog)) msgLog = defaultMsg;
+        msgMap.put("msg", msg);
+        msgMap.put("msgLog", msgLog);
+        return msgMap;
+    }
+
+    /**
+     * 替换占位字符
+     * @param str
+     * @param user
+     * @param method
+     * @return
+     */
     private String replaceStr(String str, String user, String method) {
         if (!StringUtils.isNotBlank(str)) return str;
         str = str.replaceAll(USER_EXP, user).replaceAll(METHOD_EXP, method);
-        Object t = request.getAttribute("log_parameter");
+        Object t = request.getAttribute(LOG_PARAMETER);
         if (t != null) {
             for (Map.Entry<String, String> entry : ((Map<String, String>) t).entrySet()) {
-                str = str.replace("{" + entry.getKey() + "}", entry.getValue());
+                str = str.replace(String.format(KEY_PARTTERN, entry.getKey()), entry.getValue());
             }
         }
         return str;
     }
 
+    /**
+     * 设置记录日志相关替换参数
+     * @param key
+     * @param value
+     */
     protected void setLogParameter(String key, String value) {
         Map<String, String> map = (Map<String, String>) request.getAttribute(LOG_PARAMETER);
         if (map == null) {
