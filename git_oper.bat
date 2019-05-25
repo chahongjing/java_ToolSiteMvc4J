@@ -12,7 +12,7 @@ if "%type%"=="2" (
   goto gitadd
 )
 if "%type%"=="3" (
-  goto xgitcommit
+  goto gitcommit
 )
 if "%type%"=="4" (
   goto gitpush
