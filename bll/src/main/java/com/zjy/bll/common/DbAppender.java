@@ -5,12 +5,17 @@ import ch.qos.logback.classic.spi.LoggingEvent;
 import com.zjy.baseframework.StackTraceElementHelper;
 import com.zjy.bll.common.shiro.ShiroRealmUtils;
 import com.zjy.bll.enums.LogLevel;
+import com.zjy.entities.UserInfo;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
 
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 /**
  * Created by Administrator on 2018/12/22.
@@ -31,7 +36,13 @@ public class DbAppender extends DBAppenderBase<LoggingEvent> {
 
     @Override
     protected void subAppend(LoggingEvent loggingEvent, Connection connection, PreparedStatement insertStatement) throws Throwable {
-        insertStatement.setString(1, null == ShiroRealmUtils.getCurrentUserId() ? StringUtils.EMPTY : ShiroRealmUtils.getCurrentUserId());
+        UserInfo user = (UserInfo) SecurityUtils.getSubject().getPrincipal();
+        String userId = null;
+        if (user != null) {
+            userId = user.getUserId();
+        }
+        userId = Objects.toString(userId, StringUtils.EMPTY);
+        insertStatement.setString(1, userId);
         bindLoggingEventWithInsertStatement(insertStatement, loggingEvent);
         int updateCount = insertStatement.executeUpdate();
         if (updateCount != 1) {
@@ -43,13 +54,17 @@ public class DbAppender extends DBAppenderBase<LoggingEvent> {
         StackTraceElement caller = StackTraceElementHelper.extractFirstCaller(loggingEvent.getCallerData());
         if (caller == null) caller = CallerData.naInstance();
         Object[] canshus = loggingEvent.getArgumentArray();
-        int length = canshus == null ? 0 : canshus.length;
-        stmt.setString(2, caller.getFileName());
-        stmt.setString(3, caller.getMethodName());
+        if(ArrayUtils.isNotEmpty(canshus) && canshus[canshus.length - 1] instanceof Method) {
+            Method method = (Method)canshus[canshus.length - 1];
+            stmt.setString(2, method.getDeclaringClass().getName());
+            stmt.setString(3, method.getName());
+        } else {
+            stmt.setString(2, caller.getFileName());
+            stmt.setString(3, caller.getMethodName());
+        }
         stmt.setInt(4, LogLevel.getByName(loggingEvent.getLevel().toString()).getValue());
         stmt.setString(5, asStringTruncatedToNumber(loggingEvent.getFormattedMessage(), 1300));
         stmt.setTimestamp(6, new Timestamp(loggingEvent.getTimeStamp()));
-
     }
 
     private String buildInsertSQL() {

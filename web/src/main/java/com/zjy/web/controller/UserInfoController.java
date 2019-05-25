@@ -135,6 +135,7 @@ public class UserInfoController extends BaseController {
     public BaseResult<PageBean> queryPageList(UserInfoRequest request) {
         PageBean<UserInfoVo> pageBean = (PageBean<UserInfoVo>) userInfoSrv.queryPageList(request);
         return BaseResult.ok(pageBean);
+//        throw new ServiceException("dfsfd");
     }
     // endregion
 }

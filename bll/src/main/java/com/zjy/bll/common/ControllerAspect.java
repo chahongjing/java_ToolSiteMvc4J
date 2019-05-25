@@ -40,7 +40,7 @@ public class ControllerAspect {
     private HttpServletResponse response;
 
     private static Logger logger = LoggerFactory.getLogger(ControllerInterceptor.class);
-    protected Logger oprationLogger = LoggerFactory.getLogger("OPRATION");
+    protected static Logger operationLogger = LoggerFactory.getLogger("dbLogger");
 
     private static final String USER_EXP = "\\{user\\}";
     private static final String METHOD_EXP = "\\{method\\}";
@@ -91,6 +91,7 @@ public class ControllerAspect {
 
     /**
      * 获取joinPoint拦截的方法
+     *
      * @param joinPoint
      * @return
      */
@@ -111,6 +112,7 @@ public class ControllerAspect {
 
     /**
      * 记录异常日志
+     *
      * @param request
      * @param response
      * @param method
@@ -125,7 +127,9 @@ public class ControllerAspect {
             if (ex instanceof ServiceException) {
                 Map<String, String> warnMsg = getWarnMsg(ex, request, method);
                 response.getWriter().write(JSON.toJSONString(BaseResult.no(warnMsg.get("msg"))));
-                logger.warn(warnMsg.get("msgLog") + "。" + NEW_LINE + "请求信息" + NEW_LINE + getRequestInfoStr(request, method), ex);
+                String msg = warnMsg.get("msgLog") + "。" + NEW_LINE + "请求信息" + NEW_LINE + getRequestInfoStr(request, method);
+                operationLogger.warn(msg, method);
+                logger.warn(msg, ex);
             } else if (ex instanceof UnauthorizedException) {
                 response.setStatus(HttpStatus.UNAUTHORIZED.value());
             } else if (ex instanceof UnauthenticatedException) {
@@ -133,7 +137,9 @@ public class ControllerAspect {
             } else {
                 Map<String, String> warnMsg = getErrorMsg(ex, request, method);
                 response.getWriter().write(JSON.toJSONString(BaseResult.error(warnMsg.get("msg"))));
-                logger.error(warnMsg.get("msgLog") + "。" + NEW_LINE + "请求信息" + NEW_LINE + getRequestInfo(request, method), ex);
+                String msg = warnMsg.get("msgLog") + "。" + NEW_LINE + "请求信息" + NEW_LINE + getRequestInfoStr(request, method);
+                operationLogger.error(msg, method);
+                logger.error(msg, ex);
             }
         } catch (IOException e) {
             logger.error("系统错误", e);
@@ -142,6 +148,7 @@ public class ControllerAspect {
 
     /**
      * 记录请求日志，不包括异常
+     *
      * @param request
      * @param response
      * @param method
@@ -151,14 +158,16 @@ public class ControllerAspect {
         StringBuilder sb = new StringBuilder(200);
         sb.append(NEW_LINE + getRequestInfoStr(request, method));
         if (result != null) {
-            String msg = (result instanceof String) ? (String)result : JSON.toJSONString(result);
+            String msg = (result instanceof String) ? (String) result : JSON.toJSONString(result);
             sb.append("return: ").append(msg);
         }
+        operationLogger.info(sb.toString(), method);
         logger.info(sb.toString());
     }
 
     /**
      * 获取请求相关信息String，如url, 参数
+     *
      * @param request
      * @param method
      * @return
@@ -174,6 +183,7 @@ public class ControllerAspect {
 
     /**
      * 获取请求相关信息map，如url, 参数
+     *
      * @param request
      * @param method
      * @return
@@ -194,6 +204,7 @@ public class ControllerAspect {
 
     /**
      * 获取请求参数信息
+     *
      * @param map
      * @return
      */
@@ -213,6 +224,7 @@ public class ControllerAspect {
 
     /**
      * 获取异常message
+     *
      * @param ex
      * @return
      */
@@ -228,6 +240,7 @@ public class ControllerAspect {
 
     /**
      * 获取serviceexception信息
+     *
      * @param ex
      * @param request
      * @param method
@@ -247,6 +260,7 @@ public class ControllerAspect {
 
     /**
      * 获取error信息
+     *
      * @param ex
      * @param request
      * @param method
@@ -266,6 +280,7 @@ public class ControllerAspect {
 
     /**
      * 替换占位字符
+     *
      * @param str
      * @param user
      * @param method
@@ -285,6 +300,7 @@ public class ControllerAspect {
 
     /**
      * 设置记录日志相关替换参数
+     *
      * @param key
      * @param value
      */
