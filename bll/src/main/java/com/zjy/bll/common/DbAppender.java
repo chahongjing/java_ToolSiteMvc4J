@@ -3,8 +3,7 @@ package com.zjy.bll.common;
 import ch.qos.logback.classic.spi.CallerData;
 import ch.qos.logback.classic.spi.LoggingEvent;
 import com.zjy.baseframework.StackTraceElementHelper;
-import com.zjy.bll.common.shiro.ShiroRealmUtils;
-import com.zjy.bll.enums.LogLevel;
+import com.zjy.entities.enums.LogLevel;
 import com.zjy.entities.UserInfo;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -16,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Created by Administrator on 2018/12/22.
@@ -42,7 +42,8 @@ public class DbAppender extends DBAppenderBase<LoggingEvent> {
             userId = user.getUserId();
         }
         userId = Objects.toString(userId, StringUtils.EMPTY);
-        insertStatement.setString(1, userId);
+        insertStatement.setString(1, UUID.randomUUID().toString().replace("-", StringUtils.EMPTY));
+        insertStatement.setString(2, userId);
         bindLoggingEventWithInsertStatement(insertStatement, loggingEvent);
         int updateCount = insertStatement.executeUpdate();
         if (updateCount != 1) {
@@ -56,28 +57,29 @@ public class DbAppender extends DBAppenderBase<LoggingEvent> {
         Object[] canshus = loggingEvent.getArgumentArray();
         if(ArrayUtils.isNotEmpty(canshus) && canshus[canshus.length - 1] instanceof Method) {
             Method method = (Method)canshus[canshus.length - 1];
-            stmt.setString(2, method.getDeclaringClass().getName());
-            stmt.setString(3, method.getName());
+            stmt.setString(3, method.getDeclaringClass().getName());
+            stmt.setString(4, method.getName());
         } else {
-            stmt.setString(2, caller.getFileName());
-            stmt.setString(3, caller.getMethodName());
+            stmt.setString(3, caller.getFileName());
+            stmt.setString(4, caller.getMethodName());
         }
-        stmt.setInt(4, LogLevel.getByName(loggingEvent.getLevel().toString()).getValue());
-        stmt.setString(5, asStringTruncatedToNumber(loggingEvent.getFormattedMessage(), 1300));
-        stmt.setTimestamp(6, new Timestamp(loggingEvent.getTimeStamp()));
+        stmt.setInt(5, LogLevel.getByName(loggingEvent.getLevel().toString()).getValue());
+        stmt.setString(6, asStringTruncatedToNumber(loggingEvent.getFormattedMessage(), 1300));
+        stmt.setTimestamp(7, new Timestamp(loggingEvent.getTimeStamp()));
     }
 
     private String buildInsertSQL() {
         //拼接insert sql
         StringBuilder sqlBuilder = new StringBuilder("INSERT INTO ");
         sqlBuilder.append("CAOZUORIZHI").append(" (");
+        sqlBuilder.append("logID").append(", ");
         sqlBuilder.append("userID").append(", ");
         sqlBuilder.append("controller").append(", ");
         sqlBuilder.append("method").append(", ");
         sqlBuilder.append("logLevel").append(", ");
         sqlBuilder.append("content").append(", ");
         sqlBuilder.append("createdOn").append(") ");
-        sqlBuilder.append("VALUES (?, ?, ? ,?, ?, ?)");
+        sqlBuilder.append("VALUES (?, ?, ? ,?, ?, ?, ?)");
         return sqlBuilder.toString();
     }
 

@@ -61,4 +61,10 @@ public @interface LogMessage {
      * @return
      */
     String successMsg() default "";
+
+    /**
+     * 是否记录日志
+     * @return
+     */
+    boolean doLog() default true;
 }

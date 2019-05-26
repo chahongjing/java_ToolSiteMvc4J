@@ -163,7 +163,25 @@ var router = new Router({
             breadcurmbName: '角色授权',
             pageCode: 'roleGrantPermission_enter'
           }
-        }
+        },
+        {
+          path: 'operLogList',
+            name: 'operLogList',
+          component: resolve => require(['@/components/admin/operLogList'], resolve),
+          meta:{
+            breadcurmbName: '日志列表',
+              pageCode: 'operLogList_enter'
+          }
+        },
+        {
+          path: 'operLogEdit',
+            name: 'operLogEdit',
+          component: resolve => require(['@/components/admin/operLogEdit'], resolve),
+          meta:{
+            breadcurmbName: '日志详情',
+              pageCode: 'operLogEdit_enter'
+          }
+        },
       ]
     },
     {

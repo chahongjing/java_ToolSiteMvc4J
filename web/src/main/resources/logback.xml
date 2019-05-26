@@ -183,7 +183,7 @@
     </logger>
 
     <!-- 指定特定名称的logger进行记录，LoggerFactory.getLogger("dbLogger"); -->
-<!--    <logger name="dbLogger" level="DEBUG" additivity="false">-->
-<!--        <appender-ref ref="dBAppender"/>-->
-<!--    </logger>-->
+    <logger name="dbLogger" level="DEBUG" additivity="false">
+        <appender-ref ref="dBAppender"/>
+    </logger>
 </configuration>

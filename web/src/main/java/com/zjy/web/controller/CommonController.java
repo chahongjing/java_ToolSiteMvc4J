@@ -1,6 +1,7 @@
 package com.zjy.web.controller;
 
 import com.zjy.baseframework.BaseResult;
+import com.zjy.bll.annotations.LogMessage;
 import com.zjy.bll.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +32,7 @@ public class CommonController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/getEnums", produces = "application/javascript;charset=UTF-8")
+    @LogMessage(doLog = false)
     public String getEnums() {
         return commonSrv.getEnums();
     }

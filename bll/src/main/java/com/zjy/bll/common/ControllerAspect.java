@@ -3,6 +3,7 @@ package com.zjy.bll.common;
 import com.alibaba.fastjson.JSON;
 import com.zjy.baseframework.BaseResult;
 import com.zjy.baseframework.ServiceException;
+import com.zjy.bll.annotations.LogMessage;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.shiro.authz.UnauthenticatedException;
@@ -53,7 +54,7 @@ public class ControllerAspect {
      * Controller层切点
      */
 //    @Pointcut("@annotation(com.zjy.bll.annotations.LogMessage)")
-    @Pointcut("@annotation(org.springframework.web.bind.annotation.RequestMapping)")
+    @Pointcut("@annotation(org.springframework.web.bind.annotation.RequestMapping) || @annotation(org.springframework.web.bind.annotation.GetMapping) || @annotation(org.springframework.web.bind.annotation.PostMapping)")
     public void controllerAspect() {
     }
 
@@ -75,7 +76,11 @@ public class ControllerAspect {
      */
     @AfterReturning(pointcut = "controllerAspect()", returning = "ret")
     public void afterReturning(JoinPoint joinPoint, Object ret) {
-        logRequest(request, response, getMethod(joinPoint), ret);
+        Method method = getMethod(joinPoint);
+        LogMessage annotation = method.getAnnotation(LogMessage.class);
+        if(annotation == null || annotation.doLog()) {
+            logRequest(request, response, getMethod(joinPoint), ret);
+        }
     }
 
     /**

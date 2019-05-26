@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zjy.bll.dao.OperLogDao">
+	<!-- 基本操作区 -->
+	<!-- 获取 -->
+	<select id="get" resultType="com.zjy.bll.vo.OperLogVo">
+		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="rz"/></include>,
+		ui.username
+		  FROM CaoZuoRiZhi rz
+		  left join UserInfo ui on rz.userID = ui.UserID
+		 WHERE rz.logId = #{logID, jdbcType = VARCHAR}
+	</select>
+
+	<!-- 删除 -->
+	<delete id="delete">
+		DELETE FROM CaoZuoRiZhi WHERE logID = #{logID, jdbcType=VARCHAR}
+	</delete>
+
+	<!-- 删除 -->
+	<delete id="deleteAll">
+		DELETE FROM CaoZuoRiZhi
+	</delete>
+
+	<!-- 查询简单列表 -->
+	<select id="query" resultType="com.zjy.bll.vo.OperLogVo">
+		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="rz"/></include>,
+		ui.username
+		FROM CaoZuoRiZhi rz
+		left join UserInfo ui on rz.userID = ui.UserID
+		<where>
+			<if test='logLevel != null'>
+				and rz.logLevel = #{logLevel, jdbcType=INTEGER}
+			</if>
+			<if test='beginDate != null'>
+				and rz.createdOn &gt;= #{beginDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test='endDate != null'>
+				and rz.createdOn &lt; #{endDate, jdbcType=TIMESTAMP}
+			</if>
+		</where>
+		order by rz.createdOn desc
+	</select>
+
+	<!-- 公共信息 -->
+	<!-- 字段 -->
+	<sql id="field">
+		logID, userID, controller, method, logLevel, content, createdOn
+	</sql>
+	 <!-- 带前缀的字段 -->
+	<sql id="fieldWithPrefix">
+        ${tableName}.logID, ${tableName}.userID, ${tableName}.controller, ${tableName}.method, ${tableName}.logLevel, ${tableName}.content, ${tableName}.createdOn
+	</sql>
+</mapper>
