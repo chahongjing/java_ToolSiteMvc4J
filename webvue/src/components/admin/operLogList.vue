@@ -14,6 +14,15 @@
           </div>
         </div>
         <div class="form-group">
+          <label class="form-label colon">日志级别</label>
+          <div class="form-content">
+            <select class='form-control' v-model="logLevel">
+              <option value="">-- 全部 --</option>
+              <option v-for="item in logLevelList" :value="item.key" v-text="item.name"></option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
           <button type="button" class="btn btn-purple ml20" @click='search()' :disabled='allDisabled'>
             <i class='fa fa-search mr5'></i>搜索
           </button>
@@ -71,6 +80,8 @@
         allDisabled: true,
         searchKey: null,
         list: [],
+        logLevel: null,
+        logLevelList: [],
         pager: {pageNum: 1, pageSize: 10, loading: true}
       }
     },
@@ -94,6 +105,7 @@
         me.pager.loading = true;
         this.$axios.get('/operlog/queryPageList', {
           name: this.searchKey,
+          logLevel: this.logLevel,
           pageNum: this.pager.pageNum,
           pageSize: this.pager.pageSize
         }).then(function (resp) {
@@ -129,9 +141,17 @@
             }
           });
         });
+      },
+      getEnumList: function() {
+        var list = [];
+        for (var item in LogLevel) {
+          list.push(LogLevel[item]);
+        }
+        this.logLevelList = list;
       }
     },
     mounted: function () {
+      this.getEnumList();
       this.search();
     }
   }

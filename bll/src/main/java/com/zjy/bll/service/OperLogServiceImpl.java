@@ -21,7 +21,7 @@ public class OperLogServiceImpl extends BaseService<OperLogDao, OperLog> impleme
     @Override
     public PageBean<OperLogVo> queryPageList(OperLogRequest request) {
         OperLogVo po = new OperLogVo();
-//        po.setName(request.getName());
+        po.setLogLevel(request.getLogLevel());
         return (PageBean<OperLogVo>) super.queryPageList(request, po);
     }
 
