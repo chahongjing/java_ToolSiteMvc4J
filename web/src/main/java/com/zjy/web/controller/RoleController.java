@@ -15,34 +15,34 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by Administrator on 2018/2/27.
  */
 @RestController
-@RequestMapping("/role")
+@RequestMapping("role")
 public class RoleController extends BaseController {
 
     @Autowired
     private RoleInfoService roleInfoSrv;
 
-    @RequestMapping("/queryPageList")
+    @RequestMapping("queryPageList")
     @RequiresPermissions("roleList_enter")
     public BaseResult<PageBean> queryPageList(RoleInfoRequest request) {
         PageBean<RoleInfoVo> pageBean = roleInfoSrv.queryPageList(request);
         return BaseResult.ok(pageBean);
     }
 
-    @RequestMapping("/getDetail")
+    @RequestMapping("getDetail")
     @RequiresPermissions("roleEdit_enter")
     public BaseResult<RoleInfoVo> getDetail(String id) {
         RoleInfoVo userInfo = roleInfoSrv.getVo(id);
         return BaseResult.ok(userInfo);
     }
 
-    @PostMapping("/save")
+    @PostMapping("save")
     @RequiresPermissions("roleEdit_save")
     public BaseResult<String> save(RoleInfoVo vo) {
         roleInfoSrv.save(vo);
         return BaseResult.ok();
     }
 
-    @RequestMapping("/delete")
+    @RequestMapping("delete")
     @RequiresPermissions("roleList_delete")
     public BaseResult<String> delete(String id) {
         roleInfoSrv.delete(id);

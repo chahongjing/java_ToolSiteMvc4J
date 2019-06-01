@@ -89,7 +89,7 @@ public class LearnController extends BaseController implements ServletConfigAwar
         return user;
     }
 
-    @RequestMapping("/jspLearn/{intVar}")
+    @RequestMapping("jspLearn/{intVar}")
     public String jspLearn(Model model, @ModelAttribute("mUserInfo") UserInfo mUserInfo, @PathVariable(required = true) int intVar) {
         model.addAttribute("testAttr", mUserInfo.getUserCode());
         model.addAttribute("modelattributeUser", mUserInfo.getUserName());
@@ -107,7 +107,7 @@ public class LearnController extends BaseController implements ServletConfigAwar
         return result;
     }
 
-    @RequestMapping("/testAspectJ")
+    @RequestMapping("testAspectJ")
     @ResponseBody
     public BaseResult testAspectJ() {
         BaseResult<Integer> result = BaseResult.ok();
@@ -118,12 +118,12 @@ public class LearnController extends BaseController implements ServletConfigAwar
     // endregion
 
     //region ueditor
-    @RequestMapping("/ueditorLearn")
+    @RequestMapping("ueditorLearn")
     public String ueditorLearn() {
         return "ueditorLearn";
     }
 
-    @RequestMapping("/ueditorPicUpload")
+    @RequestMapping("ueditorPicUpload")
     public void ueditorPicUpload(HttpServletRequest request, HttpServletResponse response) {
         response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         UeditorUploader up = new UeditorUploader(request);
@@ -161,7 +161,7 @@ public class LearnController extends BaseController implements ServletConfigAwar
     //endregion
 
     // region 其它
-    @PostMapping(value = "/testPostWithFile")
+    @PostMapping(value = "testPostWithFile")
     public ResponseEntity<BaseResult<UserInfo>> testPostWithFile(MultipartHttpServletRequest request,
                                                                  @RequestParam(required = false) Integer AGE,
                                                                  @RequestParam MultipartFile[] myfile,
@@ -189,7 +189,7 @@ public class LearnController extends BaseController implements ServletConfigAwar
         return new ResponseEntity<>(re, HttpStatus.OK);
     }
 
-    @RequestMapping("/download")
+    @RequestMapping("download")
     @ResponseBody
     public BaseResult download(HttpServletResponse response) {
         BaseResult result = BaseResult.ok();
@@ -206,7 +206,7 @@ public class LearnController extends BaseController implements ServletConfigAwar
         return result;
     }
 
-    @RequestMapping("/redirect")
+    @RequestMapping("redirect")
     public ModelAndView redirect(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("redirect:/testP2");
@@ -223,7 +223,7 @@ public class LearnController extends BaseController implements ServletConfigAwar
         return mv;
     }
 
-    @PostMapping(value = "/testPostEntity", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "testPostEntity", produces = "application/json;charset=UTF-8")
     public ResponseEntity<UserInfo> testPostEntity(UserInfo userForm) {
         UserInfo user = new UserInfo();
         user.setUserName(userForm.getUserName());
@@ -231,7 +231,7 @@ public class LearnController extends BaseController implements ServletConfigAwar
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @RequestMapping("/testP1")
+    @RequestMapping("testP1")
     @ResponseBody
     public BaseResult testP1() {
         // path是指欲下载的文件的路径。
@@ -244,7 +244,7 @@ public class LearnController extends BaseController implements ServletConfigAwar
         return result;
     }
 
-    @RequestMapping("/testP2")
+    @RequestMapping("testP2")
     @ResponseBody
     public BaseResult testP2() {
         // path是指欲下载的文件的路径。

@@ -12,20 +12,20 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/userRole")
+@RequestMapping("userRole")
 public class UserRoleController extends BaseController {
 
     @Autowired
     private UserRoleService userRoleSrv;
 
-    @RequestMapping("/queryUserRole")
+    @RequestMapping("queryUserRole")
     @RequiresPermissions("userRole_enter")
     public BaseResult<List<RelateCheckVo>> queryUserRole(String id) {
         List<RelateCheckVo> list = userRoleSrv.queryAllRoleWithUserRole(id);
         return BaseResult.ok(list);
     }
 
-    @RequestMapping("/saveUserRole")
+    @RequestMapping("saveUserRole")
     @RequiresPermissions("userRole_enter")
     public BaseResult saveUserRole(String listStr) {
         List<RelateCheckVo> list = JSON.parseArray(listStr, RelateCheckVo.class);

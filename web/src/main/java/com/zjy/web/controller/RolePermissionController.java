@@ -13,20 +13,20 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/rolePermission")
+@RequestMapping("rolePermission")
 public class RolePermissionController extends BaseController {
 
     @Autowired
     private RolePermissionService rolePermissionSrv;
 
-    @RequestMapping("/getRolePermission")
+    @RequestMapping("getRolePermission")
     @RequiresPermissions("roleGrantPermission_enter")
     public BaseResult<List<RelateCheckVo>> getRolePermission(String id) {
         List<RelateCheckVo> list = rolePermissionSrv.getRolePermission(id);
         return BaseResult.ok(list);
     }
 
-    @PostMapping("/savePermission")
+    @PostMapping("savePermission")
     @RequiresPermissions("roleGrantPermission_enter")
     public BaseResult savePermission(String listStr) {
         List<RelateCheckVo> list = JSON.parseArray(listStr, RelateCheckVo.class);

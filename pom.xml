@@ -18,64 +18,68 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <jstl.version>1.2</jstl.version>
-        <taglibs.version>1.1.2</taglibs.version>
+        <java.source.version>1.8</java.source.version>
+        <java.target.version>1.8</java.target.version>
+        <!-- jsp, servlet -->
         <servlet.version>4.0.1</servlet.version>
         <jsp.version>2.0</jsp.version>
+        <jstl.version>1.2</jstl.version>
+        <taglibs.version>1.1.2</taglibs.version>
+        <!-- plugin -->
         <spring.version>5.1.7.RELEASE</spring.version>
         <shiro.version>1.4.1</shiro.version>
         <mybatis.version>3.5.1</mybatis.version>
         <mybatis.spring.version>2.0.1</mybatis.spring.version>
         <mybatisplus.version>2.1.9</mybatisplus.version>
         <mybatis-generator.version>1.3.7</mybatis-generator.version>
-        <fastjson.version>1.2.58</fastjson.version>
         <druid.version>1.1.16</druid.version>
         <log4j.version>2.11.2</log4j.version>
         <slf4j.version>1.7.26</slf4j.version>
         <logback.version>1.2.3</logback.version>
+        <commons.lang.version>3.9</commons.lang.version>
+        <commons.io.version>2.6</commons.io.version>
         <janino.version>3.0.12</janino.version>
         <pagehelper.version>5.1.8</pagehelper.version>
         <fileupload.version>1.4</fileupload.version>
+        <fastjson.version>1.2.58</fastjson.version>
         <poi.version>4.1.0</poi.version>
-        <jedis.version>3.0.1</jedis.version>
-        <mongodb.version>3.4.0</mongodb.version>
-        <mongodb.spring.version>2.1.7.RELEASE</mongodb.spring.version>
+        <aspectj.version>1.8.9</aspectj.version>
         <cache.version>1.0.0</cache.version>
         <quartz.version>2.3.1</quartz.version>
         <solr.version>6.3.0</solr.version>
-        <dbutils.version>1.7</dbutils.version>
-        <c3p0.version>0.9.1.2</c3p0.version>
-        <sqlserver.version>4.0</sqlserver.version>
-        <!-- 8.0.11 -->
-        <mysql.version>6.0.5</mysql.version>
-        <oracle.version>11.2.0.3.0</oracle.version>
-        <sqlite.version>3.21.0.1</sqlite.version>
-        <junit.version>4.12</junit.version>
         <httpclientnew.version>4.5.3</httpclientnew.version>
         <ws.rs.version>2.1</ws.rs.version>
         <zip.version>1.3.2</zip.version>
-        <aspectj.version>1.8.9</aspectj.version>
-        <commons.lang.version>3.9</commons.lang.version>
-        <commons.io.version>2.6</commons.io.version>
-        <hibernate.version>5.2.10.Final</hibernate.version>
-        <maven.compiler.version>3.7.0</maven.compiler.version>
-        <maven.jar.version>3.0.2</maven.jar.version>
-        <maven.dependency.vresion>3.0.2</maven.dependency.vresion>
-        <maven.install.vresion>2.5.2</maven.install.vresion>
-        <maven.tomcat.version>2.2</maven.tomcat.version>
-        <encoding>UTF-8</encoding>
-        <java.source.version>1.8</java.source.version>
-        <java.target.version>1.8</java.target.version>
-        <jaxb.api.version>2.3.0</jaxb.api.version>
-        <jaxb.impl.version>2.3.0</jaxb.impl.version>
-        <jaxb.core.version>2.3.0</jaxb.core.version>
-        <activation.version>1.1.1</activation.version>
-        <javax.annotation.api.version>1.3.2</javax.annotation.api.version>
         <dubbo.version>2.6.6</dubbo.version>
         <zookeeper.client.version>0.10</zookeeper.client.version>
         <aspose.version>14.9.0</aspose.version>
         <ueditor.version>1.1.2</ueditor.version>
         <sitemesh.version>3.0.0</sitemesh.version>
+        <!-- db -->
+        <jedis.version>3.0.1</jedis.version>
+        <mongodb.version>3.4.0</mongodb.version>
+        <mongodb.spring.version>2.1.7.RELEASE</mongodb.spring.version>
+        <dbutils.version>1.7</dbutils.version>
+        <c3p0.version>0.9.1.2</c3p0.version>
+        <sqlserver.version>4.0</sqlserver.version>
+        <mysql.version>8.0.16</mysql.version>
+        <oracle.version>11.2.0.3.0</oracle.version>
+        <sqlite.version>3.21.0.1</sqlite.version>
+        <hibernate.version>5.2.10.Final</hibernate.version>
+        <!-- test -->
+        <junit.version>4.12</junit.version>
+        <!-- maven -->
+        <maven.compiler.version>3.8.1</maven.compiler.version>
+        <maven.jar.version>3.1.2</maven.jar.version>
+        <maven.dependency.vresion>3.1.1</maven.dependency.vresion>
+        <maven.install.vresion>3.0.0-M1</maven.install.vresion>
+        <maven.tomcat.version>2.2</maven.tomcat.version>
+        <!-- jdk11 -->
+        <jaxb.api.version>2.3.0</jaxb.api.version>
+        <jaxb.impl.version>2.3.0</jaxb.impl.version>
+        <jaxb.core.version>2.3.0</jaxb.core.version>
+        <activation.version>1.1.1</activation.version>
+        <javax.annotation.api.version>1.3.2</javax.annotation.api.version>
     </properties>
 
     <dependencyManagement>
@@ -163,9 +167,9 @@
                 <version>${mybatis.spring.version}</version>
             </dependency>
             <!--<dependency>-->
-                <!--<groupId>com.baomidou</groupId>-->
-                <!--<artifactId>mybatis-plus</artifactId>-->
-                <!--<version>${mybatisplus.version}</version>-->
+            <!--<groupId>com.baomidou</groupId>-->
+            <!--<artifactId>mybatis-plus</artifactId>-->
+            <!--<version>${mybatisplus.version}</version>-->
             <!--</dependency>-->
             <dependency>
                 <groupId>org.mybatis.generator</groupId>
@@ -419,9 +423,9 @@
                 </exclusions>
             </dependency>
             <!--<dependency>-->
-                <!--<groupId>com.aspose</groupId>-->
-                <!--<artifactId>aspose-words</artifactId>-->
-                <!--<version>${aspose.version}</version>-->
+            <!--<groupId>com.aspose</groupId>-->
+            <!--<artifactId>aspose-words</artifactId>-->
+            <!--<version>${aspose.version}</version>-->
             <!--</dependency>-->
             <dependency>
                 <groupId>org.sitemesh</groupId>
@@ -430,9 +434,9 @@
             </dependency>
 
             <!--<dependency>-->
-                <!--<groupId>com.baidu</groupId>-->
-                <!--<artifactId>ueditor</artifactId>-->
-                <!--<version>${ueditor.version}</version>-->
+            <!--<groupId>com.baidu</groupId>-->
+            <!--<artifactId>ueditor</artifactId>-->
+            <!--<version>${ueditor.version}</version>-->
             <!--</dependency>-->
 
             <!-- java 11 -->
@@ -477,7 +481,7 @@
                     <configuration>
                         <source>${java.source.version}</source>
                         <target>${java.target.version}</target>
-                        <encoding>${encoding}</encoding>
+                        <encoding>${project.build.sourceEncoding}</encoding>
                         <!--<testFailureIgnore>true</testFailureIgnore>-->
                     </configuration>
                 </plugin>
@@ -559,9 +563,9 @@
                             <version>${sqlite.version}</version>
                         </dependency>
                         <!--<dependency>-->
-                            <!--<groupId>com.microsoft.sqlserver</groupId>-->
-                            <!--<artifactId>sqljdbc4</artifactId>-->
-                            <!--<version>${sqlserver.version}</version>-->
+                        <!--<groupId>com.microsoft.sqlserver</groupId>-->
+                        <!--<artifactId>sqljdbc4</artifactId>-->
+                        <!--<version>${sqlserver.version}</version>-->
                         <!--</dependency>-->
                         <dependency>
                             <groupId>org.mybatis.generator</groupId>

@@ -16,7 +16,7 @@ import java.util.*;
  * Created by Administrator on 2018/2/27.
  */
 @Controller
-@RequestMapping("/tool")
+@RequestMapping("tool")
 public class ToolController extends BaseController {
     @Value("${db.url}")
     private String dbUrl;
@@ -28,7 +28,7 @@ public class ToolController extends BaseController {
     @Autowired
     private ToolService toolSrv;
     //region 数据库表转类
-    @RequestMapping("/tableToObject")
+    @RequestMapping("tableToObject")
     public String tableToObject(Model model) {
         model.addAttribute("dbUrl", Objects.toString(dbUrl, DbType.Oracle.getUrl()));
         model.addAttribute("dbUser", Objects.toString(dbUser, "zjy"));
@@ -36,12 +36,12 @@ public class ToolController extends BaseController {
         model.addAttribute("dbSet", EnumSet.allOf(DbType.class));
         return "tools/tableToObject";
     }
-    @RequestMapping("/sqlGenerate")
+    @RequestMapping("sqlGenerate")
     public String sqlGenerate() {
         return "tools/sqlGenerate";
     }
 
-    @RequestMapping("/getTableInfo")
+    @RequestMapping("getTableInfo")
     @ResponseBody
     public BaseResult getTableInfo(String type, String url, String user, String password, String tableName) {
         DbType dbType = DbType.getByCode(type);
@@ -49,7 +49,7 @@ public class ToolController extends BaseController {
         return BaseResult.ok(tableInfo);
     }
 
-    @RequestMapping("/getDriverUrlList")
+    @RequestMapping("getDriverUrlList")
     @ResponseBody
     public BaseResult getDriverUrlList() {
         Map<String, Object> map = new HashMap<>();

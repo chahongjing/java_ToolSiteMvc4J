@@ -38,10 +38,10 @@ import java.util.stream.IntStream;
  * Created by chahongjing on 2017/2/28.
  */
 @Controller
-@RequestMapping("/echarts")
+@RequestMapping("echarts")
 public class EchartsController {
 
-    @RequestMapping("/index")
+    @RequestMapping("index")
     public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("echarts");
@@ -53,7 +53,7 @@ public class EchartsController {
         return mv;
     }
 
-    @RequestMapping("/getChartsOption")
+    @RequestMapping("getChartsOption")
     @ResponseBody
     public BaseResult<Map<String, Object>> getChartsOption() {
         Map<String, Object> chartsOptionData = getChartsOptionData();

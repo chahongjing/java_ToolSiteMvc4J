@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/function")
+@RequestMapping("function")
 public class FunctionInfoController extends BaseController {
 
     @Autowired
@@ -25,14 +25,14 @@ public class FunctionInfoController extends BaseController {
     @Autowired
     private MenuService menuSrv;
 
-    @RequestMapping("/queryPageList")
+    @RequestMapping("queryPageList")
     @RequiresPermissions("functionList_enter")
     public BaseResult<PageBean<FunctionInfoVo>> queryPageList(FunctionInfoRequest request) {
         PageBean<FunctionInfoVo> pageBean = (PageBean<FunctionInfoVo>) functionInfoSrv.queryPageList(request);
         return BaseResult.ok(pageBean);
     }
 
-    @RequestMapping("/getDetail")
+    @RequestMapping("getDetail")
     @RequiresPermissions("functionEdit_enter")
     public BaseResult<FunctionInfoVo> getDetail(String id, String menuId) {
         FunctionInfoVo functionInfoVo = functionInfoSrv.getVo(id);
@@ -44,21 +44,21 @@ public class FunctionInfoController extends BaseController {
         return BaseResult.ok(functionInfoVo);
     }
 
-    @PostMapping("/save")
+    @PostMapping("save")
     @RequiresPermissions("functionEdit_save")
     public BaseResult<String> save(FunctionInfoVo vo) {
         functionInfoSrv.save(vo);
         return BaseResult.ok();
     }
 
-    @RequestMapping("/delete")
+    @RequestMapping("delete")
     @RequiresPermissions("functionList_delete")
     public BaseResult<String> delete(String id) {
         functionInfoSrv.delete(id);
         return BaseResult.ok();
     }
 
-    @RequestMapping("/queryFunctionList")
+    @RequestMapping("queryFunctionList")
     @RequiresPermissions("functionEdit_enter")
     public BaseResult<List<FunctionInfoVo>> queryFunctionList() {
         List<FunctionInfoVo> list = functionInfoSrv.queryFunctionList();

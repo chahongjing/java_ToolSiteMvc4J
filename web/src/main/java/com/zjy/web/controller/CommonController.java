@@ -10,18 +10,18 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/comm")
+@RequestMapping("comm")
 public class CommonController extends BaseController {
 
     @Autowired
     private CommonService commonSrv;
 
-    @RequestMapping("/getNewId")
+    @RequestMapping("getNewId")
     public BaseResult<String> getNewId() {
         return BaseResult.ok(commonSrv.getNewId());
     }
 
-    @RequestMapping("/getNewIdList")
+    @RequestMapping("getNewIdList")
     public BaseResult<List<String>> getNewIdList(int num) {
         return BaseResult.ok(commonSrv.getNewIdList(num));
     }
@@ -31,7 +31,7 @@ public class CommonController extends BaseController {
      *
      * @return
      */
-    @RequestMapping(value = "/getEnums", produces = "application/javascript;charset=UTF-8")
+    @RequestMapping(value = "getEnums", produces = "application/javascript;charset=UTF-8")
     @LogMessage(doLog = false)
     public String getEnums() {
         return commonSrv.getEnums();

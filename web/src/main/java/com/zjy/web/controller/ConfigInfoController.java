@@ -15,33 +15,33 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by Administrator on 2018/11/1.
  */
 @RestController
-@RequestMapping("/configInfo")
+@RequestMapping("configInfo")
 public class ConfigInfoController extends BaseController {
     @Autowired
     private ConfigInfoService configInfoSrv;
 
-    @RequestMapping("/queryPageList")
+    @RequestMapping("queryPageList")
     @RequiresPermissions("configInfoList_enter")
     public BaseResult<PageBean<ConfigInfoVo>> queryPageList(ConfigInfoRequest request) {
         PageBean<ConfigInfoVo> pageBean = (PageBean<ConfigInfoVo>) configInfoSrv.queryPageList(request);
         return BaseResult.ok(pageBean);
     }
 
-    @RequestMapping("/getDetail")
+    @RequestMapping("getDetail")
     @RequiresPermissions("configInfoEdit_enter")
     public BaseResult<ConfigInfoVo> getDetail(String id) {
         ConfigInfoVo userInfo = configInfoSrv.getVo(id);
         return BaseResult.ok(userInfo);
     }
 
-    @PostMapping("/save")
+    @PostMapping("save")
     @RequiresPermissions("configInfo_save")
     public BaseResult<String> save(ConfigInfoVo vo) {
         configInfoSrv.save(vo);
         return BaseResult.ok();
     }
 
-    @RequestMapping("/delete")
+    @RequestMapping("delete")
     @RequiresPermissions("configInfoList_delete")
     public BaseResult<String> delete(String id) {
         configInfoSrv.delete(id);

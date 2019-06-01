@@ -18,12 +18,12 @@ public class IndexController extends BaseController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/")
+    @RequestMapping("")
     public String index() {
         return "index";
     }
 
-    @RequestMapping("/ok")
+    @RequestMapping("ok")
     public String ok(HttpServletRequest request, HttpServletResponse response) {
         return "common/ok";
     }

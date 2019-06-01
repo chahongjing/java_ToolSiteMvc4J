@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/permission")
+@RequestMapping("permission")
 public class PermissionController extends BaseController {
 
     @Autowired
@@ -23,14 +23,14 @@ public class PermissionController extends BaseController {
     @Autowired
     private FunctionInfoService functionInfoSrv;
 
-    @RequestMapping("/queryPageList")
+    @RequestMapping("queryPageList")
     @RequiresPermissions("permissionList_enter")
     public BaseResult<PageBean<PermissionVo>> queryPageList(PermissionRequest request) {
         PageBean<PermissionVo> pageBean = (PageBean<PermissionVo>) permissionSrv.queryPageList(request);
         return BaseResult.ok(pageBean);
     }
 
-    @RequestMapping("/getDetail")
+    @RequestMapping("getDetail")
     @RequiresPermissions("permissionEdit_enter")
     public BaseResult<PermissionVo> getDetail(String id, String functionId) {
         PermissionVo permissionVo = permissionSrv.getVo(id);
@@ -42,14 +42,14 @@ public class PermissionController extends BaseController {
         return BaseResult.ok(permissionVo);
     }
 
-    @PostMapping("/save")
+    @PostMapping("save")
     @RequiresPermissions("permissionEdit_save")
     public BaseResult<String> save(PermissionVo vo) {
         permissionSrv.save(vo);
         return BaseResult.ok();
     }
 
-    @RequestMapping("/delete")
+    @RequestMapping("delete")
     @RequiresPermissions("permissionList_delete")
     public BaseResult<String> delete(String id) {
         permissionSrv.delete(id);

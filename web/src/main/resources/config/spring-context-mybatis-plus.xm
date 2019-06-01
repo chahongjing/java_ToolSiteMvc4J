@@ -22,11 +22,6 @@
                 <!--<bean id="paginationInterceptor" class="com.baomidou.mybatisplus.plugins.PaginationInterceptor">-->
                 <!--</bean>-->
                 <bean class="com.github.pagehelper.PageHelper">
-                    <property name="properties">
-                        <value>
-                            dialect=${db.dialect}
-                        </value>
-                    </property>
                 </bean>
             </array>
         </property>
@@ -75,11 +70,6 @@
     <!--<property name="plugins">-->
     <!--<array>-->
     <!--<bean class="com.github.pagehelper.PageHelper">-->
-    <!--<property name="properties">-->
-    <!--<value>-->
-    <!--dialect=${db.dialect}-->
-    <!--</value>-->
-    <!--</property>-->
     <!--</bean>-->
     <!--</array>-->
     <!--</property>-->

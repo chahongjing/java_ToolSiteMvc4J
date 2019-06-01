@@ -30,7 +30,7 @@ import javax.ws.rs.HttpMethod;
  * @create 2016-12-10 15:27
  */
 @Controller
-@RequestMapping("/user")
+@RequestMapping("user")
 public class UserInfoController extends BaseController {
 
     //region 属性
@@ -39,7 +39,7 @@ public class UserInfoController extends BaseController {
     //endregion
 
     //region 登录登出
-    @RequestMapping("/loginpage")
+    @RequestMapping("loginpage")
     public ModelAndView login(HttpServletRequest request) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("login");
@@ -56,17 +56,17 @@ public class UserInfoController extends BaseController {
         return mv;
     }
 
-    @RequestMapping("/userListPage")
+    @RequestMapping("userListPage")
     public String userListPage() {
         return "/sys/user";
     }
 
-    @RequestMapping("/userEditPage")
+    @RequestMapping("userEditPage")
     public String userEditPage() {
         return "/sys/userEdit";
     }
 
-    @RequestMapping("/login")
+    @RequestMapping("login")
     @ResponseBody
     public BaseResult<UserInfoVo> login(UserInfo user) {
         return userInfoSrv.login(user);
@@ -80,14 +80,14 @@ public class UserInfoController extends BaseController {
     //endregion
 
     // region 用户管理
-    @RequestMapping("/userEdit")
+    @RequestMapping("userEdit")
     @RequiresPermissions("userEdit_enter")
     public String editUser(String userId, Model model) {
         model.addAttribute("userId", userId);
         return "sys/userEdit";
     }
 
-    @RequestMapping("/getDetail")
+    @RequestMapping("getDetail")
     @ResponseBody
     @RequiresPermissions("userEdit_enter")
     public BaseResult<UserInfoVo> getDetail(String id) {
@@ -95,7 +95,7 @@ public class UserInfoController extends BaseController {
         return BaseResult.ok(userInfo);
     }
 
-    @PostMapping("/save")
+    @PostMapping("save")
     @ResponseBody
     public BaseResult<String> save(UserInfoVo vo) {
         UserInfo currentUser = getCurrentUser();
@@ -106,7 +106,7 @@ public class UserInfoController extends BaseController {
         return BaseResult.ok();
     }
 
-    @RequestMapping("/delete")
+    @RequestMapping("delete")
     @ResponseBody
     @RequiresPermissions(value = {"userList_delete"}, logical = Logical.OR)
     public BaseResult<String> delete(String id) {
@@ -114,14 +114,14 @@ public class UserInfoController extends BaseController {
         return BaseResult.ok();
     }
 
-    @RequestMapping("/changePassword")
+    @RequestMapping("changePassword")
     @ResponseBody
     public BaseResult<String> changePassword(String userCode, String oldPassword, String newPassword) {
         userInfoSrv.changePassword(userCode, oldPassword, newPassword);
         return BaseResult.ok();
     }
 
-    @RequestMapping("/resetPassword")
+    @RequestMapping("resetPassword")
     @ResponseBody
     @RequiresPermissions(value = {"userList_resetPassword"})
     public BaseResult<String> resetPassword(String userCode, String password) {
@@ -129,7 +129,7 @@ public class UserInfoController extends BaseController {
         return BaseResult.ok();
     }
 
-    @RequestMapping("/queryPageList")
+    @RequestMapping("queryPageList")
     @ResponseBody
     @RequiresPermissions("userList_enter")
     public BaseResult<PageBean> queryPageList(UserInfoRequest request) {
