@@ -190,7 +190,7 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
         return dao.getByCode(userCode);
     }
 
-    protected void beforeCheck(UserInfoVo vo) {
+    private void beforeCheck(UserInfoVo vo) {
         if (StringUtils.isBlank(vo.getUserCode())) {
             throw new ServiceException("请输入用户编号！");
         }
@@ -230,11 +230,10 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
             throw new ServiceException("请输入新密码！");
         }
         String oldPasswordEnc = ShiroRealmUtils.getMd5Hash(oldPassword, userCodeCur);
-        String newPasswordEnc = ShiroRealmUtils.getMd5Hash(newPassword, userCodeCur);
         if (!oldPasswordEnc.equals(user.getPassword())) {
             throw new ServiceException("原密码错误！");
         }
-        user.setPassword(newPasswordEnc);
+        user.setPassword(ShiroRealmUtils.getMd5Hash(newPassword, userCodeCur));
         dao.updateUserPassword(user.getUserId(), user.getPassword());
     }
 
@@ -247,8 +246,7 @@ public class UserInfoServiceImpl extends BaseService<UserInfoDao, UserInfo> impl
         if (StringUtils.isBlank(password)) {
             throw new ServiceException("密码不能为空！");
         }
-        String newPasswordEnc = ShiroRealmUtils.getMd5Hash(password, userCode);
-        user.setPassword(newPasswordEnc);
+        user.setPassword(ShiroRealmUtils.getMd5Hash(password, userCode));
         dao.updateUserPassword(user.getUserId(), user.getPassword());
     }
 }

@@ -41,14 +41,14 @@ public class ControllerAspect {
     private HttpServletResponse response;
 
     private static Logger logger = LoggerFactory.getLogger(ControllerInterceptor.class);
-    protected static Logger operationLogger = LoggerFactory.getLogger("dbLogger");
+    private static Logger operationLogger = LoggerFactory.getLogger("dbLogger");
 
     private static final String USER_EXP = "\\{user\\}";
     private static final String METHOD_EXP = "\\{method\\}";
     private static final String NEW_LINE = System.getProperty("line.separator", "\r\n");
-    public static final String LOG_PARAMETER = "log_parameter";
-    public static final String START_TIME = "__startTime";
-    public static final String KEY_PARTTERN = "{%s}";
+    private static final String LOG_PARAMETER = "log_parameter";
+    private static final String START_TIME = "__startTime";
+    private static final String KEY_PARTTERN = "{%s}";
 
     /**
      * Controller层切点
@@ -56,6 +56,7 @@ public class ControllerAspect {
 //    @Pointcut("@annotation(com.zjy.bll.annotations.LogMessage)")
     @Pointcut("@annotation(org.springframework.web.bind.annotation.RequestMapping) || @annotation(org.springframework.web.bind.annotation.GetMapping) || @annotation(org.springframework.web.bind.annotation.PostMapping)")
     public void controllerAspect() {
+        // 
     }
 
     /**
@@ -77,6 +78,7 @@ public class ControllerAspect {
     @AfterReturning(pointcut = "controllerAspect()", returning = "ret")
     public void afterReturning(JoinPoint joinPoint, Object ret) {
         Method method = getMethod(joinPoint);
+        if(method == null) return;
         LogMessage annotation = method.getAnnotation(LogMessage.class);
         if(annotation == null || annotation.doLog()) {
             logRequest(request, response, getMethod(joinPoint), ret);
@@ -159,15 +161,17 @@ public class ControllerAspect {
      * @param method
      * @param result
      */
-    protected void logRequest(HttpServletRequest request, HttpServletResponse response, Method method, Object result) {
+    public void logRequest(HttpServletRequest request, HttpServletResponse response, Method method, Object result) {
         StringBuilder sb = new StringBuilder(200);
-        sb.append(NEW_LINE + getRequestInfoStr(request, method));
+        sb.append(NEW_LINE).append(getRequestInfoStr(request, method));
         if (result != null) {
             String msg = (result instanceof String) ? (String) result : JSON.toJSONString(result);
             sb.append("return: ").append(msg);
         }
-        operationLogger.info(sb.toString(), method);
-        logger.info(sb.toString());
+        if(logger.isInfoEnabled()) {
+            operationLogger.info(sb.toString(), method);
+            logger.info(sb.toString());
+        }
     }
 
     /**
@@ -198,9 +202,8 @@ public class ControllerAspect {
         map.put("URI", request.getRequestURI());
         map.put("method", method.getDeclaringClass().getName() + "." + method.getName());
         map.put("params", getParamString(request.getParameterMap()));
-        long duration = 0L;
         if (request.getAttribute(START_TIME) != null) {
-            duration = System.currentTimeMillis() - ((long) request.getAttribute(START_TIME));
+            long duration = System.currentTimeMillis() - ((long) request.getAttribute(START_TIME));
             DecimalFormat df = new DecimalFormat("###,##0");
             map.put("duration", duration == 0 ? "-" : df.format(duration) + " ms");
         }

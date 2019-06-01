@@ -1,4 +1,4 @@
-package com.zjy.baseframework;
+package com.zjy.baseframework.interfaces;
 
 import com.zjy.baseframework.enums.ResultStatus;
 import org.apache.commons.lang3.StringUtils;

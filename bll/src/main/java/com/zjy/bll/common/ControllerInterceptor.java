@@ -1,7 +1,5 @@
 package com.zjy.bll.common;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,8 +14,6 @@ import javax.servlet.http.HttpServletResponse;
  * @author Administrator
  */
 public class ControllerInterceptor implements HandlerInterceptor {
-    private static Logger logger = LoggerFactory.getLogger(ControllerInterceptor.class);
-
     /**
      * before the actual handler will be executed
      *
@@ -25,10 +21,9 @@ public class ControllerInterceptor implements HandlerInterceptor {
      * @param response
      * @param handler
      * @return
-     * @throws Exception
      */
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         request.setAttribute("startTime", System.currentTimeMillis());
         return true;
     }
@@ -40,10 +35,9 @@ public class ControllerInterceptor implements HandlerInterceptor {
      * @param response
      * @param handler
      * @param modelAndView
-     * @throws Exception
      */
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
         long startTime = (long) request.getAttribute("startTime");
         long endTime = System.currentTimeMillis();
         long executeTime = endTime - startTime;
@@ -55,7 +49,7 @@ public class ControllerInterceptor implements HandlerInterceptor {
             sb.append("Params   : ").append(ControllerAspect.getParamString(request.getParameterMap())).append("\n");
             sb.append("CostTime : ").append(executeTime).append("ms").append("\n");
             sb.append("-------------------------------------------------------------------------------");
-            System.out.println(sb.toString());
+//            System.out.println(sb.toString());
         }
     }
 
@@ -66,10 +60,9 @@ public class ControllerInterceptor implements HandlerInterceptor {
      * @param response
      * @param handler
      * @param ex
-     * @throws Exception
      */
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         // 有异常
 //        if(ex != null || (request.getAttribute("isHandleException") != null && (boolean)request.getAttribute("isHandleException"))) {
 ////            handException(request, response, handler, ex);
