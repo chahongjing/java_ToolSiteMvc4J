@@ -145,7 +145,7 @@
         el: '#myApp',
         data: {
         	author: 'jyzeng',
-            selectedDbType: 'oracle',
+            selectedDbType: 'mysql',
             operatorType: 'add',
             selectedSubject: 'field',
             selectedFieldType: 'VARCHAR(XXX)',
@@ -718,7 +718,7 @@ BEGIN
    WHERE UPPER(TABLE_NAME) = UPPER(tableName)
     AND UPPER(COLUMN_NAME) = UPPER(fieldName);
   IF num = 0 THEN
-    EXECUTE IMMEDIATE 'ALTER TABLE {firstName} ADD({secondName} VARCHAR2(100))';
+    EXECUTE IMMEDIATE 'ALTER TABLE {firstName} ADD({secondName} VARCHAR2(100), {secondName} VARCHAR2(100))';
   END IF;
 END;
 /
@@ -822,7 +822,7 @@ begin
   select count(*) into v_flag from information_schema.columns where table_schema = (select DATABASE()) and table_name = v_table and column_name = v_column;
   if(v_flag = 0)
   then 
-    set @sqlstr = concat('ALTER TABLE ', v_table, ' ADD COLUMN ', v_column, ' ', v_type);
+    set @sqlstr = concat('ALTER TABLE ', v_table, ' ADD COLUMN ', v_column, ' ', v_type, ', ADD COLUMN ', v_column, ' ', v_type);
     if(v_discription is not null and v_discription <> '')
     then
       set @sqlstr = concat(@sqlstr, ' comment ''', v_discription, '''');
