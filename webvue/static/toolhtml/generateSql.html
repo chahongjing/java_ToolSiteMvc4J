@@ -820,7 +820,7 @@ CREATE PROCEDURE add_column_if(IN v_table varchar(50), IN v_column varchar(50), 
 begin
   declare stmt varchar(2000);
   declare v_flag int;
-  select count(*) into v_flag from information_schema.columns where table_schema = (select DATABASE()) and table_name = v_table and column_name = v_column;
+  select count(*) into v_flag from information_schema.columns where UPPER(table_schema) = UPPER((select DATABASE())) and UPPER(table_name) = UPPER(v_table) and UPPER(column_name) = UPPER(v_column);
   if(v_flag = 0)
   then
     set @sqlstr = concat('ALTER TABLE ', v_table, ' ADD COLUMN ', v_column, ' ', v_type, ' COMMENT ''', v_discription, ''', ADD COLUMN ', v_column, ' ', v_type, ' COMMENT ''', v_discription, '''');
@@ -843,14 +843,16 @@ CREATE PROCEDURE modify_column_if(IN v_table varchar(50), IN v_column varchar(50
 begin
   declare stmt varchar(2000);
   declare v_flag int;
-  select count(*) into v_flag from information_schema.columns where table_schema = (select DATABASE()) and table_name = v_table and column_name = v_column;
+  declare remark varchar(200);
+  select count(*) into v_flag from information_schema.columns where UPPER(table_schema) = UPPER((select DATABASE())) and UPPER(table_name) = UPPER(v_table) and UPPER(column_name) = UPPER(v_column);
+  select column_comment into remark from information_schema.columns where UPPER(table_schema) = UPPER((select DATABASE())) and UPPER(table_name) = UPPER(v_table) and UPPER(column_name) = UPPER(v_column);
   if(v_flag = 1)
-  then 
+  then
     set @sqlstr = concat('ALTER TABLE ', v_table, ' MODIFY COLUMN ', v_column, ' ', v_type);
-    if(v_discription is not null and v_discription <> '')
-    then
-      set @sqlstr = concat(@sqlstr, ' COMMENT ''', v_discription, '''');
+    if(v_discription <> '') then
+      set remark = v_discription;
     end if;
+    set @sqlstr = concat(@sqlstr, ' COMMENT ''', remark, '''');
     select @sqlstr;
     prepare stmt from @sqlstr;
     execute stmt;
@@ -860,6 +862,8 @@ end ;//
 DELIMITER ;
 
 call modify_column_if('myuser', 'test', 'int', '新字段');
+-- 修改字段的注释，注意：字段名和字段类型都要写上
+-- ALTER TABLE myuser MODIFY COLUMN test VARCHAR(40) COMMENT '姓名';
 </script>
 <script type="text/x-template" id="mysqlDropField.html">
     -- {author} {datetime} {functionName}
@@ -869,10 +873,10 @@ CREATE PROCEDURE drop_column_if(IN v_table varchar(50), IN v_column varchar(50))
 begin
   declare stmt varchar(2000);
   declare v_flag int;
-  select count(*) into v_flag from information_schema.columns where table_schema = (select DATABASE()) and table_name = v_table and column_name = v_column;
+  select count(*) into v_flag from information_schema.columns where UPPER(table_schema) = UPPER((select DATABASE())) and UPPER(table_name) = UPPER(v_table) and UPPER(column_name) = UPPER(v_column);
   if(v_flag = 1)
   then 
-    set @sqlstr = concat('ALTER TABLE ', v_table, ' drop COLUMN ', v_column);
+    set @sqlstr = concat('ALTER TABLE ', v_table, ' DROP COLUMN ', v_column);
     select @sqlstr;
     prepare stmt from @sqlstr;
     execute stmt;
