@@ -136,10 +136,10 @@
 
     <appender name="dBAppender" class="com.zjy.bll.common.DbAppender">
         <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
-            <evaluator>   
+            <evaluator>
                 <expression>
-                    return event.getLoggerName().contains("dbLogger")                   
-                </expression>      
+                    event.getLoggerName().contains("dbLogger")
+                </expression>
             </evaluator>
             <OnMatch>ACCEPT</OnMatch>
             <OnMismatch>DENY</OnMismatch>
