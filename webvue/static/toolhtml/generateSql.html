@@ -592,9 +592,10 @@ COMMENT ON COLUMN {firstName}.id is '主键';
 <script type="text/x-template" id="mysqlAddTable.html">
     -- {author} {datetime} {functionName}
     CREATE TABLE IF NOT EXISTS {firstName}(
-      id INT,
-      name VARCHAR(100)
+      id INT PRIMARY KEY AUTO_INCREMENT COMMENT '主键',
+      name VARCHAR(100) COMMENT '名称'
     ) COMMENT='{remark}';
+    -- ALTER TABLE {firstName} COMMENT '{remark}';
 </script>
 <script type="text/x-template" id="oracleAddProc.html">
     -- {author} {datetime} {functionName}
@@ -821,12 +822,9 @@ begin
   declare v_flag int;
   select count(*) into v_flag from information_schema.columns where table_schema = (select DATABASE()) and table_name = v_table and column_name = v_column;
   if(v_flag = 0)
-  then 
-    set @sqlstr = concat('ALTER TABLE ', v_table, ' ADD COLUMN ', v_column, ' ', v_type, ', ADD COLUMN ', v_column, ' ', v_type);
-    if(v_discription is not null and v_discription <> '')
-    then
-      set @sqlstr = concat(@sqlstr, ' comment ''', v_discription, '''');
-    end if;
+  then
+    set @sqlstr = concat('ALTER TABLE ', v_table, ' ADD COLUMN ', v_column, ' ', v_type, ' COMMENT ''', v_discription, ''', ADD COLUMN ', v_column, ' ', v_type, ' COMMENT ''', v_discription, '''');
+
     select @sqlstr;
     prepare stmt from @sqlstr;
     execute stmt;
@@ -848,10 +846,10 @@ begin
   select count(*) into v_flag from information_schema.columns where table_schema = (select DATABASE()) and table_name = v_table and column_name = v_column;
   if(v_flag = 1)
   then 
-    set @sqlstr = concat('ALTER TABLE ', v_table, ' modify COLUMN ', v_column, ' ', v_type);
+    set @sqlstr = concat('ALTER TABLE ', v_table, ' MODIFY COLUMN ', v_column, ' ', v_type);
     if(v_discription is not null and v_discription <> '')
     then
-      set @sqlstr = concat(@sqlstr, ' comment ''', v_discription, '''');
+      set @sqlstr = concat(@sqlstr, ' COMMENT ''', v_discription, '''');
     end if;
     select @sqlstr;
     prepare stmt from @sqlstr;
