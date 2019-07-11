@@ -594,7 +594,7 @@ COMMENT ON COLUMN {firstName}.id is '主键';
     CREATE TABLE IF NOT EXISTS {firstName}(
       id INT PRIMARY KEY AUTO_INCREMENT COMMENT '主键',
       name VARCHAR(100) COMMENT '名称'
-    ) COMMENT='{remark}';
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='{remark}';
     -- ALTER TABLE {firstName} COMMENT '{remark}';
 </script>
 <script type="text/x-template" id="oracleAddProc.html">
