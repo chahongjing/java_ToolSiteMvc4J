@@ -1,6 +1,9 @@
 export default {
   formatDate(value, parttern){
-    if (value == null || !(value instanceof Date)) return value;
+    if(value == null || !(value instanceof Date || !isNaN(value))) return value;
+    if(!isNaN(value)) {
+        value = new Date(value);
+    }
     if (!parttern) parttern = 'yyyy-MM-dd HH:mm:ss';
     return value.format(parttern);
   },
