@@ -1,6 +1,6 @@
 export default {
   formatDate(value, parttern){
-    if(value == null || !(value instanceof Date || !isNaN(value))) return value;
+    if(!value || value == 0 || !(value instanceof Date || !isNaN(value))) return value;
     if(!isNaN(value)) {
         value = new Date(value);
     }
