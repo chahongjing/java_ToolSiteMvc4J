@@ -12,7 +12,8 @@
       </div>
       <div class="form-group text-right mb0">
         <button type="button" class="btn btn-purple mr5" @click="ajaxUploadFile">上传</button>
-        <button type="button" class="btn btn-purple mr5" @click="ajaxDownload">下载</button>
+        <button type="button" class="btn btn-purple mr5" @click="ajaxDownload">axios下载</button>
+        <button type="button" class="btn btn-purple mr5" @click="jqueryDownload">jquery下载</button>
       </div>
     </form>
     <div class='trcon'>
@@ -142,6 +143,9 @@ export default {
       this.$axios.postDownload('/learn/download').then(function (resp) {
         Utility.blobDownload(resp.data, resp.headers);
       });
+    },
+    jqueryDownload() {
+      Utility.jqueryDownload('/ToolSiteMvc4J/learn/download');
     },
     initDrag() {
       var me = this;

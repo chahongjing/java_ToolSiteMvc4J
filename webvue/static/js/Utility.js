@@ -133,6 +133,29 @@
       }
     });
   }
+  ns.jqueryDownload = function (url) {
+    $.ajax({
+      type: 'POST',
+      url: url,
+      processData: false,
+      contentType: false, // 如果form没有指定enctype，则可以在此处指定
+      dataType : "arraybuffer",
+      success: function (data, a, b, c) {
+        // todo
+        Utility.blobDownload(data, Utility.getXhrHeaders(b));
+        if (data.status == ResultStatus.OK.key) {
+          alert('上传成功！' + data.value);
+        } else {
+          alert(data.message);
+        }
+      },
+      error: function (xhr, type, message) {
+        if (xhr.status == 511) {
+          window.location.reload();
+        }
+      }
+    });
+  };
   ns.readArrayBufferAsText = function (data) {
     var enc = new TextDecoder('utf-8');
     return enc.decode(new Uint8Array(data));
