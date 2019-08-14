@@ -75,6 +75,7 @@
         <maven.dependency.vresion>3.1.1</maven.dependency.vresion>
         <maven.install.vresion>3.0.0-M1</maven.install.vresion>
         <maven.tomcat.version>2.2</maven.tomcat.version>
+        <maven.surefire.plugin>3.0.0-M3</maven.surefire.plugin>
         <!-- jdk11 -->
         <jaxb.api.version>2.3.0</jaxb.api.version>
         <jaxb.impl.version>2.3.0</jaxb.impl.version>
@@ -530,6 +531,15 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-install-plugin</artifactId>
                     <version>${maven.install.vresion}</version>
+                </plugin>
+                <!-- 配置构建时忽略测试用例 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven.surefire.plugin}</version>
+                    <configuration>
+                        <skipTests>true</skipTests>
+                    </configuration>
                 </plugin>
 
                 <plugin>
