@@ -6,31 +6,17 @@ import org.slf4j.Logger;
 import java.beans.PropertyEditorSupport;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class MyCustomDateEditor extends PropertyEditorSupport {
     public final static String DATEFORMAT = "yyyy-MM-dd";
     public final static String DATETIMEFORMAT = "yyyy-MM-dd HH:mm:ss";
+    public final static String UTC = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+    public final static String GMT = "EEE MMM dd yyyy HH:mm:ss 'GMT'Z";
 
     protected Logger logger = LogHelper.getLogger(this.getClass());
-    private static final DateFormat dateSdf = new SimpleDateFormat(DATEFORMAT);
-    private static final DateFormat dateTimeSdf = new SimpleDateFormat(DATETIMEFORMAT);
-    private static final DateFormat utcSfd = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-    private static final DateFormat gmtSdf = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss 'GMT'Z", Locale.US);
-    private static final List<DateFormat> sdf;
-
-    static {
-        utcSfd.setTimeZone(TimeZone.getTimeZone("UTC"));
-        sdf = new ArrayList<>();
-        sdf.add(dateSdf);
-        sdf.add(dateTimeSdf);
-        sdf.add(utcSfd);
-        sdf.add(gmtSdf);
-    }
-
-    public MyCustomDateEditor() {
-        super();
-    }
 
     @Override
     public void setAsText(String text) {
@@ -43,29 +29,52 @@ public class MyCustomDateEditor extends PropertyEditorSupport {
 
     public static Date parse(String text) {
         Date date = null;
-        for (DateFormat dateFormat : sdf) {
-            try {
-                date = dateFormat.parse(text);
-                break;
-            } catch (Exception e) {
-            }
+
+        try {
+            date = getUtcSfd().parse(text);
+            return date;
+        } catch (Exception e) {
         }
+        try {
+            date = getGmtSdf().parse(text);
+            return date;
+        } catch (Exception e) {
+        }
+        try {
+            date = getDateTimeSdf().parse(text);
+            return date;
+        } catch (Exception e) {
+        }
+        try {
+            date = getDateSdf().parse(text);
+            return date;
+        } catch (Exception e) {
+        }
+//        for (DateFormat dateFormat : sdf) {
+//            try {
+//                date = dateFormat.parse(text);
+//                break;
+//            } catch (Exception e) {
+//            }
+//        }
         return date;
     }
 
     public static DateFormat getDateSdf() {
-        return dateSdf;
+        return new SimpleDateFormat(DATEFORMAT);
     }
 
     public static DateFormat getDateTimeSdf() {
-        return dateTimeSdf;
+        return new SimpleDateFormat(DATETIMEFORMAT);
     }
 
     public static DateFormat getUtcSfd() {
+        DateFormat utcSfd = new SimpleDateFormat(UTC);
+        utcSfd.setTimeZone(TimeZone.getTimeZone("UTC"));
         return utcSfd;
     }
 
     public static DateFormat getGmtSdf() {
-        return gmtSdf;
+        return new SimpleDateFormat(GMT, Locale.US);
     }
 }
