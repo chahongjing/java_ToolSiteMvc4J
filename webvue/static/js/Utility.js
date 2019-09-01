@@ -68,7 +68,7 @@
   }
 
   ns.blobDownload = function (data, headers) {
-    if(!(data instanceof ArrayBuffer || data instanceof Blob)) return;
+    if (!(data instanceof ArrayBuffer || data instanceof Blob)) return;
     var fileName = headers['content-disposition'];
     var contentType = headers['content-type'];
     ns.blobDownloadWithFileName(data, fileName, contentType);
@@ -77,7 +77,7 @@
     if (fileName) {
       fileName = decodeURIComponent(fileName).replace(/attachment;\s*filename=/ig, '');
     }
-    if(!contentType) {
+    if (!contentType) {
       contentType = 'application/octet-stream';
     }
     var file = new Blob([data], {type: contentType});
@@ -139,7 +139,7 @@
       url: url,
       processData: false,
       contentType: false, // 如果form没有指定enctype，则可以在此处指定
-      dataType : "arraybuffer",
+      dataType: "arraybuffer",
       success: function (data, a, b, c) {
         // todo
         Utility.blobDownload(data, Utility.getXhrHeaders(b));
@@ -167,7 +167,7 @@
       callback && callback(reader.result);
     }
   }
-  ns.imgFileToBase64 = function(imgFile, callback) {
+  ns.imgFileToBase64 = function (imgFile, callback) {
     //限定上传文件的类型，判断是否是图片类型
     if (!/image\/\w+/.test(file.type)) {
       return false;
@@ -236,13 +236,13 @@
     return ret;
   }
 
-  ns.$ajaxCommon = function(url, param, successCalback, errorCalback) {
+  ns.$ajaxCommon = function (url, param, successCalback, errorCalback) {
     // 调整为全局变量
     var loadingCount = 0;
     $.ajax({
       url: 'http://localhost:20000/ToolSiteMvc4J/comm/getEnums1',
-      beforeSend: function(xhr) {
-        if(loadingCount == 0) {
+      beforeSend: function (xhr) {
+        if (loadingCount == 0) {
           //showLoading();
         }
         loadingCount++;
@@ -251,7 +251,7 @@
         // this
         debugger;
         console.log('complete');
-        if(loadingCount == 1) {
+        if (loadingCount == 1) {
           // hideLoading();
         }
         loadingCount--;
@@ -262,32 +262,34 @@
       },
       error: function (xhr, textStatus, errorThrown) {
         // this
-        var data = {status: 'ERROR',message: '系统错误！'};
+        var data = {status: 'ERROR', message: '系统错误！'};
         handleJqueryAjax(data, successCalback, errorCalback);
       }
     })
   }
+
   function handleJqueryAjax(data, successCalback, errorCalback) {
-    if(data.status == 'OK') {
+    if (data.status == 'OK') {
       successCalback && successCalback(data);
-    } else if(data.status == 'NO') {
-      if(errorCalback) {
+    } else if (data.status == 'NO') {
+      if (errorCalback) {
         errorCalback(data);
       } else {
         // toaster.warn(data.message);
       }
-    } else if(data.status == 'UNAUTHORIZED') {
+    } else if (data.status == 'UNAUTHORIZED') {
       // goto no permission
-    } else if(data.status == 'UNAUTHENTICATION') {
+    } else if (data.status == 'UNAUTHENTICATION') {
       // goto no login
-    } else if(data.status == 'ERROR') {
-      if(errorCalback) {
+    } else if (data.status == 'ERROR') {
+      if (errorCalback) {
         errorCalback(data);
       } else {
         // toaster.error(data.message);
       }
     }
   }
+
   function handlerAjaxResult(data, optionData) {
     var jReturn, startIndex, endIndex;
     var ret = {};
@@ -311,6 +313,7 @@
     }
     return ret;
   }
+
   // endregion
 
   // region Date 扩展
@@ -440,13 +443,11 @@
     return this.minus(value) < 0;
   }
   // endregion
-  
+
   // region Array 扩展
-  if (!Array.isArray) {
-    Array.isArray = function(arg) {
-      return Object.prototype.toString.call(arg) === '[object Array]';
-    };
-  }
+  Array.isArray = Array.isArray || function (arg) {
+    return Object.prototype.toString.call(arg) === '[object Array]';
+  };
   // endregion
 
   // region String 扩展
@@ -465,8 +466,7 @@
 
     if (js.test(this)) {
       return new Date(+re.$1);
-    }
-    else if (iso.test(this)) {
+    } else if (iso.test(this)) {
       return new Date(Date.UTC(+re.$1, +re.$2 - 1, +re.$3, +re.$4, +re.$5, +re.$6));
     }
 
@@ -625,8 +625,7 @@
           if (typeof value === 'string') {
             if (js.test(value)) {
               return new Date(+re.$1);
-            }
-            else if (iso.test(value)) {
+            } else if (iso.test(value)) {
               return new Date(Date.UTC(+re.$1, +re.$2 - 1, +re.$3, +re.$4, +re.$5, +re.$6));
             }
           }
@@ -637,6 +636,9 @@
     }
   }
 
+  ns.getRawType = function (value) {
+    return Object.prototype.toString.call(value).slice(8, -1)
+  }
   ns.isNumber = function (value, min, max, prec) {
     if (isNaN(value)) {
       return {status: false, code: 1, msg: '请输入数字！'}
@@ -663,20 +665,20 @@
   // 返 回 值： 无
   // 创 建 人： zengjy01
   // 创建日期： 2013-12-19 22:46:14
-  ns.handleEvent = function(bom, eventType, funcList, type) {
-    if(!bom || !eventType || !funcList) return;
+  ns.handleEvent = function (bom, eventType, funcList, type) {
+    if (!bom || !eventType || !funcList) return;
     var eventListener;
-    if(type == 'remove') {
+    if (type == 'remove') {
       eventListener = bom.removeEventListener || bom.detachEvent;
     } else {
       eventListener = bom.addEventListener || bom.attachEvent;
     }
     eventType = (window.addEventListener ? '' : 'on') + eventType;
-    if(typeof(funcList) == 'function') {
-          eventListener(eventType, funcList);
-    } else if(Array.isArray(funcList)) {
-        for(var i = 0; i < funcList.length; i++) {
-          eventListener(eventType, funcList[i]);
+    if (typeof (funcList) == 'function') {
+      eventListener(eventType, funcList);
+    } else if (Array.isArray(funcList)) {
+      for (var i = 0; i < funcList.length; i++) {
+        eventListener(eventType, funcList[i]);
       }
     }
   }
@@ -792,8 +794,10 @@ window.Constant = {
   // Host:'10.4.132.60',Port:'20000'
   // Host:'localhost',Port:'20000'
 }
-window.ResultStatus={"OK":{"key":"OK","value":1,"code":"","name":"成功","order":0},
-"NO":{"key":"NO","value":2,"code":"","name":"失败","order":0},
-"UNAUTHENTICATION":{"key":"UNAUTHENTICATION","value":3,"code":"","name":"未登录","order":0},
-"UNAUTHORIZED":{"key":"UNAUTHORIZED","value":4,"code":"","name":"未授权","order":0},
-"ERROR":{"key":"ERROR","value":5,"code":"","name":"错误","order":0}};
+window.ResultStatus = {
+  "OK": {"key": "OK", "value": 1, "code": "", "name": "成功", "order": 0},
+  "NO": {"key": "NO", "value": 2, "code": "", "name": "失败", "order": 0},
+  "UNAUTHENTICATION": {"key": "UNAUTHENTICATION", "value": 3, "code": "", "name": "未登录", "order": 0},
+  "UNAUTHORIZED": {"key": "UNAUTHORIZED", "value": 4, "code": "", "name": "未授权", "order": 0},
+  "ERROR": {"key": "ERROR", "value": 5, "code": "", "name": "错误", "order": 0}
+};
