@@ -235,6 +235,59 @@
 
     return ret;
   }
+
+  ns.$ajaxCommon = function(url, param, successCalback, errorCalback) {
+    // 调整为全局变量
+    var loadingCount = 0;
+    $.ajax({
+      url: 'http://localhost:20000/ToolSiteMvc4J/comm/getEnums1',
+      beforeSend: function(xhr) {
+        if(loadingCount == 0) {
+          //showLoading();
+        }
+        loadingCount++;
+      },
+      complete: function (xhr, textStatus) {
+        // this
+        debugger;
+        console.log('complete');
+        if(loadingCount == 1) {
+          // hideLoading();
+        }
+        loadingCount--;
+      },
+      success: function (data, textStatus) {
+        // this, data: {status,message,value}
+        handleJqueryAjax(data, successCalback, errorCalback);
+      },
+      error: function (xhr, textStatus, errorThrown) {
+        // this
+        var data = {status: 'ERROR',message: '系统错误！'};
+        handleJqueryAjax(data, successCalback, errorCalback);
+      }
+    })
+  }
+  function handleJqueryAjax(data, successCalback, errorCalback) {
+    if(data.status == 'OK') {
+      successCalback && successCalback(data);
+    } else if(data.status == 'NO') {
+      if(errorCalback) {
+        errorCalback(data);
+      } else {
+        // toaster.warn(data.message);
+      }
+    } else if(data.status == 'UNAUTHORIZED') {
+      // goto no permission
+    } else if(data.status == 'UNAUTHENTICATION') {
+      // goto no login
+    } else if(data.status == 'ERROR') {
+      if(errorCalback) {
+        errorCalback(data);
+      } else {
+        // toaster.error(data.message);
+      }
+    }
+  }
   function handlerAjaxResult(data, optionData) {
     var jReturn, startIndex, endIndex;
     var ret = {};
