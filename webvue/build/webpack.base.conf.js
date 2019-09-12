@@ -32,6 +32,11 @@ module.exports = {
       '@': resolve('src'),
     }
   },
+  // resolveLoader: {
+  //   modules: [
+  //     path.resolve(__dirname, '../build'), 'node_modules'
+  //   ]
+  // },
   module: {
     rules: [
       {
@@ -67,7 +72,17 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
-      }
+      },
+      // {
+      //   test: /\.(html)$/,
+      //   loader: 'myloaders',
+      //   // ./ 表示build目录
+      //   include: [path.resolve(__dirname, '../')],
+      //   exclude: ['node_modules'],
+      //   options: {
+      //     limit: 10000
+      //   }
+      // }
     ]
   },
   node: {
