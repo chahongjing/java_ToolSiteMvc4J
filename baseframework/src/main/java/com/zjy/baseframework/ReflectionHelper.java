@@ -4,6 +4,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
 import java.io.IOException;
@@ -11,6 +12,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * Created by chahongjing on 2017/10/8.
@@ -84,6 +86,35 @@ public class ReflectionHelper {
 
     public static String preserveSubpackageName(String a) {
         return a.substring(a.indexOf('!') + 2);
+    }
+
+    public static void getResourceFromJar() {
+        ResourcePatternResolver resourceResolver = new PathMatchingResourcePatternResolver(ReflectionHelper.class.getClassLoader());
+        Resource[] resources = new Resource[0];
+        try {
+            resources = resourceResolver.getResources("classpath*:/props/*.properties");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String filePath;
+        for (Resource resource : resources) {
+            try {
+                filePath = preserveSubpackageNameFromSpringBootJar(resource.getURI().toString());
+                if (filePath.indexOf("props/config.properties") > -1) {
+                    Properties properties = PropertiesLoaderUtils.loadProperties(resource);
+                    String aDefault = properties.getProperty("Default");
+//                    logger.error("prop:default:" + aDefault);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                continue;
+            }
+        }
+    }
+
+    public static String preserveSubpackageNameFromSpringBootJar(String a) {
+//		return a.substring(a.indexOf("jar!") + 5);
+        return a.substring(a.indexOf("classes!") + 9);
     }
 
     //得到泛型类T
