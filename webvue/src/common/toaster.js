@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Toastr from 'vue-toastr';
-import 'vue-toastr/dist/vue-toastr.css'
+// import 'vue-toastr/dist/vue-toastr.css'
 
 const VueComponent = Vue.extend(Toastr);
 const vm = new VueComponent().$mount();
