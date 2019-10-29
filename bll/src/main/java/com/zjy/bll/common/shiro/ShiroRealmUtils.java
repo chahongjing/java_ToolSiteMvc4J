@@ -6,10 +6,7 @@ import com.zjy.entities.UserInfo;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
-import org.apache.shiro.crypto.hash.ConfigurableHashService;
-import org.apache.shiro.crypto.hash.DefaultHashService;
-import org.apache.shiro.crypto.hash.HashRequest;
-import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.crypto.hash.*;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.util.ByteSource;
 
@@ -60,6 +57,7 @@ public class ShiroRealmUtils {
         SimpleHash simpleHash = new SimpleHash(credentialsMatcher.getHashAlgorithmName(), password, ByteSource.Util.bytes(salt),
                 credentialsMatcher.getHashIterations());
 //        String newCredentials = new Md5Hash(password, salt, credentialsMatcher.getHashIterations()).toBase64();
+//        Sha512Hash sha512Hash = new Sha512Hash(password, salt, credentialsMatcher.getHashIterations());
 //        return simpleHash.toBase64();
         return simpleHash.toString();
     }
