@@ -14,7 +14,7 @@
             </list>
         </property>
     </bean>
-    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver">
         <!--<property name="defaultLocale" value="en_US"></property>-->
     </bean>
 </beans>
