@@ -19,8 +19,6 @@ import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static com.zjy.baseframework.enums.FileSuffix.XLSX;
-
 public class ExcelHelper {
 
     private ExcelHelper() {};
@@ -114,12 +112,12 @@ public class ExcelHelper {
             if (!file.getParentFile().exists()) {
                 file.mkdirs();
             }
-            if (filePath.toLowerCase().endsWith(XLSX.getValue())) {
+            if (filePath.toLowerCase().endsWith(FileSuffix.XLSX.getValue())) {
                 workbook = new XSSFWorkbook();
             } else {
                 workbook = new HSSFWorkbook();
             }
-           ;
+
             for (Map.Entry<String, List<T>> entry : sheetList.entrySet()) {
                 listToExcelNew(workbook, entry.getValue(), headers, entry.getKey());
             }
@@ -132,7 +130,7 @@ public class ExcelHelper {
 
     public static <T> void listToExcelNew(List<T> list, Map<String, String> headers, String sheetName, OutputStream os, FileSuffix suffix) {
         Workbook workbook;
-        if (suffix != null && suffix.equals(XLSX)) {
+        if (suffix != null && suffix == FileSuffix.XLSX) {
             workbook = new XSSFWorkbook();
         } else {
             workbook = new HSSFWorkbook();
@@ -214,8 +212,8 @@ public class ExcelHelper {
 //                String htmlUri = "excelResources/filename";
 //                link.setAddress(htmlUri);
 //                cell.setHyperlink(link);
-                cell.setCellValue("答案链接");
-                cell.setCellStyle(getLinkStyle(cell));
+//                cell.setCellValue("答案链接");
+//                cell.setCellStyle(getLinkStyle(cell));
             }
             rowNo++;
         }
