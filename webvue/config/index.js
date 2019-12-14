@@ -5,6 +5,7 @@
 const path = require('path')
 
 var devEnv = require('./dev.env');
+var prodEnv = require('./prod.env');
 var context = devEnv.context;
 var host = devEnv.baseHost;
 var port = devEnv.basePort;
@@ -21,6 +22,7 @@ if(prefix) prefix = prefix.replace(/'|"/g, "");
 var targetUrl = targetHost + (targetPort ? (':' + targetPort) : '');
 var proxyTable = {};
 var pathRewrite = {};
+var buildPath = '/home/zjy/webvue';
 pathRewrite['^' + context + prefix] = context;
 proxyTable[context + prefix] = {
     target: targetUrl,
@@ -40,7 +42,7 @@ module.exports = {
     //         changeOrigin: true,  //是否跨域
     //         pathRewrite: {
     //             '^/api': ''   //需要rewrite重写的,
-    //         }              
+    //         }
     //     }
     // },
     proxyTable: proxyTable,
@@ -53,7 +55,7 @@ module.exports = {
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
-    
+
     /**
      * Source Maps
      */
@@ -71,10 +73,10 @@ module.exports = {
 
   build: {
     // Template for index.html
-    index: path.resolve(__dirname, 'd:/webvue/index.html'),
+    index: path.resolve(__dirname, buildPath + '/index.html'),
 
     // Paths
-    assetsRoot: path.resolve(__dirname, 'd:/webvue'),
+    assetsRoot: path.resolve(__dirname, buildPath),
     assetsSubDirectory: './static',
     assetsPublicPath: './',
 

@@ -2,7 +2,7 @@
  * Created by jyzeng on 2018/11/2.
  */
 import axios from 'axios';
-import Qs from 'Qs';
+//import Qs from 'Qs';
 import toaster from '@/common/toaster';
 
 axios.defaults.baseURL = 'http://' + process.env.baseHost + (process.env.basePort ? (':' + process.env.basePort) : '');
