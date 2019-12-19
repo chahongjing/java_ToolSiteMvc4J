@@ -364,11 +364,11 @@
                 <scope>runtime</scope>
             </dependency>
             <!-- oracle驱动 -->
-            <dependency>
-                <groupId>com.oracle</groupId>
-                <artifactId>ojdbc6</artifactId>
-                <version>${oracle.version}</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>com.oracle</groupId>-->
+<!--                <artifactId>ojdbc6</artifactId>-->
+<!--                <version>${oracle.version}</version>-->
+<!--            </dependency>-->
             <!-- https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc -->
             <dependency>
                 <groupId>org.xerial</groupId>
