@@ -60,6 +60,8 @@
       </table>
     </div>
 
+    <my-select2></my-select2>
+
     <label v-tooltip='html'>提示</label>
 
     <div class='mt20'>
