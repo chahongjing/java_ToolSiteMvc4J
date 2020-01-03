@@ -191,19 +191,17 @@ public class LearnController extends BaseController implements ServletConfigAwar
 
     @RequestMapping("download")
     @ResponseBody
-    public BaseResult download(HttpServletResponse response) {
+    public void download(HttpServletResponse response) {
         BaseResult result = BaseResult.ok();
         try {
             File file = Paths.get(Utils.getRootPath(), "favicon.ico").toFile();
             DownloadHelper.download(file, response);
-            return null;
         } catch (Exception e) {
             response.reset();
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             result.setStatus(ResultStatus.ERROR);
             result.setMessage(e.getMessage());
         }
-        return result;
     }
 
     @RequestMapping("redirect")

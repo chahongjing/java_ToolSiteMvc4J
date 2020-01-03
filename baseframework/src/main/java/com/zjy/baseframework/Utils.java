@@ -13,6 +13,7 @@ public class Utils {
 
     public static String getRootPath() {
         //return ContextLoader.getCurrentWebApplicationContext().getServletContext().getRealPath("/");
-        return Paths.get(StringUtils.removeStart(Utils.class.getClassLoader().getResource("/").getFile(), "/")).getParent().getParent().toAbsolutePath().toString();
+//        return Paths.get(StringUtils.removeStart(Utils.class.getClassLoader().getResource("/").getFile(), "/")).getParent().getParent().toString();
+        return Paths.get(Utils.class.getClassLoader().getResource("/").getFile()).getParent().getParent().toString();
     }
 }

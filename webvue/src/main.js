@@ -13,7 +13,7 @@ import pagination from '@/components/common/pagination';
 import tableListLoading from '@/components/common/tableListLoading';
 import dateTimePicker from '@/components/common/dateTimePicker';
 import ulTree from '@/components/common/ulTree';
-import mySelect2 from '@/components/common/mySelect2';
+import select2 from '@/components/common/select2';
 
 Object.keys(filters).forEach(k => Vue.filter(k, filters[k]));
 Object.keys(directives).forEach(k => Vue.directive(k, directives[k]));
@@ -25,7 +25,7 @@ Vue.component('pagination', pagination);
 Vue.component('tableListLoading', tableListLoading);
 Vue.component('dateTimePicker', dateTimePicker);
 Vue.component('ultree', ulTree);
-Vue.component('mySelect2', mySelect2);
+Vue.component('select2', select2);
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

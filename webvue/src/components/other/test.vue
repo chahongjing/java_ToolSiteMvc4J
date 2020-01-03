@@ -60,8 +60,10 @@
       </table>
     </div>
 
-    <my-select2></my-select2>
+    {{selectValue}}
+    <select2 v-model="selectValue" :multiple="multiple" :list="selectList" :disabled="disabled" @change="changeSelect()"></select2>
 
+    <a @click="addItem()">添加</a><a @click="disabled = !disabled">禁用</a>
     <label v-tooltip='html'>提示</label>
 
     <div class='mt20'>
@@ -109,6 +111,8 @@ treeoption.afterClick = function(item){
   }
 };
 
+var selectList = [{id:1,text:'zjy'},{id:2,text:'xxc'}];
+
 export default {
   name: 'test',
   data () {
@@ -117,7 +121,11 @@ export default {
       list2: [],
       html: "这是<b style=\"color:red\">html</b>提示",
       treeData: treeDataList,
-      treeoption:treeoption
+      treeoption:treeoption,
+      selectList:selectList,
+      disabled: false,
+      multiple:true,
+      selectValue: 1
     }
   },
   methods: {
@@ -261,8 +269,10 @@ export default {
           }
         }
         return map;
-      }
-
+      },
+    addItem: function() {this.selectList.push({id:this.selectList.length + 1,text:'新的项' + (this.selectList.length + 1)});},
+    changeSelect: function() {
+      console.log(123);}
     },
     mounted: function () {
       var me = this;
