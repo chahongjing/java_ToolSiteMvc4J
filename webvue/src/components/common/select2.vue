@@ -1,6 +1,6 @@
 <template>
   <div>
-    <select ref=myselect style='width:100%;' v-on:input="$emit('input', $event.target.value)">
+    <select ref='myselect' style='width:100%;'>
     </select>
   </div>
 </template>
