@@ -125,7 +125,7 @@ export default {
       treeoption:treeoption,
       selectList:selectList,
       disabled: false,
-      multiple: true,
+      multiple: false,
       selectValue: 1
     }
   },
