@@ -10,6 +10,9 @@
 </template>
 
 <script>
+  import "../../../static/bootstrap/js/bootstrap-datetimepicker.js";
+  import "../../../static/bootstrap/js/bootstrap-datetimepicker.zh-CN.js";
+
   var defaultOption = {
     todayBtn: true,
     clearBtn: true,
@@ -100,6 +103,7 @@
   }
 </script>
 
+<style src="../../../static/bootstrap/css/bootstrap-datetimepicker.css"></style>
 <style scoped>
   .input-group.date .input-group-addon span {
     width: auto;

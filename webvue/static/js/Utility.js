@@ -608,32 +608,34 @@
   };
   // endregion
 
-  /// 添加转json对象时对日期的处理
-  if ($) {
-    $.parseJSON = function (data) {
-      if (!data || typeof data !== "string") {
-        return null;
-      }
-      data = $.trim(data);
-
-      if (window.JSON && window.JSON.parse) {
-        return window.JSON.parse(data, function (key, value) {
-          var iso, js, re;
-          iso = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/;
-          js = /\/Date\((\d+)\)\//gi;
-          re = RegExp;
-          if (typeof value === 'string') {
-            if (js.test(value)) {
-              return new Date(+re.$1);
-            } else if (iso.test(value)) {
-              return new Date(Date.UTC(+re.$1, +re.$2 - 1, +re.$3, +re.$4, +re.$5, +re.$6));
-            }
-          }
-          return value;
-        });
-      }
+  ns.parseJSON = function (data) {
+    if (!data || typeof data !== "string") {
       return null;
     }
+    data = $.trim(data);
+
+    if (window.JSON && window.JSON.parse) {
+      return window.JSON.parse(data, function (key, value) {
+        var iso, js, re;
+        iso = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/;
+        js = /\/Date\((\d+)\)\//gi;
+        re = RegExp;
+        if (typeof value === 'string') {
+          if (js.test(value)) {
+            return new Date(+re.$1);
+          } else if (iso.test(value)) {
+            return new Date(Date.UTC(+re.$1, +re.$2 - 1, +re.$3, +re.$4, +re.$5, +re.$6));
+          }
+        }
+        return value;
+      });
+    }
+    return null;
+  }
+
+  /// 添加转json对象时对日期的处理
+  if ($) {
+    $.parseJSON = ns.parseJSON;
   }
 
   ns.getRawType = function (value) {

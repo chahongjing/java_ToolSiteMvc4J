@@ -36,7 +36,7 @@ function setTooltip(el, binding, vnode) {
   if (msg === null || msg === undefined) {
     msg = '';
   }
-  var $el = $(el);
+  var $el = window.$(el);
   try{
     $el.tooltip('dispose');
   } catch(e){}

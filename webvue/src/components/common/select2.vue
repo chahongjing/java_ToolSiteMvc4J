@@ -6,6 +6,8 @@
 </template>
 
 <script>
+  import "../../../static/plugins/select2/js/select2.js";
+  import "../../../static/plugins/select2/js/i18n/zh-CN.js";
   export default {
     name: "select2",
     props: ['list', 'multiple', 'disabled', 'value', 'idField', 'textField'],
@@ -106,5 +108,7 @@
   }
 </script>
 
+<style src="../../../static/plugins/select2/css/select2.css"></style>
 <style scoped>
+  /*@import "../../../static/plugins/select2/css/select2.css";*/
 </style>

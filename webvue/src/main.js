@@ -14,6 +14,7 @@ import tableListLoading from '@/components/common/tableListLoading';
 import dateTimePicker from '@/components/common/dateTimePicker';
 import ulTree from '@/components/common/ulTree';
 import select2 from '@/components/common/select2';
+import 'jquery';
 
 Object.keys(filters).forEach(k => Vue.filter(k, filters[k]));
 Object.keys(directives).forEach(k => Vue.directive(k, directives[k]));

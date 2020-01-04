@@ -2,6 +2,7 @@
  * Created by jyzeng on 2018/11/2.
  */
 import axios from 'axios';
+import 'jquery';
 //import Qs from 'Qs';
 import toaster from '@/common/toaster';
 
@@ -9,6 +10,33 @@ axios.defaults.baseURL = 'http://' + process.env.baseHost + (process.env.basePor
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 axios.defaults.withCredentials = true;
+
+if ($) {
+  $.parseJSON = function (data) {
+    if (!data || typeof data !== "string") {
+      return null;
+    }
+    data = $.trim(data);
+
+    if (window.JSON && window.JSON.parse) {
+      return window.JSON.parse(data, function (key, value) {
+        var iso, js, re;
+        iso = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/;
+        js = /\/Date\((\d+)\)\//gi;
+        re = RegExp;
+        if (typeof value === 'string') {
+          if (js.test(value)) {
+            return new Date(+re.$1);
+          } else if (iso.test(value)) {
+            return new Date(Date.UTC(+re.$1, +re.$2 - 1, +re.$3, +re.$4, +re.$5, +re.$6));
+          }
+        }
+        return value;
+      });
+    }
+    return null;
+  }
+}
 
 axios.defaults.paramsSerializer = function (params) {
   // return Qs.stringify(params);

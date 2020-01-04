@@ -160,7 +160,7 @@ export default {
     },
     initDrag() {
       var me = this;
-      var sortable = $(".a");
+      var sortable = window.$(".a");
       sortable.sortable({
         containment: sortable.closest('table'),
         connectWith: sortable,
@@ -173,7 +173,7 @@ export default {
       }).disableSelection();
 
 
-      var sortable = $(".b");
+      var sortable = window.$(".b");
       sortable.sortable({
         containment: sortable.closest('table'),
         connectWith: sortable,

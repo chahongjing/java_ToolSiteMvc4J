@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "jquery": "^3.4.1",
     "npm": "^6.4.1",
     "vue": "^2.5.2",
     "vue-bootstrap-datetimepicker": "^5.0.1",

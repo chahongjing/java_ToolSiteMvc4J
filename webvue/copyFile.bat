@@ -3,8 +3,8 @@ title deploy ToolSiteMvc4J and webvue
 
 set javaDir=E:\workplace\java\toolsitemvc4j\web\target\ToolSiteMvc4J\
 set vueDir=D:\webvue\
-set targetDir=E:\devsoft\java\apache-tomcat-9.0.20_service\webapps\ToolSiteMvc4J\
-set configDir=E:\devsoft\java\apache-tomcat-9.0.20_service\webapps\static\
+set targetDir=D:\devSoftwareInstall\apache-tomcat-9.0.20_service\webapps\ToolSiteMvc4J\
+set configDir=D:\devSoftwareInstall\apache-tomcat-9.0.20_service\webapps\ToolSiteMvc4J\static\
 
 echo.
 set /p type=deploy type: all(1), java(2), vue(3):
