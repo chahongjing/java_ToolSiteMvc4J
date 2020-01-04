@@ -1,3 +1,8 @@
+import 'jquery';
+// import '../../static/bootstrap/js/popper.min.js';
+import 'popper.js';
+import '../../static/bootstrap/js/bootstrap.min.js';
+
 export default {
   focus: {
     // 当绑定元素插入到 DOM 中。
@@ -36,7 +41,7 @@ function setTooltip(el, binding, vnode) {
   if (msg === null || msg === undefined) {
     msg = '';
   }
-  var $el = window.$(el);
+  var $el = $(el);
   try{
     $el.tooltip('dispose');
   } catch(e){}
