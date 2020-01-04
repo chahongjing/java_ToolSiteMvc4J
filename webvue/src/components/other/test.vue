@@ -61,7 +61,8 @@
     </div>
 
     {{selectValue}}
-    <select2 v-model="selectValue" :multiple="multiple" :list="selectList" :disabled="disabled" @change="changeSelect()"></select2>
+    <select2 v-model="selectValue" :multiple="multiple" :list="selectList" :disabled="disabled" @change="changeSelect()"
+    :id-field="'myid'" :text-field="'mytext'"></select2>
 
     <a @click="addItem()">添加</a><a @click="disabled = !disabled">禁用</a>
     <label v-tooltip='html'>提示</label>
@@ -111,7 +112,7 @@ treeoption.afterClick = function(item){
   }
 };
 
-var selectList = [{id:1,text:'zjy'},{id:2,text:'xxc'}];
+var selectList = [{myid:1,mytext:'zjy'},{myid:2,mytext:'xxc'}];
 
 export default {
   name: 'test',
@@ -124,7 +125,7 @@ export default {
       treeoption:treeoption,
       selectList:selectList,
       disabled: false,
-      multiple:true,
+      multiple: true,
       selectValue: 1
     }
   },

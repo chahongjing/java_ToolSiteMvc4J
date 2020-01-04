@@ -8,11 +8,20 @@
 <script>
   export default {
     name: "select2",
-    props: ['list', 'multiple', 'disabled', 'value'],
+    props: ['list', 'multiple', 'disabled', 'value', 'idField', 'textField'],
     computed: {},
     methods: {
       init: function () {
         var me = this;
+        // 处理id和text
+        if(this.list && this.list.length > 0 && (this.idField || this.textField)) {
+          for(var i = 0; i < this.list.length; i++) {
+            var obj = me.list[i];
+            obj.id = obj.id || obj[me.idField];
+            obj.text = obj.text || obj[me.textField];
+          }
+        }
+
         var $obj = $(this.$refs.myselect);
         $obj.select2(
           {
@@ -21,10 +30,10 @@
             disabled: !!me.disabled,
             placeholder: {
               id: '-1',
-              text: 'Select an option'
+              text: '--请选择--'
             },
             allowClear: true,
-            data: me.list
+            data: this.list
           }
         ).val(this.value).trigger('change');
         $obj.on('change', function() {
