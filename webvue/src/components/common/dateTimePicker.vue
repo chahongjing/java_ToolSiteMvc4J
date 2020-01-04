@@ -66,7 +66,7 @@
         var $el = $(this.$el);
         this.destoryDatetimePicker();
         if(!this.option || !this.option.disabled) {
-          $el.datetimepicker(this.mergeOption)
+          $el.datetimepicker(this.mergeOption).off('changeDate')
           .on('changeDate', function (e) {
             me.dataValue = e.date;
             me.returnBackFn();
