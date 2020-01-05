@@ -164,7 +164,8 @@
         this.myDialog.showDialog = true;
       },
       alert:function() {
-        this.$confirm.alert('提示内容');
+        // this.$confirm.alert('提示内容');
+        this.$cstModal.customModal({});
       }
     }
   }
