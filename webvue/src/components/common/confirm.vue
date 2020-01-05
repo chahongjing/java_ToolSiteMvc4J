@@ -15,7 +15,7 @@
       </button>
       <button type="button" :class='getConfirmCls' v-if='confirmBtn.show'
               @click='defaultConfirm()'>
-        <i :class='getCancelIconCls'></i><span v-text='confirmBtn.text'></span>
+        <i :class='getConfirmIconCls'></i><span v-text='confirmBtn.text'></span>
       </button>
     </div>
   </common-modal>

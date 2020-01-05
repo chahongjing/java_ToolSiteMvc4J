@@ -35,6 +35,9 @@
               <button type="button inline-block" class="btn btn-outline-purple" @click="confirm3()">
                 <i class='fa fa-plus mr5'></i>弹Modal
               </button>
+              <button type="button inline-block" class="btn btn-outline-purple" @click="alert()">
+                <i class='fa fa-plus mr5'></i>alert
+              </button>
 
             </div>
           </div>
@@ -160,6 +163,9 @@
         }
         this.myDialog.showDialog = true;
       },
+      alert:function() {
+        this.$confirm.alert('提示内容');
+      }
     }
   }
 </script>

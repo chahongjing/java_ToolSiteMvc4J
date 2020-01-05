@@ -1,6 +1,6 @@
-import 'jquery';
+// import 'jquery';
 // import '../../static/bootstrap/js/popper.min.js';
-import 'popper.js';
+import 'popper.js'
 import '../../static/bootstrap/js/bootstrap.min.js';
 
 export default {

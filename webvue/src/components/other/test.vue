@@ -79,14 +79,15 @@
 </template>
 
 <script>
+  import '../../../static/js/jquery-ui.js'
 // demo data
 var treeDataList = [
-{id:1, name: '语文', pId: null, selected:false,isOpen:false,isLeaf:false},
+{id:1, name: '语文语文语文语文语文语文语文语文语文语文语文', pId: null, selected:false,isOpen:false,isLeaf:false},
 {id:2, name: '数学', pId: null, selected:false,isOpen:false,isLeaf:false},
 {id:3, name: '英语<b style="color:red;">我的html</b>', pId: null, selected:true,isOpen:false,isLeaf:false},
 {id:4, name: '注音', pId:1, selected:false,isOpen:false,isLeaf:false},
 {id:5, name: '成语错字识别', pId:1,selected:false,isOpen:false,isLeaf:false},
-{id:6, name: '正确的词', pId:1,selected:false,isOpen:false,isLeaf:false},
+{id:6, name: '正确的词正确的词正确的词正确的词正确的词正确的词正确的词正确的词', pId:1,selected:false,isOpen:false,isLeaf:false},
 {id:7, name: '四字成语', pId:5,selected:false,isOpen:false,isLeaf:false},
 {id:8, name: '七言绝句', pId:5,selected:false,isOpen:false,isLeaf:false},
 {id:9, name: '三角函数', pId:2,selected:true,isOpen:false,isLeaf:false},
@@ -103,7 +104,10 @@ var treeoption = {
   beforeOpenClose:function(item){console.log('beforeOpenClose');console.log(item);},
   afterOpenClose:function(item){console.log('afterOpenClose');console.log(item);},
   beforeClick:function(item){console.log('beforeClick');console.log(item);},
-  afterCheck: function(item){console.log('afterCheck');console.log(item);}
+  afterCheck: function(item){console.log('afterCheck');console.log(item);},
+  addNode: function(item){console.log('addNode');console.log(item);},
+  editNode: function(item){console.log('editNode');console.log(item);},
+  deleteNode: function(item){console.log('deleteNode');console.log(item);},
 }
 treeoption.afterClick = function(item){
   console.log('afterClick');console.log(item);
@@ -160,7 +164,7 @@ export default {
     },
     initDrag() {
       var me = this;
-      var sortable = window.$(".a");
+      var sortable = $(".a");
       sortable.sortable({
         containment: sortable.closest('table'),
         connectWith: sortable,
@@ -173,7 +177,7 @@ export default {
       }).disableSelection();
 
 
-      var sortable = window.$(".b");
+      var sortable = $(".b");
       sortable.sortable({
         containment: sortable.closest('table'),
         connectWith: sortable,
@@ -309,7 +313,7 @@ export default {
 </script>
 <style scoped>
   #mainRongQi td,#mainRongQi2 td{border:1px solid #aaa;height:30px;}
-  .mytree{border: 1px solid #ddd;padding: 10px 10px 10px 5px;}
+  .mytree{border: 1px solid #ddd;padding: 10px 5px 10px 5px;}
   .aa{width:200px;height:200px;background-color:#fff;border:3px solid;border-image:linear-gradient(to bottom, red 0%, gold 100%);border-image-slice:1;}
   .trcon{border:1px solid #999;}
   .sortable > span{font-size:14px;display:inline-block; padding:3px 5px;border:1px solid #aaa;}

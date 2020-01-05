@@ -27,6 +27,13 @@ const confirm = {
     $.extend(true, tempOption, defaultBtnOption, options);
     showModal(tempOption);
   },
+  alert: function (msg, title) {
+    var tempOption = {};
+    $.extend(true, tempOption, defaultBtnOption, {closeBtn: {show:false}});
+    if (!(msg === undefined || msg === null)) tempOption.message = msg;
+    if (!(title === undefined || title === null)) tempOption.title = title || '提示';
+    showModal(tempOption);
+  },
   confirm: function (msg, fn, title) {
     var tempOption = {};
     $.extend(true, tempOption, defaultBtnOption);
