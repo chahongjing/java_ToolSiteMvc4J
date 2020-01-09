@@ -89,6 +89,7 @@
           this.init();
         },
         deep: true
+        // immediate: true
       },
       'disabled': function() {
         $(this.$refs.myselect).prop('disabled', !!this.disabled);
