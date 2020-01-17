@@ -67,13 +67,13 @@
     });
   }
 
-  ns.blobDownload = function (data, headers) {
+  ns.downloadAfterAjax = function (data, headers) {
     if (!(data instanceof ArrayBuffer || data instanceof Blob)) return;
     var fileName = headers['content-disposition'];
     var contentType = headers['content-type'];
-    ns.blobDownloadWithFileName(data, fileName, contentType);
+    ns.downloadWithFileNameAfterAjax(data, fileName, contentType);
   }
-  ns.blobDownloadWithFileName = function (data, fileName, contentType) {
+  ns.downloadWithFileNameAfterAjax = function (data, fileName, contentType) {
     if (fileName) {
       fileName = decodeURIComponent(fileName).replace(/attachment;\s*filename=/ig, '');
     }
@@ -89,7 +89,7 @@
     a.click();
     document.body.removeChild(a);
   }
-  ns.jsBlobDownload = function (url, param) {
+  ns.jsDownload = function (url, param) {
     var xhr;
     if (window.XMLHttpRequest) {
       xhr = new XMLHttpRequest();
@@ -99,19 +99,19 @@
       return;
     }
     xhr.open('GET', url, true);
-    xhr.responseType = "blob";
+    xhr.responseType = "arraybuffer";
     xhr.onload = function () {
       if (this.status == 200) {
-        Utility.blobDownload(this.response, Utility.getXhrHeaders(this));
+        Utility.downloadAfterAjax(this.response, Utility.getXhrHeaders(this));
       } else {
-        Utility.readBlobAsText(this.response, function (data) {
+        Utility.readArrayBufferAsText(this.response, function (data) {
           alert(data);
         });
       }
     }
     xhr.send();
   }
-  ns.jsUpload = function () {
+  ns.jqueryUpload = function () {
     var $form = $('#formId');
     $.ajax({
       type: 'POST',
@@ -133,6 +133,7 @@
       }
     });
   }
+  // 不支持
   ns.jqueryDownload = function (url) {
     $.ajax({
       type: 'POST',
@@ -142,7 +143,7 @@
       dataType: "arraybuffer",
       success: function (data, a, b, c) {
         // todo
-        Utility.blobDownload(data, Utility.getXhrHeaders(b));
+        Utility.downloadAfterAjax(data, Utility.getXhrHeaders(b));
         if (data.status == ResultStatus.OK.key) {
           alert('上传成功！' + data.value);
         } else {
