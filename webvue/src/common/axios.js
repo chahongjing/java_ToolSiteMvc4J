@@ -89,6 +89,10 @@ axios.interceptors.response.use(function (resp) {
     // 用户未授权
     error.data.status = ResultStatus.UNAUTHENTICATION.key;
     error.data.message = '未登录！';
+  } else if(error.response.status == 404) {
+    console.log(error.response);
+    // error.data.code = ResultStatus.UNAUTHENTICATION.code;
+    // error.data.message = '未登录！';
   } else if (error.response.status == 500) {
     if(error.response.data instanceof ArrayBuffer) {
        var res = JSON.parse(Utility.readArrayBufferAsText(error.response.data));
@@ -152,6 +156,18 @@ var axiosIns = {
       return resp;
     });
   },
+  checkSuccess: function() {
+    return {code: ResultStatus.OK.code};
+  },
+  checkError: function(msg) {
+    return {code: ResultStatus.NO.code, msg: msg};
+  },
+  checkErrorWithPop: function(msg) {
+    return new Promise((resolve, reject) => {
+      toaster.warning(msg);
+      resolve({data:{code: ResultStatus.NO.code, msg: msg}});
+    });
+  }
 };
 export default axiosIns;
 

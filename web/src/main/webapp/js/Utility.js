@@ -89,7 +89,7 @@
         a.click();
         document.body.removeChild(a);
     }
-    ns.jsBlobDownload = function (url, param) {
+    ns.jsDownload = function (url, param) {
         var xhr;
         if (window.XMLHttpRequest) {
             xhr = new XMLHttpRequest();
@@ -98,13 +98,16 @@
         } else {
             return;
         }
-        xhr.open('GET', url, true);
-        xhr.responseType = "blob";
+        xhr.withCredentials = true;
+        param = param || {};
+        xhr.open('GET', url + "?" + $.param(param), true);
+        xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+        xhr.responseType = "arraybuffer";
         xhr.onload = function () {
             if (this.status == 200) {
                 Utility.blobDownload(this.response, Utility.getXhrHeaders(this));
             } else {
-                Utility.readBlobAsText(this.response, function (data) {
+                Utility.readArrayBufferAsText(this.response, function (data) {
                     alert(data);
                 });
             }

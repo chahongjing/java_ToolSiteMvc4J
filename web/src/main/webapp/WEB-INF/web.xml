@@ -123,30 +123,42 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <!--<filter>-->
-        <!--<filter-name>corsFilter</filter-name>-->
-        <!--<filter-class>com.zjy.bll.common.CorsFilter</filter-class>-->
-        <!--<init-param>-->
-            <!--<param-name>allowOrigin</param-name>-->
-            <!--<param-value>http://localhost:8099</param-value>-->
-        <!--</init-param>-->
-        <!--<init-param>-->
-            <!--<param-name>allowMethods</param-name>-->
-            <!--<param-value>GET,POST,OPTIONS</param-value>-->
-        <!--</init-param>-->
-        <!--&lt;!&ndash;<init-param>&ndash;&gt;-->
-            <!--&lt;!&ndash;<param-name>allowCredentials</param-name>&ndash;&gt;-->
-            <!--&lt;!&ndash;<param-value>true</param-value>&ndash;&gt;-->
-        <!--&lt;!&ndash;</init-param>&ndash;&gt;-->
-        <!--<init-param>-->
-            <!--<param-name>allowHeaders</param-name>-->
-            <!--<param-value>X-Requested-With,JSESSIONID</param-value>-->
-        <!--</init-param>-->
-    <!--</filter>-->
-    <!--<filter-mapping>-->
-        <!--<filter-name>corsFilter</filter-name>-->
-        <!--<url-pattern>/*</url-pattern>-->
-    <!--</filter-mapping>-->
+    <filter>
+        <filter-name>corsFilter</filter-name>
+        <filter-class>com.zjy.bll.common.CorsFilter</filter-class>
+        <init-param>
+            <param-name>allowOrigin</param-name>
+            <param-value>*</param-value>
+        </init-param>
+<!--        <init-param>-->
+<!--            <param-name>allowOrigin</param-name>-->
+<!--            <param-value>http://localhost:8099</param-value>-->
+<!--        </init-param>-->
+        <init-param>
+            <param-name>allowMethods</param-name>
+            <param-value>GET,POST,OPTIONS,DELETE</param-value>
+        </init-param>
+<!--        <init-param>-->
+<!--            <param-name>allowCredentials</param-name>-->
+<!--            <param-value>true</param-value>-->
+<!--        </init-param>-->
+        <init-param>
+            <param-name>allowHeaders</param-name>
+            <param-value>*</param-value>
+        </init-param>
+        <!--        <init-param>-->
+        <!--            <param-name>allowHeaders</param-name>-->
+        <!--            <param-value>X-Requested-With,JSESSIONID</param-value>-->
+        <!--        </init-param>-->
+        <init-param>
+            <param-name>exposeHeaders</param-name>
+            <param-value>Content-Disposition</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>corsFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
     <!-- controller配置首而优先级大于web.xml中此处配置 -->
     <!--<welcome-file-list>-->

@@ -98,7 +98,10 @@
     } else {
       return;
     }
-    xhr.open('GET', url, true);
+    xhr.withCredentials = true;
+    param = param || {};
+    xhr.open('GET', url + "?" + $.param(param), true);
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
     xhr.responseType = "arraybuffer";
     xhr.onload = function () {
       if (this.status == 200) {
@@ -448,6 +451,16 @@
   // region Array 扩展
   Array.isArray = Array.isArray || function (arg) {
     return Object.prototype.toString.call(arg) === '[object Array]';
+  };
+  // 数组求差集[1,2],[2,3]结果为[1,3]
+  Array.intersect = Array.intersect || function(one, two) {
+    if(!Array.isArray(one) || !Array.isArray(two)) return [];
+    return $.merge($.grep(one, function (i) {
+        return $.inArray(i, two) == -1;
+      }), $.grep(two, function (i) {
+        return $.inArray(i, one) == -1;
+      })
+    );
   };
   // endregion
 

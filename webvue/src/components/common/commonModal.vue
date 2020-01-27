@@ -19,7 +19,7 @@
 <script>
   export default {
     name: 'commonModal',
-    props: {showModal: false, width: null, height: null},
+    props: {showModal: false, options:null},
     watch: {
       showModal(curVal, oldVal) {
         var cur = $(this.$el);
@@ -36,20 +36,32 @@
           var me = this;
           modal.removeClass('show');
           setTimeout(function () {
-            modal.hide()
+            modal.hide();
             back.hide().removeClass('show').addClass('hide');
-          }, 200);
+          }, 250);
         }
       }
     },
     methods: {
       getStyle: function () {
         var obj = {};
-        if (this.width > 0) {
-          obj.width = this.width + 'px';
+        if (this.options && this.options.width) {
+          obj.width = this.options.width;
         }
-        if (this.height > 0) {
-          obj.height = this.height + 'px';
+        if (this.options && this.options.height) {
+          obj.height = this.options.height;
+        }
+        if (this.options && this.options.minWidth) {
+          obj.minWidth = this.options.minWidth;
+        }
+        if (this.options && this.options.maxWidth) {
+          obj.maxWidth = this.options.maxWidth;
+        }
+        if (this.options && this.options.minHeight) {
+          obj.minHeight = this.options.minHeight;
+        }
+        if (this.options && this.options.maxHeight) {
+          obj.maxHeight = this.options.maxHeight;
         }
         return obj;
       }
@@ -63,9 +75,10 @@
   }
 
   .modal-dialog-centered {
-    flex-flow: column;
+    /*flex-flow: column;*/
     margin-left: auto;
     margin-right: auto;
+    max-width: initial!important;
   }
 
   .blankheader {
@@ -85,6 +98,6 @@
   .modal-content {
     border-radius: .3rem;
     border-width: 0;
-    box-shadow: 0 0 10px #224acd;
+    box-shadow: 0 0 4px #224acd;
   }
 </style>

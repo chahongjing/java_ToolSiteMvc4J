@@ -73,6 +73,7 @@
             <input type="file" id="myfile" multiple/>
             <button data-ng-click="testUpload()" value="测试">上传文件</button>
             <button data-ng-click="testDownload()" value="测试">下载</button>
+            <button data-ng-click="testjsDownload()" value="测试js下载">js下载</button>
         </div>
         <br><br><br>
 
@@ -206,6 +207,10 @@
                         alert(resp.message);
                     }
                 });
+            }
+
+            $scope.testjsDownload = function() {
+                Utility.jsDownload('/ToolSiteMvc4J/learn/download');
             }
 
             $scope.checkItem = function (item) {
