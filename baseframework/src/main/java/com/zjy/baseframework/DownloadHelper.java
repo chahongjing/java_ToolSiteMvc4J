@@ -43,8 +43,17 @@ public class DownloadHelper {
         if(StringUtils.isBlank(fileName)) throw new IllegalArgumentException("文件名称不能为空！");
         // 创建输出流
         try (OutputStream out = response.getOutputStream()) {
+            String credentials = response.getHeader("Access-Control-Allow-Credentials");
+            String origin = response.getHeader("Access-Control-Allow-Origin");
             // 清空response
             response.reset();
+//            response.setHeader("Access-Control-Allow-Origin", "http://localhost:8099");
+//            response.setHeader("Access-Control-Allow-Credentials", "true");
+            response.setHeader("Access-Control-Allow-Credentials", "true");
+            response.setHeader("Access-Control-Allow-Origin", origin);
+            response.setHeader("Access-Control-Allow-Methods", "*");
+            response.setHeader("Access-Control-Allow-Headers", "*");
+            response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
             // 设置响应编码
             response.setCharacterEncoding(StandardCharsets.UTF_8.name());
             // 设置文件名

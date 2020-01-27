@@ -126,14 +126,14 @@
     <filter>
         <filter-name>corsFilter</filter-name>
         <filter-class>com.zjy.bll.common.CorsFilter</filter-class>
-        <init-param>
-            <param-name>allowOrigin</param-name>
-            <param-value>*</param-value>
-        </init-param>
 <!--        <init-param>-->
 <!--            <param-name>allowOrigin</param-name>-->
-<!--            <param-value>http://localhost:8099</param-value>-->
+<!--            <param-value>*</param-value>-->
 <!--        </init-param>-->
+        <init-param>
+            <param-name>allowOrigin</param-name>
+            <param-value>http://localhost:8099</param-value>
+        </init-param>
         <init-param>
             <param-name>allowMethods</param-name>
             <param-value>GET,POST,OPTIONS,DELETE</param-value>

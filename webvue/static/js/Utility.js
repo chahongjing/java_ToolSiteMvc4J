@@ -101,7 +101,7 @@
     xhr.withCredentials = true;
     param = param || {};
     xhr.open('GET', url + "?" + $.param(param), true);
-    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    // xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
     xhr.responseType = "arraybuffer";
     xhr.onload = function () {
       if (this.status == 200) {
@@ -114,17 +114,20 @@
     }
     xhr.send();
   }
-  ns.jqueryUpload = function () {
+  ns.jqueryUpload = function (url, formData) {
     var $form = $('#formId');
     $.ajax({
       type: 'POST',
-      url: $form.attr('action'),
-      data: new FormData($form[0]),
+      url: url,
+      data: formData,
       processData: false,
       contentType: false, // 如果form没有指定enctype，则可以在此处指定
+      xhrFields: {
+        withCredentials: true
+      },
       success: function (data) {
         if (data.status == ResultStatus.OK.key) {
-          alert('上传成功！' + data.value);
+          console.log('上传成功！' + data.value);
         } else {
           alert(data.message);
         }

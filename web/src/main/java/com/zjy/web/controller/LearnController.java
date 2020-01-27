@@ -163,6 +163,7 @@ public class LearnController extends BaseController implements ServletConfigAwar
     // region 其它
     @PostMapping(value = "testPostWithFile")
     public ResponseEntity<BaseResult<UserInfo>> testPostWithFile(MultipartHttpServletRequest request,
+                                                                 HttpServletResponse response,
                                                                  @RequestParam(required = false) Integer AGE,
                                                                  @RequestParam MultipartFile[] myfile,
                                                                  UserInfo users) {
@@ -186,6 +187,11 @@ public class LearnController extends BaseController implements ServletConfigAwar
         }
         user.setPhoto(fileName.toString());
         re.setValue(user);
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:8099");
+        response.setHeader("Access-Control-Allow-Methods", "*");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+        response.setHeader("Access-Control-Allow-Headers", "*");
+        response.setHeader("ccess-Control-Expose-Headers", "Content-Disposition");
         return new ResponseEntity<>(re, HttpStatus.OK);
     }
 

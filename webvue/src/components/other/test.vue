@@ -170,17 +170,7 @@
     methods: {
       axiosUploadFile() {
         var me = this;
-        var formData = new FormData();
-        formData.append('userCode', 'zjy');
-        formData.append('userName', '曾军毅');
-        formData.append('birthday', new Date());
-        var files = $('#testFile')[0].files;
-        if (files && files.length > 0) {
-          for (var i = 0; i < files.length; i++) {
-            formData.append('myfile', files[i]);
-          }
-        }
-        this.$axios.post('/learn/testPostWithFile', formData).then(function (resp) {
+        this.$axios.post('/learn/testPostWithFile', this.getFormData()).then(function (resp) {
           if (resp.data.status == ResultStatus.OK.key) {
             console.log(resp.data.value);
             me.$toaster.success('上传成功！');
@@ -194,11 +184,24 @@
         });
       },
       jqueryUpload: function() {
-        this.$toaster.warning('功能建设中。。。');
+        Utility.jqueryUpload('http://localhost:21000/ToolSiteMvc4J/learn/testPostWithFile', this.getFormData());
       },
       jsDownload() {
-        console.log('跨域问题未验证！');
         Utility.jsDownload('http://localhost:21000/ToolSiteMvc4J/learn/download');
+      },
+      getFormData: function() {
+        var formData = new FormData();
+        // new FormData($('.myform')[0])
+        formData.append('userCode', 'zjy');
+        formData.append('userName', '曾军毅');
+        formData.append('birthday', new Date());
+        var files = $('#testFile')[0].files;
+        if (files && files.length > 0) {
+          for (var i = 0; i < files.length; i++) {
+            formData.append('myfile', files[i]);
+          }
+        }
+        return formData;
       },
       initDrag() {
         var me = this;
