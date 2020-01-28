@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="text-left">
     <select ref='myselect' style='width:100%;'>
     </select>
   </div>
@@ -47,6 +47,7 @@
         $obj.select2({
           language: "zh-CN",
           multiple: !!me.multiple,
+          closeOnSelect: !me.multiple,
           disabled: !!me.disabled,
           placeholder: '--请选择--',
           allowClear: true,
@@ -126,5 +127,4 @@
 
 <style src="../../../static/plugins/select2/css/select2.css"></style>
 <style scoped>
-  /*@import "../../../static/plugins/select2/css/select2.css";*/
 </style>

@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.HttpHeaders;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -126,10 +127,20 @@ public class ControllerAspect {
      * @param ex
      */
     public static void logException(HttpServletRequest request, HttpServletResponse response, Method method, Exception ex) {
-        response.reset();
+        String credentials = response.getHeader(org.springframework.http.HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS);
+        String origin = response.getHeader(org.springframework.http.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN);
+        if(!response.isCommitted()) {
+            response.reset();
+        }
         response.setStatus(HttpStatus.OK.value());
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
-        response.setHeader(HttpHeaders.CACHE_CONTROL, "no-cache, must-revalidate");
+        response.setHeader(org.springframework.http.HttpHeaders.CACHE_CONTROL, "no-cache, must-revalidate");
+        response.setHeader(org.springframework.http.HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, credentials);
+        response.setHeader(org.springframework.http.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, origin);
+        response.setHeader(org.springframework.http.HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "*");
+        response.setHeader(org.springframework.http.HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, "GET,POST,DELETE");
+        response.setHeader(org.springframework.http.HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, org.springframework.http.HttpHeaders.CONTENT_DISPOSITION);
+        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         try {
             if (ex instanceof ServiceException) {
                 Map<String, String> warnMsg = getWarnMsg(ex, request, method);

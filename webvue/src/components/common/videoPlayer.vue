@@ -4,7 +4,7 @@
       <div id="jquery_jplayer_2" class="jp-jplayer" style="height:450px;"></div>
       <div class="jp-gui">
         <div class="jp-video-play">
-          <button class="jp-video-play-icon" role="button" tabindex="0">play</button>
+          <button class="jp-video-play-icon" role="button" tabindex="0" title="播放">播放</button>
         </div>
         <div class="jp-interface">
           <div class="jp-progress">
@@ -16,19 +16,19 @@
           <div class="jp-duration" role="timer" aria-label="duration">&nbsp;</div>
           <div class="jp-controls-holder">
             <div class="jp-controls">
-              <button class="jp-play" role="button" tabindex="0">play</button>
-              <button class="jp-stop" role="button" tabindex="0">stop</button>
+              <button class="jp-play" role="button" tabindex="0" title="播放">播放</button>
+              <button class="jp-stop" role="button" tabindex="0" title="暂停">暂停</button>
             </div>
             <div class="jp-volume-controls">
-              <button class="jp-mute" role="button" tabindex="0">mute</button>
-              <button class="jp-volume-max" role="button" tabindex="0">max volume</button>
+              <button class="jp-mute" role="button" tabindex="0" title="静音">静音</button>
+              <button class="jp-volume-max" role="button" tabindex="0" title="最大音量">最大音量</button>
               <div class="jp-volume-bar">
                 <div class="jp-volume-bar-value"></div>
               </div>
             </div>
             <div class="jp-toggles">
-              <button class="jp-repeat" role="button" tabindex="0">repeat</button>
-              <button class="jp-full-screen" role="button" tabindex="0">full screen</button>
+              <button class="jp-repeat" role="button" tabindex="0" title="重复播放">重复播放</button>
+              <button class="jp-full-screen" role="button" tabindex="0" title="全屏">全屏</button>
             </div>
           </div>
           <div class="jp-details hide">
@@ -37,8 +37,8 @@
         </div>
       </div>
       <div class="jp-no-solution hide">
-        <span>Update Required</span>
-        To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
+        <span>flash升级</span>
+        您的浏览器需要<a href="http://get.adobe.com/flashplayer/" target="_blank">升级flash组件</a>才能播放视频
       </div>
     </div>
   </div>
@@ -95,9 +95,7 @@
       initPlayer: function () {
         var me = this;
         me.isInit = true;
-        var suffix = commonSrv.getFileExtension(me.src).replace('.', '');
-        if(suffix == 'webm') suffix = 'webmv';
-        if(suffix == 'mp4') suffix = 'm4v';
+        var suffix = this.getMediaSuffix(me.src);
         var obj = {};
         obj[suffix] = me.src;
         this.$nextTick(function () {
@@ -128,13 +126,39 @@
             }
           });
         });
+      },
+      getMediaSuffix: function (src) {
+        var suffix = commonSrv.getFileExtension(src).replace('.', '');
+        switch (suffix) {
+          case 'mp3':
+            suffix = 'mp3';
+            break;
+          case 'mp4':
+            suffix = 'm4v';
+            break;
+          case 'webm':
+            suffix = 'webmv';
+            break;
+          case 'ogg':
+            suffix = 'ogv';
+            break;
+          case 'wav':
+            suffix = 'wav';
+            break;
+          case 'flv':
+            suffix = 'flv';
+            break;
+          default:
+            break;
+        }
+        return suffix;
       }
     },
     mounted: function () {
       this.init();
     },
     destory: function () {
-      $(this.$el).find('#jquery_jplayer_2').jPlayer("pause").jPlayer("destroy");
+      $(this.$el).find('#jquery_jplayer_2').jPlayer("pause").jPlayer("clearMedia").jPlayer("destroy");
       this.isInit = false;
     },
     watch: {
@@ -151,6 +175,7 @@
     width: 900px;
     border: none;
   }
+
   .jp-video-360p .jp-video-play {
     height: 450px;
     margin-top: -450px;

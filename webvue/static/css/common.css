@@ -87,11 +87,13 @@ label.switch input:disabled + div span:nth-child(3){color:#aaa;}
 .radio_checkbox input[type='checkbox']:checked + i:after{transform:rotate(-45deg) scale(1) !important;transition:transform 0.2s ease-in;}
 /* togglecheckbox */
 .togglecheckbox i{position:absolute;width:40px;height:22px;border-radius:18px;transition:0.2s ease-in;top:3px;}
+.togglecheckbox i:before{content:'×';left:22px;top:-5px;position:absolute;width:18px;height:18px;font-size:20px;}
 .togglecheckbox i:after{content:'';left:1px;top:1px;width:18px;height:18px;border:1px #aaa solid;border-radius:18px;background-color:#eee;transition:0.2s ease-in-out;}
 .togglecheckbox span{line-height:30px;margin-left:45px;text-align:left;}
 .togglecheckbox input:checked + i{background-color:#6087cf;}
 .togglecheckbox input:disabled + i{border-color: #bbb;}
 .togglecheckbox input:checked:disabled + i{background-color:#aaa;}
+.togglecheckbox input:checked + i:before{content:'√';left:5px;top:-2px;font-size:16px;}
 .togglecheckbox input:checked + i:after{left:20px;transition:0.2s ease-in-out;}
 
 /* 导航 */
@@ -372,3 +374,9 @@ th.sortheader.desc:before,th.sortheader.asc:after{color:#080;}
     vertical-align: top;border:1px solid #bbb;outline: 1px dashed #27c24c;border-radius:2px;}
 .bg404-back{background: url('../img/sys/bg_purple.png');}
 .itemsplitleft{border-left:1px solid #dbdfea;}
+
+.test{border:1px solid #888;outline: none;}
+.test:not(:disabled),.test:not(:read-only){border-color:#888;}
+.test:not(:disabled):hover,.test:not(:read-only):hover,.test:not(:disabled):focus,.test:not(:read-only):focus,.test:not(:disabled):active,.test:not(:read-only):active{border-color:#333;}
+.test:disabled,.test:read-only{border-color:#eee;}
+.test:disabled:hover,.test:read-only:hover,.test:disabled:focus,.test:read-only:focus,.test:disabled:active,.test:read-only:active{border-color:#bbb;}

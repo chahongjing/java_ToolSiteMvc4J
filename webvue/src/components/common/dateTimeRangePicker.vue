@@ -35,13 +35,14 @@
         $(this.$el).find('input.form-control').daterangepicker({
           singleDatePicker: !me.isRange(),
           timePicker: me.showTime(),
-          startDate: me.from || me.value,
-          endDate: me.to || me.value,
+          startDate: me.from || me.value || new Date(),
+          endDate: me.to || me.value || new Date(),
           applyButtonClasses: 'btn-dmall',
           showWeekNumbers:true,
           timePicker24Hour: true,
           timePickerSeconds: true,
           showDropdowns:true,
+          opens:'left',
           locale : {
             applyLabel : '确定',
             cancelLabel : '取消',

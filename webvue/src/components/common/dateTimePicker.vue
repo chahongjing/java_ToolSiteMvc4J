@@ -1,6 +1,6 @@
 <template>
   <div class="input-group date">
-    <input class="form-control border-right-0" size="16" type="text" readonly v-model='dataText'/>
+    <input class="form-control border-right-0" size="16" type="text" readonly v-model='dataText' :disabled="disabled"/>
     <div class="input-group-addon input-group-append">
       <span :class='{"input-group-text":true,"btn-outline-purple":!option || !option.disabled}'>
         <i :class='{"fa mr0":true,"fa-calendar": type == 1,"fa-clock-o": type == 2}'></i>
@@ -33,7 +33,7 @@
 
   export default {
     name: 'dateTimePicker',
-    props: {option: {disabled:null}, mydate: null},
+    props: {option: {disabled:null}, mydate: null, disabled: null, formart:''},
     model: {
       prop: 'mydate',
       event: 'returnBack'

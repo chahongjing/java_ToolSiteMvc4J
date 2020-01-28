@@ -3,6 +3,7 @@ package com.zjy.baseframework;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
+import org.springframework.web.filter.CorsFilter;
 
 import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.http.HttpServletResponse;
@@ -47,9 +48,7 @@ public class DownloadHelper {
             String origin = response.getHeader("Access-Control-Allow-Origin");
             // 清空response
             response.reset();
-//            response.setHeader("Access-Control-Allow-Origin", "http://localhost:8099");
-//            response.setHeader("Access-Control-Allow-Credentials", "true");
-            response.setHeader("Access-Control-Allow-Credentials", "true");
+            response.setHeader("Access-Control-Allow-Credentials", credentials);
             response.setHeader("Access-Control-Allow-Origin", origin);
             response.setHeader("Access-Control-Allow-Methods", "*");
             response.setHeader("Access-Control-Allow-Headers", "*");

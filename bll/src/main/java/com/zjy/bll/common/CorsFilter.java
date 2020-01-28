@@ -14,11 +14,11 @@ import java.io.IOException;
 
 public class CorsFilter implements Filter {
 
-    private String allowOrigin;
-    private String allowMethods;
-    private String allowCredentials;
-    private String allowHeaders;
-    private String exposeHeaders;
+    private static String allowOrigin;
+    private static String allowMethods;
+    private static String allowCredentials;
+    private static String allowHeaders;
+    private static String exposeHeaders;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -31,10 +31,16 @@ public class CorsFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
-        HttpServletResponse response = (HttpServletResponse) res;
+        setResponseCors((HttpServletResponse) res);
+        chain.doFilter(req, res);
+    }
+
+    public static void setResponseCors(HttpServletResponse response) {
+        String origin = response.getHeader("Access-Control-Allow-Origin");
         if (StringUtils.isNotEmpty(allowOrigin)) {
-            response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, allowOrigin);
+            origin = allowOrigin;
         }
+        response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, origin);
         if (StringUtils.isNotEmpty(allowMethods)) {
             response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, allowMethods);
         }
@@ -47,7 +53,6 @@ public class CorsFilter implements Filter {
         if (StringUtils.isNotEmpty(exposeHeaders)) {
             response.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, exposeHeaders);
         }
-        chain.doFilter(req, res);
     }
 
     @Override

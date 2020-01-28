@@ -1,110 +1,229 @@
 <template>
-  <div>
-    <form class='myform form-label-w120 block-form-group form-group-w300 w300 mt20'>
-      <div class="form-group">
-        <label class="form-label">文件：</label>
-        <div class="form-content">
-          <input type="file" id='testFile' class="form-control" multiple placeholder="文件" autofocus v-focus/>
+  <div class="hello h100p oya">
+    <div style="width:500px;margin:auto;padding-bottom:200px;">
+      <form class='myform infotip form-label-w110 block-form-group' style="width:487px;margin:auto;">
+        <div class="form-group">
+          <label class="form-label colon">普通文本框</label>
+          <div class="form-content">
+            <input type="text" class="form-control" placeholder="普通文本框，colon显示冒号" maxlength="50" autofocus v-focus :disabled="allDisabled"/>
+          </div>
         </div>
-        <div class='form-info'>
-          <i class='fa'></i>
+        <div class="form-group">
+          <label class="form-label req">带必填无冒号</label>
+          <div class="form-content">
+            <input type="text" class="form-control" placeholder="colon显示冒号，req显示必填" maxlength="50" :disabled="allDisabled"/>
+          </div>
         </div>
+        <div class="form-group">
+          <label class="form-label">&nbsp;</label>
+          <div class="form-content">
+            <input type="text" class="form-control" placeholder="没有label标签" maxlength="50" :disabled="allDisabled"/>
+          </div>
+        </div>
+        <div class="form-group info-error">
+          <label class="form-label req colon">验证不通过</label>
+          <div class="form-content">
+            <input type="text" class="form-control" placeholder="添加 info-error 类" maxlength="50" :disabled="allDisabled"/>
+          </div>
+          <div class='form-info'>
+            <i class='fa' title='格式不正确！'></i>
+          </div>
+        </div>
+        <div class="form-group info-success">
+          <label class="form-label colon">验证通过</label>
+          <div class="form-content">
+            <input type="text" class="form-control" placeholder="添加 info-success 类" maxlength="50" :disabled="allDisabled"/>
+          </div>
+          <div class='form-info'>
+            <i class='fa' title='验证通过！'></i>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label colon">日期</label>
+          <div class="form-content">
+            <date-time-picker v-model='beginTime' :option='dateOpt' :disabled="allDisabled"></date-time-picker>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label colon">日期时间范围</label>
+          <div class="form-content">
+            <date-time-range-picker v-model="beginTime" :from.sync="startDate" :to.sync="endDate" :type="4"
+                                    :format="'yyyy-MM-dd HH:mm:ss'"
+                                    :disabled="allDisabled"></date-time-range-picker>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label colon">单选下拉搜索</label>
+          <div class="form-content">
+            <select2 :list="selectList" v-model="selectValue" :id-field="'myid'" :text-field="'name'" :disabled="allDisabled"></select2>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label colon">多选下拉搜索</label>
+          <div class="form-content">
+            <select2 :list="selectList" v-model="selectValueArr" :id-field="'myid'" :text-field="'name'"
+                     :multiple="true" :disabled="allDisabled"></select2>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label colon">单选</label>
+          <div class="form-content">
+            <label class="radio_checkbox mt2">
+              <input type='radio' name="importantCustomer" :value="1" v-model="importantCustomer"
+                     @change="changeImportantCst()" :disabled="allDisabled"/>
+              <i></i>
+              <span class="req-text ">重要客户</span>
+            </label>
+            <label class="radio_checkbox mt2">
+              <input type='radio' name="importantCustomer" :value="2" v-model="importantCustomer"
+                     @change="changeImportantCst()" :disabled="allDisabled"/>
+              <i></i>
+              <span class="req-text ">非重要客户</span>
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label colon">多选</label>
+          <div class="form-content">
+            <label class="radio_checkbox mt2" v-for="item in chklist">
+              <input type='checkbox' name="importantCustomerchk" v-model="item.checked"
+                     @change="changeImportantCst()" :disabled="allDisabled"/>
+              <i></i>
+              <span v-text="item.name"></span>
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label colon">是否有效</label>
+          <div class="form-content">
+            <label class="togglecheckbox">
+              <input type='checkbox' name="checkbox" v-model="yn" @change="changeYn()" :disabled="allDisabled"/>
+              <i></i>
+              <span>addfe</span>
+            </label>
+          </div>
+        </div>
+        <div style="font-size:13px;">{{chklist}}</div>
+        <div class="form-group">
+          <label class="form-label">文件：</label>
+          <div class="form-content">
+            <input type="file" id='testFile' class="form-control" multiple placeholder="文件" :disabled="allDisabled"/>
+          </div>
+          <div class='form-info'>
+            <i class='fa'></i>
+          </div>
+        </div>
+        <div class="form-group text-right mb0">
+          <button type="button" class="btn btn-purple mr5" @click="axiosUploadFile">axios上传</button>
+          <button type="button" class="btn btn-purple mr5" @click="axiosDownload">axios下载</button>
+          <button type="button" class="btn btn-purple mr5" @click="jqueryUpload">jquery上传</button>
+          <button type="button" class="btn btn-purple mr5" @click="jsDownload">js下载</button>
+        </div>
+      </form>
+      <hr>
+      <button @click="showMyLoading">显示遮罩</button>
+      <button @click="showVideo">播放视频</button>
+      <button @click="showAudio">播放音频</button>
+      <button @click="showAlert">alert</button>
+      <button @click="showConfirm">confirm</button>
+      <hr>
+      <button @click="showToasterInfo">toaster info</button>
+      <button @click="showToasterWarn">toaster warn</button>
+      <button @click="showToasterError">toaster error</button>
+      <button @click="showToasterSuccess">toaster success</button>
+      <button @click="changeValue">改变值</button>
+      <button @click="changeDisabled">改变disabled</button>
+      <hr>
+      <media-player :files="mediaList" :file-domain="imgDomain"></media-player>
+      <hr>
+      <div class="mt20">
+        <ultree class='w300 mytree' :plainList="treeData" :option='treeoption'></ultree>
       </div>
-      <div class="form-group text-right mb0">
-        <button type="button" class="btn btn-purple mr5" @click="axiosUploadFile">axios上传</button>
-        <button type="button" class="btn btn-purple mr5" @click="axiosDownload">axios下载</button>
-        <button type="button" class="btn btn-purple mr5" @click="jqueryUpload">jquery上传</button>
-        <button type="button" class="btn btn-purple mr5" @click="jsDownload">js下载</button>
+      <hr>
+      hover:jquery ui文件引入导致失效
+      <div style="height:50px;background-color: #aaa;" v-tooltip="html"></div>
+      <hr>
+      <a href='javascript:void(0)' @click="goList">列表</a>
+      <hr>
+      <div class='aa'>
       </div>
-    </form>
-    <div class='trcon'>
-      <a href='http://sortablejs.github.io/Sortable/'>Sortable.js</a>
-      <table id='mainRongQi' class='w100p'>
-        <thead>
-        <tr>
-          <th>
-            内容
-          </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for='rongQi in list'>
-          <td :data-id='rongQi.id' class='sortable a'>
+      <hr>
+      <div class='trcon'>
+        <a href='http://sortablejs.github.io/Sortable/'>Sortable.js</a>
+        <table id='mainRongQi' class='w100p'>
+          <thead>
+          <tr>
+            <th>
+              内容
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for='rongQi in list'>
+            <td :data-id='rongQi.id' class='sortable a'>
               <span v-for='item in rongQi.dataList' :data-id='item.id' :data-pid='rongQi.id'>
                 <span v-text='item.name + "" + item.xuhao'></span>
                 <i class='fa fa-arrows pointer'></i>
               </span>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class='trcon'>
-      <table id='mainRongQi2' class='w100p'>
-        <thead>
-        <tr>
-          <th>
-            内容
-          </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for='rongQi in list2'>
-          <td :data-id='rongQi.id' class='sortable b'>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class='trcon'>
+        <table id='mainRongQi2' class='w100p'>
+          <thead>
+          <tr>
+            <th>
+              内容
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for='rongQi in list2'>
+            <td :data-id='rongQi.id' class='sortable b'>
               <span v-for='item in rongQi.dataList' :data-id='item.id' :data-pid='rongQi.id'>
                 <span v-text='item.name + "" + item.xuhao'></span>
                 <i class='fa fa-arrows pointer'></i>
               </span>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-
-    {{selectValue}}
-    <select2 v-model="selectValue" :multiple="multiple" :list="selectList" :disabled="disabled" @change="changeSelect()"
-             :id-field="'myid'" :text-field="'mytext'"></select2>
-
-    <a @click="addItem()">添加</a><a @click="disabled = !disabled">禁用</a>
-    <a @click="changValue()">改变值</a>
-    <label v-tooltip='html'>提示</label>
-
-    <hr>
-    <media-player :files="mediaList" :file-domain="imgDomain"></media-player>
-    <hr>
-    <div class='mt20'>
-      <ultree class='w300 mytree' :plainList="treeData" :option='treeoption'></ultree>
-    </div>
-    <hr>
-    {{this.treeoption && this.treeoption.checkedResult && this.treeoption.checkedResult.name||
-    this.treeoption.checkedResult.map(item => item.name)}}
-
-    <div class='aa'>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-  import '../../../static/js/jquery-ui.js'
-  // demo data
+  import '../../../static/js/jquery-ui.js';
+
   var treeDataList = [
     {id: 1, name: '语文语文语文语文语文语文语文语文语文语文语文', pId: null, selected: false, isOpen: false, isLeaf: false},
-    {id: 2, name: '数学', pId: null, selected: false, isOpen: false, isLeaf: false},
-    {id: 3, name: '英语<b style="color:red;">我的html</b>', pId: null, selected: true, isOpen: false, isLeaf: false},
-    {id: 4, name: '注音', pId: 1, selected: false, isOpen: false, isLeaf: false},
-    {id: 5, name: '成语错字识别', pId: 1, selected: false, isOpen: false, isLeaf: false},
-    {id: 6, name: '正确的词正确的词正确的词正确的词正确的词正确的词正确的词正确的词', pId: 1, selected: false, isOpen: false, isLeaf: false},
-    {id: 7, name: '四字成语', pId: 5, selected: false, isOpen: false, isLeaf: false},
-    {id: 8, name: '七言绝句', pId: 5, selected: false, isOpen: false, isLeaf: false},
-    {id: 9, name: '三角函数', pId: 2, selected: true, isOpen: false, isLeaf: false},
-    {id: 10, name: '立体几何', pId: 2, selected: false, isOpen: false, isLeaf: false},
-    {id: 11, name: '诗词', pId: 8, selected: false, isOpen: false, isLeaf: false}
+    {id: 2, name: '数学数学数学数学数学数学数学', pId: null, selected: false, isOpen: false, isLeaf: false},
+    {
+      id: 3,
+      name: '英语<b style="color:red;">我的html我的html我的html我的html</b>',
+      pId: null,
+      selected: false,
+      isOpen: false,
+      isLeaf: false
+    },
+    {id: 4, name: '注音注音注音注音注音注音', pId: 1, selected: false, isOpen: false, isLeaf: false},
+    {id: 5, name: '成语错字识别成语错字识别成语错字识别成语错字识别成语错字识别', pId: 1, selected: false, isOpen: false, isLeaf: false},
+    {id: 6, name: '正确的词正确的词正确的词正确的词', pId: 1, selected: false, isOpen: false, isLeaf: false},
+    {id: 7, name: '四字成语四字成语四字成语四字成语', pId: 5, selected: false, isOpen: false, isLeaf: false},
+    {id: 8, name: '七言绝句七言绝句七言绝句七言绝句', pId: 5, selected: false, isOpen: false, isLeaf: false},
+    {id: 9, name: '三角函数三角函数三角函数三角函数三角函数三角函数三角函数三角函数三角函数', pId: 2, selected: false, isOpen: false, isLeaf: false},
+    {id: 10, name: '立体几何立体几何立体几何立体几何立体几何', pId: 2, selected: false, isOpen: false, isLeaf: false},
+    {id: 11, name: '三角函数三角函数三角函数三角函数三角函数三角函数', pId: 8, selected: false, isOpen: false, isLeaf: false}
   ];
   var treeoption = {
     id: 'abc',
     openLevel: 2,
-    checktype: 'checkbox',
+    checktype: 'checkbox1',
     checkedResult: [treeDataList[0], treeDataList[6]],
+    // showIcon:true,
     // checktype: 'radio',
     // checkedResult: treeDataList[0],
     beforeOpenClose: function (item) {
@@ -122,19 +241,7 @@
     afterCheck: function (item) {
       console.log('afterCheck');
       console.log(item);
-    },
-    addNode: function (item) {
-      console.log('addNode');
-      console.log(item);
-    },
-    editNode: function (item) {
-      console.log('editNode');
-      console.log(item);
-    },
-    deleteNode: function (item) {
-      console.log('deleteNode');
-      console.log(item);
-    },
+    }
   }
   treeoption.afterClick = function (item) {
     console.log('afterClick');
@@ -144,30 +251,106 @@
     }
   };
 
-  var selectList = [{myid: 1, mytext: 'zjy'}, {myid: 2, mytext: 'xxc2'}, {myid: 3, mytext: 'xxc3'}, {
-    myid: 4,
-    mytext: 'xxc4'
-  }, {myid: 5, mytext: 'xxc5'}];
-
   export default {
-    name: 'test',
+    name: 'HelloWorld',
     data() {
       return {
-        list: [],
-        list2: [],
-        html: "这是<b style=\"color:red\">html</b>提示",
+        allDisabled: false,
+        dateOpt: {format: 'yyyy-mm-dd hh:ii:ss', minView: 0, disabled: false},
+        selectList: [{myid: 1, name: '待处理'}, {myid: 2, name: '已接单'}, {myid: 3, name: '处理中'}, {
+          myid: 4,
+          name: '待审核'
+        }, {myid: 5, name: '已审核'}, {myid: 6, name: '已完成'}],
+        startDate: new Date(2020, 1, 10, 20, 33, 43),
+        endDate: new Date(2020, 1, 13, 10, 6, 20),
+        myDate: new Date(),
         treeData: treeDataList,
         treeoption: treeoption,
-        selectList: selectList,
-        disabled: false,
-        multiple: false,
-        selectValue: 1,
-        valueT: true,
+        selectValue: null,
+        selectValueArr: [],
+        html: '这是<span class="red bold">html</span>内容',
+        beginTime: new Date(),
+        yn: true,
+        chklist: [{id: 1, name: 'java'}, {id: 2, name: 'js'}, {id: 3, name: 'css'}],
+        importantCustomer: 2,
         mediaList: [],
-        imgDomain: 'http://img.dmallcdn.com/'
+        imgDomain: 'http://img.dmallcdn.com/',
+        list: [],
+        list2: [],
       }
     },
     methods: {
+      upload: function () {
+        var me = this;
+        var formData = new FormData();
+        formData.append('busPath', 'test');
+        var files = $('#file')[0].files;
+        if (files && files.length > 0) {
+          for (var i = 0; i < files.length; i++) {
+            formData.append('file', files[i]);
+          }
+        }
+        this.$axios.post('/upload/upload', formData).then(function (resp) {
+          if (resp.data.status == ResultStatus.OK.key) {
+            console.log(resp.data.value);
+            me.$toaster.success('上传成功！');
+          }
+        });
+      },
+      showMyLoading: function () {
+        this.$root.showLoading();
+        var me = this;
+        setTimeout(function () {
+          me.$root.hideLoading();
+        }, 1500)
+      },
+      showToasterInfo: function () {
+        this.$toaster.info('info消息！');
+      },
+      showToasterWarn: function () {
+        this.$toaster.warning('warning消息！');
+      },
+      showToasterSuccess: function () {
+        this.$toaster.success('success消息！');
+      },
+      showToasterError: function () {
+        this.$toaster.error('error消息！');
+      },
+      showAlert: function () {
+        this.$confirm.alert('保存成功！');
+      },
+      showConfirm: function () {
+        this.$confirm.confirm('确定要退出吗?', function () {
+          console.log('确定退出事件');
+        });
+      },
+      goList: function () {
+        this.$router.push('/setting/settingList');
+      },
+      changeImportantCst: function () {
+        console.log('changeImportantCst');
+      },
+      showAudio: function () {
+        // 小米mp3
+        var src = "https://img.dmallcdn.com/workorder/202001/bcb1afff-ebaa-4b18-a6e2-6d559c647135.mp3";
+        // iphone mp3
+        var src = "https://img.dmallcdn.com/workorder/202001/11b63c21-9cf3-4fb2-a3cf-bcd9d35164fe.mp3";
+        this.$cstModal.showAudio({src: src});
+      },
+      showVideo: function () {
+        // 普通m4v
+        var src = "https://img.dmallcdn.com/workorder/202001/1bbb3f22-2bd0-4f77-abb2-82cbacab2332.m4v";
+        // 小米mp4
+        // var src = "https://img.dmallcdn.com/workorder/202001/0498fa62-2a95-4031-b8c1-1cc3141b8038.mp4";
+        // 小米mp4
+        // var src = "https://img.dmallcdn.com/workorder/202001/23d8cf5e-ec6f-45f5-a41c-c144e85f7a80.mp4";
+        // iphone mp4
+        // var src = "https://img.dmallcdn.com/workorder/202001/f163094e-29bf-4abe-8727-43fd44049000.mp4";
+        this.$cstModal.showVideo({src: src});
+
+      },
+      changeYn: function () {
+      },
       axiosUploadFile() {
         var me = this;
         this.$axios.post('/learn/testPostWithFile', this.getFormData()).then(function (resp) {
@@ -203,6 +386,7 @@
         }
         return formData;
       },
+      // region 拖拽
       initDrag() {
         var me = this;
         var sortable = $(".a");
@@ -322,24 +506,16 @@
         }
         return map;
       },
-      addItem: function () {
-        this.selectList.push({id: this.selectList.length + 1, text: '新的项' + (this.selectList.length + 1)});
+      // endregion
+      changeValue: function() {
+
       },
-      changeSelect: function () {
-        console.log('outerChange:' + 123);
-      },
-      changValue:function () {
-        if(this.valueT) {
-          this.selectValue = 2;
-          // this.selectValue = [1,2];
-        } else {
-          this.selectValue = 3;
-          // this.selectValue = [3,2];
-        }
-        this.valueT = !this.valueT;
+      changeDisabled: function() {
+        this.allDisabled = !this.allDisabled;
       }
     },
-    mounted: function () {
+    mounted: function() {
+      window.vuedata = this;
       var me = this;
       var list1 = [];
       var list2 = [];
@@ -375,17 +551,25 @@
     }
   }
 </script>
+
 <style scoped>
-  #mainRongQi td, #mainRongQi2 td {
-    border: 1px solid #aaa;
-    height: 30px;
+  h1, h2 {
+    font-weight: normal;
   }
 
-  .mytree {
-    border: 1px solid #ddd;
-    padding: 10px 5px 10px 5px;
+  ul {
+    list-style-type: none;
+    padding: 0;
   }
 
+  li {
+    display: inline-block;
+    margin: 0 10px;
+  }
+
+  a {
+    color: #42b983;
+  }
   .aa {
     width: 200px;
     height: 200px;

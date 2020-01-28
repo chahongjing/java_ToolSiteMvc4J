@@ -76,7 +76,7 @@
     <div class='footer-pager'>
       <pagination :pager-info='pager'></pagination>
     </div>
-    <common-modal :show-modal='showChangePasswordDialog' :width='width'>
+    <common-modal :show-modal='showChangePasswordDialog' :options="modalOpt">
       <div class="modal-header" slot='headerSlot'>
         <h5 class="modal-title">修改密码</h5>
         <button type="button" class="close" @click='showChangePasswordDialog = false'>
@@ -123,16 +123,16 @@
         list: [],
         sexValue: '',
         sexList: [],
-        nameOrderBy: {value: OrderByType.ASC.key},
+        nameOrderBy: {value: enumMap.OrderByType.ASC.key},
         codeOrderBy: {value: null},
         createdOnOrderBy: {value: null},
         pager: {pageNum: 1, pageSize: 5, loading: true},
-        width: 350,
         showChangePasswordDialog: false,
         userCode: null,
         password: null,
-        YesNo: YesNo,
-        Sex: Sex
+        YesNo: enumMap.YesNo,
+        Sex: enumMap.Sex,
+        modalOpt: {width: '350px'}
       }
     },
     methods: {
@@ -196,8 +196,8 @@
       },
       getEnumList() {
         var list = [];
-        for (var item in Sex) {
-          list.push(Sex[item]);
+        for (var item in enumMap.Sex) {
+          list.push(enumMap.Sex[item]);
         }
         this.sexList = list;
       },
@@ -251,7 +251,7 @@
           }
           return res;
         }
-      } 
+      }
     },
     mounted: function () {
       this.search();

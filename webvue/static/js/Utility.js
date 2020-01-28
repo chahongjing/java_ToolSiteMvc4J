@@ -127,7 +127,7 @@
       },
       success: function (data) {
         if (data.status == ResultStatus.OK.key) {
-          console.log('上传成功！' + data.value);
+          console.log('上传成功！' + JSON.stringify(data.value));
         } else {
           alert(data.message);
         }

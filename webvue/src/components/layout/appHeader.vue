@@ -55,7 +55,7 @@
         </li>
       </ul>
     </div>
-    <common-modal :show-modal='showchangePasswordDialog' :width='width'>
+    <common-modal :show-modal='showchangePasswordDialog' :options="modalOpt">
       <div class="modal-header" slot='headerSlot'>
         <h5 class="modal-title">修改密码</h5>
         <button type="button" class="close" @click='showchangePasswordDialog = false'>
@@ -119,12 +119,12 @@
       return {
         user: {userName: '', oldPassword: null, newPassword: null, passwordAgain: null},
         showMenu: false,
-        width: 350,
         showchangePasswordDialog: false,
         hoverMenu: false,
         oldPasswordStatus: {v:null,t:''},
         newPasswordStatus: {v:null,t:''},
-        passwordAgainStatus:{v:null,t:''}
+        passwordAgainStatus:{v:null,t:''},
+        modalOpt: {width: '350px'}
       }
     },
     methods: {

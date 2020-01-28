@@ -1,5 +1,5 @@
 <template>
-  <common-modal :show-modal='showDialog' :width='width'>
+  <common-modal :show-modal='showDialog' :options="modalOpt">
     <div class="modal-header" slot='headerSlot'>
       <h5 class="modal-title" v-text='title'></h5>
       <button type="button" class="close" @click='defaultClose()'>
@@ -29,11 +29,11 @@
     data () {
       return {
         showDialog: false,
-        width: 350,
         title: '确认信息',
         message: '确定要退出吗？',
         closeBtn: {show: true, cls: '', showIcon: true, iconCls: '', text: '关闭', fn: null},
-        confirmBtn: {show: true, cls: '', showIcon: true, iconCls: '', text: '确定', fn: null}
+        confirmBtn: {show: true, cls: '', showIcon: true, iconCls: '', text: '确定', fn: null},
+        modalOpt: {width: '350px'}
       }
     },
     methods: {

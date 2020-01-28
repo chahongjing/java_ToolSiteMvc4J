@@ -138,10 +138,10 @@
             <param-name>allowMethods</param-name>
             <param-value>GET,POST,OPTIONS,DELETE</param-value>
         </init-param>
-<!--        <init-param>-->
-<!--            <param-name>allowCredentials</param-name>-->
-<!--            <param-value>true</param-value>-->
-<!--        </init-param>-->
+        <init-param>
+            <param-name>allowCredentials</param-name>
+            <param-value>true</param-value>
+        </init-param>
         <init-param>
             <param-name>allowHeaders</param-name>
             <param-value>*</param-value>

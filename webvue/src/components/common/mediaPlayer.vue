@@ -67,11 +67,14 @@
 </script>
 <style src="../../../static/plugins/viewer/css/viewer.css"></style>
 <style scoped>
+  .file-contaniner{font-size:0;}
   .file {
     cursor: pointer;
     width: 70px;
     height: 70px;
     display: inline-block;
-    padding: 5px
+    padding: 5px;
+    border:1px solid #ddd;
+    margin:5px;
   }
 </style>

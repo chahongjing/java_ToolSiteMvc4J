@@ -44,6 +44,11 @@ new Vue({
   router,
   components: {App},
   template: '<App/>',
+  data:function() {
+    return {
+      showLoadingBox: false
+    };
+  },
   methods: {
     getUser() {
       return this.$store.state.user;
@@ -97,6 +102,12 @@ new Vue({
     },
     clearPermissionList() {
       this.$store.commit("CLEAR_PERMISSIONLIST");
+    },
+    showLoading: function() {
+      this.showLoadingBox = true;
+    },
+    hideLoading: function() {
+      this.showLoadingBox = false;
     },
     goHome() {
       this.clearBreadrumb();
