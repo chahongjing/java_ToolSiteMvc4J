@@ -32,6 +32,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by chahongjing on 2018/1/21.
@@ -162,12 +163,14 @@ public class LearnController extends BaseController implements ServletConfigAwar
 
     // region 其它
     @PostMapping(value = "testPostWithFile")
-    public ResponseEntity<BaseResult<UserInfo>> testPostWithFile(MultipartHttpServletRequest request,
-                                                                 HttpServletResponse response,
-                                                                 @RequestParam(required = false) Integer AGE,
-                                                                 @RequestParam MultipartFile[] myfile,
-                                                                 UserInfo users) {
-        BaseResult<UserInfo> re = BaseResult.ok();
+    public ResponseEntity<BaseResult<Map<String, Object>>> testPostWithFile(MultipartHttpServletRequest request,
+                                                                            HttpServletResponse response,
+                                                                            @RequestParam(required = false) Integer AGE,
+                                                                            @RequestParam MultipartFile[] myfile,
+                                                                            UserInfo users) {
+        BaseResult<Map<String, Object>> re = BaseResult.ok();
+        Map<String, Object> map = new HashMap<>();
+        re.setValue(map);
         UserInfo user = new UserInfo();
         user.setUserName(users.getUserName());
         user.setUserCode(users.getUserCode());
@@ -186,12 +189,14 @@ public class LearnController extends BaseController implements ServletConfigAwar
 //            }
         }
         user.setPhoto(fileName.toString());
-        re.setValue(user);
-//        response.setHeader("Access-Control-Allow-Origin", "http://localhost:8099");
-//        response.setHeader("Access-Control-Allow-Methods", "*");
-//        response.setHeader("Access-Control-Allow-Credentials", "true");
-//        response.setHeader("Access-Control-Allow-Headers", "*");
-//        response.setHeader("ccess-Control-Expose-Headers", "Content-Disposition");
+        map.put("user", user);
+        map.put("fileDomain", "http://img.dmallcdn.com/");
+        String[] arr = new String[]{"workorder/202001/8dd43898-e9db-4559-94dd-69b61d440bd3.png",
+                "workorder/202001/00b865b6-25e1-4092-8446-7d4580ed897d.mp3",
+                "workorder/202001/703a14ca-e601-428d-89a6-0a1abe9fb217.mp4",
+                "workorder/202001/10386cc0-8af5-4fd8-a650-39da1229fc3b.png"};
+        int ind = (int) (Math.random() * arr.length);
+        map.put("url", arr[ind]);
         return new ResponseEntity<>(re, HttpStatus.OK);
     }
 

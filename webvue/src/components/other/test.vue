@@ -103,7 +103,6 @@
             </label>
           </div>
         </div>
-        <div style="font-size:13px;">{{chklist}}</div>
         <div class="form-group">
           <label class="form-label">文件：</label>
           <div class="form-content">
@@ -135,6 +134,8 @@
       <button @click="changeDisabled">改变disabled</button>
       <hr>
       <media-player :files="mediaList" :file-domain="imgDomain"></media-player>
+      <hr>
+      <file-upload :files="fileList" :file-suffix="fileSuffix" :data-bus="dataBus" :max-file-num="maxFileNum" :disabled="allDisabled"></file-upload>
       <hr>
       <div class="mt20">
         <ultree class='w300 mytree' :plainList="treeData" :option='treeoption'></ultree>
@@ -277,26 +278,13 @@
         imgDomain: 'http://img.dmallcdn.com/',
         list: [],
         list2: [],
+        fileList: [],
+        fileSuffix:['jpg','png','gif','mp3','mp4'],
+        maxFileNum: 6,
+        dataBus:{}
       }
     },
     methods: {
-      upload: function () {
-        var me = this;
-        var formData = new FormData();
-        formData.append('busPath', 'test');
-        var files = $('#file')[0].files;
-        if (files && files.length > 0) {
-          for (var i = 0; i < files.length; i++) {
-            formData.append('file', files[i]);
-          }
-        }
-        this.$axios.post('/upload/upload', formData).then(function (resp) {
-          if (resp.data.status == ResultStatus.OK.key) {
-            console.log(resp.data.value);
-            me.$toaster.success('上传成功！');
-          }
-        });
-      },
       showMyLoading: function () {
         this.$root.showLoading();
         var me = this;

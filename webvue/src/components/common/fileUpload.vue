@@ -4,15 +4,17 @@
       <p class="help-block" v-text="getTip()"></p>
       <ul class="upload-files">
         <li v-for='file in files'>
-          <p class="file"><img :src="getImageUrl(file)"><a class="close" @click="delFile(file)">×</a></p>
+          <img :src="getImageUrl(file)" class="file">
+          <a class="close" @click="delFile(file)" v-show="!isDisabled">×</a>
         </li>
-        <li :class="{'disabled': isDisabled}">
+        <li :class="{'disabled': isDisabled}" v-show="!files || files.length < maxFileNum">
           <form class="fileForm">
             <input type="file" class="upload" @change="addFile" ref="inputer" multiple
-                   :accept="getMimeType" :disabled="isDisabled" />
+                   :accept="getMimeType" :disabled="isDisabled"/>
           </form>
           <a class="add">
-            <i class="iconfont icon-plus"></i><p>点击上传</p>
+            <i class="fa fa-plus" style="font-size:25px;margin-right:0;"></i>
+            <p>点击上传</p>
           </a>
         </li>
       </ul>
@@ -49,16 +51,20 @@
         var formData = new FormData();
         formData.append('busPath', 'workorder');
         for (var i = 0; i < files.length; i++) {
-          formData.append('files', files[i]);
+          formData.append('myfile', files[i]);
         }
         var me = this;
-        this.$axios.post('url', formData).then(function (resp) {
-          if (resp.data.code == ResultStatus.OK.code) {
-            me.fileDomain = resp.data.data.fileDomain;
-            for (var i = 0; i < resp.data.data.attachmentList.length; i++) {
-              var fileTemp = {imgUrl: resp.data.data.attachmentList[i].imgUrl,
-                fileName: resp.data.data.attachmentList[i].fileName,
-                domain:me.fileDomain};
+        this.$axios.post('/learn/testPostWithFile', formData).then(function (resp) {
+          if (resp.data.status == ResultStatus.OK.key) {
+            me.fileDomain = resp.data.value.fileDomain;
+            // var list = resp.data.value.attachmentList;
+            var list = [{imgUrl: resp.data.value.url}];
+            for (var i = 0; i < list.length; i++) {
+              var fileTemp = {
+                imgUrl: list[i].imgUrl,
+                fileName: list[i].fileName,
+                domain: me.fileDomain
+              };
               fileTemp.type = comSrv.getFileMediaType(fileTemp.imgUrl);
               me.files.push(fileTemp);
             }
@@ -85,7 +91,7 @@
             return false;
           }
           var suffix = comSrv.getFileExtension(files[i].name);
-          if(!suffix || !suffixArr.includes(suffix.toLowerCase().replace('.', ''))) {
+          if (!suffix || !suffixArr.includes(suffix.toLowerCase().replace('.', ''))) {
             this.$toaster.warning('只能上传后缀名为' + suffixArr.join(', ') + '的附件！');
             this.resetInput();
             return false;
@@ -99,21 +105,21 @@
       delFile(key) {
         this.files.splice(this.files.indexOf(key), 1);
       },
-      getTip: function() {
+      getTip: function () {
         var fsArr = this.fileSuffix || [];
         return '(建议附件格式为：' + fsArr.join(', ') + '，大小不超过' + this.fileMaxSizeStr + '，最多可上传' + (this.maxFileNum || 5) + '个附件)';
       },
-      getImageUrl: function(file) {
+      getImageUrl: function (file) {
         var url;
         switch (file.type) {
           case comSrv.mediaType.picture:
             url = this.fileDomain + '/' + file.imgUrl;
             break;
           case comSrv.mediaType.audio:
-            url = '/static/imgs/M-v-Player_17.png';
+            url = '/static/img/M-v-Player_17.png';
             break;
           case comSrv.mediaType.video:
-            url = '/static/imgs/M-v-Player_16.png';
+            url = '/static/img/M-v-Player_16.png';
             break;
           default:
             url = this.fileDomain + '/' + file.imgUrl;
@@ -125,28 +131,27 @@
     mounted: function () {
     },
     computed: {
-      getMimeType: function() {
+      getMimeType: function () {
         var arr = [];
-        if(this.fileSuffix && this.fileSuffix.includes('jpg')) {
+        if (this.fileSuffix && this.fileSuffix.includes('jpg')) {
           Array.prototype.push.apply(arr, this.jpgMimeTypeArr);
         }
-        if(this.fileSuffix && this.fileSuffix.includes('mp3')) {
+        if (this.fileSuffix && this.fileSuffix.includes('mp3')) {
           Array.prototype.push.apply(arr, this.mp3MimeTypeArr);
         }
-        if(this.fileSuffix && this.fileSuffix.includes('mp4')) {
+        if (this.fileSuffix && this.fileSuffix.includes('mp4')) {
           Array.prototype.push.apply(arr, this.mp4MimeTypeArr);
         }
         return arr.join(',');
       },
-      isDisabled: function() {
+      isDisabled: function () {
         return this.files.length > (this.maxFileNum || 5) || this.dataBus.allDisabled || this.disabled;
       }
     }
   }
 </script>
 
-<style lang="less" scoped>
-  @them-color: rgb(237, 114, 77);
+<style scoped>
   .upload-files {
     margin: 10px 0 0px 0;
     overflow: hidden;
@@ -159,25 +164,26 @@
     height: 70px;
     font-size: 14px;
     display: inline-block;
-    padding: 10px;
-    margin-right: 25px;
-    margin-bottom: 25px;
-    border: 2px dashed #ccc;
+    margin-right: 10px;
     text-align: center;
     vertical-align: middle;
   }
 
   .upload-files li:hover {
-    border-color: @them-color;
+    border-color: rgb(237, 114, 77);
   }
-  .upload-files li.disabled{border-color:#d5d5d5;opacity: 0.65;}
+
+  .upload-files li.disabled {
+    border-color: #d5d5d5;
+    opacity: 0.65;
+  }
 
   .upload-files .add {
     display: block;
     background-color: #ccc;
     color: #ffffff;
-    height: 50px;
-    padding-top: 13px;
+    height: 100%;
+    padding-top: 23px;
   }
 
   .upload-files .add .iconfont {
@@ -191,10 +197,18 @@
   }
 
   .upload-files li:hover .add {
-    background-color: @them-color;
+    background-color: rgb(237, 114, 77);
   }
-  .upload-files li.disabled input{cursor: default;}
-  .upload-files li.disabled .add{background-color:#abbac3;opacity: 0.65;color:#fff;}
+
+  .upload-files li.disabled input {
+    cursor: default;
+  }
+
+  .upload-files li.disabled .add {
+    background-color: #abbac3;
+    opacity: 0.65;
+    color: #fff;
+  }
 
   .upload-files li .upload {
     position: absolute;
@@ -212,25 +226,22 @@
     position: relative;
     width: 52px;
     height: 52px;
-    top: -3px;
-    left: -3px;
-  }
-
-  .upload-files .file img {
+    padding: 5px;
+    border: 2px dashed #ccc;
     vertical-align: middle;
     width: 100%;
     height: 100%;
   }
 
-  .upload-files .file .close {
+  .upload-files .close {
     display: none;
   }
 
-  .upload-files li:hover .file .close {
+  .upload-files li:hover .close {
     display: block;
     position: absolute;
-    right: -6px;
-    top: -10px;
+    right: 2px;
+    top: -2px;
     line-height: 1;
     font-size: 22px;
     color: #aaa;

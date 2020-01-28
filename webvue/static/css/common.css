@@ -66,7 +66,7 @@ label.switch input:disabled + div span:nth-child(1){background-color:#ddd;color:
 label.switch input:disabled + div span:nth-child(3){color:#aaa;}
 
 /* radio & checkbox */
-.radio_checkbox,.togglecheckbox{cursor:pointer;display:inline-block;position:relative;margin-right:20px;margin-bottom:0;vertical-align: top;}
+.radio_checkbox,.togglecheckbox{cursor:pointer;display:inline-block;position:relative;margin-left:1px;margin-right:20px;margin-bottom:0;vertical-align: top;}
 .radio_checkbox input,.togglecheckbox input{display:none;}
 .radio_checkbox i,.togglecheckbox i{display:inline-block;vertical-align: top;position:absolute;border:1px #777 solid;background-color:#fafafa;overflow:hidden;transition:0.2s;}
 .radio_checkbox i:after,.togglecheckbox i:after{position:absolute;font-size:14px;line-height: 10px;color:#3f51b5;border-color:#3f51b5;transition:transform 0.2s ease-out;}

@@ -17,6 +17,7 @@ import dateTimeRangePicker from '@/components/common/dateTimeRangePicker';
 import videoPlayer from '@/components/common/videoPlayer';
 import audioPlayer from '@/components/common/audioPlayer';
 import mediaPlayer from '@/components/common/mediaPlayer';
+import fileUpload from '@/components/common/fileUpload';
 import ulTree from '@/components/common/ulTree';
 import select2 from '@/components/common/select2';
 import 'jquery';
@@ -35,6 +36,7 @@ Vue.component('dateTimeRangePicker', dateTimeRangePicker);
 Vue.component('videoPlayer', videoPlayer);
 Vue.component('audioPlayer', audioPlayer);
 Vue.component('mediaPlayer', mediaPlayer);
+Vue.component('fileUpload', fileUpload);
 Vue.component('ultree', ulTree);
 Vue.component('select2', select2);
 /* eslint-disable no-new */
