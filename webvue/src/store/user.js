@@ -4,7 +4,7 @@ export const USER_SIGNIN = 'USER_SIGNIN';
 export const USER_SIGNOUT = 'USER_SIGNOUT';
 
 export default {
-    state: JSON.parse(sessionStorage.getItem('user')) || {},
+    state: JSON.parse(sessionStorage.getItem('user')) || {a:null,b:null},
     mutations: {
         [USER_SIGNIN](state, user) {
             sessionStorage.setItem('user', JSON.stringify(user))

@@ -149,8 +149,8 @@
     text-overflow: ellipsis;
   }
 
-  span.tree-item-text.selected .tree-item-text-content {
-    background-color: #83b5f3;
+  span.tree-item-text.selected .tree-item-text-content,span.tree-item-text:hover .tree-item-text-content {
+    background-color: #dbe7f5;
   }
 
   .tree-item-icon {

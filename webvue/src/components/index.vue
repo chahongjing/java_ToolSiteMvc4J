@@ -25,20 +25,9 @@
               <i class='fa fa-comment fa-fw'></i><span>测试</span>
             </router-link>
             <div class='mytest'>
-
-              <button type="button inline-block" class="btn btn-outline-purple" @click="confirm1()">
-                <i class='fa fa-plus mr5'></i>弹框1
-              </button>
-              <button type="button inline-block" class="btn btn-outline-purple" @click="confirm2()">
-                <i class='fa fa-plus mr5'></i>弹框2
-              </button>
-              <button type="button inline-block" class="btn btn-outline-purple" @click="confirm3()">
-                <i class='fa fa-plus mr5'></i>弹Modal
-              </button>
-              <button type="button inline-block" class="btn btn-outline-purple" @click="alert()">
+              <button type="button inline-block" class="btn btn-outline-purple">
                 <i class='fa fa-plus mr5'></i>alert
               </button>
-
             </div>
           </div>
         </div>
@@ -47,15 +36,12 @@
         </div>
       </div>
     </div>
-    <my-modal :title='myDialog.title' :show-dialog.sync='myDialog.showDialog' :btn-list='myDialog.btnList'
-              :width='myDialog.width'></my-modal>
   </div>
 </template>
 
 <script>
   import appHeader from '@/components/layout/appHeader';
   import appMenu from '@/components/layout/appMenu';
-  import myModal from '@/components/other/myModal';
 
   var list = [];
   // region java
@@ -122,7 +108,7 @@
         }
       }
     },
-    components: {appHeader, appMenu, myModal},
+    components: {appHeader, appMenu},
     methods: {
       goPage: function () {
         //this.$router.push({path: '/myPage', params:{ id:'1'}});
@@ -162,10 +148,6 @@
           me.myDialog.showDialog = false;
         }
         this.myDialog.showDialog = true;
-      },
-      alert:function() {
-        // this.$confirm.alert('提示内容');
-        this.$cstModal.customModal({});
       }
     }
   }

@@ -109,7 +109,8 @@
     width: auto;
     height: auto;
   }
+  .input-group .form-control{cursor:pointer;}
   .input-group-text{transition:0.3s;}
   .input-group-text.btn-outline-purple{border-color:#ced4da;}
-  .input-group-text.btn-outline-purple:hover{border-color:#5a4daa;}
+  .input-group-text.btn-outline-purple:hover{border-color:#ed724d;}
 </style>

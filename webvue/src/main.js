@@ -4,6 +4,8 @@ import Vue from 'vue';
 import App from '@/App';
 import router from '@/router';
 import store from '@/store/store';
+import 'jquery';
+import '../static/js/jquery-ui.js';
 import filters from '@/common/filters';
 import directives from '@/common/directives';
 import axios from '@/common/axios';
@@ -17,10 +19,10 @@ import dateTimeRangePicker from '@/components/common/dateTimeRangePicker';
 import videoPlayer from '@/components/common/videoPlayer';
 import audioPlayer from '@/components/common/audioPlayer';
 import mediaPlayer from '@/components/common/mediaPlayer';
-import fileUpload from '@/components/common/fileUpload';
+import fileUploadAndPreview from '@/components/common/fileUploadAndPreview';
 import ulTree from '@/components/common/ulTree';
 import select2 from '@/components/common/select2';
-import 'jquery';
+// import {storePlugin} from '@/store/storeStorage';
 
 Object.keys(filters).forEach(k => Vue.filter(k, filters[k]));
 Object.keys(directives).forEach(k => Vue.directive(k, directives[k]));
@@ -36,9 +38,10 @@ Vue.component('dateTimeRangePicker', dateTimeRangePicker);
 Vue.component('videoPlayer', videoPlayer);
 Vue.component('audioPlayer', audioPlayer);
 Vue.component('mediaPlayer', mediaPlayer);
-Vue.component('fileUpload', fileUpload);
+Vue.component('fileUploadAndPreview', fileUploadAndPreview);
 Vue.component('ultree', ulTree);
 Vue.component('select2', select2);
+// Vue.use(storePlugin);
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

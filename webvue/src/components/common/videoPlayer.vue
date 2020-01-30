@@ -1,7 +1,7 @@
 <template>
-  <div id="jp_container_1" class="jp-video jp-video-360p">
+  <div class="jp-video jp-video-360p">
     <div class="jp-type-single">
-      <div id="jquery_jplayer_2" class="jp-jplayer" style="height:450px;"></div>
+      <div class="jp-jplayer" style="height:450px;"></div>
       <div class="jp-gui">
         <div class="jp-video-play">
           <button class="jp-video-play-icon" role="button" tabindex="0" title="播放">播放</button>
@@ -99,7 +99,7 @@
         var obj = {};
         obj[suffix] = me.src;
         this.$nextTick(function () {
-          $(me.$el).find('#jquery_jplayer_2').jPlayer({
+          $(me.$el).find('.jp-jplayer').jPlayer({
             ready: function (event) {
               // $(this).jPlayer("setMedia", {
               //   // title: "title提示",
@@ -118,6 +118,7 @@
             keyEnabled: true,
             remainingDuration: true,
             toggleDuration: true,
+            cssSelectorAncestor:'.jp-video',
             // solution:'flash',
             size: {
               width: "100%",
@@ -148,6 +149,9 @@
           case 'flv':
             suffix = 'flv';
             break;
+          case 'rtmp':
+            suffix = 'rtmpv';
+            break;
           default:
             break;
         }
@@ -158,7 +162,7 @@
       this.init();
     },
     destory: function () {
-      $(this.$el).find('#jquery_jplayer_2').jPlayer("pause").jPlayer("clearMedia").jPlayer("destroy");
+      $(this.$el).find('.jp-jplayer').jPlayer("pause").jPlayer("clearMedia").jPlayer("destroy");
       this.isInit = false;
     },
     watch: {

@@ -133,15 +133,16 @@
       <button @click="changeValue">改变值</button>
       <button @click="changeDisabled">改变disabled</button>
       <hr>
-      <media-player :files="mediaList" :file-domain="imgDomain"></media-player>
+      <media-player :files="mediaList" :file-domain="imgDomain" :disabled="allDisabled"></media-player>
       <hr>
-      <file-upload :files="fileList" :file-suffix="fileSuffix" :data-bus="dataBus" :max-file-num="maxFileNum" :disabled="allDisabled"></file-upload>
+      <file-upload-and-preview :files="mediaList" :file-suffix="fileSuffix" :data-bus="dataBus" :max-file-num="maxFileNum"
+                               :file-domain="imgDomain" :disabled="allDisabled" :type="fileType + 1"></file-upload-and-preview>
       <hr>
       <div class="mt20">
         <ultree class='w300 mytree' :plainList="treeData" :option='treeoption'></ultree>
       </div>
       <hr>
-      hover:jquery ui文件引入导致失效
+      hover
       <div style="height:50px;background-color: #aaa;" v-tooltip="html"></div>
       <hr>
       <a href='javascript:void(0)' @click="goList">列表</a>
@@ -197,8 +198,6 @@
 </template>
 
 <script>
-  import '../../../static/js/jquery-ui.js';
-
   var treeDataList = [
     {id: 1, name: '语文语文语文语文语文语文语文语文语文语文语文', pId: null, selected: false, isOpen: false, isLeaf: false},
     {id: 2, name: '数学数学数学数学数学数学数学', pId: null, selected: false, isOpen: false, isLeaf: false},
@@ -262,8 +261,10 @@
           myid: 4,
           name: '待审核'
         }, {myid: 5, name: '已审核'}, {myid: 6, name: '已完成'}],
-        startDate: new Date(2020, 1, 10, 20, 33, 43),
-        endDate: new Date(2020, 1, 13, 10, 6, 20),
+        // startDate: new Date(2020, 1, 10, 20, 33, 43),
+        startDate:null,
+        // endDate: new Date(2020, 1, 13, 10, 6, 20),
+        endDate: null,
         myDate: new Date(),
         treeData: treeDataList,
         treeoption: treeoption,
@@ -281,6 +282,7 @@
         fileList: [],
         fileSuffix:['jpg','png','gif','mp3','mp4'],
         maxFileNum: 6,
+        fileType: 0,
         dataBus:{}
       }
     },
@@ -496,7 +498,7 @@
       },
       // endregion
       changeValue: function() {
-
+        this.fileType = (this.fileType + 1) % 2;
       },
       changeDisabled: function() {
         this.allDisabled = !this.allDisabled;

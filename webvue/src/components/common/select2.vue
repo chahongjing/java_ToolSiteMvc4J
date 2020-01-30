@@ -126,5 +126,18 @@
 </script>
 
 <style src="../../../static/plugins/select2/css/select2.css"></style>
-<style scoped>
+<style>
+  .myform .form-group.info-error .select2-container .select2-selection{border-color:#dc3545;}
+
+  .select2-container .select2-selection{border-radius: 0;min-height: 31px;border-radius: 0!important;}
+  .select2-container .select2-selection:focus{outline: none;}
+  .select2-container.select2-container--open.select2-container--below .selection .select2-selection--single,.select2-container.select2-container--focus .selection .select2-selection{border-color:#f59942;}
+  .select2-container .selection .select2-selection .select2-selection__choice{border-radius: 2px;margin-right: 3px;background-color: #f4f4f4;}
+  .select2-container .selection .select2-selection .select2-selection__choice__remove{float:right;margin-right:-2px;margin-left:3px;}
+  .select2-container .select2-results__option[aria-selected=true]{background-color:transparent;color:#aaa;}
+  .select2-container .select2-results__option--highlighted[aria-selected]{background-color:#5897fb;}
+  .select2-search:after{content:''}
+  .select2-container .selection .select2-selection{border-color:#d5d5d5;}
+  .select2-container.select2-container--disabled .selection .select2-selection{background-color: #e9ecef;border-color:#d5d5d5;}
+  .select2-search__field{outline: none;}
 </style>

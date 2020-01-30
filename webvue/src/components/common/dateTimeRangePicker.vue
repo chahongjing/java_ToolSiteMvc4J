@@ -1,6 +1,6 @@
 <template>
   <div class="date-time date-time-range-box relative">
-    <label class="input-group mb0" style="width:100%;height:100%;background-color: transparent;">
+    <label class="input-group mb0" style="width:100%;height:100%;background-color: transparent;cursor:pointer;">
       <input class="form-control border-right-0" size="16" type="text" readonly :value='getText()' :disabled="disabled"/>
       <div class="input-group-addon input-group-append">
         <span :class='{"input-group-text":true}'>
@@ -158,4 +158,6 @@
   .date-time-range-box .input-group:hover input:not(:disabled) + div span,
   .date-time-range-box input:active:not(:disabled) + div span,
   .date-time-range-box input:focus:not(:disabled) + div span{background-color:#ed724d;}
+
+  .date-time-range-box input:disabled + div .input-group-text{background-color: #d5d5d5;border-color:#d5d5d5;}
 </style>

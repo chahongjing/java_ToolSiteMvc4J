@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div id="jquery_jplayer_1" class="jp-jplayer"></div>
-    <div id="jp_container_1" class="jp-audio">
+    <div class="jp-jplayer"></div>
+    <div class="jp-audio">
       <div class="jp-type-single">
         <div class="jp-gui jp-interface">
           <div class="jp-controls">
@@ -99,7 +99,7 @@
         var obj = {};
         obj[suffix] = me.src;
         this.$nextTick(function () {
-          $(me.$el).find('#jquery_jplayer_1').jPlayer({
+          $(me.$el).find('.jp-jplayer').jPlayer({
             ready: function (event) {
               // $(this).jPlayer("setMedia", {
               //   m4a: me.src,
@@ -116,6 +116,7 @@
             smoothPlayBar: true,
             keyEnabled: true,
             remainingDuration: true,
+            cssSelectorAncestor:'.jp-audio',
             toggleDuration: true
           });
         });
@@ -141,6 +142,9 @@
           case 'flv':
             suffix = 'fla';
             break;
+          case 'rtmp':
+            suffix = 'rtmpa';
+            break;
           default: break;
         }
         return suffix;
@@ -150,7 +154,7 @@
       this.init();
     },
     destory: function () {
-      $(this.$el).find('#jquery_jplayer_1').jPlayer("pause").jPlayer( "clearMedia" ).jPlayer("destroy");
+      $(this.$el).find('.jp-jplayer').jPlayer("pause").jPlayer( "clearMedia" ).jPlayer("destroy");
       this.isInit = false;
     },
     watch: {
