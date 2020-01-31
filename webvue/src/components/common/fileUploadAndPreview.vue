@@ -85,8 +85,8 @@
         this.$axios.post('/learn/testPostWithFile', formData).then(function (resp) {
           if (resp.data.status == ResultStatus.OK.key) {
             // me.fileDomain = resp.data.value.fileDomain;
-            // var list = resp.data.value.attachmentList;
-            var list = [{url: resp.data.value.url}];
+            var list = resp.data.value.attachmentList;
+            // var list = [{url: resp.data.value.url}];
             for (var i = 0; i < list.length; i++) {
               var fileTemp = {
                 url: list[i].url,
