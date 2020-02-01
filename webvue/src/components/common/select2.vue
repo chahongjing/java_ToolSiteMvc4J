@@ -52,7 +52,7 @@
           placeholder: '--请选择--',
           allowClear: true,
           data: this.list
-        }).val(this.value).trigger('change').on('select2:select', function (e) {
+        }).val(this.value).trigger('change').on('change', function (e) {
           // var data = e.params.data;
           // console.log(data);
           me.setCstValue(me.getCstValue(), true);

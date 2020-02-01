@@ -62,8 +62,8 @@
           });
         });
       },
-      addFile(event) {
-        let inputDOM = this.$refs.inputer;
+      addFile:function(event) {
+        var inputDOM = this.$refs.inputer;
         if(this.dataBus) {
           this.dataBus.allDisabled = true;
         }
@@ -130,10 +130,10 @@
         }
         return true;
       },
-      resetInput() {
+      resetInput:function() {
         $(this.$el).find('.fileForm')[0].reset();
       },
-      delFile(key) {
+      delFile:function(key) {
         this.files.splice(this.files.indexOf(key), 1);
         this.init();
       },
@@ -233,7 +233,7 @@
     cursor: pointer;
   }
 
-  .file-box{width:100%;height:100%;border: 2px dashed #ccc;overflow: hidden;}
+  .file-box{width:100%;height:100%;border: 2px dashed #ccc;overflow: hidden;display:inline-block;}
 
   li img,li label{
     width: 52px;
@@ -249,7 +249,7 @@
   li .close i{position:absolute;left:6px;bottom:1px;color:#fff;text-shadow: none;}
   li label{line-height: 65px;cursor:pointer;}
   li input[type=file]{width:100px;height:70px;opacity: 0;position: absolute;top:0px;left:-30px;cursor:pointer;font-size:0;}
-  li label .add{width:100%;height:100%;display:block;background-color: #ccc;color:#fff!important;transition: background-color 0.3s;}
+  li label .add{width:100%;height:100%;display:block;background-color: #ccc;color:#fff!important;transition: background-color 0.3s;line-height:56px;}
   li label .add i{font-size:25px;margin-right:0;}
 
   li:not(.disabled):hover .file-box,li:not(.disabled):hover label{border-color: rgb(237, 114, 77);}
