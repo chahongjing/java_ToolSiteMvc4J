@@ -149,10 +149,10 @@
             url = this.fileDomain + '/' + file.url;
             break;
           case comSrv.mediaType.audio:
-            url = '/static/img/M-v-Player_17.png';
+            url = this.$root.resRoot + 'img/M-v-Player_17.png';
             break;
           case comSrv.mediaType.video:
-            url = '/static/img/M-v-Player_16.png';
+            url = this.$root.resRoot + 'img/M-v-Player_16.png';
             break;
           default:
             url = this.fileDomain + '/' + file.url;
@@ -233,7 +233,7 @@
     cursor: pointer;
   }
 
-  .file-box{width:100%;height:100%;border: 2px dashed #ccc;overflow: hidden;display:inline-block;}
+  .file-box{width:100%;height:100%;border: 2px dashed #ccc;overflow: hidden;display:inline-block;transition:border 0.3s;}
 
   li img,li label{
     width: 52px;
@@ -244,12 +244,11 @@
     height: 100%;
     transition: 0.3s;
   }
-  li .close{position:absolute;top:-20px;right:-20px;width:40px;height:40px;border-radius:20px;background-color: rgba(0,0,0,0.8);display:none;
-  transition: opacity 0.3s;}
+  li .close{position:absolute;top:-20px;right:-20px;width:40px;height:40px;border-radius:20px;background-color: rgba(0,0,0,0.8);display:none;}
   li .close i{position:absolute;left:6px;bottom:1px;color:#fff;text-shadow: none;}
   li label{line-height: 65px;cursor:pointer;}
   li input[type=file]{width:100px;height:70px;opacity: 0;position: absolute;top:0px;left:-30px;cursor:pointer;font-size:0;}
-  li label .add{width:100%;height:100%;display:block;background-color: #ccc;color:#fff!important;transition: background-color 0.3s;line-height:56px;}
+  li label .add{width:100%;height:100%;display:block;background-color: #ccc;color:#fff!important;transition: background-color 0.3s;line-height:65px;}
   li label .add i{font-size:25px;margin-right:0;}
 
   li:not(.disabled):hover .file-box,li:not(.disabled):hover label{border-color: rgb(237, 114, 77);}

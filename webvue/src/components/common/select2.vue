@@ -52,12 +52,19 @@
           placeholder: '--请选择--',
           allowClear: true,
           data: this.list
-        }).val(this.value).trigger('change').on('change', function (e) {
-          // var data = e.params.data;
-          // console.log(data);
-          me.setCstValue(me.getCstValue(), true);
+        }).val(this.value).trigger('change').on('select2:select', function (e) {
+          me.innerChange(e);
+        }).on('select2:unselect', function(e) {
+          me.innerChange(e);
+        }).on('select2:clear', function(e) {
+          me.innerChange(e);
         });
         $obj.closest('div').find('.select2-search__field').css({width: '100%'});
+      },
+      innerChange: function(e) {
+        // var data = e.params.data;
+        // console.log(data);
+        this.setCstValue(this.getCstValue(), true);
       },
       // 取值
       getCstValue: function () {

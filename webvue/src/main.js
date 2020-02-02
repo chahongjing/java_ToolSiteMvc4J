@@ -41,6 +41,11 @@ Vue.component('mediaPlayer', mediaPlayer);
 Vue.component('fileUploadAndPreview', fileUploadAndPreview);
 Vue.component('ultree', ulTree);
 Vue.component('select2', select2);
+
+var appContext = '';
+if(process.env.NODE_ENV != 'development' && process.env.context) {
+  appContext = process.env.context;
+}
 // Vue.use(storePlugin);
 /* eslint-disable no-new */
 new Vue({
@@ -51,7 +56,8 @@ new Vue({
   template: '<App/>',
   data:function() {
     return {
-      showLoadingBox: false
+      showLoadingBox: false,
+      resRoot: appContext + '/static/'
     };
   },
   methods: {
