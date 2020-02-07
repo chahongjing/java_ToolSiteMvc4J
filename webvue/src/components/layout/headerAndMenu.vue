@@ -16,7 +16,7 @@
     <div class="loading" v-if="$root.showLoadingBox">
       <div>
         <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
-        <p>处理中，请稍候...</p>
+        <p v-text="$root.loadingText || '处理中，请稍候...'"></p>
       </div>
     </div>
   </div>

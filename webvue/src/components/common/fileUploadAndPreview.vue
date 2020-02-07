@@ -117,7 +117,7 @@
         }
         for (var i = 0; i < files.length; i++) {
           if (files[i].size > this.fileMaxSize) {
-            this.$toaster.warning('请选择5M以内的附件！');
+            this.$toaster.warning('请选择' + this.fileMaxSizeStr + '以内的附件！');
             this.resetInput();
             return false;
           }

@@ -22,6 +22,7 @@ import mediaPlayer from '@/components/common/mediaPlayer';
 import fileUploadAndPreview from '@/components/common/fileUploadAndPreview';
 import ulTree from '@/components/common/ulTree';
 import select2 from '@/components/common/select2';
+import processList from '@/components/common/processList';
 // import {storePlugin} from '@/store/storeStorage';
 
 Object.keys(filters).forEach(k => Vue.filter(k, filters[k]));
@@ -41,6 +42,7 @@ Vue.component('mediaPlayer', mediaPlayer);
 Vue.component('fileUploadAndPreview', fileUploadAndPreview);
 Vue.component('ultree', ulTree);
 Vue.component('select2', select2);
+Vue.component('processList', processList);
 
 var appContext = '';
 if(process.env.NODE_ENV != 'development' && process.env.context) {
@@ -57,6 +59,7 @@ new Vue({
   data:function() {
     return {
       showLoadingBox: false,
+      loadingText: '',
       resRoot: appContext + '/static/'
     };
   },
@@ -114,11 +117,13 @@ new Vue({
     clearPermissionList() {
       this.$store.commit("CLEAR_PERMISSIONLIST");
     },
-    showLoading: function() {
+    showLoading: function(loadingText) {
+      this.loadingText = loadingText;
       this.showLoadingBox = true;
     },
     hideLoading: function() {
       this.showLoadingBox = false;
+      this.loadingText = '';
     },
     goHome() {
       this.clearBreadrumb();

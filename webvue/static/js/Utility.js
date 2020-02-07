@@ -81,13 +81,21 @@
       contentType = 'application/octet-stream';
     }
     var file = new Blob([data], {type: contentType});
-    var a = document.createElement("a");
-    a.style.display = 'none';
-    a.download = fileName;
-    a.href = URL.createObjectURL(file);
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+      window.navigator.msSaveOrOpenBlob(file, fileName);
+    } else {
+      var urlCom = (window.URL || window.webkitURL);
+      var urlObj = urlCom.createObjectURL(file);
+      var a = document.createElement("a");
+      a.style.display = 'none';
+      a.setAttribute("download", fileName);
+      // a.download = fileName;
+      a.href = urlObj;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      urlCom.revokeObjectURL(urlObj);
+    }
   }
   ns.jsDownload = function (url, param) {
     var xhr;

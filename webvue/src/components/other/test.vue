@@ -145,6 +145,8 @@
       hover
       <div style="height:50px;background-color: #aaa;" v-tooltip="html"></div>
       <hr>
+      <process-list :list="nodeList"></process-list>
+      <hr>
       <a href='javascript:void(0)' @click="goList">列表</a>
       <hr>
       <div class='aa'>
@@ -283,7 +285,8 @@
         fileSuffix:['jpg','png','gif','mp3','mp4'],
         maxFileNum: 6,
         fileType: 0,
-        dataBus:{}
+        dataBus:{},
+        nodeList: []
       }
     },
     methods: {
@@ -538,6 +541,13 @@
       this.mediaList.push({url:'workorder/202001/00b865b6-25e1-4092-8446-7d4580ed897d.mp3'});
       this.mediaList.push({url:'workorder/202001/703a14ca-e601-428d-89a6-0a1abe9fb217.mp4'});
       this.mediaList.push({url:'workorder/202001/10386cc0-8af5-4fd8-a650-39da1229fc3b.png'});
+
+      this.nodeList.push({name: '创建', hasPass:true});
+      this.nodeList.push({name: '提交', hasPass:true});
+      this.nodeList.push({name: '接单', hasPass:true});
+      this.nodeList.push({name: '审核内容过长', current:true});
+      this.nodeList.push({name: '通过', current:false});
+      this.nodeList.push({name: '关单', current:false});
     }
   }
 </script>
