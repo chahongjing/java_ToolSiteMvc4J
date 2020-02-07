@@ -54,7 +54,7 @@
   .node-list{font-size: 0;display:flex;}
   .node-list li{display:inline-block;font-size:13px;cursor:default;text-align:center;position:relative;flex:1;}
   .node{width:100%;height:30px;display:block;position: relative;}
-  .node::before,.node::after{content:' ';display: inline-block;width:50%;height:5px;position:absolute;
+  .node::before,.node::after{content:' ';display: inline-block;width:50%;height:4px;position:absolute;
   top:50%;left:0;transform: translateY(-50%);background-color: #d0d0d0;}
   .node::after{left:auto;right:0;}
   li:first-child .node::before,li:last-child .node::after{display:none;}
