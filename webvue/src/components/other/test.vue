@@ -138,6 +138,8 @@
       <file-upload-and-preview :files="mediaList" :file-suffix="fileSuffix" :data-bus="dataBus" :max-file-num="maxFileNum"
                                :file-domain="imgDomain" :disabled="allDisabled" :type="fileType + 1"></file-upload-and-preview>
       <hr>
+      <img-slider :list="mediaList"></img-slider>
+      <hr>
       <div class="mt20">
         <ultree class='w300 mytree' :plainList="treeData" :option='treeoption'></ultree>
       </div>
@@ -200,6 +202,8 @@
 </template>
 
 <script>
+  import imgSlider from '@/components/common/imgSlider';
+
   var treeDataList = [
     {id: 1, name: '语文语文语文语文语文语文语文语文语文语文语文', pId: null, selected: false, isOpen: false, isLeaf: false},
     {id: 2, name: '数学数学数学数学数学数学数学', pId: null, selected: false, isOpen: false, isLeaf: false},
@@ -537,10 +541,16 @@
       this.$nextTick(function () {
         me.initDrag();
       });
-      this.mediaList.push({url:'workorder/202001/8dd43898-e9db-4559-94dd-69b61d440bd3.png'});
-      this.mediaList.push({url:'workorder/202001/00b865b6-25e1-4092-8446-7d4580ed897d.mp3'});
-      this.mediaList.push({url:'workorder/202001/703a14ca-e601-428d-89a6-0a1abe9fb217.mp4'});
+      this.mediaList.push({url:'workorder/202001/58e03540-87c7-4c3c-ada1-c6d653e990c6.png'});
+      // this.mediaList.push({url:'workorder/202001/00b865b6-25e1-4092-8446-7d4580ed897d.mp3'});
+      // this.mediaList.push({url:'workorder/202001/703a14ca-e601-428d-89a6-0a1abe9fb217.mp4'});
       this.mediaList.push({url:'workorder/202001/10386cc0-8af5-4fd8-a650-39da1229fc3b.png'});
+      this.mediaList.push({url:'workorder/202001/c9f82e86-0d32-459d-bf67-d9ddbc976a2e.png'});
+        this.mediaList.push({url:'workorder/202001/3421b695-2db4-410e-9b81-cb2e41d284ad.png'});
+
+      this.mediaList.push({url:'workorder/202001/ba71b956-8c62-4d51-b4b7-d17d2728da5a.png'});
+      this.mediaList.push({url:'workorder/202001/2d51b60b-b2ed-4cca-ad9e-97aea00918f8.png'});
+      this.mediaList.push({url:'workorder/202001/fece44dd-42f7-4629-87d6-facad535eb55.png'});
 
       this.nodeList.push({name: '创建', hasPass:true});
       this.nodeList.push({name: '提交', hasPass:true});
@@ -548,7 +558,8 @@
       this.nodeList.push({name: '审核内容过长', current:true});
       this.nodeList.push({name: '通过', current:false});
       this.nodeList.push({name: '关单', current:false});
-    }
+    },
+    components: {imgSlider}
   }
 </script>
 

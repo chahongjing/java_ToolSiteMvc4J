@@ -14,7 +14,8 @@
     props: ['list', 'multiple', 'disabled', 'value', 'idField', 'textField'],
     data: function () {
       return {
-        isInit: false
+        isInit: false,
+        outerChange: false
       }
     },
     methods: {
@@ -81,6 +82,7 @@
         } else {
           $obj.val(value).trigger('change');
         }
+        this.outerChange = false;
       },
       // 判断是否联动引起的变化
       isCycleChange: function (value) {
@@ -123,6 +125,7 @@
         if (this.isCycleChange(curVal)) {
           return;
         }
+        this.outerChange = true;
         this.setCstValue(curVal);
       }
     },
