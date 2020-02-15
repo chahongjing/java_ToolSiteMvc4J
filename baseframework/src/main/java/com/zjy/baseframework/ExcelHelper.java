@@ -1,6 +1,7 @@
 package com.zjy.baseframework;
 
 import com.zjy.baseframework.enums.FileSuffix;
+import com.zjy.baseframework.mybatis.IBaseEnum;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFClientAnchor;
@@ -16,6 +17,7 @@ import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -393,17 +395,64 @@ public class ExcelHelper {
         if (field != null) {
             field.setAccessible(true);
             //获取字段类型
-            Class<?> fieldType = field.getType();
+            Class<?> clazz = field.getType();
+            String strValue = Objects.toString(fieldValue, StringUtils.EMPTY);
+            if(fieldValue == null || StringUtils.isBlank(strValue)) {
+                field.set(o, null);
+                return;
+            }
             //根据字段类型给字段赋值
-            if (Date.class == fieldType) {
+            if (clazz == String.class) {
+                if(fieldValue instanceof Number) {
+                    if(((Number) fieldValue).doubleValue() == ((Number) fieldValue).intValue()) {
+                        field.set(o, String.valueOf(((Number) fieldValue).intValue()));
+                    } else {
+                        field.set(o, String.valueOf(((Number) fieldValue).doubleValue()));
+                    }
+                } else {
+                    field.set(o, strValue);
+                }
+            } else if (clazz == Integer.class || clazz == int.class) {
+                field.set(o, fieldValue instanceof Number ? ((Number) fieldValue).intValue() : Integer.parseInt(strValue));
+            } else if (clazz == Float.class || clazz == float.class) {
+                field.set(o, fieldValue instanceof Number ? ((Number) fieldValue).floatValue() : Float.parseFloat(strValue));
+            } else if (clazz == Double.class || clazz == double.class) {
+                field.set(o, fieldValue instanceof Number ? ((Number) fieldValue).doubleValue() : Double.parseDouble(strValue));
+            } else if (clazz == BigDecimal.class) {
+                field.set(o, fieldValue instanceof Number ? new BigDecimal(((Number) fieldValue).doubleValue()) : ((BigDecimal)fieldValue).doubleValue());
+            } else if (clazz == Date.class) {
                 if (!StringUtils.isBlank(Objects.toString(fieldValue, StringUtils.EMPTY))) {
                     field.set(o, fieldValue);
                 }
+            } else if (clazz == Long.class || clazz == long.class) {
+                field.set(o, fieldValue instanceof Number ? ((Number) fieldValue).longValue() : Long.parseLong(strValue));
+            } else if (clazz == Boolean.class || clazz == boolean.class) {
+                field.set(o, Boolean.parseBoolean(strValue));
+            } else if (clazz == Byte.class || clazz == byte.class) {
+                field.set(o, fieldValue instanceof Number ? ((Number) fieldValue).byteValue() : Byte.parseByte(strValue));
+            } else if (clazz == Character.class || clazz == char.class) {
+                field.set(o, strValue);
+            } else if (clazz == Short.class || clazz == short.class) {
+                field.set(o, fieldValue instanceof Number ? ((Number) fieldValue).shortValue() : Short.parseShort(strValue));
+            } else if (IBaseEnum.class.isAssignableFrom(clazz)) {
+                IBaseEnum[] enumConstants = (IBaseEnum[])clazz.getEnumConstants();
+                for (IBaseEnum item : enumConstants) {
+                    if (item.getName().equals(strValue)) {
+                        field.set(o, item);
+                        return;
+                    }
+                }
+                for (IBaseEnum item : enumConstants) {
+                    if (item.getCode().equals(strValue)) {
+                        field.set(o, item);
+                        return;
+                    }
+                }
             } else {
-                field.set(o, fieldValue);
+                field.set(o, strValue);
             }
         } else {
-            throw new ServiceException(o.getClass().getSimpleName() + "类不存在字段名 " + fieldName);
+            throw new RuntimeException(o.getClass().getSimpleName() + "类不存在字段名 " + fieldName);
         }
     }
 

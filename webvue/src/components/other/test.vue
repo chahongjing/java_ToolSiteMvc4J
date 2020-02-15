@@ -39,17 +39,38 @@
           </div>
         </div>
         <div class="form-group">
+          <label class="form-label colon">邮箱</label>
+          <div class="form-content">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">&yen;</span>
+              </div>
+              <input type="text" class="form-control border-right-0">
+              <div class="input-group-append">
+                <span class="input-group-text">@qq.com</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
           <label class="form-label colon">日期</label>
           <div class="form-content">
             <date-time-picker v-model='beginTime' :option='dateOpt' :disabled="allDisabled"></date-time-picker>
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label colon">日期时间范围</label>
+          <label class="form-label colon">日期时间范围{{startDate}}-{{endDate}}</label>
           <div class="form-content">
             <date-time-range-picker v-model="beginTime" :from.sync="startDate" :to.sync="endDate" :type="4"
                                     :format="'yyyy-MM-dd HH:mm:ss'"
                                     :disabled="allDisabled"></date-time-range-picker>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label colon">范围{{ttt}}</label>
+          <div class="form-content">
+            <date-time-range-picker2 v-model="ttt" :from.sync="startDate" :to.sync="endDate" :type="5"
+                                     :disabled="allDisabled"></date-time-range-picker2>
           </div>
         </div>
         <div class="form-group">
@@ -269,15 +290,17 @@
         }, {myid: 5, name: '已审核'}, {myid: 6, name: '已完成'}],
         // startDate: new Date(2020, 1, 10, 20, 33, 43),
         startDate:null,
+        ttt:'23:43:32',
         // endDate: new Date(2020, 1, 13, 10, 6, 20),
         endDate: null,
-        myDate: new Date(),
+        myDate: null,
         treeData: treeDataList,
         treeoption: treeoption,
         selectValue: null,
         selectValueArr: [],
         html: '这是<span class="red bold">html</span>内容',
-        beginTime: new Date(),
+        // beginTime: new Date(),
+        beginTime: null,
         yn: true,
         chklist: [{id: 1, name: 'java'}, {id: 2, name: 'js'}, {id: 3, name: 'css'}],
         importantCustomer: 2,
@@ -287,7 +310,7 @@
         list2: [],
         fileList: [],
         fileSuffix:['jpg','png','gif','mp3','mp4'],
-        maxFileNum: 6,
+        maxFileNum: 8,
         fileType: 0,
         dataBus:{},
         nodeList: []
@@ -506,6 +529,9 @@
       // endregion
       changeValue: function() {
         this.fileType = (this.fileType + 1) % 2;
+        // this.beginTime = new Date(new Date().setDate(new Date().getMonth() - (parseInt(Math.random() * 5) + 6)));
+        this.startDate = new Date(new Date().setMonth(new Date().getMonth() - (parseInt(Math.random() * 5) + 1)));
+        this.endDate = new Date(new Date().setMonth(new Date().getMonth() + (parseInt(Math.random() * 5) + 1)));
       },
       changeDisabled: function() {
         this.allDisabled = !this.allDisabled;

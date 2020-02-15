@@ -42,7 +42,9 @@
         fileMaxSize: comSrv.uploadFileSize * 1024 * 1024, // 5mb
         fileMaxSizeStr: comSrv.uploadFileSize + 'M',
         jpgMimeTypeArr: ['image/png', 'image/jpeg', 'image/gif', 'image/jpg'],
+        // audio/x-m4a,audio/*
         mp3MimeTypeArr: ['audio/mp3', 'audio/mpeg3', 'audio/x-mpeg-3', 'video/mpeg', 'video/x-mpeg'],
+        // video/x-m4v,video/*
         mp4MimeTypeArr: ['video/mp4'],
         mediaType: comSrv.mediaType,
         viewer: null
