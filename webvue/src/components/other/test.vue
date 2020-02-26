@@ -59,18 +59,43 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label colon">日期时间范围{{startDate}}-{{endDate}}</label>
-          <div class="form-content">
-            <date-time-range-picker v-model="beginTime" :from.sync="startDate" :to.sync="endDate" :type="4"
+          <label class="form-label colon">日期时间</label>
+          <div class="form-content" style="position:initial;">
+            <date-time-range-picker v-model="beginTime" :type="2"
                                     :format="'yyyy-MM-dd HH:mm:ss'"
                                     :disabled="allDisabled"></date-time-range-picker>
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label colon">范围{{ttt}}</label>
+          <label class="form-label colon">日期时间范围{{startDate}}-{{endDate}}</label>
+          <div class="form-content" style="position:initial;">
+            <date-time-range-picker v-model="beginTime" :from.sync="startDate" :to.sync="endDate" :type="3"
+                                    :format="'yyyy-MM-dd HH:mm:ss'"
+                                    :disabled="allDisabled"></date-time-range-picker>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label colon">日期时间</label>
           <div class="form-content">
-            <date-time-range-picker2 v-model="ttt" :from.sync="startDate" :to.sync="endDate" :type="5"
-                                     :disabled="allDisabled"></date-time-range-picker2>
+            <date-time-range-picker2 :from.sync="startDate3" :type="3" :disabled="allDisabled"></date-time-range-picker2>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label colon">日期时间范围</label>
+          <div class="form-content">
+            <date-time-range-picker2 :from.sync="startDate4" :to.sync="endDate4" :type="4" :disabled="allDisabled"></date-time-range-picker2>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label colon">时间</label>
+          <div class="form-content">
+            <date-time-range-picker2 v-model="beginTime5" :type="5" :disabled="allDisabled"></date-time-range-picker2>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label colon">月</label>
+          <div class="form-content">
+            <date-time-range-picker2 v-model="beginTime5" :type="7" :disabled="allDisabled"></date-time-range-picker2>
           </div>
         </div>
         <div class="form-group">
@@ -290,10 +315,13 @@
         }, {myid: 5, name: '已审核'}, {myid: 6, name: '已完成'}],
         // startDate: new Date(2020, 1, 10, 20, 33, 43),
         startDate:null,
-        ttt:'23:43:32',
         // endDate: new Date(2020, 1, 13, 10, 6, 20),
         endDate: null,
         myDate: null,
+        startDate3:null,
+        startDate4:null,
+        endDate4:null,
+        beginTime5:null,
         treeData: treeDataList,
         treeoption: treeoption,
         selectValue: null,

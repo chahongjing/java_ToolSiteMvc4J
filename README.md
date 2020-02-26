@@ -19,7 +19,9 @@
 # 创建vue项目
 ~~~ cmd
 npm install --global vue-cli
-vue init webpack my-project
+# vue3.0
+npm install -g @vue/cli
+# vue init webpack my-project
 cd my-project
 npm install
 npm run dev

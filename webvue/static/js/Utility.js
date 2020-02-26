@@ -527,13 +527,11 @@
           }
         }
       } else {
-        for (var i = 0; i < arguments.length; i++) {
-          if (arguments[i] !== undefined) {
-            //var reg = new RegExp("({[" + i + "]})", "g");//这个在索引大于9时会有问题
-            var reg2 = new RegExp("({)" + i + "(})", "g");
-            result = result.replace(reg2, arguments[i]);
-          }
-        }
+        // const args = Array.prototype.slice.call(arguments, 1);
+        var params = arguments;
+        result = result.replace(/\{(\d+)\}/g, function (m, i) {
+          return params[i];
+        });
       }
     }
     return result;

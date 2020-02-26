@@ -1,5 +1,5 @@
 <template>
-  <div class="date-time date-time-range-box relative">
+  <div class="date-time date-time-range-box">
     <label class="input-group mb0" style="width:100%;height:100%;background-color: transparent;cursor:pointer;">
       <input class="form-control border-right-0" size="16" type="text" readonly :value='getText()' :disabled="disabled"/>
       <div class="input-group-addon input-group-append">
@@ -46,7 +46,7 @@
           opens:me.options && me.options.opens || 'center',
           locale : {
             applyLabel : '确定',
-            cancelLabel : '取消',
+            cancelLabel : '清空',
             fromLabel : '起始时间',
             toLabel : '结束时间',
             customRangeLabel : '自定义',
@@ -55,8 +55,8 @@
             firstDay : 1,
             weekLabel: '周',
             format: me.getMonmentFormat()
-          },
-          parentEl:$(me.$el)
+          }
+          // parentEl:$(me.$el)
         };
         if(this.options && this.options.maxSpanDays) {
           obj.maxSpan= {
@@ -69,8 +69,14 @@
         if(me.to || me.value) {
           obj.endDate = me.to || me.value;
         }
-        var drp = $(this.$el).find('input.form-control').daterangepicker(obj, function(start, end, label) {
-          me.change(start.toDate(), end.toDate());
+        // var drp = $(this.$el).find('input.form-control').daterangepicker(obj, function(start, end, label) {
+        //   me.change(start.toDate(), end.toDate());
+        // });
+        var drp = $(this.$el).find('input.form-control').daterangepicker(obj);
+        drp.on('apply.daterangepicker', function(ev, picker) {
+          me.change(picker.startDate.toDate(), picker.endDate.toDate());
+        }).on('cancel.daterangepicker', function (ev, picker) {
+          me.change(null, null);
         });
         if(!obj.startDate) {
           // $(this.$el).find('input.form-control').data('daterangepicker').setStartDate(null);
