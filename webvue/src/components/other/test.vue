@@ -69,7 +69,7 @@
         <div class="form-group">
           <label class="form-label colon">日期时间范围{{startDate}}-{{endDate}}</label>
           <div class="form-content" style="position:initial;">
-            <date-time-range-picker v-model="beginTime" :from.sync="startDate" :to.sync="endDate" :type="3"
+            <date-time-range-picker v-model="beginTime" :from.sync="startDate" :to.sync="endDate" :type="4"
                                     :format="'yyyy-MM-dd HH:mm:ss'"
                                     :disabled="allDisabled"></date-time-range-picker>
           </div>
