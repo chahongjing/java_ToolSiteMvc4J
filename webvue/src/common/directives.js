@@ -18,19 +18,27 @@ export default {
     //}
   },
   tooltip: {
-    inserted: function (el, binding, vnode) {
+    inserted: function (el, binding, vnode, oldNode) {
       setTooltip(el, binding, vnode);
     },
-    update: function (el, binding, vnode) {
+    update: function (el, binding, vnode, oldNode) {
       setTooltip(el, binding, vnode);
     }
   },
   authcode: {
-    inserted: function (el, binding, vnode) {
+    inserted: function (el, binding, vnode, oldNode) {
       handlePermission(el, binding, vnode);
     },
-    update: function (el, binding, vnode) {
+    update: function (el, binding, vnode, oldNode) {
       handlePermission(el, binding, vnode);
+    }
+  },
+  mytest: {
+    inserted: function (el, binding, vnode, oldNode) {
+      console.log("1:" + JSON.stringify(binding));
+    },
+    update: function (el, binding, vnode, oldNode) {
+      console.log("2:" + JSON.stringify(binding));
     }
   }
 }

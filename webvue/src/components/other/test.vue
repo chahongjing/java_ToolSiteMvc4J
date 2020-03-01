@@ -193,6 +193,8 @@
       hover
       <div style="height:50px;background-color: #aaa;" v-tooltip="html"></div>
       <hr>
+      <div v-mytest="dv" style="height:50px;background-color: green;" v-text="dv"></div>
+      <hr>
       <process-list :list="nodeList"></process-list>
       <hr>
       <a href='javascript:void(0)' @click="goList">列表</a>
@@ -341,7 +343,9 @@
         maxFileNum: 8,
         fileType: 0,
         dataBus:{},
-        nodeList: []
+        nodeList: [],
+        a:'a',
+        b:true
       }
     },
     methods: {
@@ -560,6 +564,8 @@
         // this.beginTime = new Date(new Date().setDate(new Date().getMonth() - (parseInt(Math.random() * 5) + 6)));
         this.startDate = new Date(new Date().setMonth(new Date().getMonth() - (parseInt(Math.random() * 5) + 1)));
         this.endDate = new Date(new Date().setMonth(new Date().getMonth() + (parseInt(Math.random() * 5) + 1)));
+        // this.a = parseInt(Math.random() * 10) % 2 == 0;
+        this.b = parseInt(Math.random() * 10) % 2 == 0;
       },
       changeDisabled: function() {
         this.allDisabled = !this.allDisabled;
@@ -612,6 +618,14 @@
       this.nodeList.push({name: '审核内容过长', current:true});
       this.nodeList.push({name: '通过', current:false});
       this.nodeList.push({name: '关单', current:false});
+    },
+    computed: {
+      dv: function() {
+        return {a:this.a,b:this.dv2};
+      },
+      dv2: function() {
+        return this.b;
+      }
     },
     components: {imgSlider}
   }

@@ -183,6 +183,7 @@
   .date-time-range-box input:focus:not(:disabled) + div span{background-color:#eb6238;}
   .date-time-range-box input:disabled + div .input-group-text{background-color: #d5d5d5;border-color:#d5d5d5;}
 
+  .daterangepicker:after{border-bottom-color: #ff8a65;}
   .daterangepicker .drp-calendar.left,.daterangepicker .drp-calendar.right{padding:0;}
   .daterangepicker .drp-calendar.left .calendar-table{padding-right:0!important;}
   .daterangepicker .drp-calendar.single.left .calendar-table{border-right:none;}
