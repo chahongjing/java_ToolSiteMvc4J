@@ -144,7 +144,7 @@
         return '(建议附件格式为：' + fsArr.join(', ') + '，大小不超过' + this.fileMaxSizeStr + '，最多可上传' + (this.maxFileNum || 5) + '个附件)';
       },
       getShowUrl: function (file) {
-        if(file.url) return '';
+        if(!file.url) return '';
         var url;
         var type = comSrv.getFileMediaType(file.url);
         switch (type) {
