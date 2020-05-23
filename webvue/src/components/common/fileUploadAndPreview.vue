@@ -3,7 +3,7 @@
     <p class="upload-tip" v-text="getTip()" v-show="type == 1"></p>
     <ul class="file-container">
       <li :class="{'disabled': isDisabled}" v-for='file in files'>
-        <div class="file-box w100p h100p">
+        <div class="file-box w100p h100p" v-if="getShowUrl(file)">
           <template>
             <img :data-type="mediaType.picture" class="file" :src="getShowUrl(file)" alt="图片" title="点击预览"
                  v-if="getFileMediaType(file) == mediaType.picture"/>
@@ -144,6 +144,7 @@
         return '(建议附件格式为：' + fsArr.join(', ') + '，大小不超过' + this.fileMaxSizeStr + '，最多可上传' + (this.maxFileNum || 5) + '个附件)';
       },
       getShowUrl: function (file) {
+        if(file.url) return '';
         var url;
         var type = comSrv.getFileMediaType(file.url);
         switch (type) {
