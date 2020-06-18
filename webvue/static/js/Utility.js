@@ -497,6 +497,7 @@
 
     for (var k in t) {
       var temp = new RegExp("(" + t[k] + ")", 'g');
+      temp.test(format);
       var index = temp.lastIndex;
       if (index == 0) {
         v[k] = 0;
@@ -505,9 +506,12 @@
       var length = format.match(temp)[0].length;
       index -= length;
       v[k] = parseInt(this.substr(index, length));
+      if(k == 4) {
+        v[4] += 12;
+      }
     }
     v[1]--;
-    v[4] += 12;
+    // v[4] += 12;
     return new Date(v[0], v[1], v[2], v[3] || v[4], v[5], v[6]);
   }
   // 函数名称： format
