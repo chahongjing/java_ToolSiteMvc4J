@@ -45,7 +45,7 @@
         <poi.version>4.1.0</poi.version>
         <aspectj.version>1.8.9</aspectj.version>
         <cache.version>1.0.0</cache.version>
-        <quartz.version>2.3.1</quartz.version>
+        <quartz.version>2.3.2</quartz.version>
         <solr.version>6.3.0</solr.version>
         <httpclientnew.version>4.5.3</httpclientnew.version>
         <ws.rs.version>2.1</ws.rs.version>
