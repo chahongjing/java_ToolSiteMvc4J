@@ -69,8 +69,14 @@
 
   ns.downloadAfterAjax = function (data, headers) {
     if (!(data instanceof ArrayBuffer || data instanceof Blob)) return;
-    var fileName = headers['content-disposition'];
-    var contentType = headers['content-type'];
+    var fileName = headers['Content-Disposition'];
+    if(!fileName) {
+      fileName = headers['content-disposition'];
+    }
+    var contentType = headers['Content-Type'];
+    if(!contentType) {
+      contentType = headers['content-type'];
+    }
     ns.downloadWithFileNameAfterAjax(data, fileName, contentType);
   }
   ns.downloadWithFileNameAfterAjax = function (data, fileName, contentType) {
