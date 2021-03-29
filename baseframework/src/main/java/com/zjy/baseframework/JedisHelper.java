@@ -35,8 +35,8 @@ public class JedisHelper {
     /**
      * 分布式加锁
      *
-     * @param key
-     * @param value
+     * @param key 如库存商品id
+     * @param value 如当前请求requestid，防止非当前操作用户释放锁
      * @param millisecond
      * @return
      */
