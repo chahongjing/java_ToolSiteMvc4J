@@ -350,12 +350,12 @@
             </dependency>
 
             <!-- sql server驱动 -->
-            <dependency>
-                <groupId>com.microsoft.sqlserver</groupId>
-                <artifactId>sqljdbc4</artifactId>
-                <version>${sqlserver.version}</version>
-                <scope>runtime</scope>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>com.microsoft.sqlserver</groupId>-->
+<!--                <artifactId>sqljdbc4</artifactId>-->
+<!--                <version>${sqlserver.version}</version>-->
+<!--                <scope>runtime</scope>-->
+<!--            </dependency>-->
             <!-- mysql驱动 -->
             <dependency>
                 <groupId>mysql</groupId>

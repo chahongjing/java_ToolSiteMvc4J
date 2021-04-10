@@ -77,10 +77,10 @@
             <artifactId>c3p0</artifactId>
         </dependency>
         <!-- sql server驱动 -->
-        <dependency>
-            <groupId>com.microsoft.sqlserver</groupId>
-            <artifactId>sqljdbc4</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.microsoft.sqlserver</groupId>-->
+<!--            <artifactId>sqljdbc4</artifactId>-->
+<!--        </dependency>-->
         <!-- mysql驱动 -->
         <dependency>
             <groupId>mysql</groupId>
