@@ -29,4 +29,6 @@ vssver2.scc
 *.suo
 *.sln
 /webvue/node
-/web/src/main/resources/static
+#/web/src/main/resources/static
+/web/src/main/webapp/static
+/web/src/main/webapp/index.html
