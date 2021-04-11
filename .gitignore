@@ -28,3 +28,5 @@ vssver2.scc
 .vscode
 *.suo
 *.sln
+/webvue/node
+/web/src/main/resources/static

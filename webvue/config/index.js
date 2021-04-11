@@ -22,7 +22,7 @@ if(prefix) prefix = prefix.replace(/'|"/g, "");
 var targetUrl = targetHost + (targetPort ? (':' + targetPort) : '');
 var proxyTable = {};
 var pathRewrite = {};
-var buildPath = '/home/zjy/webvue';
+var buildPath = '../../web/src/main/resources/static';
 pathRewrite['^' + context + prefix] = context;
 proxyTable[context + prefix] = {
     target: targetUrl,
