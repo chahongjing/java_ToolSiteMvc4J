@@ -3,6 +3,7 @@ package com.zjy.baseframework;
 import com.zjy.baseframework.interfaces.ICache;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -30,5 +31,36 @@ public class CacheHelper implements ICache {
     public boolean delete(String key){
         map.remove(key);
         return true;
+    }
+
+    @Override
+    public Object hGet(String key, String field) {
+        return map.get(getHKey(key, field));
+    }
+
+    @Override
+    public long hSet(String key, String field, String value) {
+        map.put(getHKey(key, field), value);
+        return 0;
+    }
+
+    @Override
+    public long hDelete(String key) {
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            if(entry.getKey().startsWith(key)) {
+                map.remove(getHKey(key, entry.getKey()));
+            }
+        }
+        return 0;
+    }
+
+    @Override
+    public long hDelete(String key, String field) {
+        map.remove(getHKey(key, field));
+        return 0;
+    }
+
+    private String getHKey(String key, String field) {
+        return String.format("%s_%s", key, field);
     }
 }

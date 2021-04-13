@@ -220,6 +220,31 @@ var router = new Router({
       ]
     },
     {
+      path: '/kvConfig',
+      name: 'kv',
+      component: resolve => require(['@/components/layout/headerAndMenu'], resolve),
+      children: [
+        {
+          path: 'list',
+          name: 'kvList',
+          component: resolve => require(['@/components/kvConfig/kvList'], resolve),
+          meta:{
+            breadcurmbName: '键值对列表',
+            // pageCode: 'menuList_enter'
+          }
+        },
+        {
+          path: 'edit',
+          name: 'kvEdit',
+          component: resolve => require(['@/components/kvConfig/kvEdit'], resolve),
+          meta:{
+            breadcurmbName: '键值对编辑',
+            // pageCode: 'menuList_enter'
+          }
+        }
+      ]
+    },
+    {
       path:'/test',
       component: resolve => require(['@/components/layout/headerAndMenu'], resolve),
       children: [
