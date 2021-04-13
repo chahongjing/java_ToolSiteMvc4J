@@ -245,6 +245,40 @@ var router = new Router({
       ]
     },
     {
+      path: '/upgradeLog',
+      name: 'upgradeLog',
+      component: resolve => require(['@/components/layout/headerAndMenu'], resolve),
+      children: [
+        {
+          path: 'list',
+          name: 'upgradeLogList',
+          component: resolve => require(['@/components/upgradeLog/upgradeLogList'], resolve),
+          meta:{
+            breadcurmbName: '升级日志列表',
+            // pageCode: 'menuList_enter'
+          }
+        },
+        {
+          path: 'edit',
+          name: 'upgradeLogEdit',
+          component: resolve => require(['@/components/upgradeLog/upgradeLogEdit'], resolve),
+          meta:{
+            breadcurmbName: '升级日志编辑',
+            // pageCode: 'menuList_enter'
+          }
+        },
+        {
+          path: 'preview',
+          name: 'upgradeLogPreview',
+          component: resolve => require(['@/components/upgradeLog/upgradeLogPreview'], resolve),
+          meta:{
+            breadcurmbName: '升级日志预览',
+            // pageCode: 'menuList_enter'
+          }
+        }
+      ]
+    },
+    {
       path:'/test',
       component: resolve => require(['@/components/layout/headerAndMenu'], resolve),
       children: [

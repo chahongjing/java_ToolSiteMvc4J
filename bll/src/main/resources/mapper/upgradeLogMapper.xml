@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zjy.bll.dao.UpgradeLogDao">
+	<!-- 基本操作区 -->
+	<!-- 添加 -->
+	<insert id="add">
+		INSERT INTO UpgradeLog(<include refid="field"></include>)
+		VALUES(#{id, jdbcType=VARCHAR}, #{upgradeTime, jdbcType=TIMESTAMP}, #{title, jdbcType=VARCHAR}, #{content, jdbcType=VARCHAR}, #{createTime, jdbcType=TIMESTAMP})
+	</insert>
+
+	<!-- 更新 -->
+	<update id="update">
+        update UpgradeLog
+        <set>
+			<if test='id != null and id != ""'>
+				id = #{id, jdbcType=VARCHAR},
+			</if>
+			<if test='upgradeTime != null'>
+				upgradeTime = #{upgradeTime, jdbcType=TIMESTAMP},
+			</if>
+			<if test='title != null and title != ""'>
+				title = #{title, jdbcType=VARCHAR},
+			</if>
+			<if test='content != null and content != ""'>
+				content = #{content, jdbcType=VARCHAR},
+			</if>
+			<if test='createTime != null'>
+				createTime = #{createTime, jdbcType=TIMESTAMP},
+			</if>
+		</set>
+         where id = #{id, jdbcType=VARCHAR}
+	</update>
+
+	<!-- 删除 -->
+	<delete id="delete">
+		DELETE FROM UpgradeLog WHERE id = #{id, jdbcType=VARCHAR}
+	</delete>
+
+	<!-- 获取 -->
+	<select id="get" resultType="com.zjy.bll.vo.UpgradeLogVo">
+		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="UpgradeLog"/></include>
+		  FROM UpgradeLog
+		 WHERE id = #{id, jdbcType = VARCHAR}
+	</select>
+
+	<!-- 查询简单列表 -->
+	<select id="query" resultType="com.zjy.bll.vo.UpgradeLogVo">
+		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="UpgradeLog"/></include>
+		FROM UpgradeLog
+		order by upgradeTime desc
+	</select>
+
+	<!-- 其它操作区 -->
+
+
+	<!-- 公共信息 -->
+	<!-- 字段 -->
+	<sql id="field">
+		id, upgradeTime, title, content, createTime
+	</sql>
+	 <!-- 带前缀的字段 -->
+	<sql id="fieldWithPrefix">
+		${tableName}.id, ${tableName}.upgradeTime, ${tableName}.title, ${tableName}.content, ${tableName}.createTime
+	</sql>
+</mapper>

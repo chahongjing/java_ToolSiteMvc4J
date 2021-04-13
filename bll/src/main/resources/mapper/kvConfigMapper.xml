@@ -62,7 +62,6 @@
 			and code = #{code, jdbcType=VARCHAR}
 		</where>
 	</select>
-	x
 
 	<!-- 其它操作区 -->
 
