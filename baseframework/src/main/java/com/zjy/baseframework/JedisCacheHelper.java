@@ -2,6 +2,7 @@ package com.zjy.baseframework;
 
 import com.zjy.baseframework.interfaces.ICache;
 import org.apache.shiro.codec.Base64;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 
@@ -46,5 +47,25 @@ public class JedisCacheHelper implements ICache {
         } catch (Exception e) {
             throw new RuntimeException("serialize session error", e);
         }
+    }
+
+    @Override
+    public Object hGet(String key, String field) {
+        return JedisHelper.hGet(key, field);
+    }
+
+    @Override
+    public long hSet(String key, String field, String value) {
+        return JedisHelper.hSet(key, field, value);
+    }
+
+    @Override
+    public long hDelete(String key, String field) {
+        return JedisHelper.hDelete(key, field);
+    }
+
+    @Override
+    public long hDelete(String key) {
+        return JedisHelper.delete(key);
     }
 }

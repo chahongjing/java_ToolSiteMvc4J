@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zjy.bll.dao.KvConfigDao">
+	<!-- 基本操作区 -->
+	<!-- 添加 -->
+	<insert id="add">
+		INSERT INTO KvConfig(<include refid="field"></include>)
+		VALUES(#{id, jdbcType=VARCHAR}, #{code, jdbcType=VARCHAR}, #{value, jdbcType=VARCHAR}, #{memo, jdbcType=VARCHAR}, #{createTime, jdbcType=TIMESTAMP})
+	</insert>
+
+	<!-- 更新 -->
+	<update id="update">
+        update KvConfig
+        <set>
+			<if test='id != null and id != ""'>
+				id = #{id, jdbcType=VARCHAR},
+			</if>
+			<if test='code != null and code != ""'>
+				code = #{code, jdbcType=VARCHAR},
+			</if>
+			<if test='value != null and value != ""'>
+				value = #{value, jdbcType=VARCHAR},
+			</if>
+			<if test='memo != null'>
+				memo = #{memo, jdbcType=VARCHAR},
+			</if>
+			<if test='createTime != null'>
+				createTime = #{createTime, jdbcType=TIMESTAMP},
+			</if>
+		</set>
+         where id = #{id, jdbcType=VARCHAR}
+	</update>
+
+	<!-- 删除 -->
+	<delete id="delete">
+		DELETE FROM KvConfig WHERE id = #{id, jdbcType=VARCHAR}
+	</delete>
+
+	<!-- 获取 -->
+	<select id="get" resultType="com.zjy.bll.vo.KvConfigVo">
+		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="KvConfig"/></include>
+		  FROM KvConfig
+		 WHERE id = #{id, jdbcType = VARCHAR}
+	</select>
+
+	<!-- 查询简单列表 -->
+	<select id="query" resultType="com.zjy.bll.vo.KvConfigVo">
+		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="KvConfig"/></include>
+		FROM KvConfig
+		<where>
+			<if test='code != null and code != ""'>
+				and code like '%' || #{code, jdbcType=VARCHAR} || '%'
+			</if>
+		</where>
+		order by id desc
+	</select>
+
+	<select id="getByCode" resultType="com.zjy.bll.vo.KvConfigVo">
+		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="KvConfig"/></include>
+		FROM KvConfig
+		<where>
+			and code = #{code, jdbcType=VARCHAR}
+		</where>
+	</select>
+
+	<!-- 其它操作区 -->
+
+
+	<!-- 公共信息 -->
+	<!-- 字段 -->
+	<sql id="field">
+		id, code, value, memo, createTime
+	</sql>
+	 <!-- 带前缀的字段 -->
+	<sql id="fieldWithPrefix">
+		${tableName}.id, ${tableName}.code, ${tableName}.value, ${tableName}.memo, ${tableName}.createTime
+	</sql>
+</mapper>

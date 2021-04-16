@@ -144,8 +144,8 @@
       },
       getEnumList: function() {
         var list = [];
-        for (var item in LogLevel) {
-          list.push(LogLevel[item]);
+        for (var item in enumMap.LogLevel) {
+          list.push(enumMap.LogLevel[item]);
         }
         this.logLevelList = list;
       }

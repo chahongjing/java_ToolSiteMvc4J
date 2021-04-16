@@ -220,6 +220,65 @@ var router = new Router({
       ]
     },
     {
+      path: '/kvConfig',
+      name: 'kv',
+      component: resolve => require(['@/components/layout/headerAndMenu'], resolve),
+      children: [
+        {
+          path: 'list',
+          name: 'kvList',
+          component: resolve => require(['@/components/kvConfig/kvList'], resolve),
+          meta:{
+            breadcurmbName: '键值对列表',
+            // pageCode: 'menuList_enter'
+          }
+        },
+        {
+          path: 'edit',
+          name: 'kvEdit',
+          component: resolve => require(['@/components/kvConfig/kvEdit'], resolve),
+          meta:{
+            breadcurmbName: '键值对编辑',
+            // pageCode: 'menuList_enter'
+          }
+        }
+      ]
+    },
+    {
+      path: '/upgradeLog',
+      name: 'upgradeLog',
+      component: resolve => require(['@/components/layout/headerAndMenu'], resolve),
+      children: [
+        {
+          path: 'list',
+          name: 'upgradeLogList',
+          component: resolve => require(['@/components/upgradeLog/upgradeLogList'], resolve),
+          meta:{
+            breadcurmbName: '升级日志列表',
+            // pageCode: 'menuList_enter'
+          }
+        },
+        {
+          path: 'edit',
+          name: 'upgradeLogEdit',
+          component: resolve => require(['@/components/upgradeLog/upgradeLogEdit'], resolve),
+          meta:{
+            breadcurmbName: '升级日志编辑',
+            // pageCode: 'menuList_enter'
+          }
+        },
+        {
+          path: 'preview',
+          name: 'upgradeLogPreview',
+          component: resolve => require(['@/components/upgradeLog/upgradeLogPreview'], resolve),
+          meta:{
+            breadcurmbName: '升级日志预览',
+            // pageCode: 'menuList_enter'
+          }
+        }
+      ]
+    },
+    {
       path:'/test',
       component: resolve => require(['@/components/layout/headerAndMenu'], resolve),
       children: [

@@ -27,9 +27,24 @@ public class JedisHelper {
         return jedis.get(key);
     }
 
+    public static String hGet(String key, String field) {
+        Jedis jedis = jedisPool.getResource();
+        return jedis.hget(key, field);
+    }
+
     public static String getSet(String key, String value) {
         Jedis jedis = jedisPool.getResource();
         return jedis.getSet(key, value);
+    }
+
+    public static long hSet(String key, String field, String value) {
+        Jedis jedis = jedisPool.getResource();
+        return jedis.hset(key, field, value);
+    }
+
+    public static long hDelete(String key, String field) {
+        Jedis jedis = jedisPool.getResource();
+        return jedis.hdel(key, field);
     }
 
     /**
