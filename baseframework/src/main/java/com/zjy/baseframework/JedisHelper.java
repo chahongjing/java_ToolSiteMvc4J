@@ -4,7 +4,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.params.SetParams;
 
-import java.util.Collections;
+import java.util.*;
 
 /**
  * @author chahongjing
@@ -95,5 +95,35 @@ public class JedisHelper {
     public static Long expire(String key, int seconds) {
         Jedis jedis = jedisPool.getResource();
         return jedis.expire(key, seconds);
+    }
+
+    /**
+     * 漏桶算法
+     * @param key key
+     * @param milesecon 毫秒窗口
+     * @param count 数量限制
+     * @return
+     */
+    public static boolean limiter(String key, int milesecon, int count) {
+        Date now = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        // 将现在的时间滚动固定时长,转换为Date类型赋值
+        calendar.add(Calendar.MILLISECOND, -milesecon);
+        // 转换为Date类型再赋值
+        Date before = calendar.getTime();
+
+        /**
+         * 此段并发，加锁或使用lua脚本
+         */
+        Jedis jedis = jedisPool.getResource();
+        jedis.zremrangeByScore(key, 0, before.getTime());
+        Set<String> strings = jedis.zrangeByScore(key, 0, now.getTime());
+        if(strings.size() >= count) {
+            return false;
+        } else {
+            jedis.zadd(key, now.getTime(), UUID.randomUUID().toString());
+        }
+        return true;
     }
 }

@@ -37,11 +37,11 @@
           <table class="table table-hover" style="font-size:14px;min-width: 100px;">
             <thead>
             <tr>
-              <th class="w70">类型</th>
+              <th class="w100">类型</th>
               <th class="w150">标题</th>
               <th>链接</th>
-              <th class="w50">
-                <a class='inline-block mybtn' href='javascript:void(0)' @click='addItem()' title='删除'>
+              <th class="w30">
+                <a class='inline-block mybtn' href='javascript:void(0)' @click='addItem()' title='新增'>
                 <i class='fa fa-plus-circle cf05'></i>
               </a>
               </th>
@@ -50,19 +50,19 @@
             <tbody>
             <tr v-for="item in upgradeLog.contentList">
               <td>
-                <select class="w100p" v-model="item.type">
+                <select class="form-control w100p" v-model="item.type">
                   <option value="" disabled>-- 请选择 --</option>
                   <option v-for="item in typeList" :value="item.key" v-text="item.name"></option>
                 </select>
               </td>
               <td>
-                <input class="w100p" placeholder="标题" v-model="item.text" />
+                <input class="form-control w100p" placeholder="标题" v-model="item.text" />
               </td>
               <td>
-                <input class="w100p" placeholder="内容" v-model="item.link" />
+                <input class="form-control w100p" placeholder="内容" v-model="item.link" />
               </td>
               <td>
-                <a class='inline-block mybtn' href='javascript:void(0)' @click='deleteItem(item)' title='删除'>
+                <a class='inline-block mybtn' style="margin-top:5px;margin-left:9px;" href='javascript:void(0)' @click='deleteItem(item)' title='删除'>
                   <i class='fa fa-trash cf05'></i>
                 </a>
               </td>
@@ -113,7 +113,7 @@
         this.allDisabled = true;
         this.$axios.get('/upgradeLog/getDetail', {id: id}).then(function (resp) {
           if (resp.data.status == ResultStatus.OK.key) {
-            me.upgradeLog = resp.data.value || {id:id};
+            me.upgradeLog = resp.data.value || {id:id,contentList:[]};
           }
           me.allDisabled = false;
         });
@@ -161,3 +161,7 @@
     }
   }
 </script>
+
+<style scoped>
+  .table tbody tr td{padding:2px 2px;}
+</style>
