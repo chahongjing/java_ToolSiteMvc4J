@@ -1,7 +1,7 @@
 package com.zjy.bll.service;
 
-import com.zjy.baseframework.CacheHelper;
 import com.zjy.baseframework.KeyHelper;
+import com.zjy.baseframework.interfaces.ICache;
 import com.zjy.bll.common.BaseService;
 import com.zjy.bll.dao.UserRoleDao;
 import com.zjy.bll.vo.RelateCheckVo;
@@ -23,7 +23,7 @@ public class UserRoleServiceImpl extends BaseService<UserRoleDao, UserRole> impl
     protected RoleInfoService roleInfoSrv;
 
     @Autowired
-    private CacheHelper cacheHelper;
+    private ICache cacheHelper;
 
     @Override
     public List<RelateCheckVo> queryAllRoleWithUserRole(String userId) {
