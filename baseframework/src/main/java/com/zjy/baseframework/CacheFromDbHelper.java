@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import com.sun.istack.internal.NotNull;
 import com.zjy.baseframework.interfaces.ICache;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,7 +28,7 @@ public class CacheFromDbHelper implements ICache {
             refreshAfterWrite(30, TimeUnit.MINUTES)
             .build(new CacheLoader<String, String>() {
                 @Override
-                public String load(@NotNull String key) {
+                public String load(String key) {
                     // get from db
                     return "";
                 }
