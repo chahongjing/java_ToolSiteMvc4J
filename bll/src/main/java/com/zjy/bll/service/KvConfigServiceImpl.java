@@ -9,6 +9,7 @@ import com.zjy.bll.common.BaseService;
 import com.zjy.bll.dao.KvConfigDao;
 import com.zjy.bll.request.KvConfigRequest;
 import com.zjy.entities.KvConfig;
+import com.zjy.entities.UserInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,9 @@ public class KvConfigServiceImpl extends BaseService<KvConfigDao, KvConfig> impl
     private ICache cache;
     private final static String KEY = "kvconfig";
 
+    @Autowired
+    private KvConfigLogService kvConfigLogSrv;
+
     /**
      * 添加用户
      *
@@ -32,7 +36,7 @@ public class KvConfigServiceImpl extends BaseService<KvConfigDao, KvConfig> impl
      */
     @Override
     @Transactional
-    public int add(KvConfig config) {
+    public int add(KvConfig config, UserInfo user) {
         int add = super.add(config);
         cache.set(getHKey(KEY, config.getCode()), config.getValue());
         return add;
@@ -46,7 +50,9 @@ public class KvConfigServiceImpl extends BaseService<KvConfigDao, KvConfig> impl
      */
     @Override
     @Transactional
-    public int update(KvConfig config) {
+    public int update(KvConfig config, UserInfo user) {
+        KvConfig voDb = this.get(config.getId());
+        kvConfigLogSrv.add(voDb, user);
         int update = super.update(config);
         cache.set(getHKey(KEY, config.getCode()), config.getValue());
         return update;
@@ -85,11 +91,12 @@ public class KvConfigServiceImpl extends BaseService<KvConfigDao, KvConfig> impl
      */
     @Override
     @Transactional
-    public int delete(String id) {
+    public int delete(String id, UserInfo user) {
         KvConfig kvConfig = this.get(id);
         if(kvConfig != null) {
             int delete = super.delete(id);
             cache.delete(getHKey(KEY, kvConfig.getCode()));
+            kvConfigLogSrv.add(kvConfig, user);
             return delete;
         }
         return -1;
@@ -101,15 +108,15 @@ public class KvConfigServiceImpl extends BaseService<KvConfigDao, KvConfig> impl
      * @param config
      */
     @Transactional
-    public void save(KvConfig config) {
+    public void save(KvConfig config, UserInfo user) {
         KvConfig voDb = this.get(config.getId());
 //        beforeCheck(config);
         // 处理密码
         if (voDb != null) {
-            update(config);
+            update(config, user);
         } else {
             config.setCreateTime(new Date());
-            add(config);
+            add(config, user);
         }
     }
 

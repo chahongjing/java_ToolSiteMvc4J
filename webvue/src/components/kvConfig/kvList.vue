@@ -48,6 +48,9 @@
             <a class='inline-block mybtn' href='javascript:void(0)' @click='deleteItem(item)' title='删除'>
               <i class='fa fa-trash cf05'></i>
             </a>
+            <a class='inline-block mybtn' href='javascript:void(0)' @click='showHistory(item)' title='操作记录'>
+              <i class='fa fa-history c9c0'></i>
+            </a>
           </td>
         </tr>
         </tbody>
@@ -87,6 +90,49 @@
         </button>
       </div>
     </common-modal>
+
+
+    <common-modal :show-modal='showHitoryDialog' :options="bigModalOpt">
+      <div class="modal-header" slot='headerSlot'>
+        <h5 class="modal-title">历史记录</h5>
+        <button type="button" class="close" @click='showHitoryDialog = false'>
+          <span class='closeicon' title="关闭">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body pr20" slot="bodySlot">
+        <div class='table-list' style="min-height:300px">
+          <table class="table table-hover">
+            <thead>
+            <tr>
+              <th class='w50'>#</th>
+              <th class='w150'>键</th>
+              <th>值</th>
+              <th class="w120">操作人</th>
+              <th class='w155'>创建时间</th>
+            </tr>
+            </thead>
+            <tbody v-if='!historyPager.loading'>
+            <tr v-for="(item, index) in historyList">
+              <td class="text-center" v-text='((historyPager.pageNum - 1) * historyPager.pageSize) + index + 1'></td>
+              <td v-text='item.code'></td>
+              <td v-text='item.value'></td>
+              <td v-text='item.createByName'></td>
+              <td class='text-center' v-text='$options.filters.formatDate(item.createTime)'></td>
+            </tr>
+            </tbody>
+          </table>
+<!--          <table-list-loading :list='historyList' :loading='historyPager.loading'></table-list-loading>-->
+          <div class='footer-pager'>
+            <pagination :pager-info='historyPager'></pagination>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" slot="footerSlot">
+        <button type="button" class="btn btn-purple" @click='showHitoryDialog = false'>
+          <i class='fa fa-times'></i><span>关闭</span>
+        </button>
+      </div>
+    </common-modal>
   </div>
 </template>
 
@@ -113,7 +159,12 @@
         password: null,
         YesNo: enumMap.YesNo,
         Sex: enumMap.Sex,
-        modalOpt: {width: '350px'}
+        modalOpt: {width: '350px'},
+        bigModalOpt: {width: '1000px'},
+        showHitoryDialog: false,
+        historyItem: null,
+        historyList: [],
+        historyPager: {pageNum: 1, pageSize: 10, loading: true}
       }
     },
     methods: {
@@ -161,6 +212,28 @@
         this.pager.pageNum = page;
         this.queryList();
       },
+      queryHistoryList() {
+        var me = this;
+        me.allDisabled = true;
+        me.historyPager.loading = true;
+        this.$axios.get('/kvConfigLog/queryPageList', {
+          pageNum: this.historyPager.pageNum,
+          pageSize: this.historyPager.pageSize,
+          kvId: this.historyItem.id,
+        }).then(function (resp) {
+          if(resp.data.status == ResultStatus.OK.key) {
+            me.historyList = resp.data.value.list;
+            me.historyPager = commonSrv.getPagerInfo(resp.data.value, me.goHistoryPage);
+          } else {
+            me.historyPager.loading = false;
+          }
+          me.allDisabled = false;
+        });
+      },
+      goHistoryPage(page) {
+        this.historyPager.pageNum = page;
+        this.queryHistoryList();
+      },
       deleteItem: function (entity) {
         var me = this;
         this.$confirm.confirm('确定要删除键值对吗？', function () {
@@ -171,6 +244,11 @@
             }
           });
         });
+      },
+      showHistory: function(entity) {
+        this.showHitoryDialog = true;
+        this.historyItem = entity;
+        this.queryHistoryList();
       },
       removeAllCache: function() {
         var me = this;

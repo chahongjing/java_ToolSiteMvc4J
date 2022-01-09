@@ -214,8 +214,12 @@ a:hover{color:#06f;}
 a[disabled]{pointer-events:none;color:#333;}
 
 /* 位置 */
+.w30{width:30px;}
+.w40{width:40px;}
 .w50{width:50px;}
 .w70{width:70px;}
+.w80{width:80px;}
+.w90{width:90px;}
 .w100{width:100px;}
 .w120{width:120px;}
 .w130{width:130px;}

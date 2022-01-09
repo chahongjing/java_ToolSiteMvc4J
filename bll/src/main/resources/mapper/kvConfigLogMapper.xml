@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zjy.bll.dao.KvConfigLogDao">
+	<!-- 基本操作区 -->
+	<!-- 添加 -->
+	<insert id="add">
+		INSERT INTO KvConfigLog(<include refid="field"></include>)
+		VALUES(#{id, jdbcType=VARCHAR}, #{code, jdbcType=VARCHAR}, #{value, jdbcType=VARCHAR}, #{createBy, jdbcType=VARCHAR}, #{kvId, jdbcType=VARCHAR}, #{createTime, jdbcType=TIMESTAMP})
+	</insert>
+
+	<!-- 更新 -->
+	<update id="update">
+        update KvConfigLog
+        <set>
+			<if test='id != null and id != ""'>
+				id = #{id, jdbcType=VARCHAR},
+			</if>
+			<if test='code != null and code != ""'>
+				code = #{code, jdbcType=VARCHAR},
+			</if>
+			<if test='value != null and value != ""'>
+				value = #{value, jdbcType=VARCHAR},
+			</if>
+			<if test='createBy != null and createBy != ""'>
+				createBy = #{createBy, jdbcType=VARCHAR},
+			</if>
+			<if test='kvId != null and kvId != ""'>
+				kvId = #{kvId, jdbcType=VARCHAR},
+			</if>
+			<if test='createTime != null'>
+				createTime = #{createTime, jdbcType=TIMESTAMP},
+			</if>
+		</set>
+         where id = #{id, jdbcType=VARCHAR}
+	</update>
+
+	<!-- 删除 -->
+	<delete id="delete">
+		DELETE FROM KvConfigLog WHERE id = #{id, jdbcType=VARCHAR}
+	</delete>
+
+	<!-- 获取 -->
+	<select id="get" resultType="com.zjy.bll.vo.KvConfigLogVo">
+		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="KvConfigLog"/></include>
+		  FROM KvConfigLog
+		 WHERE id = #{id, jdbcType = VARCHAR}
+	</select>
+
+	<!-- 查询简单列表 -->
+	<select id="query" resultType="com.zjy.bll.vo.KvConfigLogVo">
+		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="KvConfigLog"/></include>
+		FROM KvConfigLog
+		<where>
+			<if test='kvId != null and kvId != ""'>
+				and kvId = #{kvId, jdbcType=VARCHAR}
+			</if>
+			<if test='code != null and code != ""'>
+				and code = #{code, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<select id="queryByCode" resultType="com.zjy.bll.vo.KvConfigLogVo">
+		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="KvConfigLog"/></include>
+		FROM KvConfigLog
+		<where>
+			and code = #{code, jdbcType=VARCHAR}
+		</where>
+		order by createTime desc
+	</select>
+
+	<!-- 其它操作区 -->
+
+
+	<!-- 公共信息 -->
+	<!-- 字段 -->
+	<sql id="field">
+		id, code, value, createBy, kvId, createTime
+	</sql>
+	 <!-- 带前缀的字段 -->
+	<sql id="fieldWithPrefix">
+		${tableName}.id, ${tableName}.code, ${tableName}.value, ${tableName}.createBy, ${tableName}.kvId, ${tableName}.createTime
+	</sql>
+</mapper>
