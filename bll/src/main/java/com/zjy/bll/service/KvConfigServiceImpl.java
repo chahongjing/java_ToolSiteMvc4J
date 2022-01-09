@@ -1,34 +1,24 @@
 package com.zjy.bll.service;
 
 import com.alibaba.fastjson.JSON;
-import com.zjy.baseframework.JedisCacheHelper;
-import com.zjy.baseframework.JedisHelper;
-import com.zjy.baseframework.ServiceException;
+import com.google.common.cache.CacheLoader;
+import com.zjy.baseframework.CacheFromGuavaHelper;
 import com.zjy.baseframework.interfaces.ICache;
 import com.zjy.bll.basebean.PageBean;
 import com.zjy.bll.common.BaseService;
 import com.zjy.bll.dao.KvConfigDao;
 import com.zjy.bll.request.KvConfigRequest;
-import com.zjy.bll.request.MenuRequest;
-import com.zjy.bll.vo.MenuVo;
-import com.zjy.bll.vo.RolePermissionVo;
-import com.zjy.bll.vo.UserRoleVo;
 import com.zjy.entities.KvConfig;
-import com.zjy.entities.Menu;
 import org.apache.commons.lang3.StringUtils;
-import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
+import javax.annotation.PostConstruct;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-@Service
+@Service("kvConfigServiceImpl")
 public class KvConfigServiceImpl extends BaseService<KvConfigDao, KvConfig> implements KvConfigService {
     @Autowired
     private ICache cache;
@@ -44,7 +34,7 @@ public class KvConfigServiceImpl extends BaseService<KvConfigDao, KvConfig> impl
     @Transactional
     public int add(KvConfig config) {
         int add = super.add(config);
-        cache.hSet(KEY, config.getCode(), config.getValue());
+        cache.set(getHKey(KEY, config.getCode()), config.getValue());
         return add;
     }
 
@@ -58,24 +48,26 @@ public class KvConfigServiceImpl extends BaseService<KvConfigDao, KvConfig> impl
     @Transactional
     public int update(KvConfig config) {
         int update = super.update(config);
-        cache.hSet(KEY, config.getCode(), config.getValue());
+        cache.set(getHKey(KEY, config.getCode()), config.getValue());
         return update;
     }
 
     @Override
     public KvConfig get(String id) {
-        return super.get(id);
+        KvConfig kvConfig = super.get(id);
+//        cache.get(getHKey(KEY, kvConfig.getCode()));
+        return kvConfig;
     }
 
     @Override
     public KvConfig getByCache(String code) {
-        String o = (String)cache.hGet(KEY, code);
+        String o = (String)cache.get(getHKey(KEY, code));
         if(StringUtils.isNotBlank(o)) {
             return JSON.parseObject(o, KvConfig.class);
         }
         KvConfig byCode = this.getByCode(code);
         if(byCode != null) {
-            cache.hSet(KEY, code, byCode.getValue());
+            cache.set(getHKey(KEY, code), byCode.getValue());
         }
         return byCode;
     }
@@ -97,7 +89,7 @@ public class KvConfigServiceImpl extends BaseService<KvConfigDao, KvConfig> impl
         KvConfig kvConfig = this.get(id);
         if(kvConfig != null) {
             int delete = super.delete(id);
-            cache.hDelete(KEY, kvConfig.getCode());
+            cache.delete(getHKey(KEY, kvConfig.getCode()));
             return delete;
         }
         return -1;
@@ -123,7 +115,7 @@ public class KvConfigServiceImpl extends BaseService<KvConfigDao, KvConfig> impl
 
     @Override
     public void removeAllCache() {
-        cache.hDelete(KEY);
+        cache.getAll(KEY).forEach((key, value) -> cache.delete(key));
     }
 
     @Override
@@ -133,4 +125,7 @@ public class KvConfigServiceImpl extends BaseService<KvConfigDao, KvConfig> impl
         return (PageBean<KvConfig>) super.queryPageList(request, po);
     }
 
+    private String getHKey(String key, String field) {
+        return String.format("%s:%s", key, field);
+    }
 }

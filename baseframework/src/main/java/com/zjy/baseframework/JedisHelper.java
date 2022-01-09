@@ -47,6 +47,17 @@ public class JedisHelper {
         return jedis.hdel(key, field);
     }
 
+    public static Map<String, Object> getAll(String key) {
+        Map<String, Object> result = new HashMap<>();
+        Jedis jedis = jedisPool.getResource();
+        String[] keys = (String[])jedis.keys(key).toArray();
+        List<String> mget = jedis.mget(keys);
+        for (int i = 0; i < keys.length; i++) {
+            result.put(keys[i], mget.get(i));
+        }
+        return result;
+    }
+
     /**
      * 分布式加锁
      *
