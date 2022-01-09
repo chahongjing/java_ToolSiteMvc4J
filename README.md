@@ -43,3 +43,6 @@ npm uninstall xx-abc --save 删除模块，同时删除模块留在package.json�
 # 如果是安装在 devDependencies
 npm uninstall xx-abc --save-dev 删除模块，同时删除模块留在package.json中devDependencies下的对应信息
 ~~~
+
+# 注意
+idea运行时修改的数据库文件是：`/home/zjy/workspace/mycode/java_ToolSiteMvc4J/web/target/ToolSiteMvc4J/WEB-INF/classes/db/app.db`文件，而不是`/home/zjy/workspace/mycode/java_ToolSiteMvc4J/web/target/classes/db/app.db`
