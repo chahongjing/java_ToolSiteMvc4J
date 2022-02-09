@@ -68,7 +68,7 @@
         <oracle.version>11.2.0.3.0</oracle.version>
         <sqlite.version>3.27.2.1</sqlite.version>
         <h2.version>1.4.199</h2.version>
-        <hibernate.version>5.2.10.Final</hibernate.version>
+        <hibernate.version>5.4.24.Final</hibernate.version>
         <!-- test -->
         <junit.version>4.12</junit.version>
         <!-- maven -->
