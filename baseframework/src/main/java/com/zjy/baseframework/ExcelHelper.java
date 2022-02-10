@@ -8,6 +8,7 @@ import org.apache.poi.hssf.usermodel.HSSFClientAnchor;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.CellUtil;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -463,6 +464,18 @@ public class ExcelHelper {
         cellFont.setColor(IndexedColors.BLUE.index);
         linkStyle.setFont(cellFont);
         return linkStyle;
+    }
+
+    private static void mergeCell(Sheet sheet, int firstRow, int lastRow, int firstCol, int lastCol, String value) {
+        sheet.addMergedRegion(new CellRangeAddress(firstRow, lastRow, firstCol, lastCol));
+        // 获取当前表头的首行位置
+        Row row = sheet.getRow(firstRow);
+        // 在表头的首行与首列位置创建一个新的单元格
+        Cell cell = row.createCell(firstCol);
+        // 赋值单元格
+        cell.setCellValue(value);
+        //cell.setCellStyle(style);
+        sheet.setColumnWidth(firstCol, sheet.getColumnWidth(firstCol) * 17 / 12);
     }
     // endregion
 
