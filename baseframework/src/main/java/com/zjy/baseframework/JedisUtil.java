@@ -4,9 +4,14 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.ListPosition;
+import redis.clients.jedis.ShardedJedis;
+import redis.clients.jedis.ShardedJedisPool;
 import redis.clients.jedis.SortingParams;
 import redis.clients.jedis.util.SafeEncoder;
 
+import java.io.Closeable;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -50,6 +55,7 @@ public class JedisUtil {
     public SortSet SORTSET;
 
     private static JedisPool jedisPool = null;
+    private static ShardedJedisPool sharedJedisPool = null;
 
     private JedisUtil() {
     }
@@ -65,6 +71,7 @@ public class JedisUtil {
 //        config.setMaxWait(1000 * 100);
         //在borrow一个jedis实例时，是否提前进行validate操作；如果为true，则得到的jedis实例均是可用的；
         config.setTestOnBorrow(true);
+        config.setTestOnReturn(true);
 
         //redis如果设置了密码：
         /*jedisPool = new JedisPool(config, JRedisPoolConfig.REDIS_IP,
@@ -72,6 +79,19 @@ public class JedisUtil {
         10000,JRedisPoolConfig.REDIS_PASSWORD); */
         //redis未设置了密码：
         jedisPool = new JedisPool(config, "127.0.0.1", 6379);
+
+//        //设置Redis信息
+//        String host = "127.0.0.1";
+//        JedisShardInfo shardInfo1 = new JedisShardInfo(host, 6379, 500);
+//        shardInfo1.setPassword("test123");
+//        JedisShardInfo shardInfo2 = new JedisShardInfo(host, 6380, 500);
+//        shardInfo2.setPassword("test123");
+//        JedisShardInfo shardInfo3 = new JedisShardInfo(host, 6381, 500);
+//        shardInfo3.setPassword("test123");
+//
+//        //初始化ShardedJedisPool
+//        List<JedisShardInfo> infoList = Arrays.asList(shardInfo1, shardInfo2, shardInfo3);
+//        ShardedJedisPool jedisPool = new ShardedJedisPool(config, infoList);
     }
 
     public JedisPool getPool() {
@@ -85,6 +105,10 @@ public class JedisUtil {
      */
     public Jedis getJedis() {
         return jedisPool.getResource();
+    }
+
+    public ShardedJedis getShardedJedis() {
+        return sharedJedisPool.getResource();
     }
 
     private static final JedisUtil jedisUtil = new JedisUtil();
@@ -103,7 +127,7 @@ public class JedisUtil {
      *
      * @param jedis
      */
-    public void returnJedis(Jedis jedis) {
+    public void returnJedis(Closeable jedis) {
         returnBrokenResource(jedis);
     }
 
@@ -113,9 +137,13 @@ public class JedisUtil {
      * @param
      * @param
      */
-    public static void returnBrokenResource(Jedis jedis) {
+    public static void returnBrokenResource(Closeable jedis) {
         if (null != jedis && null != jedisPool) {
-            jedis.close();
+            try {
+                jedis.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -1010,7 +1038,7 @@ public class JedisUtil {
          * @return 值
          */
         public String get(String key) {
-//ShardedJedis sjedis = getShardedJedis();
+//            ShardedJedis sjedis = getShardedJedis();
             Jedis sjedis = getJedis();
             String value = sjedis.get(key);
             returnJedis(sjedis);
