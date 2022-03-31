@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Component
 public class CacheFromLocal implements ICache {
-    private ConcurrentHashMap<String, Object> map = new ConcurrentHashMap();
+    private ConcurrentHashMap<String, Object> map = new ConcurrentHashMap<>();
 
     @Override
     public <T> T get(String key, Class<T> clazz) {

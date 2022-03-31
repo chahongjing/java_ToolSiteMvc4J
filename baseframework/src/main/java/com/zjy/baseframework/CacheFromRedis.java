@@ -59,6 +59,10 @@ public class CacheFromRedis implements ICache {
         return JedisHelper.hGet(key, field);
     }
 
+    public Map<String, String> hGetAll(String key) {
+        return JedisHelper.hGetAll(key);
+    }
+
     public long hSet(String key, String field, String value) {
         return JedisHelper.hSet(key, field, value);
     }

@@ -1,6 +1,6 @@
 <template>
   <div class="p20 oya h100p">
-    <div id='' class='content'>
+    <div id='' class='content h100p'>
       <div class='wrapper'>
         <div class='light'><i></i></div>
         <hr class='line-left'></hr>

@@ -32,6 +32,11 @@ public class JedisHelper {
         return jedis.hget(key, field);
     }
 
+    public static Map<String, String> hGetAll(String key) {
+        Jedis jedis = jedisPool.getResource();
+        return jedis.hgetAll(key);
+    }
+
     public static String getSet(String key, String value) {
         Jedis jedis = jedisPool.getResource();
         return jedis.getSet(key, value);
