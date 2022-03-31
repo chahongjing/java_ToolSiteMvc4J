@@ -4,6 +4,9 @@
       <button type="button inline-block" class="btn btn-outline-purple" @click="add()" v-authcode='"userList_add"'>
         <i class='fa fa-plus fa-plus-myrotate mr5'></i>添加
       </button>
+      <button type="button inline-block" class="btn btn-outline-purple" @click="preview()" v-authcode='"userList_add"'>
+        <i class='fa fa-picture-o mr5'></i>预览
+      </button>
     </div>
     <div class='searchbar'>
       <form class='myform form-inline form-group-w280 form-label-w80'>
@@ -125,6 +128,9 @@
           }
         });
 
+      },
+      preview() {
+        this.$router.push({path: '/upgradeLog/preview'});
       },
       edit(entity) {
         this.$router.push({path: '/upgradeLog/edit', query: {id: entity.id}});
