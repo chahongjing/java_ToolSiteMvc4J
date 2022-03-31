@@ -7,7 +7,7 @@
           <label class="radio_checkbox">
             <input type='checkbox' v-model='firstMenu.singleCheck' @change='save(firstMenu)'/>
             <i></i>
-            <span v-text='firstMenu.name'></span>
+            <span v-text='firstMenu.name + " 菜单"'></span>
           </label>
           <div class='inline-block fr'>
             <label class="radio_checkbox checkall">
@@ -27,7 +27,7 @@
               <label class="radio_checkbox">
                 <input type='checkbox' v-model='secondMenu.singleCheck' @change='save(secondMenu)'/>
                 <i></i>
-                <span v-text='secondMenu.name'></span>
+                <span v-text='secondMenu.name + " 菜单"'></span>
               </label>
               <div class='inline-block fr'>
                 <label class="radio_checkbox checkall">
@@ -45,9 +45,9 @@
                 <div class="panel-heading font-bold"
                      :class='{"noboderbottom":functionItem.subList.length == 0 || !functionItem.showDetail}'>
                   <label class="radio_checkbox">
-                    <input type='checkbox' v-model='functionItem.singleCheck' @change='save(functionItem)'/>
-                    <i></i>
-                    <span v-text='functionItem.name'></span>
+                    <input type='checkbox' v-model='functionItem.singleCheck' @change='save(functionItem)' disabled/>
+                    <i style="display:none"></i>
+                    <span v-text='functionItem.name' style="margin-left:0;"></span>
                   </label>
                   <div class='inline-block fr'>
                     <label class="radio_checkbox checkall">
@@ -185,14 +185,14 @@
       checkChildren(item, children, changed) {
         if (!children || children.length == 0) return;
         for (var i = 0; i < children.length; i++) {
-          if (children[i].type == PermissionType.Permission.key) {
+          if (children[i].type == enumMap.PermissionType.Permission.key) {
             if (children[i].isCheck !== item.isCheck) {
               changed.push(children[i]);
               children[i].isCheck = item.isCheck;
               this.checkChildren(children[i], children[i].subList, changed);
             }
           } else {
-            if (children[i].isCheck != PermissionType.Permission.key) {
+            if (children[i].isCheck != enumMap.PermissionType.Permission.key) {
               children[i].isCheck = item.isCheck;
               this.checkChildren(children[i], children[i].subList, changed);
             }

@@ -46,3 +46,8 @@ npm uninstall xx-abc --save-dev 删除模块，同时删除模块留在package.j
 
 # 注意
 idea运行时修改的数据库文件是：`/home/zjy/workspace/mycode/java_ToolSiteMvc4J/web/target/ToolSiteMvc4J/WEB-INF/classes/db/app.db`文件，而不是`/home/zjy/workspace/mycode/java_ToolSiteMvc4J/web/target/classes/db/app.db`
+
+# 添加菜单和授权
+1. 在菜单列表中添加菜单，填写好页面路径
+2. 在功能管理中添加页面功能，填写好路径，保存后进入授权页添加权限点，创建功能时默认会帮我们创建一个**进入页面**的功能点
+3. 添加完成后在角色管理中对角色进行授权

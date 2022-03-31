@@ -255,7 +255,7 @@ var router = new Router({
           component: resolve => require(['@/components/upgradeLog/upgradeLogList'], resolve),
           meta:{
             breadcurmbName: '升级日志列表',
-            // pageCode: 'menuList_enter'
+            pageCode: 'upgradeLog_enter'
           }
         },
         {
@@ -264,7 +264,7 @@ var router = new Router({
           component: resolve => require(['@/components/upgradeLog/upgradeLogEdit'], resolve),
           meta:{
             breadcurmbName: '升级日志编辑',
-            // pageCode: 'menuList_enter'
+            pageCode: 'upgradeLogEdit_enter'
           }
         },
         {
@@ -273,7 +273,7 @@ var router = new Router({
           component: resolve => require(['@/components/upgradeLog/upgradeLogPreview'], resolve),
           meta:{
             breadcurmbName: '升级日志预览',
-            // pageCode: 'menuList_enter'
+            pageCode: 'menuList_enter'
           }
         }
       ]
@@ -289,7 +289,7 @@ var router = new Router({
           component: resolve => require(['@/components/switch/list'], resolve),
           meta:{
             breadcurmbName: '开关控制室',
-            // pageCode: 'menuList_enter'
+            pageCode: 'switchList_enter'
           }
         }
       ]
