@@ -279,6 +279,22 @@ var router = new Router({
       ]
     },
     {
+      path: '/switch',
+      name: 'switch',
+      component: resolve => require(['@/components/layout/headerAndMenu'], resolve),
+      children: [
+        {
+          path: 'list',
+          name: 'switchList',
+          component: resolve => require(['@/components/switch/list'], resolve),
+          meta:{
+            breadcurmbName: '开关控制室',
+            // pageCode: 'menuList_enter'
+          }
+        }
+      ]
+    },
+    {
       path:'/test',
       component: resolve => require(['@/components/layout/headerAndMenu'], resolve),
       children: [
