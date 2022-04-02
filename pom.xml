@@ -18,8 +18,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.source.version>18</java.source.version>
-        <java.target.version>18</java.target.version>
+        <java.source.version>1.8</java.source.version>
+        <java.target.version>1.8</java.target.version>
         <!-- jsp, servlet -->
         <servlet.version>4.0.1</servlet.version>
         <jsp.version>2.0</jsp.version>
