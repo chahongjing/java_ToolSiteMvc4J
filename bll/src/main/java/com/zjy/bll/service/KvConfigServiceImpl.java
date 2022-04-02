@@ -1,8 +1,6 @@
 package com.zjy.bll.service;
 
 import com.alibaba.fastjson.JSON;
-import com.google.common.cache.CacheLoader;
-import com.zjy.baseframework.CacheFromGuavaHelper;
 import com.zjy.baseframework.interfaces.ICache;
 import com.zjy.bll.basebean.PageBean;
 import com.zjy.bll.common.BaseService;
@@ -15,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
 import java.util.Date;
-import java.util.Map;
 
 @Service("kvConfigServiceImpl")
 public class KvConfigServiceImpl extends BaseService<KvConfigDao, KvConfig> implements KvConfigService {

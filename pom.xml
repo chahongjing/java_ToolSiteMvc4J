@@ -18,15 +18,15 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.source.version>1.8</java.source.version>
-        <java.target.version>1.8</java.target.version>
+        <java.source.version>18</java.source.version>
+        <java.target.version>18</java.target.version>
         <!-- jsp, servlet -->
         <servlet.version>4.0.1</servlet.version>
         <jsp.version>2.0</jsp.version>
         <jstl.version>1.2</jstl.version>
         <taglibs.version>1.1.2</taglibs.version>
         <!-- plugin -->
-        <spring.version>5.1.7.RELEASE</spring.version>
+        <spring.version>5.3.15</spring.version>
         <shiro.version>1.4.1</shiro.version>
         <mybatis.version>3.5.1</mybatis.version>
         <mybatis.spring.version>2.0.1</mybatis.spring.version>
@@ -43,7 +43,7 @@
         <fileupload.version>1.4</fileupload.version>
         <fastjson.version>1.2.58</fastjson.version>
         <poi.version>4.1.0</poi.version>
-        <aspectj.version>1.8.9</aspectj.version>
+        <aspectj.version>1.9.7</aspectj.version>
         <cache.version>1.0.0</cache.version>
         <quartz.version>2.3.1</quartz.version>
         <solr.version>6.3.0</solr.version>
@@ -56,7 +56,7 @@
         <ueditor.version>1.1.2</ueditor.version>
         <sitemesh.version>3.0.0</sitemesh.version>
         <guava.version>23.0</guava.version>
-        <lombok.version>1.16.16</lombok.version>
+        <lombok.version>1.18.22</lombok.version>
         <!-- db -->
         <jedis.version>3.0.1</jedis.version>
         <mongodb.version>3.4.0</mongodb.version>
@@ -78,6 +78,7 @@
         <maven.install.vresion>3.0.0-M1</maven.install.vresion>
         <maven.tomcat.version>2.2</maven.tomcat.version>
         <maven.surefire.plugin>3.0.0-M3</maven.surefire.plugin>
+        <maven-war-plugin>3.2.2</maven-war-plugin>
         <!-- jdk11 -->
         <jaxb.api.version>2.3.0</jaxb.api.version>
         <jaxb.impl.version>2.3.0</jaxb.impl.version>
@@ -543,6 +544,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-install-plugin</artifactId>
                     <version>${maven.install.vresion}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>${maven-war-plugin}</version>
                 </plugin>
                 <!-- 配置构建时忽略测试用例 -->
                 <plugin>

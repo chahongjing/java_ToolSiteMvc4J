@@ -3,6 +3,7 @@ package com.zjy.bll.common;
 import com.zjy.baseframework.EnumHelper;
 import com.zjy.baseframework.ReflectionHelper;
 import com.zjy.baseframework.mybatis.CodeEnumTypeHandler;
+import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEvent;
@@ -18,6 +19,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2018/5/16.
  */
+@Slf4j
 @Component
 public class InstantiationTracingBeanPostProcessor implements ApplicationListener<ApplicationEvent> {
 
@@ -35,7 +37,7 @@ public class InstantiationTracingBeanPostProcessor implements ApplicationListene
         if (((ContextRefreshedEvent) event).getApplicationContext().getParent() != null) return;
         //需要执行的逻辑代码，当spring容器初始化完成后就会执行该方法。
         if (event instanceof ContextClosedEvent) {
-            System.out.println(event.getClass().getSimpleName() + " 事件已发生！");
+            log.info(event.getClass().getSimpleName() + " 事件已发生！");
         } else if (event instanceof ContextRefreshedEvent) {
             // 需要执行的逻辑代码，当spring容器初始化完成后就会执行该方法。
             // 获取所有类型
@@ -49,13 +51,13 @@ public class InstantiationTracingBeanPostProcessor implements ApplicationListene
             }
             // 初始化要序列化的枚举
             EnumHelper.initAllSerializeEnum(classList);
-            System.out.println(event.getClass().getSimpleName() + " 事件已发生！");
+            log.info(event.getClass().getSimpleName() + " 事件已发生！");
         } else if (event instanceof ContextStartedEvent) {
-            System.out.println(event.getClass().getSimpleName() + " 事件已发生！");
+            log.info(event.getClass().getSimpleName() + " 事件已发生！");
         } else if (event instanceof ContextStoppedEvent) {
-            System.out.println(event.getClass().getSimpleName() + " 事件已发生！");
+            log.info(event.getClass().getSimpleName() + " 事件已发生！");
         } else {
-            System.out.println("有其它事件发生:" + event.getClass().getName());
+            log.info("有其它事件发生:" + event.getClass().getName());
         }
     }
 }
