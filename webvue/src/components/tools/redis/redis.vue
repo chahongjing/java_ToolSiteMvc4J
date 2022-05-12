@@ -1,7 +1,7 @@
 <template>
   <div class='maincontent'>
     <div class="mypanel" style="width:500px;margin:auto;margin-top:20px;">
-      <div class="panel-heading font-bold">用户信息</div>
+      <div class="panel-heading font-bold">redis操作</div>
       <div class="panel-body">
         <form class='myform infotip form-label-w110 block-form-group'>
           <div class="form-group">
@@ -24,14 +24,14 @@
             <label class="form-label req colon">键</label>
             <div class="form-content">
               <input type="text" class="form-control" placeholder="键"
-                     v-model='user.userCode' :disabled='allDisabled'/>
+                     v-model='key' :disabled='allDisabled'/>
             </div>
           </div>
           <div class="form-group">
             <label class="form-label req colon">字段</label>
             <div class="form-content">
               <input type="text" class="form-control" placeholder="字段"
-                     v-model='key' :disabled='allDisabled'/>
+                     v-model='field' :disabled='allDisabled'/>
             </div>
           </div>
           <div class="form-group">
@@ -49,10 +49,10 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label req colon">分数</label>
+            <label class="form-label req colon">结果</label>
             <div class="form-content">
-               <textarea type="text" class="form-control" placeholder="说明"
-                         v-model='opResult' :disabled='allDisabled'></textarea>
+               <textarea type="text" class="form-control" placeholder="结果"
+                         v-model='opResult' readonly=""></textarea>
             </div>
           </div>
 
@@ -81,12 +81,12 @@ export default {
       score: null,
       dataTypeOption: window.enumMap['RedisDataType'],
       dataOpOption: window.enumMap['RedisOpType'],
-      opResult: {}
+      opResult: ''
     }
   },
   methods: {
     init: function () {
-
+      this.allDisabled = false;
     },
     opRedis: function() {
       var me = this;
@@ -99,9 +99,9 @@ export default {
         value: this.value,
         score: this.score
       };
-      me.$axios.post('/redis/optRedis').then(function (resp) {
+      me.$axios.post('/redis/optRedis', param).then(function (resp) {
         if(resp.data.status === ResultStatus.OK.key) {
-          me.opResult = resp.data.value;
+          me.opResult = JSON.stringify(resp.data.value);
           me.allDisabled = false;
         }
       });

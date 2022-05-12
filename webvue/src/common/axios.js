@@ -129,7 +129,7 @@ axios.interceptors.response.use(function (resp) {
 });
 
 function filterResp(resp) {
-  var showMsg = response.config.showMsg
+  var showMsg = resp.config.showMsg
   if (resp.data.status == ResultStatus.NO.key && showMsg) {
     toaster.warning(resp.data.message);
   } else if (resp.data.status == ResultStatus.ERROR.key) {

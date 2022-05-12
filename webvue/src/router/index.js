@@ -295,6 +295,22 @@ var router = new Router({
       ]
     },
     {
+      path: '/redis',
+      name: 'redis',
+      component: resolve => require(['@/components/layout/headerAndMenu'], resolve),
+      children: [
+        {
+          path: '',
+          name: 'redisOp',
+          component: resolve => require(['@/components/tools/redis/redis'], resolve),
+          meta:{
+            breadcurmbName: 'redis操作',
+            // pageCode: 'redisOp_enter'
+          }
+        }
+      ]
+    },
+    {
       path:'/test',
       component: resolve => require(['@/components/layout/headerAndMenu'], resolve),
       children: [
