@@ -64,6 +64,19 @@ axios.defaults.transformResponse = [function (data) {
 // 添加请求拦截器
 axios.interceptors.request.use(function (config) {
   // 在发送请求之前做些什么
+  var showMsg = true
+  if (config.data) {
+    if (config.data instanceof FormData) {
+      showMsg = !(config.data.get('showMsg') === 'false')
+    } else if (typeof config.data === 'object') {
+      showMsg = !(config.data['showMsg'] === false)
+    } else if (typeof config.data === 'string') {
+      showMsg = !(Utility.getQuery(showMsg, config.data) === 'false')
+    }
+  } else {
+    showMsg = !(config.params && config.params.showMsg === false)
+  }
+  config.showMsg = showMsg
   return config;
 }, function (error) {
   // 对请求错误做些什么
@@ -116,7 +129,8 @@ axios.interceptors.response.use(function (resp) {
 });
 
 function filterResp(resp) {
-  if (resp.data.status == ResultStatus.NO.key) {
+  var showMsg = response.config.showMsg
+  if (resp.data.status == ResultStatus.NO.key && showMsg) {
     toaster.warning(resp.data.message);
   } else if (resp.data.status == ResultStatus.ERROR.key) {
     toaster.error(resp.data.message);
