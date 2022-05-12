@@ -27,7 +27,7 @@
                      v-model='key' :disabled='allDisabled'/>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group" v-if="dataType === 'HASH' && (opType === 'GET' || opType === 'SET')">
             <label class="form-label req colon">字段</label>
             <div class="form-content">
               <input type="text" class="form-control" placeholder="字段"
@@ -41,14 +41,14 @@
                      v-model='value' :disabled='allDisabled'/>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group" v-if="dataType === 'ZSET' && opType === 'SET'">
             <label class="form-label req colon">分数</label>
             <div class="form-content">
               <input type="text" class="form-control" placeholder="分数"
                      v-model='score' :disabled='allDisabled'/>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group" v-if="opType === 'GET'">
             <label class="form-label req colon">结果</label>
             <div class="form-content">
                <textarea type="text" class="form-control" placeholder="结果"
@@ -80,7 +80,6 @@ export default {
       value: '',
       score: null,
       dataTypeOption: window.enumMap['RedisDataType'],
-      dataOpOption: window.enumMap['RedisOpType'],
       opResult: ''
     }
   },
@@ -109,6 +108,20 @@ export default {
   },
   mounted: function () {
     this.init();
+  },
+  computed: {
+    dataOpOption: function() {
+      var arrDataType = ['STRING', 'HASH']
+      var arrOpType = ['ADD_ITEM', 'DEL_ITEM']
+      var list = []
+      for(var ind in window.enumMap['RedisOpType']) {
+        list.push(window.enumMap['RedisOpType'][ind]);
+      }
+      if(arrDataType.includes(this.dataType)) {
+        list = list.filter(item => !arrOpType.includes(item.key))
+      }
+      return list
+    }
   }
 }
 </script>
