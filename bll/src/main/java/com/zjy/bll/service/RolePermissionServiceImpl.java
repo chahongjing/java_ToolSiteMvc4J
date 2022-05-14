@@ -57,7 +57,7 @@ public class RolePermissionServiceImpl extends BaseService<RolePermissionDao, Ro
             } else {
                 firtMenu.setSingleCheck(false);
             }
-            if (CollectionUtils.isEmpty(list) || true) firtMenu.setShowDetail(true);
+            if (CollectionUtils.isEmpty(list)) firtMenu.setShowDetail(true);
             list.add(firtMenu);
             // 二级
             List<MenuVo> children = menuVos.stream().filter(item -> menuVo.getMenuId().equalsIgnoreCase(item.getPId())).collect(Collectors.toList());
@@ -73,7 +73,7 @@ public class RolePermissionServiceImpl extends BaseService<RolePermissionDao, Ro
                 } else {
                     secondMenu.setSingleCheck(false);
                 }
-                if (CollectionUtils.isEmpty(firtMenu.getSubList()) || true) secondMenu.setShowDetail(true);
+                if (CollectionUtils.isEmpty(firtMenu.getSubList())) secondMenu.setShowDetail(true);
                 firtMenu.getSubList().add(secondMenu);
                 // 功能
                 List<FunctionInfoVo> functions = functionInfoVos.stream().filter(item -> child.getMenuId().equals(item.getMenuId())).collect(Collectors.toList());
@@ -89,7 +89,7 @@ public class RolePermissionServiceImpl extends BaseService<RolePermissionDao, Ro
                     } else {
                         functionItem.setSingleCheck(false);
                     }
-                    if (CollectionUtils.isEmpty(secondMenu.getSubList()) || true) functionItem.setShowDetail(true);
+                    if (CollectionUtils.isEmpty(secondMenu.getSubList())) functionItem.setShowDetail(true);
                     secondMenu.getSubList().add(functionItem);
                     // 权限
                     List<PermissionVo> permissions = permissionVos.stream().filter(item -> function.getFunctionId().equals(item.getFunctionId())).collect(Collectors.toList());
@@ -105,7 +105,7 @@ public class RolePermissionServiceImpl extends BaseService<RolePermissionDao, Ro
                         } else {
                             permissionItem.setIsCheck(false);
                         }
-                        if (CollectionUtils.isEmpty(functionItem.getSubList()) || true) permissionItem.setShowDetail(true);
+                        if (CollectionUtils.isEmpty(functionItem.getSubList())) permissionItem.setShowDetail(true);
                         functionItem.getSubList().add(permissionItem);
                     }
                 }

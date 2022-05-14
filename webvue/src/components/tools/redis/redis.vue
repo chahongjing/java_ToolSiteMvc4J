@@ -41,7 +41,7 @@
                      v-model='value' :disabled='allDisabled'/>
             </div>
           </div>
-          <div class="form-group" v-if="dataType === 'ZSET' && opType === 'SET'">
+          <div class="form-group" v-if="dataType === 'ZSET' && (opType === 'SET' || opType === 'ADD_ITEM')">
             <label class="form-label req colon">分数</label>
             <div class="form-content">
               <input type="text" class="form-control" placeholder="分数"

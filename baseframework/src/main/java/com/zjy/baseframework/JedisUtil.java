@@ -1,5 +1,6 @@
 package com.zjy.baseframework;
 
+import lombok.Getter;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+@Getter
 public class JedisUtil {
     //private Logger log = Logger.getLogger(this.getClass());
 
