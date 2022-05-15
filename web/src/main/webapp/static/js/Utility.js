@@ -787,6 +787,13 @@
       window.Query[arrKeyValue[1]] = arrKeyValue[2];
     }
   }
+  ns.getQuery = function(key, url) {
+    if(!key || !url) return '';
+    var regKey = new RegExp("(\\?|&)" + key + "=([^&]*)(&|$)", 'i')
+    var group = url.match(regKey);
+    if(group) return group[2]
+    return '';
+  }
   /**
    * 获取文件名称
    * @param path

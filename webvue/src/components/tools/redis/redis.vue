@@ -8,7 +8,7 @@
             <label class="form-label req colon">数据类型</label>
             <div class="form-content">
               <select class='form-control' v-model="dataType">
-                <option v-for="item in dataTypeOption" :value="item.key" v-text="item.name"></option>
+                <option v-for="item in dataTypeOption" :value="item.key" v-text="item.name" />
               </select>
             </div>
           </div>
@@ -16,7 +16,7 @@
             <label class="form-label req colon">操作类型</label>
             <div class="form-content">
               <select class='form-control' v-model="opType">
-                <option v-for="item in dataOpOption" :value="item.key" v-text="item.name"></option>
+                <option v-for="item in dataOpOption" :value="item.key" v-text="item.name" />
               </select>
             </div>
           </div>
@@ -34,7 +34,7 @@
                      v-model='field' :disabled='allDisabled'/>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group" v-if="opType === 'SET' || opType === 'ADD_ITEM'">
             <label class="form-label req colon">值</label>
             <div class="form-content">
               <input type="text" class="form-control" placeholder="值"
@@ -52,7 +52,7 @@
             <label class="form-label req colon">结果</label>
             <div class="form-content">
                <textarea type="text" class="form-control" placeholder="结果"
-                         v-model='opResult' readonly=""></textarea>
+                         v-model='opResult' readonly="" />
             </div>
           </div>
 
@@ -100,9 +100,10 @@ export default {
       };
       me.$axios.post('/redis/optRedis', param).then(function (resp) {
         if(resp.data.status === ResultStatus.OK.key) {
+          me.$toaster.success('操作成功！');
           me.opResult = JSON.stringify(resp.data.value);
-          me.allDisabled = false;
         }
+        me.allDisabled = false
       });
     }
   },

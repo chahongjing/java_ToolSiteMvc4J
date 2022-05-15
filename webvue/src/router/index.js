@@ -301,11 +301,11 @@ var router = new Router({
       children: [
         {
           path: '',
-          name: 'redisOp',
+          name: 'redisOpt',
           component: resolve => require(['@/components/tools/redis/redis'], resolve),
           meta:{
             breadcurmbName: 'redis操作',
-            // pageCode: 'redisOp_enter'
+            pageCode: 'redisOpt_enter'
           }
         }
       ]

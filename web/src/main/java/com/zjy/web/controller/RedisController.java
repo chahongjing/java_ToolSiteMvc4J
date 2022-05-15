@@ -7,7 +7,6 @@ import com.zjy.bll.enums.RedisOpType;
 import com.zjy.entities.UserInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +19,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/redis")
 public class RedisController {
 //    @Autowired
-    private JedisUtil jedisUtil;
+    private JedisUtil jedisUtil = new JedisUtil();
 
     /**
      * 操作redis
@@ -50,8 +49,12 @@ public class RedisController {
         }
         log.warn("{} optRedis.dataType:{},opType:{},key:{},field:{},value:{}", user.getUserId(), dataType, opType, key, field, value);
         if(opType == RedisOpType.DEL) {
-            jedisUtil.getKEYS().del(key);
-            return BaseResult.ok();
+            if (jedisUtil.getKEYS().exists(key)) {
+                jedisUtil.getKEYS().del(key);
+                return BaseResult.ok();
+            } else {
+                return BaseResult.error("键不存在！");
+            }
         }
         Map<String, Object> result = null;
         switch (dataType) {
