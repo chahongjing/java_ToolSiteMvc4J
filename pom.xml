@@ -70,7 +70,7 @@
         <h2.version>1.4.199</h2.version>
         <hibernate.version>5.2.10.Final</hibernate.version>
         <!-- test -->
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
         <!-- maven -->
         <maven.compiler.version>3.8.1</maven.compiler.version>
         <maven.jar.version>3.1.2</maven.jar.version>
