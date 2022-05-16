@@ -14,8 +14,10 @@
   <!-- built files will be auto injected -->
   <script src="static/js/jquery-3.3.1.min.js"></script>
   <script src="static/js/Utility.js"></script>
-  <script>
-    document.write('<script type="text/javascript" src="' + Utility.getServerUrl() + '/comm/getEnums"><' + '' + '/script>');
-  </script>
+  <% if(process.env.NODE_ENV === 'production') { %>
+    <script src="<%= process.env.context %>/comm/getEnums"></script>
+  <% } else { %>
+    <script src="<%= process.env.targetHost %>:<%= process.env.targetPort %><%= process.env.context %>/comm/getEnums"></script>
+  <% } %>
 </body>
 </html>

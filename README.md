@@ -56,7 +56,6 @@ npm uninstall xx-abc --save-dev 删除模块，同时删除模块留在package.j
 
 # 注意
 1. idea运行时修改的数据库文件是：`/home/zjy/workspace/mycode/java_ToolSiteMvc4J/web/target/ToolSiteMvc4J/WEB-INF/classes/db/app.db`文件，而不是`/home/zjy/workspace/mycode/java_ToolSiteMvc4J/web/target/classes/db/app.db`
-2. 打包运行时，要修改webvue-->static--.js-->Utility.js-->window.Constant中的Context，Host，Port变量信息
 
 # 添加菜单和授权
 1. 在菜单列表中添加菜单，填写好页面路径

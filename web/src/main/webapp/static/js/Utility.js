@@ -815,26 +815,11 @@
     var end = fileName.length;
     return fileName.substring(start, end);
   }
-  ns.getServerUrl = function () {
-    var str = 'http://' + Constant.Host;
-    if (Constant.Port || Constant.Port != 80) {
-      str += ':' + Constant.Port;
-    }
-    if (Constant.Context) {
-      str += Constant.Context
-    } else {
-      str += '/';
-    }
-    return str;
-  }
 })(window.Utility);
 
 /// 系统常量
 window.Constant = {
-  EmptyGuid: "00000000-0000-0000-0000-000000000000", Context: '/ToolSiteMvc4J',
-  Host: 'localhost', Port: '21000'
-  // Host:'10.4.132.60',Port:'20000'
-  // Host:'localhost',Port:'20000'
+  EmptyGuid: "00000000-0000-0000-0000-000000000000"
 }
 window.ResultStatus = {
   "OK": {"key": "OK", "value": 1, "code": "", "name": "成功", "order": 0},
