@@ -34,7 +34,7 @@
                      v-model='field' :disabled='allDisabled'/>
             </div>
           </div>
-          <div class="form-group" v-if="opType === 'SET' || opType === 'ADD_ITEM'">
+          <div class="form-group" v-if="opType === 'SET' || opType === 'ADD_ITEM' || opType === 'DEL_ITEM'">
             <label class="form-label req colon">值</label>
             <div class="form-content">
               <input type="text" class="form-control" placeholder="值"

@@ -41,10 +41,10 @@ public class RedisController {
         if(dataType == null || opType == null || StringUtils.isBlank(key)) {
             return BaseResult.error("参数不能为空");
         }
-        if(dataType == RedisDataType.HASH && StringUtils.isBlank(field)) {
+        if(dataType == RedisDataType.HASH && StringUtils.isBlank(field) && opType != RedisOpType.DEL) {
             return BaseResult.error("参数不能为空");
         }
-        if(dataType == RedisDataType.ZSET && score == null) {
+        if(dataType == RedisDataType.ZSET && score == null && (opType == RedisOpType.SET || opType == RedisOpType.ADD_ITEM)) {
             return BaseResult.error("参数不能为空");
         }
         log.warn("{} optRedis.dataType:{},opType:{},key:{},field:{},value:{}", user.getUserId(), dataType, opType, key, field, value);
@@ -85,7 +85,6 @@ public class RedisController {
     }
 
     private Map<String, Object> opList(RedisOpType opType, String key, String value) {
-        // todo: test
         Map<String, Object> map = new HashMap<>();
         if(opType == RedisOpType.GET) {
             map.put("result", jedisUtil.getLISTS().lrange(key, 0, -1));
@@ -100,7 +99,7 @@ public class RedisController {
         } else if(opType == RedisOpType.ADD_ITEM) {
             jedisUtil.getLISTS().lpush(key, value);
         } else if(opType == RedisOpType.DEL_ITEM) {
-            // todo: impl
+            throw new RuntimeException("未实现功能");
 //            jedisUtil.getLISTS().rpop(key, value);
         }
         return map;
@@ -126,8 +125,7 @@ public class RedisController {
         return map;
     }
 
-    private Map<String, Object> opZset(RedisOpType opType, String key, String value, double score) {
-        // todo: test
+    private Map<String, Object> opZset(RedisOpType opType, String key, String value, Double score) {
         Map<String, Object> map = new HashMap<>();
         if(opType == RedisOpType.GET) {
             map.put("result", jedisUtil.getSORTSET().zrange(key, 0, -1));
@@ -156,7 +154,6 @@ public class RedisController {
      * @return
      */
     private Map<String, Object> opHash(RedisOpType opType, String key, String field, String value) {
-        // todo: test
         Map<String, Object> map = new HashMap<>();
         if(opType == RedisOpType.GET) {
             map.put("result", jedisUtil.getHASH().hget(key, field));
