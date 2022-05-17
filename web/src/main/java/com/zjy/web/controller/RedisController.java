@@ -99,8 +99,7 @@ public class RedisController {
         } else if(opType == RedisOpType.ADD_ITEM) {
             jedisUtil.getLISTS().lpush(key, value);
         } else if(opType == RedisOpType.DEL_ITEM) {
-            throw new RuntimeException("未实现功能");
-//            jedisUtil.getLISTS().rpop(key, value);
+            jedisUtil.getLISTS().lrem(key, 0, value);
         }
         return map;
     }
