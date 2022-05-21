@@ -75,9 +75,11 @@ module.exports = {
     // Template for index.html
     index: path.resolve(__dirname, buildPath + '/index.html'),
 
-    // Paths
+    // Paths 打包后文件存放的路径
     assetsRoot: path.resolve(__dirname, buildPath),
+    // 除了index.html之外的静态资源要存放的路径
     assetsSubDirectory: './static',
+    // 代表打包后，index.html里面引用资源的相对地址
     assetsPublicPath: './',
 
     /**
