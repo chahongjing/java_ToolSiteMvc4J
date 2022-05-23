@@ -127,7 +127,7 @@ public class RedisController {
     private Map<String, Object> opZset(RedisOpType opType, String key, String value, Double score) {
         Map<String, Object> map = new HashMap<>();
         if(opType == RedisOpType.GET) {
-            map.put("result", jedisUtil.getSORTSET().zrange(key, 0, -1));
+            map.put("result", jedisUtil.getSORTSET().zrangeWithScore(key, 0, -1));
             map.put("ttl", jedisUtil.getKEYS().ttl(key));
         } else if (opType == RedisOpType.SET) {
             jedisUtil.getKEYS().del(key);

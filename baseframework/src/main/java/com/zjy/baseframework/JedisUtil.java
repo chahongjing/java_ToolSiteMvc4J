@@ -8,6 +8,7 @@ import redis.clients.jedis.ListPosition;
 import redis.clients.jedis.ShardedJedis;
 import redis.clients.jedis.ShardedJedisPool;
 import redis.clients.jedis.SortingParams;
+import redis.clients.jedis.Tuple;
 import redis.clients.jedis.util.SafeEncoder;
 
 import java.io.Closeable;
@@ -672,6 +673,14 @@ public class JedisUtil {
             Set<String> set = sjedis.zrange(key, start, end);
             returnJedis(sjedis);
             return set;
+        }
+
+        public Set<Tuple> zrangeWithScore(String key, int start, int end) {
+//ShardedJedis sjedis = getShardedJedis();
+            Jedis sjedis = getJedis();
+            Set<Tuple> tuples = sjedis.zrangeWithScores(key, start, end);
+            returnJedis(sjedis);
+            return tuples;
         }
 
         /**
