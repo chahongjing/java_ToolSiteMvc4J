@@ -193,13 +193,13 @@
       },
       getEnumList() {
         var list = [];
-        for (var item in Sex) {
-          list.push(Sex[item]);
+        for (var item in enumMap.Sex) {
+          list.push(enumMap.Sex[item]);
         }
         this.sexList = list;
         list = [];
-        for (var item in YesNo) {
-          list.push(YesNo[item]);
+        for (var item in enumMap.YesNo) {
+          list.push(enumMap.YesNo[item]);
         }
         this.YesNoList = list;
       }

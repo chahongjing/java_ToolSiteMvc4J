@@ -69,7 +69,7 @@ public class UpgradeLogServiceImpl extends BaseService<UpgradeLogDao, UpgradeLog
     @Override
     public PageBean<UpgradeLogVo> queryPageList(UpgradeLogRequest request) {
         UpgradeLog po = new UpgradeLog();
-//        po.setName(request.getName());
+        po.setTitle(request.getTitle());
         PageBean<UpgradeLogVo> upgradeLogPageBean = (PageBean<UpgradeLogVo>) super.queryPageList(request, po);
         for (UpgradeLogVo upgradeLogVo : upgradeLogPageBean.getList()) {
             convertContent(upgradeLogVo);

@@ -124,7 +124,7 @@ public class KvConfigServiceImpl extends BaseService<KvConfigDao, KvConfig> impl
     @Override
     public PageBean<KvConfig> queryPageList(KvConfigRequest request) {
         KvConfig po = new KvConfig();
-//        po.setName(request.getName());
+        po.setCode(request.getCode());
         return (PageBean<KvConfig>) super.queryPageList(request, po);
     }
 

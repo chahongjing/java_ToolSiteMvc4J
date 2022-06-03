@@ -143,8 +143,7 @@
         me.allDisabled = true;
         me.pager.loading = true;
         this.$axios.get('/upgradeLog/queryPageList', {
-          userName: this.searchKey,
-          sex: this.sexValue,
+          title: this.searchKey,
           pageNum: this.pager.pageNum,
           pageSize: this.pager.pageSize,
           nameOrderBy: this.nameOrderBy.value,

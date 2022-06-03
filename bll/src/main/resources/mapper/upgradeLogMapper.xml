@@ -47,6 +47,11 @@
 	<select id="query" resultType="com.zjy.bll.vo.UpgradeLogVo">
 		SELECT <include refid="fieldWithPrefix"><property name="tableName" value="UpgradeLog"/></include>
 		FROM UpgradeLog
+		<where>
+			<if test='title != null and title != ""'>
+				and title like '%' || #{title, jdbcType=VARCHAR} || '%'
+			</if>
+		</where>
 		order by upgradeTime desc
 	</select>
 
