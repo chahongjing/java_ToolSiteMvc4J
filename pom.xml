@@ -60,7 +60,7 @@
         <!-- db -->
         <jedis.version>3.0.1</jedis.version>
         <mongodb.version>3.4.0</mongodb.version>
-        <mongodb.spring.version>2.1.7.RELEASE</mongodb.spring.version>
+        <mongodb.spring.version>3.3.5</mongodb.spring.version>
         <dbutils.version>1.7</dbutils.version>
         <c3p0.version>0.9.1.2</c3p0.version>
         <sqlserver.version>4.0</sqlserver.version>
