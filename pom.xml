@@ -42,7 +42,7 @@
         <pagehelper.version>5.1.8</pagehelper.version>
         <fileupload.version>1.4</fileupload.version>
         <fastjson.version>1.2.58</fastjson.version>
-        <poi.version>4.1.0</poi.version>
+        <poi.version>4.1.1</poi.version>
         <aspectj.version>1.9.7</aspectj.version>
         <cache.version>1.0.0</cache.version>
         <quartz.version>2.3.1</quartz.version>
