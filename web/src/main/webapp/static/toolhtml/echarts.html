@@ -65,7 +65,7 @@
         var comHis = echarts.init(document.getElementById('comHis'));
 
         // 页面加载
-        $.get(Utility.getServerUrl() + '/echarts/getChartsOption').then(function(resp) {
+        $.get('/ToolSiteMvc4J/echarts/getChartsOption').then(function(resp) {
         	// 准备数据
 	        var optionDashBoard = JSON.parse(resp.value.dashBoard);
 	        var optionLineChart = JSON.parse(resp.value.lineChart);

@@ -211,7 +211,7 @@
         if(this.createdOnOrderBy != field) {
           this.createdOnOrderBy.value = null;
         }
-        field.value = (field.value == OrderByType.ASC.key ? OrderByType.DESC.key : OrderByType.ASC.key);
+        field.value = (field.value == enumMap.OrderByType.ASC.key ? enumMap.OrderByType.DESC.key : enumMap.OrderByType.ASC.key);
         this.queryList();
       },
       setPassword(entity) {
